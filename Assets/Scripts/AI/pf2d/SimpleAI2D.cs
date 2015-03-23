@@ -6,7 +6,8 @@ public class SimpleAI2D : Pathfinding2D
     public int SearchPerSecond = 5;
     //public Transform Target;
 	public GameObject Target;
-	Transform groundCheckTransf;
+	
+	public Transform myGroundCheckTransf;
 
     public bool search = true;
     public float tempDistance = 0F;
@@ -31,13 +32,13 @@ public class SimpleAI2D : Pathfinding2D
 		foreach (Transform child in transform) {
 			
 			if(child.tag=="GroundCheck" || child.name=="GroundCheck") {
-				groundCheckTransf = child;
+				myGroundCheckTransf = child;
 				break;
 			}
 			
 		}
 		
-		if (groundCheckTransf == null)
+		if (myGroundCheckTransf == null)
 			Debug.Log ("groundCheck non trovato");
 		
 	}
@@ -84,7 +85,7 @@ public class SimpleAI2D : Pathfinding2D
 
 				//versione nuova di prova
 				//Debug.Log("nuovo path : " + Time.time);
-				FindPath(groundCheckTransf.position, Target.transform.position);
+				FindPath(myGroundCheckTransf.position, Target.transform.position);
 
             }
 

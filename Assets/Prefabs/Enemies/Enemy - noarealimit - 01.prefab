@@ -26,7 +26,7 @@ GameObject:
   - 58: {fileID: 5830684}
   - 114: {fileID: 11453704}
   m_Layer: 13
-  m_Name: StunningPoint
+  m_Name: WeakPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -41,6 +41,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 460808}
   - 61: {fileID: 6110788}
+  - 114: {fileID: 11410356}
   m_Layer: 13
   m_Name: ToStun
   m_TagString: Stunning
@@ -234,6 +235,17 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &11410356
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 175278}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 923867140a3df41ddb136b74ea116edc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &11426398
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -284,6 +296,7 @@ MonoBehaviour:
   JS: 0
   SearchPerSecond: 3
   Target: {fileID: 0}
+  myGroundCheckTransf: {fileID: 0}
   search: 1
   tempDistance: 0
   HideLayer: 16
@@ -312,15 +325,12 @@ MonoBehaviour:
   hidingLayer:
     serializedVersion: 2
     m_Bits: 65536
-  DEBUG_PHASE_BASIC: 0
-  DEBUG_PHASE_WEIRD: 0
   statusSprites: []
   pointPrefab: {fileID: 186992, guid: 49e83c496a1b5654ab08f42747acf236, type: 2}
+  groundCheckTransf: {fileID: 0}
   patrolPoints: []
-  patrolSuspiciousPoints: []
-  suspicious: 0
   patrolledTarget: {fileID: 0}
-  canJump: 1
+  DefaultVerseRight: 1
 --- !u!212 &21276338
 SpriteRenderer:
   m_ObjectHideFlags: 1
