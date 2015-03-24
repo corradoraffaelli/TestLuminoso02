@@ -146,9 +146,12 @@ public class basicAIEnemyV4 : MonoBehaviour {
 	
 	bool stunnedReceived = false;
 	float tLastStunnedAttackReceived = -10.0f;
-	float tToReturnFromStunned = 3.0f;
+	float tToReturnFromStunned = 4.0f;
 	//bool autoDestroy = false;
-	
+	//sotto caso freezed----------------------
+	PhysicsMaterial2D myPhysicsMat;
+	GameObject myToStun;
+
 	//Gestione jump------------------------------------------------------------------------------------
 	
 	bool canJump = true;
@@ -158,16 +161,15 @@ public class basicAIEnemyV4 : MonoBehaviour {
 	float tBetweenJumps = 0.3f;
 	float spaceToOvercomeH = 2.5f;
 	float spaceToOvercomeL = 3.5f;
-
-	//Gestione stunned---------------------------------------------------------------------------------
-	GameObject myToStun;
-
+	
 	//Gestione flip------------------------------------------------------------------------------------
 	float tLastFlip = -0.5f;
 	float tBetweenFlips = 0.2f;
 	
 	//GESTIONE A*
 	SimpleAI2D myAstar;
+
+	bool freezedByGun = false;
 	
 	//INIZIO FUNZIONI START---------------------------------------------------------------------------------------------------------------------
 	//------------------------------------------------------------------------------------------------------------------------------------------
@@ -175,7 +177,7 @@ public class basicAIEnemyV4 : MonoBehaviour {
 	
 	// Use this for initialization
 	void Start () {
-		//Time.timeScale = 0.1f;
+		Time.timeScale = 0.2f;
 		//c2d = GetComponent<controller2DV2> ();
 		pm = GetComponent<PlayerMovements> ();
 		eMS = enemyMachineState.Patrol;
@@ -744,6 +746,8 @@ public class basicAIEnemyV4 : MonoBehaviour {
 		eMS = enemyMachineState.Stunned;
 		
 		initializeStunned ();
+
+		Debug.Log ("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
 		
 	}
 	
@@ -1804,7 +1808,13 @@ public class basicAIEnemyV4 : MonoBehaviour {
 		
 		tLastStunnedAttackReceived = Time.time;
 
-		i_stunned (true);
+		if (freezedByGun) {
+			//handleFreezing(true);
+			//GetComponent<Animator>().enabled = false;
+		} else {
+			i_stunned (true);
+
+		}
 
 		if (myToStun != null)
 			myToStun.GetComponent<BoxCollider2D> ().enabled = false;
@@ -1815,7 +1825,12 @@ public class basicAIEnemyV4 : MonoBehaviour {
 		
 		i_stunned (false);
 		//TODO: PRIOR resta così? sarebbe responsabilità del photogun
-		GetComponent<Rigidbody2D>().isKinematic = false;
+		if (freezedByGun) {
+			handleFreezing(false);
+			//GetComponent<Rigidbody2D> ().isKinematic = false;
+			//GetComponent<Animator> ().enabled = true;
+			//freezedByGun = false;
+		}
 
 		if (myToStun != null)
 			myToStun.GetComponent<BoxCollider2D> ().enabled = true;
@@ -2260,13 +2275,73 @@ public class basicAIEnemyV4 : MonoBehaviour {
 		}
 	}
 	*/
-	public void setFreeze(bool a) {
-		
-		if (a) {
-			Debug.Log ("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb");
-			gameObject.GetComponent<Rigidbody2D>().isKinematic = true;
-			makeAnyStTransition();
+
+	private void handleFreezing(bool start){
+
+		if (start) {
+			GetComponent<Animator> ().enabled = false;
+			GetComponent<Rigidbody2D> ().velocity = new Vector2 (0.0f, 0.0f);
+			gameObject.GetComponent<Rigidbody2D> ().isKinematic = true;
+			myPhysicsMat = GetComponent<BoxCollider2D>().sharedMaterial;
+			GetComponent<BoxCollider2D>().sharedMaterial = GetComponent<CircleCollider2D>().sharedMaterial;
+			GetComponent<BoxCollider2D>().enabled = false;
+			GetComponent<BoxCollider2D>().enabled = true;
+			freezedByGun = true;
 		}
+		else {
+			GetComponent<Rigidbody2D> ().isKinematic = false;
+			GetComponent<Animator> ().enabled = true;
+			GetComponent<BoxCollider2D>().sharedMaterial = myPhysicsMat;
+			GetComponent<BoxCollider2D>().enabled = false;
+			GetComponent<BoxCollider2D>().enabled = true;
+			freezedByGun = false;
+		}
+
+	}
+
+	private void handleFreezingClone() {
+
+		gameObject.layer = 17;
+		
+		foreach(Transform child in transform) {
+			
+			child.gameObject.SetActive(false);
+		}
+		
+		GetComponent<Animator>().enabled = false;
+		
+		GetComponent<Rigidbody2D> ().velocity = new Vector2 (0.0f, 0.0f);
+		GetComponent<Rigidbody2D> ().isKinematic = true;
+		
+		GetComponent<autoDestroy>().enabled = true;
+
+		GetComponent<BoxCollider2D>().sharedMaterial = GetComponent<CircleCollider2D>().sharedMaterial;
+		GetComponent<BoxCollider2D>().enabled = false;
+		GetComponent<BoxCollider2D>().enabled = true;
+		
+		GetComponent<basicAIEnemyV4>().enabled = false;
+
+	}
+	
+	public void c_freeze_ai(bool clone = false) {
+		
+		if (!clone) {
+			Debug.Log ("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb");
+
+			//freezedByGun = true;
+			handleFreezing(true);
+			makeAnyStTransition ();
+
+			//TODO: PRIOR
+			//makeStateTransition(eMS,enemyMachineState.Stunned);
+
+		} else {
+
+			handleFreezingClone();
+		
+		}
+
+
 		
 	}
 

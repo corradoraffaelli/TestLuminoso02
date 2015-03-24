@@ -8,7 +8,7 @@ public class PlayerMovements : MonoBehaviour {
 
 	bool facingRight = true;
 	bool Jumping = false;
-	bool onGround = false;
+	public bool onGround = false;
 	bool onLadder = false;
 	bool collidingLadder = false;
 

@@ -40,6 +40,8 @@ public class stunnedCheck : MonoBehaviour {
 			case stunType.AI :
 
 				if (c.gameObject.tag=="Stunning") {
+					
+					Debug.Log("woooooooooooooooooooooow" + c.gameObject.name + c.gameObject.transform.parent.gameObject.name);
 					transform.parent.SendMessage ("setStunned", true);
 
 				} 
