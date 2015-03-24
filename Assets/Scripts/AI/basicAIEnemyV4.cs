@@ -70,8 +70,13 @@ public class basicAIEnemyV4 : MonoBehaviour {
 	public LayerMask hidingLayer;
 	
 	//DEBUG VARIABLES
+<<<<<<< HEAD
 	bool DEBUG_PHASE_BASIC = false;
 	bool DEBUG_PHASE_WEIRD = false;
+=======
+	bool DEBUG_PHASE_BASIC = true;
+	bool DEBUG_PHASE_WEIRD = true;
+>>>>>>> 2a16d070d8bf1e7138060cb780f2b1fb24c99491
 	
 	//Gestione status visivo
 	public Sprite []statusSprites;
@@ -101,6 +106,7 @@ public class basicAIEnemyV4 : MonoBehaviour {
 	//Gestione patrol----------------------------------------------------------------------------------
 	public GameObject []patrolPoints;
 	public GameObject[]patrolSuspiciousPoints;
+	GameObject[]patrolSuspiciousPoints;
 	float suspiciousStartTime = 0.0f;
 	float countDownSuspicious = 7.0f;
 	float suspPointReachedTime = 0.0f;

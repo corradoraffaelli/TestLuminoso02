@@ -1366,6 +1366,33 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 18424285edaf8437b830879e8ce34d55, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &513652880
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 513652881}
+  m_Layer: 0
+  m_Name: single 1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &513652881
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 513652880}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 21.1299992, y: .310000002, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 18
 --- !u!1 &514704254
 GameObject:
   m_ObjectHideFlags: 0
@@ -2896,6 +2923,33 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 17, y: 1.58000004, z: 1}
   m_Center: {x: 0, y: .75, z: 0}
+--- !u!1 &1067031392
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 1067031393}
+  m_Layer: 0
+  m_Name: single
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1067031393
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1067031392}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 15.0500002, y: .310000002, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 17
 --- !u!1 &1074494673
 GameObject:
   m_ObjectHideFlags: 0
@@ -4201,6 +4255,10 @@ Prefab:
       propertyPath: m_RootOrder
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 11469994, guid: 19c742b764f9b4c42b916ab361b42ba1, type: 2}
+      propertyPath: patrolPoints.Array.data[0]
+      value: 
+      objectReference: {fileID: 1067031392}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 19c742b764f9b4c42b916ab361b42ba1, type: 2}
   m_IsPrefabParent: 0
@@ -5011,11 +5069,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 498744, guid: 9dd63b744304c406e9fa563c7783e32e, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -5.13899994
+      value: 1.76999998
       objectReference: {fileID: 0}
     - target: {fileID: 498744, guid: 9dd63b744304c406e9fa563c7783e32e, type: 2}
       propertyPath: m_LocalPosition.y
-      value: .023
+      value: .0199999996
       objectReference: {fileID: 0}
     - target: {fileID: 498744, guid: 9dd63b744304c406e9fa563c7783e32e, type: 2}
       propertyPath: m_LocalPosition.z
