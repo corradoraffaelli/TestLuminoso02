@@ -45,6 +45,10 @@ public class toolSwitcher : MonoBehaviour {
 
 	//attiva la funzione per attivare il Tool, vedi classe Tool
 	void setActiveTool(int index, bool act){
+		if (act == true) {
+			if (!toolList[index].canBeActivated())
+				return;
+		}
 		toolList [index].Active(act);
 	}
 	

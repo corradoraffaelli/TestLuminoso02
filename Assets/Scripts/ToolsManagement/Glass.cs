@@ -14,7 +14,7 @@ public class Glass : MonoBehaviour
 			usable = value;
 		}
 	}
-	
+
 	public Sprite spriteObject;
 	public Sprite goodProjection;
 	public Sprite badProjection;

@@ -17,6 +17,7 @@ abstract public class Tool : MonoBehaviour {
 	//dice se è il tool momentaneamente in uso del giocatore
 	//cioè, ad esempio se sto perlomeno mirando
 	public bool active;
+	public bool activable;
 
 	//il tool può essere bloccante per il controllo del giocatore o meno
 	public bool freezingTool;
@@ -215,5 +216,8 @@ abstract public class Tool : MonoBehaviour {
 		}
 		
 	}
-
+	
+	public virtual bool canBeActivated(){
+		return true;
+	}
 }

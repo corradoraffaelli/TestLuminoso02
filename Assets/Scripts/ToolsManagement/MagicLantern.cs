@@ -48,8 +48,6 @@ public class MagicLantern : Tool {
 	bool wasGoodProjection = false;
 
 	GameObject gameObjectProjection;
-	
-	//INITIALIZATION PART------------------------------------------------------------------------------------------------------------------
 
 	protected override void initializeTool() {
 
@@ -62,24 +60,31 @@ public class MagicLantern : Tool {
 
 		PC = transform.GetComponent<ProjectionCollision>();
 
-		if (glassList.Length != 0) {
-			actualGlass = glassList [0];
-		}
-			
+		//la prima volta che attivo la lanterna, prendo il primo vetrino usabile
+		actualGlass = nextUsableGlass (true);
 	}
-
-	//UPDATING PART-------------------------------------------------------------------------------------------------------------------------
 
 	protected override void activationToolFunc()
 	{
 		//posiziono la lenterna di fronte al personaggio
 		toolGameObject.transform.position = new Vector3(player.transform.position.x+0.4f,player.transform.position.y+0.8f,player.transform.position.z);
-		Debug.Log ("attivata");
+	}
+
+	//ritorna true, solo se esiste almeno un vetrino usabile
+	public override bool canBeActivated()
+	{
+		Glass tempGlass = nextUsableGlass (true);
+		if (tempGlass != null) {
+			Debug.Log ("abilitabile");
+			return true;
+		} else {
+			Debug.Log ("non abilitabile");
+			return false;
+		}
 	}
 
 	//qui va inserita la logica del tool, usata nell'update...
 	protected override void useTool() {
-
 
 		normalMovementsUnderMouse ();
 
@@ -93,8 +98,11 @@ public class MagicLantern : Tool {
 		}
 
 		if (Input.GetKeyUp (KeyCode.E)) {
-			nextGlass();
+			actualGlass = nextUsableGlass();
 		}
+
+		glassSpriteUpdate ();
+		updateSpriteAfterChanging ();
 			
 		if (PC.isColliding() && !wasGoodProjection) {
 			switchProjection (true);
@@ -112,9 +120,27 @@ public class MagicLantern : Tool {
 	// (vedi updateSpriteAfterChanging())
 	void glassSpriteUpdate()
 	{
-		goodGlass = actualGlass.goodProjection;
-		badGlass = actualGlass.badProjection;
-		projectionSprite = actualGlass.spriteObject;
+		if (actualGlass != null) {
+			goodGlass = actualGlass.goodProjection;
+			badGlass = actualGlass.badProjection;
+			projectionSprite = actualGlass.spriteObject;
+		}
+
+	}
+
+	//funzione da chiamare per abilitare disabilitare la possibilità di usare un vetrino
+	//------!!! DA TESTARE!!!!------------------
+	public void enableGlass(int glassIndexToEnable, bool enable = true)
+	{
+		if (enable) {
+			glassList[glassIndexToEnable].usable = true;
+			actualGlass = glassList[glassIndexToEnable];
+			//glassSpriteUpdate ();
+		}else{
+			glassList[glassIndexToEnable].usable = false;
+			actualGlass = nextUsableGlass();
+			//glassSpriteUpdate ();
+		}
 	}
 
 	//passa al prossimo vetrino
@@ -126,9 +152,36 @@ public class MagicLantern : Tool {
 			glassIndex = 0;
 		}
 		actualGlass = glassList [glassIndex];
+	}
 
-		glassSpriteUpdate ();
-		updateSpriteAfterChanging ();
+	Glass nextUsableGlass(bool first = false)
+	{
+		//salvo l'indice del vetrino prima dell'incremento
+		int indexBeforeIncrement = glassIndex;
+
+		while (true) {
+			//incremento l'indice (solo se non uso il parametro first)
+			if (!first)
+			{
+				if (glassIndex < (glassList.Length-1)) {
+					glassIndex = glassIndex + 1;
+				} else {
+					glassIndex = 0;
+				}
+			}
+			first = false;
+			if (glassList[glassIndex].Usable)
+			{
+				return glassList[glassIndex];
+			}else{
+				if (glassIndex == indexBeforeIncrement)
+				{
+					return null;
+				}
+			}	
+		}
+
+		//actualGlass = glassList [glassIndex];
 	}
 
 	void updateSpriteAfterChanging()
@@ -166,6 +219,8 @@ public class MagicLantern : Tool {
 		PlayerMovements PM = player.GetComponent<PlayerMovements> ();
 		if (!PM.FacingRight) {
 			_direction = new Vector3 (-_direction.x, _direction.y,_direction.z);
+			//il cerchio e la proiezione contenuta in esso non devono flippare insieme al personaggio
+			raggio_cerchio.transform.localScale = new Vector3(-raggio_cerchio.transform.localScale.x,raggio_cerchio.transform.localScale.y,raggio_cerchio.transform.localScale.z);
 		}
 		raggio.transform.right = _direction;
 		
@@ -200,18 +255,6 @@ public class MagicLantern : Tool {
 		deleteOldProjection ();
 
 		Bounds objBounds = PC.getSpriteBounds ();
-		/*
-		gameObjectProjection = Instantiate <GameObject> (projectionPrefab);
-
-		gameObjectProjection.transform.position = new Vector3(actualMousePosition.x, actualMousePosition.y, zPositionEnvironment);
-
-		SpriteRenderer actualSprite = gameObjectProjection.transform.GetComponent<SpriteRenderer> ();
-		actualSprite.sprite = projectionSprite;
-		Bounds newObjBounds = actualSprite.bounds;
-
-		float spriteScale = objBounds.size.x / newObjBounds.size.x;
-		gameObjectProjection.transform.localScale = new Vector3 (spriteScale, spriteScale, spriteScale);
-		*/
 
 		actualGlass.projectionObject = Instantiate <GameObject> (projectionPrefab);
 		
@@ -223,6 +266,8 @@ public class MagicLantern : Tool {
 		
 		float spriteScale = objBounds.size.x / newObjBounds.size.x;
 		actualGlass.projectionObject.transform.localScale = new Vector3 (spriteScale, spriteScale, spriteScale);
+
+		actualGlass.projectionObject.SetActive (true);
 
 	}
 
