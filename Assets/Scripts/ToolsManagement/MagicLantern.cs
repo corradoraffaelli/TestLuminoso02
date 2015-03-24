@@ -19,6 +19,7 @@ public class MagicLantern : Tool {
 	public float RotationSpeed = 100;
 	public float zPositionEnvironment = 0.0f;
 	public float resizeFactor = 4.0f;
+	public float maxProjectingDistance = 8.5f;
 
 	public Sprite normalRay;
 	public Sprite normalCircle;
@@ -28,6 +29,7 @@ public class MagicLantern : Tool {
 	public Sprite goodGlass;
 	public Sprite badGlass;
 	public Sprite projectionSprite;
+	public Sprite blurredSprite;
 
 	public GameObject projectionPrefab;
 
@@ -48,6 +50,8 @@ public class MagicLantern : Tool {
 	bool wasGoodProjection = false;
 
 	GameObject gameObjectProjection;
+
+	bool tooFarFromPlayer = false;
 
 	protected override void initializeTool() {
 
@@ -93,7 +97,7 @@ public class MagicLantern : Tool {
 
 		if (Input.GetMouseButtonUp (0)) {
 			changeRaySprite (false);
-			if (PC.isColliding())
+			if (PC.isColliding() && !verifyIfTooFar ())
 				placeImage();
 		}
 
@@ -112,7 +116,20 @@ public class MagicLantern : Tool {
 			wasGoodProjection = false;
 		}
 
+		//Debug.Log (verifyIfTooFar ());
+		if (verifyIfTooFar())
+			PC.changeSprite (blurredSprite);
+	}
 
+	bool verifyIfTooFar()
+	{
+		Vector3 pos_cursor = raggio_cerchio.transform.position;
+		Vector3 pos_player = player.transform.position;
+		float distance = Vector3.Distance (pos_player, pos_cursor);
+		if (Mathf.Abs (distance) > maxProjectingDistance)
+			return true;
+		else
+			return false;
 	}
 
 	//funzione per aggiornare le variabili contenenti le sprites
@@ -124,6 +141,7 @@ public class MagicLantern : Tool {
 			goodGlass = actualGlass.goodProjection;
 			badGlass = actualGlass.badProjection;
 			projectionSprite = actualGlass.spriteObject;
+			blurredSprite = actualGlass.blurredProjection;
 		}
 
 	}
