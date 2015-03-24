@@ -68,7 +68,8 @@ public class basicAIEnemyV4 : MonoBehaviour {
 	public LayerMask targetLayers;
 	public LayerMask fleeLayer;
 	public LayerMask hidingLayer;
-	
+	public LayerMask cloneLayer;
+
 	//DEBUG VARIABLES
 	bool DEBUG_PHASE_BASIC = false;
 	bool DEBUG_PHASE_WEIRD = false;
@@ -149,6 +150,7 @@ public class basicAIEnemyV4 : MonoBehaviour {
 	float tToReturnFromStunned = 4.0f;
 	//bool autoDestroy = false;
 	//sotto caso freezed----------------------
+
 	PhysicsMaterial2D myPhysicsMat;
 	GameObject myToStun;
 
@@ -177,7 +179,7 @@ public class basicAIEnemyV4 : MonoBehaviour {
 	
 	// Use this for initialization
 	void Start () {
-		Time.timeScale = 0.2f;
+		//Time.timeScale = 0.2f;
 		//c2d = GetComponent<controller2DV2> ();
 		pm = GetComponent<PlayerMovements> ();
 		eMS = enemyMachineState.Patrol;
@@ -2253,7 +2255,62 @@ public class basicAIEnemyV4 : MonoBehaviour {
 		
 	}
 
+	//FUNZIONI VARIE--------------------------------------------------------------------------------------------------------------------------
+	//----------------------------------------------------------------------------------------------------------------------------------------
 
+
+	private int convertBinToDec(int binintval) {
+		
+		switch (binintval) {
+			
+		case 256 :
+			return 8;
+			break;
+			
+		case 512 :
+			return 9;
+			break;
+			
+		case 1024 :
+			return 10;
+			break;
+			
+		case 2048 :
+			return 11;
+			break;
+			
+		case 4096 :
+			return 12;
+			break;
+			
+		case 8192 :
+			return 13;
+			break;
+			
+		case 16384 :
+			return 14;
+			break;
+			
+		case 32768 :
+			return 15;				
+			break;
+			
+		case 65536 :
+			return 16;
+			break;
+			
+		case 131072 :
+			return 17;
+			break;
+			
+		default :
+				break;
+				
+		}
+		return 0;
+	}
+	
+	
 	//FUNZIONI PUBBLICHE INVOCATE DALL'ESTERNO------------------------------------------------------------------------------------------------
 	//----------------------------------------------------------------------------------------------------------------------------------------
 
@@ -2299,9 +2356,13 @@ public class basicAIEnemyV4 : MonoBehaviour {
 
 	}
 
+
+
 	private void handleFreezingClone() {
 
-		gameObject.layer = 17;
+		gameObject.layer = convertBinToDec(cloneLayer.value);
+
+		//Debug.Log ("valore " + cloneLayer.value + " " + convertBinToDec(cloneLayer.value));
 		
 		foreach(Transform child in transform) {
 			

@@ -13,7 +13,6 @@ public class photoGun : Tool {
 	public GameObject detectedEnemies;
 	//public ArrayList detectedEnemies;
 	public LayerMask enemiesLayer;
-	public LayerMask cloneLayer;
 	bool inAction = false;
 
 	protected override void initializeTool() {
