@@ -8,15 +8,14 @@ public class MagicLantern : Tool {
 
 	public Glass[] glassList;
 	int glassIndex = 0;
-	public Glass actualGlass;
+	Glass actualGlass;
 
 	//public GameObject glasses;
 	public GameObject raggio_cerchio;
 	public GameObject raggio;
 	public GameObject cameraPoint;
 	public GameObject camera;
-	
-	public float RotationSpeed = 100;
+
 	public float zPositionEnvironment = 0.0f;
 	public float resizeFactor = 4.0f;
 	public float maxProjectingDistance = 8.5f;
@@ -26,16 +25,15 @@ public class MagicLantern : Tool {
 	public Sprite pressedRay;
 	public Sprite pressedCircle;
 
-	public Sprite goodGlass;
-	public Sprite badGlass;
-	public Sprite projectionSprite;
-	public Sprite blurredSprite;
+	Sprite goodGlass;
+	Sprite badGlass;
+	Sprite projectionSprite;
+	Sprite blurredSprite;
 
 	public GameObject projectionPrefab;
 
 	Vector3 cameraPointPos;
 	Vector3 _direction;
-	float distance_to_screen;
 	Vector3 pos_move;
 
 	//grandezza della sprite con il raggio
@@ -49,19 +47,18 @@ public class MagicLantern : Tool {
 	ProjectionCollision PC;
 	bool wasGoodProjection = false;
 
-	GameObject gameObjectProjection;
-
-	bool tooFarFromPlayer = false;
+	//--------INITIALIZATION AND ACTIVATION-------------------------------------
 
 	protected override void initializeTool() {
-
-		boundsRay = raggio.GetComponent<SpriteRenderer>().bounds;
-		xSize = boundsRay.size.x;
-		ySize = boundsRay.size.y;
-
+		//componenti Sprite Renderer del raggio
 		spRendRay = raggio.GetComponent<SpriteRenderer> ();
 		spRendCircle = raggio_cerchio.GetComponent<SpriteRenderer> ();
 
+		boundsRay = spRendRay.bounds;
+		xSize = boundsRay.size.x;
+		ySize = boundsRay.size.y;
+
+		//lo script ProjectionCollision si occupa di controllare che la proiezione collida con i muri
 		PC = transform.GetComponent<ProjectionCollision>();
 
 		//la prima volta che attivo la lanterna, prendo il primo vetrino usabile
@@ -71,6 +68,7 @@ public class MagicLantern : Tool {
 	protected override void activationToolFunc()
 	{
 		//posiziono la lenterna di fronte al personaggio
+		//!!!!!!--------------DA CONTROLLARE!!!!-------- probabilmente basta settare la lanterna come figlio del player nella giusta posizione
 		toolGameObject.transform.position = new Vector3(player.transform.position.x+0.4f,player.transform.position.y+0.8f,player.transform.position.z);
 	}
 
@@ -79,35 +77,43 @@ public class MagicLantern : Tool {
 	{
 		Glass tempGlass = nextUsableGlass (true);
 		if (tempGlass != null) {
-			Debug.Log ("abilitabile");
 			return true;
 		} else {
-			Debug.Log ("non abilitabile");
 			return false;
 		}
 	}
 
+	//--------------------UPDATE---------------------------
+
 	//qui va inserita la logica del tool, usata nell'update...
 	protected override void useTool() {
 
+		//movimenti del raggio e della proiezione sotto al mouse
 		normalMovementsUnderMouse ();
 
+		//se il mouse è tenuto premuto, cambia la sprite del raggio
 		if (usingDrag)
 			changeRaySprite (true);
 
+		//quando si rilascia il mouse, viene proiettato l'oggetto, se le condizioni sono soddisfatte
 		if (Input.GetMouseButtonUp (0)) {
 			changeRaySprite (false);
 			if (PC.isColliding() && !verifyIfTooFar ())
 				placeImage();
 		}
 
+		//DEBUG: se si preme E, si passa al prossimo vetrino
 		if (Input.GetKeyUp (KeyCode.E)) {
 			actualGlass = nextUsableGlass();
 		}
 
+		//si aggiornano le sprites del vetrino
+		//viene fatto ad ogni update, da verificare se troppo pesante, precedentemente queste funzioni erano poste in modo più intelligente,
+		//sono state inserite nell'update per semplificare
 		glassSpriteUpdate ();
 		updateSpriteAfterChanging ();
 			
+		//switch delle sprite nel caso la proiezione si trovi o meno su un muro adatto
 		if (PC.isColliding() && !wasGoodProjection) {
 			switchProjection (true);
 			wasGoodProjection = true;
@@ -116,11 +122,12 @@ public class MagicLantern : Tool {
 			wasGoodProjection = false;
 		}
 
-		//Debug.Log (verifyIfTooFar ());
+		//switch delle sprite nel caso la proiezione si trovi o meno troppo lontano dal player
 		if (verifyIfTooFar())
 			PC.changeSprite (blurredSprite);
 	}
 
+	//verifica se la proiezione è troppo lontana dal player
 	bool verifyIfTooFar()
 	{
 		Vector3 pos_cursor = raggio_cerchio.transform.position;
@@ -146,62 +153,7 @@ public class MagicLantern : Tool {
 
 	}
 
-	//funzione da chiamare per abilitare disabilitare la possibilità di usare un vetrino
-	//------!!! DA TESTARE!!!!------------------
-	public void enableGlass(int glassIndexToEnable, bool enable = true)
-	{
-		if (enable) {
-			glassList[glassIndexToEnable].usable = true;
-			actualGlass = glassList[glassIndexToEnable];
-			//glassSpriteUpdate ();
-		}else{
-			glassList[glassIndexToEnable].usable = false;
-			actualGlass = nextUsableGlass();
-			//glassSpriteUpdate ();
-		}
-	}
-
-	//passa al prossimo vetrino
-	void nextGlass()
-	{
-		if (glassIndex < (glassList.Length-1)) {
-			glassIndex = glassIndex + 1;
-		} else {
-			glassIndex = 0;
-		}
-		actualGlass = glassList [glassIndex];
-	}
-
-	Glass nextUsableGlass(bool first = false)
-	{
-		//salvo l'indice del vetrino prima dell'incremento
-		int indexBeforeIncrement = glassIndex;
-
-		while (true) {
-			//incremento l'indice (solo se non uso il parametro first)
-			if (!first)
-			{
-				if (glassIndex < (glassList.Length-1)) {
-					glassIndex = glassIndex + 1;
-				} else {
-					glassIndex = 0;
-				}
-			}
-			first = false;
-			if (glassList[glassIndex].Usable)
-			{
-				return glassList[glassIndex];
-			}else{
-				if (glassIndex == indexBeforeIncrement)
-				{
-					return null;
-				}
-			}	
-		}
-
-		//actualGlass = glassList [glassIndex];
-	}
-
+	//fa l'update delle sprites della proiezione, a seconda che questa si trovi o meno in corrispondenza di un muro
 	void updateSpriteAfterChanging()
 	{
 		if (PC.isColliding ()) {
@@ -211,8 +163,9 @@ public class MagicLantern : Tool {
 		}
 	}
 
+	//movimenti del raggio e della proiezione in relazione alla posizione del player e del cursore
 	void normalMovementsUnderMouse(){
-
+		
 		//posiziono la lenterna di fronte al personaggio (ora non serve, la lanterna è "child" del player, da verificare la correttezza della cosa
 		//toolGameObject.transform.position = new Vector3(player.transform.position.x+0.4f,player.transform.position.y+0.8f,player.transform.position.z);
 		
@@ -247,7 +200,7 @@ public class MagicLantern : Tool {
 			camera.transform.localEulerAngles = new Vector3 (raggio.transform.localEulerAngles.x, raggio.transform.localEulerAngles.x, (raggio.transform.localEulerAngles.z-360) / 2);
 		else
 			camera.transform.localEulerAngles = new Vector3 (raggio.transform.localEulerAngles.x, raggio.transform.localEulerAngles.x, raggio.transform.localEulerAngles.z / 2);
-
+		
 		//test flipping personaggio
 		//flippa se il raggio punta dietro al personaggio
 		if ((PM.FacingRight && raggio_cerchio.transform.position.x < player.transform.position.x)
@@ -255,7 +208,66 @@ public class MagicLantern : Tool {
 			PM.c_flip ();
 	}
 
-	//cambia la sprite del raggio
+	//funzione da chiamare per abilitare disabilitare la possibilità di usare un vetrino
+	//------!!! DA TESTARE!!!!------------------
+	public void enableGlass(int glassIndexToEnable, bool enable = true)
+	{
+		if (enable) {
+			glassList[glassIndexToEnable].usable = true;
+			actualGlass = glassList[glassIndexToEnable];
+			//glassSpriteUpdate ();
+		}else{
+			glassList[glassIndexToEnable].usable = false;
+			actualGlass = nextUsableGlass();
+			//glassSpriteUpdate ();
+		}
+	}
+
+	//passa al prossimo vetrino (ORA INUTILIZZATA)
+	void nextGlass()
+	{
+		if (glassIndex < (glassList.Length-1)) {
+			glassIndex = glassIndex + 1;
+		} else {
+			glassIndex = 0;
+		}
+		actualGlass = glassList [glassIndex];
+	}
+
+	//ritorna il prossimo vetrino usabile, se first è abilitato, ritorna il prossimo, a partire da quello attuale (utile per primo avvio)
+	Glass nextUsableGlass(bool first = false)
+	{
+		//salvo l'indice del vetrino prima dell'incremento
+		int indexBeforeIncrement = glassIndex;
+
+		while (true) {
+			//incremento l'indice (solo se non uso il parametro first)
+			if (!first)
+			{
+				if (glassIndex < (glassList.Length-1)) {
+					glassIndex = glassIndex + 1;
+				} else {
+					glassIndex = 0;
+				}
+			}
+			first = false;
+			if (glassList[glassIndex].Usable)
+			{
+				return glassList[glassIndex];
+			}else{
+				if (glassIndex == indexBeforeIncrement)
+				{
+					return null;
+				}
+			}	
+		}
+	}
+
+
+
+
+
+	//cambia la sprite del raggio, se needToChangeSprite è true, imposta la sprite più "visibile"
 	void changeRaySprite(bool needToChangeSprite)
 	{
 		if (needToChangeSprite) {
@@ -289,19 +301,19 @@ public class MagicLantern : Tool {
 
 	}
 
+	//cancella il vecchio oggetto instanziato
 	void deleteOldProjection()
 	{
 		if (actualGlass.projectionObject)
 			Destroy (actualGlass.projectionObject);
 	}
 
+	//cambia la sprite della proiezione, se good = true imposta la sprite utile a comprendere che è possibile proiettare e quindi creare l'oggetto
 	void switchProjection(bool good)
 	{
 		if (good)
 			PC.changeSprite (goodGlass);
 		else
 			PC.changeSprite (badGlass);
-
-		Debug.Log ("cambiata sprite");
 	}
 }

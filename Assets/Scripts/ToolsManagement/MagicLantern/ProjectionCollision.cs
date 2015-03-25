@@ -15,8 +15,8 @@ public class ProjectionCollision : MonoBehaviour {
 	Bounds objBounds;
 	
 	//----DEBUG
-	public GameObject cubo1;
-	public GameObject cubo2;
+	//public GameObject cubo1;
+	//public GameObject cubo2;
 
 	void Update()
 	{
@@ -27,23 +27,24 @@ public class ProjectionCollision : MonoBehaviour {
 
 		colliding = false;
 
+		//per ogni oggetto di tipo "ProjectingWall" controlla se la sprite è interna o meno
 		foreach (GameObject wallObject in wallObjects) {
 			wallBounds = wallObject.GetComponent<BoxCollider2D>().bounds;
 			if (collisionTest(wallBounds,objBounds))
 			{
 				colliding = true;
 				colliderObject = wallObject;
-				//Debug.Log ("collidendo");
 				break;
 			}
 		} 
 
 		//-----------------DEBUG--------------------
-		Vector3 center = projectionObject.transform.position;
-		cubo1.transform.position = new Vector3 (center.x - objBounds.extents.x , center.y - objBounds.extents.y , 0.0f);
-		cubo2.transform.position = new Vector3 (center.x + objBounds.extents.x , center.y + objBounds.extents.y , 0.0f);
+		//Vector3 center = projectionObject.transform.position;
+		//cubo1.transform.position = new Vector3 (center.x - objBounds.extents.x , center.y - objBounds.extents.y , 0.0f);
+		//cubo2.transform.position = new Vector3 (center.x + objBounds.extents.x , center.y + objBounds.extents.y , 0.0f);
 	}
 
+	//ritorna true se un oggetto di tipo bounds è contenuto in un altro
 	bool collisionTest (Bounds outBounds, Bounds inBounds)
 	{
 		Vector3 center = projectionObject.transform.position;

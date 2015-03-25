@@ -21,6 +21,7 @@ public class Glass : MonoBehaviour
 	public Sprite blurredProjection;
 	public string glassType;
 
+	//oggetto proiettato ddal vetrino, public perché deve essere usato dallo script della lanterna
 	public GameObject projectionObject;
 }
 
