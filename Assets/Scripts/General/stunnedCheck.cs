@@ -41,7 +41,7 @@ public class stunnedCheck : MonoBehaviour {
 
 				if (c.gameObject.tag=="Stunning") {
 					
-					Debug.Log("woooooooooooooooooooooow" + c.gameObject.name + c.gameObject.transform.parent.gameObject.name);
+					//Debug.Log("woooooooooooooooooooooow" + c.gameObject.name + c.gameObject.transform.parent.gameObject.name);
 					transform.parent.SendMessage ("setStunned", true);
 
 				} 

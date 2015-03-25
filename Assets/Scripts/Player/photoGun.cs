@@ -53,7 +53,7 @@ public class photoGun : Tool {
 			if(Time.time -tStartShoot > tShoot) {
 				//tempo di cattura finito
 
-				Debug.Log ("finishhhhhhhhh");
+				//Debug.Log ("finishhhhhhhhh");
 				shooting = false;
 				countFrames = 0;
 				inAction = false;
@@ -130,7 +130,7 @@ public class photoGun : Tool {
 
 			}
 			*/
-			Debug.Log("ho beccato" + c.gameObject.name);
+			//Debug.Log("ho beccato" + c.gameObject.name);
 			if(detectedEnemies != null)
 				return;
 

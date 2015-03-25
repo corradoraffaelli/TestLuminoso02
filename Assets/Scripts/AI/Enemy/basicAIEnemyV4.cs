@@ -58,7 +58,7 @@ public class basicAIEnemyV4 : MonoBehaviour {
 		NoJumpNoChase,//fa solo patrol
 		NoJumpSoftChase,//non si allontana troppo dai punti di patrol
 		NoJumpHeavyChase,//si allontana fin dove può dai punti di patrol
-		HeavyChase,
+		HeavyChase,//come precedente, ma può pure saltare (non implementato)
 	}
 	public enemyType eType;
 	
@@ -78,18 +78,6 @@ public class basicAIEnemyV4 : MonoBehaviour {
 	public Sprite []statusSprites;
 	GameObject statusImg;
 	public GameObject pointPrefab;
-	
-	//GESTIONE COMPORTAMENTO
-	/*
-	private Personality myPers;
-	public int behavior = 1;
-	public int suspiciousness = 0;
-	public int senses = 0;
-
-	private ArrayList myPriors;
-	*/
-	
-	
 
 	//Gestione import di oggetti vari------------------------------------------------------------------
 	//controller2DV2 c2d;
@@ -103,9 +91,9 @@ public class basicAIEnemyV4 : MonoBehaviour {
 	public GameObject []patrolPoints;
 	public GameObject[]patrolSuspiciousPoints;
 	float suspiciousStartTime = 0.0f;
-	float countDownSuspicious = 7.0f;
-	float suspPointReachedTime = 0.0f;
-	float countDownSingleSuspPoint = 2.0f;
+	float countDown_Suspicious = 7.0f;
+	float suspPoint_ReachedTime = 0.0f;
+	float countDown_SingleSuspPoint = 2.0f;
 	float thresholdNearSuspPoint = 1.0f;
 	bool suspicious = false;
 	
@@ -131,7 +119,8 @@ public class basicAIEnemyV4 : MonoBehaviour {
 	//Gestione attack----------------------------------------------------------------------------------
 	float tLastAttack = 0.0f;
 	float tBetweenAttacks = 1.0f;
-	float thresholdNear = 1.4f;
+	//public float thresholdNear = 1.4f;
+	bool targetNearCheck = false;
 	float marginAtChThreshold = 0.06f;//ex. 0.3f
 
 	bool isPlayerStunned = false;
@@ -186,7 +175,7 @@ public class basicAIEnemyV4 : MonoBehaviour {
 		//originalHDifferenceWithTarget = thresholdHeightDifference;
 		
 		getGroundCheck ();
-		
+
 		checkPatrolPoints ();
 		
 		checkSuspPoints ();
@@ -204,6 +193,7 @@ public class basicAIEnemyV4 : MonoBehaviour {
 		//myPers = new Personality (this.behavior, this.suspiciousness, this.senses);
 		//myPriors = new ArrayList ();
 	}
+	
 
 	private void getMyToStun() {
 
@@ -341,14 +331,47 @@ public class basicAIEnemyV4 : MonoBehaviour {
 			}
 			
 		}
+	
+	}
+
+	private bool getRangeOfView(){
+
+		GameObject range = null;
+
+		foreach (Transform child in transform) {
+			if(child.gameObject.name=="RangeOfView") {
+				range = child.gameObject;
+			}
 		
+		}
+		
+		if (range != null) {
+			
+			frontalDistanceOfView = range.transform.localPosition.x * Mathf.Abs( transform.localScale.x );
+			//Debug.Log("variabili " + range.transform.localPosition.x);
+			return true;
+
+		}
+		else {
+
+			return false;
+
+		}
+
 	}
 	
 	private void normalizeSpatialVariables(){
 		
 		//Gestione raycast target------------------------------------
-		
-		frontalDistanceOfView = frontalDistanceOfView * Mathf.Abs(transform.localScale.x);
+
+
+		 if(!getRangeOfView()) {
+			Debug.Log ("Oggetto 'RangeOfView' non assegnato!!");
+			frontalDistanceOfView = frontalDistanceOfView * Mathf.Abs(transform.localScale.x);
+
+		}
+
+
 		backDistanceOfView = backDistanceOfView * Mathf.Abs(transform.localScale.x);
 		
 		//Gestione jump------------------------------------------------------------------------------------
@@ -359,9 +382,9 @@ public class basicAIEnemyV4 : MonoBehaviour {
 		
 		//Gestione attack----------------------------------------------------------------------------------
 		
-		thresholdNear = thresholdNear * Mathf.Abs(transform.localScale.x);
+		//thresholdNear = thresholdNear * Mathf.Abs(transform.localScale.x) * 0.5f;
 		marginAtChThreshold = marginAtChThreshold * Mathf.Abs(transform.localScale.x);
-		
+
 		//Gestione fleeing---------------------------------------------------------------------------------
 		
 		securityDistanceFleeing = securityDistanceFleeing * Mathf.Abs(transform.localScale.x);
@@ -749,7 +772,7 @@ public class basicAIEnemyV4 : MonoBehaviour {
 		
 		initializeStunned ();
 
-		Debug.Log ("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+		//Debug.Log ("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
 		
 	}
 	
@@ -1203,14 +1226,19 @@ public class basicAIEnemyV4 : MonoBehaviour {
 		}
 
 		if (changeDir) {
-			Debug.Log("ci sono riuscito");
+			//Debug.Log("ci sono riuscito");
 			if(pm.FacingRight) {
 				patrolledTarget = patrolPoints[0].transform;
-				Debug.Log("cerco sx");
+				//Debug.Log("cerco sx");
 			}
 			else {
-				patrolledTarget = patrolPoints[1].transform;
-				Debug.Log("cerco dx");
+				//dovrei impostare il patrol point destro, ma se
+				//non è assegnato, punto al primo
+				if(patrolPoints.Length>1)
+					patrolledTarget = patrolPoints[1].transform;
+				else
+					patrolledTarget = patrolPoints[0].transform;
+				//Debug.Log("cerco dx");
 			}
 			patrollingTowardAPoint = true;
 			setTargetAStar (patrolledTarget.gameObject);
@@ -1522,7 +1550,7 @@ public class basicAIEnemyV4 : MonoBehaviour {
 		else {
 			//go toward next point
 			
-			if(Time.time > suspiciousStartTime + countDownSuspicious) {
+			if(Time.time > suspiciousStartTime + countDown_Suspicious) {
 				//se è passato abbastanza tempo, torno al normale patrol
 				
 				makeSubPatrolStateTransition("normal");
@@ -1538,7 +1566,7 @@ public class basicAIEnemyV4 : MonoBehaviour {
 					//if we are really near, we'll set next point to patrol
 					
 					if(reacheadOneSuspPoint) {
-						if(Time.time > suspPointReachedTime + countDownSingleSuspPoint) {
+						if(Time.time > suspPoint_ReachedTime + countDown_SingleSuspPoint) {
 							//se sto abbastanza tempo, cambio punto
 							searchNextPatrollingPoint(true);
 							reacheadOneSuspPoint = false;
@@ -1551,7 +1579,7 @@ public class basicAIEnemyV4 : MonoBehaviour {
 					}
 					else {
 						reacheadOneSuspPoint = true;
-						suspPointReachedTime = Time.time;
+						suspPoint_ReachedTime = Time.time;
 					}
 					
 				}
@@ -1602,15 +1630,18 @@ public class basicAIEnemyV4 : MonoBehaviour {
 	
 	//per capire quando iniziare ad attaccare
 	private bool isTargetNear(float dist) {
-		
+
+		return targetNearCheck;
+		/*
 		if (dist < thresholdNear - 0.3f) {
-			Debug.Log ("PASSO ALL'ATTACCO");
+			//Debug.Log ("PASSO ALL'ATTACCO");
 			return true;
 		}
 		else {
 			return false;
 			
 		}
+		*/
 		
 	}
 	
@@ -1696,7 +1727,9 @@ public class basicAIEnemyV4 : MonoBehaviour {
 	//se si allontana un po dobbiamo inseguirlo di nuovo e quindi ritornare
 	//allo stato chasing
 	private bool isTargetNotNear(float dist) {
-		
+
+		return !targetNearCheck;
+		/*
 		if (dist > thresholdNear) {
 			return true;
 			
@@ -1705,6 +1738,7 @@ public class basicAIEnemyV4 : MonoBehaviour {
 			return false;
 			
 		}
+		*/
 	}
 	
 	private enemyMachineState isStoppedAttack() {
@@ -2373,8 +2407,10 @@ public class basicAIEnemyV4 : MonoBehaviour {
 		
 		GetComponent<Rigidbody2D> ().velocity = new Vector2 (0.0f, 0.0f);
 		GetComponent<Rigidbody2D> ().isKinematic = true;
-		
-		GetComponent<autoDestroy>().enabled = true;
+
+		gameObject.AddComponent<autoDestroy> ();
+
+		//GetComponent<autoDestroy>().enabled = true;
 
 		GetComponent<BoxCollider2D>().sharedMaterial = GetComponent<CircleCollider2D>().sharedMaterial;
 		GetComponent<BoxCollider2D>().enabled = false;
@@ -2387,7 +2423,7 @@ public class basicAIEnemyV4 : MonoBehaviour {
 	public void c_freeze_ai(bool clone = false) {
 		
 		if (!clone) {
-			Debug.Log ("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb");
+			//Debug.Log ("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb");
 
 			//freezedByGun = true;
 			handleFreezing(true);
@@ -2409,7 +2445,7 @@ public class basicAIEnemyV4 : MonoBehaviour {
 	public void playerStunned(bool a) {
 
 		if (a) {
-			Debug.Log ("colpito");
+			//Debug.Log ("colpito");
 			switch(eType) {
 
 			case enemyType.NoJumpNoChase :
@@ -2420,6 +2456,12 @@ public class basicAIEnemyV4 : MonoBehaviour {
 				break;
 			}
 		}
+
+	}
+
+	public void c_targetNear(bool n) {
+
+		this.targetNearCheck = n;
 
 	}
 	
