@@ -112,7 +112,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 126976}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.76999998, y: .0199999996, z: 0}
+  m_LocalPosition: {x: 8.96000004, y: .0199999996, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 475474}
@@ -227,9 +227,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5675304ff344eb3409dac57d91b4ec93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  onGround: 0
   speedFactor: 5
   jumpFactor: 3
-  forceOnAirFactor: 10
+  forceOnAirFactor: 14
   LadderLateralLimit: .300000012
   onLadderMovement: .100000001
   fromLadderForce: 100
@@ -238,7 +239,7 @@ MonoBehaviour:
   GroundCheckBottomRight: {fileID: 475474}
   GroundLayers:
     serializedVersion: 2
-    m_Bits: 768
+    m_Bits: 140032
 --- !u!212 &21286792
 SpriteRenderer:
   m_ObjectHideFlags: 1
