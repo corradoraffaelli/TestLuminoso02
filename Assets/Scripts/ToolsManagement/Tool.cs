@@ -30,10 +30,10 @@ abstract public class Tool : MonoBehaviour {
 	protected int subToolActiveIndex;
 
 	//riferimento al player
-	public GameObject player;
+	protected GameObject player;
 
 	//possibile riferimento ad un gameobject che rappresenta il mio tool
-	public GameObject toolGameObject;
+	protected GameObject toolGameObject;
 
 	public enum toolType {
 		oneClick,
@@ -59,6 +59,7 @@ abstract public class Tool : MonoBehaviour {
 	
 	// Use this for initialization
 	void Start () {
+		player = GameObject.FindGameObjectWithTag ("Player");
 		initializeTool ();
 	}
 

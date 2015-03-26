@@ -3,7 +3,7 @@ using System.Collections;
 
 public class ProjectionCollision : MonoBehaviour {
 
-	public GameObject projectionObject;
+	GameObject projectionObject;
 
 	GameObject colliderObject;
 	bool colliding = false;
@@ -67,6 +67,11 @@ public class ProjectionCollision : MonoBehaviour {
 		BoxCollider2D newBC;
 		newBC = projectionObject.gameObject.AddComponent<BoxCollider2D>() as BoxCollider2D;
 		newBC.isTrigger = true;
+	}
+
+	public void setProjectionObject(GameObject projObj)
+	{
+		projectionObject = projObj;
 	}
 
 	public void changeSprite(Sprite sprite)

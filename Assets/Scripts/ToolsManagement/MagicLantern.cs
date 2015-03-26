@@ -11,10 +11,14 @@ public class MagicLantern : Tool {
 	Glass actualGlass;
 
 	//public GameObject glasses;
-	public GameObject raggio_cerchio;
-	public GameObject raggio;
-	public GameObject cameraPoint;
-	public GameObject camera;
+	GameObject raggio_cerchio;
+	GameObject raggio;
+	GameObject cameraPoint;
+	GameObject camera;
+	GameObject projectionObject;
+
+	public LayerMask toChase;
+	public LayerMask hiding;
 
 	public float zPositionEnvironment = 0.0f;
 	public float resizeFactor = 4.0f;
@@ -31,6 +35,8 @@ public class MagicLantern : Tool {
 	Sprite blurredSprite;
 
 	public GameObject projectionPrefab;
+
+	public bool collidingWall = false;
 
 	Vector3 cameraPointPos;
 	Vector3 _direction;
@@ -50,19 +56,55 @@ public class MagicLantern : Tool {
 	//--------INITIALIZATION AND ACTIVATION-------------------------------------
 
 	protected override void initializeTool() {
+		//lo script ProjectionCollision si occupa di controllare che la proiezione collida con i muri
+		PC = transform.GetComponent<ProjectionCollision>();
+
+		foreach (Transform child in player.transform) {
+			if (child.name == "MagicLantern") {
+				toolGameObject = child.gameObject;
+				break;
+			}
+		}
+
+
+		//la prima volta che attivo la lanterna, prendo il primo vetrino usabile
+		//actualGlass = nextUsableGlass (true);
+		foreach (Transform child in toolGameObject.transform) {
+			if (child.name == "Proiettore")
+			{
+				camera = child.gameObject;
+				foreach (Transform subChild in child.transform) {
+					if (subChild.name == "Proiettore_punta")
+					{
+						cameraPoint = subChild.gameObject;
+					}
+				}
+			}else if(child.name == "raggio"){
+				raggio = child.gameObject;
+			}else if (child.name == "raggio_cerchio"){
+				raggio_cerchio = child.gameObject;
+				foreach (Transform subChild in child.transform) {
+					if (subChild.name == "ProjectedObject")
+					{
+						projectionObject = subChild.gameObject;
+					}
+				}
+			}
+		}
+
 		//componenti Sprite Renderer del raggio
 		spRendRay = raggio.GetComponent<SpriteRenderer> ();
 		spRendCircle = raggio_cerchio.GetComponent<SpriteRenderer> ();
-
+		
 		boundsRay = spRendRay.bounds;
 		xSize = boundsRay.size.x;
 		ySize = boundsRay.size.y;
 
-		//lo script ProjectionCollision si occupa di controllare che la proiezione collida con i muri
-		PC = transform.GetComponent<ProjectionCollision>();
+		PC.setProjectionObject(projectionObject);
 
-		//la prima volta che attivo la lanterna, prendo il primo vetrino usabile
-		//actualGlass = nextUsableGlass (true);
+
+
+
 	}
 
 	protected override void activationToolFunc()
@@ -96,15 +138,20 @@ public class MagicLantern : Tool {
 		normalMovementsUnderMouse ();
 
 		//se il mouse è tenuto premuto, cambia la sprite del raggio
+		/*
 		if (usingDrag)
 			changeRaySprite (true);
 
+
+
+
 		//quando si rilascia il mouse, viene proiettato l'oggetto, se le condizioni sono soddisfatte
-		if (Input.GetMouseButtonUp (0)) {
+		if (Input.GetMouseButton (0)) {
 			changeRaySprite (false);
 			if (PC.isColliding() && !verifyIfTooFar ())
 				placeImage();
 		}
+		*/
 
 		//DEBUG: se si preme E, si passa al prossimo vetrino
 		if (Input.GetKeyUp (KeyCode.E)) {
@@ -115,9 +162,10 @@ public class MagicLantern : Tool {
 		//viene fatto ad ogni update, da verificare se troppo pesante, precedentemente queste funzioni erano poste in modo più intelligente,
 		//sono state inserite nell'update per semplificare
 		glassSpriteUpdate ();
-		updateSpriteAfterChanging ();
+		//updateSpriteAfterChanging ();
 			
 		//switch delle sprite nel caso la proiezione si trovi o meno su un muro adatto
+		/*
 		if (PC.isColliding() && !wasGoodProjection) {
 			switchProjection (true);
 			wasGoodProjection = true;
@@ -129,6 +177,44 @@ public class MagicLantern : Tool {
 		//switch delle sprite nel caso la proiezione si trovi o meno troppo lontano dal player
 		if (verifyIfTooFar())
 			PC.changeSprite (blurredSprite);
+		*/
+
+		projectionObject.layer = convertBinToDec(hiding.value);
+
+		if (!PC.isColliding ()) {
+			collidingWall = false;
+			changeRayAndCircleSprites (normalRay, normalCircle);
+			changeProjectionSprite (null);
+		} else if (PC.isColliding () && verifyIfTooFar ()) {
+			changeRayAndCircleSprites (pressedRay, pressedCircle);
+			changeProjectionSprite (blurredSprite);
+			collidingWall = true;
+			//se la proiezione è OK
+		} else if (PC.isColliding () && !verifyIfTooFar ()) {
+			changeRayAndCircleSprites (pressedRay, pressedCircle);
+			changeProjectionSprite (projectionSprite);
+			collidingWall = true;
+			if (actualGlass.attractor)
+			{
+				projectionObject.layer = convertBinToDec(toChase.value);
+			}
+		}
+
+		if (actualGlass.canInstantiateObj) {
+			if (actualGlass.controlIfOverlap (projectionObject.GetComponent<SpriteRenderer> ().bounds))
+				placeImage ();
+		}
+	}
+
+	void changeRayAndCircleSprites(Sprite RaySprite, Sprite CircleSprite)
+	{
+		spRendRay.sprite = RaySprite;
+		spRendCircle.sprite = CircleSprite;
+	}
+
+	void changeProjectionSprite(Sprite neoProjectionSprite)
+	{
+		PC.changeSprite (neoProjectionSprite);
 	}
 
 	//verifica se la proiezione è troppo lontana dal player
@@ -269,9 +355,6 @@ public class MagicLantern : Tool {
 	}
 
 
-
-
-
 	//cambia la sprite del raggio, se needToChangeSprite è true, imposta la sprite più "visibile"
 	void changeRaySprite(bool needToChangeSprite)
 	{
@@ -282,6 +365,11 @@ public class MagicLantern : Tool {
 			spRendRay.sprite = normalRay;
 			spRendCircle.sprite = normalCircle;
 		}
+	}
+
+	void useObjectSprite(bool useObjectOrNot)
+	{
+		//projectionSprite = 
 	}
 
 	//istanzia un nuovo oggetto di tipo "Projection" una volta che si clicca sulla posizione voluta
@@ -320,5 +408,56 @@ public class MagicLantern : Tool {
 			PC.changeSprite (goodGlass);
 		else
 			PC.changeSprite (badGlass);
+	}
+
+	private int convertBinToDec(int binintval) {
+		
+		switch (binintval) {
+			
+		case 256 :
+			return 8;
+			break;
+			
+		case 512 :
+			return 9;
+			break;
+			
+		case 1024 :
+			return 10;
+			break;
+			
+		case 2048 :
+			return 11;
+			break;
+			
+		case 4096 :
+			return 12;
+			break;
+			
+		case 8192 :
+			return 13;
+			break;
+			
+		case 16384 :
+			return 14;
+			break;
+			
+		case 32768 :
+			return 15;				
+			break;
+			
+		case 65536 :
+			return 16;
+			break;
+			
+		case 131072 :
+			return 17;
+			break;
+			
+		default :
+			break;
+			
+		}
+		return 0;
 	}
 }

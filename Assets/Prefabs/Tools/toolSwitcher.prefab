@@ -1,0 +1,235 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &111878
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 448980}
+  - 114: {fileID: 11492554}
+  m_Layer: 0
+  m_Name: Glass_X
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &117048
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 468236}
+  - 114: {fileID: 11462174}
+  m_Layer: 0
+  m_Name: toolSwitcher
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &122768
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 434080}
+  - 114: {fileID: 11466352}
+  m_Layer: 0
+  m_Name: Glass_Door
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &174074
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 481108}
+  - 114: {fileID: 11481048}
+  - 114: {fileID: 11460304}
+  m_Layer: 0
+  m_Name: MagicLanternLogic
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &434080
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 122768}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -.878022909, y: -.571219444, z: 7.76986217}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 481108}
+  m_RootOrder: 0
+--- !u!4 &448980
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 111878}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -.878022909, y: -.571219444, z: 7.76986217}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 481108}
+  m_RootOrder: 1
+--- !u!4 &468236
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 117048}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: .378270417, y: 1.14487529, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 481108}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+--- !u!4 &481108
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 174074}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.20940638, y: 5.25735283, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 434080}
+  - {fileID: 448980}
+  m_Father: {fileID: 468236}
+  m_RootOrder: 0
+--- !u!114 &11460304
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 174074}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7da78f3a0c2daa642bd203b1a51e2b58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &11462174
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 117048}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7f3619782afe3248ae52d5e1f05b239, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  toolList:
+  - {fileID: 11481048}
+  - {fileID: 0}
+  activeToolIndex: 0
+  usingTool: 0
+  useTapOnPlayer: 0
+--- !u!114 &11466352
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 122768}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d528b953161387942976b4620f5a3fa6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  usable: 1
+  attractor: 0
+  canInstantiateObj: 0
+  toOverlap: {fileID: 0}
+  spriteObject: {fileID: 21300000, guid: 55a32b8f669f22d438c8f6ee380986ea, type: 3}
+  goodProjection: {fileID: 21300000, guid: 64fef828077b20a4b94856d7163028c9, type: 3}
+  badProjection: {fileID: 21300000, guid: f1f1f9b406faddf4fb2dee832b14468a, type: 3}
+  blurredProjection: {fileID: 21300000, guid: da6aaacaee3b40c4da19cbfe8d7ee636, type: 3}
+  glassType: Door
+  subGlassList: []
+  projectionObject: {fileID: 0}
+--- !u!114 &11481048
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 174074}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b78fd1d533183974283e48c372b493f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  active: 0
+  activable: 0
+  freezingTool: 0
+  inventory: {fileID: 0}
+  tType: 2
+  glassList:
+  - {fileID: 11466352}
+  - {fileID: 11492554}
+  toChase:
+    serializedVersion: 2
+    m_Bits: 16384
+  hiding:
+    serializedVersion: 2
+    m_Bits: 65536
+  zPositionEnvironment: 0
+  resizeFactor: 1.5
+  maxProjectingDistance: 7.5
+  normalRay: {fileID: 21300006, guid: 3c09fae1fc827b34f9bbe6516a68eb0b, type: 3}
+  normalCircle: {fileID: 21300002, guid: 3c09fae1fc827b34f9bbe6516a68eb0b, type: 3}
+  pressedRay: {fileID: 21300004, guid: 3c09fae1fc827b34f9bbe6516a68eb0b, type: 3}
+  pressedCircle: {fileID: 21300000, guid: 3c09fae1fc827b34f9bbe6516a68eb0b, type: 3}
+  projectionPrefab: {fileID: 146854, guid: e903df3634975d94d8f090cffe868ace, type: 2}
+  collidingWall: 0
+--- !u!114 &11492554
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 111878}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d528b953161387942976b4620f5a3fa6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  usable: 1
+  attractor: 1
+  canInstantiateObj: 0
+  toOverlap: {fileID: 0}
+  spriteObject: {fileID: 21300000, guid: e70389d12caf0da4aa6145ab7991c55b, type: 3}
+  goodProjection: {fileID: 21300000, guid: 97b86e54c158a2c4ba146842245bcb96, type: 3}
+  badProjection: {fileID: 21300000, guid: 1ad9c277657c65540ac79b145a6ae7f3, type: 3}
+  blurredProjection: {fileID: 21300000, guid: 9d636f22705873146aa4144831617136, type: 3}
+  glassType: X_Marks_The_spot
+  subGlassList: []
+  projectionObject: {fileID: 0}
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 117048}
+  m_IsPrefabParent: 1
