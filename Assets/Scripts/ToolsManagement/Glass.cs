@@ -5,6 +5,9 @@ public class Glass : MonoBehaviour
 {
 	// da impostare a private
 	public bool usable = false;
+	public bool attractor = false;
+	public bool canInstantiateObj = false;
+	public GameObject toOverlap;
 
 	public bool Usable {
 		get{ 
@@ -41,6 +44,12 @@ public class Glass : MonoBehaviour
 		return true;
 	}
 
+	/*
+	bool controlIfOverlap()
+	{
+		BoxCollider2D = toOverlap.GetComponent<BoxCollider2D> ();
+	}
+	*/
 
 }
 
