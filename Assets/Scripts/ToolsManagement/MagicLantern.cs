@@ -101,6 +101,10 @@ public class MagicLantern : Tool {
 		ySize = boundsRay.size.y;
 
 		PC.setProjectionObject(projectionObject);
+
+
+
+
 	}
 
 	protected override void activationToolFunc()
@@ -194,6 +198,11 @@ public class MagicLantern : Tool {
 			{
 				projectionObject.layer = convertBinToDec(toChase.value);
 			}
+		}
+
+		if (actualGlass.canInstantiateObj) {
+			if (actualGlass.controlIfOverlap (projectionObject.GetComponent<SpriteRenderer> ().bounds))
+				placeImage ();
 		}
 	}
 

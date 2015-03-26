@@ -44,12 +44,20 @@ public class Glass : MonoBehaviour
 		return true;
 	}
 
-	/*
-	bool controlIfOverlap()
+
+	public bool controlIfOverlap(Bounds inObjBOunds)
 	{
-		BoxCollider2D = toOverlap.GetComponent<BoxCollider2D> ();
+		BoxCollider2D BCOut = toOverlap.GetComponent<BoxCollider2D> ();
+		if (inObjBOunds.min.x > BCOut.bounds.min.x &&
+		    inObjBOunds.min.y > BCOut.bounds.min.y &&
+		    inObjBOunds.max.x < BCOut.bounds.max.x &&
+		    inObjBOunds.max.y < BCOut.bounds.max.y)
+		    return true;
+		else
+		    return false;
+
 	}
-	*/
+
 
 }
 
