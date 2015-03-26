@@ -5,6 +5,7 @@ public class Glass : MonoBehaviour
 {
 	// da impostare a private
 	public bool usable = false;
+	bool canBeEnabled = true;
 	public bool attractor = false;
 	public bool canInstantiateObj = false;
 	public GameObject toOverlap;
@@ -31,7 +32,7 @@ public class Glass : MonoBehaviour
 	public GameObject projectionObject;
 
 	void Update(){
-		 if (usable == false)
+		 if (usable == false && canBeEnabled)
 			usable = controlSubGlassList ();
 	}
 
@@ -42,6 +43,7 @@ public class Glass : MonoBehaviour
 			if (subGlassScript.taken == false)
 				return false;
 		}
+		canBeEnabled = false;
 		return true;
 	}
 

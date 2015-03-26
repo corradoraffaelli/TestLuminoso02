@@ -203,7 +203,15 @@ public class MagicLantern : Tool {
 
 		if (actualGlass.canInstantiateObj) {
 			if (actualGlass.controlIfOverlap (projectionObject.GetComponent<SpriteRenderer> ().bounds))
+			{
 				placeImage ();
+				actualGlass.Usable = false;
+				toolSwitcher TS = transform.parent.gameObject.GetComponent<toolSwitcher>();
+				TS.useTool(false);
+				TS.switchUsingTool(false);
+
+			}
+				
 		}
 	}
 
