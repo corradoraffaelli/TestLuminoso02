@@ -34,6 +34,8 @@ public class PlayerMovements : MonoBehaviour {
 	public Transform GroundCheckBottomRight;
 	public LayerMask GroundLayers;
 
+	public bool running;
+
 	GameObject actualLadder;
 
 	public bool FacingRight {
@@ -335,10 +337,13 @@ public class PlayerMovements : MonoBehaviour {
 		
 
 		
-		if (RigBody.velocity.x != 0)
+		if (RigBody.velocity.x != 0) {
+			running = true;
 			anim.SetBool ("Running", true);
-		else 
+		} else {
+			running = false;
 			anim.SetBool ("Running", false);
+		}
 	}
 
 	//se attivo il trigger della scala, setto le relative variabili

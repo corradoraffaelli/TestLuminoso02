@@ -2392,6 +2392,14 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 11466352, guid: 13d9d001b3131984182707d6012402d8, type: 2}
+      propertyPath: subGlassList.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 11492554, guid: 13d9d001b3131984182707d6012402d8, type: 2}
+      propertyPath: subGlassList.Array.size
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 468236, guid: 13d9d001b3131984182707d6012402d8, type: 2}
       propertyPath: m_LocalPosition.x
       value: .378270417
@@ -2432,6 +2440,40 @@ Prefab:
       propertyPath: canInstantiateObj
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 11466352, guid: 13d9d001b3131984182707d6012402d8, type: 2}
+      propertyPath: emptySprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 1172cc0229ae017458e3b7497760daad,
+        type: 3}
+    - target: {fileID: 11466352, guid: 13d9d001b3131984182707d6012402d8, type: 2}
+      propertyPath: subGlassList.Array.data[0]
+      value: 
+      objectReference: {fileID: 1224670470}
+    - target: {fileID: 11466352, guid: 13d9d001b3131984182707d6012402d8, type: 2}
+      propertyPath: subGlassList.Array.data[1]
+      value: 
+      objectReference: {fileID: 580863395}
+    - target: {fileID: 11466352, guid: 13d9d001b3131984182707d6012402d8, type: 2}
+      propertyPath: subGlassList.Array.data[2]
+      value: 
+      objectReference: {fileID: 767079940}
+    - target: {fileID: 11492554, guid: 13d9d001b3131984182707d6012402d8, type: 2}
+      propertyPath: subGlassList.Array.data[0]
+      value: 
+      objectReference: {fileID: 233747357}
+    - target: {fileID: 11492554, guid: 13d9d001b3131984182707d6012402d8, type: 2}
+      propertyPath: subGlassList.Array.data[1]
+      value: 
+      objectReference: {fileID: 1308399771}
+    - target: {fileID: 11492554, guid: 13d9d001b3131984182707d6012402d8, type: 2}
+      propertyPath: subGlassList.Array.data[2]
+      value: 
+      objectReference: {fileID: 1366424079}
+    - target: {fileID: 11492554, guid: 13d9d001b3131984182707d6012402d8, type: 2}
+      propertyPath: emptySprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 0b15632485be95c409db3dc2f91fe923,
+        type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 13d9d001b3131984182707d6012402d8, type: 2}
   m_IsPrefabParent: 0
@@ -3065,6 +3107,7 @@ MonoBehaviour:
   GroundLayers:
     serializedVersion: 2
     m_Bits: 768
+  running: 0
 --- !u!50 &1756480610
 Rigidbody2D:
   m_ObjectHideFlags: 0

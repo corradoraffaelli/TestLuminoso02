@@ -33,6 +33,7 @@ public class MagicLantern : Tool {
 	Sprite badGlass;
 	Sprite projectionSprite;
 	Sprite blurredSprite;
+	Sprite emptySprite;
 
 	public GameObject projectionPrefab;
 
@@ -184,7 +185,7 @@ public class MagicLantern : Tool {
 		if (!PC.isColliding ()) {
 			collidingWall = false;
 			changeRayAndCircleSprites (normalRay, normalCircle);
-			changeProjectionSprite (null);
+			changeProjectionSprite (emptySprite);
 		} else if (PC.isColliding () && verifyIfTooFar ()) {
 			changeRayAndCircleSprites (pressedRay, pressedCircle);
 			changeProjectionSprite (blurredSprite);
@@ -239,6 +240,7 @@ public class MagicLantern : Tool {
 			badGlass = actualGlass.badProjection;
 			projectionSprite = actualGlass.spriteObject;
 			blurredSprite = actualGlass.blurredProjection;
+			emptySprite = actualGlass.emptySprite;
 		}
 
 	}
@@ -293,8 +295,9 @@ public class MagicLantern : Tool {
 		
 		//test flipping personaggio
 		//flippa se il raggio punta dietro al personaggio
-		if ((PM.FacingRight && raggio_cerchio.transform.position.x < player.transform.position.x)
+		if (((PM.FacingRight && raggio_cerchio.transform.position.x < player.transform.position.x)
 		    || (!PM.FacingRight && raggio_cerchio.transform.position.x > player.transform.position.x))
+		    && !player.GetComponent<PlayerMovements>().running)
 			PM.c_flip ();
 	}
 
