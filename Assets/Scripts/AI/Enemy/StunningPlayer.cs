@@ -25,8 +25,8 @@ public class StunningPlayer : MonoBehaviour {
 				tLastStun = Time.time;
 			
 			}
-		} 
-
+		}
+	
 	}
 
 	public void OnTriggerExit2D(Collider2D c) {

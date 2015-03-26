@@ -80,7 +80,6 @@ GameObject:
   - 95: {fileID: 9534756}
   - 114: {fileID: 11435798}
   - 114: {fileID: 11457102}
-  - 114: {fileID: 11466314}
   m_Layer: 13
   m_Name: Enemy - big - 02
   m_TagString: Untagged
@@ -158,7 +157,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 149714}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 18.559391, y: .539556205, z: 0}
+  m_LocalPosition: {x: 20.5599995, y: 1.44000006, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 1}
   m_Children:
   - {fileID: 449518}
@@ -175,7 +174,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 121536}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5, y: 1, z: 0}
+  m_LocalPosition: {x: 3.02999997, y: .5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 482050}
@@ -345,7 +344,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   eMS: 0
-  eType: 2
+  eType: 1
   targetLayers:
     serializedVersion: 2
     m_Bits: 20480
@@ -365,17 +364,6 @@ MonoBehaviour:
   patrolSuspiciousPoints: []
   patrolledTarget: {fileID: 0}
   DefaultVerseRight: 1
---- !u!114 &11466314
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 149714}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 98362fc0bb0724992b9d1038010945c9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!212 &21212658
 SpriteRenderer:
   m_ObjectHideFlags: 1

@@ -257,6 +257,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5675304ff344eb3409dac57d91b4ec93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  onGround: 0
   speedFactor: 2
   jumpFactor: 3
   forceOnAirFactor: 10
@@ -325,10 +326,14 @@ MonoBehaviour:
   hidingLayer:
     serializedVersion: 2
     m_Bits: 65536
+  cloneLayer:
+    serializedVersion: 2
+    m_Bits: 0
   statusSprites: []
   pointPrefab: {fileID: 186992, guid: 49e83c496a1b5654ab08f42747acf236, type: 2}
   groundCheckTransf: {fileID: 0}
   patrolPoints: []
+  patrolSuspiciousPoints: []
   patrolledTarget: {fileID: 0}
   DefaultVerseRight: 1
 --- !u!212 &21276338

@@ -168,7 +168,7 @@ public class basicAIEnemyV4 : MonoBehaviour {
 	
 	// Use this for initialization
 	void Start () {
-		//Time.timeScale = 0.2f;
+		Time.timeScale = 0.2f;
 		//c2d = GetComponent<controller2DV2> ();
 		pm = GetComponent<PlayerMovements> ();
 		eMS = enemyMachineState.Patrol;
@@ -346,9 +346,12 @@ public class basicAIEnemyV4 : MonoBehaviour {
 		}
 		
 		if (range != null) {
-			
-			frontalDistanceOfView = range.transform.localPosition.x * Mathf.Abs( transform.localScale.x );
-			//Debug.Log("variabili " + range.transform.localPosition.x);
+
+			if(range.transform.localPosition.x < 0) 
+				Debug.Log("Attenzione! L'empty 'RangeOfView' è in una posizione negativa");
+
+			frontalDistanceOfView = Mathf.Abs( range.transform.localPosition.x ) * Mathf.Abs( transform.localScale.x );
+
 			return true;
 
 		}
@@ -366,7 +369,7 @@ public class basicAIEnemyV4 : MonoBehaviour {
 
 
 		 if(!getRangeOfView()) {
-			Debug.Log ("Oggetto 'RangeOfView' non assegnato!!");
+			Debug.Log ("L'empty 'RangeOfView' non è assegnato!!");
 			frontalDistanceOfView = frontalDistanceOfView * Mathf.Abs(transform.localScale.x);
 
 		}
@@ -1246,7 +1249,7 @@ public class basicAIEnemyV4 : MonoBehaviour {
 			i_flip();
 		}
 	}
-	
+
 	//basic method to detect enemies
 	private enemyMachineState isStoppedPatrol(ref GameObject go){
 
@@ -1262,9 +1265,10 @@ public class basicAIEnemyV4 : MonoBehaviour {
 			case enemyType.NoJumpSoftChase :
 				break;
 			case enemyType.NoJumpHeavyChase :
+				/*
 				if (backVision) {
 					//OPZIONALE PER NEMICI FORTI??
-					
+
 					hit = Physics2D.Raycast (transform.position, i_facingRight() ? -Vector2.right : Vector2.right, backDistanceOfView, targetLayers);
 					if (hit.collider != null) {
 						//Debug.Log ("check2");
@@ -1273,8 +1277,10 @@ public class basicAIEnemyV4 : MonoBehaviour {
 						
 					}
 				}
+				*/
 				break;
 			case enemyType.HeavyChase :
+				/*
 				if (backVision) {
 					//OPZIONALE PER NEMICI FORTI??
 					
@@ -1286,6 +1292,7 @@ public class basicAIEnemyV4 : MonoBehaviour {
 						
 					}
 				}
+				*/
 				break;
 			default :
 			
@@ -1594,7 +1601,7 @@ public class basicAIEnemyV4 : MonoBehaviour {
 	}
 	
 	
-	//METODI PRINCIPALI STATO CHASING---------------------------------------------------------------------------------------------------------------
+	//METODI GESTIONE STATO CHASING---------------------------------------------------------------------------------------------------------------
 	//--------------------------------------------------------------------------------------------------------------------------------------------
 	
 	private void initializeChase(GameObject t) {
@@ -1692,27 +1699,69 @@ public class basicAIEnemyV4 : MonoBehaviour {
 		
 		return enemyMachineState.Chase;
 	}
+
+	//TODO: da generalizzare.. per ora è fatta ad hoc... per dare priorità a qualcosa altro che non sia il player
+	private void checkChangeChaseTarget(){
+		Debug.Log ("check");
+		RaycastHit2D hit;
+		GameObject go = null;
+
+		Debug.DrawLine (new Vector2(transform.position.x, transform.position.y + 1.0f), i_facingRight () ? new Vector2 (transform.position.x + frontalDistanceOfView, transform.position.y + 1.0f) : new Vector2 (transform.position.x - frontalDistanceOfView, transform.position.y + 1.0f), Color.red);
+		hit = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y + 1.0f) , i_facingRight()? Vector2.right : -Vector2.right, frontalDistanceOfView, targetLayers);
+		if (hit.collider != null) {
+			//Debug.Log ("check2");
+			go = hit.transform.gameObject;
+
+			/*
+			if(myAstar.Target.gameObject.transform.parent==null){
+				Debug.Log ("if1" + myAstar.Target.gameObject.name);
+				return;
+			}
+			*/
+			//if(myAstar.Target.transform.parent.gameObject.layer
+			//if ((targetLayers.value & 1 << myAstar.Target.layer) == 0) {
+			if(myAstar.Target.gameObject==go) {
+				Debug.Log ("if2");
+				return;
+			}
+
+			if(go.tag == "Player")
+				return;
+
+			//if(myAstar.Target.gameObject.transform.parent.gameObject.tag == "Player")
+			//	return;
+
+			setTargetAStar(go);
+			Debug.Log ("cambio fattoùùùùùùùùùùùùùùùù");
+
+			return;
+			
+		}
+		
+	}
 	
 	private void continueChase(){
-		
+
+
+
 		switch (eType) {
 
 			case enemyType.NoJumpNoChase :
 				//non ci arriverà mai qui, perché non è previsto che faccia il chase
 			case enemyType.NoJumpSoftChase :
-				
+				checkChangeChaseTarget();
 				moveAlongAStarPathNoJump();
 				
 				break;
 				
 			case enemyType.NoJumpHeavyChase :
-				
+				checkChangeChaseTarget();
 				moveAlongAStarPathNoJump();
 				
 				break;
 				
 			case enemyType.HeavyChase :
-				
+				checkChangeChaseTarget();
 				moveAlongAStarPathNoLimits ();
 				
 				break;
