@@ -62,7 +62,7 @@ public class MagicLantern : Tool {
 		PC = transform.GetComponent<ProjectionCollision>();
 
 		//la prima volta che attivo la lanterna, prendo il primo vetrino usabile
-		actualGlass = nextUsableGlass (true);
+		//actualGlass = nextUsableGlass (true);
 	}
 
 	protected override void activationToolFunc()
@@ -70,15 +70,19 @@ public class MagicLantern : Tool {
 		//posiziono la lenterna di fronte al personaggio
 		//!!!!!!--------------DA CONTROLLARE!!!!-------- probabilmente basta settare la lanterna come figlio del player nella giusta posizione
 		toolGameObject.transform.position = new Vector3(player.transform.position.x+0.4f,player.transform.position.y+0.8f,player.transform.position.z);
+		actualGlass = nextUsableGlass (true);
+		glassSpriteUpdate ();
 	}
 
 	//ritorna true, solo se esiste almeno un vetrino usabile
 	public override bool canBeActivated()
 	{
 		Glass tempGlass = nextUsableGlass (true);
+
 		if (tempGlass != null) {
 			return true;
 		} else {
+			Debug.Log ("non attivabile");
 			return false;
 		}
 	}
@@ -250,16 +254,17 @@ public class MagicLantern : Tool {
 					glassIndex = 0;
 				}
 			}
-			first = false;
+
 			if (glassList[glassIndex].Usable)
 			{
 				return glassList[glassIndex];
 			}else{
-				if (glassIndex == indexBeforeIncrement)
+				if (glassIndex == indexBeforeIncrement && first == false)
 				{
 					return null;
 				}
 			}	
+			first = false;
 		}
 	}
 

@@ -21,8 +21,27 @@ public class Glass : MonoBehaviour
 	public Sprite blurredProjection;
 	public string glassType;
 
+	public GameObject[] subGlassList;
+
 	//oggetto proiettato ddal vetrino, public perché deve essere usato dallo script della lanterna
 	public GameObject projectionObject;
+
+	void Update(){
+		 if (usable == false)
+			usable = controlSubGlassList ();
+	}
+
+	bool controlSubGlassList()
+	{
+		foreach (GameObject subGlass in subGlassList) {
+			subGlass subGlassScript = subGlass.GetComponent<subGlass>();
+			if (subGlassScript.taken == false)
+				return false;
+		}
+		return true;
+	}
+
+
 }
 
 

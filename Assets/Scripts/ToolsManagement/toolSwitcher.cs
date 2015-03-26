@@ -47,7 +47,11 @@ public class toolSwitcher : MonoBehaviour {
 	void setActiveTool(int index, bool act){
 		if (act == true) {
 			if (!toolList[index].canBeActivated())
+			{
+				usingTool = false;
 				return;
+			}
+				
 		}
 		toolList [index].Active(act);
 	}
