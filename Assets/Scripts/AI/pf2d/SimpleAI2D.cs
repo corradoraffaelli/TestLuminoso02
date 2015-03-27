@@ -66,19 +66,27 @@ public class SimpleAI2D : Pathfinding2D
 				//che avrà tutti i bit a zero tranne quello identificativo del layer, e la maschera dei layer, se il bit
 				//del layer sarà uguale, cioè allo stesso posto, il risultato dell'& sarà > 0, se invece i posti saranno diversi
 				//tutti i bit andranno a zero, quindi avremo un valore di zero
+
+				//TODO: dovrei togliere questo null, in quanto piloto tutto da basicAI
+				//verificare che vada bene toglierlo
+				/*
 				if( (HidingLayerMask.value & 1<<Target.layer) > 0 ) {
+					Debug.Log ("il target si è nascosto, lo metto a null");
 					Target = null;
 					return;
 
 				}
+				*/
 
 				// if (layermask.value & 1<<layer) 
 
 				//TODO: da ELIMINARE
+				/*
 				if(Target.layer == HideLayer) {
 					Target = null;
 					return;
 				}
+				*/
 
 				//versione vecchia
 				//FindPath(transform.position, Target.transform.position);

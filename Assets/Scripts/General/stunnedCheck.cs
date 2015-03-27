@@ -29,6 +29,8 @@ public class stunnedCheck : MonoBehaviour {
 			case stunType.Player :
 
 				if (c.gameObject.tag=="Stunning") {
+					Debug.Log ("io sono " + transform.gameObject.name);
+					Debug.Log("sono stato colpito dal figlio di " + c.gameObject.transform.parent.gameObject.name);
 					transform.SendMessage ("c_stunned", true);
 					
 				} 

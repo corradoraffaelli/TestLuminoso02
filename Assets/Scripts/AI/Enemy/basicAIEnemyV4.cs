@@ -168,7 +168,7 @@ public class basicAIEnemyV4 : MonoBehaviour {
 	
 	// Use this for initialization
 	void Start () {
-		Time.timeScale = 0.2f;
+		//Time.timeScale = 0.2f;
 		//c2d = GetComponent<controller2DV2> ();
 		pm = GetComponent<PlayerMovements> ();
 		eMS = enemyMachineState.Patrol;
@@ -292,45 +292,55 @@ public class basicAIEnemyV4 : MonoBehaviour {
 	private void checkPatrolPoints(bool reallocate = false){
 		
 		//Debug.Log("gen patrol");
-		
+		bool pointNotAssigned = false;
+
 		if(patrolPoints.Length>0) {
 			//serve almeno 1 punto
 
+			foreach(GameObject pp in patrolPoints) {
+
+				if(pp == null) {
+					Debug.Log("Attento, non hai assegnato correttamente i patrol point/s");
+					pointNotAssigned = true;
+				}
+			}
+
+			if(!pointNotAssigned)
+				return;
 			//TODO: fare qualcosa in questo caso?
-			return;
+
+		}
+
+
+		if(reallocate) {
+			patrolPoints[0].transform.position = new Vector3(groundCheckTransf.position.x - 3*transform.localScale.x, groundCheckTransf.position.y, groundCheckTransf.position.z);
+			patrolPoints[1].transform.position =  new Vector3(groundCheckTransf.position.x + 3*transform.localScale.x, groundCheckTransf.position.y, groundCheckTransf.position.z);
 
 		}
 		else {
 
-			if(reallocate) {
-				patrolPoints[0].transform.position = new Vector3(groundCheckTransf.position.x - 3*transform.localScale.x, groundCheckTransf.position.y, groundCheckTransf.position.z);
-				patrolPoints[1].transform.position =  new Vector3(groundCheckTransf.position.x + 3*transform.localScale.x, groundCheckTransf.position.y, groundCheckTransf.position.z);
-
-			}
-			else {
-
-				GameObject p = GameObject.Find ("AutoGenPatrolPoints");
-				
-				if (p == null) {
-					//Debug.Log ("creo patrol points containter");
-					p = (GameObject) GameObject.Instantiate(pointPrefab, new Vector3(0.0f, 0.0f, 0.0f), Quaternion.identity);
-					p.name = "AutoGenPatrolPoints";
-				}
-				
-				patrolPoints = new GameObject[2];
-				
-				GameObject ob1 = (GameObject) GameObject.Instantiate(pointPrefab, new Vector3(groundCheckTransf.position.x - 3*transform.localScale.x, groundCheckTransf.position.y, groundCheckTransf.position.z), Quaternion.identity);
-				ob1.name = "Point(clone) " + this.name + " left";
-				ob1.transform.parent = p.transform;
-				patrolPoints[0] = ob1;
-				
-				GameObject ob2 = (GameObject) GameObject.Instantiate(pointPrefab, new Vector3(groundCheckTransf.position.x + 3*transform.localScale.x, groundCheckTransf.position.y, groundCheckTransf.position.z), Quaternion.identity);
-				ob2.name = "Point(clone) " + this.name + " right";
-				ob2.transform.parent = p.transform;
-				patrolPoints[1] = ob2;
+			GameObject p = GameObject.Find ("AutoGenPatrolPoints");
+			
+			if (p == null) {
+				//Debug.Log ("creo patrol points containter");
+				p = (GameObject) GameObject.Instantiate(pointPrefab, new Vector3(0.0f, 0.0f, 0.0f), Quaternion.identity);
+				p.name = "AutoGenPatrolPoints";
 			}
 			
+			patrolPoints = new GameObject[2];
+			
+			GameObject ob1 = (GameObject) GameObject.Instantiate(pointPrefab, new Vector3(groundCheckTransf.position.x - 3*transform.localScale.x, groundCheckTransf.position.y, groundCheckTransf.position.z), Quaternion.identity);
+			ob1.name = "Point(clone) " + this.name + " left";
+			ob1.transform.parent = p.transform;
+			patrolPoints[0] = ob1;
+			
+			GameObject ob2 = (GameObject) GameObject.Instantiate(pointPrefab, new Vector3(groundCheckTransf.position.x + 3*transform.localScale.x, groundCheckTransf.position.y, groundCheckTransf.position.z), Quaternion.identity);
+			ob2.name = "Point(clone) " + this.name + " right";
+			ob2.transform.parent = p.transform;
+			patrolPoints[1] = ob2;
 		}
+		
+
 	
 	}
 
@@ -937,16 +947,19 @@ public class basicAIEnemyV4 : MonoBehaviour {
 	private bool isTargetLost(){
 		
 		if (myAstar.Target == null ) {
-			//Debug.Log ("NULL");
+			//TODO: PRIORRR perché è NULL?????
+			Debug.Log ("NULL");
 			suspiciousUp();
 			return true;
 		}
 
 		if ((targetLayers.value & 1 << myAstar.Target.layer) == 0) {
-
+			Debug.Log ("layer");
 			suspiciousUp();
 			return true;
 		}
+
+
 		/*
 		if (myAstar.Target.layer != 12 && myAstar.Target.layer != 14 ) {
 			//Debug.Log ("SCOMPARSO");
@@ -1307,6 +1320,7 @@ public class basicAIEnemyV4 : MonoBehaviour {
 		if (hit.collider != null) {
 			//Debug.Log ("check2");
 			go = hit.transform.gameObject;
+			Debug.Log("nome di ciò che becco" + go.name + "posizione " + go.transform.position.x);
 			return enemyMachineState.Chase;
 			
 		}
@@ -1369,7 +1383,7 @@ public class basicAIEnemyV4 : MonoBehaviour {
 					
 					//STATO PATROL-normal
 					
-					patrollingBetweenPoints (1);
+					patrollingBetweenPoints (0);
 				}
 				
 				break;
@@ -1651,6 +1665,18 @@ public class basicAIEnemyV4 : MonoBehaviour {
 		*/
 		
 	}
+
+	private bool isTargetAtDifferentHeight() {
+
+		//float dist = Vector2.Distance (groundCheckTransf.position, myAstar.Target.transform.position);
+		float hDiff = Mathf.Abs (groundCheckTransf.position.y - myAstar.Target.transform.position.y );
+
+		if (hDiff > 2.5f)
+			return true;
+		else
+			return false;
+
+	}
 	
 	private enemyMachineState isStoppedChase() {
 		
@@ -1661,13 +1687,25 @@ public class basicAIEnemyV4 : MonoBehaviour {
 				//non ci arriverà mai qui, perché non è previsto che faccia il chase
 			case enemyType.NoJumpSoftChase :
 				
-				if(isTargetOutOfPatrolArea())
+				if(isTargetOutOfPatrolArea()) {
+					Debug.Log ("torno a patrol per uscita da patrol area");
 					return enemyMachineState.Patrol;
+				}
+
+				if(isTargetAtDifferentHeight()) {
+					Debug.Log ("torno a patrol per differenza di h");
+					return enemyMachineState.Patrol;
+				}
 				
 				break;
 				
 			case enemyType.NoJumpHeavyChase :
-				
+				if(isTargetAtDifferentHeight()) {
+					Debug.Log ("torno a patrol per differenza di h");
+					return enemyMachineState.Patrol;
+				}
+				break;
+
 			case enemyType.HeavyChase :
 				
 			default :
@@ -1679,8 +1717,10 @@ public class basicAIEnemyV4 : MonoBehaviour {
 		//controlli in comune a tutti gli enemyType
 		
 		//controllo se è null o ha cambiato layer...
-		if(isTargetLost())
+		if (isTargetLost ()) {
+			Debug.Log ("torno a patrol 2 - lost");
 			return enemyMachineState.Patrol;
+		}
 		
 		//float dist = Vector2.Distance (transform.position, new Vector2 (chasedTarget.position.x, chasedTarget.position.y));
 		//float dist = Vector2.Distance (groundCheckTransf.position, new Vector2 (myAstar.Target.transform.position.x, myAstar.Target.transform.position.y));
@@ -1689,6 +1729,7 @@ public class basicAIEnemyV4 : MonoBehaviour {
 
 		//se è troppo lontano torno a patrol...
 		if (isTargetFar (dist)) {
+			Debug.Log ("torno a patrol 3 - far");
 			return enemyMachineState.Patrol;
 		}
 		
@@ -1702,7 +1743,7 @@ public class basicAIEnemyV4 : MonoBehaviour {
 
 	//TODO: da generalizzare.. per ora è fatta ad hoc... per dare priorità a qualcosa altro che non sia il player
 	private void checkChangeChaseTarget(){
-		Debug.Log ("check");
+		//Debug.Log ("check");
 		RaycastHit2D hit;
 		GameObject go = null;
 
@@ -1721,7 +1762,7 @@ public class basicAIEnemyV4 : MonoBehaviour {
 			//if(myAstar.Target.transform.parent.gameObject.layer
 			//if ((targetLayers.value & 1 << myAstar.Target.layer) == 0) {
 			if(myAstar.Target.gameObject==go) {
-				Debug.Log ("if2");
+				//Debug.Log ("if2");
 				return;
 			}
 
@@ -1732,7 +1773,7 @@ public class basicAIEnemyV4 : MonoBehaviour {
 			//	return;
 
 			setTargetAStar(go);
-			Debug.Log ("cambio fattoùùùùùùùùùùùùùùùù");
+			//Debug.Log ("cambio fattoùùùùùùùùùùùùùùùù");
 
 			return;
 			
@@ -1749,19 +1790,19 @@ public class basicAIEnemyV4 : MonoBehaviour {
 			case enemyType.NoJumpNoChase :
 				//non ci arriverà mai qui, perché non è previsto che faccia il chase
 			case enemyType.NoJumpSoftChase :
-				checkChangeChaseTarget();
+				//checkChangeChaseTarget();
 				moveAlongAStarPathNoJump();
 				
 				break;
 				
 			case enemyType.NoJumpHeavyChase :
-				checkChangeChaseTarget();
+				//checkChangeChaseTarget();
 				moveAlongAStarPathNoJump();
 				
 				break;
 				
 			case enemyType.HeavyChase :
-				checkChangeChaseTarget();
+				//checkChangeChaseTarget();
 				moveAlongAStarPathNoLimits ();
 				
 				break;
@@ -2044,18 +2085,21 @@ public class basicAIEnemyV4 : MonoBehaviour {
 	private void setTargetAStar(GameObject myT) {
 		
 		if (myT == null) {
+			Debug.Log ("metto il target astar a null");
 			myAstar.Target = myT;
 			return;
 		}
 		
 		foreach (Transform child in myT.transform) {
 			if(child.tag=="GroundCheck") {
+				Debug.Log ("trovato il groundcheck");
 				myAstar.Target = child.gameObject;
+				Debug.Log ("contenuto target : " + myAstar.Target.name + " ++++++++++++++++++");
 				return;
 			}
 			
 		}
-		
+		Debug.Log ("NON trovato il groundcheck, assegno lui stesso");
 		myAstar.Target = myT;
 		
 	}
