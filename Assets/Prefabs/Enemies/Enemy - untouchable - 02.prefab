@@ -134,7 +134,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 104816}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.32999992, y: .0799999982, z: 0}
+  m_LocalPosition: {x: 3.29999995, y: .0799999982, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 428478}
@@ -259,7 +259,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_Offset: {x: 0, y: -.150000006}
   serializedVersion: 2
-  m_Size: {x: .600000024, y: .730000019}
+  m_Size: {x: .779999971, y: .730000019}
 --- !u!95 &9556960
 Animator:
   serializedVersion: 3
@@ -289,7 +289,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   onGround: 0
-  speedFactor: 2
+  speedFactor: 5
   jumpFactor: 3
   forceOnAirFactor: 10
   LadderLateralLimit: .300000012
@@ -301,6 +301,7 @@ MonoBehaviour:
   GroundLayers:
     serializedVersion: 2
     m_Bits: 768
+  running: 0
 --- !u!114 &11427122
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -346,6 +347,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ffd41ab3bdb78420295612377ac18484, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  targetLayers:
+    serializedVersion: 2
+    m_Bits: 20480
 --- !u!114 &11471162
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -357,6 +361,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 162b394b67e4645e48893d0645014e9f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  DEBUG_FSM_TRANSITION: 000000
+  DEBUG_RECOGNITION: 0000
+  DEBUG_ASTAR: 0000
+  DEBUG_FLIP: 0
   eMS: 0
   eType: 2
   targetLayers:
@@ -373,11 +381,10 @@ MonoBehaviour:
     m_Bits: 131072
   statusSprites: []
   pointPrefab: {fileID: 186992, guid: 49e83c496a1b5654ab08f42747acf236, type: 2}
-  groundCheckTransf: {fileID: 0}
-  patrolPoints: []
-  patrolSuspiciousPoints: []
-  patrolledTarget: {fileID: 0}
+  patrolPoints:
+  - {fileID: 0}
   DefaultVerseRight: 1
+  patrolSuspiciousPoints: []
 --- !u!212 &21210646
 SpriteRenderer:
   m_ObjectHideFlags: 1

@@ -7,6 +7,14 @@ public class autoDestroy : MonoBehaviour {
 	float tToDestroy = 4.0f;
 	bool started = false;
 	// Use this for initialization
+
+	public void setTimer(float timer) {
+
+		if (timer >= 0)
+			tToDestroy = timer;
+
+	}
+
 	void Start () {
 	
 	}

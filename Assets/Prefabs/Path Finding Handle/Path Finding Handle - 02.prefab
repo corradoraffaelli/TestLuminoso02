@@ -44,7 +44,7 @@ GameObject:
   m_Layer: 0
   m_Name: startastar
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 5721338939258241955, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -105,7 +105,7 @@ GameObject:
   m_Layer: 0
   m_Name: endastar
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 5721338939258241955, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -175,7 +175,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 188148}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -46.5999985, y: -8, z: 0}
+  m_LocalPosition: {x: -10.1899996, y: -.720000029, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 488146}
@@ -223,7 +223,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 188156}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 50.5999985, y: 36, z: 0}
+  m_LocalPosition: {x: 30.1399994, y: 17.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 488146}
@@ -309,14 +309,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e902cb5214162441ebd64d8c5b80676a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Tilesize: 1
+  Tilesize: .5
   HeuristicAggression: 0
   zStart: -10
   zEnd: 10
-  MapStartPositionGO: {fileID: 0}
-  MapEndPositionGO: {fileID: 0}
-  MapStartPosition: {x: -47, y: -8}
-  MapEndPosition: {x: 55, y: 36}
+  MapStartPositionGO: {fileID: 188148}
+  MapEndPositionGO: {fileID: 188156}
+  MapStartPosition: {x: -10, y: -1}
+  MapEndPosition: {x: 30, y: 18}
   DisallowedTags:
   - ground_astar
   - wall_astar

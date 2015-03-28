@@ -3,6 +3,8 @@ using System.Collections;
 
 public class stunnedCheck : MonoBehaviour {
 
+	public bool DEBUG_STUNNED = false;
+
 	public enum stunType {
 		Player,
 		AI,
@@ -29,8 +31,12 @@ public class stunnedCheck : MonoBehaviour {
 			case stunType.Player :
 
 				if (c.gameObject.tag=="Stunning") {
-					Debug.Log ("io sono " + transform.gameObject.name);
-					Debug.Log("sono stato colpito dal figlio di " + c.gameObject.transform.parent.gameObject.name);
+					if(DEBUG_STUNNED) {
+						
+						Debug.Log("Io sono " + transform.gameObject.name + " e sono stato colpito dal figlio di " + c.gameObject.transform.parent.gameObject.name);
+
+					}
+					
 					transform.SendMessage ("c_stunned", true);
 					
 				} 
@@ -43,7 +49,11 @@ public class stunnedCheck : MonoBehaviour {
 
 				if (c.gameObject.tag=="Stunning") {
 					
-					//Debug.Log("woooooooooooooooooooooow" + c.gameObject.name + c.gameObject.transform.parent.gameObject.name);
+					if(DEBUG_STUNNED) {
+						
+						Debug.Log("Io sono " + transform.gameObject.name + " e sono stato colpito dal figlio di " + c.gameObject.transform.parent.gameObject.name);
+						
+					}
 					transform.parent.SendMessage ("setStunned", true);
 
 				} 
