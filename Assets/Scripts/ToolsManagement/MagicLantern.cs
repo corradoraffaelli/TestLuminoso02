@@ -29,15 +29,13 @@ public class MagicLantern : Tool {
 	public Sprite pressedRay;
 	public Sprite pressedCircle;
 
-	Sprite goodGlass;
-	Sprite badGlass;
+	Sprite goodGlassSprite;
+	Sprite badGlassSprite;
 	Sprite projectionSprite;
 	Sprite blurredSprite;
 	Sprite emptySprite;
 
 	public GameObject projectionPrefab;
-
-	public bool collidingWall = false;
 
 	Vector3 cameraPointPos;
 	Vector3 _direction;
@@ -52,7 +50,8 @@ public class MagicLantern : Tool {
 	SpriteRenderer spRendCircle;
 
 	ProjectionCollision PC;
-	bool wasGoodProjection = false;
+
+	bool createdProjection = false;
 
 	//--------INITIALIZATION AND ACTIVATION-------------------------------------
 
@@ -138,24 +137,9 @@ public class MagicLantern : Tool {
 		//movimenti del raggio e della proiezione sotto al mouse
 		normalMovementsUnderMouse ();
 
-		//se il mouse è tenuto premuto, cambia la sprite del raggio
-		/*
-		if (usingDrag)
-			changeRaySprite (true);
-
-
-
-
-		//quando si rilascia il mouse, viene proiettato l'oggetto, se le condizioni sono soddisfatte
-		if (Input.GetMouseButton (0)) {
-			changeRaySprite (false);
-			if (PC.isColliding() && !verifyIfTooFar ())
-				placeImage();
-		}
-		*/
-
 		//DEBUG: se si preme E, si passa al prossimo vetrino
 		if (Input.GetKeyUp (KeyCode.E)) {
+			deleteActualProjection();
 			actualGlass = nextUsableGlass();
 		}
 
@@ -163,23 +147,36 @@ public class MagicLantern : Tool {
 		//viene fatto ad ogni update, da verificare se troppo pesante, precedentemente queste funzioni erano poste in modo più intelligente,
 		//sono state inserite nell'update per semplificare
 		glassSpriteUpdate ();
-		//updateSpriteAfterChanging ();
-			
-		//switch delle sprite nel caso la proiezione si trovi o meno su un muro adatto
-		/*
-		if (PC.isColliding() && !wasGoodProjection) {
-			switchProjection (true);
-			wasGoodProjection = true;
-		} else if (!PC.isColliding() && wasGoodProjection) {
-			switchProjection(false);
-			wasGoodProjection = false;
+
+		//immplementazione attuale
+
+		// la proiezione si trova fuori da un muro adatto
+		if (!PC.isColliding ()) {
+			changeRayAndCircleSprites (normalRay, normalCircle);
+			changeProjectionSprite (badGlassSprite);
+			//deleteActualProjection();
+
+		// la proiezione si trova in un muro adatto, ma è troppo lontana e risulta fuori fuoco
+		} else if (PC.isColliding () && verifyIfTooFar ()) {
+			changeRayAndCircleSprites (pressedRay, pressedCircle);
+			changeProjectionSprite (blurredSprite);
+			//deleteActualProjection();
+
+		// la proiezione è OK
+		} else if (PC.isColliding () && !verifyIfTooFar ()) {
+			changeRayAndCircleSprites (pressedRay, pressedCircle);
+			changeProjectionSprite (emptySprite);
+			if (!createdProjection)
+			{
+				createdProjection = true;
+				instantiatePrefab();
+			}else{
+				prefabFollowingCursor();
+			}
 		}
 
-		//switch delle sprite nel caso la proiezione si trovi o meno troppo lontano dal player
-		if (verifyIfTooFar())
-			PC.changeSprite (blurredSprite);
-		*/
-
+		//implementazione precedente
+		/*
 		projectionObject.layer = convertBinToDec(hiding.value);
 
 		if (!PC.isColliding ()) {
@@ -209,10 +206,9 @@ public class MagicLantern : Tool {
 				toolSwitcher TS = transform.parent.gameObject.GetComponent<toolSwitcher>();
 				TS.useTool(false);
 				TS.switchUsingTool(false);
-
 			}
-				
 		}
+		*/
 	}
 
 	void changeRayAndCircleSprites(Sprite RaySprite, Sprite CircleSprite)
@@ -244,23 +240,13 @@ public class MagicLantern : Tool {
 	void glassSpriteUpdate()
 	{
 		if (actualGlass != null) {
-			goodGlass = actualGlass.goodProjection;
-			badGlass = actualGlass.badProjection;
+			goodGlassSprite = actualGlass.goodProjection;
+			badGlassSprite = actualGlass.badProjection;
 			projectionSprite = actualGlass.spriteObject;
 			blurredSprite = actualGlass.blurredProjection;
 			emptySprite = actualGlass.emptySprite;
 		}
 
-	}
-
-	//fa l'update delle sprites della proiezione, a seconda che questa si trovi o meno in corrispondenza di un muro
-	void updateSpriteAfterChanging()
-	{
-		if (PC.isColliding ()) {
-			PC.changeSprite (goodGlass);
-		} else {
-			PC.changeSprite (badGlass);
-		}
 	}
 
 	//movimenti del raggio e della proiezione in relazione alla posizione del player e del cursore
@@ -324,17 +310,6 @@ public class MagicLantern : Tool {
 		}
 	}
 
-	//passa al prossimo vetrino (ORA INUTILIZZATA)
-	void nextGlass()
-	{
-		if (glassIndex < (glassList.Length-1)) {
-			glassIndex = glassIndex + 1;
-		} else {
-			glassIndex = 0;
-		}
-		actualGlass = glassList [glassIndex];
-	}
-
 	//ritorna il prossimo vetrino usabile, se first è abilitato, ritorna il prossimo, a partire da quello attuale (utile per primo avvio)
 	Glass nextUsableGlass(bool first = false)
 	{
@@ -365,22 +340,30 @@ public class MagicLantern : Tool {
 		}
 	}
 
-
-	//cambia la sprite del raggio, se needToChangeSprite è true, imposta la sprite più "visibile"
-	void changeRaySprite(bool needToChangeSprite)
+	void instantiatePrefab()
 	{
-		if (needToChangeSprite) {
-			spRendRay.sprite = pressedRay;
-			spRendCircle.sprite = pressedCircle;
-		} else {
-			spRendRay.sprite = normalRay;
-			spRendCircle.sprite = normalCircle;
-		}
+		//prendo i bounds della sprite della proiezione
+		Bounds objBounds = PC.getSpriteBounds ();
+
+		//istanzio un prefab e lo sposto sotto il mouse
+		actualGlass.projectionObject = Instantiate <GameObject> (actualGlass.prefabObject);
+		actualGlass.projectionObject.transform.position = new Vector3(actualMousePosition.x, actualMousePosition.y, zPositionEnvironment);
+
+		//prendo lo spriteRenderer del prefab ed i suoi bounds
+		SpriteRenderer actualSprite = actualGlass.projectionObject.transform.GetComponent<SpriteRenderer> ();
+		//actualSprite.sprite = projectionSprite;
+		Bounds newObjBounds = actualSprite.bounds;
+
+		//scalo l'oggetto per far sì che la sua sprite coincida con quella sottostante (teoricamente vuota)
+		float spriteScale = objBounds.size.x / newObjBounds.size.x;
+		actualGlass.projectionObject.transform.localScale = new Vector3 (spriteScale, spriteScale, spriteScale);
+		
+		actualGlass.projectionObject.SetActive (true);
 	}
 
-	void useObjectSprite(bool useObjectOrNot)
+	void prefabFollowingCursor()
 	{
-		//projectionSprite = 
+
 	}
 
 	//istanzia un nuovo oggetto di tipo "Projection" una volta che si clicca sulla posizione voluta
@@ -405,20 +388,18 @@ public class MagicLantern : Tool {
 
 	}
 
+	void deleteActualProjection()
+	{
+		createdProjection = false;
+		if (actualGlass.projectionObject)
+			Destroy (actualGlass.projectionObject);
+	}
+
 	//cancella il vecchio oggetto instanziato
 	void deleteOldProjection()
 	{
 		if (actualGlass.projectionObject)
 			Destroy (actualGlass.projectionObject);
-	}
-
-	//cambia la sprite della proiezione, se good = true imposta la sprite utile a comprendere che è possibile proiettare e quindi creare l'oggetto
-	void switchProjection(bool good)
-	{
-		if (good)
-			PC.changeSprite (goodGlass);
-		else
-			PC.changeSprite (badGlass);
 	}
 
 	private int convertBinToDec(int binintval) {

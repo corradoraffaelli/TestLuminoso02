@@ -31,6 +31,9 @@ public class Glass : MonoBehaviour
 	//oggetto proiettato ddal vetrino, public perché deve essere usato dallo script della lanterna
 	public GameObject projectionObject;
 
+	//prfab dell'oggetto istanziato dal vetrino, va imposto manualmente
+	public GameObject prefabObject;
+
 	void Update(){
 		 if (usable == false && canBeEnabled)
 			usable = controlSubGlassList ();
