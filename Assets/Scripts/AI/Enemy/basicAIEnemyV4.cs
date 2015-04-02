@@ -2174,10 +2174,15 @@ public class basicAIEnemyV4 : MonoBehaviour {
 	private bool isStunnedCountDownFinished() {
 		
 		if (Time.time - tLastStunnedAttackReceived > tToReturnFromStunned) {
+			if(DEBUG_FSM_TRANSITION[2])
+				Debug.Log ("ST -> PA/WA - countDown finito");
 			return true;
 		}
-		else
+		else {
+			if(DEBUG_FSM_TRANSITION[2])
+				Debug.Log ("Stunned countdown : " + (Time.time - tLastStunnedAttackReceived));
 			return false;
+		}
 	}
 	
 	private enemyMachineState isStoppedStunned(){
@@ -2849,15 +2854,19 @@ public class basicAIEnemyV4 : MonoBehaviour {
 
 		if (a) {
 			//Debug.Log ("colpito");
-			switch(eType) {
+			switch (eType) {
 
-			case enemyType.NoJumpJustPatrol :
-				searchNextPatrollingPoint();
+			case enemyType.NoJumpJustPatrol:
+				searchNextPatrollingPoint ();
 				break;
 			default :
 				isPlayerStunned = true;
 				break;
 			}
+		} else {
+
+			isPlayerStunned = false;
+
 		}
 
 	}

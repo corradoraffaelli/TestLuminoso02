@@ -102,11 +102,13 @@ public class PlayerMovements : MonoBehaviour {
 			softGroundCollManagement ();
 		} else {
 
-			//personaggio stunned
-			if(stunnedState) {
-				
+
+			if(stunnedState && !AIControl) {
+				//player stunned
 				handleStunned();
 			}
+	
+			//AI stunned è gestito da esterno
 
 			//personaggio freezato
 			if(freezedByTool) {
@@ -128,47 +130,7 @@ public class PlayerMovements : MonoBehaviour {
 		}
 	}
 
-	private void handleStunned() {
 
-		if (Time.time > tStartStunned + tToReturnFromStunned) {
-			stunnedState = false;
-			gameObject.layer = convertBinToDec(PlayerLayer.value);
-			myToStun.layer = convertBinToDec(PlayerLayer.value);
-			anim.SetBool ("Stunned", false);
-		}
-
-	}
-
-	public void c_stunned(bool isStun) {
-
-		if (isStun) {
-			if(!stunnedState) {
-				anim.SetBool ("Running", false);
-				//altri controlli? devo mettere a false altre variabili?
-				anim.SetBool ("Stunned", true);
-				anim.SetTrigger("StartStunned");
-				if(!AIControl) {
-					tStartStunned = Time.time;
-					stunnedState = true;
-					gameObject.layer = convertBinToDec(PlayerStunnedLayer.value);
-					myToStun.layer = convertBinToDec(PlayerStunnedLayer.value);
-					/*
-					GetComponent<BoxCollider2D>().enabled = false;
-					GetComponent<BoxCollider2D>().enabled = true;
-					GetComponent<CircleCollider2D>().enabled = false;
-					GetComponent<CircleCollider2D>().enabled = true;
-					*/
-
-				}
-			}
-
-		}
-		else {
-			anim.SetBool ("Stunned", false);
-			//qualcosa per riporlarlo allo stato idle
-		}
-
-	}
 
 	void FixedUpdate()
 	{
@@ -411,6 +373,8 @@ public class PlayerMovements : MonoBehaviour {
 		anim.SetBool("usingTool",UseOrNot);
 	}
 
+	//funzione temporanea per conversione del layer
+
 	private int convertBinToDec(int binintval) {
 		
 		switch (binintval) {
@@ -474,6 +438,22 @@ public class PlayerMovements : MonoBehaviour {
 		return 0;
 	}
 
+	//funzione per gestire lo stato stunned del player, diversa gestione per l'AI
+
+	private void handleStunned() {
+
+		Debug.Log ("stunnato");
+
+		if (Time.time > tStartStunned + tToReturnFromStunned) {
+			stunnedState = false;
+			gameObject.layer = convertBinToDec(PlayerLayer.value);
+			myToStun.layer = convertBinToDec(PlayerLayer.value);
+			anim.SetBool ("Stunned", false);
+			Debug.Log ("fine STUNNNNNNN");
+		}
+		
+	}
+
 	//------------------------FUNZIONI WRAPPER-------------------------------
 
 	public void c_jump()
@@ -493,5 +473,32 @@ public class PlayerMovements : MonoBehaviour {
 		transform.localScale = new Vector3 (-transform.localScale.x, transform.localScale.y, transform.localScale.z);
 		facingRight = ! facingRight;
 	}
-	
+
+	//gestione stunned, usato sia per player che per AI
+	public void c_stunned(bool isStun) {
+		
+		if (isStun) {
+			if(!stunnedState) {
+				anim.SetBool ("Running", false);
+				//altri controlli? devo mettere a false altre variabili?
+				anim.SetBool ("Stunned", true);
+				anim.SetTrigger("StartStunned");
+				if(!AIControl) {
+					tStartStunned = Time.time;
+					stunnedState = true;
+					gameObject.layer = convertBinToDec(PlayerStunnedLayer.value);
+					myToStun.layer = convertBinToDec(PlayerStunnedLayer.value);
+					
+				}
+			}
+			
+		}
+		else {
+			anim.SetBool ("Stunned", false);
+			gameObject.layer = convertBinToDec(PlayerLayer.value);
+			myToStun.layer = convertBinToDec(PlayerLayer.value);
+			//qualcosa per riporlarlo allo stato idle
+		}
+		
+	}
 }
