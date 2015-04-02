@@ -33,6 +33,8 @@ public class PlayerMovements : MonoBehaviour {
 	public Transform GroundCheckUpperLeft;
 	public Transform GroundCheckBottomRight;
 	public LayerMask GroundLayers;
+	public LayerMask PlayerLayer;
+	public LayerMask PlayerStunnedLayer;
 
 	public bool running;
 
@@ -46,10 +48,25 @@ public class PlayerMovements : MonoBehaviour {
 	float tStartStunned = -5.0f;
 	float tToReturnFromStunned = 1.5f;
 
+	private GameObject myToStun;
+
 	void Start () {
+		bool warning = true;
 		RigBody = transform.GetComponent<Rigidbody2D>();
 		anim = transform.GetComponent<Animator> ();
 		standardGravity = RigBody.gravityScale;
+
+		foreach (Transform child in transform) {
+
+			if(child.tag=="Stunning") {
+				myToStun = child.gameObject;
+				warning = false;
+				break;
+			}
+		}
+
+		if (warning)
+			Debug.Log ("attenzione, manca un oggetto stunning sotto il player");
 	}
 
 	void Update () {
@@ -115,6 +132,8 @@ public class PlayerMovements : MonoBehaviour {
 
 		if (Time.time > tStartStunned + tToReturnFromStunned) {
 			stunnedState = false;
+			gameObject.layer = convertBinToDec(PlayerLayer.value);
+			myToStun.layer = convertBinToDec(PlayerLayer.value);
 			anim.SetBool ("Stunned", false);
 		}
 
@@ -131,6 +150,15 @@ public class PlayerMovements : MonoBehaviour {
 				if(!AIControl) {
 					tStartStunned = Time.time;
 					stunnedState = true;
+					gameObject.layer = convertBinToDec(PlayerStunnedLayer.value);
+					myToStun.layer = convertBinToDec(PlayerStunnedLayer.value);
+					/*
+					GetComponent<BoxCollider2D>().enabled = false;
+					GetComponent<BoxCollider2D>().enabled = true;
+					GetComponent<CircleCollider2D>().enabled = false;
+					GetComponent<CircleCollider2D>().enabled = true;
+					*/
+
 				}
 			}
 
@@ -381,6 +409,69 @@ public class PlayerMovements : MonoBehaviour {
 	{
 		freezedByTool = UseOrNot;
 		anim.SetBool("usingTool",UseOrNot);
+	}
+
+	private int convertBinToDec(int binintval) {
+		
+		switch (binintval) {
+			
+		case 256 :
+			return 8;
+			break;
+			
+		case 512 :
+			return 9;
+			break;
+			
+		case 1024 :
+			return 10;
+			break;
+			
+		case 2048 :
+			return 11;
+			break;
+			
+		case 4096 :
+			return 12;
+			break;
+			
+		case 8192 :
+			return 13;
+			break;
+			
+		case 16384 :
+			return 14;
+			break;
+			
+		case 32768 :
+			return 15;				
+			break;
+			
+		case 65536 :
+			return 16;
+			break;
+			
+		case 131072 :
+			return 17;
+			break;
+		
+		case 262144 :
+			return 18;
+			break;
+			
+		case 524288 :
+			return 19;
+			break;
+			
+		case 1048576 :
+			return 20;
+			break;
+
+		default :
+			break;
+			
+		}
+		return 0;
 	}
 
 	//------------------------FUNZIONI WRAPPER-------------------------------
