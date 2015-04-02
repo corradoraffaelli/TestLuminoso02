@@ -1876,6 +1876,10 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 11400786, guid: 7bda57da48de74041ad47c123e1e2dbb, type: 2}
+      propertyPath: patrolPoints.Array.size
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 468110, guid: 7bda57da48de74041ad47c123e1e2dbb, type: 2}
       propertyPath: m_LocalPosition.x
       value: 1.90970886
@@ -1906,16 +1910,16 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 468110, guid: 7bda57da48de74041ad47c123e1e2dbb, type: 2}
       propertyPath: m_RootOrder
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 11400786, guid: 7bda57da48de74041ad47c123e1e2dbb, type: 2}
-      propertyPath: spawner
-      value: 
-      objectReference: {fileID: 2124298439}
     - target: {fileID: 11400786, guid: 7bda57da48de74041ad47c123e1e2dbb, type: 2}
       propertyPath: patrolPoints.Array.data[0]
       value: 
       objectReference: {fileID: 1067031392}
+    - target: {fileID: 11400786, guid: 7bda57da48de74041ad47c123e1e2dbb, type: 2}
+      propertyPath: spawner
+      value: 
+      objectReference: {fileID: 2124298439}
     - target: {fileID: 11417764, guid: 7bda57da48de74041ad47c123e1e2dbb, type: 2}
       propertyPath: speedFactor
       value: 3
@@ -2308,7 +2312,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 483294, guid: 6dab19b30813c41fcbb77fc4cb7ee123, type: 2}
       propertyPath: m_RootOrder
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 11413446, guid: 6dab19b30813c41fcbb77fc4cb7ee123, type: 2}
       propertyPath: mold
@@ -2612,7 +2616,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 488146, guid: 56e3355c557704b32acdcbce74217072, type: 2}
       propertyPath: m_RootOrder
-      value: 9
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 56e3355c557704b32acdcbce74217072, type: 2}

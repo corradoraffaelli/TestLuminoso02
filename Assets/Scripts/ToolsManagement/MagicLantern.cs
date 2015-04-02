@@ -17,8 +17,8 @@ public class MagicLantern : Tool {
 	GameObject camera;
 	GameObject projectionObject;
 
-	public LayerMask toChase;
-	public LayerMask hiding;
+	//public LayerMask toChase;
+	//public LayerMask hiding;
 
 	public float zPositionEnvironment = 0.0f;
 	public float resizeFactor = 4.0f;
@@ -52,6 +52,7 @@ public class MagicLantern : Tool {
 	ProjectionCollision PC;
 
 	bool createdProjection = false;
+	bool leftLantern = false;
 
 	//--------INITIALIZATION AND ACTIVATION-------------------------------------
 
@@ -101,10 +102,6 @@ public class MagicLantern : Tool {
 		ySize = boundsRay.size.y;
 
 		PC.setProjectionObject(projectionObject);
-
-
-
-
 	}
 
 	protected override void activationToolFunc()
@@ -134,45 +131,61 @@ public class MagicLantern : Tool {
 	//qui va inserita la logica del tool, usata nell'update...
 	protected override void useTool() {
 
-		//movimenti del raggio e della proiezione sotto al mouse
-		normalMovementsUnderMouse ();
+		if (!leftLantern) {
+			//movimenti del raggio e della proiezione sotto al mouse
+			normalMovementsUnderMouse ();
 
-		//DEBUG: se si preme E, si passa al prossimo vetrino
-		if (Input.GetKeyUp (KeyCode.E)) {
-			deleteActualProjection();
-			actualGlass = nextUsableGlass();
+			//si aggiornano le sprites del vetrino
+			//viene fatto ad ogni update, da verificare se troppo pesante, precedentemente queste funzioni erano poste in modo più intelligente,
+			//sono state inserite nell'update per semplificare
+			glassSpriteUpdate ();
+
+			//immplementazione attuale
+
+			// la proiezione si trova fuori da un muro adatto
+			if (!PC.isColliding ()) {
+				changeRayAndCircleSprites (normalRay, normalCircle);
+				changeProjectionSprite (badGlassSprite);
+				deleteActualProjection ();
+
+				// la proiezione si trova in un muro adatto, ma è troppo lontana e risulta fuori fuoco
+			} else if (PC.isColliding () && verifyIfTooFar ()) {
+				changeRayAndCircleSprites (pressedRay, pressedCircle);
+				changeProjectionSprite (blurredSprite);
+				deleteActualProjection ();
+
+				// la proiezione è OK
+			} else if (PC.isColliding () && !verifyIfTooFar ()) {
+				changeRayAndCircleSprites (pressedRay, pressedCircle);
+				changeProjectionSprite (emptySprite);
+				if (!createdProjection) {
+					createdProjection = true;
+					instantiatePrefab ();
+				}
+			}
+
+			//DEBUG: se si preme E, si passa al prossimo vetrino
+			if (Input.GetKeyUp (KeyCode.E)) {
+				deleteActualProjection ();
+				actualGlass = nextUsableGlass ();
+			}
+		} else {
+
 		}
 
-		//si aggiornano le sprites del vetrino
-		//viene fatto ad ogni update, da verificare se troppo pesante, precedentemente queste funzioni erano poste in modo più intelligente,
-		//sono state inserite nell'update per semplificare
-		glassSpriteUpdate ();
-
-		//immplementazione attuale
-
-		// la proiezione si trova fuori da un muro adatto
-		if (!PC.isColliding ()) {
-			changeRayAndCircleSprites (normalRay, normalCircle);
-			changeProjectionSprite (badGlassSprite);
-			//deleteActualProjection();
-
-		// la proiezione si trova in un muro adatto, ma è troppo lontana e risulta fuori fuoco
-		} else if (PC.isColliding () && verifyIfTooFar ()) {
-			changeRayAndCircleSprites (pressedRay, pressedCircle);
-			changeProjectionSprite (blurredSprite);
-			//deleteActualProjection();
-
-		// la proiezione è OK
-		} else if (PC.isColliding () && !verifyIfTooFar ()) {
-			changeRayAndCircleSprites (pressedRay, pressedCircle);
-			changeProjectionSprite (emptySprite);
-			if (!createdProjection)
+		if (Input.GetKeyUp (KeyCode.C)) {
+			leftLantern = !leftLantern;
+			if (leftLantern)
+				toolGameObject.transform.parent = transform;
+			else
 			{
-				createdProjection = true;
-				instantiatePrefab();
-			}else{
-				prefabFollowingCursor();
+				toolGameObject.transform.parent = player.transform;
+				toolGameObject.transform.localPosition = new Vector3(0.4f, 0.8f, 0.0f);
+				//risolvo in maniera malamente il problema del flipping inspiegabile dell'oggetto
+				Vector3 actualScale = toolGameObject.transform.localScale;
+				toolGameObject.transform.localScale = new Vector3 (Mathf.Abs(actualScale.x),Mathf.Abs(actualScale.y),Mathf.Abs(actualScale.z));
 			}
+				
 		}
 
 		//implementazione precedente
@@ -342,13 +355,16 @@ public class MagicLantern : Tool {
 
 	void instantiatePrefab()
 	{
-		//prendo i bounds della sprite della proiezione
-		Bounds objBounds = PC.getSpriteBounds ();
+
 
 		//istanzio un prefab e lo sposto sotto il mouse
 		actualGlass.projectionObject = Instantiate <GameObject> (actualGlass.prefabObject);
 		actualGlass.projectionObject.transform.position = new Vector3(actualMousePosition.x, actualMousePosition.y, zPositionEnvironment);
 
+
+
+		//prendo i bounds della sprite della proiezione
+		Bounds objBounds = PC.getSpriteBounds ();
 		//prendo lo spriteRenderer del prefab ed i suoi bounds
 		SpriteRenderer actualSprite = actualGlass.projectionObject.transform.GetComponent<SpriteRenderer> ();
 		//actualSprite.sprite = projectionSprite;
@@ -357,13 +373,31 @@ public class MagicLantern : Tool {
 		//scalo l'oggetto per far sì che la sua sprite coincida con quella sottostante (teoricamente vuota)
 		float spriteScale = objBounds.size.x / newObjBounds.size.x;
 		actualGlass.projectionObject.transform.localScale = new Vector3 (spriteScale, spriteScale, spriteScale);
-		
+
+		//metto l'oggetto come figlio del raggio_cerchio
+		actualGlass.projectionObject.transform.parent = raggio_cerchio.transform;
+
 		actualGlass.projectionObject.SetActive (true);
 	}
 
+	//Attualmente inutilizzata
 	void prefabFollowingCursor()
 	{
+		//actualGlass.projectionObject.transform.position = ;
 
+		Bounds objBounds = PC.getSpriteBounds ();
+		Bounds newObjBounds = actualGlass.projectionObject.transform.GetComponent<SpriteRenderer> ().bounds;
+		//float spriteScale = objBounds.size.x / newObjBounds.size.x;
+		//actualGlass.projectionObject.transform.localScale = new Vector3 (spriteScale, spriteScale, spriteScale);
+		//newObjBounds.SetMinMax (objBounds.min, objBounds.max);
+		//float spriteScale = objBounds.size.x / newObjBounds.size.x;
+		//actualGlass.projectionObject.transform.localScale = new Vector3 (spriteScale, spriteScale, spriteScale);
+		//Debug.Log (spriteScale);
+		Debug.Log (newObjBounds.size);
+		Debug.Log ("obj " + objBounds.min);
+		Debug.Log ("obj " + objBounds.max);
+		Debug.Log ("new " + newObjBounds.min);
+		Debug.Log ("new " + newObjBounds.max);
 	}
 
 	//istanzia un nuovo oggetto di tipo "Projection" una volta che si clicca sulla posizione voluta
