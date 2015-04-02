@@ -6,9 +6,9 @@ public class Glass : MonoBehaviour
 	// da impostare a private
 	public bool usable = false;
 	bool canBeEnabled = true;
-	public bool attractor = false;
-	public bool canInstantiateObj = false;
-	public GameObject toOverlap;
+	//public bool attractor = false;
+	//public bool canInstantiateObj = false;
+	//public GameObject toOverlap;
 
 	public bool Usable {
 		get{ 
@@ -29,6 +29,7 @@ public class Glass : MonoBehaviour
 	public GameObject[] subGlassList;
 
 	//oggetto proiettato ddal vetrino, public perché deve essere usato dallo script della lanterna
+	[HideInInspector]
 	public GameObject projectionObject;
 
 	//prfab dell'oggetto istanziato dal vetrino, va imposto manualmente
@@ -50,7 +51,7 @@ public class Glass : MonoBehaviour
 		return true;
 	}
 
-
+	/*
 	public bool controlIfOverlap(Bounds inObjBOunds)
 	{
 		BoxCollider2D BCOut = toOverlap.GetComponent<BoxCollider2D> ();
@@ -63,6 +64,7 @@ public class Glass : MonoBehaviour
 		    return false;
 
 	}
+	*/
 
 
 }
