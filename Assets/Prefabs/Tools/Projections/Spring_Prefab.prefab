@@ -10,6 +10,7 @@ GameObject:
   - 4: {fileID: 432572}
   - 212: {fileID: 21218108}
   - 61: {fileID: 6107590}
+  - 114: {fileID: 11404556}
   m_Layer: 0
   m_Name: Spring_Prefab
   m_TagString: Untagged
@@ -41,7 +42,19 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Size: {x: 1.40999997, y: 2.48000002}
+  m_Size: {x: 2.55999994, y: .980000019}
+--- !u!114 &11404556
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 160210}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e921027d9ca6c147a00d8e4c59ec410, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  upForce: 500
 --- !u!212 &21218108
 SpriteRenderer:
   m_ObjectHideFlags: 1
