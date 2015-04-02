@@ -3,7 +3,20 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - SoftGround
+  - Ladder
+  - GroundCheck
+  - hor_wall
+  - ground_astar
+  - escapePoint
+  - ver_wall
+  - dx_foothold
+  - wall_astar
+  - sx_foothold
+  - groundCheck
+  - Stunning
+  - ProjectionWall
   layers:
   - Default
   - TransparentFX
@@ -13,17 +26,17 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Ground
+  - SoftGround
+  - Ladder
+  - PlayerStunned
+  - Player
+  - Enemies
+  - ToChase
+  - ToFlee
+  - Hiding
+  - Clone
+  - Platform
   - 
   - 
   - 
@@ -40,4 +53,16 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Scene
+    uniqueID: 3630162507
+    locked: 0
+  - name: tool
+    uniqueID: 90432273
+    locked: 0
+  - name: Inventory
+    uniqueID: 690481819
+    locked: 0
+  - name: UI
+    uniqueID: 858567151
     locked: 0
