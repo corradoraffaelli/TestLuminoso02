@@ -43,7 +43,7 @@ using System;
  * 
  */
 
-public class basicAIEnemyV4 : MonoBehaviour {
+public class basicAIEnemyV4old : MonoBehaviour {
 
 	//DEBUG VARIABLES
 	bool DEBUG_PHASE_BASIC = false;
@@ -54,7 +54,6 @@ public class basicAIEnemyV4 : MonoBehaviour {
 	public bool []DEBUG_RECOGNITION = new bool[2];
 	public bool []DEBUG_ASTAR = new bool[2];
 	public bool DEBUG_FLIP = false;
-	public bool DEBUG_COLLISION = false;
 
 	//Gestione macchina a stati-----------------------------------------------------------------------
 	public enum enemyMachineState {
@@ -69,9 +68,6 @@ public class basicAIEnemyV4 : MonoBehaviour {
 	
 	//Gestione tipologia nemico------------------------------------------------------------------------
 	public enum enemyType {
-		Dumb,
-		Guard,
-		Heavy,
 		NoJumpJustWander,//cammina a caso e si gira dopo essersi scontrato con un ostacolo
 		NoJumpJustPatrol,//fa solo patrol
 		NoJumpSoftChase,//non si allontana troppo dai punti di patrol
@@ -79,25 +75,6 @@ public class basicAIEnemyV4 : MonoBehaviour {
 		HeavyChase,//come precedente, ma può pure saltare (non implementato)
 	}
 	public enemyType eType;
-
-	public enum patrolType {
-		Walk,
-		Stand,
-		Area,
-	}
-	patrolType paType;
-
-	public enum chaseType {
-		ChargedCh,
-		Constant,
-	}
-	chaseType chType;
-
-	public enum attackType {
-		Immediate,
-		ChargedAt,
-	}
-	attackType atType;
 
 	public bool killable = false;
 	public GameObject spawner;
@@ -172,11 +149,6 @@ public class basicAIEnemyV4 : MonoBehaviour {
 
 	//enemytype nojumpsoftchase
 	float offset_MaxDistanceReachable_FromChase = 5.0f;
-	bool chaseCharged = false;
-	bool chaseCharging = false;
-	float tChargingChase = 1.0f;
-	float tStartCrash = -1.0f;
-	float tToReachMaxCrashVelocity = 0.5f;
 
 	//Gestione attack----------------------------------------------------------------------------------
 	float tLastAttack = 0.0f;
@@ -186,12 +158,6 @@ public class basicAIEnemyV4 : MonoBehaviour {
 	float marginAtChThreshold = 0.06f;//ex. 0.3f
 
 	bool isPlayerStunned = false;
-
-	public bool attackCharged = false;
-	public bool attackCharging = false;
-	float tChargingAttack = 0.5f;
-	public bool attackStuck = false;
-	float tStuckLenght = 2.0f;
 	
 	//Gestione fleeing---------------------------------------------------------------------------------
 	//public LayerMask fleeLayer; dichiarato su
@@ -211,7 +177,6 @@ public class basicAIEnemyV4 : MonoBehaviour {
 	PhysicsMaterial2D myPhysicsMat;
 	GameObject myToStun;
 	GameObject myWeakPoint;
-	bool involveEType = false;
 
 	//Gestione jump------------------------------------------------------------------------------------
 	
@@ -240,117 +205,47 @@ public class basicAIEnemyV4 : MonoBehaviour {
 	
 	// Use this for initialization
 	void Start () {
-
+		//c2d = GetComponent<controller2DV2> ();
 		pm = GetComponent<PlayerMovements> ();
-		myAstar = GetComponent<SimpleAI2D> ();
+		eMS = enemyMachineState.Patrol;
+		//originalHDifferenceWithTarget = thresholdHeightDifference;
+
+		setupStartState ();
 
 		getGroundCheck ();
 
+		checkPatrolPoints ();
+		
 		checkSuspPoints ();
 		
 		normalizeSpatialVariables ();
 		
+		//inizializzazione comportamento/personalità
 		takeStatusImg ();
 		
+		getScriptAStar ();
 
-		setupEnemy ();
+		setupByEnemyType ();
 
 		getMyToStun ();
-
 		getMyWeakPoint ();
+		//myPers = new Personality (this.behavior, this.suspiciousness, this.senses);
+		//myPriors = new ArrayList ();
+	}
+
+	private void setupStartState() {
+
+		if (eType == enemyType.NoJumpJustWander)
+			eMS = enemyMachineState.Wander;
+		else
+			eMS = enemyMachineState.Patrol;
 
 	}
 
-	private patrolType setupPatrolPoints() {
 
-		bool pointNotAssigned = false;
-
-		if(patrolPoints.Length>0) {
-			//serve almeno 1 punto
-			
-			foreach(GameObject pp in patrolPoints) {
-				
-				if(pp == null) {
-					Debug.Log("Attento, non hai assegnato correttamente i patrol point/s");
-					pointNotAssigned = true;
-				}
-			}
-			
-			if(pointNotAssigned) {
-				Debug.Log ("L'AI quindi ha come default il patrol di tipo walk (wander like)");
-				return patrolType.Walk;
-			}
-
-			if(patrolPoints.Length>2) {
-				Debug.Log("Hai assegnato più di 2 punti di patrol, non è un caso previsto per ora");
-				Debug.Log ("L'AI quindi ha come default il patrol di tipo walk (wander like)");
-				return patrolType.Walk;
-			}
-				 
-
-			if(patrolPoints.Length==1) {
-				return patrolType.Stand;
-			}
-			else { 
-				if(patrolPoints.Length==2) {
-					return patrolType.Area;
-				} 
-				else {
-					Debug.Log ("CASO ASSURDO NEL SETUP DI PATROL");
-					Debug.Log ("L'AI quindi ha come default il patrol di tipo walk (wander like)");
-					return patrolType.Walk;
-				}
-			}
-
-		}
-		else {
-
-			return patrolType.Walk;
-
-		}
-
-
-	}
-
-	private void setupEnemy() {
-
-		switch(eType) {
-
-			case enemyType.Dumb :
-				canJump = false;
-				eMS = enemyMachineState.Wander;
-				pm.speedFactor = 2.0f;
-				break;
-			
-			case enemyType.Guard :
-				canJump = false;
-				eMS = enemyMachineState.Patrol;
-				pm.speedFactor = 5.0f;
-				paType = setupPatrolPoints ();
-				chType = chaseType.ChargedCh;
-				atType = attackType.Immediate;
-				break;
-
-			case enemyType.Heavy :
-				canJump = false;
-				eMS = enemyMachineState.Patrol;
-				pm.speedFactor = 2.0f;
-				paType = setupPatrolPoints ();
-				chType = chaseType.Constant;
-				atType = attackType.ChargedAt;
-				break;
-
-		}
-
-	}
-	
-	
 	private void getMyToStun() {
 
 		bool founded = false;
-
-		if (eType != enemyType.Heavy)
-			return;
 
 		foreach (Transform child in transform) {
 
@@ -392,7 +287,42 @@ public class basicAIEnemyV4 : MonoBehaviour {
 
 	}
 
+	private void setupByEnemyType() {
+		
+		switch (eType) {
 
+			case enemyType.NoJumpJustWander :
+
+				canJump = false;
+				
+				break;
+
+			case enemyType.NoJumpJustPatrol :
+			
+				canJump = false;
+			
+				break;
+
+			case enemyType.NoJumpSoftChase :
+				
+				canJump = false;
+				
+				break;
+				
+			case enemyType.NoJumpHeavyChase :
+				
+				canJump = false;
+				
+				break;
+				
+			case enemyType.HeavyChase :
+				
+				canJump = true;
+				
+				break;
+		}
+		
+	}
 	
 	private void getGroundCheck(){
 		
@@ -442,6 +372,64 @@ public class basicAIEnemyV4 : MonoBehaviour {
 		
 	}
 	
+	//TODO: PRIO non funziona bene
+	private void checkPatrolPoints(bool reallocate = false){
+		
+		//Debug.Log("gen patrol");
+		bool pointNotAssigned = false;
+
+		if(patrolPoints.Length>0 && !reallocate) {
+			//serve almeno 1 punto
+
+			foreach(GameObject pp in patrolPoints) {
+
+				if(pp == null) {
+					Debug.Log("Attento, non hai assegnato correttamente i patrol point/s");
+					pointNotAssigned = true;
+				}
+			}
+
+			if(!pointNotAssigned)
+				return;
+			//TODO: fare qualcosa in questo caso?
+
+		}
+
+
+		if(reallocate) {
+			if(patrolPoints.Length>0) {
+				patrolPoints[0].transform.position = new Vector3(groundCheckTransf.position.x - 3*transform.localScale.x, groundCheckTransf.position.y, groundCheckTransf.position.z);
+				if(patrolPoints.Length>1) {
+					patrolPoints[1].transform.position =  new Vector3(groundCheckTransf.position.x + 3*transform.localScale.x, groundCheckTransf.position.y, groundCheckTransf.position.z);
+				}
+			}
+		}
+		else {
+
+			GameObject p = GameObject.Find ("AutoGenPatrolPoints");
+			
+			if (p == null) {
+				//Debug.Log ("creo patrol points containter");
+				p = (GameObject) GameObject.Instantiate(pointPrefab, new Vector3(0.0f, 0.0f, 0.0f), Quaternion.identity);
+				p.name = "AutoGenPatrolPoints";
+			}
+			
+			patrolPoints = new GameObject[2];
+			
+			GameObject ob1 = (GameObject) GameObject.Instantiate(pointPrefab, new Vector3(groundCheckTransf.position.x - 3*transform.localScale.x, groundCheckTransf.position.y, groundCheckTransf.position.z), Quaternion.identity);
+			ob1.name = "Point(clone) " + this.name + " left";
+			ob1.transform.parent = p.transform;
+			patrolPoints[0] = ob1;
+			
+			GameObject ob2 = (GameObject) GameObject.Instantiate(pointPrefab, new Vector3(groundCheckTransf.position.x + 3*transform.localScale.x, groundCheckTransf.position.y, groundCheckTransf.position.z), Quaternion.identity);
+			ob2.name = "Point(clone) " + this.name + " right";
+			ob2.transform.parent = p.transform;
+			patrolPoints[1] = ob2;
+		}
+		
+
+	
+	}
 
 	private bool getRangeOfView(){
 
@@ -518,8 +506,20 @@ public class basicAIEnemyV4 : MonoBehaviour {
 		}
 		
 	}
-
-
+	
+	private void getScriptAStar() {
+		
+		myAstar = GetComponent<SimpleAI2D> ();
+		
+	}
+	
+	void checkPriorities() {
+		
+		checkFleeingNeed ();
+		checkStunned ();
+	}
+	
+	
 	//FINE FUNZIONI START-----------------------------------------------------------------------------------------------------------------------
 	//------------------------------------------------------------------------------------------------------------------------------------------
 	
@@ -584,14 +584,6 @@ public class basicAIEnemyV4 : MonoBehaviour {
 				break;
 		}
 	}
-
-	void checkPriorities() {
-		
-		if(eType!=enemyType.Dumb) 
-			checkFleeingNeed ();
-
-		checkStunned ();
-	}
 	
 	//METODI GESTIONE COMPORTAMENTO--------------------------------------------------------------------------------------------------------
 	
@@ -636,7 +628,25 @@ public class basicAIEnemyV4 : MonoBehaviour {
 	}
 	*/
 
+	private enemyMachineState isStoppedWander() {
 
+		return enemyMachineState.Wander;
+
+	}
+
+	private void continueWander() {
+
+		Debug.DrawLine (new Vector2(transform.position.x, transform.position.y + 1.0f), i_facingRight () ? new Vector2 (transform.position.x + 1.0f, transform.position.y + 1.0f) : new Vector2 (transform.position.x - 1.0f, transform.position.y + 1.0f), Color.red);
+		RaycastHit2D hit = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y + 1.0f), i_facingRight()? Vector2.right : -Vector2.right, 1.0f, obstacleLayers);
+		if (hit.collider != null) {
+			Debug.Log ("flippooooo per " + hit.collider.gameObject.name);
+			i_flip();
+			
+		}
+
+		i_move ();
+
+	}
 
 	private void _Wandering(float deltaTime) {
 
@@ -1109,7 +1119,11 @@ public class basicAIEnemyV4 : MonoBehaviour {
 	//METODI GESTIONE STATI-----------------------------------------------------------------------------------------------------------------------
 	//--------------------------------------------------------------------------------------------------------------------------------------------
 	//--------------------------------------------------------------------------------------------------------------------------------------------
-
+	
+	//se per qualche motivo il target scompare o viene distrutto...
+	//oppure se non appartiene ad un layer di interesse
+	//8 = Player (layer)
+	//13 = Showing (layer) (per le false proiezioni)
 	private bool isTargetLost(){
 		
 		if (myAstar.Target == null ) {
@@ -1138,30 +1152,16 @@ public class basicAIEnemyV4 : MonoBehaviour {
 		return false;
 	}
 	
+	void checkMyLife() {
+		
+		
+	}
 	
-	//METODI GESTIONE STATO WANDER -------------------------------------------------------------------------------------------------------------------
+	
+	//METODI GESTIONE STATO BASICGROUNDING -------------------------------------------------------------------------------------------------------------------
 	//-----------------------------------------------------------------------------------------------------------------------------------------------
 	
-	private enemyMachineState isStoppedWander() {
-		
-		return enemyMachineState.Wander;
-		
-	}
 	
-	private void continueWander(float myScaleFactor=1) {
-		
-		Debug.DrawLine (new Vector2(transform.position.x, transform.position.y + 1.0f), i_facingRight () ? new Vector2 (transform.position.x + 1.0f, transform.position.y + 1.0f) : new Vector2 (transform.position.x - 1.0f, transform.position.y + 1.0f), Color.red);
-		RaycastHit2D hit = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y + 1.0f), i_facingRight()? Vector2.right : -Vector2.right, 1.0f, obstacleLayers);
-		if (hit.collider != null) {
-			if(DEBUG_FLIP)
-				Debug.Log ("flippooooo per ostacolo in prossimità " + hit.collider.gameObject.name);
-			i_flip();
-			
-		}
-		
-		i_move (myScaleFactor);
-		
-	}
 	
 	
 	//METODI GESTIONE STATO FLEEING-----------------------------------------------------------------------------------------------------------------------
@@ -1432,46 +1432,84 @@ public class basicAIEnemyV4 : MonoBehaviour {
 
 		if (changeDir) {
 			//Debug.Log("ci sono riuscito");
-			if(patrolPoints.Length>0) {
-				if(pm.FacingRight) {
-					patrolledTarget = patrolPoints[0].transform;
-					//Debug.Log("cerco sx");
-				}
-				else {
-					//dovrei impostare il patrol point destro, ma se
-					//non è assegnato, punto al primo
-
-					if(patrolPoints.Length>1)
-						patrolledTarget = patrolPoints[1].transform;
-					else
-						patrolledTarget = patrolPoints[0].transform;
-
-					//Debug.Log("cerco dx");
-				}
-
-				patrollingTowardAPoint = true;
-				setTargetAStar (patrolledTarget.gameObject);
-
+			if(pm.FacingRight) {
+				patrolledTarget = patrolPoints[0].transform;
+				//Debug.Log("cerco sx");
 			}
+			else {
+				//dovrei impostare il patrol point destro, ma se
+				//non è assegnato, punto al primo
+				if(patrolPoints.Length>1)
+					patrolledTarget = patrolPoints[1].transform;
+				else
+					patrolledTarget = patrolPoints[0].transform;
+				//Debug.Log("cerco dx");
+			}
+			patrollingTowardAPoint = true;
+			setTargetAStar (patrolledTarget.gameObject);
 
 			i_flip();
 		}
 	}
-	
 
 	//basic method to detect enemies
 	private enemyMachineState isStoppedPatrol(ref GameObject go){
 
 		RaycastHit2D hit;
 
-		//switch fra eType oppure paType inutile
+		//controlli ad hoc per ogni enemyType
+		switch (eType) {
 
-		//controlli in comune a tutti gli enemyType e paType
+			case enemyType.NoJumpJustPatrol :
+				//non esce mai dal patrol
+				return enemyMachineState.Patrol;
+				break;
+			case enemyType.NoJumpSoftChase :
+				break;
+			case enemyType.NoJumpHeavyChase :
+				/*
+				if (backVision) {
+					//OPZIONALE PER NEMICI FORTI??
 
+					hit = Physics2D.Raycast (transform.position, i_facingRight() ? -Vector2.right : Vector2.right, backDistanceOfView, targetLayers);
+					if (hit.collider != null) {
+						//Debug.Log ("check2");
+						go = hit.transform.gameObject;
+						return enemyMachineState.Chase;
+						
+					}
+				}
+				*/
+				break;
+			case enemyType.HeavyChase :
+				/*
+				if (backVision) {
+					//OPZIONALE PER NEMICI FORTI??
+					
+					hit = Physics2D.Raycast (transform.position, i_facingRight() ? -Vector2.right : Vector2.right, backDistanceOfView, targetLayers);
+					if (hit.collider != null) {
+						//Debug.Log ("check2");
+						go = hit.transform.gameObject;
+						return enemyMachineState.Chase;
+						
+					}
+				}
+				*/
+				break;
+			default :
+			
+			break;
+			
+		}
+		
+		//controlli in comune a tutti gli enemyType
+		//Debug.Log ("check1");
 		Debug.DrawLine (new Vector2(transform.position.x, transform.position.y + 1.0f), i_facingRight () ? new Vector2 (transform.position.x + frontalDistanceOfView, transform.position.y + 1.0f) : new Vector2 (transform.position.x - frontalDistanceOfView, transform.position.y + 1.0f), Color.red);
 		hit = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y + 1.0f) , i_facingRight()? Vector2.right : -Vector2.right, frontalDistanceOfView, targetLayers);
 		if (hit.collider != null) {
+			//Debug.Log ("check2");
 			go = hit.transform.gameObject;
+			//Debug.Log("nome di ciò che becco" + go.name + "posizione " + go.transform.position.x);
 			if(DEBUG_FSM_TRANSITION[1])
 				Debug.Log ("PA -> CH - Raycast trova target : " + go.name);
 
@@ -1484,39 +1522,88 @@ public class basicAIEnemyV4 : MonoBehaviour {
 		return enemyMachineState.Patrol;
 		
 	}
-
+	
 	private void continuePatrol() {
+		//TODO: PRIOR abbiamo 2 casi di patrol, quindi due sotto stati. Gestire meglio
+		
+		switch (eType) {
+			case enemyType.NoJumpJustPatrol :
 
-		switch (paType) {
-
-			case patrolType.Walk :
-				continueWander(0.5f);
-				break;
-			case patrolType.Stand :
 				if(suspicious) {
+					
+					//STATO PATROL-suspicious
+					
 					patrollingSuspicious();
+					
 				}
 				else {
-					patrollingBetweenPoints (0, 0.5f);
+					
+					//STATO PATROL-normal
+					
+					patrollingBetweenPoints (0);
 				}
-				break;
-			case patrolType.Area :
-				if(suspicious) {
-					patrollingSuspicious();
-				}
-				else {
-					patrollingBetweenPoints (0, 0.5f);
-				}
-				break;
-			default :
+
 				break;
 
+			case enemyType.NoJumpSoftChase :
+
+				if(suspicious) {
+					
+					//STATO PATROL-suspicious
+					
+					patrollingSuspicious();
+					
+				}
+				else {
+					
+					//STATO PATROL-normal
+					
+					patrollingBetweenPoints (0);
+				}
+
+				break;
+
+			case enemyType.NoJumpHeavyChase :
+				if(suspicious) {
+					
+					//STATO PATROL-suspicious
+					
+					patrollingSuspicious();
+					
+				}
+				else {
+					
+					//STATO PATROL-normal
+					
+					patrollingBetweenPoints (0);
+				}
+				
+				break;
+				
+			case enemyType.HeavyChase :
+				if(suspicious) {
+					
+					//STATO PATROL-suspicious
+					
+					patrollingSuspicious();
+					
+				}
+				else {
+					
+					//STATO PATROL-normal
+					
+					patrollingBetweenPoints (1);
+				}
+				
+				break;
+
+			
 		}
-
-
+		
+		
+		
 	}
-
-
+	
 	private void setNextPatrolTargetPoint(GameObject t) {
 		
 		setTargetAStar (patrolledTarget.gameObject);
@@ -1602,7 +1689,7 @@ public class basicAIEnemyV4 : MonoBehaviour {
 		
 	}
 	
-	private void patrollingBetweenPoints(int mode, float myScaleFactor=1) {
+	private void patrollingBetweenPoints(int mode) {
 		
 		//Debug.Log ("ciao1");
 
@@ -1611,7 +1698,7 @@ public class basicAIEnemyV4 : MonoBehaviour {
 
 			if (Mathf.Abs (patrolledTarget.transform.position.y - groundCheckTransf.position.y) > thresholdHeightDifference) {
 
-				paType = patrolType.Walk;
+				checkPatrolPoints (true);
 			
 			}
 		}
@@ -1648,7 +1735,7 @@ public class basicAIEnemyV4 : MonoBehaviour {
 			else {
 				//go toward the patrol point
 				if(mode==0) {
-					moveAlongAStarPathNoJump(myScaleFactor);
+					moveAlongAStarPathNoJump();
 				}
 				else {
 
@@ -1734,20 +1821,6 @@ public class basicAIEnemyV4 : MonoBehaviour {
 	private void initializeChase(GameObject t) {
 		
 		setTargetAStar (t);
-
-		switch (chType) {
-
-			case chaseType.ChargedCh :
-
-				chaseCharged = false;
-				chaseCharging = false;
-
-				break;
-
-			default :
-				break;
-
-		}
 		
 	}
 
@@ -1804,86 +1877,90 @@ public class basicAIEnemyV4 : MonoBehaviour {
 			return false;
 
 	}
-
+	
 	private enemyMachineState isStoppedChase() {
+		
+		//controlli ad hoc per ogni enemyType
+		switch (eType) {
 
-		float dist;
+			case enemyType.NoJumpJustPatrol :
+				//non ci arriverà mai qui, perché non è previsto che faccia il chase
+			case enemyType.NoJumpSoftChase :
+				
+				if(isTargetOutOfPatrolArea()) {
 
-		switch (chType) {
+					if(DEBUG_FSM_TRANSITION[1])
+						Debug.Log ("CH -> PA - target esce da area di patrol");
 
-			case chaseType.ChargedCh :
+					return enemyMachineState.Patrol;
+				}
+
 				if(isTargetAtDifferentHeight()) {
-					
+
 					if(DEBUG_FSM_TRANSITION[1])
 						Debug.Log ("CH -> PA - target va ad una altezza diversa dalla mia");
-					
+
 					return enemyMachineState.Patrol;
 				}
 				
-				if(chaseCharged) {
-					RaycastHit2D hit = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y + 1.0f), i_facingRight()? Vector2.right : -Vector2.right, 1.0f, obstacleLayers);
-					if (hit.collider != null) {
-						Debug.Log ("urtato ostacolo!" + hit.collider.gameObject.name);
-						return enemyMachineState.Stunned;
-						
-					}
-				}
-
 				break;
-
-			case chaseType.Constant :
+				
+			case enemyType.NoJumpHeavyChase :
 				if(isTargetAtDifferentHeight()) {
-					
+						
 					if(DEBUG_FSM_TRANSITION[1])
 						Debug.Log ("CH -> PA - target va ad una altezza diversa dalla mia");
-					
+
 					return enemyMachineState.Patrol;
 				}
 				break;
 
+			case enemyType.HeavyChase :
+				
 			default :
+				
 				break;
-
+			
 		}
-
-		//controlli in comune a tutti
+		
+		//controlli in comune a tutti gli enemyType
 		
 		//controllo se è null o ha cambiato layer...
 		if (isTargetLost ()) {
-			
+
 			if(DEBUG_FSM_TRANSITION[1])
 				Debug.Log ("CH -> PA - target perso");
-			
+
 			return enemyMachineState.Patrol;
 		}
-
-		dist = Vector2.Distance (groundCheckTransf.position, myAstar.Target.transform.position);
 		
+		//float dist = Vector2.Distance (transform.position, new Vector2 (chasedTarget.position.x, chasedTarget.position.y));
+		//float dist = Vector2.Distance (groundCheckTransf.position, new Vector2 (myAstar.Target.transform.position.x, myAstar.Target.transform.position.y));
+
+		float dist = Vector2.Distance (groundCheckTransf.position, myAstar.Target.transform.position);
+
 		//se è troppo lontano torno a patrol...
 		if (isTargetFar (dist)) {
-			
+
 			if(DEBUG_FSM_TRANSITION[1])
 				Debug.Log ("CH -> PA - target troppo lontano");
-			
+
 			return enemyMachineState.Patrol;
 		}
 		
 		
 		//se è vicino passo ad attack
 		if (isTargetNear (dist)) {
-			
+		
 			if(DEBUG_FSM_TRANSITION[1])
 				Debug.Log ("CH -> AT - target è nella mia zona di attacco");
-			
+
 			return enemyMachineState.Attack;
-			
-		}
 		
+		}
+
 		return enemyMachineState.Chase;
-
 	}
-
-
 
 	//TODO: da generalizzare.. per ora è fatta ad hoc... per dare priorità a qualcosa altro che non sia il player
 	private void checkChangeChaseTarget(){
@@ -1924,87 +2001,34 @@ public class basicAIEnemyV4 : MonoBehaviour {
 		}
 		
 	}
-
-	private IEnumerator chargeChase() {
-
-		chaseCharging = true;
-
-		yield return new WaitForSeconds(tChargingChase);
-
-		chaseCharging = false;
-		chaseCharged = true;
-		tStartCrash = Time.time;
-	}
-
-	//smusso anche qui l'accellerazione, più velocemente però
-	private void constantCatchTarget() {
-
-		float mydelta;
-		mydelta = Time.time - tStartCrash;
-		
-		if (mydelta != 0) {
-
-			//per raggiungere la massima velocità di carica
-			//uso una tempistica inferiore a quella usata per il tipo di chase con la carica
-
-			mydelta = mydelta / (tToReachMaxCrashVelocity * 0.7f );
-			if(mydelta>1.0f)
-				mydelta = 1.0f;
-			
-		}
-		
-		moveAlongAStarPathNoJump(Mathf.Lerp (0.5f, 1.0f, mydelta));
-
-	}
-
-	private void crashTowardTarget() {
-
-		float mydelta;
-		mydelta = Time.time - tStartCrash;
-
-		if (mydelta != 0) {
-
-			mydelta = mydelta / tToReachMaxCrashVelocity;
-			if(mydelta>1.0f)
-				mydelta = 1.0f;
-
-		}
-
-		if (mydelta < 1)
-			moveAlongAStarPathNoJump (Mathf.Lerp (0.5f, 1.0f, mydelta));
-		else
-			i_move ();
-	}
-
+	
 	private void continueChase(){
 
-		switch (chType) {
 
-			case chaseType.ChargedCh :
-				if(chaseCharged) {
 
-					crashTowardTarget();
-					
-				}
-				else {
-					if(!chaseCharging) {
-						StartCoroutine(chargeChase());
-					}
-				}
+		switch (eType) {
 
+			case enemyType.NoJumpJustPatrol :
+				//non ci arriverà mai qui, perché non è previsto che faccia il chase
+			case enemyType.NoJumpSoftChase :
+				//checkChangeChaseTarget();
+				moveAlongAStarPathNoJump();
+				
 				break;
-
-			case chaseType.Constant :
-				constantCatchTarget();
-
+				
+			case enemyType.NoJumpHeavyChase :
+				//checkChangeChaseTarget();
+				moveAlongAStarPathNoJump();
+				
 				break;
-
-			default : 
-
+				
+			case enemyType.HeavyChase :
+				//checkChangeChaseTarget();
+				moveAlongAStarPathNoLimits ();
+				
 				break;
-
+			
 		}
-
 	}
 	
 	//METODI GESTIONE STATO ATTACKING -------------------------------------------------------------------------------------------------------------------
@@ -2032,45 +2056,50 @@ public class basicAIEnemyV4 : MonoBehaviour {
 
 		Rigidbody2D r = GetComponent<Rigidbody2D> ();
 		r.velocity = new Vector2 (r.velocity.x * 0.2f, r.velocity.y);
-		
-		attackCharged = false;
-		attackCharging = false;
-		attackStuck = false;
+
 	}
 	
 	private enemyMachineState isStoppedAttack() {
 
-		float dist;
 		//controlli ad hoc per ogni enemyType
+		switch (eType) {
 
-		switch (atType) {
-
-			case attackType.ChargedAt :
-
+			case enemyType.NoJumpJustPatrol :
+				//non ci arriverà mai qui, perché non è previsto che faccia l'attack
 				break;
 
-			case attackType.Immediate :
+			case enemyType.NoJumpSoftChase :
+				if(isPlayerStunned) {
+					if(DEBUG_FSM_TRANSITION[1])
+						Debug.Log("AT -> PA - target colpito");
+					//i_flip();
+					isPlayerStunned = false;
+					return enemyMachineState.Patrol;
 
+				}
 				break;
 
+			case enemyType.NoJumpHeavyChase :
+				if(isPlayerStunned) {
+					if(DEBUG_FSM_TRANSITION[1])
+						Debug.Log("AT -> PA - target colpito");
+					//i_flip();
+					isPlayerStunned = false;
+					return enemyMachineState.Patrol;
+
+				}
+				break;
+
+			case enemyType.HeavyChase :
+				
 			default :
-
+				
 				break;
-
+			
 		}
-
-		//controlli in comune a tutti
-
-		//non esco da modalità attack se sono stuck
-		if (attackStuck || attackCharging || attackCharged) {
-
-			if(DEBUG_FSM_TRANSITION[1])
-				Debug.Log("AT -> AT - variabili che non mi fanno uscire da attack");
-
-			return enemyMachineState.Attack;
-
-		}
-
+		
+		//controlli in comune a tutti gli enemyType
+		
 		//se per qualche motivo il target scompare o viene distrutto...
 		if (isTargetLost()) {
 			if(DEBUG_FSM_TRANSITION[1])
@@ -2078,7 +2107,7 @@ public class basicAIEnemyV4 : MonoBehaviour {
 			return enemyMachineState.Patrol;
 		}
 		
-		dist = Vector2.Distance (groundCheckTransf.position, new Vector2 (myAstar.Target.transform.position.x, myAstar.Target.transform.position.y));
+		float dist = Vector2.Distance (groundCheckTransf.position, new Vector2 (myAstar.Target.transform.position.x, myAstar.Target.transform.position.y));
 		
 		if (isTargetNotNear(dist)) {
 
@@ -2091,80 +2120,30 @@ public class basicAIEnemyV4 : MonoBehaviour {
 		
 		return enemyMachineState.Attack;
 	}
-
-	private IEnumerator chargeAttack() {
-		
-		attackCharging = true;
-		
-		yield return new WaitForSeconds(tChargingAttack);
-		
-		attackCharging = false;
-		attackCharged = true;
-	}
-
-	private IEnumerator handleStuck() {
-		
-		attackStuck = true;
-		
-		yield return new WaitForSeconds(tStuckLenght);
-		
-		attackStuck = false;
-
-	}
+	
 	
 	private void continueAttack(){
+		
+		switch (eType) {
 
-		switch (atType) {
-			
-			case attackType.ChargedAt :
-				if(attackCharged || attackStuck) {
-					
-					if(!attackStuck) {
-						heavyAttack();
-					}
-					else {
-						if(attackStuck) {
-							if(DEBUG_FSM_TRANSITION[2])
-								Debug.Log ("sono in stuck");
-							
-						}
+			case enemyType.NoJumpJustPatrol :
+				//non ci arriverà mai qui, perché non è previsto che faccia l'attack
 
-					}
-					
-					
-				}
-				else {
-					if(!attackCharging || !attackStuck) {
-						StartCoroutine(chargeAttack());
-					}
-				}
-				break;
+			case enemyType.NoJumpSoftChase :
 				
-			case attackType.Immediate :
+			case enemyType.NoJumpHeavyChase :
 				
-				break;
+			case enemyType.HeavyChase :
 				
 			default :
+				
+				basicAttack();
 				
 				break;
 			
 		}
-
-
 	}
-
-	private void heavyAttack() {
-
-		if(DEBUG_FSM_TRANSITION[2])
-			Debug.Log ("ATTACCO PESANTE");
-
-		myToStun.SendMessage ("c_chargedAttack");
-
-		attackCharged = false;
-		attackCharging = false;
-
-		StartCoroutine (handleStuck ());
-	}
+	
 	//basic attack
 	private void basicAttack(){
 		
@@ -2197,26 +2176,8 @@ public class basicAIEnemyV4 : MonoBehaviour {
 			//GetComponent<Animator>().enabled = false;
 		} else {
 			i_stunned (true);
-
-			switch(eType) {
-
-				case enemyType.Dumb :
-					StartCoroutine(handleKill());
-					break;
-				case enemyType.Guard :
-					if(involveEType) {
-						eType = enemyType.Dumb;
-						setupEnemy();
-						eMS = enemyMachineState.Stunned;
-					}
-					break;
-				case enemyType.Heavy :
-					break;
-				default :
-					break;
-			}
-
-
+			if(killable)
+				StartCoroutine(handleKill());
 
 		}
 
@@ -2260,7 +2221,7 @@ public class basicAIEnemyV4 : MonoBehaviour {
 		//controlli ad hoc per ogni enemyType
 		switch (eType) {
 
-			case enemyType.Dumb :
+			case enemyType.NoJumpJustWander :
 				if (isStunnedCountDownFinished ()) {
 					
 					if(DEBUG_FSM_TRANSITION[1])
@@ -2274,35 +2235,31 @@ public class basicAIEnemyV4 : MonoBehaviour {
 				}
 				break;
 
-			case enemyType.Guard :
-				if (isStunnedCountDownFinished ()) {
-					
-					if(DEBUG_FSM_TRANSITION[1])
-						Debug.Log("ST -> PA - fine countdown stun");
-					
-					return enemyMachineState.Patrol;
-					
-				}
-				break;
+			case enemyType.NoJumpJustPatrol :
 
-			case enemyType.Heavy :
-				if (isStunnedCountDownFinished ()) {
-					
-					if(DEBUG_FSM_TRANSITION[1])
-						Debug.Log("ST -> PA - fine countdown stun");
-					
-					return enemyMachineState.Patrol;
-					
-				}
-
-				break;
-
+			case enemyType.NoJumpSoftChase :
+				
+			case enemyType.NoJumpHeavyChase :
+				
+			case enemyType.HeavyChase :
+				
 			default :
 				
 				break;
 			
 		}
+		
+		//controlli in comune a tutti gli enemyType
+		
+		if (isStunnedCountDownFinished ()) {
+		
+			if(DEBUG_FSM_TRANSITION[1])
+				Debug.Log("ST -> PA - fine countdown stun");
 
+			return enemyMachineState.Patrol;
+
+		}
+		
 		return enemyMachineState.Stunned;
 		
 	}
@@ -2699,7 +2656,7 @@ public class basicAIEnemyV4 : MonoBehaviour {
 	}
 	
 	
-	private void moveAlongAStarPathNoJump(float m_scaleFactor=1) {
+	private void moveAlongAStarPathNoJump() {
 		
 		if (myAstar.Path.Count > 0)
 		{
@@ -2741,7 +2698,7 @@ public class basicAIEnemyV4 : MonoBehaviour {
 					Debug.Log ("ASTAR - target più alto di me e distante");
 
 				//followPath(1, 0.7f);
-				i_move(m_scaleFactor* 0.85f);
+				i_move(0.85f);
 			}
 			else {
 				
@@ -2749,7 +2706,7 @@ public class basicAIEnemyV4 : MonoBehaviour {
 					Debug.Log ("ASTAR - target più alto di me e sopra di me");
 
 				//followPath(1, 0.3f);
-				i_move(m_scaleFactor * 0.7f);
+				i_move(0.7f);
 			}
 			
 		}
@@ -2758,7 +2715,7 @@ public class basicAIEnemyV4 : MonoBehaviour {
 			if(DEBUG_ASTAR[1])
 				Debug.Log ("ASTAR - target alla mia stessa altezza");
 
-			followPath(2, m_scaleFactor);
+			followPath(2);
 		}
 		
 		
@@ -2839,9 +2796,7 @@ public class basicAIEnemyV4 : MonoBehaviour {
 	public void setStunned(bool st) {
 		//Debug.Log ("ahi");
 		this.stunnedReceived = st;
-
-		if (eType == enemyType.Guard)
-			this.involveEType = true;
+		
 	}
 	/*
 	public void setAutoDestroy(bool a) {
@@ -2908,7 +2863,7 @@ public class basicAIEnemyV4 : MonoBehaviour {
 		GetComponent<BoxCollider2D>().enabled = false;
 		GetComponent<BoxCollider2D>().enabled = true;
 		
-		GetComponent<basicAIEnemyV4>().enabled = false;
+		GetComponent<basicAIEnemyV4old>().enabled = false;
 
 	}
 	
@@ -2934,7 +2889,7 @@ public class basicAIEnemyV4 : MonoBehaviour {
 		
 	}
 
-	public void c_playerStunned(bool a) {
+	public void playerStunned(bool a) {
 
 		if (a) {
 			//Debug.Log ("colpito");
@@ -2948,7 +2903,7 @@ public class basicAIEnemyV4 : MonoBehaviour {
 				break;
 			}
 		} else {
-			//non usato
+
 			isPlayerStunned = false;
 
 		}
@@ -2974,23 +2929,6 @@ public class basicAIEnemyV4 : MonoBehaviour {
 		StartCoroutine(handleDestroy(timer));
 
 	}
-
-	public void OnCollisionEnter2D(Collision2D c) {
-
-		if(DEBUG_COLLISION)
-			Debug.Log ("TOCCATO " + c.gameObject.name);
-
-		if (c.gameObject.tag == "Player") {
-			c.gameObject.transform.SendMessage ("c_stunned", true);
-			Vector2 dist = c.gameObject.transform.position - transform.position;
-			
-			Rigidbody2D r = c.gameObject.GetComponent<Rigidbody2D>();
-			r.velocity = new Vector2(0.0f, 0.0f);
-			r.AddForce(300.0f*dist.normalized);
-			//c_playerStunned(true);
-		}
-
-
-	}
+	
 	
 }

@@ -31,7 +31,7 @@ public class StunningPlayer : MonoBehaviour {
 				i_targetNear (true);
 
 				if (Time.time > tLastStun + tBetweenAdvise) {
-					transform.parent.SendMessage ("playerStunned", true);
+					transform.parent.SendMessage ("c_playerStunned", true);
 					tLastStun = Time.time;
 			
 				}
