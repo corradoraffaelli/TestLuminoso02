@@ -54,6 +54,18 @@ public class MagicLantern : Tool {
 	bool createdProjection = false;
 	bool leftLantern = false;
 
+	//parametri per il fine livello
+	//bool endedProjected = false;
+	bool timerStarted = false;
+	float timer = 0.0f;
+	public float projectionTimer = 6.0f;
+
+	ParticleSystem partSyst;
+	public float maxParticleEmission = 2000.0f;
+
+	GameObject tempProjectedObject;
+	//ParticleEmitter partEmit;
+
 	//--------INITIALIZATION AND ACTIVATION-------------------------------------
 
 	protected override void initializeTool() {
@@ -93,6 +105,9 @@ public class MagicLantern : Tool {
 			}
 		}
 
+		//partEmit = raggio_cerchio.GetComponent<ParticleEmitter> ();
+		partSyst = raggio_cerchio.GetComponent<ParticleSystem> ();
+
 		//componenti Sprite Renderer del raggio
 		spRendRay = raggio.GetComponent<SpriteRenderer> ();
 		spRendCircle = raggio_cerchio.GetComponent<SpriteRenderer> ();
@@ -130,7 +145,6 @@ public class MagicLantern : Tool {
 
 	//qui va inserita la logica del tool, usata nell'update...
 	protected override void useTool() {
-
 		if (!leftLantern) {
 			//movimenti del raggio e della proiezione sotto al mouse
 			normalMovementsUnderMouse ();
@@ -141,28 +155,89 @@ public class MagicLantern : Tool {
 			glassSpriteUpdate ();
 
 			//immplementazione attuale
+			if (!actualGlass.endingLevelGlass)
+			{
+				// la proiezione si trova fuori da un muro adatto
+				if (!PC.isColliding ()) {
+					changeRayAndCircleSprites (normalRay, normalCircle);
+					changeProjectionSprite (badGlassSprite);
+					deleteActualProjection ();
+					
+					// la proiezione si trova in un muro adatto, ma è troppo lontana e risulta fuori fuoco
+				} else if (PC.isColliding () && verifyIfTooFar ()) {
+					changeRayAndCircleSprites (pressedRay, pressedCircle);
+					changeProjectionSprite (blurredSprite);
+					deleteActualProjection ();
+					
+					// la proiezione è OK
+				} else if (PC.isColliding () && !verifyIfTooFar ()) {
+					
+					//è un vetrino normale
+					changeRayAndCircleSprites (pressedRay, pressedCircle);
+					changeProjectionSprite (emptySprite);
+					if (!createdProjection) {
+						createdProjection = true;
+						instantiatePrefab ();
+					}
+				}
 
-			// la proiezione si trova fuori da un muro adatto
-			if (!PC.isColliding ()) {
+				timerStarted = false;
+				timer = 0.0f;
+				if (tempProjectedObject)
+					Destroy(tempProjectedObject);
+				partSyst.enableEmission = false;
+				//partEmit.emit = false;
+			}else{
+				//si tratta di un vetrino di fine livello
 				changeRayAndCircleSprites (normalRay, normalCircle);
 				changeProjectionSprite (badGlassSprite);
-				deleteActualProjection ();
 
-				// la proiezione si trova in un muro adatto, ma è troppo lontana e risulta fuori fuoco
-			} else if (PC.isColliding () && verifyIfTooFar ()) {
-				changeRayAndCircleSprites (pressedRay, pressedCircle);
-				changeProjectionSprite (blurredSprite);
-				deleteActualProjection ();
+				if (actualGlass.controlIfOverlap(PC.getSpriteBounds ()) && !actualGlass.endedProjected)
+				{
 
-				// la proiezione è OK
-			} else if (PC.isColliding () && !verifyIfTooFar ()) {
-				changeRayAndCircleSprites (pressedRay, pressedCircle);
-				changeProjectionSprite (emptySprite);
-				if (!createdProjection) {
-					createdProjection = true;
-					instantiatePrefab ();
+					if (timerStarted)
+					{
+						changeProjectionSprite (projectionSprite);
+						projectionEffects();
+						timer+= Time.deltaTime;
+						if (timer > projectionTimer)
+						{
+							actualGlass.activeEndingLevelObjects();
+
+							//disattiva la lanterna
+							actualGlass.endedProjected = true;
+							actualGlass.Usable = false;
+							toolSwitcher TS = transform.parent.gameObject.GetComponent<toolSwitcher>();
+							TS.useTool(false);
+							TS.switchUsingTool(false);
+						}
+					}else{
+						tempProjectedObject = Instantiate(projectionObject, projectionObject.transform.position, projectionObject.transform.rotation) as GameObject;
+						tempProjectedObject.transform.parent = raggio_cerchio.transform;
+						tempProjectedObject.transform.localScale = projectionObject.transform.localScale;
+						//changeProjectionSprite (projectionSprite);
+						timerStarted = true;
+					}
+					partSyst.enableEmission = true;
+					partSyst.emissionRate = (timer*maxParticleEmission)/projectionTimer;
+
+					SpriteRenderer tempSR = tempProjectedObject.GetComponent<SpriteRenderer>();
+					tempSR.color = new Color(tempSR.color.r, tempSR.color.g, tempSR.color.b, (timer*1.0f)/projectionTimer);
+					//setAplhaProjectionSprite((timer*1.0f)/projectionTimer);
+					//Debug.Log (partSyst.emissionRate);
+				}else{
+					partSyst.enableEmission = false;
+					if (tempProjectedObject)
+						Destroy(tempProjectedObject);
+					timerStarted = false;
+					timer = 0.0f;
 				}
+
+
+
 			}
+
+
 
 			//DEBUG: se si preme E, si passa al prossimo vetrino
 			if (Input.GetKeyUp (KeyCode.E)) {
@@ -179,55 +254,44 @@ public class MagicLantern : Tool {
 				toolGameObject.transform.parent = transform;
 			else
 			{
-				toolGameObject.transform.parent = player.transform;
-				toolGameObject.transform.localPosition = new Vector3(0.4f, 0.8f, 0.0f);
-				//risolvo in maniera malamente il problema del flipping inspiegabile dell'oggetto
-				Vector3 actualScale = toolGameObject.transform.localScale;
-				toolGameObject.transform.localScale = new Vector3 (Mathf.Abs(actualScale.x),Mathf.Abs(actualScale.y),Mathf.Abs(actualScale.z));
+				setPlayerAsParent ();
 			}
 				
 		}
+	}
 
-		//implementazione precedente
-		/*
-		projectionObject.layer = convertBinToDec(hiding.value);
+	//chiamata quando la lanterna viene disattivata
+	protected override void disactivationToolFunc()
+	{
+		setPlayerAsParent ();
+		leftLantern = false;
+	}
 
-		if (!PC.isColliding ()) {
-			collidingWall = false;
-			changeRayAndCircleSprites (normalRay, normalCircle);
-			changeProjectionSprite (emptySprite);
-		} else if (PC.isColliding () && verifyIfTooFar ()) {
-			changeRayAndCircleSprites (pressedRay, pressedCircle);
-			changeProjectionSprite (blurredSprite);
-			collidingWall = true;
-			//se la proiezione è OK
-		} else if (PC.isColliding () && !verifyIfTooFar ()) {
-			changeRayAndCircleSprites (pressedRay, pressedCircle);
-			changeProjectionSprite (projectionSprite);
-			collidingWall = true;
-			if (actualGlass.attractor)
-			{
-				projectionObject.layer = convertBinToDec(toChase.value);
-			}
-		}
+	//effetti durante la proiezione del vetrino di fine livello
+	void projectionEffects()
+	{
 
-		if (actualGlass.canInstantiateObj) {
-			if (actualGlass.controlIfOverlap (projectionObject.GetComponent<SpriteRenderer> ().bounds))
-			{
-				placeImage ();
-				actualGlass.Usable = false;
-				toolSwitcher TS = transform.parent.gameObject.GetComponent<toolSwitcher>();
-				TS.useTool(false);
-				TS.switchUsingTool(false);
-			}
-		}
-		*/
+	}
+
+	//impone il player come oggetto pparent della lanterna
+	void setPlayerAsParent()
+	{
+		toolGameObject.transform.parent = player.transform;
+		toolGameObject.transform.localPosition = new Vector3(0.4f, 0.8f, 0.0f);
+		//risolvo in maniera malamente il problema del flipping inspiegabile dell'oggetto
+		Vector3 actualScale = toolGameObject.transform.localScale;
+		toolGameObject.transform.localScale = new Vector3 (Mathf.Abs(actualScale.x),Mathf.Abs(actualScale.y),Mathf.Abs(actualScale.z));
 	}
 
 	void changeRayAndCircleSprites(Sprite RaySprite, Sprite CircleSprite)
 	{
 		spRendRay.sprite = RaySprite;
 		spRendCircle.sprite = CircleSprite;
+	}
+
+	void setAplhaProjectionSprite (float alphaValue)
+	{
+		PC.setAlphaSprite (alphaValue);
 	}
 
 	void changeProjectionSprite(Sprite neoProjectionSprite)
@@ -249,7 +313,6 @@ public class MagicLantern : Tool {
 
 	//funzione per aggiornare le variabili contenenti le sprites
 	//----!!!!! il cambiamento di queste variabili non modifica ciò che viene mostrato a schermo, a meno di un aggiornamento
-	// (vedi updateSpriteAfterChanging())
 	void glassSpriteUpdate()
 	{
 		if (actualGlass != null) {
@@ -353,15 +416,12 @@ public class MagicLantern : Tool {
 		}
 	}
 
+	//funzione per istanziare il prefab dell'oggetto relativo al vetrino, sotto il cursore
 	void instantiatePrefab()
 	{
-
-
 		//istanzio un prefab e lo sposto sotto il mouse
 		actualGlass.projectionObject = Instantiate <GameObject> (actualGlass.prefabObject);
 		actualGlass.projectionObject.transform.position = new Vector3(actualMousePosition.x, actualMousePosition.y, zPositionEnvironment);
-
-
 
 		//prendo i bounds della sprite della proiezione
 		Bounds objBounds = PC.getSpriteBounds ();
@@ -400,7 +460,7 @@ public class MagicLantern : Tool {
 		Debug.Log ("new " + newObjBounds.max);
 	}
 
-	//istanzia un nuovo oggetto di tipo "Projection" una volta che si clicca sulla posizione voluta
+	//istanzia un nuovo oggetto di tipo "Projection" una volta che si clicca sulla posizione voluta (attualmente inutilizzato)
 	void placeImage()
 	{
 		deleteOldProjection ();
@@ -422,6 +482,7 @@ public class MagicLantern : Tool {
 
 	}
 
+	//chiamato quando è necessario eliminare il vecchio prefab istanziato (quando si cambia vetrino, quando si esce da un muro o si va fuori fuoco)
 	void deleteActualProjection()
 	{
 		createdProjection = false;
