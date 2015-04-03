@@ -2095,9 +2095,13 @@ public class basicAIEnemyV4 : MonoBehaviour {
 	private IEnumerator chargeAttack() {
 		
 		attackCharging = true;
+		if (DEBUG_FSM_TRANSITION [0])
+			Debug.Log ("AT start -> AT CHARGE");
 		
 		yield return new WaitForSeconds(tChargingAttack);
-		
+
+		if (DEBUG_FSM_TRANSITION [0])
+			Debug.Log ("AT CHARGE -> AT charged");
 		attackCharging = false;
 		attackCharged = true;
 	}
@@ -2105,11 +2109,15 @@ public class basicAIEnemyV4 : MonoBehaviour {
 	private IEnumerator handleStuck() {
 		
 		attackStuck = true;
+		if (DEBUG_FSM_TRANSITION [0])
+			Debug.Log ("AT charged -> AT STUCK");
 		
 		yield return new WaitForSeconds(tStuckLenght);
 		
 		attackStuck = false;
 
+		if (DEBUG_FSM_TRANSITION [0])
+			Debug.Log ("AT STUCK -> AT end");
 	}
 	
 	private void continueAttack(){
