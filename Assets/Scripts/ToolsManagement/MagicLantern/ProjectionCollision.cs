@@ -79,6 +79,17 @@ public class ProjectionCollision : MonoBehaviour {
 		projectionObject.transform.GetComponent<SpriteRenderer> ().sprite = sprite;
 	}
 
+	public void setAlphaSprite(float alphaValue)
+	{
+		SpriteRenderer SpRend = projectionObject.transform.GetComponent<SpriteRenderer> ();
+		SpRend.color = new Color (SpRend.color.r, SpRend.color.g, SpRend.color.b, alphaValue); 
+	}
+
+	public void getAlpha()
+	{
+		Debug.Log (projectionObject.transform.GetComponent<SpriteRenderer> ().color);
+	}
+
 	public bool isColliding()
 	{
 		return colliding;
