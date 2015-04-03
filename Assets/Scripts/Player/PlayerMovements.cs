@@ -48,14 +48,14 @@ public class PlayerMovements : MonoBehaviour {
 	float tStartStunned = -5.0f;
 	float tToReturnFromStunned = 1.5f;
 
-	private GameObject myToStun;
+	//private GameObject myToStun;
 
 	void Start () {
 		bool warning = true;
 		RigBody = transform.GetComponent<Rigidbody2D>();
 		anim = transform.GetComponent<Animator> ();
 		standardGravity = RigBody.gravityScale;
-
+		/*
 		foreach (Transform child in transform) {
 
 			if(child.tag=="Stunning") {
@@ -67,6 +67,7 @@ public class PlayerMovements : MonoBehaviour {
 
 		if (warning)
 			Debug.Log ("attenzione, manca un oggetto stunning sotto il player");
+		*/
 	}
 
 	void Update () {
@@ -442,14 +443,14 @@ public class PlayerMovements : MonoBehaviour {
 
 	private void handleStunned() {
 
-		Debug.Log ("stunnato");
+		//Debug.Log ("stunnato");
 
 		if (Time.time > tStartStunned + tToReturnFromStunned) {
 			stunnedState = false;
 			gameObject.layer = convertBinToDec(PlayerLayer.value);
-			myToStun.layer = convertBinToDec(PlayerLayer.value);
+			//myToStun.layer = convertBinToDec(PlayerLayer.value);
 			anim.SetBool ("Stunned", false);
-			Debug.Log ("fine STUNNNNNNN");
+			//Debug.Log ("fine STUNNNNNNN");
 		}
 		
 	}
@@ -487,7 +488,7 @@ public class PlayerMovements : MonoBehaviour {
 					tStartStunned = Time.time;
 					stunnedState = true;
 					gameObject.layer = convertBinToDec(PlayerStunnedLayer.value);
-					myToStun.layer = convertBinToDec(PlayerStunnedLayer.value);
+					//myToStun.layer = convertBinToDec(PlayerStunnedLayer.value);
 					
 				}
 			}
@@ -496,7 +497,7 @@ public class PlayerMovements : MonoBehaviour {
 		else {
 			anim.SetBool ("Stunned", false);
 			gameObject.layer = convertBinToDec(PlayerLayer.value);
-			myToStun.layer = convertBinToDec(PlayerLayer.value);
+			//myToStun.layer = convertBinToDec(PlayerLayer.value);
 			//qualcosa per riporlarlo allo stato idle
 		}
 		
