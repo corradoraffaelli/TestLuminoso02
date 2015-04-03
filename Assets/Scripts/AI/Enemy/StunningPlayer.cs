@@ -7,12 +7,11 @@ public class StunningPlayer : MonoBehaviour {
 
 	float tLastStun = -2.0f;
 	float tBetweenAdvise = 2.0f;
-	basicAIEnemyV4 bai;
 	public LayerMask targetLayers;
+	basicAIEnemyV4 bai;
 
 	void Start() {
-		bai = transform.parent.GetComponent<basicAIEnemyV4> ();
-
+		bai = transform.parent.gameObject.GetComponent<basicAIEnemyV4> ();
 	}
 
 	public void OnTriggerEnter2D(Collider2D c) {
@@ -52,6 +51,8 @@ public class StunningPlayer : MonoBehaviour {
 	
 	}
 
+
+
 	public void OnTriggerExit2D(Collider2D c) {
 
 		if ((targetLayers.value & 1 << c.gameObject.layer) > 0) {
@@ -64,7 +65,8 @@ public class StunningPlayer : MonoBehaviour {
 
 	public void i_targetNear(bool n) {
 
-		bai.c_targetNear (n);
+		//bai.c_targetNear (n);
+		transform.parent.gameObject.SendMessage ("c_targetNear", n);
 
 	}
 }

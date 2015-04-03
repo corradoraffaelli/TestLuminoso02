@@ -3,6 +3,8 @@ using System.Collections;
 
 public class enemiesCleaner : MonoBehaviour {
 
+	public bool DEBUG_CLEANING = false;
+
 	public LayerMask cleanableLayers;
 
 	// Use this for initialization
@@ -17,13 +19,25 @@ public class enemiesCleaner : MonoBehaviour {
 
 	public void OnTriggerEnter2D(Collider2D c) {
 
-		if ((cleanableLayers.value & 1 << c.gameObject.layer) > 0) {
+		if ((cleanableLayers.value & 1 << c.gameObject.layer) > 0 && c.gameObject.tag=="Enemy") {
 
 			if(c.GetType() == typeof( CircleCollider2D) ) {
 				c.gameObject.GetComponent<basicAIEnemyV4>().c_startAutoDestroy(0.2f);
-				//Debug.Log ("Boom baby! : " + c.gameObject.name);
+				if(DEBUG_CLEANING)
+					Debug.Log ("Colliso con " + c.gameObject.name);
+			}
+			else {
+
+				if(DEBUG_CLEANING)
+					Debug.Log ("Colliso qualcosa che non è circle collider");
+
 			}
 
+		}
+		else {
+
+			if(DEBUG_CLEANING)
+				Debug.Log ("Colliso qualcosa che non è tag enemy oppure non ha il layer enemies : " + c.gameObject.name);
 		}
 
 	}

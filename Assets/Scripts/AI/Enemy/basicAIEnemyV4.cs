@@ -35,7 +35,7 @@ using System;
  * 
  *  TIPOLOGIE NEMICO :
  * 
- * 	a) NoJumpNoChase -> se ne infischia della presenza del nemico, segue solo il suo tragitto di patrol, può essere stunned e può colpire il player se lo tocca,
+ * 	a) NoJumpJustPatrol -> se ne infischia della presenza del nemico, segue solo il suo tragitto di patrol, può essere stunned e può colpire il player se lo tocca,
  * 	b) NoJumpSoftChase -> non si allontana troppo dai punti di patrol e non riesce neanche a saltare. E' il tipo di nemico meno pericoloso che esista
  *	c) NoJumpHeavyChase -> si allontana fin dove può per inseguire un target, non riesce comunque a saltare. Il mondo migliore per scappare è salire delle scale.
  *	d) HeavyChase -> insegue il target fin dove può, saltando se dovesse servire. (? per ora non completamente implementato)
@@ -57,6 +57,7 @@ public class basicAIEnemyV4 : MonoBehaviour {
 
 	//Gestione macchina a stati-----------------------------------------------------------------------
 	public enum enemyMachineState {
+		Wander,
 		Patrol,
 		Chase,
 		Attack,
@@ -67,7 +68,8 @@ public class basicAIEnemyV4 : MonoBehaviour {
 	
 	//Gestione tipologia nemico------------------------------------------------------------------------
 	public enum enemyType {
-		NoJumpNoChase,//fa solo patrol
+		NoJumpJustWander,//cammina a caso e si gira dopo essersi scontrato con un ostacolo
+		NoJumpJustPatrol,//fa solo patrol
 		NoJumpSoftChase,//non si allontana troppo dai punti di patrol
 		NoJumpHeavyChase,//si allontana fin dove può dai punti di patrol
 		HeavyChase,//come precedente, ma può pure saltare (non implementato)
@@ -83,6 +85,7 @@ public class basicAIEnemyV4 : MonoBehaviour {
 	public LayerMask fleeLayer;
 	public LayerMask hidingLayer;
 	public LayerMask cloneLayer;
+	public LayerMask obstacleLayers;
 
 
 
@@ -205,7 +208,9 @@ public class basicAIEnemyV4 : MonoBehaviour {
 		pm = GetComponent<PlayerMovements> ();
 		eMS = enemyMachineState.Patrol;
 		//originalHDifferenceWithTarget = thresholdHeightDifference;
-		
+
+		setupStartState ();
+
 		getGroundCheck ();
 
 		checkPatrolPoints ();
@@ -224,6 +229,15 @@ public class basicAIEnemyV4 : MonoBehaviour {
 		getMyToStun ();
 		//myPers = new Personality (this.behavior, this.suspiciousness, this.senses);
 		//myPriors = new ArrayList ();
+	}
+
+	private void setupStartState() {
+
+		if (eType == enemyType.NoJumpJustWander)
+			eMS = enemyMachineState.Wander;
+		else
+			eMS = enemyMachineState.Patrol;
+
 	}
 
 
@@ -245,7 +259,14 @@ public class basicAIEnemyV4 : MonoBehaviour {
 	private void setupByEnemyType() {
 		
 		switch (eType) {
-			case enemyType.NoJumpNoChase :
+
+			case enemyType.NoJumpJustWander :
+
+				canJump = false;
+				
+				break;
+
+			case enemyType.NoJumpJustPatrol :
 			
 				canJump = false;
 			
@@ -485,42 +506,51 @@ public class basicAIEnemyV4 : MonoBehaviour {
 		//used to evaluate what to do in case of low health
 		
 		switch(eMS) {
-		case enemyMachineState.Patrol :
-			
-			_Patrolling(Time.deltaTime);
-			//check davanti
-			if(DEBUG_PHASE_BASIC)
-				Debug.Log("patrol " + Time.time);
-			break;
-			
-		case enemyMachineState.Chase :
-			_Chasing(Time.deltaTime);
-			if(DEBUG_PHASE_BASIC)
-				Debug.Log("chasing " + Time.time);
-			break;
-			
-		case enemyMachineState.Attack :
-			
-			_Attacking(Time.deltaTime);
-			if(DEBUG_PHASE_BASIC)
-				Debug.Log("attack " + Time.time);
-			break;
-			
-		case enemyMachineState.Flee :
-			_Fleeing(Time.deltaTime);
-			break;
-			
-		case enemyMachineState.Stunned :
-			if(DEBUG_PHASE_BASIC)
-				Debug.Log("Stunned" + Time.time);
-			_Stunned(Time.deltaTime);
-			break;
-			
-			
-		default :
-			if(DEBUG_PHASE_BASIC)
-				Debug.Log("caso strano in switch +++++++++++++++++++");
-			break;
+
+			case enemyMachineState.Wander :
+
+				_Wandering(Time.deltaTime);
+				if(DEBUG_PHASE_BASIC)
+					Debug.Log("wander " + Time.time);
+
+				break;
+
+			case enemyMachineState.Patrol :
+				
+				_Patrolling(Time.deltaTime);
+				//check davanti
+				if(DEBUG_PHASE_BASIC)
+					Debug.Log("patrol " + Time.time);
+				break;
+				
+			case enemyMachineState.Chase :
+				_Chasing(Time.deltaTime);
+				if(DEBUG_PHASE_BASIC)
+					Debug.Log("chasing " + Time.time);
+				break;
+				
+			case enemyMachineState.Attack :
+				
+				_Attacking(Time.deltaTime);
+				if(DEBUG_PHASE_BASIC)
+					Debug.Log("attack " + Time.time);
+				break;
+				
+			case enemyMachineState.Flee :
+				_Fleeing(Time.deltaTime);
+				break;
+				
+			case enemyMachineState.Stunned :
+				if(DEBUG_PHASE_BASIC)
+					Debug.Log("Stunned" + Time.time);
+				_Stunned(Time.deltaTime);
+				break;
+				
+				
+			default :
+				if(DEBUG_PHASE_BASIC)
+					Debug.Log("caso strano in switch +++++++++++++++++++");
+				break;
 		}
 	}
 	
@@ -566,6 +596,43 @@ public class basicAIEnemyV4 : MonoBehaviour {
 		
 	}
 	*/
+
+	private enemyMachineState isStoppedWander() {
+
+		return enemyMachineState.Wander;
+
+	}
+
+	private void continueWander() {
+
+		Debug.DrawLine (new Vector2(transform.position.x, transform.position.y + 1.0f), i_facingRight () ? new Vector2 (transform.position.x + 1.0f, transform.position.y + 1.0f) : new Vector2 (transform.position.x - 1.0f, transform.position.y + 1.0f), Color.red);
+		RaycastHit2D hit = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y + 1.0f), i_facingRight()? Vector2.right : -Vector2.right, 1.0f, obstacleLayers);
+		if (hit.collider != null) {
+			Debug.Log ("flippooooo per " + hit.collider.gameObject.name);
+			i_flip();
+			
+		}
+
+		i_move ();
+
+	}
+
+	private void _Wandering(float deltaTime) {
+
+		enemyMachineState next = enemyMachineState.Patrol;
+		
+		if ((next = isStoppedWander ()) == enemyMachineState.Wander) {
+			
+			continueWander();
+			
+		} 
+		else {
+			
+			makeStateTransition(eMS,next);
+			
+		}
+
+	}
 	
 	private void _Patrolling(float deltaTime) {
 		
@@ -732,9 +799,17 @@ public class basicAIEnemyV4 : MonoBehaviour {
 		//quindi il target è già settato
 		
 	}
-	
+
+	private void finalizeAttack() {
+
+		targetNearCheck = false;
+
+	}
+
 	private void makeAtPaTransition() {
-		
+
+		finalizeAttack ();
+
 		eMS = enemyMachineState.Patrol;
 		
 		initializePatrol (true);
@@ -743,7 +818,9 @@ public class basicAIEnemyV4 : MonoBehaviour {
 	}
 	
 	private void makeAtChTransition() {
-		
+
+		finalizeAttack ();
+
 		eMS = enemyMachineState.Chase;
 		
 		//initialize chase non serve, perché veniamo dall'attack
@@ -753,6 +830,7 @@ public class basicAIEnemyV4 : MonoBehaviour {
 	
 	private void finalizeAnyState() {
 
+		finalizeAttack ();
 		setTargetAStar(null);
 		
 	}
@@ -825,152 +903,183 @@ public class basicAIEnemyV4 : MonoBehaviour {
 		//Debug.Log ("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
 		
 	}
+
+	private void makeStWaTransition() {
+
+		finalizeStunned ();
+		
+		eMS = enemyMachineState.Wander;
 	
+	}
+	
+
 	private void makeStateTransition(enemyMachineState actual, enemyMachineState next, GameObject target=null) {
 
 		if (DEBUG_FSM_TRANSITION[0])
 			Debug.Log (Enum.GetName(typeof(enemyMachineState),actual) + " -> " + Enum.GetName(typeof(enemyMachineState), next) + (target==null ? "." : ". Target : " + target.name) );
 
 		switch (actual) {
-			
-		case enemyMachineState.Patrol :
-			
-			switch(next) {
-				
-			case enemyMachineState.Chase :
-				
-				makePaChTransition(target);
-				
+
+			case enemyMachineState.Wander :
+				switch(next) {
+					
+					case enemyMachineState.Chase :
+						break;
+
+					case enemyMachineState.Stunned :
+						makeAnyStTransition();
+						break;
+						
+					default :
+						break;
+				}
+
 				break;
-				
-			case enemyMachineState.Flee :
-				
-				makeAnyFlTransition(target);		
-				
-				break;
-				
-			case enemyMachineState.Stunned :
-				
-				makeAnyStTransition();
-				
-				break;
-				
-			default :
-				break;
-				
-			}
-			
-			break;
-			
-		case enemyMachineState.Chase :
-			switch(next) {
-				
+
 			case enemyMachineState.Patrol :
 				
-				makeChPaTransition();
+				switch(next) {
+					
+				case enemyMachineState.Chase :
+					
+					makePaChTransition(target);
+					
+					break;
+					
+				case enemyMachineState.Flee :
+					
+					makeAnyFlTransition(target);		
+					
+					break;
+					
+				case enemyMachineState.Stunned :
+					
+					makeAnyStTransition();
+					
+					break;
+					
+				default :
+					break;
+					
+				}
+				
+				break;
+				
+			case enemyMachineState.Chase :
+				switch(next) {
+					
+				case enemyMachineState.Patrol :
+					
+					makeChPaTransition();
+					
+					break;
+					
+				case enemyMachineState.Flee :
+					
+					makeAnyFlTransition(target);		
+					
+					break;
+					
+				case enemyMachineState.Attack :
+					
+					makeChAtTransition();
+					
+					break;
+					
+				case enemyMachineState.Stunned :
+					
+					makeAnyStTransition();
+					
+					break;
+					
+				default :
+					break;
+					
+				}
 				
 				break;
 				
 			case enemyMachineState.Flee :
 				
-				makeAnyFlTransition(target);		
+				switch(next) {
+					
+				case enemyMachineState.Patrol :
+					
+					makeFlPaTransition();
+					
+					break;
+					
+				case enemyMachineState.Stunned :
+					
+					makeAnyStTransition();
+					
+					break;
+					
+				default :
+					break;
+					
+				}
 				
 				break;
 				
 			case enemyMachineState.Attack :
-				
-				makeChAtTransition();
-				
-				break;
-				
-			case enemyMachineState.Stunned :
-				
-				makeAnyStTransition();
-				
-				break;
-				
-			default :
-				break;
-				
-			}
-			
-			break;
-			
-		case enemyMachineState.Flee :
-			
-			switch(next) {
-				
-			case enemyMachineState.Patrol :
-				
-				makeFlPaTransition();
-				
-				break;
-				
-			case enemyMachineState.Stunned :
-				
-				makeAnyStTransition();
-				
-				break;
-				
-			default :
-				break;
-				
-			}
-			
-			break;
-			
-		case enemyMachineState.Attack :
-			switch(next) {
-				
-			case enemyMachineState.Patrol :
-				
-				makeAtPaTransition();
-				
-				break;
-				
-			case enemyMachineState.Flee :
-				
-				makeAnyFlTransition(target);		
-				
-				break;
-				
-			case enemyMachineState.Chase :
-				
-				makeAtChTransition();
+				switch(next) {
+					
+				case enemyMachineState.Patrol :
+					
+					makeAtPaTransition();
+					
+					break;
+					
+				case enemyMachineState.Flee :
+					
+					makeAnyFlTransition(target);		
+					
+					break;
+					
+				case enemyMachineState.Chase :
+					
+					makeAtChTransition();
+					
+					break;
+					
+				case enemyMachineState.Stunned :
+					
+					makeAnyStTransition();
+					
+					break;
+					
+				default :
+					break;
+					
+				}
 				
 				break;
 				
 			case enemyMachineState.Stunned :
-				
-				makeAnyStTransition();
+				switch(next) {
+					
+				case enemyMachineState.Patrol :
+					
+					makeStPaTransition();
+					
+					break;
+
+				case enemyMachineState.Wander :
+					
+					makeStWaTransition();
+					
+					break;
+					
+					
+				default :
+					break;
+					
+				}
 				
 				break;
 				
-			default :
-				break;
 				
-			}
-			
-			break;
-			
-		case enemyMachineState.Stunned :
-			switch(next) {
-				
-			case enemyMachineState.Patrol :
-				
-				makeStPaTransition();
-				
-				break;
-				
-				
-			default :
-				break;
-				
-			}
-			
-			break;
-			
-			
 		}
 		
 	}
@@ -1049,7 +1158,7 @@ public class basicAIEnemyV4 : MonoBehaviour {
 		//controlli ad hoc per ogni enemyType
 		switch (eType) {
 		
-			case enemyType.NoJumpNoChase :
+			case enemyType.NoJumpJustPatrol :
 
 			case enemyType.NoJumpSoftChase :
 				
@@ -1076,7 +1185,7 @@ public class basicAIEnemyV4 : MonoBehaviour {
 		
 		switch (eType) {
 
-			case enemyType.NoJumpNoChase :
+			case enemyType.NoJumpJustPatrol :
 
 			case enemyType.NoJumpSoftChase :
 				
@@ -1320,7 +1429,7 @@ public class basicAIEnemyV4 : MonoBehaviour {
 		//controlli ad hoc per ogni enemyType
 		switch (eType) {
 
-			case enemyType.NoJumpNoChase :
+			case enemyType.NoJumpJustPatrol :
 				//non esce mai dal patrol
 				return enemyMachineState.Patrol;
 				break;
@@ -1387,7 +1496,7 @@ public class basicAIEnemyV4 : MonoBehaviour {
 		//TODO: PRIOR abbiamo 2 casi di patrol, quindi due sotto stati. Gestire meglio
 		
 		switch (eType) {
-			case enemyType.NoJumpNoChase :
+			case enemyType.NoJumpJustPatrol :
 
 				if(suspicious) {
 					
@@ -1743,7 +1852,7 @@ public class basicAIEnemyV4 : MonoBehaviour {
 		//controlli ad hoc per ogni enemyType
 		switch (eType) {
 
-			case enemyType.NoJumpNoChase :
+			case enemyType.NoJumpJustPatrol :
 				//non ci arriverà mai qui, perché non è previsto che faccia il chase
 			case enemyType.NoJumpSoftChase :
 				
@@ -1868,7 +1977,7 @@ public class basicAIEnemyV4 : MonoBehaviour {
 
 		switch (eType) {
 
-			case enemyType.NoJumpNoChase :
+			case enemyType.NoJumpJustPatrol :
 				//non ci arriverà mai qui, perché non è previsto che faccia il chase
 			case enemyType.NoJumpSoftChase :
 				//checkChangeChaseTarget();
@@ -1924,7 +2033,7 @@ public class basicAIEnemyV4 : MonoBehaviour {
 		//controlli ad hoc per ogni enemyType
 		switch (eType) {
 
-			case enemyType.NoJumpNoChase :
+			case enemyType.NoJumpJustPatrol :
 				//non ci arriverà mai qui, perché non è previsto che faccia l'attack
 				break;
 
@@ -1986,7 +2095,7 @@ public class basicAIEnemyV4 : MonoBehaviour {
 		
 		switch (eType) {
 
-			case enemyType.NoJumpNoChase :
+			case enemyType.NoJumpJustPatrol :
 				//non ci arriverà mai qui, perché non è previsto che faccia l'attack
 
 			case enemyType.NoJumpSoftChase :
@@ -2065,10 +2174,15 @@ public class basicAIEnemyV4 : MonoBehaviour {
 	private bool isStunnedCountDownFinished() {
 		
 		if (Time.time - tLastStunnedAttackReceived > tToReturnFromStunned) {
+			if(DEBUG_FSM_TRANSITION[2])
+				Debug.Log ("ST -> PA/WA - countDown finito");
 			return true;
 		}
-		else
+		else {
+			if(DEBUG_FSM_TRANSITION[2])
+				Debug.Log ("Stunned countdown : " + (Time.time - tLastStunnedAttackReceived));
 			return false;
+		}
 	}
 	
 	private enemyMachineState isStoppedStunned(){
@@ -2076,7 +2190,21 @@ public class basicAIEnemyV4 : MonoBehaviour {
 		//controlli ad hoc per ogni enemyType
 		switch (eType) {
 
-			case enemyType.NoJumpNoChase :
+			case enemyType.NoJumpJustWander :
+				if (isStunnedCountDownFinished ()) {
+					
+					if(DEBUG_FSM_TRANSITION[1])
+						Debug.Log("ST -> WA - fine countdown stun");
+					
+					return enemyMachineState.Wander;
+					
+				}
+				else {
+					return enemyMachineState.Stunned;
+				}
+				break;
+
+			case enemyType.NoJumpJustPatrol :
 
 			case enemyType.NoJumpSoftChase :
 				
@@ -2109,7 +2237,10 @@ public class basicAIEnemyV4 : MonoBehaviour {
 		
 		//controlli ad hoc per ogni enemyType
 		switch (eType) {
-			case enemyType.NoJumpNoChase :
+
+			case enemyType.NoJumpJustWander :
+
+			case enemyType.NoJumpJustPatrol :
 
 			case enemyType.NoJumpSoftChase :
 				
@@ -2257,8 +2388,12 @@ public class basicAIEnemyV4 : MonoBehaviour {
 	}
 	
 	//funzione di medio livello per muoversi lungo il path dell'A*
-	//uso un numero superiore di step per quando sono in una differente altezza
+	//VECCHIO USO : uso un numero superiore di step per quando sono in una differente altezza
 	//rispetto le prossime tiles dell'A*
+
+	//ATTUALE USO : uso un numero di step uguale a 2 per evitare comportamenti strani, cioè
+	//che si flippi prima del dovuto, così lui va avanti guardando nel "futuro"
+	//TODO: è una cosa da gestire meglio
 	private void followPath(int step , float scaleFactor=1){
 		
 		if (myAstar.Path.Count > step) {
@@ -2523,14 +2658,16 @@ public class basicAIEnemyV4 : MonoBehaviour {
 				if(DEBUG_ASTAR[1])
 					Debug.Log ("ASTAR - target più alto di me e distante");
 
-				followPath(1, 0.7f);
+				//followPath(1, 0.7f);
+				i_move(0.85f);
 			}
 			else {
 				
 				if(DEBUG_ASTAR[1])
 					Debug.Log ("ASTAR - target più alto di me e sopra di me");
 
-				followPath(1, 0.3f);
+				//followPath(1, 0.3f);
+				i_move(0.7f);
 			}
 			
 		}
@@ -2539,7 +2676,7 @@ public class basicAIEnemyV4 : MonoBehaviour {
 			if(DEBUG_ASTAR[1])
 				Debug.Log ("ASTAR - target alla mia stessa altezza");
 
-			followPath(1);
+			followPath(2);
 		}
 		
 		
@@ -2593,7 +2730,19 @@ public class basicAIEnemyV4 : MonoBehaviour {
 		case 131072 :
 			return 17;
 			break;
-			
+
+		case 262144 :
+			return 18;
+			break;
+
+		case 524288 :
+			return 19;
+			break;
+
+		case 1048576 :
+			return 20;
+			break;
+
 		default :
 				break;
 				
@@ -2705,15 +2854,19 @@ public class basicAIEnemyV4 : MonoBehaviour {
 
 		if (a) {
 			//Debug.Log ("colpito");
-			switch(eType) {
+			switch (eType) {
 
-			case enemyType.NoJumpNoChase :
-				searchNextPatrollingPoint();
+			case enemyType.NoJumpJustPatrol:
+				searchNextPatrollingPoint ();
 				break;
 			default :
 				isPlayerStunned = true;
 				break;
 			}
+		} else {
+
+			isPlayerStunned = false;
+
 		}
 
 	}
