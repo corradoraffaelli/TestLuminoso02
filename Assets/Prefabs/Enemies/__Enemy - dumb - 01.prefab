@@ -161,7 +161,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_Offset: {x: 0, y: .239999995}
   serializedVersion: 2
-  m_Size: {x: .460000008, y: .109999999}
+  m_Size: {x: .649999976, y: .109999999}
 --- !u!61 &6151400
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -256,9 +256,11 @@ MonoBehaviour:
   DefaultVerseRight: 1
   patrolSuspiciousPoints: []
   patrolledTarget: {fileID: 0}
-  attackCharged: 0
-  attackCharging: 0
-  attackStuck: 0
+  tChargingChase: 1
+  tToMaxVelocity: .5
+  tChargingAttack: .5
+  tStuckLenght: 2
+  tStunnedLenght: 4
 --- !u!114 &11493326
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -272,6 +274,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DEBUG_STUNNED: 1
   bouncy: 1
+  sprintForce: 350
   IAM: 1
 --- !u!114 &11494728
 MonoBehaviour:

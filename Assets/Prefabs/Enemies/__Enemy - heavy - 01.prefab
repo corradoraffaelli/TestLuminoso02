@@ -133,7 +133,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 160016}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.62, y: .540000021, z: 0}
+  m_LocalPosition: {x: 1.62, y: .109999999, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 468216}
@@ -245,7 +245,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_Offset: {x: 0, y: .239999995}
   serializedVersion: 2
-  m_Size: {x: .460000008, y: .109999999}
+  m_Size: {x: .649999976, y: .109999999}
 --- !u!95 &9544794
 Animator:
   serializedVersion: 3
@@ -304,9 +304,11 @@ MonoBehaviour:
   DefaultVerseRight: 1
   patrolSuspiciousPoints: []
   patrolledTarget: {fileID: 0}
-  attackCharged: 0
-  attackCharging: 0
-  attackStuck: 0
+  tChargingChase: 1
+  tToMaxVelocity: .5
+  tChargingAttack: .5
+  tStuckLenght: 2
+  tStunnedLenght: 4
 --- !u!114 &11439726
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -351,6 +353,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DEBUG_STUNNED: 0
   bouncy: 1
+  sprintForce: 350
   IAM: 1
 --- !u!114 &11483856
 MonoBehaviour:

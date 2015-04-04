@@ -154,9 +154,6 @@ public class basicAIEnemyV4 : MonoBehaviour {
 	bool patrollingTowardAPoint = false;
 	public Transform patrolledTarget;//utile dichiararlo momentaneamente public per vedere che valore ha
 	bool reacheadOneSuspPoint = false;
-
-
-
 	
 	//Gestione raycast target------------------------------------
 	//public LayerMask targetLayers; dichiarata su
@@ -174,24 +171,30 @@ public class basicAIEnemyV4 : MonoBehaviour {
 	float offset_MaxDistanceReachable_FromChase = 5.0f;
 	bool chaseCharged = false;
 	bool chaseCharging = false;
-	float tChargingChase = 1.0f;
+	public float tChargingChase = 1.0f;
 	float tStartCrash = -1.0f;
-	float tToReachMaxCrashVelocity = 0.5f;
+	public float tToMaxVelocity = 0.5f;
 
 	//Gestione attack----------------------------------------------------------------------------------
+
+	//usati per basic attack... non usati con nuova implementazione
 	float tLastAttack = 0.0f;
 	float tBetweenAttacks = 1.0f;
-	//public float thresholdNear = 1.4f;
+
 	bool targetNearCheck = false;
+
+	//non usata...
 	float marginAtChThreshold = 0.06f;//ex. 0.3f
 
-	bool isPlayerStunned = false;
+	//non usata per ora...
+	bool isTargetStunned = false;
 
-	public bool attackCharged = false;
-	public bool attackCharging = false;
-	float tChargingAttack = 0.5f;
-	public bool attackStuck = false;
-	float tStuckLenght = 2.0f;
+	bool attackCharged = false;
+	bool attackCharging = false;
+	bool attackStuck = false;
+
+	public float tChargingAttack = 0.5f;
+	public float tStuckLenght = 2.0f;
 	
 	//Gestione fleeing---------------------------------------------------------------------------------
 	//public LayerMask fleeLayer; dichiarato su
@@ -204,7 +207,7 @@ public class basicAIEnemyV4 : MonoBehaviour {
 	
 	bool stunnedReceived = false;
 	float tLastStunnedAttackReceived = -10.0f;
-	float tToReturnFromStunned = 4.0f;
+	public float tStunnedLenght = 4.0f;
 	//bool autoDestroy = false;
 	//sotto caso freezed----------------------
 
@@ -220,9 +223,6 @@ public class basicAIEnemyV4 : MonoBehaviour {
 	//float originalHDifferenceWithTarget = 0.0f;
 	float tLastJump = -3.0f;
 	float tBetweenJumps = 0.3f;
-	float spaceToOvercomeH = 2.5f;
-	float spaceToOvercomeL = 3.5f;
-	
 	//Gestione flip------------------------------------------------------------------------------------
 	float tLastFlip = -0.5f;
 	float tBetweenFlips = 0.2f;
@@ -489,8 +489,6 @@ public class basicAIEnemyV4 : MonoBehaviour {
 		//Gestione jump------------------------------------------------------------------------------------
 		
 		thresholdHeightDifference = thresholdHeightDifference * Mathf.Abs(transform.localScale.y);
-		spaceToOvercomeH = spaceToOvercomeH * Mathf.Abs(transform.localScale.x);
-		spaceToOvercomeL = spaceToOvercomeL * Mathf.Abs(transform.localScale.x);
 		
 		//Gestione attack----------------------------------------------------------------------------------
 		
@@ -1947,7 +1945,7 @@ public class basicAIEnemyV4 : MonoBehaviour {
 			//per raggiungere la massima velocità di carica
 			//uso una tempistica inferiore a quella usata per il tipo di chase con la carica
 
-			mydelta = mydelta / (tToReachMaxCrashVelocity * 0.7f );
+			mydelta = mydelta / (tToMaxVelocity * 0.7f );
 			if(mydelta>1.0f)
 				mydelta = 1.0f;
 			
@@ -1964,7 +1962,7 @@ public class basicAIEnemyV4 : MonoBehaviour {
 
 		if (mydelta != 0) {
 
-			mydelta = mydelta / tToReachMaxCrashVelocity;
+			mydelta = mydelta / tToMaxVelocity;
 			if(mydelta>1.0f)
 				mydelta = 1.0f;
 
@@ -2251,7 +2249,7 @@ public class basicAIEnemyV4 : MonoBehaviour {
 
 	private bool isStunnedCountDownFinished() {
 		
-		if (Time.time - tLastStunnedAttackReceived > tToReturnFromStunned) {
+		if (Time.time - tLastStunnedAttackReceived > tStunnedLenght) {
 			if(DEBUG_FSM_TRANSITION[2])
 				Debug.Log ("ST -> PA/WA - countDown finito");
 			return true;
@@ -2952,12 +2950,12 @@ public class basicAIEnemyV4 : MonoBehaviour {
 				searchNextPatrollingPoint ();
 				break;
 			default :
-				isPlayerStunned = true;
+				isTargetStunned = true;
 				break;
 			}
 		} else {
 			//non usato
-			isPlayerStunned = false;
+			isTargetStunned = false;
 
 		}
 
