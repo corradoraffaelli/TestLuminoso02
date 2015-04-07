@@ -35,11 +35,6 @@ using System;
  * 
  *  TIPOLOGIE NEMICO :
  * 
- * 	a) NoJumpJustPatrol -> se ne infischia della presenza del nemico, segue solo il suo tragitto di patrol, può essere stunned e può colpire il player se lo tocca,
- * 	b) NoJumpSoftChase -> non si allontana troppo dai punti di patrol e non riesce neanche a saltare. E' il tipo di nemico meno pericoloso che esista
- *	c) NoJumpHeavyChase -> si allontana fin dove può per inseguire un target, non riesce comunque a saltare. Il mondo migliore per scappare è salire delle scale.
- *	d) HeavyChase -> insegue il target fin dove può, saltando se dovesse servire. (? per ora non completamente implementato)
- *	e) ClimberHeavyChase -> insegue persino lungo le scale. E' il nemico più frustrante di tutti da seminare. (???? da implementare)
  * 
  */
 
@@ -72,11 +67,6 @@ public class basicAIEnemyV4 : MonoBehaviour {
 		Dumb,
 		Guard,
 		Heavy,
-		NoJumpJustWander,//cammina a caso e si gira dopo essersi scontrato con un ostacolo
-		NoJumpJustPatrol,//fa solo patrol
-		NoJumpSoftChase,//non si allontana troppo dai punti di patrol
-		NoJumpHeavyChase,//si allontana fin dove può dai punti di patrol
-		HeavyChase,//come precedente, ma può pure saltare (non implementato)
 	}
 	public enemyType eType;
 
@@ -99,7 +89,7 @@ public class basicAIEnemyV4 : MonoBehaviour {
 	}
 	attackType atType;
 
-	public bool killable = false;
+	bool killable = false;
 	public GameObject spawner;
 	//LAYER MASK da usare
 	//public LayerMask wallLayers;
@@ -155,9 +145,9 @@ public class basicAIEnemyV4 : MonoBehaviour {
 	public Transform patrolledTarget;//utile dichiararlo momentaneamente public per vedere che valore ha
 	bool reacheadOneSuspPoint = false;
 
+	public float DEFAULT_DUMB_SPEED = 2.0f;
+	public float WalkSpeed = 4.0f;
 
-
-	
 	//Gestione raycast target------------------------------------
 	//public LayerMask targetLayers; dichiarata su
 	bool backVision = true;
@@ -170,28 +160,36 @@ public class basicAIEnemyV4 : MonoBehaviour {
 	//bool avoidingObstacles = false;
 	Vector3 ignoreZ;//da privatizzare
 
+	public float RunSpeed = 5.0f;
+
 	//enemytype nojumpsoftchase
 	float offset_MaxDistanceReachable_FromChase = 5.0f;
 	bool chaseCharged = false;
 	bool chaseCharging = false;
-	float tChargingChase = 1.0f;
+	public float tChargingChase = 1.0f;
 	float tStartCrash = -1.0f;
-	float tToReachMaxCrashVelocity = 0.5f;
+	public float tToMaxVelocity = 0.5f;
 
 	//Gestione attack----------------------------------------------------------------------------------
+
+	//usati per basic attack... non usati con nuova implementazione
 	float tLastAttack = 0.0f;
 	float tBetweenAttacks = 1.0f;
-	//public float thresholdNear = 1.4f;
+
 	bool targetNearCheck = false;
+
+	//non usata...
 	float marginAtChThreshold = 0.06f;//ex. 0.3f
 
-	bool isPlayerStunned = false;
+	//non usata per ora...
+	bool isTargetStunned = false;
 
-	public bool attackCharged = false;
-	public bool attackCharging = false;
-	float tChargingAttack = 0.5f;
-	public bool attackStuck = false;
-	float tStuckLenght = 2.0f;
+	bool attackCharged = false;
+	bool attackCharging = false;
+	bool attackStuck = false;
+
+	public float tChargingAttack = 0.5f;
+	public float tStuckLenght = 2.0f;
 	
 	//Gestione fleeing---------------------------------------------------------------------------------
 	//public LayerMask fleeLayer; dichiarato su
@@ -204,7 +202,7 @@ public class basicAIEnemyV4 : MonoBehaviour {
 	
 	bool stunnedReceived = false;
 	float tLastStunnedAttackReceived = -10.0f;
-	float tToReturnFromStunned = 4.0f;
+	public float tStunnedLenght = 4.0f;
 	//bool autoDestroy = false;
 	//sotto caso freezed----------------------
 
@@ -220,9 +218,6 @@ public class basicAIEnemyV4 : MonoBehaviour {
 	//float originalHDifferenceWithTarget = 0.0f;
 	float tLastJump = -3.0f;
 	float tBetweenJumps = 0.3f;
-	float spaceToOvercomeH = 2.5f;
-	float spaceToOvercomeL = 3.5f;
-	
 	//Gestione flip------------------------------------------------------------------------------------
 	float tLastFlip = -0.5f;
 	float tBetweenFlips = 0.2f;
@@ -312,20 +307,32 @@ public class basicAIEnemyV4 : MonoBehaviour {
 
 	}
 
-	private void setupEnemy() {
+	private void setupEnemy(bool involution = false) {
 
 		switch(eType) {
 
 			case enemyType.Dumb :
 				canJump = false;
 				eMS = enemyMachineState.Wander;
-				pm.speedFactor = 2.0f;
+				//pm.speedFactor = 2.0f;
+				if(involution) {
+					this.WalkSpeed = DEFAULT_DUMB_SPEED;
+					pm.WalkSpeed = DEFAULT_DUMB_SPEED;
+				}
+				else {
+					pm.WalkSpeed = this.WalkSpeed;
+					pm.RunSpeed = this.RunSpeed;
+					
+				}
+				
 				break;
 			
 			case enemyType.Guard :
 				canJump = false;
 				eMS = enemyMachineState.Patrol;
-				pm.speedFactor = 5.0f;
+				//pm.speedFactor = 5.0f;
+				pm.WalkSpeed = this.WalkSpeed;
+				pm.RunSpeed = this.RunSpeed;
 				paType = setupPatrolPoints ();
 				chType = chaseType.ChargedCh;
 				atType = attackType.Immediate;
@@ -334,7 +341,9 @@ public class basicAIEnemyV4 : MonoBehaviour {
 			case enemyType.Heavy :
 				canJump = false;
 				eMS = enemyMachineState.Patrol;
-				pm.speedFactor = 2.0f;
+				//pm.speedFactor = 2.0f;
+				pm.WalkSpeed = this.WalkSpeed;
+				pm.RunSpeed = this.RunSpeed;
 				paType = setupPatrolPoints ();
 				chType = chaseType.Constant;
 				atType = attackType.ChargedAt;
@@ -489,8 +498,6 @@ public class basicAIEnemyV4 : MonoBehaviour {
 		//Gestione jump------------------------------------------------------------------------------------
 		
 		thresholdHeightDifference = thresholdHeightDifference * Mathf.Abs(transform.localScale.y);
-		spaceToOvercomeH = spaceToOvercomeH * Mathf.Abs(transform.localScale.x);
-		spaceToOvercomeL = spaceToOvercomeL * Mathf.Abs(transform.localScale.x);
 		
 		//Gestione attack----------------------------------------------------------------------------------
 		
@@ -1091,8 +1098,13 @@ public class basicAIEnemyV4 : MonoBehaviour {
 					makeStWaTransition();
 					
 					break;
+
+				case enemyMachineState.Stunned :
+
+					makeAnyStTransition();
 					
-					
+					break;
+						
 				default :
 					break;
 					
@@ -1148,7 +1160,7 @@ public class basicAIEnemyV4 : MonoBehaviour {
 		
 	}
 	
-	private void continueWander(float myScaleFactor=1) {
+	private void continueWander() {
 		
 		Debug.DrawLine (new Vector2(transform.position.x, transform.position.y + 1.0f), i_facingRight () ? new Vector2 (transform.position.x + 1.0f, transform.position.y + 1.0f) : new Vector2 (transform.position.x - 1.0f, transform.position.y + 1.0f), Color.red);
 		RaycastHit2D hit = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y + 1.0f), i_facingRight()? Vector2.right : -Vector2.right, 1.0f, obstacleLayers);
@@ -1159,7 +1171,7 @@ public class basicAIEnemyV4 : MonoBehaviour {
 			
 		}
 		
-		i_move (myScaleFactor);
+		i_move (true);
 		
 	}
 	
@@ -1189,13 +1201,10 @@ public class basicAIEnemyV4 : MonoBehaviour {
 		//controlli ad hoc per ogni enemyType
 		switch (eType) {
 		
-			case enemyType.NoJumpJustPatrol :
+			case enemyType.Guard :
 
-			case enemyType.NoJumpSoftChase :
-				
-			case enemyType.NoJumpHeavyChase :
-				
-			case enemyType.HeavyChase :
+			case enemyType.Heavy :
+
 				
 			default :
 				
@@ -1216,14 +1225,10 @@ public class basicAIEnemyV4 : MonoBehaviour {
 		
 		switch (eType) {
 
-			case enemyType.NoJumpJustPatrol :
+			case enemyType.Guard :
 
-			case enemyType.NoJumpSoftChase :
-				
-			case enemyType.NoJumpHeavyChase :
-				
-			case enemyType.HeavyChase :
-				
+			case enemyType.Heavy :
+
 			default :
 				
 				fleeTowardFarthestEscapePoint ();
@@ -1490,7 +1495,7 @@ public class basicAIEnemyV4 : MonoBehaviour {
 		switch (paType) {
 
 			case patrolType.Walk :
-				continueWander(0.5f);
+				continueWander();
 				break;
 			case patrolType.Stand :
 				if(suspicious) {
@@ -1648,11 +1653,11 @@ public class basicAIEnemyV4 : MonoBehaviour {
 			else {
 				//go toward the patrol point
 				if(mode==0) {
-					moveAlongAStarPathNoJump(myScaleFactor);
+					moveAlongAStarPathNoJump(true, myScaleFactor);
 				}
 				else {
 
-					moveAlongAStarPathNoLimits();
+					//moveAlongAStarPathNoLimits();
 				}
 			}
 			
@@ -1823,7 +1828,8 @@ public class basicAIEnemyV4 : MonoBehaviour {
 				if(chaseCharged) {
 					RaycastHit2D hit = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y + 1.0f), i_facingRight()? Vector2.right : -Vector2.right, 1.0f, obstacleLayers);
 					if (hit.collider != null) {
-						Debug.Log ("urtato ostacolo!" + hit.collider.gameObject.name);
+						if(DEBUG_FSM_TRANSITION[1])
+							Debug.Log ("urtato ostacolo!" + hit.collider.gameObject.name);
 						return enemyMachineState.Stunned;
 						
 					}
@@ -1947,13 +1953,13 @@ public class basicAIEnemyV4 : MonoBehaviour {
 			//per raggiungere la massima velocità di carica
 			//uso una tempistica inferiore a quella usata per il tipo di chase con la carica
 
-			mydelta = mydelta / (tToReachMaxCrashVelocity * 0.7f );
+			mydelta = mydelta / (tToMaxVelocity * 0.7f );
 			if(mydelta>1.0f)
 				mydelta = 1.0f;
 			
 		}
 		
-		moveAlongAStarPathNoJump(Mathf.Lerp (0.5f, 1.0f, mydelta));
+		moveAlongAStarPathNoJump(false, Mathf.Lerp (0.5f, 1.0f, mydelta));
 
 	}
 
@@ -1964,16 +1970,16 @@ public class basicAIEnemyV4 : MonoBehaviour {
 
 		if (mydelta != 0) {
 
-			mydelta = mydelta / tToReachMaxCrashVelocity;
+			mydelta = mydelta / tToMaxVelocity;
 			if(mydelta>1.0f)
 				mydelta = 1.0f;
 
 		}
 
 		if (mydelta < 1)
-			moveAlongAStarPathNoJump (Mathf.Lerp (0.5f, 1.0f, mydelta));
+			moveAlongAStarPathNoJump (false, Mathf.Lerp (0.5f, 1.0f, mydelta));
 		else
-			i_move ();
+			i_move (false);
 	}
 
 	private void continueChase(){
@@ -2214,7 +2220,7 @@ public class basicAIEnemyV4 : MonoBehaviour {
 				case enemyType.Guard :
 					if(involveEType) {
 						eType = enemyType.Dumb;
-						setupEnemy();
+						setupEnemy(true);
 						eMS = enemyMachineState.Stunned;
 					}
 					break;
@@ -2251,7 +2257,7 @@ public class basicAIEnemyV4 : MonoBehaviour {
 
 	private bool isStunnedCountDownFinished() {
 		
-		if (Time.time - tLastStunnedAttackReceived > tToReturnFromStunned) {
+		if (Time.time - tLastStunnedAttackReceived > tStunnedLenght) {
 			if(DEBUG_FSM_TRANSITION[2])
 				Debug.Log ("ST -> PA/WA - countDown finito");
 			return true;
@@ -2320,16 +2326,12 @@ public class basicAIEnemyV4 : MonoBehaviour {
 		//controlli ad hoc per ogni enemyType
 		switch (eType) {
 
-			case enemyType.NoJumpJustWander :
+			case enemyType.Dumb :
 
-			case enemyType.NoJumpJustPatrol :
+			case enemyType.Guard :
 
-			case enemyType.NoJumpSoftChase :
-				
-			case enemyType.NoJumpHeavyChase :
-				
-			case enemyType.HeavyChase :
-				
+			case enemyType.Heavy :
+
 			default :
 				
 				break;
@@ -2437,10 +2439,10 @@ public class basicAIEnemyV4 : MonoBehaviour {
 		return pm.FacingRight;
 	}
 	
-	private void i_move(float scaleFactor = 1){
+	private void i_move(bool isPatrolSpeed = true, float scaleFactor = 1){
 		
 		//c2d.moveCharacterHorizontal (!i_facingRight(), i_facingRight(), scaleFactor);
-		pm.c_runningManagement(!i_facingRight(), i_facingRight(), scaleFactor);
+		pm.c_runningManagement(!i_facingRight(), i_facingRight(), isPatrolSpeed, scaleFactor);
 	}
 
 
@@ -2484,7 +2486,7 @@ public class basicAIEnemyV4 : MonoBehaviour {
 	//ATTUALE USO : uso un numero di step uguale a 2 per evitare comportamenti strani, cioè
 	//che si flippi prima del dovuto, così lui va avanti guardando nel "futuro"
 	//TODO: è una cosa da gestire meglio
-	private void followPath(int step , float scaleFactor=1){
+	private void followPath(int step , bool isPatrolSpeed = true, float scaleFactor=1){
 		
 		if (myAstar.Path.Count > step) {
 			
@@ -2498,7 +2500,7 @@ public class basicAIEnemyV4 : MonoBehaviour {
 		}
 		
 		
-		i_move (scaleFactor);
+		i_move (isPatrolSpeed, scaleFactor);
 		
 	}
 	
@@ -2707,7 +2709,7 @@ public class basicAIEnemyV4 : MonoBehaviour {
 	}
 	
 	
-	private void moveAlongAStarPathNoJump(float m_scaleFactor=1) {
+	private void moveAlongAStarPathNoJump(bool isPatrolSpeed = true, float m_scaleFactor=1) {
 		
 		if (myAstar.Path.Count > 0)
 		{
@@ -2748,16 +2750,14 @@ public class basicAIEnemyV4 : MonoBehaviour {
 				if(DEBUG_ASTAR[1])
 					Debug.Log ("ASTAR - target più alto di me e distante");
 
-				//followPath(1, 0.7f);
-				i_move(m_scaleFactor* 0.85f);
+				i_move(isPatrolSpeed, m_scaleFactor* 0.85f);
 			}
 			else {
 				
 				if(DEBUG_ASTAR[1])
 					Debug.Log ("ASTAR - target più alto di me e sopra di me");
 
-				//followPath(1, 0.3f);
-				i_move(m_scaleFactor * 0.7f);
+				i_move(isPatrolSpeed, m_scaleFactor * 0.7f);
 			}
 			
 		}
@@ -2766,7 +2766,7 @@ public class basicAIEnemyV4 : MonoBehaviour {
 			if(DEBUG_ASTAR[1])
 				Debug.Log ("ASTAR - target alla mia stessa altezza");
 
-			followPath(2, m_scaleFactor);
+			followPath(2, isPatrolSpeed, m_scaleFactor);
 		}
 		
 		
@@ -2946,18 +2946,12 @@ public class basicAIEnemyV4 : MonoBehaviour {
 
 		if (a) {
 			//Debug.Log ("colpito");
-			switch (eType) {
 
-			case enemyType.NoJumpJustPatrol:
-				searchNextPatrollingPoint ();
-				break;
-			default :
-				isPlayerStunned = true;
-				break;
-			}
+			isTargetStunned = true;
+
 		} else {
 			//non usato
-			isPlayerStunned = false;
+			isTargetStunned = false;
 
 		}
 
@@ -2984,6 +2978,9 @@ public class basicAIEnemyV4 : MonoBehaviour {
 	}
 
 	public void OnCollisionEnter2D(Collision2D c) {
+
+		if (eMS == enemyMachineState.Stunned)
+			return;
 
 		if(DEBUG_COLLISION)
 			Debug.Log ("TOCCATO " + c.gameObject.name);

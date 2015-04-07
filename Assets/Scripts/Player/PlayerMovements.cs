@@ -19,6 +19,26 @@ public class PlayerMovements : MonoBehaviour {
 	bool jumpFromLadderLeft = false;
 
 	public float speedFactor = 4.0f;
+
+	//solo per AI-------------------------
+	private float walkSpeed = 4.0f;
+	private float runSpeed = 5.0f;
+
+	public float WalkSpeed {
+
+		get{ return walkSpeed;}
+		set{ if(value>0.0f) walkSpeed = value;}
+
+	}
+
+	
+	public float RunSpeed {
+		
+		get{ return runSpeed;}
+		set{ if(value>0.0f) runSpeed = value;}
+		
+	}
+	//------------------------------------
 	public float jumpFactor = 2.0f;
 	public float forceOnAirFactor = 10.0f;
 	public float LadderLateralLimit = 0.1f;
@@ -42,6 +62,7 @@ public class PlayerMovements : MonoBehaviour {
 
 	public bool FacingRight {
 		get{ return facingRight;}
+		set{ facingRight = value;}
 	}
 
 	bool stunnedState = false;
@@ -51,6 +72,7 @@ public class PlayerMovements : MonoBehaviour {
 	//private GameObject myToStun;
 
 	void Start () {
+		checkStartFacing ();
 		bool warning = true;
 		RigBody = transform.GetComponent<Rigidbody2D>();
 		anim = transform.GetComponent<Animator> ();
@@ -68,6 +90,24 @@ public class PlayerMovements : MonoBehaviour {
 		if (warning)
 			Debug.Log ("attenzione, manca un oggetto stunning sotto il player");
 		*/
+	}
+
+	private void checkStartFacing(){
+
+		if (transform.localScale.x < 0) {
+			if(transform.localScale.x == -1) {
+				
+				facingRight = false;
+				
+			}
+			else {
+				
+				Debug.Log ("ATTENZIONE : Assegnato uno scale strano");
+				
+			}
+			
+		}
+
 	}
 
 	void Update () {
@@ -305,7 +345,8 @@ public class PlayerMovements : MonoBehaviour {
 	}
 
 	//gestione della corsa
-	void runningManagement(bool facingLeftAI = false, bool facingRightAI = false, float scaleFactorAI = 1)
+	//i
+	void runningManagement(bool facingLeftAI = false, bool facingRightAI = false, bool isWalkSpeed = true, float scaleFactorAI = 1)
 	{
 		if (!AIControl) {
 			RigBody.velocity = new Vector2 (Input.GetAxis ("Horizontal") * speedFactor, RigBody.velocity.y);
@@ -323,7 +364,12 @@ public class PlayerMovements : MonoBehaviour {
 			}else if (!facingLeftAI && facingRightAI)
 				directionAI = 1;
 
-			RigBody.velocity = new Vector2 (scaleFactorAI * speedFactor * directionAI, RigBody.velocity.y);
+			if(isWalkSpeed) {
+				RigBody.velocity = new Vector2 (scaleFactorAI * walkSpeed * directionAI, RigBody.velocity.y);
+			}
+			else {
+				RigBody.velocity = new Vector2 (scaleFactorAI * runSpeed * directionAI, RigBody.velocity.y);
+			}
 		}
 		
 
@@ -450,7 +496,7 @@ public class PlayerMovements : MonoBehaviour {
 			gameObject.layer = convertBinToDec(PlayerLayer.value);
 			//myToStun.layer = convertBinToDec(PlayerLayer.value);
 			anim.SetBool ("Stunned", false);
-			//Debug.Log ("fine STUNNNNNNN");
+			//Debug.Log ("fin (e STUNNNNNNN");
 		}
 		
 	}
@@ -463,9 +509,9 @@ public class PlayerMovements : MonoBehaviour {
 		jumpingManagementFU ();
 	}
 
-	public void c_runningManagement(bool AIfacingLeft, bool AIfacingRight, float AIscaleFactor)
+	public void c_runningManagement(bool AIfacingLeft, bool AIfacingRight, bool isWalkSpeed = true, float AIscaleFactor = 1)
 	{
-		runningManagement (AIfacingLeft, AIfacingRight, AIscaleFactor);
+		runningManagement (AIfacingLeft, AIfacingRight, isWalkSpeed, AIscaleFactor);
 		
 	}
 
@@ -502,4 +548,5 @@ public class PlayerMovements : MonoBehaviour {
 		}
 		
 	}
+
 }
