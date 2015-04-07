@@ -3,12 +3,8 @@ using UnityEngine;
 
 public class Glass : MonoBehaviour
 {
-	// da impostare a private
 	public bool usable = false;
-	bool canBeEnabled = true;
-	//public bool attractor = false;
-	//public bool canInstantiateObj = false;
-	//public GameObject toOverlap;
+	public bool canBeEnabled = true;
 
 	public bool Usable {
 		get{ 
@@ -32,8 +28,16 @@ public class Glass : MonoBehaviour
 	[HideInInspector]
 	public GameObject projectionObject;
 
+
 	//prfab dell'oggetto istanziato dal vetrino, va imposto manualmente
 	public GameObject prefabObject;
+
+	//variabili da settare se è un vetrino di fine livello
+	public bool endingLevelGlass = false;
+	public GameObject toOverlap;
+	public int overlapPercentage = 10;
+	[HideInInspector]
+	public bool endedProjected = false;
 
 	void Update(){
 		 if (usable == false && canBeEnabled)
@@ -51,21 +55,36 @@ public class Glass : MonoBehaviour
 		return true;
 	}
 
-	/*
+
 	public bool controlIfOverlap(Bounds inObjBOunds)
 	{
 		BoxCollider2D BCOut = toOverlap.GetComponent<BoxCollider2D> ();
-		if (inObjBOunds.min.x > BCOut.bounds.min.x &&
-		    inObjBOunds.min.y > BCOut.bounds.min.y &&
-		    inObjBOunds.max.x < BCOut.bounds.max.x &&
-		    inObjBOunds.max.y < BCOut.bounds.max.y)
+
+		float xpixels = BCOut.bounds.size.x * overlapPercentage / 100;
+		float ypixels = BCOut.bounds.size.y * overlapPercentage / 100;
+
+
+
+		if (inObjBOunds.min.x > (BCOut.bounds.min.x-xpixels) &&
+		    inObjBOunds.min.y > (BCOut.bounds.min.y-ypixels) &&
+		    inObjBOunds.max.x < (BCOut.bounds.max.x+xpixels) &&
+		    inObjBOunds.max.y < (BCOut.bounds.max.y+ypixels) &&
+
+		    inObjBOunds.min.x < (BCOut.bounds.min.x+xpixels) &&
+		    inObjBOunds.min.y < (BCOut.bounds.min.y+ypixels) &&
+		    inObjBOunds.max.x > (BCOut.bounds.max.x-xpixels) &&
+		    inObjBOunds.max.y > (BCOut.bounds.max.y-ypixels))
 		    return true;
 		else
 		    return false;
-
 	}
-	*/
 
+	public void activeEndingLevelObjects()
+	{
+		foreach (Transform child in toOverlap.transform) {
+			child.gameObject.SetActive(true);
+		}
+	}
 
 }
 
