@@ -3,7 +3,7 @@ using System.Collections;
 
 public class CameraMovements : MonoBehaviour {
 
-	public GameObject player;
+	GameObject player;
 
 	Vector3 cameraCenter;
 	Vector3 beginCamera;
@@ -12,6 +12,7 @@ public class CameraMovements : MonoBehaviour {
 	float yDistFromBeginning;
 	
 	void Start () {
+		player = GameObject.FindGameObjectWithTag ("Player");
 		cameraCenter = new Vector3 (Camera.main.gameObject.transform.position.x, Camera.main.gameObject.transform.position.y, player.transform.position.z);
 		beginCamera = Camera.main.ScreenToWorldPoint (new Vector3 (0.0f, 0.0f, player.transform.position.z));
 		xDistFromBeginning = Mathf.Abs (cameraCenter.x - beginCamera.x);
