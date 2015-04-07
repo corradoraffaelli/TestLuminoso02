@@ -74,6 +74,11 @@ public class ProjectionCollision : MonoBehaviour {
 		projectionObject = projObj;
 	}
 
+	public SpriteRenderer getSpriteRenderer()
+	{
+		return projectionObject.transform.GetComponent<SpriteRenderer> ();
+	}
+
 	public void changeSprite(Sprite sprite)
 	{
 		projectionObject.transform.GetComponent<SpriteRenderer> ().sprite = sprite;

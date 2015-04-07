@@ -64,60 +64,28 @@ public class MagicLantern : Tool {
 	public float maxParticleEmission = 2000.0f;
 
 	GameObject tempProjectedObject;
+	SpriteRenderer tempSR;
 	//ParticleEmitter partEmit;
 
 	//--------INITIALIZATION AND ACTIVATION-------------------------------------
 
 	protected override void initializeTool() {
-		//lo script ProjectionCollision si occupa di controllare che la proiezione collida con i muri
-		PC = transform.GetComponent<ProjectionCollision>();
-
-		foreach (Transform child in player.transform) {
-			if (child.name == "MagicLantern") {
-				toolGameObject = child.gameObject;
-				break;
-			}
-		}
 
 
-		//la prima volta che attivo la lanterna, prendo il primo vetrino usabile
-		//actualGlass = nextUsableGlass (true);
-		foreach (Transform child in toolGameObject.transform) {
-			if (child.name == "Proiettore")
-			{
-				camera = child.gameObject;
-				foreach (Transform subChild in child.transform) {
-					if (subChild.name == "Proiettore_punta")
-					{
-						cameraPoint = subChild.gameObject;
-					}
-				}
-			}else if(child.name == "raggio"){
-				raggio = child.gameObject;
-			}else if (child.name == "raggio_cerchio"){
-				raggio_cerchio = child.gameObject;
-				foreach (Transform subChild in child.transform) {
-					if (subChild.name == "ProjectedObject")
-					{
-						projectionObject = subChild.gameObject;
-					}
-				}
-			}
-		}
+		//prendo gli oggetti dalla scena e li salvo nelle rispettive variabili
+		takeObjectsFromScene ();
 
-		//partEmit = raggio_cerchio.GetComponent<ParticleEmitter> ();
-		partSyst = raggio_cerchio.GetComponent<ParticleSystem> ();
+		//prendo i components a partire dalle variabili appena salvate
+		takeComponentsFromObjects ();
 
-		//componenti Sprite Renderer del raggio
-		spRendRay = raggio.GetComponent<SpriteRenderer> ();
-		spRendCircle = raggio_cerchio.GetComponent<SpriteRenderer> ();
-		
 		boundsRay = spRendRay.bounds;
 		xSize = boundsRay.size.x;
 		ySize = boundsRay.size.y;
 
 		PC.setProjectionObject(projectionObject);
 	}
+
+
 
 	protected override void activationToolFunc()
 	{
@@ -145,6 +113,7 @@ public class MagicLantern : Tool {
 
 	//qui va inserita la logica del tool, usata nell'update...
 	protected override void useTool() {
+		//caso in cui la lanterna non è lasciata a terra
 		if (!leftLantern) {
 			//movimenti del raggio e della proiezione sotto al mouse
 			normalMovementsUnderMouse ();
@@ -155,8 +124,7 @@ public class MagicLantern : Tool {
 			glassSpriteUpdate ();
 
 			//immplementazione attuale
-			if (!actualGlass.endingLevelGlass)
-			{
+			if (!actualGlass.endingLevelGlass) {
 				// la proiezione si trova fuori da un muro adatto
 				if (!PC.isColliding ()) {
 					changeRayAndCircleSprites (normalRay, normalCircle);
@@ -181,74 +149,83 @@ public class MagicLantern : Tool {
 					}
 				}
 
-				timerStarted = false;
-				timer = 0.0f;
-				if (tempProjectedObject)
-					Destroy(tempProjectedObject);
-				partSyst.enableEmission = false;
-				//partEmit.emit = false;
-			}else{
+				resetEndProjVariables ();
+			} else {
 				//si tratta di un vetrino di fine livello
 				changeRayAndCircleSprites (normalRay, normalCircle);
 				changeProjectionSprite (badGlassSprite);
 
-				if (actualGlass.controlIfOverlap(PC.getSpriteBounds ()) && !actualGlass.endedProjected)
-				{
+				//se mi trovo nella posizione giusta e non ho ancora proiettato il vetrino
+				if (actualGlass.controlIfOverlap (PC.getSpriteBounds ()) && !actualGlass.endedProjected) {
+					//il timer è partito
+					if (timerStarted) {
+						//changeProjectionSprite (projectionSprite);
+						projectionEffects ();
+						timer += Time.deltaTime;
 
-					if (timerStarted)
-					{
-						changeProjectionSprite (projectionSprite);
-						projectionEffects();
-						timer+= Time.deltaTime;
-						if (timer > projectionTimer)
-						{
-							actualGlass.activeEndingLevelObjects();
+						//ho superato il momento in cui devo istanziare la proiezione del vetrino di fine livello
+						if (timer > projectionTimer) {
+							//attivo tutti i GameObjects relativi al particolare vetrino
+							actualGlass.activeEndingLevelObjects ();
 
 							//disattiva la lanterna
 							actualGlass.endedProjected = true;
 							actualGlass.Usable = false;
-							toolSwitcher TS = transform.parent.gameObject.GetComponent<toolSwitcher>();
-							TS.useTool(false);
-							TS.switchUsingTool(false);
+							toolSwitcher TS = transform.parent.gameObject.GetComponent<toolSwitcher> ();
+							TS.useTool (false);
+							TS.switchUsingTool (false);
 						}
-					}else{
-						tempProjectedObject = Instantiate(projectionObject, projectionObject.transform.position, projectionObject.transform.rotation) as GameObject;
+						//sto attivando ora il timer, devo fare tutte le operazioni di avvio
+					} else {
+						//istanzio un nuovo oggetto proiezione, da sfumare
+
+						tempProjectedObject = new GameObject();
+						UnityEditorInternal.ComponentUtility.CopyComponent(PC.getSpriteRenderer());
+						UnityEditorInternal.ComponentUtility.PasteComponentAsNew(tempProjectedObject);
 						tempProjectedObject.transform.parent = raggio_cerchio.transform;
+						tempProjectedObject.transform.localPosition = projectionObject.transform.localPosition;
 						tempProjectedObject.transform.localScale = projectionObject.transform.localScale;
+
+						tempSR = tempProjectedObject.GetComponent<SpriteRenderer>();
+						tempSR.sprite = projectionSprite;
+						tempSR.color = new Color(tempSR.color.r, tempSR.color.g, tempSR.color.b, 0.0f);
+						//tempProjectedObject = Instantiate (projectionObject, projectionObject.transform.position, projectionObject.transform.rotation) as GameObject;
+						//tempProjectedObject.transform.parent = raggio_cerchio.transform;
+						//tempProjectedObject.transform.localScale = projectionObject.transform.localScale;
 						//changeProjectionSprite (projectionSprite);
 						timerStarted = true;
+
+						partSyst.enableEmission = true;
 					}
+					/*
 					partSyst.enableEmission = true;
 					partSyst.emissionRate = (timer*maxParticleEmission)/projectionTimer;
 
 					SpriteRenderer tempSR = tempProjectedObject.GetComponent<SpriteRenderer>();
 					tempSR.color = new Color(tempSR.color.r, tempSR.color.g, tempSR.color.b, (timer*1.0f)/projectionTimer);
+					*/
 					//setAplhaProjectionSprite((timer*1.0f)/projectionTimer);
 					//Debug.Log (partSyst.emissionRate);
-				}else{
-					partSyst.enableEmission = false;
-					if (tempProjectedObject)
-						Destroy(tempProjectedObject);
-					timerStarted = false;
-					timer = 0.0f;
+				} else {
+					resetEndProjVariables ();
 				}
-
-
-
 			}
-
-
 
 			//DEBUG: se si preme E, si passa al prossimo vetrino
 			if (Input.GetKeyUp (KeyCode.E)) {
 				deleteActualProjection ();
 				actualGlass = nextUsableGlass ();
 			}
-		} else {
+		}
+
+		//se ho lasciato la lanterna
+		else 
+		{
 
 		}
 
-		if (Input.GetKeyUp (KeyCode.C)) {
+		//se premo C o il tasto sinistro del mouse lascio la lanterna
+		if (Input.GetKeyUp (KeyCode.C) || Input.GetMouseButtonUp(0)) {
 			leftLantern = !leftLantern;
 			if (leftLantern)
 				toolGameObject.transform.parent = transform;
@@ -258,6 +235,16 @@ public class MagicLantern : Tool {
 			}
 				
 		}
+	}
+
+	void resetEndProjVariables()
+	{
+		timerStarted = false;
+		timer = 0.0f;
+		if (tempProjectedObject)
+			Destroy(tempProjectedObject);
+		partSyst.enableEmission = false;
+		PC.setAlphaSprite (1.0f);
 	}
 
 	//chiamata quando la lanterna viene disattivata
@@ -270,7 +257,11 @@ public class MagicLantern : Tool {
 	//effetti durante la proiezione del vetrino di fine livello
 	void projectionEffects()
 	{
-
+		partSyst.emissionRate = (timer*maxParticleEmission)/projectionTimer;
+		//SpriteRenderer tempSR = tempProjectedObject.GetComponent<SpriteRenderer>();
+		//tempSR.color = new Color(tempSR.color.r, tempSR.color.g, tempSR.color.b, (timer*1.0f)/projectionTimer);
+		tempSR.color = new Color(tempSR.color.r, tempSR.color.g, tempSR.color.b, (timer*1.0f)/projectionTimer);
+		PC.setAlphaSprite (1.0f-((timer * 1.0f) / projectionTimer));
 	}
 
 	//impone il player come oggetto pparent della lanterna
@@ -371,20 +362,7 @@ public class MagicLantern : Tool {
 			PM.c_flip ();
 	}
 
-	//funzione da chiamare per abilitare disabilitare la possibilità di usare un vetrino
-	//------!!! DA TESTARE!!!!------------------
-	public void enableGlass(int glassIndexToEnable, bool enable = true)
-	{
-		if (enable) {
-			glassList[glassIndexToEnable].usable = true;
-			actualGlass = glassList[glassIndexToEnable];
-			//glassSpriteUpdate ();
-		}else{
-			glassList[glassIndexToEnable].usable = false;
-			actualGlass = nextUsableGlass();
-			//glassSpriteUpdate ();
-		}
-	}
+
 
 	//ritorna il prossimo vetrino usabile, se first è abilitato, ritorna il prossimo, a partire da quello attuale (utile per primo avvio)
 	Glass nextUsableGlass(bool first = false)
@@ -441,6 +419,7 @@ public class MagicLantern : Tool {
 	}
 
 	//Attualmente inutilizzata
+	/*
 	void prefabFollowingCursor()
 	{
 		//actualGlass.projectionObject.transform.position = ;
@@ -461,6 +440,7 @@ public class MagicLantern : Tool {
 	}
 
 	//istanzia un nuovo oggetto di tipo "Projection" una volta che si clicca sulla posizione voluta (attualmente inutilizzato)
+
 	void placeImage()
 	{
 		deleteOldProjection ();
@@ -481,6 +461,7 @@ public class MagicLantern : Tool {
 		actualGlass.projectionObject.SetActive (true);
 
 	}
+	*/
 
 	//chiamato quando è necessario eliminare il vecchio prefab istanziato (quando si cambia vetrino, quando si esce da un muro o si va fuori fuoco)
 	void deleteActualProjection()
@@ -495,6 +476,68 @@ public class MagicLantern : Tool {
 	{
 		if (actualGlass.projectionObject)
 			Destroy (actualGlass.projectionObject);
+	}
+
+
+	void takeObjectsFromScene()
+	{
+		foreach (Transform child in player.transform) {
+			if (child.name == "MagicLantern") {
+				toolGameObject = child.gameObject;
+				break;
+			}
+		}
+		
+		foreach (Transform child in toolGameObject.transform) {
+			if (child.name == "Proiettore")
+			{
+				camera = child.gameObject;
+				foreach (Transform subChild in child.transform) {
+					if (subChild.name == "Proiettore_punta")
+					{
+						cameraPoint = subChild.gameObject;
+					}
+				}
+			}else if(child.name == "raggio"){
+				raggio = child.gameObject;
+			}else if (child.name == "raggio_cerchio"){
+				raggio_cerchio = child.gameObject;
+				foreach (Transform subChild in child.transform) {
+					if (subChild.name == "ProjectedObject")
+					{
+						projectionObject = subChild.gameObject;
+					}
+				}
+			}
+		}
+	}
+	
+	void takeComponentsFromObjects()
+	{
+		//lo script ProjectionCollision si occupa di controllare che la proiezione collida con i muri
+		PC = transform.GetComponent<ProjectionCollision>();
+		
+		//sistema particellare
+		partSyst = raggio_cerchio.GetComponent<ParticleSystem> ();
+		
+		//componenti Sprite Renderer del raggio
+		spRendRay = raggio.GetComponent<SpriteRenderer> ();
+		spRendCircle = raggio_cerchio.GetComponent<SpriteRenderer> ();
+	}
+
+	//funzione da chiamare per abilitare disabilitare la possibilità di usare un vetrino
+	//------!!! DA TESTARE!!!!------------------
+	public void enableGlass(int glassIndexToEnable, bool enable = true)
+	{
+		if (enable) {
+			glassList[glassIndexToEnable].usable = true;
+			actualGlass = glassList[glassIndexToEnable];
+			//glassSpriteUpdate ();
+		}else{
+			glassList[glassIndexToEnable].usable = false;
+			actualGlass = nextUsableGlass();
+			//glassSpriteUpdate ();
+		}
 	}
 
 	private int convertBinToDec(int binintval) {

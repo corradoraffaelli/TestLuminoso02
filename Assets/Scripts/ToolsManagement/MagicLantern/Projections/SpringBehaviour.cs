@@ -38,6 +38,5 @@ public class SpringBehaviour : MonoBehaviour {
 			rigBody.AddForce(new Vector2 (0.0f,upForce));
 			spinta = false;
 		}
-		//vel01 = player.GetComponent<Rigidbody2D> ().velocity.y;
 	}
 }
