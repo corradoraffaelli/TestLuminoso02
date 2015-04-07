@@ -1,16 +1,64 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &111878
+--- !u!1 &104622
 GameObject:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 4
   m_Component:
-  - 4: {fileID: 448980}
-  - 114: {fileID: 11492554}
+  - 4: {fileID: 467384}
+  - 114: {fileID: 11462030}
   m_Layer: 0
-  m_Name: Glass_X
+  m_Name: Glass_Ending01
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &107662
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 406404}
+  - 114: {fileID: 11420836}
+  m_Layer: 0
+  m_Name: Glass_Cage
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &111530
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 489368}
+  - 114: {fileID: 11413822}
+  m_Layer: 0
+  m_Name: Glass_Spring
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &113054
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 422238}
+  - 114: {fileID: 11453772}
+  m_Layer: 0
+  m_Name: Glass_Cake
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -32,17 +80,33 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!1 &122768
+--- !u!1 &131266
 GameObject:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 4
   m_Component:
-  - 4: {fileID: 434080}
-  - 114: {fileID: 11466352}
+  - 4: {fileID: 491868}
+  - 114: {fileID: 11480792}
   m_Layer: 0
   m_Name: Glass_Door
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &158122
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 497356}
+  - 114: {fileID: 11469258}
+  m_Layer: 0
+  m_Name: Glass_Platform
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -65,30 +129,86 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &434080
+--- !u!1 &175824
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 439546}
+  - 114: {fileID: 11420058}
+  m_Layer: 0
+  m_Name: Glass_X
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &188184
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 470308}
+  - 114: {fileID: 11484244}
+  m_Layer: 0
+  m_Name: Glass_Ghost
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &406404
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 122768}
+  m_GameObject: {fileID: 107662}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 481108}
   m_RootOrder: 0
---- !u!4 &448980
+--- !u!4 &422238
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 111878}
+  m_GameObject: {fileID: 113054}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 481108}
-  m_RootOrder: 1
+  m_RootOrder: 5
+--- !u!4 &439546
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 175824}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 481108}
+  m_RootOrder: 2
+--- !u!4 &467384
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 104622}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 481108}
+  m_RootOrder: 7
 --- !u!4 &468236
 Transform:
   m_ObjectHideFlags: 1
@@ -102,6 +222,18 @@ Transform:
   - {fileID: 481108}
   m_Father: {fileID: 0}
   m_RootOrder: 0
+--- !u!4 &470308
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 188184}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 481108}
+  m_RootOrder: 3
 --- !u!4 &481108
 Transform:
   m_ObjectHideFlags: 1
@@ -112,10 +244,156 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 434080}
-  - {fileID: 448980}
+  - {fileID: 406404}
+  - {fileID: 491868}
+  - {fileID: 439546}
+  - {fileID: 470308}
+  - {fileID: 497356}
+  - {fileID: 422238}
+  - {fileID: 489368}
+  - {fileID: 467384}
   m_Father: {fileID: 468236}
   m_RootOrder: 0
+--- !u!4 &489368
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 111530}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 481108}
+  m_RootOrder: 6
+--- !u!4 &491868
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 131266}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 481108}
+  m_RootOrder: 1
+--- !u!4 &497356
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 158122}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 481108}
+  m_RootOrder: 4
+--- !u!114 &11413822
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 111530}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d528b953161387942976b4620f5a3fa6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  usable: 1
+  canBeEnabled: 1
+  spriteObject: {fileID: 21300000, guid: 6af22ad39387eb34bbf12093c3b99270, type: 3}
+  goodProjection: {fileID: 21300000, guid: 15087dbd8a26cc34c8299d99b2911707, type: 3}
+  badProjection: {fileID: 21300000, guid: 15087dbd8a26cc34c8299d99b2911707, type: 3}
+  blurredProjection: {fileID: 21300000, guid: 4edf04c498cee884eac6ee932f10a3e8, type: 3}
+  emptySprite: {fileID: 21300000, guid: 50a50227ac61e084e90932c68e1866ff, type: 3}
+  glassType: Spring
+  subGlassList: []
+  projectionObject: {fileID: 0}
+  prefabObject: {fileID: 160210, guid: b5e6c50a6e5d35f49a8d96e1c2792828, type: 2}
+  endingLevelGlass: 0
+  toOverlap: {fileID: 0}
+  overlapPercentage: 10
+  endedProjected: 0
+--- !u!114 &11420058
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 175824}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d528b953161387942976b4620f5a3fa6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  usable: 1
+  canBeEnabled: 1
+  spriteObject: {fileID: 21300000, guid: e70389d12caf0da4aa6145ab7991c55b, type: 3}
+  goodProjection: {fileID: 21300000, guid: 97b86e54c158a2c4ba146842245bcb96, type: 3}
+  badProjection: {fileID: 21300000, guid: 1ad9c277657c65540ac79b145a6ae7f3, type: 3}
+  blurredProjection: {fileID: 21300000, guid: 9d636f22705873146aa4144831617136, type: 3}
+  emptySprite: {fileID: 21300000, guid: 0b15632485be95c409db3dc2f91fe923, type: 3}
+  glassType: X_Marks_The_spot
+  subGlassList: []
+  projectionObject: {fileID: 0}
+  prefabObject: {fileID: 105052, guid: 55892cbcab641ed4588c279c4a796e96, type: 2}
+  endingLevelGlass: 0
+  toOverlap: {fileID: 0}
+  overlapPercentage: 10
+  endedProjected: 0
+--- !u!114 &11420836
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 107662}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d528b953161387942976b4620f5a3fa6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  usable: 1
+  canBeEnabled: 1
+  spriteObject: {fileID: 21300000, guid: 4ee18d1beb64a32448911d15bbba5262, type: 3}
+  goodProjection: {fileID: 21300000, guid: 1e2f61b4771c5b941b549ec940cb22ff, type: 3}
+  badProjection: {fileID: 21300000, guid: 1e2f61b4771c5b941b549ec940cb22ff, type: 3}
+  blurredProjection: {fileID: 21300000, guid: 4ec62d54cdbb8a54097cb0be14eabafb, type: 3}
+  emptySprite: {fileID: 21300000, guid: 5107ae915a71b72479b27f4233ed125d, type: 3}
+  glassType: Cage
+  subGlassList: []
+  projectionObject: {fileID: 0}
+  prefabObject: {fileID: 160210, guid: 8f7a92d0e8888f844844bd524bbe7cbc, type: 2}
+  endingLevelGlass: 0
+  toOverlap: {fileID: 0}
+  overlapPercentage: 10
+  endedProjected: 0
+--- !u!114 &11453772
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 113054}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d528b953161387942976b4620f5a3fa6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  usable: 1
+  canBeEnabled: 1
+  spriteObject: {fileID: 21300000, guid: cdb3bd5efd992d74eb44df6ea6ca67c1, type: 3}
+  goodProjection: {fileID: 21300000, guid: 162107af128bf9a4a815a0ff47130f7b, type: 3}
+  badProjection: {fileID: 21300000, guid: 162107af128bf9a4a815a0ff47130f7b, type: 3}
+  blurredProjection: {fileID: 21300000, guid: 20129ed1b13df234c92be07778a14a9d, type: 3}
+  emptySprite: {fileID: 21300000, guid: 39c99c64947336841bcc0ff945c05a40, type: 3}
+  glassType: Cake
+  subGlassList: []
+  projectionObject: {fileID: 0}
+  prefabObject: {fileID: 142134, guid: cc2571bb609cda14b8279c003069c067, type: 2}
+  endingLevelGlass: 0
+  toOverlap: {fileID: 0}
+  overlapPercentage: 10
+  endedProjected: 0
 --- !u!114 &11460304
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -127,6 +405,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7da78f3a0c2daa642bd203b1a51e2b58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &11462030
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 104622}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d528b953161387942976b4620f5a3fa6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  usable: 1
+  canBeEnabled: 0
+  spriteObject: {fileID: 21300000, guid: 98f4ed6e23b1c304488a3f46bba2a142, type: 3}
+  goodProjection: {fileID: 21300000, guid: 703f548b2d0895c428e3f46a003d9244, type: 3}
+  badProjection: {fileID: 21300000, guid: 703f548b2d0895c428e3f46a003d9244, type: 3}
+  blurredProjection: {fileID: 21300000, guid: 703f548b2d0895c428e3f46a003d9244, type: 3}
+  emptySprite: {fileID: 21300000, guid: b1baccf9c9f3caf46a51239c387c82e8, type: 3}
+  glassType: Ending 01
+  subGlassList: []
+  projectionObject: {fileID: 0}
+  prefabObject: {fileID: 0}
+  endingLevelGlass: 1
+  toOverlap: {fileID: 0}
+  overlapPercentage: 10
+  endedProjected: 0
 --- !u!114 &11462174
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -143,33 +447,58 @@ MonoBehaviour:
   activeToolIndex: 0
   usingTool: 0
   useTapOnPlayer: 0
---- !u!114 &11466352
+--- !u!114 &11469258
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 122768}
+  m_GameObject: {fileID: 158122}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d528b953161387942976b4620f5a3fa6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   usable: 1
-  attractor: 0
-  canInstantiateObj: 0
+  canBeEnabled: 1
+  spriteObject: {fileID: 21300000, guid: 2069cce1966271b45af7e881c8b73ca2, type: 3}
+  goodProjection: {fileID: 21300000, guid: ccb7d92fcf2cd4647a6da08ac75139bb, type: 3}
+  badProjection: {fileID: 21300000, guid: ccb7d92fcf2cd4647a6da08ac75139bb, type: 3}
+  blurredProjection: {fileID: 21300000, guid: 0cd3b672380e36a428c33281524b6fe3, type: 3}
+  emptySprite: {fileID: 21300000, guid: 6d6dbd4837225ea4a896418830624d88, type: 3}
+  glassType: Platform
+  subGlassList: []
+  projectionObject: {fileID: 0}
+  prefabObject: {fileID: 174492, guid: 9a41e2cfe9b388e49860344afdd42842, type: 2}
+  endingLevelGlass: 0
   toOverlap: {fileID: 0}
+  overlapPercentage: 10
+  endedProjected: 0
+--- !u!114 &11480792
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 131266}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d528b953161387942976b4620f5a3fa6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  usable: 1
+  canBeEnabled: 1
   spriteObject: {fileID: 21300000, guid: 55a32b8f669f22d438c8f6ee380986ea, type: 3}
   goodProjection: {fileID: 21300000, guid: 64fef828077b20a4b94856d7163028c9, type: 3}
   badProjection: {fileID: 21300000, guid: f1f1f9b406faddf4fb2dee832b14468a, type: 3}
   blurredProjection: {fileID: 21300000, guid: da6aaacaee3b40c4da19cbfe8d7ee636, type: 3}
   emptySprite: {fileID: 21300000, guid: 1172cc0229ae017458e3b7497760daad, type: 3}
   glassType: Door
-  subGlassList:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  subGlassList: []
   projectionObject: {fileID: 0}
   prefabObject: {fileID: 160210, guid: 76cc0afb07544d441bd5cde8699e39a7, type: 2}
+  endingLevelGlass: 0
+  toOverlap: {fileID: 0}
+  overlapPercentage: 10
+  endedProjected: 0
 --- !u!114 &11481048
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -187,8 +516,12 @@ MonoBehaviour:
   inventory: {fileID: 0}
   tType: 2
   glassList:
-  - {fileID: 11466352}
-  - {fileID: 11492554}
+  - {fileID: 11453772}
+  - {fileID: 11420836}
+  - {fileID: 11484244}
+  - {fileID: 11469258}
+  - {fileID: 11413822}
+  - {fileID: 11462030}
   zPositionEnvironment: 0
   resizeFactor: 1.5
   maxProjectingDistance: 7.5
@@ -197,33 +530,34 @@ MonoBehaviour:
   pressedRay: {fileID: 21300004, guid: 3c09fae1fc827b34f9bbe6516a68eb0b, type: 3}
   pressedCircle: {fileID: 21300000, guid: 3c09fae1fc827b34f9bbe6516a68eb0b, type: 3}
   projectionPrefab: {fileID: 146854, guid: e903df3634975d94d8f090cffe868ace, type: 2}
---- !u!114 &11492554
+  projectionTimer: 3
+  maxParticleEmission: 5000
+--- !u!114 &11484244
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 111878}
+  m_GameObject: {fileID: 188184}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d528b953161387942976b4620f5a3fa6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   usable: 1
-  attractor: 1
-  canInstantiateObj: 0
-  toOverlap: {fileID: 0}
-  spriteObject: {fileID: 21300000, guid: e70389d12caf0da4aa6145ab7991c55b, type: 3}
-  goodProjection: {fileID: 21300000, guid: 97b86e54c158a2c4ba146842245bcb96, type: 3}
-  badProjection: {fileID: 21300000, guid: 1ad9c277657c65540ac79b145a6ae7f3, type: 3}
-  blurredProjection: {fileID: 21300000, guid: 9d636f22705873146aa4144831617136, type: 3}
-  emptySprite: {fileID: 21300000, guid: 0b15632485be95c409db3dc2f91fe923, type: 3}
-  glassType: X_Marks_The_spot
-  subGlassList:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  canBeEnabled: 1
+  spriteObject: {fileID: 21300000, guid: f75e460e1846a97499f695c24e2ad848, type: 3}
+  goodProjection: {fileID: 21300000, guid: d529531f29c89954f864702bd5583a2b, type: 3}
+  badProjection: {fileID: 21300000, guid: d529531f29c89954f864702bd5583a2b, type: 3}
+  blurredProjection: {fileID: 21300000, guid: 58547162551e30f4f80bdf3d8d40872e, type: 3}
+  emptySprite: {fileID: 21300000, guid: 13b738f786009794691859e757c7ef4a, type: 3}
+  glassType: Ghost
+  subGlassList: []
   projectionObject: {fileID: 0}
-  prefabObject: {fileID: 105052, guid: 55892cbcab641ed4588c279c4a796e96, type: 2}
+  prefabObject: {fileID: 174594, guid: 7dc86dd05a962f44399a04afad2fa71d, type: 2}
+  endingLevelGlass: 0
+  toOverlap: {fileID: 0}
+  overlapPercentage: 10
+  endedProjected: 0
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
