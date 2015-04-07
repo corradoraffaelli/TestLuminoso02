@@ -2979,6 +2979,7 @@ public class basicAIEnemyV4 : MonoBehaviour {
 
 	public void OnCollisionEnter2D(Collision2D c) {
 
+		//se l'AI è stunnata non reca danno al player, per ora...
 		if (eMS == enemyMachineState.Stunned)
 			return;
 
