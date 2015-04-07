@@ -61,7 +61,7 @@ public class MagicLantern : Tool {
 	public float projectionTimer = 6.0f;
 
 	ParticleSystem partSyst;
-	public float maxParticleEmission = 2000.0f;
+	public float maxParticleEmission = 5000.0f;
 
 	GameObject tempProjectedObject;
 	SpriteRenderer tempSR;
@@ -149,7 +149,7 @@ public class MagicLantern : Tool {
 					}
 				}
 
-				resetEndProjVariables ();
+				resetEndingGlassVariables ();
 			} else {
 				//si tratta di un vetrino di fine livello
 				changeRayAndCircleSprites (normalRay, normalCircle);
@@ -159,55 +159,13 @@ public class MagicLantern : Tool {
 				if (actualGlass.controlIfOverlap (PC.getSpriteBounds ()) && !actualGlass.endedProjected) {
 					//il timer è partito
 					if (timerStarted) {
-						//changeProjectionSprite (projectionSprite);
-						projectionEffects ();
-						timer += Time.deltaTime;
-
-						//ho superato il momento in cui devo istanziare la proiezione del vetrino di fine livello
-						if (timer > projectionTimer) {
-							//attivo tutti i GameObjects relativi al particolare vetrino
-							actualGlass.activeEndingLevelObjects ();
-
-							//disattiva la lanterna
-							actualGlass.endedProjected = true;
-							actualGlass.Usable = false;
-							toolSwitcher TS = transform.parent.gameObject.GetComponent<toolSwitcher> ();
-							TS.useTool (false);
-							TS.switchUsingTool (false);
-						}
+						EndingGlassTimerStarted();
 						//sto attivando ora il timer, devo fare tutte le operazioni di avvio
 					} else {
-						//istanzio un nuovo oggetto proiezione, da sfumare
-
-						tempProjectedObject = new GameObject();
-						UnityEditorInternal.ComponentUtility.CopyComponent(PC.getSpriteRenderer());
-						UnityEditorInternal.ComponentUtility.PasteComponentAsNew(tempProjectedObject);
-						tempProjectedObject.transform.parent = raggio_cerchio.transform;
-						tempProjectedObject.transform.localPosition = projectionObject.transform.localPosition;
-						tempProjectedObject.transform.localScale = projectionObject.transform.localScale;
-
-						tempSR = tempProjectedObject.GetComponent<SpriteRenderer>();
-						tempSR.sprite = projectionSprite;
-						tempSR.color = new Color(tempSR.color.r, tempSR.color.g, tempSR.color.b, 0.0f);
-						//tempProjectedObject = Instantiate (projectionObject, projectionObject.transform.position, projectionObject.transform.rotation) as GameObject;
-						//tempProjectedObject.transform.parent = raggio_cerchio.transform;
-						//tempProjectedObject.transform.localScale = projectionObject.transform.localScale;
-						//changeProjectionSprite (projectionSprite);
-						timerStarted = true;
-
-						partSyst.enableEmission = true;
+						EndingGlassFirstTime();
 					}
-					/*
-					partSyst.enableEmission = true;
-					partSyst.emissionRate = (timer*maxParticleEmission)/projectionTimer;
-
-					SpriteRenderer tempSR = tempProjectedObject.GetComponent<SpriteRenderer>();
-					tempSR.color = new Color(tempSR.color.r, tempSR.color.g, tempSR.color.b, (timer*1.0f)/projectionTimer);
-					*/
-					//setAplhaProjectionSprite((timer*1.0f)/projectionTimer);
-					//Debug.Log (partSyst.emissionRate);
 				} else {
-					resetEndProjVariables ();
+					resetEndingGlassVariables ();
 				}
 			}
 
@@ -237,7 +195,53 @@ public class MagicLantern : Tool {
 		}
 	}
 
-	void resetEndProjVariables()
+	//gestione di quello che deve succedere la prima volta che la proiezione del vetrino di fine livello si trova
+	//nella giusta posizione
+	void EndingGlassFirstTime()
+	{
+		//istanzio un nuovo oggetto proiezione, da sfumare
+		tempProjectedObject = new GameObject();
+		UnityEditorInternal.ComponentUtility.CopyComponent(PC.getSpriteRenderer());
+		UnityEditorInternal.ComponentUtility.PasteComponentAsNew(tempProjectedObject);
+		tempProjectedObject.transform.parent = raggio_cerchio.transform;
+		tempProjectedObject.transform.localPosition = projectionObject.transform.localPosition;
+		tempProjectedObject.transform.localScale = projectionObject.transform.localScale;
+		
+		tempSR = tempProjectedObject.GetComponent<SpriteRenderer>();
+		tempSR.sprite = projectionSprite;
+		tempSR.color = new Color(tempSR.color.r, tempSR.color.g, tempSR.color.b, 0.0f);
+
+		partSyst.enableEmission = true;
+
+		timerStarted = true;
+	}
+
+	//gestione di quello che deve succedere una volta istanziato ed avviato un nuovo timer per il vetrino di fine livello
+	void EndingGlassTimerStarted()
+	{
+		//changeProjectionSprite (projectionSprite);
+		projectionEffects ();
+		timer += Time.deltaTime;
+		
+		//ho superato il momento in cui devo istanziare la proiezione del vetrino di fine livello
+		if (timer > projectionTimer) {
+			//attivo tutti i GameObjects relativi al particolare vetrino
+			actualGlass.activeEndingLevelObjects ();
+			
+			//disattiva la lanterna
+			actualGlass.endedProjected = true;
+			actualGlass.Usable = false;
+			toolSwitcher TS = transform.parent.gameObject.GetComponent<toolSwitcher> ();
+			TS.useTool (false);
+			TS.switchUsingTool (false);
+			
+			resetEndingGlassVariables();
+		}
+	}
+
+	//gestione della disattivazione degli eventi relativi alla proiezione del vetrino di fine livello
+	//(non più nella giusta posizione ecc.)
+	void resetEndingGlassVariables()
 	{
 		timerStarted = false;
 		timer = 0.0f;
@@ -261,7 +265,7 @@ public class MagicLantern : Tool {
 		//SpriteRenderer tempSR = tempProjectedObject.GetComponent<SpriteRenderer>();
 		//tempSR.color = new Color(tempSR.color.r, tempSR.color.g, tempSR.color.b, (timer*1.0f)/projectionTimer);
 		tempSR.color = new Color(tempSR.color.r, tempSR.color.g, tempSR.color.b, (timer*1.0f)/projectionTimer);
-		PC.setAlphaSprite (1.0f-((timer * 1.0f) / projectionTimer));
+		setAplhaProjectionSprite (1.0f-((timer * 1.0f) / projectionTimer));
 	}
 
 	//impone il player come oggetto pparent della lanterna
