@@ -21,7 +21,9 @@ public class PlayerMovements : MonoBehaviour {
 	public float speedFactor = 4.0f;
 
 	//solo per AI-------------------------
+	[Range(0.1f,10.0f)]
 	public float AI_walkSpeed = 4.0f;
+	[Range(0.1f,10.0f)]
 	public float AI_runSpeed = 5.0f;
 	
 	//------------------------------------
