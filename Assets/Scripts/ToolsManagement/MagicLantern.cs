@@ -401,25 +401,28 @@ public class MagicLantern : Tool {
 	//funzione per istanziare il prefab dell'oggetto relativo al vetrino, sotto il cursore
 	void instantiatePrefab()
 	{
-		//istanzio un prefab e lo sposto sotto il mouse
-		actualGlass.projectionObject = Instantiate <GameObject> (actualGlass.prefabObject);
-		actualGlass.projectionObject.transform.position = new Vector3(actualMousePosition.x, actualMousePosition.y, zPositionEnvironment);
+		if (actualGlass.prefabObject) {
+			//istanzio un prefab e lo sposto sotto il mouse
+			actualGlass.projectionObject = Instantiate <GameObject> (actualGlass.prefabObject);
+			actualGlass.projectionObject.transform.position = new Vector3(actualMousePosition.x, actualMousePosition.y, zPositionEnvironment);
+			
+			//prendo i bounds della sprite della proiezione
+			Bounds objBounds = PC.getSpriteBounds ();
+			//prendo lo spriteRenderer del prefab ed i suoi bounds
+			SpriteRenderer actualSprite = actualGlass.projectionObject.transform.GetComponent<SpriteRenderer> ();
+			//actualSprite.sprite = projectionSprite;
+			Bounds newObjBounds = actualSprite.bounds;
+			
+			//scalo l'oggetto per far sì che la sua sprite coincida con quella sottostante (teoricamente vuota)
+			float spriteScale = objBounds.size.x / newObjBounds.size.x;
+			actualGlass.projectionObject.transform.localScale = new Vector3 (spriteScale, spriteScale, spriteScale);
+			
+			//metto l'oggetto come figlio del raggio_cerchio
+			actualGlass.projectionObject.transform.parent = raggio_cerchio.transform;
+			
+			actualGlass.projectionObject.SetActive (true);
+		}
 
-		//prendo i bounds della sprite della proiezione
-		Bounds objBounds = PC.getSpriteBounds ();
-		//prendo lo spriteRenderer del prefab ed i suoi bounds
-		SpriteRenderer actualSprite = actualGlass.projectionObject.transform.GetComponent<SpriteRenderer> ();
-		//actualSprite.sprite = projectionSprite;
-		Bounds newObjBounds = actualSprite.bounds;
-
-		//scalo l'oggetto per far sì che la sua sprite coincida con quella sottostante (teoricamente vuota)
-		float spriteScale = objBounds.size.x / newObjBounds.size.x;
-		actualGlass.projectionObject.transform.localScale = new Vector3 (spriteScale, spriteScale, spriteScale);
-
-		//metto l'oggetto come figlio del raggio_cerchio
-		actualGlass.projectionObject.transform.parent = raggio_cerchio.transform;
-
-		actualGlass.projectionObject.SetActive (true);
 	}
 
 	//Attualmente inutilizzata

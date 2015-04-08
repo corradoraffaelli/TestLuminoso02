@@ -58,25 +58,29 @@ public class Glass : MonoBehaviour
 
 	public bool controlIfOverlap(Bounds inObjBOunds)
 	{
-		BoxCollider2D BCOut = toOverlap.GetComponent<BoxCollider2D> ();
+		if (toOverlap) {
+			BoxCollider2D BCOut = toOverlap.GetComponent<BoxCollider2D> ();
 
-		float xpixels = BCOut.bounds.size.x * overlapPercentage / 100;
-		float ypixels = BCOut.bounds.size.y * overlapPercentage / 100;
+			float xpixels = BCOut.bounds.size.x * overlapPercentage / 100;
+			float ypixels = BCOut.bounds.size.y * overlapPercentage / 100;
 
 
 
-		if (inObjBOunds.min.x > (BCOut.bounds.min.x-xpixels) &&
-		    inObjBOunds.min.y > (BCOut.bounds.min.y-ypixels) &&
-		    inObjBOunds.max.x < (BCOut.bounds.max.x+xpixels) &&
-		    inObjBOunds.max.y < (BCOut.bounds.max.y+ypixels) &&
+			if (inObjBOunds.min.x > (BCOut.bounds.min.x - xpixels) &&
+				inObjBOunds.min.y > (BCOut.bounds.min.y - ypixels) &&
+				inObjBOunds.max.x < (BCOut.bounds.max.x + xpixels) &&
+				inObjBOunds.max.y < (BCOut.bounds.max.y + ypixels) &&
 
-		    inObjBOunds.min.x < (BCOut.bounds.min.x+xpixels) &&
-		    inObjBOunds.min.y < (BCOut.bounds.min.y+ypixels) &&
-		    inObjBOunds.max.x > (BCOut.bounds.max.x-xpixels) &&
-		    inObjBOunds.max.y > (BCOut.bounds.max.y-ypixels))
-		    return true;
-		else
-		    return false;
+				inObjBOunds.min.x < (BCOut.bounds.min.x + xpixels) &&
+				inObjBOunds.min.y < (BCOut.bounds.min.y + ypixels) &&
+				inObjBOunds.max.x > (BCOut.bounds.max.x - xpixels) &&
+				inObjBOunds.max.y > (BCOut.bounds.max.y - ypixels))
+				return true;
+			else
+				return false;
+		} else {
+			return false;
+		}
 	}
 
 	public void activeEndingLevelObjects()
