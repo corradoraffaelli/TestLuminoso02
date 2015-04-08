@@ -109,7 +109,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 169760}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.81999993, y: .239999995, z: 0}
+  m_LocalPosition: {x: .660000026, y: .239999995, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 1}
   m_Children:
   - {fileID: 424260}
@@ -150,7 +150,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 177524}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.75, y: 1, z: 0}
+  m_LocalPosition: {x: 3.46000004, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 404072}
@@ -307,6 +307,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   onGround: 0
   speedFactor: 2
+  AI_walkSpeed: 1.5
+  AI_runSpeed: 3
   jumpFactor: 3
   forceOnAirFactor: 10
   LadderLateralLimit: .300000012
@@ -365,9 +367,7 @@ MonoBehaviour:
   DefaultVerseRight: 1
   patrolSuspiciousPoints: []
   patrolledTarget: {fileID: 0}
-  DEFAULT_DUMB_SPEED: 2
-  WalkSpeed: 4
-  RunSpeed: 5
+  DEFAULT_DUMB_SPEED: .699999988
   tChargingChase: 1
   tToMaxVelocity: .5
   tChargingAttack: .5
