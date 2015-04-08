@@ -363,6 +363,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   onGround: 0
   speedFactor: 5
+  AI_walkSpeed: 4
+  AI_runSpeed: 5
   jumpFactor: 3
   forceOnAirFactor: 30
   LadderLateralLimit: .300000012
@@ -373,7 +375,7 @@ MonoBehaviour:
   GroundCheckBottomRight: {fileID: 462138}
   GroundLayers:
     serializedVersion: 2
-    m_Bits: 140032
+    m_Bits: 402176
   PlayerLayer:
     serializedVersion: 2
     m_Bits: 4096
