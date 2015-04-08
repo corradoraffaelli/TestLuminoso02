@@ -146,7 +146,6 @@ public class basicAIEnemyV4 : MonoBehaviour {
 	bool reacheadOneSuspPoint = false;
 
 	public float DEFAULT_DUMB_SPEED = 2.0f;
-	public float WalkSpeed = 4.0f;
 
 	//Gestione raycast target------------------------------------
 	//public LayerMask targetLayers; dichiarata su
@@ -158,9 +157,7 @@ public class basicAIEnemyV4 : MonoBehaviour {
 	//Transform chasedTarget;
 	//bool avoidingObstacles = false;
 	Vector3 ignoreZ;//da privatizzare
-
-	public float RunSpeed = 5.0f;
-
+	
 	//enemytype nojumpsoftchase
 	float offset_MaxDistanceReachable_FromChase = 5.0f;
 	bool chaseCharged = false;
@@ -315,13 +312,7 @@ public class basicAIEnemyV4 : MonoBehaviour {
 				eMS = enemyMachineState.Wander;
 				//pm.speedFactor = 2.0f;
 				if(involution) {
-					this.WalkSpeed = DEFAULT_DUMB_SPEED;
-					pm.WalkSpeed = DEFAULT_DUMB_SPEED;
-				}
-				else {
-					pm.WalkSpeed = this.WalkSpeed;
-					pm.RunSpeed = this.RunSpeed;
-					
+					pm.AI_walkSpeed = DEFAULT_DUMB_SPEED;
 				}
 				
 				break;
@@ -330,8 +321,6 @@ public class basicAIEnemyV4 : MonoBehaviour {
 				canJump = false;
 				eMS = enemyMachineState.Patrol;
 				//pm.speedFactor = 5.0f;
-				pm.WalkSpeed = this.WalkSpeed;
-				pm.RunSpeed = this.RunSpeed;
 				paType = setupPatrolPoints ();
 				chType = chaseType.ChargedCh;
 				atType = attackType.Immediate;
@@ -341,8 +330,6 @@ public class basicAIEnemyV4 : MonoBehaviour {
 				canJump = false;
 				eMS = enemyMachineState.Patrol;
 				//pm.speedFactor = 2.0f;
-				pm.WalkSpeed = this.WalkSpeed;
-				pm.RunSpeed = this.RunSpeed;
 				paType = setupPatrolPoints ();
 				chType = chaseType.Constant;
 				atType = attackType.ChargedAt;

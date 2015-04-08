@@ -108,7 +108,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 191622}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.61999989, y: 1, z: 0}
+  m_LocalPosition: {x: 3.9000001, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 417712}
@@ -254,7 +254,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 162b394b67e4645e48893d0645014e9f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DEBUG_FSM_TRANSITION: 000000
+  DEBUG_FSM_TRANSITION: 010100
   DEBUG_RECOGNITION: 0000
   DEBUG_ASTAR: 0000
   DEBUG_FLIP: 0
@@ -283,9 +283,7 @@ MonoBehaviour:
   DefaultVerseRight: 1
   patrolSuspiciousPoints: []
   patrolledTarget: {fileID: 0}
-  DEFAULT_DUMB_SPEED: 1
-  WalkSpeed: 1.70000005
-  RunSpeed: 5
+  DEFAULT_DUMB_SPEED: .699999988
   tChargingChase: 1
   tToMaxVelocity: .5
   tChargingAttack: .5
@@ -304,6 +302,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   onGround: 0
   speedFactor: 5
+  AI_walkSpeed: 1.5
+  AI_runSpeed: 5
   jumpFactor: 3
   forceOnAirFactor: 10
   LadderLateralLimit: .300000012

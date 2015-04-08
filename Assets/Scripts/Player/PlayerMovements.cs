@@ -21,23 +21,9 @@ public class PlayerMovements : MonoBehaviour {
 	public float speedFactor = 4.0f;
 
 	//solo per AI-------------------------
-	private float walkSpeed = 4.0f;
-	private float runSpeed = 5.0f;
-
-	public float WalkSpeed {
-
-		get{ return walkSpeed;}
-		set{ if(value>0.0f) walkSpeed = value;}
-
-	}
-
+	public float AI_walkSpeed = 4.0f;
+	public float AI_runSpeed = 5.0f;
 	
-	public float RunSpeed {
-		
-		get{ return runSpeed;}
-		set{ if(value>0.0f) runSpeed = value;}
-		
-	}
 	//------------------------------------
 	public float jumpFactor = 2.0f;
 	public float forceOnAirFactor = 10.0f;
@@ -365,10 +351,10 @@ public class PlayerMovements : MonoBehaviour {
 				directionAI = 1;
 
 			if(isWalkSpeed) {
-				RigBody.velocity = new Vector2 (scaleFactorAI * walkSpeed * directionAI, RigBody.velocity.y);
+				RigBody.velocity = new Vector2 (scaleFactorAI * AI_walkSpeed * directionAI, RigBody.velocity.y);
 			}
 			else {
-				RigBody.velocity = new Vector2 (scaleFactorAI * runSpeed * directionAI, RigBody.velocity.y);
+				RigBody.velocity = new Vector2 (scaleFactorAI * AI_runSpeed * directionAI, RigBody.velocity.y);
 			}
 		}
 		
