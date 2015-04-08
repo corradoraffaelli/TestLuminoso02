@@ -145,6 +145,7 @@ public class basicAIEnemyV4 : MonoBehaviour {
 	public Transform patrolledTarget;//utile dichiararlo momentaneamente public per vedere che valore ha
 	bool reacheadOneSuspPoint = false;
 
+	[Range(0.1f,10.0f)]
 	public float DEFAULT_DUMB_SPEED = 2.0f;
 
 	//Gestione raycast target------------------------------------
@@ -162,8 +163,10 @@ public class basicAIEnemyV4 : MonoBehaviour {
 	float offset_MaxDistanceReachable_FromChase = 5.0f;
 	bool chaseCharged = false;
 	bool chaseCharging = false;
+	[Range(0.1f,5.0f)]
 	public float tChargingChase = 1.0f;
 	float tStartCrash = -1.0f;
+	[Range(0.1f,5.0f)]
 	public float tToMaxVelocity = 0.5f;
 
 	//Gestione attack----------------------------------------------------------------------------------
@@ -184,7 +187,9 @@ public class basicAIEnemyV4 : MonoBehaviour {
 	bool attackCharging = false;
 	bool attackStuck = false;
 
+	[Range(0.1f,5.0f)]
 	public float tChargingAttack = 0.5f;
+	[Range(0.1f,5.0f)]
 	public float tStuckLenght = 2.0f;
 	
 	//Gestione fleeing---------------------------------------------------------------------------------
@@ -198,6 +203,7 @@ public class basicAIEnemyV4 : MonoBehaviour {
 	
 	bool stunnedReceived = false;
 	float tLastStunnedAttackReceived = -10.0f;
+	[Range(0.1f,5.0f)]
 	public float tStunnedLenght = 4.0f;
 	//bool autoDestroy = false;
 	//sotto caso freezed----------------------
