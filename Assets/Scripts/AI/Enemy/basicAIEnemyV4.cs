@@ -49,7 +49,7 @@ public class basicAIEnemyV4 : MonoBehaviour {
 	public bool []DEBUG_RECOGNITION = new bool[2];
 	public bool []DEBUG_ASTAR = new bool[2];
 	public bool DEBUG_FLIP = false;
-	public bool DEBUG_COLLISION = false;
+	public bool []DEBUG_COLLISION = new bool[3];
 
 	//Gestione macchina a stati-----------------------------------------------------------------------
 	public enum enemyMachineState {
@@ -74,8 +74,10 @@ public class basicAIEnemyV4 : MonoBehaviour {
 		Walk,
 		Stand,
 		Area,
+		AreaSuspicious,
 	}
 	patrolType paType;
+	patrolType defaultPaType;
 
 	public enum chaseType {
 		ChargedCh,
@@ -121,6 +123,7 @@ public class basicAIEnemyV4 : MonoBehaviour {
 	//controller2DV2 c2d;
 	PlayerMovements pm;
 	Transform groundCheckTransf;
+	Rigidbody2D myRigidBody;
 	
 	//Gestione basic ground raycast--------------------------------------------------------------------
 	//public LayerMask groundBasic; dichiarato su
@@ -138,8 +141,7 @@ public class basicAIEnemyV4 : MonoBehaviour {
 	float countDown_SingleSuspPoint = 2.0f;
 	float thresholdNearSuspPoint = 1.0f;
 	float offset_SuspPoint = 1.5f;
-	bool suspicious = false;
-	
+
 	//variabili da resettare ad inizio stato
 	bool patrollingTowardAPoint = false;
 	public Transform patrolledTarget;//utile dichiararlo momentaneamente public per vedere che valore ha
@@ -240,6 +242,7 @@ public class basicAIEnemyV4 : MonoBehaviour {
 
 		pm = GetComponent<PlayerMovements> ();
 		myAstar = GetComponent<SimpleAI2D> ();
+		myRigidBody = GetComponent<Rigidbody2D> ();
 
 		getGroundCheck ();
 
@@ -328,6 +331,7 @@ public class basicAIEnemyV4 : MonoBehaviour {
 				eMS = enemyMachineState.Patrol;
 				//pm.speedFactor = 5.0f;
 				paType = setupPatrolPoints ();
+				defaultPaType = paType;
 				chType = chaseType.ChargedCh;
 				atType = attackType.Immediate;
 				break;
@@ -337,6 +341,7 @@ public class basicAIEnemyV4 : MonoBehaviour {
 				eMS = enemyMachineState.Patrol;
 				//pm.speedFactor = 2.0f;
 				paType = setupPatrolPoints ();
+				defaultPaType = paType;
 				chType = chaseType.Constant;
 				atType = attackType.ChargedAt;
 				break;
@@ -506,15 +511,22 @@ public class basicAIEnemyV4 : MonoBehaviour {
 	}
 	
 	void takeStatusImg(){
+
+		bool founded = false;
+
 		foreach (Transform child in transform) {
 			
-			if(child.name=="statusImg") {
+			if(child.name=="StatusImg") {
 				
 				statusImg = child.gameObject;
+				founded = true;
 				break;
 			}
-			
+
 		}
+
+		if (!founded)
+			Debug.Log ("ATTENZIONE - game object figlio per status sprite assente");
 		
 	}
 
@@ -593,17 +605,18 @@ public class basicAIEnemyV4 : MonoBehaviour {
 	}
 	
 	//METODI GESTIONE COMPORTAMENTO--------------------------------------------------------------------------------------------------------
-	
+	/*
 	private void suspiciousUp(){
-		
-		suspicious = true;
+		//Debug.Log ("chiamato sono stato");
+		paType = patrolType.AreaSuspicious;
+
 	}
 	
 	private void suspiciousDown(){
 		
-		suspicious = false;
+		paType = setupPatrolPoints ();
 	}
-	
+	*/
 	//METODI PRINCIPALI GESTIONE MACHINE STATE---------------------------------------------------------------------------------------------
 	
 	
@@ -763,25 +776,55 @@ public class basicAIEnemyV4 : MonoBehaviour {
 		
 		switch (e) {
 			
-		case enemyMachineState.Chase :
-			statusImg.GetComponent<SpriteRenderer>().sprite = statusSprites[0];
-			break;
-			
-		case enemyMachineState.Patrol :
-			
-			if(suspicious) {
-				statusImg.GetComponent<SpriteRenderer>().sprite = statusSprites[1];
+			case enemyMachineState.Chase :
+				if(DEBUG_FSM_TRANSITION[0])
+					Debug.Log ("Status 00 - avvistamento");
+
+				statusImg.GetComponent<SpriteRenderer>().sprite = statusSprites[0];
+				break;
 				
-			}
-			else {
-				statusImg.GetComponent<SpriteRenderer>().sprite = null;
+			case enemyMachineState.Patrol :
+
+				switch(paType){
+
+					case patrolType.AreaSuspicious : {
+
+						if(DEBUG_FSM_TRANSITION[0])
+							Debug.Log ("Status 01 - perdita di vista");
+						
+						statusImg.GetComponent<SpriteRenderer>().sprite = statusSprites[1];
+
+						}
+						break;
+
+					default : {
+
+						statusImg.GetComponent<SpriteRenderer>().sprite = null;
+						
+						}
+						break;
+
+
+				}
 				
-			}
-			
-			break;
+				break;
+
+			default :
+				Debug.Log ("ATTENZIONE CASO NON PREVISTO IN SETSTATUSSPRITE");
+				break;
+				
 			
 		}
 		
+	}
+
+	private void setStatusSprite(){
+
+		if (statusImg == null)
+			return;
+
+		statusImg.GetComponent<SpriteRenderer>().sprite = null;
+
 	}
 	
 	//GESTIONE TRANSIZIONI FSM--------------------------------------------------------------------------
@@ -790,7 +833,9 @@ public class basicAIEnemyV4 : MonoBehaviour {
 	
 	
 	private void makePaChTransition(GameObject myTarget) {
-		
+
+		finalizePatrol ();
+
 		eMS = enemyMachineState.Chase;
 		
 		initializeChase (myTarget);
@@ -800,7 +845,9 @@ public class basicAIEnemyV4 : MonoBehaviour {
 	}
 	
 	private void makeChPaTransition() {
-		
+
+		finalizeChase ();
+
 		eMS = enemyMachineState.Patrol;
 		
 		initializePatrol ();
@@ -811,10 +858,13 @@ public class basicAIEnemyV4 : MonoBehaviour {
 	
 	private void makeChAtTransition() {
 
-		initializeAttack ();
+		finalizeChase ();
 
 		eMS = enemyMachineState.Attack;
-		
+
+		initializeAttack ();
+
+
 		//initialize attack non serve, perché veniamo dal chase
 		//quindi il target è già settato
 		
@@ -852,6 +902,8 @@ public class basicAIEnemyV4 : MonoBehaviour {
 
 		finalizeAttack ();
 		setTargetAStar(null);
+		finalizePatrol ();
+		finalizeChase ();
 		
 	}
 	
@@ -890,26 +942,15 @@ public class basicAIEnemyV4 : MonoBehaviour {
 		setStatusSprite (eMS);
 	}
 	
-	private void makeSubPatrolStateTransition(string s) {
-		
-		switch (s) {
-			
-		case "normal" :
-			suspiciousDown();
-			setStatusSprite(eMS);
-			break;
-			
-		case "suspicious" :
-			suspiciousUp();
-			setStatusSprite(eMS);
-			break;
-		default :
-			break;
-			
-		}
+	private void makeSubStateTransition(patrolType pt) {
+
+		paType = pt;
+
+		setStatusSprite(eMS);
 		
 	}
 	
+
 	public void makeAnyStTransition() {
 		
 		//TODO: PRIOR posibile fonte di errori,da provare
@@ -1120,25 +1161,19 @@ public class basicAIEnemyV4 : MonoBehaviour {
 			//TODO: PRIORRR perché è NULL?????
 			if(DEBUG_FSM_TRANSITION[2])
 				Debug.Log ("CH -> PA - target perso perché NULL");
-			suspiciousUp();
+			//suspiciousUp();
+			makeSubStateTransition(patrolType.AreaSuspicious);
 			return true;
 		}
 
 		if ((targetLayers.value & 1 << myAstar.Target.layer) == 0) {
 			if(DEBUG_FSM_TRANSITION[2])
 				Debug.Log ("CH -> PA - target perso perché LAYER non di interesse");
-			suspiciousUp();
+			//suspiciousUp();
+			makeSubStateTransition(patrolType.AreaSuspicious);
 			return true;
 		}
 
-
-		/*
-		if (myAstar.Target.layer != 12 && myAstar.Target.layer != 14 ) {
-			//Debug.Log ("SCOMPARSO");
-			suspiciousUp();
-			return true;
-		}
-		*/
 		return false;
 	}
 	
@@ -1151,9 +1186,9 @@ public class basicAIEnemyV4 : MonoBehaviour {
 		return enemyMachineState.Wander;
 		
 	}
-	
-	private void continueWander() {
-		
+
+	private void checkForObstacle() {
+
 		Debug.DrawLine (new Vector2(transform.position.x, transform.position.y + 1.0f), i_facingRight () ? new Vector2 (transform.position.x + 1.0f, transform.position.y + 1.0f) : new Vector2 (transform.position.x - 1.0f, transform.position.y + 1.0f), Color.red);
 		RaycastHit2D hit = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y + 1.0f), i_facingRight()? Vector2.right : -Vector2.right, 1.0f, obstacleLayers);
 		if (hit.collider != null) {
@@ -1162,6 +1197,12 @@ public class basicAIEnemyV4 : MonoBehaviour {
 			i_flip();
 			
 		}
+
+	}
+	
+	private void continueWander() {
+
+		//checkForObstacle ();
 		
 		i_move (true);
 		
@@ -1425,24 +1466,31 @@ public class basicAIEnemyV4 : MonoBehaviour {
 	
 	//METODI GESTIONE STATO PATROL-----------------------------------------------------------------------------------------------------------------------
 	//--------------------------------------------------------------------------------------------------------------------------------------------
-	
+
+	private void finalizePatrol(){
+
+		paType = defaultPaType;
+
+	}
+
 	private void initializePatrol(bool changeDir = false){
 		patrollingTowardAPoint = false;
 		patrolledTarget = null;
 		reacheadOneSuspPoint = false;
 		setTargetAStar (null);
-		
-		if (suspicious) {
-			reacheadOneSuspPoint = false;
+
+		switch (paType) {
+
+			case patrolType.AreaSuspicious :
+				reacheadOneSuspPoint = false;
+				break;
+
+			default :
+				break;
+				
 		}
-		/*
-		if (Mathf.Abs (patrolPoints [0].transform.position.y - groundCheckTransf.transform.position.y) > thresholdHeightDifference) {
 
-			checkPatrolPoints(true);
-
-		}
-		*/
-
+		//TODO : da gestire meglio...??
 		if (changeDir) {
 			//Debug.Log("ci sono riuscito");
 			if(patrolPoints.Length>0) {
@@ -1504,23 +1552,22 @@ public class basicAIEnemyV4 : MonoBehaviour {
 
 			case patrolType.Walk :
 				continueWander();
+				
 				break;
 			case patrolType.Stand :
-				if(suspicious) {
-					patrollingSuspicious();
-				}
-				else {
-					patrollingBetweenPoints (0, 0.5f);
-				}
+				patrollingBetweenPoints(0);
+				
 				break;
 			case patrolType.Area :
-				if(suspicious) {
-					patrollingSuspicious();
-				}
-				else {
-					patrollingBetweenPoints (0, 0.5f);
-				}
+				patrollingBetweenPoints(0);
+				
 				break;
+
+			case patrolType.AreaSuspicious :
+				patrollingSuspicious();
+
+				break;
+				
 			default :
 				break;
 
@@ -1686,7 +1733,7 @@ public class basicAIEnemyV4 : MonoBehaviour {
 	
 	
 	private void patrollingSuspicious () {
-		
+
 		if (!patrollingTowardAPoint) {
 			//search next point
 			setSuspPoints();
@@ -1700,7 +1747,11 @@ public class basicAIEnemyV4 : MonoBehaviour {
 			if(Time.time > suspiciousStartTime + countDown_Suspicious) {
 				//se è passato abbastanza tempo, torno al normale patrol
 				
-				makeSubPatrolStateTransition("normal");
+				//makeSubPatrolStateTransition("normal");
+
+				//suspiciousDown();
+				makeSubStateTransition(defaultPaType);
+				//setStatusSprite(eMS);
 				
 				initializePatrol();
 				
@@ -1743,7 +1794,13 @@ public class basicAIEnemyV4 : MonoBehaviour {
 	
 	//METODI GESTIONE STATO CHASING---------------------------------------------------------------------------------------------------------------
 	//--------------------------------------------------------------------------------------------------------------------------------------------
-	
+
+	private void finalizeChase() {
+
+		setStatusSprite();
+
+	}
+
 	private void initializeChase(GameObject t) {
 		
 		setTargetAStar (t);
@@ -1775,11 +1832,65 @@ public class basicAIEnemyV4 : MonoBehaviour {
 			return false;
 		
 	}
+
+	private bool isTargetOutOfMyView(bool distanceCheck) {
+
+		if (myAstar.Target == null)
+			return false;
+
+		if (distanceCheck ) {
+
+			float dist = Vector2.Distance (groundCheckTransf.position, myAstar.Target.transform.position);
+			
+			if ((transform.position.x > myAstar.Target.transform.position.x) && (pm.FacingRight) && (dist > frontalDistanceOfView * 2.0f) ) {
+				if(DEBUG_FSM_TRANSITION[2])
+					Debug.Log ("CH -> PA - target perso perché io guardo a destra e lui è a sinistra");
+				//suspiciousUp();
+				makeSubStateTransition(patrolType.AreaSuspicious);
+				return true;
+			}
+			
+			
+			if ((transform.position.x < myAstar.Target.transform.position.x) && (!pm.FacingRight) && (dist > frontalDistanceOfView * 2.0f) ) {
+				if(DEBUG_FSM_TRANSITION[2])
+					Debug.Log ("CH -> PA - target perso perché io guardo a sinistra e lui è a destra");
+				//suspiciousUp();
+				makeSubStateTransition(patrolType.AreaSuspicious);
+				return true;
+			}
+
+		} 
+		else {
+
+			if ((transform.position.x > myAstar.Target.transform.position.x) && pm.FacingRight) {
+				if(DEBUG_FSM_TRANSITION[2])
+					Debug.Log ("CH -> PA - target perso perché io guardo a destra e lui è a sinistra");
+				//suspiciousUp();
+				makeSubStateTransition(patrolType.AreaSuspicious);
+				return true;
+			}
+			
+			
+			if ((transform.position.x < myAstar.Target.transform.position.x) && !pm.FacingRight) {
+				if(DEBUG_FSM_TRANSITION[2])
+					Debug.Log ("CH -> PA - target perso perché io guardo a sinistra e lui è a destra");
+				//suspiciousUp();
+				makeSubStateTransition(patrolType.AreaSuspicious);
+				return true;
+			}
+
+		}
+
+
+
+		
+		return false;
+	}
 	
-	//basic lost of target by the abs(distance)
+	//NON PIU USATA
+	//TODO : NOW da cancellare?
 	private bool isTargetFar(float dist){
 		if (dist > frontalDistanceOfView * scale_FrontalDistanceOfView_ToBeFar) {
-			suspiciousUp();
 			return true;
 			
 		}
@@ -1806,19 +1917,56 @@ public class basicAIEnemyV4 : MonoBehaviour {
 		
 	}
 
-	private bool isTargetAtDifferentHeight() {
+	private bool isTargetAtDifferentHeight(bool linearDistanceCheck) {
 
-		//float dist = Vector2.Distance (groundCheckTransf.position, myAstar.Target.transform.position);
 		if (myAstar.Target == null)
-			return true;
-
-		float hDiff = Mathf.Abs (groundCheckTransf.position.y - myAstar.Target.transform.position.y );
-
-		if (hDiff > 2.5f)
-			return true;
-		else
 			return false;
 
+		float hDiff = Mathf.Abs (groundCheckTransf.position.y - myAstar.Target.transform.position.y );
+			
+		if (linearDistanceCheck) {
+
+			float dist = Vector2.Distance (groundCheckTransf.position, myAstar.Target.transform.position);
+
+			if ((hDiff > 2.5f) && (dist > frontalDistanceOfView * 2.0f))
+				return true;
+			else
+				return false;
+
+
+		} else {
+
+			if (hDiff > 2.5f)
+				return true;
+			else
+				return false;
+
+		}
+
+
+
+
+
+
+	}
+
+	private bool isObstacleHit(){
+
+		if(chaseCharged && myAstar.Target!=null) {
+
+
+			RaycastHit2D hit = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y + 1.0f), i_facingRight()? Vector2.right : -Vector2.right, 1.0f, obstacleLayers);
+			if (hit.collider != null) {
+				if(DEBUG_FSM_TRANSITION[2])
+					Debug.Log ("CH -> PA - urtato ostacolo!" + hit.collider.gameObject.name);
+				return true;
+				
+			}
+
+		}
+
+		return false;
+		
 	}
 
 	private enemyMachineState isStoppedChase() {
@@ -1828,7 +1976,7 @@ public class basicAIEnemyV4 : MonoBehaviour {
 		switch (chType) {
 
 			case chaseType.ChargedCh :
-				if(isTargetAtDifferentHeight()) {
+				if(isTargetAtDifferentHeight(true)) {
 					
 					if(DEBUG_FSM_TRANSITION[1])
 						Debug.Log ("CH -> PA - target va ad una altezza diversa dalla mia");
@@ -1836,26 +1984,41 @@ public class basicAIEnemyV4 : MonoBehaviour {
 					return enemyMachineState.Patrol;
 				}
 				
-				if(chaseCharged) {
-					RaycastHit2D hit = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y + 1.0f), i_facingRight()? Vector2.right : -Vector2.right, 1.0f, obstacleLayers);
-					if (hit.collider != null) {
-						if(DEBUG_FSM_TRANSITION[1])
-							Debug.Log ("urtato ostacolo!" + hit.collider.gameObject.name);
-						return enemyMachineState.Stunned;
-						
-					}
+				/*
+				if(isObstacleHit()) {
+					
+					if(DEBUG_FSM_TRANSITION[1])
+						Debug.Log ("CH -> PA - colpito un ostacolo");
+					
+					return enemyMachineState.Stunned;
 				}
-
+				*/
+				if(isTargetOutOfMyView(true)) {
+					
+					if(DEBUG_FSM_TRANSITION[1])
+						Debug.Log ("CH -> PA - perso di vista dopo la corsa");
+					
+					return enemyMachineState.Patrol;
+				}
+				
 				break;
 
 			case chaseType.Constant :
-				if(isTargetAtDifferentHeight()) {
+				if(isTargetAtDifferentHeight(false)) {
 					
 					if(DEBUG_FSM_TRANSITION[1])
 						Debug.Log ("CH -> PA - target va ad una altezza diversa dalla mia");
 					
 					return enemyMachineState.Patrol;
 				}
+				if(isTargetOutOfMyView(false)) {
+					
+					if(DEBUG_FSM_TRANSITION[1])
+						Debug.Log ("CH -> PA - target perso di vista, non più davanti a me");
+					
+					return enemyMachineState.Patrol;
+				}
+				
 				break;
 
 			default :
@@ -1866,6 +2029,9 @@ public class basicAIEnemyV4 : MonoBehaviour {
 		//controlli in comune a tutti
 		
 		//controllo se è null o ha cambiato layer...
+
+
+
 		if (isTargetLost ()) {
 			
 			if(DEBUG_FSM_TRANSITION[1])
@@ -1877,14 +2043,6 @@ public class basicAIEnemyV4 : MonoBehaviour {
 		dist = Vector2.Distance (groundCheckTransf.position, myAstar.Target.transform.position);
 		
 		//se è troppo lontano torno a patrol...
-		if (isTargetFar (dist)) {
-			
-			if(DEBUG_FSM_TRANSITION[1])
-				Debug.Log ("CH -> PA - target troppo lontano");
-			
-			return enemyMachineState.Patrol;
-		}
-		
 		
 		//se è vicino passo ad attack
 		if (isTargetNear (dist)) {
@@ -2047,8 +2205,7 @@ public class basicAIEnemyV4 : MonoBehaviour {
 
 	private void initializeAttack() {
 
-		Rigidbody2D r = GetComponent<Rigidbody2D> ();
-		r.velocity = new Vector2 (r.velocity.x * 0.2f, r.velocity.y);
+		myRigidBody.velocity = new Vector2 (myRigidBody.velocity.x * 0.2f, myRigidBody.velocity.y);
 		
 		attackCharged = false;
 		attackCharging = false;
@@ -2233,6 +2390,10 @@ public class basicAIEnemyV4 : MonoBehaviour {
 						eType = enemyType.Dumb;
 						setupEnemy(true);
 						eMS = enemyMachineState.Stunned;
+						SpriteRenderer s = GetComponent<SpriteRenderer>();
+						s.color = Color.blue;
+						setStatusSprite();
+						
 					}
 					break;
 				case enemyType.Heavy :
@@ -2274,8 +2435,8 @@ public class basicAIEnemyV4 : MonoBehaviour {
 			return true;
 		}
 		else {
-			if(DEBUG_FSM_TRANSITION[2])
-				Debug.Log ("Stunned countdown : " + (Time.time - tLastStunnedAttackReceived));
+			//if(DEBUG_FSM_TRANSITION[2])
+				//Debug.Log ("Stunned countdown : " + (Time.time - tLastStunnedAttackReceived));
 			return false;
 		}
 	}
@@ -2360,11 +2521,10 @@ public class basicAIEnemyV4 : MonoBehaviour {
 		
 		yield return new WaitForSeconds(0.1f);
 		
-		Rigidbody2D r = GetComponent<Rigidbody2D> ();
 		BoxCollider2D b2d = GetComponent<BoxCollider2D> ();
 		CircleCollider2D c2d = GetComponent<CircleCollider2D> ();
 		
-		r.AddForce(new Vector2(100.0f,300.0f));
+		myRigidBody.AddForce(new Vector2(100.0f,300.0f));
 		b2d.isTrigger = true;
 		c2d.isTrigger = true;
 		
@@ -2515,107 +2675,7 @@ public class basicAIEnemyV4 : MonoBehaviour {
 		
 	}
 	
-	//funzione di alto livello per muoversi lungo il path dell'A*
-	private void moveAlongAStarPath1() {
-		
-		if (myAstar.Path.Count > 0)
-		{
-			//if we get close enough or we are closer then the indexed position, then remove the position from our path list,
-			//primo OR : se le x sono più vicine di 1.5 (caso in cui devo solo salire)
-			//secondo OR : se la distanza punto punto è meno di 0.2 (più restrittiva)
-			//terzo OR : distanza inizio-fine è maggiore di tempDistance, dove tempDistance è la distanza fra l'AI e il target
-			if ( /*(Mathf.Abs(transform.position.x - myAstar.Path[0].x)<1.5F)||*/ Vector3.Distance(transform.position, myAstar.Path[0]) < thresholdApproachingNextTile || myAstar.tempDistance < Vector3.Distance(myAstar.Path[0], myAstar.Target.transform.position)) 
-			{
-				myAstar.Path.RemoveAt(0);
-				/*
-				while(myAstar.Path.Count>0) {
-					if((Mathf.Abs(transform.position.y - myAstar.Path[0].y)<5 && Mathf.Abs(transform.position.x - myAstar.Path[0].x)<1.5F))
-						myAstar.Path.RemoveAt(0);
-					else
-						break;
-				}
-				*/
-			}
-			
-			
-			if(myAstar.Path.Count < 1)
-				return;
-			
-			//First we will create a new vector ignoreing the depth (z-axiz).
-			ignoreZ = new Vector3(myAstar.Path[0].x, myAstar.Path[0].y, transform.position.z);
-			
-			//now move towards the newly created position
-			
-			//transform.position = Vector3.MoveTowards(transform.position, ignoreZ, Time.deltaTime * Speed);
-			
-			
-		}
-		else {
-			//path finito
-			return;
-		}
-		
-		//può dare problemi toglierlo??
-		/*
-		if(ignoreZ == new Vector3(0,0,0))
-			return;
-		*/
-		
-		
-		if (Mathf.Abs (ignoreZ.y - transform.position.y) > 1f) {
-			
-			//target ad un livello diverso
-			
-			
-			if(myAstar.Path.Count>1) {
-				
-				//livello superiore
-				if(myAstar.Path[1].y > transform.position.y + 0.5f) {
-					Debug.Log ("+++^^^^^^^^^^^^");
-					i_jump(true);
-					return;
-				}
-				
-				//livello inferiore
-				if(myAstar.Path[1].y < transform.position.y) {
-					//Debug.Log ("+++____________");
-					followPath(5);
-					return;
-				}
-			}
-			
-			//handleChasingAtDifferentHeightLevel1(ignoreZ);
-		} 
-		else {
-			
-			//target allo stesso livello
-			
-			//TODO: giocare con questo parametro qui sotto..
-			
-			
-			if(myAstar.Path.Count>1) {
-				if(myAstar.Path[1].y > transform.position.y + 1.5f) {
-					i_jump(true);
-					Debug.Log ("----^^^^^^^^^^");
-					return;
-				}
-			}
-			
-			//fase di discesa
-			if(myAstar.Path.Count>1) {
-				if(myAstar.Path[1].y  < transform.position.y - 0.5f) {
-					//i_jump(true);
-					//Debug.Log ("----___________");
-					return;
-				}
-			}
-			
-			//Debug.Log ("----------");
-			followPath(1);
-			
-		}
-		
-	}
+
 	
 	//funzione di alto livello per muoversi lungo il path dell'A*
 	private void moveAlongAStarPathNoLimits() {
@@ -2730,7 +2790,7 @@ public class basicAIEnemyV4 : MonoBehaviour {
 			//primo OR : se le x sono più vicine di 1.5 (caso in cui devo solo salire)
 			//secondo OR : se la distanza punto punto è meno di 0.2 (più restrittiva)
 			//terzo OR : distanza inizio-fine è maggiore di tempDistance, dove tempDistance è la distanza fra l'AI e il target
-			if ( /*(Mathf.Abs(  groundCheckTransf.position.x - myAstar.Path[0].x)<1.5F)|| */Vector3.Distance(groundCheckTransf.position, myAstar.Path[0]) < thresholdApproachingNextTile || myAstar.tempDistance < Vector3.Distance(myAstar.Path[0], myAstar.Target.transform.position)) 
+			if ( Vector3.Distance(groundCheckTransf.position, myAstar.Path[0]) < thresholdApproachingNextTile || myAstar.tempDistance < Vector3.Distance(myAstar.Path[0], myAstar.Target.transform.position)) 
 			{
 				myAstar.Path.RemoveAt(0);
 				
@@ -2862,26 +2922,14 @@ public class basicAIEnemyV4 : MonoBehaviour {
 		if (eType == enemyType.Guard)
 			this.involveEType = true;
 	}
-	/*
-	public void setAutoDestroy(bool a) {
-		Debug.Log ("autoDestroy set");
-		if (a) {
-			Debug.Log ("aaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-			makeAnyStTransition();
-			this.autoDestroy = a;
-		} 
-		else {
-			this.autoDestroy = a;
-		}
-	}
-	*/
+
 
 	private void handleFreezing(bool start){
 
 		if (start) {
 			GetComponent<Animator> ().enabled = false;
-			GetComponent<Rigidbody2D> ().velocity = new Vector2 (0.0f, 0.0f);
-			gameObject.GetComponent<Rigidbody2D> ().isKinematic = true;
+			myRigidBody.velocity = new Vector2 (0.0f, 0.0f);
+			myRigidBody.isKinematic = true;
 			myPhysicsMat = GetComponent<BoxCollider2D>().sharedMaterial;
 			GetComponent<BoxCollider2D>().sharedMaterial = GetComponent<CircleCollider2D>().sharedMaterial;
 			GetComponent<BoxCollider2D>().enabled = false;
@@ -2889,7 +2937,7 @@ public class basicAIEnemyV4 : MonoBehaviour {
 			freezedByGun = true;
 		}
 		else {
-			GetComponent<Rigidbody2D> ().isKinematic = false;
+			myRigidBody.isKinematic = false;
 			GetComponent<Animator> ().enabled = true;
 			GetComponent<BoxCollider2D>().sharedMaterial = myPhysicsMat;
 			GetComponent<BoxCollider2D>().enabled = false;
@@ -2914,8 +2962,8 @@ public class basicAIEnemyV4 : MonoBehaviour {
 		
 		GetComponent<Animator>().enabled = false;
 		
-		GetComponent<Rigidbody2D> ().velocity = new Vector2 (0.0f, 0.0f);
-		GetComponent<Rigidbody2D> ().isKinematic = true;
+		myRigidBody.velocity = new Vector2 (0.0f, 0.0f);
+		myRigidBody.isKinematic = true;
 
 		//gameObject.AddComponent<autoDestroy> ();
 
@@ -2934,14 +2982,9 @@ public class basicAIEnemyV4 : MonoBehaviour {
 	public void c_freeze_ai(bool clone = false) {
 		
 		if (!clone) {
-			//Debug.Log ("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb");
 
-			//freezedByGun = true;
 			handleFreezing(true);
 			makeAnyStTransition ();
-
-			//TODO: PRIOR
-			//makeStateTransition(eMS,enemyMachineState.Stunned);
 
 		} else {
 
@@ -2988,26 +3031,177 @@ public class basicAIEnemyV4 : MonoBehaviour {
 
 	}
 
+	//INIZIO GESTIONE COLLISIONI--------------------------------------------------------------------------------------------------------------
+
+	private bool checkObstacleCollision(Collision2D co) {
+
+		if ((obstacleLayers.value & 1 << co.gameObject.layer) > 0) {			
+			return true;
+		}
+		return false;
+	}
+
+	private bool checkPlayerCollision(Collision2D co) {
+
+		if (co.gameObject.tag == "Player") {
+			co.gameObject.transform.SendMessage ("c_stunned", true);
+			Vector2 dist = co.gameObject.transform.position - transform.position;
+			
+			Rigidbody2D r = co.gameObject.GetComponent<Rigidbody2D>();
+			r.velocity = new Vector2(0.0f, 0.0f);
+			r.AddForce(300.0f*dist.normalized);
+			//c_playerStunned(true);
+			return true;
+		}
+		else {
+
+			return false;
+
+		}
+	}
+
+	private void recoil() {
+
+		if (pm.FacingRight) {
+
+			myRigidBody.velocity = new Vector2(0.0f, 0.0f);
+			myRigidBody.AddForce(new Vector2(-200.0f, 0.0f));
+
+		}
+		else {
+
+			myRigidBody.velocity = new Vector2(0.0f, 0.0f);
+			myRigidBody.AddForce(new Vector2(200.0f, 0.0f));
+
+		}
+
+	}
+
+	private void checkRecoilOrFlip() {
+
+		switch (eMS) {
+
+			case enemyMachineState.Wander :
+				if(DEBUG_COLLISION[2])
+					Debug.Log ("WA - flippo e basta");
+				i_flip();
+				break;
+
+			case enemyMachineState.Patrol :
+
+				if(paType== patrolType.Walk) {
+					
+					if(DEBUG_COLLISION[2])
+						Debug.Log ("PA wa - flippo e basta");
+
+					i_flip();
+				}
+				else {
+					if(paType==patrolType.AreaSuspicious) {
+						Debug.Log ("caso da gestire");
+					}
+					else {
+						Debug.Log ("caso da gestire");
+					}
+					   
+				}
+				break;
+
+			case enemyMachineState.Chase :
+
+				if(chType== chaseType.ChargedCh) {
+					if(DEBUG_COLLISION[2])
+						Debug.Log ("CH CH - cambio a stun");
+
+					makeStateTransition(eMS, enemyMachineState.Stunned);
+					recoil();
+					
+				}
+				else {
+					if(DEBUG_COLLISION[2])
+						Debug.Log ("CH CO - flippo e cambio a patrol");
+
+					i_flip();
+					makeSubStateTransition(patrolType.AreaSuspicious);
+					makeStateTransition(eMS, enemyMachineState.Patrol);
+
+				}
+				break;
+
+		}
+
+	}
+
+	private void handleObstacleCollision(Collision2D co) {
+
+		switch (eType) {
+
+			case enemyType.Dumb :
+
+				i_flip();
+
+				break;
+
+			case enemyType.Guard :
+				
+				checkRecoilOrFlip();
+				
+				break;
+
+			case enemyType.Heavy :
+				
+				checkRecoilOrFlip();
+				
+				break;
+
+		}
+
+	}
+
 	public void OnCollisionEnter2D(Collision2D c) {
+		//Debug.Log ("dai cazzo");
+		bool playerColl = false;
 
 		//se l'AI è stunnata non reca danno al player, per ora...
 		if (eMS == enemyMachineState.Stunned)
 			return;
 
-		if(DEBUG_COLLISION)
-			Debug.Log ("TOCCATO " + c.gameObject.name);
 
-		if (c.gameObject.tag == "Player") {
-			c.gameObject.transform.SendMessage ("c_stunned", true);
-			Vector2 dist = c.gameObject.transform.position - transform.position;
-			
-			Rigidbody2D r = c.gameObject.GetComponent<Rigidbody2D>();
-			r.velocity = new Vector2(0.0f, 0.0f);
-			r.AddForce(300.0f*dist.normalized);
-			//c_playerStunned(true);
+		playerColl = checkPlayerCollision (c);
+
+		if(checkObstacleCollision (c)) {
+			//colliso con un ostacolo
+
+			if(playerColl) {
+				//mi comporto in qualche modo se collido pure con il player?
+				if(DEBUG_COLLISION[1])
+					Debug.Log("HO COLLISO SIA COL PLAYER CHE CON UN OSTACOLO " + c.gameObject.name);
+			}
+			else {
+				if(DEBUG_COLLISION[1])
+					Debug.Log("HO COLLISO CON UN OSTACOLO " + c.gameObject.name);
+				handleObstacleCollision(c);
+
+			}
+
+
+
+		}
+		else {
+
+			if(DEBUG_COLLISION[1])
+				Debug.Log("HA COLLISO SOLO CON IL PLAYER");
 		}
 
 
+		if(DEBUG_COLLISION[0])
+			Debug.Log ("TOCCATO " + c.gameObject.name);
+
+
+
+
 	}
+
+	//FINE GESTIONE COLLISIONI----------------------------------------------------------------------------------------------
 	
 }
