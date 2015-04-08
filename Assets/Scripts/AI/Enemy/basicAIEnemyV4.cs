@@ -150,7 +150,6 @@ public class basicAIEnemyV4 : MonoBehaviour {
 
 	//Gestione raycast target------------------------------------
 	//public LayerMask targetLayers; dichiarata su
-	bool backVision = true;
 	float frontalDistanceOfView = 5.0f;
 	float scale_FrontalDistanceOfView_ToBeFar = 1.5f;
 	float backDistanceOfView = 2.0f;
@@ -1231,15 +1230,35 @@ public class basicAIEnemyV4 : MonoBehaviour {
 
 			default :
 				
-				fleeTowardFarthestEscapePoint ();
+				//fleeTowardFarthestEscapePoint ();
 				
 				break;
 			
 		}
-		
+
+		goOppositeDirectionOfTargetFlee ();
+
 		
 	}
-	
+
+	private void goOppositeDirectionOfTargetFlee() {
+
+		if (transform.position.x >= fleeingBy.transform.position.x) {
+			if(!i_facingRight())
+				i_flip();
+
+		}
+		else {
+
+			if(i_facingRight())
+				i_flip();
+
+		}
+
+		i_move (false);
+
+	}
+
 	private bool isTargetFleeLostORFarEnough (){
 		
 		//se il target è null o il suo layer è 14
@@ -1262,7 +1281,7 @@ public class basicAIEnemyV4 : MonoBehaviour {
 		*/
 		float dist = Vector2.Distance (groundCheckTransf.position, new Vector2 (fleeingBy.position.x, fleeingBy.position.y));
 		
-		if (Mathf.Abs (dist) > frontalDistanceOfView * 1.5f) {
+		if (Mathf.Abs (dist) > frontalDistanceOfView * 2.0f) {
 			return true;
 		}
 		
@@ -1274,25 +1293,19 @@ public class basicAIEnemyV4 : MonoBehaviour {
 	private void checkFleeingNeed(){
 		
 		//basic method to detect enemies
-		
-		RaycastHit2D hit = Physics2D.Raycast(transform.position, i_facingRight()? Vector2.right : -Vector2.right, frontalDistanceOfView, fleeLayer);
+		RaycastHit2D hit;
+
+		Debug.DrawLine (new Vector2(transform.position.x, transform.position.y + 0.8f), i_facingRight () ? new Vector2 (transform.position.x + frontalDistanceOfView, transform.position.y + 0.8f) : new Vector2 (transform.position.x - frontalDistanceOfView, transform.position.y + 0.8f), Color.yellow);
+		hit = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y + 0.8f) , i_facingRight()? Vector2.right : -Vector2.right, frontalDistanceOfView, fleeLayer);
+
+		//RaycastHit2D hit = Physics2D.Raycast(transform.position, i_facingRight()? Vector2.right : -Vector2.right, frontalDistanceOfView, fleeLayer);
 		if (hit.collider != null) {
 			
 			makeStateTransition(eMS,enemyMachineState.Flee, hit.transform.gameObject);
 			
 			return;
 		}
-		
-		if (backVision) {
-			//OPZIONALE PER NEMICI FORTI??
-			
-			hit = Physics2D.Raycast (transform.position, i_facingRight() ? -Vector2.right : Vector2.right, backDistanceOfView, fleeLayer);
-			if (hit.collider != null) {
-				makeStateTransition(eMS,enemyMachineState.Flee, hit.transform.gameObject);
-				
-				return;
-			}
-		}
+
 		
 		return;
 		
@@ -1369,7 +1382,9 @@ public class basicAIEnemyV4 : MonoBehaviour {
 			}
 			else {
 				//gestire il caso in cui non si abbiano punti di escape di default
-				
+				Debug.Log("ATTENZIONE - nessun punto di escape nella scena");
+
+
 			}
 			
 		}
