@@ -1809,6 +1809,9 @@ public class basicAIEnemyV4 : MonoBehaviour {
 	private bool isTargetAtDifferentHeight() {
 
 		//float dist = Vector2.Distance (groundCheckTransf.position, myAstar.Target.transform.position);
+		if (myAstar.Target == null)
+			return true;
+
 		float hDiff = Mathf.Abs (groundCheckTransf.position.y - myAstar.Target.transform.position.y );
 
 		if (hDiff > 2.5f)
