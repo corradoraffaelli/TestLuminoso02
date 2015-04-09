@@ -34,8 +34,11 @@ public class SpringBehaviour : MonoBehaviour {
 	void FixedUpdate()
 	{
 		if (spinta) {
-			rigBody.velocity = new Vector3(rigBody.velocity.x,0.0f,0.0f);
-			rigBody.AddForce(new Vector2 (0.0f,upForce));
+			PlayerMovements PM = player.GetComponent<PlayerMovements>();
+			//player.SendMessage("setAscForce");
+			PM.setAscForce(true);
+			//rigBody.velocity = new Vector3(rigBody.velocity.x,0.0f,0.0f);
+			//rigBody.AddForce(new Vector2 (0.0f,upForce));
 			spinta = false;
 		}
 	}

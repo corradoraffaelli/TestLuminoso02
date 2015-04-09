@@ -37,7 +37,23 @@ public class PlayerMovements : MonoBehaviour {
 	public float fromLadderForce = 100.0f;
 	public float airXDeceleration = 5.0f;
 	public float maxFallingSpeed = 12.0f;
-	
+
+	//gestione rimbalzi
+	public float baseAscForce = 300.0f;
+	public float baseAscForceSpring = 500.0f;
+	public float addEnemyAscForce = 100.0f;
+	public float addHeightAscForce = 50.0f;
+	//public float HeightLevels = 5.0f;
+	public int numEnemyJump = 0;
+	public int maxNumEnemyCount = 2;
+	//public int numHeightLevel = 0;
+	public float lastTouchedHeight;
+	bool settedNumHeightLevel = false;
+	public float diffHeight = 0.0f;
+	public float maxDiffHeight = 5.0f;
+	public float addedForceDebug = 0.0f;
+	bool leavedGround = false;
+
 	float standardGravity;
 	bool freezedByTool = false;
 	public bool AIControl = false;
@@ -117,12 +133,29 @@ public class PlayerMovements : MonoBehaviour {
 			//se tocco terra
 			if (onGround == true) {
 
+				//lastTouchedHeight = transform.position.y;
+				resetAscForceVariables();
+
 				//corsa
 				runningManagement ();
 
 				//salto (verrà gestito nel FixedUpdate
 				jumpingManagement ();
+			}else{
+				if (!leavedGround)
+				{
+					lastTouchedHeight = transform.position.y;
+					leavedGround = true;
+				}
+
 			}
+
+			//-------------debug-------------
+			if (Input.GetKeyUp(KeyCode.Q))
+			{
+				addEnemyCount();
+			}
+
 
 			notGroundManagement ();
 
@@ -158,13 +191,8 @@ public class PlayerMovements : MonoBehaviour {
 					anim.SetBool ("Running", false);
 
 			}
-
-
-			
 		}
 	}
-
-
 
 	void FixedUpdate()
 	{
@@ -178,6 +206,55 @@ public class PlayerMovements : MonoBehaviour {
 			//scala
 			OnLadderManagemetFU ();
 		}
+	}
+
+	public void setAscForce(bool isSpring = false)
+	{
+		//richiamato al primo rimbalzo, la variabile settedNumHeightLevel deve essere rimessa a false ogni volta che si tocca terra
+		if (!settedNumHeightLevel) {
+			//se la posizione da cui lascio terra è > maggiore della posizione in cui c'è il rimbalzo
+			if (lastTouchedHeight>transform.position.y)
+			{
+				diffHeight = Mathf.Abs (lastTouchedHeight - transform.position.y);
+				if (diffHeight > maxDiffHeight)
+					diffHeight = maxDiffHeight;
+			}else{
+				diffHeight = 0.0f;
+			}
+
+			settedNumHeightLevel = true;
+		}
+
+		RigBody.velocity = new Vector3(RigBody.velocity.x,0.0f,0.0f);
+
+		if (isSpring)
+			addedForceDebug = baseAscForceSpring + (numEnemyJump*addEnemyAscForce) + (diffHeight/4*addHeightAscForce);
+		else
+			addedForceDebug = baseAscForce + (numEnemyJump*addEnemyAscForce) + (diffHeight/4*addHeightAscForce);
+
+		RigBody.AddForce(new Vector2 (0.0f,addedForceDebug));
+		/*
+		if (isSpring)
+			RigBody.AddForce(new Vector2 (0.0f,(baseAscForce + (numEnemyJump*addEnemyAscForce) + (numHeightLevel*addHeightAscForce)))*1.5f);
+		else
+			RigBody.AddForce(new Vector2 (0.0f,baseAscForce + (numEnemyJump*addEnemyAscForce) + (numHeightLevel*addHeightAscForce)));
+		*/
+	}
+
+	public void addEnemyCount()
+	{
+		if (numEnemyJump<maxNumEnemyCount)
+			numEnemyJump = numEnemyJump +1;
+	}
+		
+
+	void resetAscForceVariables()
+	{
+		leavedGround = false;
+		numEnemyJump = 0;
+		//numHeightLevel = 0;
+		settedNumHeightLevel = false;
+		diffHeight = 0.0f;
 	}
 
 	void jumpingManagement()
@@ -228,7 +305,7 @@ public class PlayerMovements : MonoBehaviour {
 			{
 				RigBody.velocity = new Vector2(RigBody.velocity.x, -maxFallingSpeed);
 			}
-			Debug.Log(RigBody.velocity.y);
+			//Debug.Log(RigBody.velocity.y);
 		}
 	}
 
@@ -253,7 +330,7 @@ public class PlayerMovements : MonoBehaviour {
 				//ho superato il limite
 				if ((RigBody.velocity.x < 0.0f && removeFallingPosForce) || (RigBody.velocity.x > 0.0f && removeFallingNegForce))
 				{
-					Debug.Log ("I'm in");
+					//Debug.Log ("I'm in");
 					RigBody.velocity = new Vector2(0.0f, RigBody.velocity.y);
 					removeFallingForce = false;
 					removeFallingNegForce = false;
@@ -355,6 +432,8 @@ public class PlayerMovements : MonoBehaviour {
 					jumpFromLadderLeft = true;
 			}
 
+
+			resetAscForceVariables();
 		}
 	}
 
