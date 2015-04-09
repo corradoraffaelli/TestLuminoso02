@@ -13,6 +13,9 @@ public class PlayerMovements : MonoBehaviour {
 	bool collidingLadder = false;
 
 	bool addFallingForce = false;
+	bool removeFallingNegForce = false;
+	bool removeFallingPosForce = false;
+	bool removeFallingForce = false;
 	bool climbingUp = false;
 	bool climbingDown = false;
 	bool jumpFromLadderRight = false;
@@ -32,6 +35,8 @@ public class PlayerMovements : MonoBehaviour {
 	public float LadderLateralLimit = 0.1f;
 	public float onLadderMovement = 0.1f;
 	public float fromLadderForce = 100.0f;
+	public float airXDeceleration = 5.0f;
+	public float maxFallingSpeed = 12.0f;
 	
 	float standardGravity;
 	bool freezedByTool = false;
@@ -194,7 +199,13 @@ public class PlayerMovements : MonoBehaviour {
 	{
 		if (!onGround && !onLadder) {
 			if (Input.GetAxis ("Horizontal") == 0.0f)
+			{
 				addFallingForce = false;
+
+				//-----nuova aggiunta------
+				if (RigBody.velocity.x != 0.0f && !removeFallingForce)
+					removeFallingForce = true;
+			}
 			else{
 				//se sto muovendo nella stessa direzione in cui sto guardando, devo controllare che la velocità non sia già massima
 				if (((RigBody.velocity.x > 0.0f) && (Input.GetAxis ("Horizontal") > 0)) || ((RigBody.velocity.x < 0.0f) && (Input.GetAxis ("Horizontal") < 0)))
@@ -206,7 +217,18 @@ public class PlayerMovements : MonoBehaviour {
 				}else{
 					addFallingForce = true;
 				}
+
+				//-----nuova aggiunta------
+				removeFallingForce = false;
+				removeFallingNegForce = false;
+				removeFallingPosForce = false;
 			}
+
+			if (RigBody.velocity.y < -maxFallingSpeed)
+			{
+				RigBody.velocity = new Vector2(RigBody.velocity.x, -maxFallingSpeed);
+			}
+			Debug.Log(RigBody.velocity.y);
 		}
 	}
 
@@ -223,6 +245,36 @@ public class PlayerMovements : MonoBehaviour {
 					RigBody.AddForce (new Vector2(-forceOnAirFactor,0.0f));
 				addFallingForce = false;
 			}
+
+
+			//-----nuova aggiunta------
+			if (removeFallingForce)
+			{
+				//ho superato il limite
+				if ((RigBody.velocity.x < 0.0f && removeFallingPosForce) || (RigBody.velocity.x > 0.0f && removeFallingNegForce))
+				{
+					Debug.Log ("I'm in");
+					RigBody.velocity = new Vector2(0.0f, RigBody.velocity.y);
+					removeFallingForce = false;
+					removeFallingNegForce = false;
+					removeFallingPosForce = false;
+					return;
+				}
+
+				if (RigBody.velocity.x < 0.0f)
+				{
+					//Debug.Log ("rallenting");
+					removeFallingNegForce = true;
+					RigBody.AddForce (new Vector2(airXDeceleration,0.0f));
+				}else if(RigBody.velocity.x > 0.0f)
+				{
+					//Debug.Log ("rallenting");
+					removeFallingPosForce = true;
+					RigBody.AddForce (new Vector2(-airXDeceleration,0.0f));
+				}
+
+			}
+
 		}
 	}
 
