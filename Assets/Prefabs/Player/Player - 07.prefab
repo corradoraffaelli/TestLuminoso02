@@ -206,7 +206,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 182692}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.88000011, y: .0900000036, z: 0}
+  m_LocalPosition: {x: 1.05999994, y: 3.06999993, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 490946}
@@ -372,6 +372,15 @@ MonoBehaviour:
   fromLadderForce: 100
   airXDeceleration: 8
   maxFallingSpeed: 14
+  baseAscForce: 350
+  baseAscForceSpring: 450
+  addEnemyAscForce: 100
+  addHeightAscForce: 200
+  numEnemyJump: 0
+  maxNumEnemyCount: 2
+  diffHeight: 0
+  maxDiffHeight: 9
+  addedForceDebug: 0
   AIControl: 0
   GroundCheckUpperLeft: {fileID: 452864}
   GroundCheckBottomRight: {fileID: 410702}
@@ -385,6 +394,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 2048
   running: 0
+  actualLadder: {fileID: 0}
 --- !u!198 &19886938
 ParticleSystem:
   m_ObjectHideFlags: 1

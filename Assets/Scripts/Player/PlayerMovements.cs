@@ -5,6 +5,7 @@ public class PlayerMovements : MonoBehaviour {
 
 	Rigidbody2D RigBody;
 	Animator anim;
+	//Collider coll;
 
 	bool facingRight = true;
 	bool Jumping = false;
@@ -47,12 +48,16 @@ public class PlayerMovements : MonoBehaviour {
 	public int numEnemyJump = 0;
 	public int maxNumEnemyCount = 2;
 	//public int numHeightLevel = 0;
-	public float lastTouchedHeight;
+	//public float lastTouchedHeight;
 	bool settedNumHeightLevel = false;
 	public float diffHeight = 0.0f;
 	public float maxDiffHeight = 5.0f;
 	public float addedForceDebug = 0.0f;
-	bool leavedGround = false;
+	//bool leavedGround = false;
+	bool savedFallingPositions = false;
+	float lastYPositivePosition = 0.0f;
+	float firstYNegativePosition = 0.0f;
+	//public float yPos = 0.0f;
 
 	float standardGravity;
 	bool freezedByTool = false;
@@ -67,7 +72,7 @@ public class PlayerMovements : MonoBehaviour {
 
 	public bool running;
 
-	GameObject actualLadder;
+	public GameObject actualLadder;
 
 	public bool FacingRight {
 		get{ return facingRight;}
@@ -120,7 +125,6 @@ public class PlayerMovements : MonoBehaviour {
 	}
 
 	void Update () {
-
 		//verifico se il player è a terra ed aggiorno l'animator
 		onGround = groundCheck ();
 		anim.SetBool ("onGround", onGround);
@@ -142,10 +146,17 @@ public class PlayerMovements : MonoBehaviour {
 				//salto (verrà gestito nel FixedUpdate
 				jumpingManagement ();
 			}else{
-				if (!leavedGround)
+				if (!savedFallingPositions)
 				{
-					lastTouchedHeight = transform.position.y;
-					leavedGround = true;
+					if (RigBody.velocity.y >= 0.0f){
+						lastYPositivePosition = transform.position.y;
+					}else{
+						firstYNegativePosition = transform.position.y;
+						savedFallingPositions = true;
+					}
+						
+					//lastTouchedHeight = transform.position.y;
+					//leavedGround = true;
 				}
 
 			}
@@ -212,7 +223,21 @@ public class PlayerMovements : MonoBehaviour {
 	{
 		//richiamato al primo rimbalzo, la variabile settedNumHeightLevel deve essere rimessa a false ogni volta che si tocca terra
 		if (!settedNumHeightLevel) {
+
+			//faccio una media tra l'ultima posizione con velocità positiva registrata e la prima con velocità negativa,
+			//per approssimare la massima posizione raggiunta
+			float mediumMaxHeight = (lastYPositivePosition + firstYNegativePosition) / 2;
+			//diffHeight = (lastYPositivePosition + firstYNegativePosition) / 2;
+			if (mediumMaxHeight>transform.position.y)
+			{
+				diffHeight = Mathf.Abs (mediumMaxHeight - transform.position.y);
+				if (diffHeight > maxDiffHeight)
+					diffHeight = maxDiffHeight;
+			}else{
+				diffHeight = 0.0f;
+			}
 			//se la posizione da cui lascio terra è > maggiore della posizione in cui c'è il rimbalzo
+			/*
 			if (lastTouchedHeight>transform.position.y)
 			{
 				diffHeight = Mathf.Abs (lastTouchedHeight - transform.position.y);
@@ -221,6 +246,7 @@ public class PlayerMovements : MonoBehaviour {
 			}else{
 				diffHeight = 0.0f;
 			}
+			*/
 
 			settedNumHeightLevel = true;
 		}
@@ -250,11 +276,13 @@ public class PlayerMovements : MonoBehaviour {
 
 	void resetAscForceVariables()
 	{
-		leavedGround = false;
+		//leavedGround = false;
 		numEnemyJump = 0;
 		//numHeightLevel = 0;
 		settedNumHeightLevel = false;
 		diffHeight = 0.0f;
+		lastYPositivePosition = transform.position.y;
+		savedFallingPositions = false;
 	}
 
 	void jumpingManagement()
@@ -392,6 +420,7 @@ public class PlayerMovements : MonoBehaviour {
 
 	void OnLadderManagement ()
 	{
+
 		if (onLadder == true) {
 
 			RigBody.gravityScale = 0.0f;
@@ -402,24 +431,44 @@ public class PlayerMovements : MonoBehaviour {
 			//se non premo più verso il basso o l'alto, il personaggio si ferma
 			if (Input.GetAxisRaw("Vertical") == 0.0f)
 			{
+				//if (onGround)
+				//	onLadder = false;
 				RigBody.velocity = new Vector2 (0.0f,0.0f);
+			}else if(Input.GetAxisRaw("Vertical") > 0.0f && isUpperOnLadder())
+			{
+				RigBody.velocity = new Vector2(0.0f, onLadderMovement*40.0f);
+			}else if(Input.GetAxisRaw("Vertical") > 0.0f && !isUpperOnLadder())
+			{
+				RigBody.velocity = new Vector2(0.0f, 0.0f);
+			}else if(Input.GetAxisRaw("Vertical") < 0.0f && isMiddleOnLadder())
+			{
+				RigBody.velocity = new Vector2(0.0f, -onLadderMovement*40.0f);
+
+			}else if(Input.GetAxisRaw("Vertical") < 0.0f && !isMiddleOnLadder())
+			{
+				//dovrebbe cadere
+				RigBody.velocity = new Vector2(0.0f, 0.0f);
+				onLadder = false;
+				anim.SetBool("OnLadder", false);
 				anim.SetBool("Climbing", false);
-			}else if(Input.GetAxisRaw("Vertical") > 0.0f)
-			{
-				climbingUp = true;
-				climbingDown = false;
-				anim.SetBool("Climbing", true);
-			}else if(Input.GetAxisRaw("Vertical") < 0.0f)
-			{
-				climbingUp = false;
-				climbingDown = true;
-				anim.SetBool("Climbing", true);
+				
+				RigBody.gravityScale = standardGravity;
 			}
+
+			//if (!isStillOnLadder())
+			//	RigBody.velocity = new Vector2(0.0f, 0.0f);
+
+			if (RigBody.velocity.y == 0.0f)
+				anim.SetBool("Climbing", false);
+			else
+				anim.SetBool("Climbing", true);
+
 
 			float HorInput = Input.GetAxisRaw("Horizontal");
 			//se mi muovo lateralmente dalla scala
 			if (HorInput != 0.0f)
 			{
+				RigBody.velocity = new Vector2(0.0f, 0.0f);
 				onLadder = false;
 				anim.SetBool("OnLadder", false);
 				anim.SetBool("Climbing", false);
@@ -432,15 +481,22 @@ public class PlayerMovements : MonoBehaviour {
 					jumpFromLadderLeft = true;
 			}
 
-
+			//anim.SetBool ("OnLadder", !onGround);
+			//bisogna resettare le variabili, perché se il player è sulla scala non è onGround, quindi le variabili rimangono settate
 			resetAscForceVariables();
+
+
+
+
+			Debug.Log ("Upper "+isUpperOnLadder());
+			Debug.Log ("Middle "+isMiddleOnLadder());
 		}
 	}
 
 	void OnLadderManagemetFU()
 	{
 		if (onLadder) {
-
+			/*
 			if (climbingUp)
 			{
 				transform.position = new Vector3 (transform.position.x, transform.position.y+onLadderMovement,transform.position.z);
@@ -450,7 +506,7 @@ public class PlayerMovements : MonoBehaviour {
 				transform.position = new Vector3 (transform.position.x, transform.position.y-onLadderMovement,transform.position.z);
 				climbingDown = false;
 			}
-
+			*/
 			if (jumpFromLadderRight)
 			{
 				RigBody.AddForce(new Vector2(fromLadderForce,0.0f));
@@ -502,19 +558,63 @@ public class PlayerMovements : MonoBehaviour {
 		}
 	}
 
+	bool isUpperOnLadder()
+	{
+		GameObject[] Ladders = GameObject.FindGameObjectsWithTag ("Ladder");
+		Bounds playerBounds = GetComponent<Collider2D> ().bounds;
+		float yPlayerPos = playerBounds.max.y;
+		float xPlayerPos = playerBounds.center.x;
+		foreach (GameObject ladder in Ladders) {
+			Bounds ladderBounds = ladder.GetComponent<Collider2D> ().bounds;
+			float yMaxLadderPos = ladderBounds.max.y;
+			float yMinLadderPos = ladderBounds.min.y;
+			float xCenterLadder = ladderBounds.center.x;
+			if (xPlayerPos <= (xCenterLadder+0.1f) && xPlayerPos >= (xCenterLadder-0.1f))
+			{
+				if (yPlayerPos <= yMaxLadderPos && yPlayerPos >= yMinLadderPos)
+					return true;
+			}
+		}
+		return false;
+	}
+
+	bool isMiddleOnLadder()
+	{
+		GameObject[] Ladders = GameObject.FindGameObjectsWithTag ("Ladder");
+		Bounds playerBounds = GetComponent<Collider2D> ().bounds;
+		float yPlayerPos = playerBounds.center.y;
+		float xPlayerPos = playerBounds.center.x;
+		foreach (GameObject ladder in Ladders) {
+			Bounds ladderBounds = ladder.GetComponent<Collider2D> ().bounds;
+			float yMaxLadderPos = ladderBounds.max.y;
+			float yMinLadderPos = ladderBounds.min.y;
+			float xCenterLadder = ladderBounds.center.x;
+			//sono sulla stessa scala
+			if (xPlayerPos <= (xCenterLadder+0.1f) && xPlayerPos >= (xCenterLadder-0.1f))
+			{
+				if (yPlayerPos <= yMaxLadderPos && yPlayerPos >= yMinLadderPos)
+					return true;
+			}
+		}
+		return false;
+	}
+
 	//se attivo il trigger della scala, setto le relative variabili
-	void OnTriggerStay2D(Collider2D coll)
+	void OnTriggerEnter2D(Collider2D coll)
 	{
 		if (coll.tag == "Ladder") {
+			//Debug.Log ("entrato");
 			collidingLadder = true;
 			actualLadder = coll.gameObject;
+			//yPos = actualLadder.GetComponent<BoxCollider2D>().bounds.max.y;
 		}
 	}
 
 	//esco dal trigger della scala
-	void OntriggerExit2D(Collider2D coll)
+	void OnTriggerExit2D(Collider2D coll)
 	{
 		if (coll.tag == "Ladder") {
+			//Debug.Log ("uscito");
 			collidingLadder = false;
 		}
 	}
