@@ -72,7 +72,7 @@ public class PlayerMovements : MonoBehaviour {
 
 	public bool running;
 
-	public GameObject actualLadder;
+	GameObject actualLadder;
 
 	public bool FacingRight {
 		get{ return facingRight;}
@@ -488,8 +488,8 @@ public class PlayerMovements : MonoBehaviour {
 
 
 
-			Debug.Log ("Upper "+isUpperOnLadder());
-			Debug.Log ("Middle "+isMiddleOnLadder());
+			//Debug.Log ("Upper "+isUpperOnLadder());
+			//Debug.Log ("Middle "+isMiddleOnLadder());
 		}
 	}
 
