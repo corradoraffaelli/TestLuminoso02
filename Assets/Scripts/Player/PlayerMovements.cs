@@ -387,6 +387,7 @@ public class PlayerMovements : MonoBehaviour {
 					onLadder = true;
 					anim.SetBool ("OnLadder", true);
 					RigBody.velocity = new Vector2 (0.0f,0.0f);
+					transform.position = new Vector3 (actualLadder.transform.position.x, transform.position.y, transform.position.z);
 				}
 			}
 		}
@@ -400,7 +401,7 @@ public class PlayerMovements : MonoBehaviour {
 			RigBody.gravityScale = 0.0f;
 
 			//faccio in modo che il personaggio sia sempre "centrato"
-			transform.position = new Vector3 (actualLadder.transform.position.x, transform.position.y, transform.position.z);
+			//transform.position = new Vector3 (actualLadder.transform.position.x, transform.position.y, transform.position.z);
 
 			//se non premo più verso il basso o l'alto, il personaggio si ferma
 			if (Input.GetAxisRaw("Vertical") == 0.0f)
