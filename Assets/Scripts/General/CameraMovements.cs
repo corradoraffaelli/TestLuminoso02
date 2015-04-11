@@ -18,32 +18,41 @@ public class CameraMovements : MonoBehaviour {
 	GameObject controller;
 	CursorHandler CH;
 
+	Transform UpperLimit;
+	Transform BottomLimit;
+	Transform RightLimit;
+	Transform LeftLimit;
+
 	public float RatioDistanceFromPlayer = 0.3f;
+	Vector3 BLActualLimit;
+	Vector3 URActualLimit;
 
 	void Start () {
 		player = GameObject.FindGameObjectWithTag ("Player");
 
-		if (newImplementation) {
+		controller = GameObject.FindGameObjectWithTag ("Controller");
+		CH = controller.GetComponent<CursorHandler> ();
 
-			controller = GameObject.FindGameObjectWithTag ("Controller");
-			CH = controller.GetComponent<CursorHandler> ();
-		} else {
-			cameraCenter = new Vector3 (Camera.main.gameObject.transform.position.x, Camera.main.gameObject.transform.position.y, player.transform.position.z);
-			beginCamera = Camera.main.ScreenToWorldPoint (new Vector3 (0.0f, 0.0f, player.transform.position.z));
-			xDistFromBeginning = Mathf.Abs (cameraCenter.x - beginCamera.x);
-			yDistFromBeginning = Mathf.Abs (cameraCenter.y - beginCamera.y);
+		UpperLimit = CH.getUpperLimit();
+		BottomLimit = CH.getBottomLimit();
+		RightLimit = CH.getRightLimit();
+		LeftLimit = CH.getLeftLimit();
 
-		}
-
+		cameraCenter = new Vector3 (Camera.main.gameObject.transform.position.x, Camera.main.gameObject.transform.position.y, player.transform.position.z);
+		beginCamera = Camera.main.ScreenToWorldPoint (new Vector3 (0.0f, 0.0f, player.transform.position.z));
+		xDistFromBeginning = Mathf.Abs (cameraCenter.x - beginCamera.x);
+		yDistFromBeginning = Mathf.Abs (cameraCenter.y - beginCamera.y);
 	}
 
 	void Update () {
 		if (newImplementation) {
+
 			cursorWorldPosition = CH.getCursorWorldPosition ();
 			playerPosition = player.transform.position;
 
 			transform.position = getCameraPosition (RatioDistanceFromPlayer, cursorWorldPosition, playerPosition);
-			Debug.Log (getCameraPosition (RatioDistanceFromPlayer, cursorWorldPosition, playerPosition));
+
+			cameraLimitations();
 
 		} else {
 		
@@ -63,10 +72,50 @@ public class CameraMovements : MonoBehaviour {
 		float xCamera = (curPos.x - plPos.x) * distanceRatioFromPlayer + plPos.x;
 		float yCamera = (curPos.y - plPos.y) * distanceRatioFromPlayer + plPos.y;
 		Vector3 cameraPos = new Vector3(xCamera, yCamera, Camera.main.transform.position.z);
-		Debug.Log ("x1 "+curPos.x);
-		Debug.Log ("x "+xCamera);
-		Debug.Log ("y "+yCamera);
+		//Camera.main.pix
 		return cameraPos;
 	}
+
+	void cameraLimitations()
+	{
+		//copiato dall'implementazione precedente
+		cameraCenter = new Vector3 (Camera.main.gameObject.transform.position.x, Camera.main.gameObject.transform.position.y, player.transform.position.z);
+		beginCamera = Camera.main.ScreenToWorldPoint (new Vector3 (0.0f, 0.0f, player.transform.position.z));
+		xDistFromBeginning = Mathf.Abs (cameraCenter.x - beginCamera.x);
+		yDistFromBeginning = Mathf.Abs (cameraCenter.y - beginCamera.y);
+
+		//posizione nello spazio del mondo del vertice in basso a sinistra della camera
+		if (LeftLimit || BottomLimit) {
+			BLActualLimit = Camera.main.ScreenToWorldPoint(new Vector3(0.0f, 0.0f, transform.position.z));
+		}
+		//posizione nello spazio del mondo del vertice in alto a destra della camera
+		if (RightLimit || UpperLimit) {
+			URActualLimit = Camera.main.ScreenToWorldPoint(new Vector3(Camera.main.pixelWidth, Camera.main.pixelHeight, transform.position.z));
+		}
+
+		if (LeftLimit) {
+			if (LeftLimit.position.x > BLActualLimit.x){
+				transform.position = new Vector3(LeftLimit.position.x+xDistFromBeginning, transform.position.y, transform.position.z);
+			}	
+		}
+		if (RightLimit) {
+			if (RightLimit.position.x < URActualLimit.x){
+				transform.position = new Vector3(RightLimit.position.x-xDistFromBeginning, transform.position.y, transform.position.z);
+			}	
+		}
+		if (UpperLimit) {
+			if (UpperLimit.position.y < URActualLimit.y){
+				transform.position = new Vector3(transform.position.x, UpperLimit.position.y-yDistFromBeginning, transform.position.z);
+			}	
+		}
+
+		if (BottomLimit) {
+			if (BottomLimit.position.y > BLActualLimit.y){
+				transform.position = new Vector3(transform.position.x, BottomLimit.position.y+yDistFromBeginning, transform.position.z);
+			}	
+		}
+
+	}
+
 
 }

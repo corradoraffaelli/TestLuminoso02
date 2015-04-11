@@ -22,6 +22,7 @@ public class CursorHandler : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		setCursorPosition ();
+		//Debug.Log (getCursorScreenPosition());
 	}
 
 	void setCursorPosition()
@@ -29,9 +30,10 @@ public class CursorHandler : MonoBehaviour {
 		Vector3 actualMousePosition = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x,Input.mousePosition.y, 0.0f));
 		cursorPosition = new Vector3 (actualMousePosition.x, actualMousePosition.y, zPositionEnvironment);
 
-		limitCursorPosition ();
+		//limitCursorPosition ();
 	}
 
+	//per ora inutilizzata
 	void limitCursorPosition()
 	{
 		//trovo la retta passante per i due punti
@@ -75,5 +77,25 @@ public class CursorHandler : MonoBehaviour {
 	public Vector3 getCursorScreenPosition()
 	{
 		return Camera.main.WorldToScreenPoint (cursorPosition);
+	}
+
+	public Transform getBottomLimit()
+	{
+		return BottomLimit;
+	}
+
+	public Transform getUpperLimit()
+	{
+		return UpperLimit;
+	}
+
+	public Transform getLeftLimit()
+	{
+		return LeftLimit;
+	}
+
+	public Transform getRightLimit()
+	{
+		return RightLimit;
 	}
 }
