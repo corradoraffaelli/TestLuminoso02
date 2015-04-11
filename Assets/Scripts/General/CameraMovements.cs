@@ -48,7 +48,9 @@ public class CameraMovements : MonoBehaviour {
 		if (newImplementation) {
 
 			cursorWorldPosition = CH.getCursorWorldPosition ();
-			playerPosition = player.transform.position;
+			//uso il centro della sprite anzichè la base del personaggio
+			playerPosition = player.GetComponent<SpriteRenderer>().bounds.center;
+			//playerPosition = player.transform.position;
 
 			transform.position = getCameraPosition (RatioDistanceFromPlayer, cursorWorldPosition, playerPosition);
 
@@ -67,15 +69,16 @@ public class CameraMovements : MonoBehaviour {
 		}
 	}
 
+	//piazza la camera lungo la direzione tra il player ed il cursore, alla distanza passata come parametro
 	Vector3 getCameraPosition(float distanceRatioFromPlayer, Vector3 curPos, Vector3 plPos)
 	{
 		float xCamera = (curPos.x - plPos.x) * distanceRatioFromPlayer + plPos.x;
 		float yCamera = (curPos.y - plPos.y) * distanceRatioFromPlayer + plPos.y;
 		Vector3 cameraPos = new Vector3(xCamera, yCamera, Camera.main.transform.position.z);
-		//Camera.main.pix
 		return cameraPos;
 	}
 
+	//limita i movimenti della camera a seconda della scena
 	void cameraLimitations()
 	{
 		//copiato dall'implementazione precedente
