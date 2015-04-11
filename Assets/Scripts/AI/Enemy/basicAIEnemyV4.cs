@@ -133,19 +133,15 @@ public class basicAIEnemyV4 : MonoBehaviour {
 	//verso di default dove puntare lo sguardo nel caso di un singolo punto di patrol
 	public bool DefaultVerseRight = true;
 
-	public GameObject[]patrolSuspiciousPoints;
-
-	float suspiciousStartTime = 0.0f;
-	float countDown_Suspicious = 7.0f;
-	float suspPoint_ReachedTime = 0.0f;
-	float countDown_SingleSuspPoint = 2.0f;
-	float thresholdNearSuspPoint = 1.0f;
-	float offset_SuspPoint = 1.5f;
+	//nuova gestione suspicious
+	public bool firstCheckDone_Suspicious = false;
+	float countDown_Check_Suspicious = 2.5f;
+	public bool standingSusp = false;
+	public bool exitSuspicious = false;
 
 	//variabili da resettare ad inizio stato
 	bool patrollingTowardAPoint = false;
 	public Transform patrolledTarget;//utile dichiararlo momentaneamente public per vedere che valore ha
-	bool reacheadOneSuspPoint = false;
 
 	[Range(0.1f,10.0f)]
 	public float DEFAULT_DUMB_SPEED = 2.0f;
@@ -232,6 +228,10 @@ public class basicAIEnemyV4 : MonoBehaviour {
 	float thresholdApproachingNextTile = 0.4f;
 
 	bool freezedByGun = false;
+
+	//Gestione collision
+	bool handlingCollision = false;
+
 	
 	//INIZIO FUNZIONI START---------------------------------------------------------------------------------------------------------------------
 	//------------------------------------------------------------------------------------------------------------------------------------------
@@ -246,8 +246,6 @@ public class basicAIEnemyV4 : MonoBehaviour {
 
 		getGroundCheck ();
 
-		checkSuspPoints ();
-		
 		normalizeSpatialVariables ();
 		
 		takeStatusImg ();
@@ -415,39 +413,7 @@ public class basicAIEnemyV4 : MonoBehaviour {
 			Debug.Log ("groundCheck non trovato");
 		
 	}
-	
-	private void checkSuspPoints() {
-		
-		if (patrolSuspiciousPoints.Length > 1) {
-			
-			return;
-		}
-		else {
-			
-			GameObject p = GameObject.Find ("AutoGenSuspPoints");
-			
-			if (p == null) {
-				//Debug.Log ("creo susp points container");
-				p = (GameObject) GameObject.Instantiate(pointPrefab, new Vector3(0.0f, 0.0f, 0.0f), Quaternion.identity);
-				p.name = "AutoGenSuspPoints";
-			}
-			
-			patrolSuspiciousPoints = new GameObject[2];
-			
-			GameObject ob1 = (GameObject) GameObject.Instantiate(pointPrefab, new Vector3(0.0f, 0.0f, 0.0f), Quaternion.identity);
-			ob1.name = "Point(clone) " + this.name + " left";
-			ob1.transform.parent = p.transform;
-			patrolSuspiciousPoints[0] = ob1;
-			
-			GameObject ob2 = (GameObject) GameObject.Instantiate(pointPrefab, new Vector3(0.0f, 0.0f, 0.0f), Quaternion.identity);
-			ob2.name = "Point(clone) " + this.name + " right";
-			ob2.transform.parent = p.transform;
-			patrolSuspiciousPoints[1] = ob2;
-			
-		}
-		
-	}
-	
+
 
 	private bool getRangeOfView(){
 
@@ -507,7 +473,6 @@ public class basicAIEnemyV4 : MonoBehaviour {
 		
 		//Gestione patrolling------------------------------------------------------------------------------
 		
-		thresholdNearSuspPoint = thresholdNearSuspPoint * Mathf.Abs(transform.localScale.x);
 	}
 	
 	void takeStatusImg(){
@@ -1473,12 +1438,41 @@ public class basicAIEnemyV4 : MonoBehaviour {
 
 	}
 
-	private void initializePatrol(bool changeDir = false){
-		patrollingTowardAPoint = false;
-		patrolledTarget = null;
-		reacheadOneSuspPoint = false;
-		setTargetAStar (null);
+	private void initializePatrolSuspiciousVariables() {
 
+		firstCheckDone_Suspicious = false;
+		bool standingSusp = false;
+		bool exitSuspicious = false;
+
+	}
+
+	private void initializePatrolBasicVariables() {
+
+		switch (paType) {
+
+			case patrolType.Walk :
+				//non dovrei inizializzare nulla nel caso walk, per ora...
+				break;
+
+			default :
+				patrollingTowardAPoint = false;
+				patrolledTarget = null;
+				setTargetAStar (null);
+
+				break;
+
+		}
+
+	}
+
+	private void initializePatrol(bool changeDir = false){
+
+		initializePatrolBasicVariables ();
+
+		initializePatrolSuspiciousVariables ();
+
+		//TODO: now da eliminare...
+		/*
 		switch (paType) {
 
 			case patrolType.AreaSuspicious :
@@ -1489,6 +1483,7 @@ public class basicAIEnemyV4 : MonoBehaviour {
 				break;
 				
 		}
+		*/
 
 		//TODO : da gestire meglio...??
 		if (changeDir) {
@@ -1564,8 +1559,8 @@ public class basicAIEnemyV4 : MonoBehaviour {
 				break;
 
 			case patrolType.AreaSuspicious :
-				patrollingSuspicious();
-
+				//patrollingSuspicious();
+				standSuspicious();
 				break;
 				
 			default :
@@ -1584,81 +1579,37 @@ public class basicAIEnemyV4 : MonoBehaviour {
 	}
 	
 	//TODO : PRIOR il parametro è toglibile... c'è già il parametro globale
-	private void searchNextPatrollingPoint(bool suspic = false) {
+	private void searchNextPatrollingPoint() {
 		
-		//definisco prossimo patrol point
-		
-		if (suspic) {
-			
-			//CASO SOSPETTOSO
-			
-			if (patrolledTarget == null) {
-				
-				if(i_facingRight()) {
-					patrolledTarget = patrolSuspiciousPoints [1].transform;
-					//Debug.Log("destra");
-				}
-				else {
-					patrolledTarget = patrolSuspiciousPoints [0].transform;
-					//Debug.Log("sinistra");
-				}
-				
-				setNextPatrolTargetPoint(patrolledTarget.gameObject);
-				
-			} 
-			else {
-				
-				//scelgo alternatamente il primo e il secondo
-				int firstTry = UnityEngine.Random.Range (0, patrolSuspiciousPoints.Length);
-				
-				
-				while (true) {
-					firstTry = firstTry % patrolSuspiciousPoints.Length;
-					if (patrolSuspiciousPoints [firstTry].transform != patrolledTarget) {
-						patrolledTarget = patrolSuspiciousPoints [firstTry].transform;
-						break;
-					}
-					firstTry++;
-					
-				}
 
+		//CASO NORMALE
 
-				setNextPatrolTargetPoint(patrolledTarget.gameObject);
+		if (patrolledTarget == null) {
+
+			//TODO: PRIOR rinnovare all'occorrenza punti di patrol
+
+			patrolledTarget = patrolPoints [0].transform;
+			setNextPatrolTargetPoint(patrolledTarget.gameObject);
+
+		} else {
+			
+			//scelta randomica
+			int firstTry = UnityEngine.Random.Range (0, patrolPoints.Length);
+			
+			
+			while (true) {
+				firstTry = firstTry % patrolPoints.Length;
+				if (patrolPoints [firstTry].transform != patrolledTarget) {
+					patrolledTarget = patrolPoints [firstTry].transform;
+					break;
+				}
+				firstTry++;
+				
 			}
 			
-			
-		} 
-		else {
-			
-			//CASO NORMALE
-
-			if (patrolledTarget == null) {
-
-				//TODO: PRIOR rinnovare all'occorrenza punti di patrol
-
-				patrolledTarget = patrolPoints [0].transform;
-				setNextPatrolTargetPoint(patrolledTarget.gameObject);
-
-			} else {
-				
-				//scelta randomica
-				int firstTry = UnityEngine.Random.Range (0, patrolPoints.Length);
-				
-				
-				while (true) {
-					firstTry = firstTry % patrolPoints.Length;
-					if (patrolPoints [firstTry].transform != patrolledTarget) {
-						patrolledTarget = patrolPoints [firstTry].transform;
-						break;
-					}
-					firstTry++;
-					
-				}
-				
-				setNextPatrolTargetPoint(patrolledTarget.gameObject);
-			}
-			
+			setNextPatrolTargetPoint(patrolledTarget.gameObject);
 		}
+		
 		
 	}
 	
@@ -1721,74 +1672,49 @@ public class basicAIEnemyV4 : MonoBehaviour {
 		
 		
 	}
+	
 
+	private IEnumerator standSuspiciousTimer() {
+		//Debug.Log ("PREPARO OOOOOOOOOOOOOOOOHHHHHHHHH");
+		standingSusp = true;
+		
+		yield return new WaitForSeconds(countDown_Check_Suspicious);
+		//Debug.Log ("OOOOOOOOOOOOOOOOHHHHHHHHH");
 
-	private void setSuspPoints() {
-		
-		//Debug.Log ("SETTO SUSP POINTS!");
-		patrolSuspiciousPoints [0].transform.position = new Vector3 (groundCheckTransf.position.x - (offset_SuspPoint * Mathf.Abs(transform.localScale.x)), groundCheckTransf.position.y, 0f);
-		patrolSuspiciousPoints [1].transform.position = new Vector3 (groundCheckTransf.position.x + (offset_SuspPoint * Mathf.Abs(transform.localScale.x)), groundCheckTransf.position.y, 0f);
-		
+		if (!firstCheckDone_Suspicious) {
+			firstCheckDone_Suspicious = true;
+			standingSusp = false;
+			i_flip();
+		} 
+		else {
+
+			standingSusp = false;
+			firstCheckDone_Suspicious = false;
+			exitSuspicious = true;
+
+		}
 	}
-	
-	
-	private void patrollingSuspicious () {
 
-		if (!patrollingTowardAPoint) {
-			//search next point
-			setSuspPoints();
-			searchNextPatrollingPoint(true);
-			patrollingTowardAPoint = true;
-			suspiciousStartTime = Time.time;
+	private void standSuspicious(){
+
+		if(exitSuspicious) {
+			exitSuspicious = false;
+			makeSubStateTransition(defaultPaType);
+			return;
+		}
+
+		if (!firstCheckDone_Suspicious) {
+			if(!standingSusp) {
+				StartCoroutine( standSuspiciousTimer());
+			}
+
 		}
 		else {
-			//go toward next point
-			
-			if(Time.time > suspiciousStartTime + countDown_Suspicious) {
-				//se è passato abbastanza tempo, torno al normale patrol
-				
-				//makeSubPatrolStateTransition("normal");
-
-				//suspiciousDown();
-				makeSubStateTransition(defaultPaType);
-				//setStatusSprite(eMS);
-				
-				initializePatrol();
-				
-			}
-			else {
-				//patrol attorno i punti di sospetto
-				
-				
-				if(Vector2.Distance(groundCheckTransf.position, patrolledTarget.position) < thresholdNearSuspPoint) {
-					//if we are really near, we'll set next point to patrol
-					
-					if(reacheadOneSuspPoint) {
-						if(Time.time > suspPoint_ReachedTime + countDown_SingleSuspPoint) {
-							//se sto abbastanza tempo, cambio punto
-							searchNextPatrollingPoint(true);
-							reacheadOneSuspPoint = false;
-						}
-						else {
-							//fermo a fissare il vuoto
-							//Debug.Log ("fermoooooo");
-						}
-						
-					}
-					else {
-						reacheadOneSuspPoint = true;
-						suspPoint_ReachedTime = Time.time;
-					}
-					
-				}
-				else {
-					//go toward the patrol point
-					moveAlongAStarPathNoLimits();
-				}
-				
+			if(!standingSusp) {
+				StartCoroutine( standSuspiciousTimer());
 			}
 		}
-		
+
 	}
 	
 	
@@ -3035,10 +2961,27 @@ public class basicAIEnemyV4 : MonoBehaviour {
 
 	private bool checkObstacleCollision(Collision2D co) {
 
-		if ((obstacleLayers.value & 1 << co.gameObject.layer) > 0) {			
-			return true;
+		if ((obstacleLayers.value & 1 << co.gameObject.layer) > 0) {
+
+			if (co.transform.position.y < transform.position.y) {
+
+				if (DEBUG_COLLISION [2])
+					Debug.Log ("ostacolo sotto di me, è ground...");
+
+				return false;
+
+			} else {
+
+				if (DEBUG_COLLISION [2])
+					Debug.Log ("ostacolo al mio livello! lo considero");
+
+				return true;
+
+			}
 		}
+
 		return false;
+
 	}
 
 	private bool checkPlayerCollision(Collision2D co) {
@@ -3077,7 +3020,7 @@ public class basicAIEnemyV4 : MonoBehaviour {
 
 	}
 
-	private void checkRecoilOrFlip() {
+	private bool checkRecoilOrFlip() {
 
 		switch (eMS) {
 
@@ -3122,17 +3065,18 @@ public class basicAIEnemyV4 : MonoBehaviour {
 						Debug.Log ("CH CO - flippo e cambio a patrol");
 
 					i_flip();
-					makeSubStateTransition(patrolType.AreaSuspicious);
-					makeStateTransition(eMS, enemyMachineState.Patrol);
+					return true;
 
 				}
 				break;
 
 		}
 
+		return false;
+
 	}
 
-	private void handleObstacleCollision(Collision2D co) {
+	private bool handleObstacleCollision(Collision2D co) {
 
 		switch (eType) {
 
@@ -3144,27 +3088,46 @@ public class basicAIEnemyV4 : MonoBehaviour {
 
 			case enemyType.Guard :
 				
-				checkRecoilOrFlip();
+				return( checkRecoilOrFlip());
 				
 				break;
 
 			case enemyType.Heavy :
 				
-				checkRecoilOrFlip();
+				return( checkRecoilOrFlip());
 				
 				break;
 
 		}
 
+		return false;
+
 	}
 
 	public void OnCollisionEnter2D(Collision2D c) {
+
+		if(DEBUG_COLLISION[0])
+			Debug.Log("HO COLLISO CON " + c.gameObject.name);
+
+		if (!handlingCollision)
+			StartCoroutine (coroutineCollEnter (c));
+
+	}
+
+	public IEnumerator coroutineCollEnter(Collision2D c) {
 		//Debug.Log ("dai cazzo");
+		if(DEBUG_COLLISION[1])
+			Debug.Log("COROUTINE -> HO COLLISO CON " + c.gameObject.name);
+
+		handlingCollision = true;
+
 		bool playerColl = false;
 
 		//se l'AI è stunnata non reca danno al player, per ora...
-		if (eMS == enemyMachineState.Stunned)
-			return;
+		if (eMS == enemyMachineState.Stunned) {
+			handlingCollision = false;
+			return true;
+		}
 
 
 		playerColl = checkPlayerCollision (c);
@@ -3180,7 +3143,23 @@ public class basicAIEnemyV4 : MonoBehaviour {
 			else {
 				if(DEBUG_COLLISION[1])
 					Debug.Log("HO COLLISO CON UN OSTACOLO " + c.gameObject.name);
-				handleObstacleCollision(c);
+				if(handleObstacleCollision(c)) {
+
+					//TODO: soluzione momentanea per allontanarmi dall'ostacolo
+					for (int i= 0; i<5; i++) {
+						i_move ();
+						yield return new WaitForSeconds (0.1f);
+					}
+					
+					makeSubStateTransition (patrolType.AreaSuspicious);
+					makeStateTransition (eMS, enemyMachineState.Patrol);
+
+				}
+				else {
+
+					//Debug.Log ("non serve tornare indietro");
+
+				}
 
 			}
 
@@ -3197,7 +3176,7 @@ public class basicAIEnemyV4 : MonoBehaviour {
 		if(DEBUG_COLLISION[0])
 			Debug.Log ("TOCCATO " + c.gameObject.name);
 
-
+		handlingCollision = false;
 
 
 	}

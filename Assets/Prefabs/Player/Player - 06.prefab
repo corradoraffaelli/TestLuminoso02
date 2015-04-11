@@ -96,7 +96,7 @@ GameObject:
   - 4: {fileID: 437548}
   m_Layer: 0
   m_Name: GroundCheckUL
-  m_TagString: groundCheck
+  m_TagString: GroundCheck
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -194,7 +194,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 169110}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.88000011, y: .0900000036, z: 0}
+  m_LocalPosition: {x: -2.93000007, y: .150000006, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 473868}
@@ -370,6 +370,17 @@ MonoBehaviour:
   LadderLateralLimit: .300000012
   onLadderMovement: .100000001
   fromLadderForce: 100
+  airXDeceleration: 5
+  maxFallingSpeed: 12
+  baseAscForce: 300
+  baseAscForceSpring: 500
+  addEnemyAscForce: 100
+  addHeightAscForce: 50
+  numEnemyJump: 0
+  maxNumEnemyCount: 2
+  diffHeight: 0
+  maxDiffHeight: 5
+  addedForceDebug: 0
   AIControl: 0
   GroundCheckUpperLeft: {fileID: 437548}
   GroundCheckBottomRight: {fileID: 462138}

@@ -1003,6 +1003,14 @@ Prefab:
       propertyPath: m_RootOrder
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 170192, guid: 0f8887bc11991e64ba857e6490355a8f, type: 2}
+      propertyPath: m_TagString
+      value: GroundCheck
+      objectReference: {fileID: 0}
+    - target: {fileID: 170192, guid: 0f8887bc11991e64ba857e6490355a8f, type: 2}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0f8887bc11991e64ba857e6490355a8f, type: 2}
   m_IsPrefabParent: 0
@@ -1752,6 +1760,14 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11445674, guid: cd3aaa67375ed4dae8ffe107cf02f32e, type: 2}
       propertyPath: DEBUG_COLLISION.Array.data[1]
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11445674, guid: cd3aaa67375ed4dae8ffe107cf02f32e, type: 2}
+      propertyPath: DEBUG_FSM_TRANSITION.Array.data[0]
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11445674, guid: cd3aaa67375ed4dae8ffe107cf02f32e, type: 2}
+      propertyPath: DEBUG_FSM_TRANSITION.Array.data[1]
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -3181,6 +3197,10 @@ Prefab:
     - target: {fileID: 451724, guid: 7fe025f23268c4bb2bd0c8cdd9260a52, type: 2}
       propertyPath: m_RootOrder
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 160016, guid: 7fe025f23268c4bb2bd0c8cdd9260a52, type: 2}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7fe025f23268c4bb2bd0c8cdd9260a52, type: 2}
@@ -4946,6 +4966,38 @@ Prefab:
     - target: {fileID: 136526, guid: 7b272c89441d14e9d9505c764e6e24ce, type: 2}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11442602, guid: 7b272c89441d14e9d9505c764e6e24ce, type: 2}
+      propertyPath: DEBUG_FSM_TRANSITION.Array.data[0]
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11442602, guid: 7b272c89441d14e9d9505c764e6e24ce, type: 2}
+      propertyPath: DEBUG_FSM_TRANSITION.Array.data[1]
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11442602, guid: 7b272c89441d14e9d9505c764e6e24ce, type: 2}
+      propertyPath: DEBUG_FSM_TRANSITION.Array.data[2]
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11442602, guid: 7b272c89441d14e9d9505c764e6e24ce, type: 2}
+      propertyPath: DEBUG_COLLISION.Array.data[0]
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11442602, guid: 7b272c89441d14e9d9505c764e6e24ce, type: 2}
+      propertyPath: DEBUG_COLLISION.Array.data[1]
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11442602, guid: 7b272c89441d14e9d9505c764e6e24ce, type: 2}
+      propertyPath: DEBUG_ASTAR.Array.data[0]
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11442602, guid: 7b272c89441d14e9d9505c764e6e24ce, type: 2}
+      propertyPath: DEBUG_ASTAR.Array.data[1]
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11442602, guid: 7b272c89441d14e9d9505c764e6e24ce, type: 2}
+      propertyPath: DEBUG_FLIP
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7b272c89441d14e9d9505c764e6e24ce, type: 2}
