@@ -15,6 +15,7 @@ public class CursorHandler : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		Cursor.lockState = CursorLockMode.Confined;
 		player = GameObject.FindGameObjectWithTag ("Player");
 	}
 	

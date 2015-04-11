@@ -200,9 +200,10 @@ public class MagicLantern : Tool {
 	void EndingGlassFirstTime()
 	{
 		//istanzio un nuovo oggetto proiezione, da sfumare
-		tempProjectedObject = new GameObject();
-		UnityEditorInternal.ComponentUtility.CopyComponent(PC.getSpriteRenderer());
-		UnityEditorInternal.ComponentUtility.PasteComponentAsNew(tempProjectedObject);
+		tempProjectedObject = Instantiate (projectionObject);
+		//tempProjectedObject = new GameObject();
+		//UnityEditorInternal.ComponentUtility.CopyComponent(PC.getSpriteRenderer());
+		//UnityEditorInternal.ComponentUtility.PasteComponentAsNew(tempProjectedObject);
 		tempProjectedObject.transform.parent = raggio_cerchio.transform;
 		tempProjectedObject.transform.localPosition = projectionObject.transform.localPosition;
 		tempProjectedObject.transform.localScale = projectionObject.transform.localScale;
