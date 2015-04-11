@@ -134,14 +134,15 @@ public class basicAIEnemyV4 : MonoBehaviour {
 	public bool DefaultVerseRight = true;
 
 	//nuova gestione suspicious
-	public bool firstCheckDone_Suspicious = false;
-	float countDown_Check_Suspicious = 2.5f;
-	public bool standingSusp = false;
-	public bool exitSuspicious = false;
+	bool firstCheckDone_Suspicious = false;
+	[Range(0.1f,10.0f)]
+	public float tSearchLenght = 2.5f;
+	bool standingSusp = false;
+	bool exitSuspicious = false;
 
 	//variabili da resettare ad inizio stato
 	bool patrollingTowardAPoint = false;
-	public Transform patrolledTarget;//utile dichiararlo momentaneamente public per vedere che valore ha
+	Transform patrolledTarget;//utile dichiararlo momentaneamente public per vedere che valore ha
 
 	[Range(0.1f,10.0f)]
 	public float DEFAULT_DUMB_SPEED = 2.0f;
@@ -156,6 +157,8 @@ public class basicAIEnemyV4 : MonoBehaviour {
 	//Transform chasedTarget;
 	//bool avoidingObstacles = false;
 	Vector3 ignoreZ;//da privatizzare
+	[Range(0.1f,5.0f)]
+	public float fTargetFar = 2.0f;
 	
 	//enemytype nojumpsoftchase
 	float offset_MaxDistanceReachable_FromChase = 5.0f;
@@ -1678,7 +1681,7 @@ public class basicAIEnemyV4 : MonoBehaviour {
 		//Debug.Log ("PREPARO OOOOOOOOOOOOOOOOHHHHHHHHH");
 		standingSusp = true;
 		
-		yield return new WaitForSeconds(countDown_Check_Suspicious);
+		yield return new WaitForSeconds(tSearchLenght * 0.5f);
 		//Debug.Log ("OOOOOOOOOOOOOOOOHHHHHHHHH");
 
 		if (!firstCheckDone_Suspicious) {
@@ -1768,7 +1771,7 @@ public class basicAIEnemyV4 : MonoBehaviour {
 
 			float dist = Vector2.Distance (groundCheckTransf.position, myAstar.Target.transform.position);
 			
-			if ((transform.position.x > myAstar.Target.transform.position.x) && (pm.FacingRight) && (dist > frontalDistanceOfView * 2.0f) ) {
+			if ((transform.position.x > myAstar.Target.transform.position.x) && (pm.FacingRight) && (dist > frontalDistanceOfView * fTargetFar) ) {
 				if(DEBUG_FSM_TRANSITION[2])
 					Debug.Log ("CH -> PA - target perso perché io guardo a destra e lui è a sinistra");
 				//suspiciousUp();
@@ -1777,7 +1780,7 @@ public class basicAIEnemyV4 : MonoBehaviour {
 			}
 			
 			
-			if ((transform.position.x < myAstar.Target.transform.position.x) && (!pm.FacingRight) && (dist > frontalDistanceOfView * 2.0f) ) {
+			if ((transform.position.x < myAstar.Target.transform.position.x) && (!pm.FacingRight) && (dist > frontalDistanceOfView * fTargetFar) ) {
 				if(DEBUG_FSM_TRANSITION[2])
 					Debug.Log ("CH -> PA - target perso perché io guardo a sinistra e lui è a destra");
 				//suspiciousUp();
