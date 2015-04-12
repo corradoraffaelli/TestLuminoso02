@@ -6,6 +6,7 @@ public class handleStunAI : MonoBehaviour {
 	public bool DEBUG_STUNNED = false;
 	public bool bouncy = true;
 	public float sprintForce = 350.0f;
+	private GameObject helmet;
 	
 	public enum stunType {
 		Player,
@@ -15,9 +16,10 @@ public class handleStunAI : MonoBehaviour {
 	public stunType IAM;
 	// Use this for initialization
 	void Start () {
-		
+
 	}
 	
+
 	// Update is called once per frame
 	void Update () {
 		
@@ -44,7 +46,8 @@ public class handleStunAI : MonoBehaviour {
 					if(bouncy) {
 						Rigidbody2D r = c.gameObject.GetComponent<Rigidbody2D>();
 						r.velocity = new Vector2(0.0f, 0.0f);
-					r.AddForce(new Vector2(0.0f, sprintForce));
+						r.AddForce(new Vector2(0.0f, sprintForce));
+												
 						//bouncy = false;
 					}
 				} 
