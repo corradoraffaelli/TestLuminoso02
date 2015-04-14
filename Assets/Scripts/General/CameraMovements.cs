@@ -54,6 +54,7 @@ public class CameraMovements : MonoBehaviour {
 			//playerPosition = player.transform.position;
 
 			Vector3 newPosition =  getCameraPosition (RatioDistanceFromPlayer, cursorWorldPosition, playerPosition);
+			//transform.position = newPosition;
 			transform.position = Vector3.Lerp (transform.position, newPosition, Time.deltaTime * smooth);
 
 			if (limitCameraMovements)
