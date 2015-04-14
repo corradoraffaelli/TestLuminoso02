@@ -48,8 +48,12 @@ abstract public class Tool : MonoBehaviour {
 	protected bool[] usingTwoClick = {false, true};
 	protected bool usingDrag = false;
 
+
 	Vector3 clickMousePosition;
 	protected Vector3 actualMousePosition;
+
+	protected GameObject controller;
+	protected CursorHandler cursorHandler;
 
 	//true se sto riattivando il tool, quindi è true se fino a quel momento è stato
 	//inattivo, sarà false lungo tutto il suo utilizzo, tornerà true a fine utilizzo
@@ -60,6 +64,8 @@ abstract public class Tool : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		player = GameObject.FindGameObjectWithTag ("Player");
+		controller = GameObject.FindGameObjectWithTag ("Controller");
+		cursorHandler = controller.GetComponent<CursorHandler> ();
 		initializeTool ();
 	}
 
