@@ -4,12 +4,12 @@ using System.Collections;
 public class CameraMovements : MonoBehaviour {
 
 	public bool newImplementation = false;
+	public bool limitCameraMovements = false;
 
 	GameObject player;
 
 	Vector3 cameraCenter;
 	Vector3 beginCamera;
-	public GameObject endingPoint;
 	float xDistFromBeginning;
 	float yDistFromBeginning;
 
@@ -24,6 +24,7 @@ public class CameraMovements : MonoBehaviour {
 	Transform LeftLimit;
 
 	public float RatioDistanceFromPlayer = 0.3f;
+	public float smooth = 6.0f;
 	Vector3 BLActualLimit;
 	Vector3 URActualLimit;
 
@@ -52,14 +53,17 @@ public class CameraMovements : MonoBehaviour {
 			playerPosition = player.GetComponent<SpriteRenderer>().bounds.center;
 			//playerPosition = player.transform.position;
 
-			transform.position = getCameraPosition (RatioDistanceFromPlayer, cursorWorldPosition, playerPosition);
+			Vector3 newPosition =  getCameraPosition (RatioDistanceFromPlayer, cursorWorldPosition, playerPosition);
+			//transform.position = newPosition;
+			transform.position = Vector3.Lerp (transform.position, newPosition, Time.deltaTime * smooth);
 
-			cameraLimitations();
+			if (limitCameraMovements)
+				cameraLimitations();
 
 		} else {
 		
 			if ((Mathf.Abs (beginCamera.x - player.transform.position.x) > xDistFromBeginning) && 
-				(Mathf.Abs (player.transform.position.x - endingPoint.transform.position.x) > xDistFromBeginning)) {
+			    (Mathf.Abs (player.transform.position.x - UpperLimit.transform.position.x) > xDistFromBeginning)) {
 				Camera.main.gameObject.transform.position = new Vector3 (player.transform.position.x, Camera.main.gameObject.transform.position.y, Camera.main.gameObject.transform.position.z);
 			}
 

@@ -7,13 +7,14 @@ public class PlayerMovements : MonoBehaviour {
 	Animator anim;
 	//Collider coll;
 
-	bool facingRight = true;
+	public bool facingRight = true;
 	bool Jumping = false;
 	public bool onGround = false;
 	bool onLadder = false;
 	bool collidingLadder = false;
 
-	bool addFallingForce = false;
+	public bool addFallingForceRight = false;
+	public bool addFallingForceLeft = false;
 	bool removeFallingNegForce = false;
 	bool removeFallingPosForce = false;
 	bool removeFallingForce = false;
@@ -74,6 +75,9 @@ public class PlayerMovements : MonoBehaviour {
 
 	GameObject actualLadder;
 
+	GameObject controller;
+	CursorHandler cursorHandler;
+
 	public bool FacingRight {
 		get{ return facingRight;}
 		set{ facingRight = value;}
@@ -86,6 +90,8 @@ public class PlayerMovements : MonoBehaviour {
 	//private GameObject myToStun;
 
 	void Start () {
+		controller = GameObject.FindGameObjectWithTag ("Controller");
+		cursorHandler = controller.GetComponent<CursorHandler> ();
 		checkStartFacing ();
 		bool warning = true;
 		RigBody = transform.GetComponent<Rigidbody2D>();
@@ -131,7 +137,11 @@ public class PlayerMovements : MonoBehaviour {
 	
 		if (!freezedByTool && !AIControl && !stunnedState) {
 			//gestione del girarsi o meno
-			if ((facingRight == true && Input.GetAxis ("Horizontal") < 0) || (facingRight == false && Input.GetAxis ("Horizontal") > 0))
+			//if ((facingRight == true && Input.GetAxis ("Horizontal") < 0) || (facingRight == false && Input.GetAxis ("Horizontal") > 0))
+			//	Flip ();
+
+			if (((cursorHandler.getCursorWorldPosition().x > transform.position.x) && !FacingRight) ||
+			    ((cursorHandler.getCursorWorldPosition().x < transform.position.x) && FacingRight))
 				Flip ();
 
 			//se tocco terra
@@ -145,16 +155,11 @@ public class PlayerMovements : MonoBehaviour {
 
 				//salto (verrà gestito nel FixedUpdate
 				jumpingManagement ();
+
 			}else{
-				if (!savedFallingPositions)
-				{
-					if (RigBody.velocity.y >= 0.0f){
-						lastYPositivePosition = transform.position.y;
-					}else{
-						firstYNegativePosition = transform.position.y;
-						savedFallingPositions = true;
-					}
-				}
+
+				//salvo le posizioni utili a calcolare le forze di rimbalzo
+				saveFallingPositionsManagement();
 
 			}
 
@@ -213,6 +218,19 @@ public class PlayerMovements : MonoBehaviour {
 
 			//scala
 			OnLadderManagemetFU ();
+		}
+	}
+
+	void saveFallingPositionsManagement()
+	{
+		if (!savedFallingPositions)
+		{
+			if (RigBody.velocity.y >= 0.0f){
+				lastYPositivePosition = transform.position.y;
+			}else{
+				firstYNegativePosition = transform.position.y;
+				savedFallingPositions = true;
+			}
 		}
 	}
 
@@ -277,19 +295,45 @@ public class PlayerMovements : MonoBehaviour {
 			Jumping = false;
 		}
 	}
-	
+
+	void resetFallingForcesVariables()
+	{
+		removeFallingForce = false;
+		removeFallingNegForce = false;
+		removeFallingPosForce = false;
+	}
+
 	void notGroundManagement()
 	{
 		if (!onGround && !onLadder) {
 			if (Input.GetAxis ("Horizontal") == 0.0f)
 			{
-				addFallingForce = false;
+				addFallingForceRight = false;
+				addFallingForceLeft = false;
 
-				//-----nuova aggiunta------
+				//rallentamento del personaggio
 				if (RigBody.velocity.x != 0.0f && !removeFallingForce)
 					removeFallingForce = true;
 			}
+
 			else{
+				if (Input.GetAxis ("Horizontal") > 0.0f){
+					addFallingForceRight = true;
+					//se supero la velocità massima non aggiungo forza
+					if ((RigBody.velocity.x > 0.0f) && (Mathf.Abs (RigBody.velocity.x) > speedFactor)){
+						addFallingForceRight = false;
+					}
+				}else if (Input.GetAxis ("Horizontal") < 0.0f){
+					addFallingForceLeft = true;
+					//se supero la velocità massima non aggiungo forza
+					if ((RigBody.velocity.x < 0.0f) && (Mathf.Abs (RigBody.velocity.x) > speedFactor)){
+						addFallingForceLeft = false;
+					}
+				}
+
+
+
+				/*
 				//se sto muovendo nella stessa direzione in cui sto guardando, devo controllare che la velocità non sia già massima
 				if (((RigBody.velocity.x > 0.0f) && (Input.GetAxis ("Horizontal") > 0)) || ((RigBody.velocity.x < 0.0f) && (Input.GetAxis ("Horizontal") < 0)))
 				{
@@ -301,11 +345,11 @@ public class PlayerMovements : MonoBehaviour {
 					addFallingForce = true;
 				}
 
+				*/
 				//-----nuova aggiunta------
-				removeFallingForce = false;
-				removeFallingNegForce = false;
-				removeFallingPosForce = false;
+				resetFallingForcesVariables();
 			}
+
 
 			if (RigBody.velocity.y < -maxFallingSpeed)
 			{
@@ -319,6 +363,19 @@ public class PlayerMovements : MonoBehaviour {
 	{
 		if (!onGround && !onLadder) {
 
+			if (addFallingForceRight)
+			{
+				RigBody.AddForce (new Vector2(forceOnAirFactor,0.0f));
+				addFallingForceRight = false;
+			}
+
+			if (addFallingForceLeft)
+			{
+				RigBody.AddForce (new Vector2(-forceOnAirFactor,0.0f));
+				addFallingForceLeft = false;
+			}
+				
+			/*
 			if (addFallingForce)
 			{
 				if (facingRight)
@@ -327,7 +384,7 @@ public class PlayerMovements : MonoBehaviour {
 					RigBody.AddForce (new Vector2(-forceOnAirFactor,0.0f));
 				addFallingForce = false;
 			}
-
+			*/
 
 			//-----nuova aggiunta------
 			if (removeFallingForce)
@@ -504,6 +561,14 @@ public class PlayerMovements : MonoBehaviour {
 
 		
 		if (RigBody.velocity.x != 0) {
+			if (!AIControl)
+			{
+				if (((RigBody.velocity.x > 0.0f) && !facingRight) || ((RigBody.velocity.x < 0.0f) && facingRight))
+					anim.SetBool ("Backwards", true);
+				else
+					anim.SetBool ("Backwards", false);
+
+			}
 			running = true;
 			anim.SetBool ("Running", true);
 		} else {
