@@ -1501,8 +1501,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   newImplementation: 1
-  endingPoint: {fileID: 1107607573}
-  RatioDistanceFromPlayer: .300000012
+  limitCameraMovements: 0
+  RatioDistanceFromPlayer: .150000006
+  smooth: 6
 --- !u!1 &737838264
 GameObject:
   m_ObjectHideFlags: 0
@@ -2202,7 +2203,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1168215993}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -10.7299995, y: -.810000002, z: 0}
+  m_LocalPosition: {x: -10.0900002, y: -.819999993, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
