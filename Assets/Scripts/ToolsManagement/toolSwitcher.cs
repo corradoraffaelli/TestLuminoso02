@@ -29,7 +29,7 @@ public class toolSwitcher : MonoBehaviour {
 
 
 		//utilizzo un tool se clicco ul personaggio, o premo left_shift, solo se esiste almeno un oggetto nella lista
-
+		/*
 		if (toolList.GetLength(0) != 0.0) {
 			if (Input.GetButtonUp ("Fire1") && !useTapOnPlayer) {
 				usingTool = !usingTool;
@@ -47,13 +47,16 @@ public class toolSwitcher : MonoBehaviour {
 				}
 			}
 		}
+		*/
 
-		/*
-		if (Input.GetButtonDown ("Mira")) {
-			usingTool = !usingTool;
+
+		//attivo la lanterna se tengo premuto il rispettivo tasto, non è attiva ed il player è a terra
+		if (Input.GetButton ("Mira") && !usingTool && player.GetComponent<PlayerMovements>().OnGround) {
+			usingTool = true;
 			useTool (usingTool);
 		}
 
+		/*
 		if (Input.GetButtonDown ("Mira")) {
 			usingTool = !usingTool;
 			useTool (usingTool);

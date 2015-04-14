@@ -65,13 +65,15 @@ public class MagicLantern : Tool {
 
 	GameObject tempProjectedObject;
 	SpriteRenderer tempSR;
+
+	public bool proiettaInSagomaMode = false;
+
 	//ParticleEmitter partEmit;
 
 	//--------INITIALIZATION AND ACTIVATION-------------------------------------
 
 	protected override void initializeTool() {
-
-
+	
 		//prendo gli oggetti dalla scena e li salvo nelle rispettive variabili
 		takeObjectsFromScene ();
 
@@ -126,7 +128,106 @@ public class MagicLantern : Tool {
 			//sono state inserite nell'update per semplificare
 			glassSpriteUpdate ();
 
-			//immplementazione attuale
+
+
+
+				
+			//disattivo la lanterna se non sono a terra
+			if (!player.GetComponent<PlayerMovements>().OnGround)
+			{
+				toolSwitcher TS = transform.parent.gameObject.GetComponent<toolSwitcher> ();
+				TS.useTool (false);
+				TS.switchUsingTool (false);
+			}
+
+			if (!actualGlass.endingLevelGlass) {
+				changeRayAndCircleSprites (normalRay, normalCircle);
+				changeProjectionSprite (badGlassSprite);
+				deleteActualProjection ();
+
+				if (proiettaInSagomaMode)
+				{
+					if (PC.isColliding () && verifyIfTooFar ()) {
+						changeRayAndCircleSprites (pressedRay, pressedCircle);
+						changeProjectionSprite (blurredSprite);
+						deleteActualProjection ();
+						
+						// la proiezione è OK
+					} else if (PC.isColliding () && !verifyIfTooFar ()) {
+						
+						//è un vetrino normale
+						changeRayAndCircleSprites (pressedRay, pressedCircle);
+						changeProjectionSprite (emptySprite);
+						if (!createdProjection) {
+							createdProjection = true;
+							instantiatePrefab ();
+						}
+					}
+				}
+
+				//se lascio il tasto
+				if (Input.GetButtonUp("Mira"))
+				{
+					//la lascio e proietto se sono nella buona posizione
+					if (PC.isColliding () && !verifyIfTooFar ()) {
+						
+						//è un vetrino normale
+						changeRayAndCircleSprites (pressedRay, pressedCircle);
+						changeProjectionSprite (emptySprite);
+						if (!createdProjection) {
+							createdProjection = true;
+							instantiatePrefab ();
+						}
+						
+						leftLantern = true;
+						toolGameObject.transform.parent = transform;
+						
+					}else{
+						//disattivo la lanterna se non è nella buona posizione
+						toolSwitcher TS = transform.parent.gameObject.GetComponent<toolSwitcher> ();
+						TS.useTool (false);
+						TS.switchUsingTool (false);
+					}
+				}
+
+				resetEndingGlassVariables ();
+			}
+
+			/*
+			if (proiettaInSagomaMode)
+			{
+
+			}
+			if (!actualGlass.endingLevelGlass) {
+				// la proiezione si trova fuori da un muro adatto
+				if (!PC.isColliding ()) {
+					changeRayAndCircleSprites (normalRay, normalCircle);
+					changeProjectionSprite (badGlassSprite);
+					deleteActualProjection ();
+					
+					// la proiezione si trova in un muro adatto, ma è troppo lontana e risulta fuori fuoco
+				} else if (PC.isColliding () && verifyIfTooFar ()) {
+					changeRayAndCircleSprites (pressedRay, pressedCircle);
+					changeProjectionSprite (blurredSprite);
+					deleteActualProjection ();
+					
+					// la proiezione è OK
+				} else if (PC.isColliding () && !verifyIfTooFar ()) {
+					
+					//è un vetrino normale
+					changeRayAndCircleSprites (pressedRay, pressedCircle);
+					changeProjectionSprite (emptySprite);
+					if (!createdProjection) {
+						createdProjection = true;
+						instantiatePrefab ();
+					}
+				}
+				
+				resetEndingGlassVariables ();
+			}
+			*/
+			//immplementazione vecchia
+			/*
 			if (!actualGlass.endingLevelGlass) {
 				// la proiezione si trova fuori da un muro adatto
 				if (!PC.isColliding ()) {
@@ -170,7 +271,9 @@ public class MagicLantern : Tool {
 				} else {
 					resetEndingGlassVariables ();
 				}
+
 			}
+			*/
 
 			//DEBUG: se si preme E, si passa al prossimo vetrino
 			if (Input.GetKeyUp (KeyCode.E)) {
@@ -182,10 +285,16 @@ public class MagicLantern : Tool {
 		//se ho lasciato la lanterna
 		else 
 		{
-
+			//se ripremo il tasto, la riprendo in mano
+			if (Input.GetButtonDown("Mira"))
+			{
+				leftLantern = false;
+				setPlayerAsParent();
+			}
 		}
 
 		//se premo C o il tasto sinistro del mouse lascio la lanterna
+		/*
 		if (Input.GetKeyUp (KeyCode.C) || Input.GetMouseButtonUp(0)) {
 			leftLantern = !leftLantern;
 			if (leftLantern)
@@ -196,6 +305,7 @@ public class MagicLantern : Tool {
 			}
 				
 		}
+		*/
 	}
 
 	//gestione di quello che deve succedere la prima volta che la proiezione del vetrino di fine livello si trova
@@ -331,8 +441,9 @@ public class MagicLantern : Tool {
 		//toolGameObject.transform.position = new Vector3(player.transform.position.x+0.4f,player.transform.position.y+0.8f,player.transform.position.z);
 		
 		//posiziono l'origine del cerchio sotto il mouse
-		pos_move = new Vector3 (actualMousePosition.x, actualMousePosition.y, zPositionEnvironment);
-		raggio_cerchio.transform.position = new Vector3( pos_move.x, pos_move.y, pos_move.z );
+		//pos_move = new Vector3 (cursorHandler.getCursorWorl.x, actualMousePosition.y, zPositionEnvironment);
+		//raggio_cerchio.transform.position = new Vector3( pos_move.x, pos_move.y, pos_move.z );
+		raggio_cerchio.transform.position = cursorHandler.getCursorWorldPosition ();
 		
 		//prendo la posizione del punto frontale della sprite della camera, e ci piazzo l'origine del raggio
 		cameraPointPos = cameraPoint.transform.position;
@@ -364,10 +475,12 @@ public class MagicLantern : Tool {
 		
 		//test flipping personaggio
 		//flippa se il raggio punta dietro al personaggio
+		/*
 		if (((PM.FacingRight && raggio_cerchio.transform.position.x < player.transform.position.x)
 		    || (!PM.FacingRight && raggio_cerchio.transform.position.x > player.transform.position.x))
 		    && !player.GetComponent<PlayerMovements>().running)
 			PM.c_flip ();
+			*/
 	}
 
 
