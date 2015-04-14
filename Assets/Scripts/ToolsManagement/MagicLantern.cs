@@ -91,7 +91,10 @@ public class MagicLantern : Tool {
 	{
 		//posiziono la lenterna di fronte al personaggio
 		//!!!!!!--------------DA CONTROLLARE!!!!-------- probabilmente basta settare la lanterna come figlio del player nella giusta posizione
-		toolGameObject.transform.position = new Vector3(player.transform.position.x+0.4f,player.transform.position.y+0.8f,player.transform.position.z);
+		//toolGameObject.transform.position = new Vector3(player.transform.position.x+0.4f,player.transform.position.y+0.8f,player.transform.position.z);
+
+		//presupponendo che la lanterna sia figlia dell'oggetto
+		toolGameObject.transform.localPosition = new Vector3 (0.4f, 0.8f, 0.0f);
 		actualGlass = nextUsableGlass (true);
 		glassSpriteUpdate ();
 	}

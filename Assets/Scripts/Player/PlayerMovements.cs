@@ -7,9 +7,9 @@ public class PlayerMovements : MonoBehaviour {
 	Animator anim;
 	//Collider coll;
 
-	public bool facingRight = true;
+	bool facingRight = true;
 	bool Jumping = false;
-	public bool onGround = false;
+	bool onGround = false;
 	bool onLadder = false;
 	bool collidingLadder = false;
 
@@ -81,6 +81,10 @@ public class PlayerMovements : MonoBehaviour {
 	public bool FacingRight {
 		get{ return facingRight;}
 		set{ facingRight = value;}
+	}
+
+	public bool OnGround {
+		get{ return onGround;}
 	}
 
 	bool stunnedState = false;

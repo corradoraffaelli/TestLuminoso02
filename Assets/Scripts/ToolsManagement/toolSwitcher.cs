@@ -10,9 +10,12 @@ public class toolSwitcher : MonoBehaviour {
 	public bool usingTool = false;
 
 	public bool useTapOnPlayer = false;
-	
+
+	GameObject player;
+
 	void Start () {
 		//setActiveTool (activeToolIndex, true);
+		player = GameObject.FindGameObjectWithTag ("Player");
 	}
 
 	void Update () {
@@ -23,7 +26,10 @@ public class toolSwitcher : MonoBehaviour {
 
 		}
 		*/
+
+
 		//utilizzo un tool se clicco ul personaggio, o premo left_shift, solo se esiste almeno un oggetto nella lista
+
 		if (toolList.GetLength(0) != 0.0) {
 			if (Input.GetButtonUp ("Fire1") && !useTapOnPlayer) {
 				usingTool = !usingTool;
@@ -41,6 +47,18 @@ public class toolSwitcher : MonoBehaviour {
 				}
 			}
 		}
+
+		/*
+		if (Input.GetButtonDown ("Mira")) {
+			usingTool = !usingTool;
+			useTool (usingTool);
+		}
+
+		if (Input.GetButtonDown ("Mira")) {
+			usingTool = !usingTool;
+			useTool (usingTool);
+		}
+		*/
 	}
 
 	//attiva la funzione per attivare il Tool, vedi classe Tool

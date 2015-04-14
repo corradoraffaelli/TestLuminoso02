@@ -24,7 +24,7 @@ public class CameraMovements : MonoBehaviour {
 	Transform LeftLimit;
 
 	public float RatioDistanceFromPlayer = 0.3f;
-	public float smooth = 6.0f;
+	public float smooth = 10.0f;
 	Vector3 BLActualLimit;
 	Vector3 URActualLimit;
 
@@ -62,10 +62,16 @@ public class CameraMovements : MonoBehaviour {
 
 		} else {
 		
-			if ((Mathf.Abs (beginCamera.x - player.transform.position.x) > xDistFromBeginning) && 
-			    (Mathf.Abs (player.transform.position.x - UpperLimit.transform.position.x) > xDistFromBeginning)) {
+			if (UpperLimit)
+			{
+				if ((Mathf.Abs (beginCamera.x - player.transform.position.x) > xDistFromBeginning) && 
+				    (Mathf.Abs (player.transform.position.x - UpperLimit.transform.position.x) > xDistFromBeginning)) {
+					Camera.main.gameObject.transform.position = new Vector3 (player.transform.position.x, Camera.main.gameObject.transform.position.y, Camera.main.gameObject.transform.position.z);
+				}
+			}else if (Mathf.Abs (beginCamera.x - player.transform.position.x) > xDistFromBeginning){
 				Camera.main.gameObject.transform.position = new Vector3 (player.transform.position.x, Camera.main.gameObject.transform.position.y, Camera.main.gameObject.transform.position.z);
 			}
+
 
 			if (Mathf.Abs (beginCamera.y - player.transform.position.y) > yDistFromBeginning) {
 				Camera.main.gameObject.transform.position = new Vector3 (Camera.main.gameObject.transform.position.x, player.transform.position.y, Camera.main.gameObject.transform.position.z);

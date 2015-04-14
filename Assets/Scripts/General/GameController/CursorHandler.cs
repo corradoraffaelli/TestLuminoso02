@@ -81,21 +81,33 @@ public class CursorHandler : MonoBehaviour {
 
 	public Transform getBottomLimit()
 	{
-		return BottomLimit;
+		if (BottomLimit) 
+			return BottomLimit;
+		else
+			return null;
 	}
 
 	public Transform getUpperLimit()
 	{
-		return UpperLimit;
+		if (UpperLimit) 
+			return UpperLimit;
+		else
+			return null;
 	}
 
 	public Transform getLeftLimit()
 	{
-		return LeftLimit;
+		if (LeftLimit) 
+			return LeftLimit;
+		else
+			return null;
 	}
 
 	public Transform getRightLimit()
 	{
-		return RightLimit;
+		if (RightLimit) 
+			return RightLimit;
+		else
+			return null;
 	}
 }
