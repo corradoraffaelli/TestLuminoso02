@@ -8,6 +8,9 @@ public class MagicLantern : Tool {
 
 	public Glass[] glassList;
 	int glassIndex = 0;
+	public int GlassIndex {
+		get{ return glassIndex;}
+	}
 	Glass actualGlass;
 
 	//public GameObject glasses;
@@ -129,9 +132,6 @@ public class MagicLantern : Tool {
 			glassSpriteUpdate ();
 
 
-
-
-				
 			//disattivo la lanterna se non sono a terra
 			if (!player.GetComponent<PlayerMovements>().OnGround)
 			{
@@ -145,6 +145,16 @@ public class MagicLantern : Tool {
 				changeProjectionSprite (badGlassSprite);
 				deleteActualProjection ();
 
+				//la proiezione è sul muro
+				if (PC.isColliding () && verifyIfTooFar ()) {
+					//changeRayAndCircleSprites (pressedRay, pressedCircle);
+					changeProjectionSprite (blurredSprite);
+					//deleteActualProjection ();
+					
+				// la proiezione è OK
+				} 
+
+				//altra modalità attivabile da boolean
 				if (proiettaInSagomaMode)
 				{
 					if (PC.isColliding () && verifyIfTooFar ()) {
@@ -164,6 +174,9 @@ public class MagicLantern : Tool {
 						}
 					}
 				}
+
+				setAplhaProjectionSprite (0.1f);
+				//projectionObject.GetComponent<SpriteRenderer>().color = new Color(1.0f, 1.0f, 1.0f, 0.2f);
 
 				//se lascio il tasto
 				if (Input.GetButtonUp("Mira"))
@@ -276,10 +289,13 @@ public class MagicLantern : Tool {
 			*/
 
 			//DEBUG: se si preme E, si passa al prossimo vetrino
+			/*
 			if (Input.GetKeyUp (KeyCode.E)) {
 				deleteActualProjection ();
 				actualGlass = nextUsableGlass ();
 			}
+			*/
+
 		}
 
 		//se ho lasciato la lanterna
@@ -513,6 +529,17 @@ public class MagicLantern : Tool {
 			}	
 			first = false;
 		}
+	}
+
+	public void c_nextGlass()
+	{
+		deleteActualProjection ();
+		actualGlass = nextUsableGlass ();
+	}
+
+	public void c_showActualGLass()
+	{
+
 	}
 
 	//funzione per istanziare il prefab dell'oggetto relativo al vetrino, sotto il cursore

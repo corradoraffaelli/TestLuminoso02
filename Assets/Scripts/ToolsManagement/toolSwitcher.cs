@@ -11,6 +11,10 @@ public class toolSwitcher : MonoBehaviour {
 
 	public bool useTapOnPlayer = false;
 
+	
+	
+	public GlassesUIManager glassesUIManager;
+
 	GameObject player;
 
 	void Start () {
@@ -54,6 +58,28 @@ public class toolSwitcher : MonoBehaviour {
 		if (Input.GetButton ("Mira") && !usingTool && player.GetComponent<PlayerMovements>().OnGround) {
 			usingTool = true;
 			useTool (usingTool);
+		}
+
+		if (Input.GetMouseButtonUp(0))
+		{
+
+			useTool (false);
+			switchUsingTool (false);
+		}
+		
+		if (Input.GetKeyUp (KeyCode.E)) {
+			Debug.Log ("dentro");
+			//switch del vetrino
+			MagicLantern ML = toolList[activeToolIndex] as MagicLantern;
+			ML.c_nextGlass();
+
+			//ML.c_showActualGLass();
+			if (glassesUIManager!= null)
+			{
+				glassesUIManager.setGlassSize();
+			}
+
+
 		}
 
 		/*
