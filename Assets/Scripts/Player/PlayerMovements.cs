@@ -91,6 +91,8 @@ public class PlayerMovements : MonoBehaviour {
 	float tStartStunned = -5.0f;
 	float tToReturnFromStunned = 1.5f;
 
+	Vector2 vec2Null = new Vector2(0.0f,0.0f);
+
 	//private GameObject myToStun;
 
 	void Start () {
@@ -186,17 +188,22 @@ public class PlayerMovements : MonoBehaviour {
 			softGroundCollManagement ();
 		} else {
 
+			if(stunnedState) {
 
-			if(stunnedState && !AIControl) {
-				//player stunned
-				handleStunned();
+				//riga che avevo provato a mettere per controbilanciare le piattaforme con friction zero...
+				//ma per ora meglio di no
+				//RigBody.velocity = vec2Null;
+
+				if(stunnedState && !AIControl) {
+					//player stunned
+					handleStunned();
+				}
 			}
-	
 			//AI stunned è gestito da esterno
 
 			//personaggio freezato
 			if(freezedByTool) {
-				RigBody.velocity = new Vector2(0.0f,0.0f);
+				RigBody.velocity = vec2Null;
 			}
 
 			//personaggio AI
@@ -447,7 +454,7 @@ public class PlayerMovements : MonoBehaviour {
 				if (Mathf.Abs (actualLadder.transform.position.x - transform.position.x) < LadderLateralLimit) {
 					onLadder = true;
 					anim.SetBool ("OnLadder", true);
-					RigBody.velocity = new Vector2 (0.0f,0.0f);
+					RigBody.velocity = vec2Null;
 					transform.position = new Vector3 (actualLadder.transform.position.x, transform.position.y, transform.position.z);
 				}
 			}
@@ -469,13 +476,13 @@ public class PlayerMovements : MonoBehaviour {
 			{
 				//if (onGround)
 				//	onLadder = false;
-				RigBody.velocity = new Vector2 (0.0f,0.0f);
+				RigBody.velocity = vec2Null;
 			}else if(Input.GetAxisRaw("Vertical") > 0.0f && isUpperOnLadder())
 			{
 				RigBody.velocity = new Vector2(0.0f, onLadderMovement*40.0f);
 			}else if(Input.GetAxisRaw("Vertical") > 0.0f && !isUpperOnLadder())
 			{
-				RigBody.velocity = new Vector2(0.0f, 0.0f);
+				RigBody.velocity = vec2Null;
 			}else if(Input.GetAxisRaw("Vertical") < 0.0f && isMiddleOnLadder())
 			{
 				RigBody.velocity = new Vector2(0.0f, -onLadderMovement*40.0f);
@@ -483,7 +490,7 @@ public class PlayerMovements : MonoBehaviour {
 			}else if(Input.GetAxisRaw("Vertical") < 0.0f && !isMiddleOnLadder())
 			{
 				//dovrebbe cadere
-				RigBody.velocity = new Vector2(0.0f, 0.0f);
+				RigBody.velocity = vec2Null;
 				onLadder = false;
 				anim.SetBool("OnLadder", false);
 				anim.SetBool("Climbing", false);
@@ -501,7 +508,7 @@ public class PlayerMovements : MonoBehaviour {
 			//se mi muovo lateralmente dalla scala
 			if (HorInput != 0.0f)
 			{
-				RigBody.velocity = new Vector2(0.0f, 0.0f);
+				RigBody.velocity = vec2Null;
 				onLadder = false;
 				anim.SetBool("OnLadder", false);
 				anim.SetBool("Climbing", false);
@@ -769,9 +776,9 @@ public class PlayerMovements : MonoBehaviour {
 				//altri controlli? devo mettere a false altre variabili?
 				anim.SetBool ("Stunned", true);
 				anim.SetTrigger("StartStunned");
+				stunnedState = true;
 				if(!AIControl) {
 					tStartStunned = Time.time;
-					stunnedState = true;
 					gameObject.layer = convertBinToDec(PlayerStunnedLayer.value);
 					//myToStun.layer = convertBinToDec(PlayerStunnedLayer.value);
 					
@@ -780,8 +787,12 @@ public class PlayerMovements : MonoBehaviour {
 			
 		}
 		else {
+
+			//parte di codice chiamata ESCLUSIVAMENTE da AI quando si esce da stunned
+
 			anim.SetBool ("Stunned", false);
 			gameObject.layer = convertBinToDec(PlayerLayer.value);
+			stunnedState = false;
 			//myToStun.layer = convertBinToDec(PlayerLayer.value);
 			//qualcosa per riporlarlo allo stato idle
 		}
