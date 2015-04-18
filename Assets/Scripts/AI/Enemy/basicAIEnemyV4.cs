@@ -76,7 +76,7 @@ public class basicAIEnemyV4 : MonoBehaviour {
 		Area,
 		AreaSuspicious,
 	}
-	public patrolSubState paSS;
+	patrolSubState paSS;
 	patrolSubState defaultPaType;
 
 	public enum chaseSubState {
@@ -98,7 +98,7 @@ public class basicAIEnemyV4 : MonoBehaviour {
 		Surprise,
 		Escape,
 	}
-	public fleeSubState flSS;
+	fleeSubState flSS;
 
 	bool killable = false;
 	public GameObject spawner;
@@ -143,11 +143,11 @@ public class basicAIEnemyV4 : MonoBehaviour {
 	public bool DefaultVerseRight = true;
 
 	//nuova gestione suspicious
-	public bool firstCheckDone_Suspicious = false;
+	bool firstCheckDone_Suspicious = false;
 	[Range(0.1f,10.0f)]
 	public float tSearchLenght = 2.5f;
-	public bool standingSusp = false;
-	public bool exitSuspicious = false;
+	bool standingSusp = false;
+	bool exitSuspicious = false;
 
 	//variabili da resettare ad inizio stato
 	bool patrollingTowardAPoint = false;
@@ -208,7 +208,7 @@ public class basicAIEnemyV4 : MonoBehaviour {
 	
 	//Gestione fleeing---------------------------------------------------------------------------------
 	//public LayerMask fleeLayer; dichiarato su
-	public Transform fleeingBy;
+	Transform fleeingBy;
 	SpriteRenderer fleeingBySR;
 	Transform fleeingTargetPoint;
 	float securityDistanceFleeing = 8.0f;
@@ -260,7 +260,9 @@ public class basicAIEnemyV4 : MonoBehaviour {
 	bool handlingCollision = false;
 	GameObject actualGround;
 
-	
+	//Gestione target (indipendente da Astar)
+	GameObject myTarget;
+
 	//INIZIO FUNZIONI START---------------------------------------------------------------------------------------------------------------------
 	//------------------------------------------------------------------------------------------------------------------------------------------
 	
@@ -1221,7 +1223,7 @@ public class basicAIEnemyV4 : MonoBehaviour {
 
 	private bool isTargetLost(){
 		
-		if (myAstar.Target == null ) {
+		if (myTarget == null ) {
 			//TODO: PRIORRR perché è NULL?????
 			if(DEBUG_FSM_TRANSITION[2])
 				Debug.Log ("CH -> PA - target perso perché NULL");
@@ -1232,7 +1234,7 @@ public class basicAIEnemyV4 : MonoBehaviour {
 
 		//TODO: serve fare il check sul cambio di layer?? ormai il layer non cambia più...
 		//al massimo posso fare check su spegnimento della proiezione
-		if ((targetLayers.value & 1 << myAstar.Target.layer) == 0 && !notImpressionedByFleeingByTarget) {
+		if ((targetLayers.value & 1 << myTarget.layer) == 0 && !notImpressionedByFleeingByTarget) {
 			if(DEBUG_FSM_TRANSITION[2])
 				Debug.Log ("CH -> PA - target perso perché LAYER non di interesse");
 			//suspiciousUp();
@@ -1856,7 +1858,7 @@ public class basicAIEnemyV4 : MonoBehaviour {
 			else {
 				//go toward the patrol point
 				if(mode==0) {
-					moveAlongAStarPathNoJump(true, myScaleFactor);
+					moveTowardTarget(true, myScaleFactor);
 				}
 				else {
 
@@ -1979,13 +1981,13 @@ public class basicAIEnemyV4 : MonoBehaviour {
 
 	private bool isTargetOutOfMyView(bool timeCheck) {
 
-		if (myAstar.Target == null)
+		if (myTarget == null)
 			return false;
 		
 		if (timeCheck ) {
 
-			if (	((transform.position.x > myAstar.Target.transform.position.x) && (pm.FacingRight)	)	|| 
-			    	((transform.position.x < myAstar.Target.transform.position.x) && (!pm.FacingRight)	)		) {
+			if (	((transform.position.x > myTarget.transform.position.x) && (pm.FacingRight)	)	|| 
+			    	((transform.position.x < myTarget.transform.position.x) && (!pm.FacingRight)	)		) {
 
 				if(DEBUG_FSM_TRANSITION[2])
 					Debug.Log ("CH -> PA - target perso perché io guardo a destra e lui è a sinistra o viceversa");
@@ -2016,8 +2018,8 @@ public class basicAIEnemyV4 : MonoBehaviour {
 		} 
 		else {
 			
-			if ( ( (transform.position.x > myAstar.Target.transform.position.x) && pm.FacingRight  )	||
-			     ( (transform.position.x < myAstar.Target.transform.position.x) && !pm.FacingRight )		) {
+			if ( ( (transform.position.x > myTarget.transform.position.x) && pm.FacingRight  )	||
+			     ( (transform.position.x < myTarget.transform.position.x) && !pm.FacingRight )		) {
 
 				if(DEBUG_FSM_TRANSITION[2])
 					Debug.Log ("CH -> PA - target perso perché io guardo a destra e lui è a sinistra o viceversa");
@@ -2035,14 +2037,14 @@ public class basicAIEnemyV4 : MonoBehaviour {
 
 	private bool isTargetOutOfMyView1(bool distanceCheck) {
 
-		if (myAstar.Target == null)
+		if (myTarget == null)
 			return false;
 
 		if (distanceCheck ) {
 
-			float dist = Mathf.Abs(Vector2.Distance (groundCheckTransf.position, myAstar.Target.transform.position));
+			float dist = Mathf.Abs(Vector2.Distance (groundCheckTransf.position, myTarget.transform.position));
 			
-			if ((transform.position.x > myAstar.Target.transform.position.x) && (pm.FacingRight) && (dist > frontalDistanceOfView * fTargetFar) ) {
+			if ((transform.position.x > myTarget.transform.position.x) && (pm.FacingRight) && (dist > frontalDistanceOfView * fTargetFar) ) {
 				if(DEBUG_FSM_TRANSITION[2])
 					Debug.Log ("CH -> PA - target perso perché io guardo a destra e lui è a sinistra");
 				//suspiciousUp();
@@ -2051,7 +2053,7 @@ public class basicAIEnemyV4 : MonoBehaviour {
 			}
 			
 			
-			if ((transform.position.x < myAstar.Target.transform.position.x) && (!pm.FacingRight) && (dist > frontalDistanceOfView * fTargetFar) ) {
+			if ((transform.position.x < myTarget.transform.position.x) && (!pm.FacingRight) && (dist > frontalDistanceOfView * fTargetFar) ) {
 				if(DEBUG_FSM_TRANSITION[2])
 					Debug.Log ("CH -> PA - target perso perché io guardo a sinistra e lui è a destra");
 				//suspiciousUp();
@@ -2062,7 +2064,7 @@ public class basicAIEnemyV4 : MonoBehaviour {
 		} 
 		else {
 
-			if ((transform.position.x > myAstar.Target.transform.position.x) && pm.FacingRight) {
+			if ((transform.position.x > myTarget.transform.position.x) && pm.FacingRight) {
 				if(DEBUG_FSM_TRANSITION[2])
 					Debug.Log ("CH -> PA - target perso perché io guardo a destra e lui è a sinistra");
 				//suspiciousUp();
@@ -2071,7 +2073,7 @@ public class basicAIEnemyV4 : MonoBehaviour {
 			}
 			
 			
-			if ((transform.position.x < myAstar.Target.transform.position.x) && !pm.FacingRight) {
+			if ((transform.position.x < myTarget.transform.position.x) && !pm.FacingRight) {
 				if(DEBUG_FSM_TRANSITION[2])
 					Debug.Log ("CH -> PA - target perso perché io guardo a sinistra e lui è a destra");
 				//suspiciousUp();
@@ -2119,14 +2121,14 @@ public class basicAIEnemyV4 : MonoBehaviour {
 
 	private bool isTargetAtDifferentHeight(bool linearDistanceCheck) {
 
-		if (myAstar.Target == null)
+		if (myTarget == null)
 			return false;
 
-		float hDiff = Mathf.Abs (groundCheckTransf.position.y - myAstar.Target.transform.position.y );
+		float hDiff = Mathf.Abs (groundCheckTransf.position.y - myTarget.transform.position.y );
 			
 		if (linearDistanceCheck) {
 
-			float dist = Vector2.Distance (groundCheckTransf.position, myAstar.Target.transform.position);
+			float dist = Vector2.Distance (groundCheckTransf.position, myTarget.transform.position);
 
 			if ((hDiff > 2.5f) && (dist > frontalDistanceOfView * 2.0f))
 				return true;
@@ -2152,7 +2154,7 @@ public class basicAIEnemyV4 : MonoBehaviour {
 
 	private bool isObstacleHit(){
 
-		if(chaseCharged && myAstar.Target!=null) {
+		if(chaseCharged && myTarget!=null) {
 
 
 			RaycastHit2D hit = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y + 1.0f), i_facingRight()? Vector2.right : -Vector2.right, 1.0f, obstacleLayers);
@@ -2233,7 +2235,7 @@ public class basicAIEnemyV4 : MonoBehaviour {
 			return enemyMachineState.Patrol;
 		}
 
-		dist = Vector2.Distance (groundCheckTransf.position, myAstar.Target.transform.position);
+		dist = Vector2.Distance (groundCheckTransf.position, myTarget.transform.position);
 		
 		//se è troppo lontano torno a patrol...
 		
@@ -2280,7 +2282,7 @@ public class basicAIEnemyV4 : MonoBehaviour {
 			
 		}
 		
-		moveAlongAStarPathNoJump(false, Mathf.Lerp (0.5f, 1.0f, mydelta));
+		moveTowardTarget(false, Mathf.Lerp (0.5f, 1.0f, mydelta));
 
 	}
 
@@ -2298,7 +2300,7 @@ public class basicAIEnemyV4 : MonoBehaviour {
 		}
 
 		if (mydelta < 1)
-			moveAlongAStarPathNoJump (false, Mathf.Lerp (0.5f, 1.0f, mydelta));
+			moveTowardTarget (false, Mathf.Lerp (0.5f, 1.0f, mydelta));
 		else
 			i_move (false);
 	}
@@ -2404,7 +2406,7 @@ public class basicAIEnemyV4 : MonoBehaviour {
 			return enemyMachineState.Patrol;
 		}
 		
-		dist = Vector2.Distance (groundCheckTransf.position, new Vector2 (myAstar.Target.transform.position.x, myAstar.Target.transform.position.y));
+		dist = Vector2.Distance (groundCheckTransf.position, new Vector2 (myTarget.transform.position.x, myTarget.transform.position.y));
 		
 		if (isTargetNotNear(dist)) {
 
@@ -2788,7 +2790,8 @@ public class basicAIEnemyV4 : MonoBehaviour {
 			if(DEBUG_ASTAR[0])
 				Debug.Log ("ASTAR - metto il target astar a null");
 
-			myAstar.Target = myT;
+			myTarget = myT;
+			//myAstar.Target = myT;
 			return;
 		}
 		
@@ -2796,8 +2799,8 @@ public class basicAIEnemyV4 : MonoBehaviour {
 			if(child.tag=="GroundCheck") {
 				if(DEBUG_ASTAR[0])
 					Debug.Log ("ASTAR - trovato e assegnato il groundcheck");
-				myAstar.Target = child.gameObject;
-				//Debug.Log ("contenuto target : " + myAstar.Target.name + " ++++++++++++++++++");
+				//myAstar.Target = child.gameObject;
+				myTarget = child.gameObject;
 				return;
 			}
 			
@@ -2805,7 +2808,8 @@ public class basicAIEnemyV4 : MonoBehaviour {
 		if(DEBUG_ASTAR[0])
 			Debug.Log ("ASTAR - NON trovato il groundcheck, assegno lui stesso");
 
-		myAstar.Target = myT;
+		//myAstar.Target = myT;
+		myTarget = myT;
 		
 	}
 	
@@ -3001,6 +3005,61 @@ public class basicAIEnemyV4 : MonoBehaviour {
 		
 		
 		
+	}
+
+
+	//FUNZIONI MOVIMENTO BASE (indipendente da Astar)-----------------------------------------------------------------------------------------
+	//----------------------------------------------------------------------------------------------------------------------------------------
+
+	private void moveTowardTarget(bool isPatrolSpeed = true, float m_scaleFactor=1) {
+
+
+		if (Mathf.Abs (myTarget.transform.position.y - groundCheckTransf.position.y) > 1.0f) {
+			
+			if(Mathf.Abs (myTarget.transform.position.x - groundCheckTransf.position.x) > 1.0f) {
+				
+				if(DEBUG_ASTAR[1])
+					Debug.Log ("ASTAR - target più alto di me e distante");
+				
+				i_move(isPatrolSpeed, m_scaleFactor* 0.85f);
+			}
+			else {
+				
+				if(DEBUG_ASTAR[1])
+					Debug.Log ("ASTAR - target più alto di me e sopra di me");
+				
+				i_move(isPatrolSpeed, m_scaleFactor * 0.7f);
+			}
+			
+		}
+		else {
+			
+			if(DEBUG_ASTAR[1])
+				Debug.Log ("ASTAR - target alla mia stessa altezza");
+
+			moveRightVerse(isPatrolSpeed, m_scaleFactor);
+			//followPath(2, isPatrolSpeed, m_scaleFactor);
+
+		}
+
+
+	}
+
+	private void moveRightVerse(bool isPatrolSpeed = true, float m_scaleFactor=1) {
+
+	
+		if( (myTarget.transform.position.x > groundCheckTransf.transform.position.x ) && !i_facingRight()) {
+			i_flip ();
+		}
+		
+		if( (myTarget.transform.position.x < groundCheckTransf.transform.position.x ) && i_facingRight()) {
+			i_flip ();
+		}
+
+		
+		
+		i_move (isPatrolSpeed, m_scaleFactor);
+
 	}
 
 	//FUNZIONI VARIE--------------------------------------------------------------------------------------------------------------------------

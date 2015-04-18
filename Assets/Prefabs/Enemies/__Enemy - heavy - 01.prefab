@@ -161,7 +161,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 160016}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.67000008, y: .109999999, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 468216}
@@ -306,7 +306,7 @@ MonoBehaviour:
   DEBUG_FSM_TRANSITION: 000000
   DEBUG_RECOGNITION: 0000
   DEBUG_ASTAR: 0000
-  DEBUG_FLIP: 0
+  DEBUG_FLIP: 
   DEBUG_COLLISION: 000000
   eMS: 0
   eType: 2
@@ -332,13 +332,16 @@ MonoBehaviour:
   pointPrefab: {fileID: 186992, guid: 49e83c496a1b5654ab08f42747acf236, type: 2}
   patrolPoints: []
   DefaultVerseRight: 1
-  patrolSuspiciousPoints: []
-  patrolledTarget: {fileID: 0}
+  tSearchLenght: 2.5
   DEFAULT_DUMB_SPEED: .699999988
+  fTargetFar: 2
   tChargingChase: 1
   tToMaxVelocity: .5
+  tLosingTargerLenght: 5.5
   tChargingAttack: .5
   tStuckLenght: 2
+  tSurpriceLenght: 2.5
+  tEscapeLenght: 4
   tStunnedLenght: 4
 --- !u!114 &11439726
 MonoBehaviour:
@@ -351,7 +354,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5675304ff344eb3409dac57d91b4ec93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  onGround: 0
+  addFallingForceRight: 0
+  addFallingForceLeft: 0
   speedFactor: 2
   AI_walkSpeed: 1
   AI_runSpeed: 2.5
@@ -360,6 +364,17 @@ MonoBehaviour:
   LadderLateralLimit: .300000012
   onLadderMovement: .100000001
   fromLadderForce: 100
+  airXDeceleration: 5
+  maxFallingSpeed: 12
+  baseAscForce: 300
+  baseAscForceSpring: 500
+  addEnemyAscForce: 100
+  addHeightAscForce: 50
+  numEnemyJump: 0
+  maxNumEnemyCount: 2
+  diffHeight: 0
+  maxDiffHeight: 5
+  addedForceDebug: 0
   AIControl: 1
   GroundCheckUpperLeft: {fileID: 421990}
   GroundCheckBottomRight: {fileID: 468216}

@@ -190,7 +190,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 182146}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.94000006, y: .109999999, z: 0}
+  m_LocalPosition: {x: 8.23999977, y: .25999999, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 412306}
@@ -348,7 +348,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5675304ff344eb3409dac57d91b4ec93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  onGround: 0
+  addFallingForceRight: 0
+  addFallingForceLeft: 0
   speedFactor: 2
   AI_walkSpeed: 1
   AI_runSpeed: 2.5
@@ -387,7 +388,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 182146}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 30ad31dbbcca7437fb0746619eecca04, type: 3}
   m_Name: 
@@ -415,14 +416,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 162b394b67e4645e48893d0645014e9f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DEBUG_FSM_TRANSITION: 010101
+  DEBUG_FSM_TRANSITION: 000000
   DEBUG_RECOGNITION: 0000
   DEBUG_ASTAR: 0000
-  DEBUG_FLIP: 
+  DEBUG_FLIP: 0000
   DEBUG_COLLISION: 000000
   eMS: 0
   eType: 2
-  flSS: 0
   spawner: {fileID: 0}
   targetLayers:
     serializedVersion: 2
@@ -454,7 +454,6 @@ MonoBehaviour:
   tLosingTargerLenght: 5.5
   tChargingAttack: .5
   tStuckLenght: 2
-  fleeingBy: {fileID: 0}
   tSurpriceLenght: 2.5
   tEscapeLenght: 4
   tStunnedLenght: 4
