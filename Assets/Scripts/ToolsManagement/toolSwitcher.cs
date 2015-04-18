@@ -66,11 +66,13 @@ public class toolSwitcher : MonoBehaviour {
 			useTool (false);
 			switchUsingTool (false);
 		}
-		
+
+		/*
 		if (Input.GetKeyUp (KeyCode.E)) {
 			Debug.Log ("dentro");
 			//switch del vetrino
 			MagicLantern ML = toolList[activeToolIndex] as MagicLantern;
+
 			ML.c_nextGlass();
 
 			//ML.c_showActualGLass();
@@ -78,9 +80,8 @@ public class toolSwitcher : MonoBehaviour {
 			{
 				glassesUIManager.setGlassSize();
 			}
-
-
 		}
+		*/
 
 		/*
 		if (Input.GetButtonDown ("Mira")) {

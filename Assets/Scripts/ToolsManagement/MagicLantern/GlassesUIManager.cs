@@ -5,6 +5,8 @@ public class GlassesUIManager : MonoBehaviour {
 
 	GameObject MLLogic;
 	MagicLantern MLScript;
+	GlassesManager glassesManager;
+
 	Glass[] usableGlassList;
 
 	public GameObject GlassOnScreenPrefab;
@@ -29,9 +31,10 @@ public class GlassesUIManager : MonoBehaviour {
 	int actualGlassIndex;
 
 	void Start () {
-		
+
 		MLLogic = GameObject.FindGameObjectWithTag ("MagicLanternLogic");
 		MLScript = MLLogic.GetComponent<MagicLantern> ();
+		glassesManager = MLLogic.GetComponent<GlassesManager> ();
 
 		//salvo la larghezza e l'altezza dell'oggetto
 		if (GlassOnScreenPrefab != null) {
@@ -45,9 +48,11 @@ public class GlassesUIManager : MonoBehaviour {
 		setSpritesToPrefabs ();
 		setGlassPositions ();
 		setGlassSize ();
+	
 	}
 
 	void Update () {
+
 		if (Input.GetKeyUp (KeyCode.P)) {
 			reloadGlasses ();
 			initializeGlassPrefabList ();
@@ -55,7 +60,12 @@ public class GlassesUIManager : MonoBehaviour {
 			setGlassPositions ();
 			setGlassSize ();
 		}
+
+		if (actualGlassIndex != glassesManager.getActualGlassIndexUsableList ())
+			setGlassSize ();
+
 	}
+
 
 	void reloadGlasses()
 	{
@@ -65,11 +75,12 @@ public class GlassesUIManager : MonoBehaviour {
 	
 	void changeActualGlass()
 	{
-		actualGlassIndex = MLScript.GlassIndex;
+		actualGlassIndex = glassesManager.getActualGlassIndexUsableList();
 	}
 	
 	public void setGlassSize()
 	{
+
 		changeActualGlass ();
 		if (usableGlassList!= null && GlassPrefabList != null && usableGlassList.Length == GlassPrefabList.Length) {
 			for (int i = 0; i<usableGlassList.Length; i++)
@@ -87,6 +98,7 @@ public class GlassesUIManager : MonoBehaviour {
 				}
 			}
 		}
+
 	}
 	
 	void setGlassPositions()
@@ -106,9 +118,14 @@ public class GlassesUIManager : MonoBehaviour {
 		if (usableGlassList != null)
 			System.Array.Clear(usableGlassList,0,usableGlassList.Length);
 	}
-	
+
+
 	void getOnlyUsableGlasses()
 	{
+		usableGlassList = glassesManager.getUsableGlassList ();
+
+
+		/*
 		int totalGlassNumber = MLScript.glassList.Length;
 		int usableGlasses = 0;
 		int index = 0;
@@ -132,7 +149,9 @@ public class GlassesUIManager : MonoBehaviour {
 				}
 			}
 		}
+		*/
 	}
+
 	
 	void initializeGlassPrefabList()
 	{
@@ -171,4 +190,5 @@ public class GlassesUIManager : MonoBehaviour {
 		}
 		
 	}
+
 }

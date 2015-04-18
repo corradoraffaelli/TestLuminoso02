@@ -58,9 +58,10 @@ GameObject:
   - 4: {fileID: 434724}
   - 114: {fileID: 11426804}
   - 114: {fileID: 11421314}
+  - 114: {fileID: 11454082}
   m_Layer: 0
   m_Name: MagicLanternLogic
-  m_TagString: Untagged
+  m_TagString: MagicLanternLogic
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -317,6 +318,7 @@ MonoBehaviour:
   activeToolIndex: 0
   usingTool: 0
   useTapOnPlayer: 0
+  glassesUIManager: {fileID: 11495192, guid: b2ad164a7d19276419097c284043e40e, type: 2}
 --- !u!114 &11425658
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -359,13 +361,6 @@ MonoBehaviour:
   freezingTool: 0
   inventory: {fileID: 0}
   tType: 2
-  glassList:
-  - {fileID: 11446870}
-  - {fileID: 11439578}
-  - {fileID: 11438048}
-  - {fileID: 11462374}
-  - {fileID: 11425658}
-  - {fileID: 11465904}
   zPositionEnvironment: 0
   resizeFactor: 1.5
   maxProjectingDistance: 7.5
@@ -376,6 +371,7 @@ MonoBehaviour:
   projectionPrefab: {fileID: 146854, guid: e903df3634975d94d8f090cffe868ace, type: 2}
   projectionTimer: 3
   maxParticleEmission: 5000
+  proiettaInSagomaMode: 0
 --- !u!114 &11438048
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -454,6 +450,28 @@ MonoBehaviour:
   toOverlap: {fileID: 0}
   overlapPercentage: 10
   endedProjected: 0
+--- !u!114 &11454082
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 132258}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09dc669aa0a055742ab0ec514b8aa80e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  glassList:
+  - {fileID: 11439578}
+  - {fileID: 11465760}
+  - {fileID: 11496418}
+  - {fileID: 11438048}
+  - {fileID: 11462374}
+  - {fileID: 11446870}
+  - {fileID: 11425658}
+  - {fileID: 11465904}
+  actualGlassIndex: 0
+  actualGlassIndexUsableList: 0
 --- !u!114 &11462374
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -517,7 +535,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d528b953161387942976b4620f5a3fa6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  usable: 1
+  usable: 0
   canBeEnabled: 0
   spriteObject: {fileID: 21300000, guid: 98f4ed6e23b1c304488a3f46bba2a142, type: 3}
   goodProjection: {fileID: 21300000, guid: 703f548b2d0895c428e3f46a003d9244, type: 3}
@@ -543,8 +561,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d528b953161387942976b4620f5a3fa6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  usable: 1
-  canBeEnabled: 1
+  usable: 0
+  canBeEnabled: 0
   spriteObject: {fileID: 21300000, guid: e70389d12caf0da4aa6145ab7991c55b, type: 3}
   goodProjection: {fileID: 21300000, guid: 97b86e54c158a2c4ba146842245bcb96, type: 3}
   badProjection: {fileID: 21300000, guid: 1ad9c277657c65540ac79b145a6ae7f3, type: 3}
