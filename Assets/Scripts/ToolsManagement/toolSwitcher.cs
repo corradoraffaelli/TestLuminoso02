@@ -55,6 +55,7 @@ public class toolSwitcher : MonoBehaviour {
 
 
 		//attivo la lanterna se tengo premuto il rispettivo tasto, non è attiva ed il player è a terra
+		//
 		if (Input.GetButton ("Mira") && !usingTool && player.GetComponent<PlayerMovements>().OnGround) {
 			usingTool = true;
 			useTool (usingTool);

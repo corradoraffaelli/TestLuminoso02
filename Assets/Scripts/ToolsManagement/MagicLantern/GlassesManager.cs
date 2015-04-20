@@ -7,8 +7,8 @@ public class GlassesManager : MonoBehaviour {
 
 	Glass[] usableGlassList;
 
-	public int actualGlassIndex = 0;
-	public int actualGlassIndexUsableList = 0;
+	int actualGlassIndex = 0;
+	int actualGlassIndexUsableList = 0;
 	//public Glass actualGlass;
 	
 	void Start () {
@@ -19,8 +19,40 @@ public class GlassesManager : MonoBehaviour {
 	void Update () {
 		//DEBUG----------
 		if (Input.GetKeyUp (KeyCode.E)) {
-			nextUsableGlass();
+			nextUsableGlass ();
 		}
+		if (Input.GetKeyUp (KeyCode.M)) {
+			enableGlass (2, true);
+		}
+		if (Input.GetKeyUp (KeyCode.N)) {
+			enableGlass (3, false);
+		}
+
+		//se sono raccolti tutti i frammenti di un vetrino, si attiva il vetrino
+		if (isThereAGlass ())
+		{
+			for (int i = 0; i<glassList.Length; i++) {
+				if (glassList[i].Usable == false && glassList[i].canBeEnabled)
+				{
+
+					if (controlSubGlassList(glassList[i]))
+					    enableGlass (i, true);
+				}
+			}
+		}
+		//updateUsableGlassList ();
+	}
+
+	//controllo dei frammenti del vetrino passato come input
+	bool controlSubGlassList(Glass glass)
+	{
+		foreach (GameObject subGlass in glass.subGlassList) {
+			subGlass subGlassScript = subGlass.GetComponent<subGlass>();
+			if (subGlassScript.taken == false)
+				return false;
+		}
+		glass.canBeEnabled = false;
+		return true;
 	}
 
 	//ritorna vero se c'è almeno un vetrino

@@ -40,10 +40,11 @@ public class Glass : MonoBehaviour
 	public bool endedProjected = false;
 
 	void Update(){
-		 if (usable == false && canBeEnabled)
-			usable = controlSubGlassList ();
+		 //if (usable == false && canBeEnabled)
+		//	usable = controlSubGlassList ();
 	}
 
+	//ora inutilizzato
 	bool controlSubGlassList()
 	{
 		foreach (GameObject subGlass in subGlassList) {

@@ -64,8 +64,20 @@ public class GlassesUIManager : MonoBehaviour {
 		if (actualGlassIndex != glassesManager.getActualGlassIndexUsableList ())
 			setGlassSize ();
 
+		if (usableGlassList != glassesManager.getUsableGlassList ()) {
+			reinitialization ();
+		}
+		//reinitialization ();
+
 	}
 
+	void reinitialization(){
+		reloadGlasses ();
+		initializeGlassPrefabList ();
+		setSpritesToPrefabs ();
+		setGlassPositions ();
+		setGlassSize ();
+	}
 
 	void reloadGlasses()
 	{
