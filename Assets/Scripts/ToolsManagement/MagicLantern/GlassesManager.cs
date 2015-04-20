@@ -18,16 +18,17 @@ public class GlassesManager : MonoBehaviour {
 
 	void Update () {
 		//DEBUG----------
-		if (Input.GetKeyUp (KeyCode.E)) {
+		if (Input.GetButtonUp("NextGlass")) {
 			nextUsableGlass ();
 		}
+		/*
 		if (Input.GetKeyUp (KeyCode.M)) {
 			enableGlass (2, true);
 		}
 		if (Input.GetKeyUp (KeyCode.N)) {
 			enableGlass (3, false);
 		}
-
+		*/
 		//se sono raccolti tutti i frammenti di un vetrino, si attiva il vetrino
 		if (isThereAGlass ())
 		{

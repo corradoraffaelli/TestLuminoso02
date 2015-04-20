@@ -99,11 +99,12 @@ public class MagicLantern : Tool {
 		//presupponendo che la lanterna sia figlia dell'oggetto
 		toolGameObject.transform.localPosition = new Vector3 (0.4f, 0.8f, 0.0f);
 		//actualGlass = nextUsableGlass (true);
+		/*
 		if (glassesManager.isThereAUsableGlass ()) {
 			actualGlass = glassesManager.getActualGlass();
 			glassSpriteUpdate ();
 		}
-			
+			*/
 		
 	}
 
@@ -153,6 +154,8 @@ public class MagicLantern : Tool {
 			PC.setAlphaSprite(alphaProjection);
 
 			//se lascio il tasto
+			//if (Input.GetButtonUp("Mira") || (Input.GetAxis("Mira")<0.5f))
+			//Debug.Log (Input.GetAxisRaw("Mira"));
 			if (Input.GetButtonUp("Mira"))
 			{
 				//fastTime();
@@ -381,6 +384,14 @@ public class MagicLantern : Tool {
 	void deleteActualProjection()
 	{
 		createdProjection = false;
+
+		/*
+		for (int i = 0; i<glassList.Length; i++) {
+			if (glassList[i].projectionObject)
+				Destroy (actualGlass.projectionObject);
+		}
+		*/
+
 		if (actualGlass) {
 			if (actualGlass.projectionObject)
 				Destroy (actualGlass.projectionObject);
@@ -391,6 +402,12 @@ public class MagicLantern : Tool {
 	//cancella il vecchio oggetto instanziato
 	void deleteOldProjection()
 	{
+		/*
+		for (int i = 0; i<glassList.Length; i++) {
+			if (glassList[i].projectionObject)
+				Destroy (glassList[i].projectionObject);
+		}
+		*/
 		if (actualGlass.projectionObject)
 			Destroy (actualGlass.projectionObject);
 	}

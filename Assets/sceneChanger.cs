@@ -17,14 +17,14 @@ public class sceneChanger : MonoBehaviour {
 		if (c.tag == "Player") {
 
 			foreach(GameObject go in toDisappear) {
-
-				go.SetActive(false);
+				if (go != null)
+					go.SetActive(false);
 
 			}
 
 			foreach(GameObject go in toAppear) {
-				
-				go.SetActive(true);
+				if (go != null)
+					go.SetActive(true);
 				
 			}
 
