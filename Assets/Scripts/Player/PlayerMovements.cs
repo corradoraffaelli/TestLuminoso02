@@ -9,9 +9,9 @@ public class PlayerMovements : MonoBehaviour {
 
 	bool facingRight = true;
 	bool Jumping = false;
-	bool onGround = false;
-	bool onLadder = false;
-	bool collidingLadder = false;
+	public bool onGround = false;
+	public bool onLadder = false;
+	public bool collidingLadder = false;
 
 	public bool addFallingForceRight = false;
 	public bool addFallingForceLeft = false;
@@ -68,6 +68,7 @@ public class PlayerMovements : MonoBehaviour {
 	public Transform GroundCheckUpperLeft;
 	public Transform GroundCheckBottomRight;
 	public LayerMask GroundLayers;
+	public LayerMask hardGroundLayers;
 	public LayerMask PlayerLayer;
 	public LayerMask PlayerStunnedLayer;
 
@@ -138,83 +139,122 @@ public class PlayerMovements : MonoBehaviour {
 
 	void Update () {
 		//verifico se il player è a terra ed aggiorno l'animator
-		onGround = groundCheck ();
-		anim.SetBool ("onGround", onGround);
-	
-		if (!freezedByTool && !AIControl && !stunnedState) {
-			//gestione del girarsi o meno
-			//if ((facingRight == true && Input.GetAxis ("Horizontal") < 0) || (facingRight == false && Input.GetAxis ("Horizontal") > 0))
-			//	Flip ();
 
-			if (((cursorHandler.getCursorWorldPosition().x > transform.position.x) && !FacingRight) ||
-			    ((cursorHandler.getCursorWorldPosition().x < transform.position.x) && FacingRight))
-				Flip ();
+		if (!onLadder) {
+			onGround = groundCheck ();
 
-			//se tocco terra
-			if (onGround == true) {
+			if (!freezedByTool && !AIControl && !stunnedState) {
+				
+				//gestione del girarsi o meno
+				//if ((facingRight == true && Input.GetAxis ("Horizontal") < 0) || (facingRight == false && Input.GetAxis ("Horizontal") > 0))
+				//	Flip ();
+				
+				if (((cursorHandler.getCursorWorldPosition ().x > transform.position.x) && !FacingRight) ||
+					((cursorHandler.getCursorWorldPosition ().x < transform.position.x) && FacingRight))
+					Flip ();
+				
+				//se tocco terra
+				if (onGround) {
+					resetAscForceVariables ();
+					
+					//corsa
+					runningManagement ();
+					
+					//salto (verrà gestito nel FixedUpdate)
+					jumpingManagement ();
+					
+				} else {
+					
+					//salvo le posizioni utili a calcolare le forze di rimbalzo
+					saveFallingPositionsManagement ();
+					
+				}
+				
+				//-------------debug-------------
+				if (Input.GetKeyUp (KeyCode.Q)) {
+					addEnemyCount ();
+				}
+				
+				//gestione del movimento in aria
+				notGroundManagement ();
+				
+				//gestione della collisione con la scala
+				CollidingLadderManagement ();
+				
 
-				//lastTouchedHeight = transform.position.y;
-				resetAscForceVariables();
-
-				//corsa
-				runningManagement ();
-
-				//salto (verrà gestito nel FixedUpdate
-				jumpingManagement ();
-
-			}else{
-
-				//salvo le posizioni utili a calcolare le forze di rimbalzo
-				saveFallingPositionsManagement();
-
-			}
-
-			//-------------debug-------------
-			if (Input.GetKeyUp(KeyCode.Q))
-			{
-				addEnemyCount();
-			}
-
-
-			notGroundManagement ();
-
-			//gestione della collisione con la scala
-			CollidingLadderManagement ();
-
-			//gestione del movimento lungo la scala
-			OnLadderManagement ();
-
-			//gestione collisioni con oggetti "softGround" (quelli in corrispondenza o meno di scale)
-			softGroundCollManagement ();
-		} else {
-
-			if(stunnedState) {
-
-				//riga che avevo provato a mettere per controbilanciare le piattaforme con friction zero...
-				//ma per ora meglio di no
-				//RigBody.velocity = vec2Null;
-
-				if(stunnedState && !AIControl) {
-					//player stunned
-					handleStunned();
+				//gestione collisioni con oggetti "softGround" (quelli in corrispondenza o meno di scale)
+				//softGroundCollManagement ();
+				//softGroundCollManagement_02();
+			} else {
+				
+				if (stunnedState) {
+					
+					//riga che avevo provato a mettere per controbilanciare le piattaforme con friction zero...
+					//ma per ora meglio di no
+					//RigBody.velocity = vec2Null;
+					
+					if (stunnedState && !AIControl) {
+						//player stunned
+						handleStunned ();
+					}
+				}
+				//AI stunned è gestito da esterno
+				
+				//personaggio freezato
+				if (freezedByTool) {
+					RigBody.velocity = vec2Null;
+				}
+				
+				//personaggio AI
+				
+				//per ora solo check per vedere se AI è fermo
+				if (AIControl) {
+					
+					if (RigBody.velocity.x == 0.0f)
+						anim.SetBool ("Running", false);
+					
 				}
 			}
-			//AI stunned è gestito da esterno
 
-			//personaggio freezato
-			if(freezedByTool) {
-				RigBody.velocity = vec2Null;
-			}
 
-			//personaggio AI
+		} 
+		//sono sulla scala
+		else {
+			//gestione del movimento lungo la scala
+			OnLadderManagement ();
+		}
+		
+		setAnimations ();
 
-			//per ora solo check per vedere se AI è fermo
-			if(AIControl) {
+	}
 
-				if(RigBody.velocity.x == 0.0f)
-					anim.SetBool ("Running", false);
+	void setAnimations()
+	{
+		anim.SetBool ("onGround", onGround);
+		anim.SetBool ("Running", running);
+		if (running) {
+			if (((RigBody.velocity.x > 0.0f) && !facingRight) || ((RigBody.velocity.x < 0.0f) && facingRight))
+				anim.SetBool ("Backwards", true);
+			else
+				anim.SetBool ("Backwards", false);
+		}
 
-			}
+		anim.SetBool ("OnLadder", onLadder);
+		if (onLadder && RigBody.velocity.y != 0.0f)
+			anim.SetBool ("Climbing", true);
+		else
+			anim.SetBool ("Climbing", false);
+
+	}
+
+	void setCollisionsOnLadder(bool toIgnore = true)
+	{
+		GameObject[] softGrounds = GameObject.FindGameObjectsWithTag("SoftGround");
+		
+		foreach (GameObject softGround in softGrounds)
+		{
+			Physics2D.IgnoreCollision(softGround.transform.GetComponent<BoxCollider2D>(), GetComponent<BoxCollider2D>(), toIgnore);
+			Physics2D.IgnoreCollision(softGround.transform.GetComponent<BoxCollider2D>(), GetComponent<CircleCollider2D>(), toIgnore);
 		}
 	}
 
@@ -243,6 +283,12 @@ public class PlayerMovements : MonoBehaviour {
 				savedFallingPositions = true;
 			}
 		}
+	}
+
+	void softGroundCollManagement_02()
+	{
+		//if (onLadder)
+		//	onGround = groundCheckOnLadder ();
 	}
 
 	public void setAscForce(bool isSpring = false)
@@ -361,7 +407,7 @@ public class PlayerMovements : MonoBehaviour {
 				resetFallingForcesVariables();
 			}
 
-
+			//setto la massima velocità di caduta
 			if (RigBody.velocity.y < -maxFallingSpeed)
 			{
 				RigBody.velocity = new Vector2(RigBody.velocity.x, -maxFallingSpeed);
@@ -385,17 +431,6 @@ public class PlayerMovements : MonoBehaviour {
 				RigBody.AddForce (new Vector2(-forceOnAirFactor,0.0f));
 				addFallingForceLeft = false;
 			}
-				
-			/*
-			if (addFallingForce)
-			{
-				if (facingRight)
-					RigBody.AddForce (new Vector2(forceOnAirFactor,0.0f));
-				else
-					RigBody.AddForce (new Vector2(-forceOnAirFactor,0.0f));
-				addFallingForce = false;
-			}
-			*/
 
 			//-----nuova aggiunta------
 			if (removeFallingForce)
@@ -448,14 +483,18 @@ public class PlayerMovements : MonoBehaviour {
 	{
 		//se decido di salire sulla scala
 		if (collidingLadder && !onLadder) {
-			if (Input.GetAxisRaw ("Vertical") != 0.0f) 
+
+			if (((Input.GetAxisRaw ("Vertical") > 0.5f) || (Input.GetAxisRaw ("Vertical") < -0.5f && !groundCheckOnLadder()))) 
 			{
 				//controllo sulla distanza dalla scala, si può sostituire diminuendo la dimensione del collider, ma così ho più controllo
 				if (Mathf.Abs (actualLadder.transform.position.x - transform.position.x) < LadderLateralLimit) {
 					onLadder = true;
-					anim.SetBool ("OnLadder", true);
+					onGround = false;
+					//anim.SetBool ("OnLadder", true);
 					RigBody.velocity = vec2Null;
 					transform.position = new Vector3 (actualLadder.transform.position.x, transform.position.y, transform.position.z);
+
+					setCollisionsOnLadder();
 				}
 			}
 		}
@@ -465,6 +504,10 @@ public class PlayerMovements : MonoBehaviour {
 	{
 
 		if (onLadder == true) {
+
+			//onGround = false;
+
+			//onGround = groundCheckOnLadder();
 
 			RigBody.gravityScale = 0.0f;
 
@@ -477,53 +520,59 @@ public class PlayerMovements : MonoBehaviour {
 				//if (onGround)
 				//	onLadder = false;
 				RigBody.velocity = vec2Null;
-			}else if(Input.GetAxisRaw("Vertical") > 0.0f && isUpperOnLadder())
+			}else if(Input.GetAxisRaw("Vertical") > 0.5f && isUpperOnLadder())
 			{
 				RigBody.velocity = new Vector2(0.0f, onLadderMovement*40.0f);
-			}else if(Input.GetAxisRaw("Vertical") > 0.0f && !isUpperOnLadder())
+			}else if(Input.GetAxisRaw("Vertical") > 0.5f && !isUpperOnLadder())
 			{
 				RigBody.velocity = vec2Null;
-			}else if(Input.GetAxisRaw("Vertical") < 0.0f && isMiddleOnLadder())
+			}else if(Input.GetAxisRaw("Vertical") < -0.5f && isMiddleOnLadder())
 			{
-				RigBody.velocity = new Vector2(0.0f, -onLadderMovement*40.0f);
+				if (!groundCheckOnLadder())
+					RigBody.velocity = new Vector2(0.0f, -onLadderMovement*40.0f);
+				//sto toccando terra e premendo il tasto giù, cioè sto lasciando la scala
+				else
+				{
+					leaveLadder();
+				}
+					
 
-			}else if(Input.GetAxisRaw("Vertical") < 0.0f && !isMiddleOnLadder())
+			}else if(Input.GetAxisRaw("Vertical") < -0.5f && !isMiddleOnLadder())
 			{
 				//dovrebbe cadere
 				RigBody.velocity = vec2Null;
-				onLadder = false;
-				anim.SetBool("OnLadder", false);
-				anim.SetBool("Climbing", false);
-				
-				RigBody.gravityScale = standardGravity;
+
+				leaveLadder();
 			}
 
-			if (RigBody.velocity.y == 0.0f)
-				anim.SetBool("Climbing", false);
-			else
-				anim.SetBool("Climbing", true);
 
 
 			float HorInput = Input.GetAxisRaw("Horizontal");
 			//se mi muovo lateralmente dalla scala
-			if (HorInput != 0.0f)
+			if (HorInput != 0.0f && Input.GetAxisRaw("Vertical") > -0.4f && Input.GetAxisRaw("Vertical") < 0.4f)
 			{
+				leaveLadder();
 				RigBody.velocity = vec2Null;
-				onLadder = false;
-				anim.SetBool("OnLadder", false);
-				anim.SetBool("Climbing", false);
-
-				RigBody.gravityScale = standardGravity;
 
 				if (HorInput > 0.0f)
 					jumpFromLadderRight = true;
 				else
 					jumpFromLadderLeft = true;
+			}else{
+				jumpFromLadderRight = false;
+				jumpFromLadderLeft = false;
 			}
 
 			//bisogna resettare le variabili, perché se il player è sulla scala non è onGround, quindi le variabili rimangono settate
 			resetAscForceVariables();
 		}
+	}
+
+	void leaveLadder()
+	{
+		setCollisionsOnLadder(false);
+		onLadder = false;
+		RigBody.gravityScale = standardGravity;
 	}
 
 	void OnLadderManagemetFU()
@@ -574,17 +623,17 @@ public class PlayerMovements : MonoBehaviour {
 		if (RigBody.velocity.x != 0) {
 			if (!AIControl)
 			{
-				if (((RigBody.velocity.x > 0.0f) && !facingRight) || ((RigBody.velocity.x < 0.0f) && facingRight))
-					anim.SetBool ("Backwards", true);
-				else
-					anim.SetBool ("Backwards", false);
+				//if (((RigBody.velocity.x > 0.0f) && !facingRight) || ((RigBody.velocity.x < 0.0f) && facingRight))
+					//anim.SetBool ("Backwards", true);
+				//else
+					//anim.SetBool ("Backwards", false);
 
 			}
 			running = true;
-			anim.SetBool ("Running", true);
+			//anim.SetBool ("Running", true);
 		} else {
 			running = false;
-			anim.SetBool ("Running", false);
+			//anim.SetBool ("Running", false);
 		}
 	}
 
@@ -630,7 +679,7 @@ public class PlayerMovements : MonoBehaviour {
 	}
 
 	//se attivo il trigger della scala, setto le relative variabili
-	void OnTriggerEnter2D(Collider2D coll)
+	void OnTriggerStay2D(Collider2D coll)
 	{
 		if (coll.tag == "Ladder") {
 			collidingLadder = true;
@@ -646,6 +695,7 @@ public class PlayerMovements : MonoBehaviour {
 		}
 	}
 
+
 	//giro il player
 	void Flip()
 	{
@@ -660,10 +710,16 @@ public class PlayerMovements : MonoBehaviour {
 		                              new Vector2(GroundCheckBottomRight.position.x,GroundCheckBottomRight.position.y), GroundLayers);
 	}
 
+	bool groundCheckOnLadder()
+	{
+		return Physics2D.OverlapArea (new Vector2(GroundCheckUpperLeft.position.x,GroundCheckUpperLeft.position.y), 
+		                              new Vector2(GroundCheckBottomRight.position.x,GroundCheckBottomRight.position.y), hardGroundLayers);
+	}
+
 	public void isUsingTool(bool UseOrNot)
 	{
 		freezedByTool = UseOrNot;
-		anim.SetBool("usingTool",UseOrNot);
+		//anim.SetBool("usingTool",UseOrNot);
 	}
 
 	//funzione temporanea per conversione del layer

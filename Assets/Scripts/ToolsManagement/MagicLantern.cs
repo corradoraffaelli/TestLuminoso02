@@ -20,6 +20,9 @@ public class MagicLantern : Tool {
 	public float zPositionEnvironment = 0.0f;
 	public float resizeFactor = 4.0f;
 	public float maxProjectingDistance = 8.5f;
+	public bool limitProjectionDistance = true;
+	[Range(0.0f,1.0f)]
+	public float alphaProjection = 0.5f;
 
 	public Sprite normalRay;
 	public Sprite normalCircle;
@@ -54,17 +57,17 @@ public class MagicLantern : Tool {
 
 	//parametri per il fine livello
 	//bool endedProjected = false;
-	bool timerStarted = false;
-	float timer = 0.0f;
-	public float projectionTimer = 6.0f;
+	//bool timerStarted = false;
+	//float timer = 0.0f;
+	//public float projectionTimer = 6.0f;
 
-	ParticleSystem partSyst;
-	public float maxParticleEmission = 5000.0f;
+	//ParticleSystem partSyst;
+	//public float maxParticleEmission = 5000.0f;
 
-	GameObject tempProjectedObject;
-	SpriteRenderer tempSR;
+	//GameObject tempProjectedObject;
+	//SpriteRenderer tempSR;
 
-	public bool proiettaInSagomaMode = false;
+	//public bool proiettaInSagomaMode = false;
 
 	//ParticleEmitter partEmit;
 
@@ -119,6 +122,7 @@ public class MagicLantern : Tool {
 	protected override void useTool() {
 		//caso in cui la lanterna non è lasciata a terra
 		if (!leftLantern) {
+			//slowTime();
 			//movimenti del raggio e della proiezione sotto al mouse
 			normalMovementsUnderMouse ();
 
@@ -139,14 +143,22 @@ public class MagicLantern : Tool {
 			}
 
 			changeRayAndCircleSprites (normalRay, normalCircle);
-			changeProjectionSprite (badGlassSprite);
+			changeProjectionSprite (projectionSprite);
 			deleteActualProjection ();
+
+			if (verifyIfTooFar () && !limitProjectionDistance)
+				changeProjectionSprite (blurredSprite);
+
+			//abbasso l'alpha della sprite in modalità "mira"
+			PC.setAlphaSprite(alphaProjection);
 
 			//se lascio il tasto
 			if (Input.GetButtonUp("Mira"))
 			{
+				//fastTime();
+
 				//la lascio e proietto se sono nella buona posizione
-				if (!verifyIfTooFar ()) {
+				if (!verifyIfTooFar () || limitProjectionDistance) {
 					
 					//è un vetrino normale
 					changeRayAndCircleSprites (pressedRay, pressedCircle);
@@ -166,6 +178,8 @@ public class MagicLantern : Tool {
 					TS.switchUsingTool (false);
 				}
 			}
+
+
 		}
 
 		//se ho lasciato la lanterna
@@ -192,7 +206,20 @@ public class MagicLantern : Tool {
 	}
 
 
-	//impone il player come oggetto pparent della lanterna
+	void slowTime()
+	{
+		float tempoLento = 0.1f;
+		Time.timeScale = Mathf.Lerp (1.0f, tempoLento, 0.5f);
+
+	}
+
+	void fastTime()
+	{
+		float tempoLento = 0.1f;
+		Time.timeScale = Mathf.Lerp (tempoLento, 1.0f, 1.0f);
+	}
+
+	//impone il player come oggetto parent della lanterna
 	void setPlayerAsParent()
 	{
 		toolGameObject.transform.parent = player.transform;
@@ -221,8 +248,10 @@ public class MagicLantern : Tool {
 	//verifica se la proiezione è troppo lontana dal player
 	bool verifyIfTooFar()
 	{
-		Vector3 pos_cursor = raggio_cerchio.transform.position;
-		Vector3 pos_player = player.transform.position;
+		//Vector3 pos_cursor = raggio_cerchio.transform.position;
+		Vector3 pos_cursor = cursorHandler.getCursorWorldPosition ();
+		Vector3 pos_player = cameraPoint.transform.position;
+		//Vector3 pos_player = player.transform.position;
 		float distance = Vector3.Distance (pos_player, pos_cursor);
 		if (Mathf.Abs (distance) > maxProjectingDistance)
 			return true;
@@ -251,7 +280,10 @@ public class MagicLantern : Tool {
 		//toolGameObject.transform.position = new Vector3(player.transform.position.x+0.4f,player.transform.position.y+0.8f,player.transform.position.z);
 		
 		//posiziono l'origine del cerchio sotto il mouse
-		raggio_cerchio.transform.position = cursorHandler.getCursorWorldPosition ();
+		if (limitProjectionDistance && verifyIfTooFar ())
+			raggio_cerchio.transform.position = getPositionAlongDirection (cameraPoint.transform.position, cursorHandler.getCursorWorldPosition (), maxProjectingDistance);
+		else
+			raggio_cerchio.transform.position = cursorHandler.getCursorWorldPosition ();
 		
 		//prendo la posizione del punto frontale della sprite della camera, e ci piazzo l'origine del raggio
 		cameraPointPos = cameraPoint.transform.position;
@@ -292,7 +324,28 @@ public class MagicLantern : Tool {
 	}
 
 
+	Vector3 getPositionAlongDirection(Vector3 startPosition, Vector3 endingPosition, float distance)
+	{
+		float catetoX = Mathf.Abs (startPosition.x - endingPosition.x);
+		float catetoY = Mathf.Abs (startPosition.y - endingPosition.y);
+		float ipotenusa = Mathf.Sqrt(catetoX * catetoX + catetoY * catetoY);
+		float dX = distance * catetoX / ipotenusa;
+		float dY = distance * catetoY / ipotenusa;
 
+		float posX, posY;
+		if (startPosition.x < endingPosition.x)
+			posX = dX + startPosition.x;
+		else
+			posX = startPosition.x - dX;
+
+		if (startPosition.y < endingPosition.y)
+			posY = dY + startPosition.y;
+		else
+			posY = startPosition.y - dY;
+
+		Vector3 pos = new Vector3 (posX, posY, zPositionEnvironment);
+		return pos;
+	}
 
 	//funzione per istanziare il prefab dell'oggetto relativo al vetrino, sotto il cursore
 	void instantiatePrefab()
@@ -300,7 +353,8 @@ public class MagicLantern : Tool {
 		if (actualGlass.prefabObject) {
 			//istanzio un prefab e lo sposto sotto il mouse
 			actualGlass.projectionObject = Instantiate <GameObject> (actualGlass.prefabObject);
-			actualGlass.projectionObject.transform.position = new Vector3(actualMousePosition.x, actualMousePosition.y, zPositionEnvironment);
+			actualGlass.projectionObject.transform.position = raggio_cerchio.transform.position;
+			//actualGlass.projectionObject.transform.position = new Vector3(actualMousePosition.x, actualMousePosition.y, zPositionEnvironment);
 			
 			//prendo i bounds della sprite della proiezione
 			Bounds objBounds = PC.getSpriteBounds ();
@@ -381,7 +435,7 @@ public class MagicLantern : Tool {
 		PC = transform.GetComponent<ProjectionCollision>();
 		
 		//sistema particellare
-		partSyst = raggio_cerchio.GetComponent<ParticleSystem> ();
+		//partSyst = raggio_cerchio.GetComponent<ParticleSystem> ();
 		
 		//componenti Sprite Renderer del raggio
 		spRendRay = raggio.GetComponent<SpriteRenderer> ();
