@@ -88,7 +88,7 @@ public class PlayerMovements : MonoBehaviour {
 		get{ return onGround;}
 	}
 
-	bool stunnedState = false;
+	bool stunned = false;
 	float tStartStunned = -5.0f;
 	float tToReturnFromStunned = 1.5f;
 
@@ -145,7 +145,7 @@ public class PlayerMovements : MonoBehaviour {
 		if (!onLadder) {
 			onGround = groundCheck ();
 
-			if (!freezedByTool && !AIControl && !stunnedState) {
+			if (!freezedByTool && !AIControl && !stunned) {
 				
 				//gestione del girarsi o meno
 				//if ((facingRight == true && Input.GetAxis ("Horizontal") < 0) || (facingRight == false && Input.GetAxis ("Horizontal") > 0))
@@ -191,13 +191,13 @@ public class PlayerMovements : MonoBehaviour {
 				//softGroundCollManagement_02();
 			} else {
 				
-				if (stunnedState) {
+				if (stunned) {
 					
 					//riga che avevo provato a mettere per controbilanciare le piattaforme con friction zero...
 					//ma per ora meglio di no
 					//RigBody.velocity = vec2Null;
 					
-					if (stunnedState && !AIControl) {
+					if (stunned && !AIControl) {
 						//player stunned
 						handleStunned ();
 					}
@@ -214,9 +214,10 @@ public class PlayerMovements : MonoBehaviour {
 				//per ora solo check per vedere se AI è fermo
 				if (AIControl) {
 					
-					if (RigBody.velocity.x == 0.0f)
-						anim.SetBool ("Running", false);
-					
+					if (RigBody.velocity.x == 0.0f) {
+						//anim.SetBool ("Running", false);
+						running = false;
+					}
 				}
 			}
 
@@ -234,6 +235,10 @@ public class PlayerMovements : MonoBehaviour {
 
 	void setAnimations()
 	{
+		if(!anim.GetBool("Stunned") && stunned)
+			anim.SetTrigger("StartStunned");
+		
+		anim.SetBool ("Stunned", stunned);
 		anim.SetBool ("onGround", onGround);
 		anim.SetBool ("Running", running);
 		if (running) {
@@ -827,10 +832,10 @@ public class PlayerMovements : MonoBehaviour {
 		//Debug.Log ("stunnato");
 
 		if (Time.time > tStartStunned + tToReturnFromStunned) {
-			stunnedState = false;
+			stunned = false;
 			gameObject.layer = convertBinToDec(PlayerLayer.value);
 			//myToStun.layer = convertBinToDec(PlayerLayer.value);
-			anim.SetBool ("Stunned", false);
+			//anim.SetBool ("Stunned", false);
 			//Debug.Log ("fin (e STUNNNNNNN");
 		}
 		
@@ -860,12 +865,13 @@ public class PlayerMovements : MonoBehaviour {
 	public void c_stunned(bool isStun) {
 		
 		if (isStun) {
-			if(!stunnedState) {
-				anim.SetBool ("Running", false);
+			if(!stunned) {
+				running = false;
+				//anim.SetBool ("Running", false);
 				//altri controlli? devo mettere a false altre variabili?
-				anim.SetBool ("Stunned", true);
-				anim.SetTrigger("StartStunned");
-				stunnedState = true;
+				//anim.SetBool ("Stunned", true);
+				//anim.SetTrigger("StartStunned");
+				stunned = true;
 				if(!AIControl) {
 					tStartStunned = Time.time;
 					gameObject.layer = convertBinToDec(PlayerStunnedLayer.value);
@@ -876,12 +882,12 @@ public class PlayerMovements : MonoBehaviour {
 			
 		}
 		else {
-
+			
 			//parte di codice chiamata ESCLUSIVAMENTE da AI quando si esce da stunned
-
-			anim.SetBool ("Stunned", false);
+			
+			//anim.SetBool ("Stunned", false);
 			gameObject.layer = convertBinToDec(PlayerLayer.value);
-			stunnedState = false;
+			stunned = false;
 			//myToStun.layer = convertBinToDec(PlayerLayer.value);
 			//qualcosa per riporlarlo allo stato idle
 		}
