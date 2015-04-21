@@ -27,7 +27,6 @@ public class FallingBoot : MonoBehaviour {
 
 	public void InteractingMethod()
 	{
-		Debug.Log ("chiamato 01");
 		falling = true;
 	}
 
