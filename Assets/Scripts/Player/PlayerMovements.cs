@@ -244,8 +244,9 @@ public class PlayerMovements : MonoBehaviour {
 				
 				//gestione della collisione con la scala
 				CollidingLadderManagement ();
-				
-				movingPlatformManagement();
+
+				//gestione delle piattaforme che si muovono. importante che non sia nell'if dell'onground, fa un controllo all'interno
+				//movingPlatformManagement();
 				//gestione collisioni con oggetti "softGround" (quelli in corrispondenza o meno di scale)
 				//softGroundCollManagement ();
 				//softGroundCollManagement_02();
