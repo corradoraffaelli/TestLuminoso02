@@ -78,6 +78,11 @@ public class PlayerMovements : MonoBehaviour {
 
 	GameObject controller;
 	CursorHandler cursorHandler;
+	GameObject mainCamera;
+	public GameObject MainCamera {
+		get{ return mainCamera;}
+		set{ mainCamera = value;}
+	}
 
 	public bool FacingRight {
 		get{ return facingRight;}
@@ -973,9 +978,13 @@ public class PlayerMovements : MonoBehaviour {
 		b2d.isTrigger = true;
 		c2d.isTrigger = true;
 
-		yield return new WaitForSeconds(1.5f);
+		yield return new WaitForSeconds(0.5f);
 
 		//transizione scura...
+		if(mainCamera!=null)
+			mainCamera.SendMessage ("GameOver");
+
+		yield return new WaitForSeconds(1.0f);
 
 		//riposizionamento all'ultimo checkpoint
 		b2d.isTrigger = false;

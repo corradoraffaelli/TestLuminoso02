@@ -1212,6 +1212,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c93b61cfb669f4f88a01537f468b8b98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  oneKill: 1
 --- !u!1 &311292016
 GameObject:
   m_ObjectHideFlags: 0
@@ -1968,6 +1969,26 @@ Prefab:
 Transform:
   m_PrefabParentObject: {fileID: 477606, guid: 9d42b07479b3545b2aa4eca8e3a576ba, type: 2}
   m_PrefabInternal: {fileID: 1851153349}
+--- !u!1 &553888571
+GameObject:
+  m_PrefabParentObject: {fileID: 139418, guid: ec102504c5a3ea84fa6e628e168bb9c7, type: 2}
+  m_PrefabInternal: {fileID: 1184623428}
+--- !u!114 &553888572
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 553888571}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ded59d7cf68394c978e5c079b6669bdf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  checkPoints:
+  - {fileID: 494942095}
+  - {fileID: 1584080058}
+  - {fileID: 2075218480}
+  starterPoint: 2
 --- !u!1 &593549193
 GameObject:
   m_ObjectHideFlags: 0
@@ -2144,6 +2165,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c93b61cfb669f4f88a01537f468b8b98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  oneKill: 0
 --- !u!1001 &681972019
 Prefab:
   m_ObjectHideFlags: 0
@@ -3926,7 +3948,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 157464, guid: 31ee4228d98f04eb09b7be7aae9cdec6, type: 2}
       propertyPath: m_Name
-      value: Stella 01
+      value: Stella 005
       objectReference: {fileID: 0}
     - target: {fileID: 11451080, guid: 31ee4228d98f04eb09b7be7aae9cdec6, type: 2}
       propertyPath: toAppear.Array.data[0]
@@ -4604,7 +4626,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 157464, guid: 31ee4228d98f04eb09b7be7aae9cdec6, type: 2}
       propertyPath: m_Name
-      value: Stella 01
+      value: Stella 004
       objectReference: {fileID: 0}
     - target: {fileID: 11451080, guid: 31ee4228d98f04eb09b7be7aae9cdec6, type: 2}
       propertyPath: toAppear.Array.data[0]
@@ -4800,7 +4822,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 157464, guid: 31ee4228d98f04eb09b7be7aae9cdec6, type: 2}
       propertyPath: m_Name
-      value: Stella 01
+      value: Stella 002
       objectReference: {fileID: 0}
     - target: {fileID: 11451080, guid: 31ee4228d98f04eb09b7be7aae9cdec6, type: 2}
       propertyPath: toAppear.Array.data[0]
@@ -5372,7 +5394,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 157464, guid: 31ee4228d98f04eb09b7be7aae9cdec6, type: 2}
       propertyPath: m_Name
-      value: Stella 01
+      value: Stella 001
       objectReference: {fileID: 0}
     - target: {fileID: 11451080, guid: 31ee4228d98f04eb09b7be7aae9cdec6, type: 2}
       propertyPath: toAppear.Array.data[0]
@@ -5894,6 +5916,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c93b61cfb669f4f88a01537f468b8b98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  oneKill: 1
 --- !u!1001 &1938756340
 Prefab:
   m_ObjectHideFlags: 0
@@ -6055,7 +6078,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 157464, guid: 31ee4228d98f04eb09b7be7aae9cdec6, type: 2}
       propertyPath: m_Name
-      value: Stella 01
+      value: Stella 003
       objectReference: {fileID: 0}
     - target: {fileID: 11451080, guid: 31ee4228d98f04eb09b7be7aae9cdec6, type: 2}
       propertyPath: toAppear.Array.data[0]

@@ -12,9 +12,13 @@ public class sceneChanger : MonoBehaviour {
 
 
 	// Use this for initialization
-	void Start () {
+	void Awake() {
 		getGameController ();
 		getRespawnPoint ();
+	}
+
+	void Start () {
+
 
 	}
 
@@ -50,8 +54,33 @@ public class sceneChanger : MonoBehaviour {
 		if (respawnPoint != null) {
 			
 			respawnPoint.transform.position = transform.position;
-			respawnPoint.transform.localScale = new Vector3( (defaultVerseRight ? 1.0f : -1.0f) ,respawnPoint.transform.localScale.y,respawnPoint.transform.localScale.z);
+			respawnPoint.transform.localScale = new Vector3 ((defaultVerseRight ? 1.0f : -1.0f), respawnPoint.transform.localScale.y, respawnPoint.transform.localScale.z);
+		} 
+		else {
+			Debug.Log ("ATTENZIONE - oggetto RespawnPoint non trovato");
 		}
+		
+	}
+
+	public void c_manualActivation(){
+
+		//Debug.Log ("attivazione by " + gameObject.name);
+
+		foreach(GameObject go in toDisappear) {
+			if (go != null)
+				go.SetActive(false);
+			
+		}
+		
+		foreach(GameObject go in toAppear) {
+			if (go != null)
+				go.SetActive(true);
+			
+		}
+		
+		setRespawnPosition();
+		
+		this.gameObject.SetActive(false);
 		
 	}
 
@@ -59,24 +88,12 @@ public class sceneChanger : MonoBehaviour {
 
 		if (c.tag == "Player") {
 
-			foreach(GameObject go in toDisappear) {
-				if (go != null)
-					go.SetActive(false);
-
-			}
-
-			foreach(GameObject go in toAppear) {
-				if (go != null)
-					go.SetActive(true);
-				
-			}
-
-			setRespawnPosition();
-
-			this.gameObject.SetActive(false);
+			c_manualActivation();
 
 		}
 
 	}
+
+
 
 }

@@ -47,7 +47,7 @@ public class handleStunAI : MonoBehaviour {
 						Rigidbody2D r = c.gameObject.GetComponent<Rigidbody2D>();
 						r.velocity = new Vector2(0.0f, 0.0f);
 						r.AddForce(new Vector2(0.0f, sprintForce));
-												
+						
 						//bouncy = false;
 					}
 				} 
