@@ -96,16 +96,28 @@ public class PlayerMovements : MonoBehaviour {
 	Vector3 movingPlatformPosition;
 	bool goneOnMovingPlatform = false;
 
+	public GameObject respawnPoint;
+
 	//private GameObject myToStun;
 
 	void Start () {
-		controller = GameObject.FindGameObjectWithTag ("Controller");
-		cursorHandler = controller.GetComponent<CursorHandler> ();
-		checkStartFacing ();
-		bool warning = true;
+
 		RigBody = transform.GetComponent<Rigidbody2D>();
 		anim = transform.GetComponent<Animator> ();
+
+		getGameController ();
+
+		if (!AIControl){
+			getRespawnPoint ();
+			getCursorHandler ();
+			bringMeToRespawnPosition ();
+		}
+		checkStartFacing ();
+
 		standardGravity = RigBody.gravityScale;
+
+
+
 		/*
 		foreach (Transform child in transform) {
 
@@ -119,6 +131,40 @@ public class PlayerMovements : MonoBehaviour {
 		if (warning)
 			Debug.Log ("attenzione, manca un oggetto stunning sotto il player");
 		*/
+	}
+
+	private void getGameController(){
+
+		controller = GameObject.FindGameObjectWithTag ("Controller");
+
+		if (controller == null)
+			Debug.Log ("ATTENZIONE - oggetto GameController non trovato");
+
+	}
+
+	private void getRespawnPoint () {
+
+		bool found = false;
+
+		foreach (Transform child in controller.transform) {
+
+			if (child.name == "RespawnPoint"){
+				respawnPoint = child.gameObject;
+				found = true; 
+				break;
+			}
+
+		}
+
+		if(!found)
+			Debug.Log ("ATTENZIONE - oggetto RespawnPoint non trovato");
+	}
+
+	private void getCursorHandler(){
+
+		cursorHandler = controller.GetComponent<CursorHandler> ();
+		if (cursorHandler == null)
+			Debug.Log ("ATTENZIONE - oggetto cursorHandler non trovato");
 	}
 
 	private void checkStartFacing(){
@@ -135,6 +181,20 @@ public class PlayerMovements : MonoBehaviour {
 				
 			}
 			
+		}
+
+	}
+
+	private void bringMeToRespawnPosition(){
+
+		if (respawnPoint != null) {
+
+			transform.position = respawnPoint.transform.position;
+			if(	(respawnPoint.transform.localScale.x > 0 && !FacingRight) ||
+				(respawnPoint.transform.localScale.x < 0 && FacingRight)	) {
+				Flip();
+			}
+
 		}
 
 	}
@@ -892,6 +952,35 @@ public class PlayerMovements : MonoBehaviour {
 			//qualcosa per riporlarlo allo stato idle
 		}
 		
+	}
+
+	public void c_instantKill(){
+
+		StartCoroutine (handlePlayerKill ());
+		c_stunned (true);
+
+	}
+
+	private IEnumerator handlePlayerKill() {
+		
+		yield return new WaitForSeconds(0.1f);
+		
+		BoxCollider2D b2d = GetComponent<BoxCollider2D> ();
+		CircleCollider2D c2d = GetComponent<CircleCollider2D> ();
+		
+		RigBody.AddForce(new Vector2(100.0f,300.0f));
+		b2d.isTrigger = true;
+		c2d.isTrigger = true;
+
+		yield return new WaitForSeconds(1.5f);
+
+		//transizione scura...
+
+		//riposizionamento all'ultimo checkpoint
+		b2d.isTrigger = false;
+		c2d.isTrigger = false;
+		bringMeToRespawnPosition ();
+
 	}
 
 }
