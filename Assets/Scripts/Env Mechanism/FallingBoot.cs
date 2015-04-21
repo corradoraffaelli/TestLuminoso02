@@ -41,11 +41,18 @@ public class FallingBoot : MonoBehaviour {
 
 	void setAsPlatform()
 	{
+
+		disableChildren ();
 		for (int i = 0; i< colliders.Length; i++) {
 			colliders [i].isTrigger = false;
 			colliders[i].usedByEffector = true;
 		}
 		transform.GetComponent<PlatformEffector2D> ().enabled = true;
 			
+	}
+
+	void disableChildren()
+	{
+		transform.GetChild (0).gameObject.SetActive(false);
 	}
 }
