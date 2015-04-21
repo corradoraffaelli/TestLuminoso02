@@ -80,7 +80,8 @@ public class HeavyAttackCheck : MonoBehaviour {
 				Debug.Log("Io sono " + transform.gameObject.name + " e ho colpito il player " + actualTarget.name);
 				
 			}
-			actualTarget.transform.SendMessage ("c_stunned", true);
+			//actualTarget.transform.SendMessage ("c_stunned", true);
+			actualTarget.transform.SendMessage ("c_instantKill");
 			Vector2 dist = actualTarget.transform.position - transform.position;
 			Rigidbody2D r = actualTarget.GetComponent<Rigidbody2D>();
 
