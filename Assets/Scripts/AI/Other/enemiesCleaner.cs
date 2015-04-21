@@ -38,6 +38,7 @@ public class enemiesCleaner : MonoBehaviour {
 
 			if(DEBUG_CLEANING)
 				Debug.Log ("Colliso qualcosa che non è tag enemy oppure non ha il layer enemies : " + c.gameObject.name);
+
 		}
 
 	}

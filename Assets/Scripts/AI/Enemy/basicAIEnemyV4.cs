@@ -546,6 +546,8 @@ public class basicAIEnemyV4 : MonoBehaviour {
 			if(child.name=="StatusImg") {
 				
 				statusImg = child.gameObject;
+				if(transform.localScale.x < 0.0f)
+					statusImg.transform.localScale = new Vector3(-statusImg.transform.localScale.x, statusImg.transform.localScale.y, statusImg.transform.localScale.z);
 				founded = true;
 				break;
 			}
@@ -3302,7 +3304,8 @@ public class basicAIEnemyV4 : MonoBehaviour {
 	private bool checkPlayerCollision(Collision2D co) {
 
 		if (co.gameObject.tag == "Player") {
-			co.gameObject.transform.SendMessage ("c_stunned", true);
+			//co.gameObject.transform.SendMessage ("c_stunned", true);
+			co.gameObject.transform.SendMessage ("c_instantKill");
 			Vector2 dist = co.gameObject.transform.position - transform.position;
 			
 			Rigidbody2D r = co.gameObject.GetComponent<Rigidbody2D>();
