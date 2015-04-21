@@ -93,6 +93,8 @@ public class PlayerMovements : MonoBehaviour {
 	float tToReturnFromStunned = 1.5f;
 
 	Vector2 vec2Null = new Vector2(0.0f,0.0f);
+	Vector3 movingPlatformPosition;
+	bool goneOnMovingPlatform = false;
 
 	//private GameObject myToStun;
 
@@ -162,6 +164,8 @@ public class PlayerMovements : MonoBehaviour {
 					
 					//salto (verrà gestito nel FixedUpdate)
 					jumpingManagement ();
+
+
 					
 				} else {
 					
@@ -181,7 +185,7 @@ public class PlayerMovements : MonoBehaviour {
 				//gestione della collisione con la scala
 				CollidingLadderManagement ();
 				
-
+				movingPlatformManagement();
 				//gestione collisioni con oggetti "softGround" (quelli in corrispondenza o meno di scale)
 				//softGroundCollManagement ();
 				//softGroundCollManagement_02();
@@ -637,6 +641,29 @@ public class PlayerMovements : MonoBehaviour {
 		}
 	}
 
+	void movingPlatformManagement()
+	{
+		if (onGround) {
+			GameObject GO = getGroundGameObject ();
+			if (GO.tag.ToString () == "MovingPlatform") {
+				//parenting
+				setPlayerParentTo(GO);
+			}else{
+				setPlayerParentTo(null);
+			}
+		} else {
+			setPlayerParentTo(null);
+		}
+	}
+
+	void setPlayerParentTo(GameObject parentGO)
+	{
+		if (parentGO != null)
+			transform.parent = parentGO.transform;
+		else
+			transform.parent = null;
+	}
+
 	bool isUpperOnLadder()
 	{
 		GameObject[] Ladders = GameObject.FindGameObjectsWithTag ("Ladder");
@@ -714,6 +741,12 @@ public class PlayerMovements : MonoBehaviour {
 	{
 		return Physics2D.OverlapArea (new Vector2(GroundCheckUpperLeft.position.x,GroundCheckUpperLeft.position.y), 
 		                              new Vector2(GroundCheckBottomRight.position.x,GroundCheckBottomRight.position.y), hardGroundLayers);
+	}
+
+	GameObject getGroundGameObject()
+	{
+		return Physics2D.OverlapArea (new Vector2(GroundCheckUpperLeft.position.x,GroundCheckUpperLeft.position.y), 
+		                              new Vector2(GroundCheckBottomRight.position.x,GroundCheckBottomRight.position.y), GroundLayers).gameObject;
 	}
 
 	public void isUsingTool(bool UseOrNot)
