@@ -5,6 +5,7 @@ public class ButtonTrigger : MonoBehaviour {
 
 	public GameObject objectToActivate;
 	public string []triggerTagList;
+	public bool NeedInteractionButton = false;
 	int realTriggerTagListLength;
 
 	// Use this for initialization
@@ -35,6 +36,9 @@ public class ButtonTrigger : MonoBehaviour {
 	//TODO: implementare controllo su chi fa push, tengo variabile conservata e confronto all'exit
 	public void OnTriggerEnter2D(Collider2D c) {
 
+		if (NeedInteractionButton)
+			return;
+
 		for (int i=0; i< triggerTagList.Length; i++) {
 
 			if(c.tag== triggerTagList[i]) {
@@ -56,6 +60,9 @@ public class ButtonTrigger : MonoBehaviour {
 
 	public void OnTriggerExit2D(Collider2D c) {
 
+		if (NeedInteractionButton)
+			return;
+
 		for (int i=0; i< triggerTagList.Length; i++) {
 			
 			if(c.tag== triggerTagList[i]) {
@@ -73,6 +80,35 @@ public class ButtonTrigger : MonoBehaviour {
 		}
 
 
+	}
+
+
+	public void OnTriggerStay2D(Collider2D c) {
+		
+		if (!NeedInteractionButton)
+			return;
+
+		if (!Input.GetKeyUp (KeyCode.Return))
+			return;
+
+
+		for (int i=0; i< triggerTagList.Length; i++) {
+			
+			if(c.tag== triggerTagList[i]) {
+				
+				if(objectToActivate!=null) {
+					objectToActivate.SendMessage("buttonPushed", true);
+				}
+				else {
+					Debug.Log ("ATTENZIONE - L'OGGETTO DA ATTIVARE NON E' STATO ASSEGNATO");
+				}
+				break;
+				
+			}
+			
+		}
+		
+		
 	}
 
 
