@@ -101,7 +101,9 @@ public class basicAIEnemyV4 : MonoBehaviour {
 	fleeSubState flSS;
 
 	bool killable = false;
-	public GameObject spawner;
+
+	public GameObject Spawner;
+
 	//LAYER MASK da usare
 	//public LayerMask wallLayers;
 	//public LayerMask groundBasic;
@@ -512,7 +514,8 @@ public class basicAIEnemyV4 : MonoBehaviour {
 
 
 		 if(!getRangeOfView()) {
-			Debug.Log ("L'empty 'RangeOfView' non è assegnato!!");
+			if(eType!=enemyType.Dumb)
+				Debug.Log ("L'empty 'RangeOfView' non è assegnato!!");
 			frontalDistanceOfView = frontalDistanceOfView * Mathf.Abs(transform.localScale.x);
 
 		}
@@ -554,9 +557,10 @@ public class basicAIEnemyV4 : MonoBehaviour {
 
 		}
 
-		if (!founded)
-			Debug.Log ("ATTENZIONE - game object figlio per status sprite assente");
-		
+		if (!founded) {
+			if(eType != enemyType.Dumb)
+				Debug.Log ("ATTENZIONE - game object figlio per status sprite assente");
+		}
 	}
 
 
@@ -2695,9 +2699,10 @@ public class basicAIEnemyV4 : MonoBehaviour {
 	
 	private void lastWill() {
 		
-		if (spawner != null) {
+		if (Spawner != null) {
 
-			spawner.SendMessage("letsSpawn");
+			Spawner.SendMessage("letsSpawn");
+			//Debug.Log("spawn - enemy");
 
 		}
 	}

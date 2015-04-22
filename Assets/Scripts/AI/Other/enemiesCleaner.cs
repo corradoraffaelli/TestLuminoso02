@@ -19,7 +19,7 @@ public class enemiesCleaner : MonoBehaviour {
 
 	public void OnTriggerEnter2D(Collider2D c) {
 
-		if ((cleanableLayers.value & 1 << c.gameObject.layer) > 0 && c.gameObject.tag=="Enemy") {
+		if ( c.gameObject.name!="WeakPoint" && c.gameObject.tag=="Enemy") {
 
 			if(c.GetType() == typeof( CircleCollider2D) ) {
 				c.gameObject.GetComponent<basicAIEnemyV4>().c_startAutoDestroy(0.2f);

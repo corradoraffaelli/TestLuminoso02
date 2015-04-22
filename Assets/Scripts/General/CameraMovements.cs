@@ -7,6 +7,7 @@ public class CameraMovements : MonoBehaviour {
 	public bool limitCameraMovements = false;
 
 	GameObject player;
+	GameObject GameOverObj;
 
 	Vector3 cameraCenter;
 	Vector3 beginCamera;
@@ -25,11 +26,16 @@ public class CameraMovements : MonoBehaviour {
 
 	public float RatioDistanceFromPlayer = 0.3f;
 	public float smooth = 10.0f;
+
 	Vector3 BLActualLimit;
 	Vector3 URActualLimit;
-
+	
 	void Start () {
 		player = GameObject.FindGameObjectWithTag ("Player");
+
+		assignMainCameraToPlayer ();
+
+		getGameOverObject ();
 
 		controller = GameObject.FindGameObjectWithTag ("Controller");
 		CH = controller.GetComponent<CursorHandler> ();
@@ -43,6 +49,30 @@ public class CameraMovements : MonoBehaviour {
 		beginCamera = Camera.main.ScreenToWorldPoint (new Vector3 (0.0f, 0.0f, player.transform.position.z));
 		xDistFromBeginning = Mathf.Abs (cameraCenter.x - beginCamera.x);
 		yDistFromBeginning = Mathf.Abs (cameraCenter.y - beginCamera.y);
+	}
+
+	private void assignMainCameraToPlayer(){
+
+		if(player!=null)
+			player.GetComponent<PlayerMovements> ().MainCamera = this.gameObject;
+
+	}
+
+	private void getGameOverObject(){
+
+		bool found = false;
+
+		foreach (Transform child in transform) {
+
+			if(child.name=="GameOver") {
+				GameOverObj = child.gameObject;
+				found = true;
+			}
+		}
+
+		if (!found)
+			Debug.Log ("ATTENZIONE - oggetto figlio GameOver dentro la camera, non trovato");
+
 	}
 
 	void Update () {
@@ -128,6 +158,37 @@ public class CameraMovements : MonoBehaviour {
 			}	
 		}
 
+	}
+
+	public void GameOver(){
+
+		if (GameOverObj != null) {
+			StartCoroutine (handleGameOver ());
+		}
+
+	}
+
+	private IEnumerator handleGameOver() {
+
+		SpriteRenderer sr = GameOverObj.GetComponent<SpriteRenderer> ();
+		sr.enabled = true;
+
+		for (int i = 1; i<=20; i++) {
+			sr.color = new Color(sr.color.r, sr.color.g, sr.color.b, ((float)i)/20);
+			yield return new WaitForSeconds(0.01f);
+
+		}
+
+		yield return new WaitForSeconds(1.5f);
+
+		for (int i = 20; i>=0; i--) {
+			sr.color = new Color(sr.color.r, sr.color.g, sr.color.b, ((float)i)/20);
+			yield return new WaitForSeconds(0.01f);
+			
+		}
+
+		sr.color = new Color(sr.color.r, sr.color.g, sr.color.b, 0.0f);
+		sr.enabled = false;
 	}
 
 
