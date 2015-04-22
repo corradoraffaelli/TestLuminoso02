@@ -64,18 +64,21 @@ public class sceneChanger : MonoBehaviour {
 
 	public void c_manualActivation(){
 
-		//Debug.Log ("attivazione by " + gameObject.name);
+		Debug.Log ("attivazione by " + gameObject.name);
 
 		foreach(GameObject go in toDisappear) {
-			if (go != null)
+			if (go != null) {
 				go.SetActive(false);
+				Debug.Log ("disattivato l'oggetto " + go.name);
+			}
 			
 		}
 		
 		foreach(GameObject go in toAppear) {
-			if (go != null)
+			if (go != null) {
 				go.SetActive(true);
-			
+				Debug.Log ("attivato l'oggetto " + go.name);
+			}
 		}
 		
 		setRespawnPosition();
