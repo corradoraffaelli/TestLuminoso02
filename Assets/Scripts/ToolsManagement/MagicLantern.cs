@@ -111,10 +111,15 @@ public class MagicLantern : Tool {
 	//ritorna true, solo se esiste almeno un vetrino usabile
 	public override bool canBeActivated()
 	{
-		if (glassesManager.isThereAUsableGlass())
+		if (glassesManager.isThereAUsableGlass() && activable)
 			return true;
 		else
 			return false;
+	}
+
+	public void setActivable(bool activableOrNot)
+	{
+		activable = activableOrNot;
 	}
 
 	//--------------------UPDATE---------------------------
