@@ -48,9 +48,13 @@ public class GlassesManager : MonoBehaviour {
 	bool controlSubGlassList(Glass glass)
 	{
 		foreach (GameObject subGlass in glass.subGlassList) {
-			subGlass subGlassScript = subGlass.GetComponent<subGlass>();
-			if (subGlassScript.taken == false)
-				return false;
+			if (subGlass)
+			{
+				subGlass subGlassScript = subGlass.GetComponent<subGlass>();
+				if (subGlassScript.taken == false)
+					return false;
+			}
+
 		}
 		glass.canBeEnabled = false;
 		return true;
