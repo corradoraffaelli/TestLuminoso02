@@ -364,14 +364,13 @@ MonoBehaviour:
   zPositionEnvironment: 0
   resizeFactor: 1.5
   maxProjectingDistance: 7.5
+  limitProjectionDistance: 1
+  alphaProjection: .5
   normalRay: {fileID: 21300006, guid: 3c09fae1fc827b34f9bbe6516a68eb0b, type: 3}
   normalCircle: {fileID: 21300002, guid: 3c09fae1fc827b34f9bbe6516a68eb0b, type: 3}
   pressedRay: {fileID: 21300004, guid: 3c09fae1fc827b34f9bbe6516a68eb0b, type: 3}
   pressedCircle: {fileID: 21300000, guid: 3c09fae1fc827b34f9bbe6516a68eb0b, type: 3}
   projectionPrefab: {fileID: 146854, guid: e903df3634975d94d8f090cffe868ace, type: 2}
-  projectionTimer: 3
-  maxParticleEmission: 5000
-  proiettaInSagomaMode: 0
 --- !u!114 &11438048
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -470,8 +469,6 @@ MonoBehaviour:
   - {fileID: 11446870}
   - {fileID: 11425658}
   - {fileID: 11465904}
-  actualGlassIndex: 0
-  actualGlassIndexUsableList: 0
 --- !u!114 &11462374
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -485,7 +482,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   usable: 1
   canBeEnabled: 1
-  spriteObject: {fileID: 21300000, guid: 2069cce1966271b45af7e881c8b73ca2, type: 3}
+  spriteObject: {fileID: 21300000, guid: 64e00865ac5ca7149a67d2896475929f, type: 3}
   goodProjection: {fileID: 21300000, guid: ccb7d92fcf2cd4647a6da08ac75139bb, type: 3}
   badProjection: {fileID: 21300000, guid: ccb7d92fcf2cd4647a6da08ac75139bb, type: 3}
   blurredProjection: {fileID: 21300000, guid: 0cd3b672380e36a428c33281524b6fe3, type: 3}
