@@ -10,6 +10,7 @@ GameObject:
   - 4: {fileID: 400412}
   - 212: {fileID: 21250698}
   - 61: {fileID: 6109474}
+  - 251: {fileID: 25175922}
   m_Layer: 18
   m_Name: Platform_Prefab
   m_TagString: Untagged
@@ -38,10 +39,10 @@ BoxCollider2D:
   m_Enabled: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_Offset: {x: 0, y: 0}
+  m_UsedByEffector: 1
+  m_Offset: {x: 0, y: -.119999997}
   serializedVersion: 2
-  m_Size: {x: 2.38000011, y: .660000026}
+  m_Size: {x: 2.38000011, y: .419999987}
 --- !u!212 &21250698
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -66,8 +67,22 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 90432273
   m_SortingOrder: 4
-  m_Sprite: {fileID: 21300000, guid: 2069cce1966271b45af7e881c8b73ca2, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 64e00865ac5ca7149a67d2896475929f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
+--- !u!251 &25175922
+PlatformEffector2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 174492}
+  m_Enabled: 1
+  m_ColliderMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_UseOneWay: 1
+  m_UseSideFriction: 0
+  m_UseSideBounce: 0
+  m_SideAngleVariance: 0
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
