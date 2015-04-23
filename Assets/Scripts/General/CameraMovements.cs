@@ -179,10 +179,10 @@ public class CameraMovements : MonoBehaviour {
 
 		}
 
-		yield return new WaitForSeconds(1.5f);
+		yield return new WaitForSeconds(1.0f);
 
 		for (int i = 20; i>=0; i--) {
-			sr.color = new Color(sr.color.r, sr.color.g, sr.color.b, ((float)i)/20);
+			sr.color = new Color(sr.color.r, sr.color.g, sr.color.b, ((float)i)/15);
 			yield return new WaitForSeconds(0.01f);
 			
 		}

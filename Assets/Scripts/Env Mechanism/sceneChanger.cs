@@ -13,12 +13,13 @@ public class sceneChanger : MonoBehaviour {
 
 	// Use this for initialization
 	void Awake() {
-		getGameController ();
-		getRespawnPoint ();
+
 	}
 
 	void Start () {
 
+		getGameController ();
+		getRespawnPoint ();
 
 	}
 
@@ -64,12 +65,12 @@ public class sceneChanger : MonoBehaviour {
 
 	public void c_manualActivation(){
 
-		Debug.Log ("attivazione by " + gameObject.name);
+		//Debug.Log ("attivazione by " + gameObject.name);
 
 		foreach(GameObject go in toDisappear) {
 			if (go != null) {
 				go.SetActive(false);
-				Debug.Log ("disattivato l'oggetto " + go.name);
+				//Debug.Log ("disattivato l'oggetto " + go.name);
 			}
 			
 		}
@@ -77,7 +78,7 @@ public class sceneChanger : MonoBehaviour {
 		foreach(GameObject go in toAppear) {
 			if (go != null) {
 				go.SetActive(true);
-				Debug.Log ("attivato l'oggetto " + go.name);
+				//Debug.Log ("attivato l'oggetto " + go.name);
 			}
 		}
 		

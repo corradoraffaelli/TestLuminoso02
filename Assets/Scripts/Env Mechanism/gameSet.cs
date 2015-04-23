@@ -8,7 +8,7 @@ public class gameSet : MonoBehaviour {
 	public int starterPoint = 0;
 
 	// Use this for initialization
-	void Awake () {
+	void Start () {
 
 		checkCheckPoints ();
 
@@ -46,7 +46,7 @@ public class gameSet : MonoBehaviour {
 
 			for(int i=0; i<starterPoint;i++) {
 
-				Debug.Log ("mando mess " + i);
+				//Debug.Log ("mando mess " + i);
 				checkPoints[i].SendMessage("c_manualActivation");
 
 			}

@@ -102,7 +102,7 @@ public class PlayerMovements : MonoBehaviour {
 	bool goneOnMovingPlatform = false;
 
 	public GameObject respawnPoint;
-
+	gameSet gs;
 	//private GameObject myToStun;
 
 	void Start () {
@@ -115,8 +115,15 @@ public class PlayerMovements : MonoBehaviour {
 		if (!AIControl){
 			getRespawnPoint ();
 			getCursorHandler ();
-			bringMeToRespawnPosition ();
+
+			gs = controller.GetComponent<gameSet>();
+
+			if(gs!=null) {
+				if(gs.starterPoint>0)
+					bringMeToRespawnPosition ();
+			}
 		}
+
 		checkStartFacing ();
 
 		standardGravity = RigBody.gravityScale;
@@ -962,8 +969,13 @@ public class PlayerMovements : MonoBehaviour {
 
 	public void c_instantKill(){
 
-		StartCoroutine (handlePlayerKill ());
-		c_stunned (true);
+		if (!AIControl) {
+			StartCoroutine (handlePlayerKill ());
+			c_stunned (true);
+		} else {
+			//se ne occupa lo script dell'AI, riceve anche lui il messaggio
+
+		}
 
 	}
 
@@ -990,6 +1002,13 @@ public class PlayerMovements : MonoBehaviour {
 		b2d.isTrigger = false;
 		c2d.isTrigger = false;
 		bringMeToRespawnPosition ();
+
+	}
+
+	public void c_jumpEnemy(){
+
+		setAscForce ();
+		addEnemyCount ();
 
 	}
 

@@ -2550,20 +2550,26 @@ public class basicAIEnemyV4 : MonoBehaviour {
 					StartCoroutine(handleKill());
 					break;
 				case enemyType.Guard :
-					if(involveEType) {
-						eType = enemyType.Dumb;
-						setupEnemy(true);
-						eMS = enemyMachineState.Stunned;
-						SpriteRenderer s = GetComponent<SpriteRenderer>();
-						s.color = Color.blue;
+					if(killable) {
+						StartCoroutine(handleKill());
+					}
+					else {
+						if(involveEType) {
+							eType = enemyType.Dumb;
+							setupEnemy(true);
+							eMS = enemyMachineState.Stunned;
+							SpriteRenderer s = GetComponent<SpriteRenderer>();
+							s.color = Color.blue;
+						}
 					}
 					setStatusSprite();
 					break;
 				case enemyType.Heavy :
-					setStatusSprite();
+					
 					if(killable) {
 						StartCoroutine(handleKill());
 					}
+					setStatusSprite();
 					break;
 				default :
 					break;
@@ -3535,6 +3541,13 @@ public class basicAIEnemyV4 : MonoBehaviour {
 
 		handlingCollision = false;
 
+
+	}
+
+	public void c_instantKill(){
+
+		killable = true;
+		makeStateTransition(eMS, enemyMachineState.Stunned);
 
 	}
 

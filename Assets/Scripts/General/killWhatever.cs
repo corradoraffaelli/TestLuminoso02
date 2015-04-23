@@ -11,7 +11,7 @@ public class killWhatever : MonoBehaviour {
 		if (!turnOn)
 			return;
 
-		if (c.gameObject.tag == "Player" || c.gameObject.tag == "Enemies") {
+		if (c.gameObject.tag == "Player" || c.gameObject.tag == "Enemy") {
 
 			c.gameObject.SendMessage("c_instantKill");
 
