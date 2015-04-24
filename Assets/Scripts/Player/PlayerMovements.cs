@@ -314,7 +314,10 @@ public class PlayerMovements : MonoBehaviour {
 			anim.SetTrigger("StartStunned");
 		
 		anim.SetBool ("Stunned", stunned);
-		anim.SetBool ("onGround", onGround);
+		if (onGround && RigBody.velocity.y <= 0.0f)
+			anim.SetBool ("onGround", true);
+		else
+			anim.SetBool ("onGround", false);
 		anim.SetBool ("Running", running);
 		if (running) {
 			if (((RigBody.velocity.x > 0.0f) && !facingRight) || ((RigBody.velocity.x < 0.0f) && facingRight))
