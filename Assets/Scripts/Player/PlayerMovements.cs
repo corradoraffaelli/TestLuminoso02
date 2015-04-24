@@ -247,9 +247,11 @@ public class PlayerMovements : MonoBehaviour {
 				}
 				
 				//-------------debug-------------
+				/*
 				if (Input.GetKeyUp (KeyCode.Q)) {
 					addEnemyCount ();
 				}
+				*/
 				
 				//gestione del movimento in aria
 				notGroundManagement ();
