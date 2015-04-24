@@ -7,6 +7,7 @@ public class handleStunAI : MonoBehaviour {
 	public bool bouncy = true;
 	public float sprintForce = 350.0f;
 	public bool newImplementation = true;
+
 	private GameObject helmet;
 	
 	public enum stunType {
@@ -75,4 +76,14 @@ public class handleStunAI : MonoBehaviour {
 		
 	}
 	
+}
+
+[System.Serializable]
+public class proviamo {
+	[SerializeField]
+	public int ciao = 1;
+	[SerializeField]
+	public float deo = 2;
+	[SerializeField]
+	private float io = 5.0f;
 }

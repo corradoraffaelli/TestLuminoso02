@@ -9,17 +9,22 @@ public class sceneChanger : MonoBehaviour {
 
 	private GameObject controller;
 	private GameObject respawnPoint;
-
-
-	// Use this for initialization
-	void Awake() {
-
-	}
+	
 
 	void Start () {
 
-		getGameController ();
-		getRespawnPoint ();
+		tryInitializeSceneChanger ();
+
+	}
+
+	private void tryInitializeSceneChanger(){
+		if (controller != null && respawnPoint != null) {
+			return;
+		}
+		else {
+			getGameController ();
+			getRespawnPoint ();
+		}
 
 	}
 
@@ -50,7 +55,7 @@ public class sceneChanger : MonoBehaviour {
 			Debug.Log ("ATTENZIONE - oggetto RespawnPoint non trovato");
 	}
 
-	private void setRespawnPosition(){
+	private void setRespawnPosition(bool recursive = false){
 		
 		if (respawnPoint != null) {
 			
@@ -58,7 +63,17 @@ public class sceneChanger : MonoBehaviour {
 			respawnPoint.transform.localScale = new Vector3 ((defaultVerseRight ? 1.0f : -1.0f), respawnPoint.transform.localScale.y, respawnPoint.transform.localScale.z);
 		} 
 		else {
-			Debug.Log ("ATTENZIONE - oggetto RespawnPoint non trovato");
+			if(recursive) {
+				Debug.Log ("ATTENZIONE - oggetto RespawnPoint non trovato neanche al secondo tentativo - by" + gameObject.name);
+				return;
+			}
+			else {
+				//TODO: per ora gestisco così il fatto che inizialmente possa essere disattivo...
+				Debug.Log ("ATTENZIONE - oggetto RespawnPoint non trovato al primo tentativo - by" + gameObject.name);
+				tryInitializeSceneChanger();
+
+				setRespawnPosition(true);
+			}
 		}
 		
 	}
