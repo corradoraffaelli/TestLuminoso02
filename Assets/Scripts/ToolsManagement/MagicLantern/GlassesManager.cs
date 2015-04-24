@@ -10,10 +10,15 @@ public class GlassesManager : MonoBehaviour {
 	int actualGlassIndex = 0;
 	int actualGlassIndexUsableList = 0;
 	//public Glass actualGlass;
-	
+
+	void Awake(){
+		updateUsableGlassList ();
+		nextUsableGlass (true);
+	}
+
 	void Start () {
 		//prima inizializzazione della lista di vetrini usabili
-		updateUsableGlassList ();
+
 	}
 
 	void Update () {
@@ -103,12 +108,14 @@ public class GlassesManager : MonoBehaviour {
 			int indexBeforeIncrement = actualGlassIndex;
 
 			while (true) {
-				if (actualGlassIndex < (glassList.Length - 1)) {
-					actualGlassIndex = actualGlassIndex + 1;
-				} else {
-					actualGlassIndex = 0;
+				if (!first)
+				{
+					if (actualGlassIndex < (glassList.Length - 1)) {
+						actualGlassIndex = actualGlassIndex + 1;
+					} else {
+						actualGlassIndex = 0;
+					}
 				}
-
 
 				if (glassList [actualGlassIndex].Usable) {
 					updateActualGlassIndexUsableList();
