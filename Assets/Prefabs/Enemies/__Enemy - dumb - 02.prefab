@@ -130,7 +130,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: .0500000007
-  m_GravityScale: 2
+  m_GravityScale: 1
   m_FixedAngle: 1
   m_IsKinematic: 0
   m_Interpolate: 0
@@ -208,6 +208,7 @@ MonoBehaviour:
   collidingLadder: 0
   addFallingForceRight: 0
   addFallingForceLeft: 0
+  gravityMultiplier: 3
   speedFactor: 100
   AI_walkSpeed: 2.29999995
   AI_runSpeed: 5
