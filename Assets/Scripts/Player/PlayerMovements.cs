@@ -3,6 +3,8 @@ using System.Collections;
 
 public class PlayerMovements : MonoBehaviour {
 
+
+
 	Rigidbody2D RigBody;
 	Animator anim;
 	//Collider coll;
@@ -22,6 +24,9 @@ public class PlayerMovements : MonoBehaviour {
 	bool climbingDown = false;
 	bool jumpFromLadderRight = false;
 	bool jumpFromLadderLeft = false;
+
+	[Range(1.0f,5.0f)]
+	public float gravityMultiplier = 3.0f;
 
 	public float speedFactor = 4.0f;
 
@@ -296,7 +301,7 @@ public class PlayerMovements : MonoBehaviour {
 				}
 			}
 
-
+			gravityManagement();
 		} 
 		//sono sulla scala
 		else {
@@ -332,6 +337,16 @@ public class PlayerMovements : MonoBehaviour {
 		else
 			anim.SetBool ("Climbing", false);
 
+	}
+
+	void gravityManagement()
+	{
+		if (RigBody.velocity.y < 0.0f)
+			RigBody.gravityScale = gravityMultiplier * standardGravity;
+		else
+			RigBody.gravityScale = standardGravity;
+
+		//Debug.Log (RigBody.gravityScale);
 	}
 
 	void setCollisionsOnLadder(bool toIgnore = true)

@@ -19,8 +19,9 @@ public class OneWayPlatform : MonoBehaviour {
 	//bool needToNotIgnore = false;
 	int toIgnoreProgressive = 0;
 
+	public bool debugVariables = false;
 	public int threshBeforeIgnore = 10;
-	public bool useSprite = false;
+	public bool useSpriteLimits = false;
 
 	// Use this for initialization
 	void Start () {
@@ -33,7 +34,7 @@ public class OneWayPlatform : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (useSprite) {
+		if (useSpriteLimits) {
 			spriteRenderer = player.GetComponent<SpriteRenderer> ();
 
 			float playerLimit = spriteRenderer.bounds.min.y;
@@ -53,7 +54,7 @@ public class OneWayPlatform : MonoBehaviour {
 
 	void FixedUpdate()
 	{
-		if (!useSprite) {
+		if (!useSpriteLimits) {
 			playerOver = isPlayerOver (getPlayerBottomCollider (), platformCollider);
 			if (playerOver)
 				toIgnoreProgressive = 0;
@@ -61,19 +62,22 @@ public class OneWayPlatform : MonoBehaviour {
 			if (playerOver && !playerWasOver) {
 				changeIgnoreCollider (false);
 				playerWasOver = true;
-				Debug.Log ("da settare");
+				if (debugVariables)
+					Debug.Log ("da settare");
 			}
 			
 			if (!playerOver && playerWasOver && toIgnoreProgressive < threshBeforeIgnore) {
 				toIgnoreProgressive ++;
-				Debug.Log (toIgnoreProgressive);
+				if (debugVariables)
+					Debug.Log (toIgnoreProgressive);
 			}
 			
 			if (!playerOver && playerWasOver && toIgnoreProgressive == threshBeforeIgnore) {
 				changeIgnoreCollider(true);
 				playerWasOver = false;
 				toIgnoreProgressive = 0;
-				Debug.Log ("da ignorare");
+				if (debugVariables)
+					Debug.Log ("da ignorare");
 			}
 		}
 
