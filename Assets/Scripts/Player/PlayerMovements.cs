@@ -26,7 +26,7 @@ public class PlayerMovements : MonoBehaviour {
 	bool jumpFromLadderLeft = false;
 
 	[Range(1.0f,5.0f)]
-	public float gravityMultiplier = 3.0f;
+	public float gravityMultiplier = 1.0f;
 
 	public float speedFactor = 4.0f;
 
