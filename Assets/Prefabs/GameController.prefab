@@ -9,6 +9,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 430008}
   - 114: {fileID: 11490140}
+  - 114: {fileID: 11421212}
   m_Layer: 0
   m_Name: GameController
   m_TagString: Controller
@@ -28,6 +29,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
+--- !u!114 &11421212
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 139418}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 342100b8d8d3fd04598aa46d7c8ea441, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gravityValue: -9.81000042
 --- !u!114 &11490140
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -39,6 +52,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd0f2b1d5fdd4b342972ac16e6fec475, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  useController: 0
+  xControllerMultiplier: 15
+  yControllerMultiplier: 15
   zPositionEnvironment: 0
   BottomLimit: {fileID: 0}
   LeftLimit: {fileID: 0}
