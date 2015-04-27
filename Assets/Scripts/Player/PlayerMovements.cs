@@ -13,10 +13,10 @@ public class PlayerMovements : MonoBehaviour {
 	bool Jumping = false;
 	public bool onGround = false;
 	public bool onLadder = false;
-	public bool collidingLadder = false;
+	bool collidingLadder = false;
 
-	public bool addFallingForceRight = false;
-	public bool addFallingForceLeft = false;
+	bool addFallingForceRight = false;
+	bool addFallingForceLeft = false;
 	bool removeFallingNegForce = false;
 	bool removeFallingPosForce = false;
 	bool removeFallingForce = false;
@@ -46,6 +46,7 @@ public class PlayerMovements : MonoBehaviour {
 	public float maxFallingSpeed = 12.0f;
 
 	//gestione rimbalzi
+	public bool FallingVelocityDependence = false;
 	public float baseAscForce = 300.0f;
 	public float baseAscForceSpring = 500.0f;
 	public float addEnemyAscForce = 100.0f;
@@ -64,6 +65,8 @@ public class PlayerMovements : MonoBehaviour {
 	float lastYPositivePosition = 0.0f;
 	float firstYNegativePosition = 0.0f;
 	//public float yPos = 0.0f;
+	float bounceTime = 0.0f;
+	public float diffBounceTime = 0.5f;
 
 	float standardGravity;
 	bool freezedByTool = false;
@@ -77,7 +80,7 @@ public class PlayerMovements : MonoBehaviour {
 	public LayerMask PlayerLayer;
 	public LayerMask PlayerStunnedLayer;
 
-	public bool running;
+	bool running;
 
 	GameObject actualLadder;
 
@@ -395,33 +398,51 @@ public class PlayerMovements : MonoBehaviour {
 
 	public void setAscForce(bool isSpring = false)
 	{
-		//richiamato al primo rimbalzo, la variabile settedNumHeightLevel deve essere rimessa a false ogni volta che si tocca terra
-		if (!settedNumHeightLevel) {
+		//Debug.Log ("called");
+		//richiamo la funzione solo se è passato il tempo necessario
+		if (Mathf.Abs (Time.time - bounceTime) > diffBounceTime) {
+			bounceTime = Time.time;
 
-			//faccio una media tra l'ultima posizione con velocità positiva registrata e la prima con velocità negativa,
-			//per approssimare la massima posizione raggiunta
-			float mediumMaxHeight = (lastYPositivePosition + firstYNegativePosition) / 2;
-
-			if (mediumMaxHeight>transform.position.y)
-			{
-				diffHeight = Mathf.Abs (mediumMaxHeight - transform.position.y);
-				if (diffHeight > maxDiffHeight)
-					diffHeight = maxDiffHeight;
-			}else{
-				diffHeight = 0.0f;
+			//richiamato al primo rimbalzo, la variabile settedNumHeightLevel deve essere rimessa a false ogni volta che si tocca terra
+			if (!settedNumHeightLevel && !FallingVelocityDependence) {
+				
+				//faccio una media tra l'ultima posizione con velocità positiva registrata e la prima con velocità negativa,
+				//per approssimare la massima posizione raggiunta
+				float mediumMaxHeight = (lastYPositivePosition + firstYNegativePosition) / 2;
+				
+				if (mediumMaxHeight>transform.position.y)
+				{
+					diffHeight = Mathf.Abs (mediumMaxHeight - transform.position.y);
+					if (diffHeight > maxDiffHeight)
+						diffHeight = maxDiffHeight;
+				}else{
+					diffHeight = 0.0f;
+				}
+				
+				settedNumHeightLevel = true;
+			}
+			
+			float velocity = 0.0f;
+			if (FallingVelocityDependence) {
+				velocity = Mathf.Abs (RigBody.velocity.y);
+			}
+			
+			RigBody.velocity = new Vector3(RigBody.velocity.x,0.0f,0.0f);
+			
+			//dipende dalla velocità di caduta
+			if (FallingVelocityDependence) {
+				addedForceDebug = baseAscForce + (numEnemyJump*addEnemyAscForce) + (velocity*0.1f*addHeightAscForce);
+			} else {
+				
+				//dipende dall'altezza di caduta, non dalla velocità
+				if (isSpring)
+					addedForceDebug = baseAscForceSpring + (numEnemyJump*addEnemyAscForce) + (diffHeight/4*addHeightAscForce);
+				else
+					addedForceDebug = baseAscForce + (numEnemyJump*addEnemyAscForce) + (diffHeight/4*addHeightAscForce);
 			}
 
-			settedNumHeightLevel = true;
+			RigBody.AddForce(new Vector2 (0.0f,addedForceDebug));
 		}
-
-		RigBody.velocity = new Vector3(RigBody.velocity.x,0.0f,0.0f);
-
-		if (isSpring)
-			addedForceDebug = baseAscForceSpring + (numEnemyJump*addEnemyAscForce) + (diffHeight/4*addHeightAscForce);
-		else
-			addedForceDebug = baseAscForce + (numEnemyJump*addEnemyAscForce) + (diffHeight/4*addHeightAscForce);
-
-		RigBody.AddForce(new Vector2 (0.0f,addedForceDebug));
 	}
 
 	public void addEnemyCount()
