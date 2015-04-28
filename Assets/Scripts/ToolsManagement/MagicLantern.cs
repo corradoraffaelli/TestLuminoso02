@@ -22,7 +22,7 @@ public class MagicLantern : Tool {
 	public float zPositionEnvironment = 0.0f;
 	public float resizeFactor = 4.0f;
 	public float maxProjectingDistance = 8.5f;
-	public float minProjectingDistance = 1.5f;
+	public float minProjectingDistance = 1.0f;
 	public bool newSizeImplementation = true;
 	public float defaultCircleSize = 3.5f;
 	public float defaultDircleDistance = 4.0f;
