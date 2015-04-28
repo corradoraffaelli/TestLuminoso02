@@ -22,6 +22,12 @@ public class MagicLantern : Tool {
 	public float zPositionEnvironment = 0.0f;
 	public float resizeFactor = 4.0f;
 	public float maxProjectingDistance = 8.5f;
+	public float minProjectingDistance = 1.5f;
+	public bool newSizeImplementation = true;
+	public float defaultCircleSize = 3.5f;
+	public float defaultDircleDistance = 4.0f;
+	[Range(0.0f,3.0f)]
+	public float changeSizeMultiplier = 1.8f;
 	public bool limitProjectionDistance = true;
 	[Range(0.0f,1.0f)]
 	public float alphaProjection = 0.5f;
@@ -271,6 +277,48 @@ public class MagicLantern : Tool {
 			return false;
 	}
 
+	//verifica se la proiezione è troppo vicina al player
+	bool verifyIfTooNear()
+	{
+		//Vector3 pos_cursor = raggio_cerchio.transform.position;
+		Vector3 pos_cursor = cursorHandler.getCursorWorldPosition ();
+		Vector3 pos_player = cameraPoint.transform.position;
+		//Vector3 pos_player = player.transform.position;
+		float distance = Vector3.Distance (pos_player, pos_cursor);
+		if (Mathf.Abs (distance) < minProjectingDistance)
+			return true;
+		else
+			return false;
+	}
+
+	//verifica se la proiezione è troppo vicina al player
+	bool verifyIfCursorCameraTooNear()
+	{
+		//RaycastHit2D[] cacca =  RaycastAll(new Vector2(cameraPoint.transform.position.x, cameraPoint.transform.position.y), Vector2 direction, float distance = Mathf.Infinity, int layerMask = DefaultRaycastLayers, float minDepth = -Mathf.Infinity, float maxDepth = Mathf.Infinity);
+
+		//Vector3 pos_cursor = raggio_cerchio.transform.position;
+		Vector3 pos_cursor = cursorHandler.getCursorWorldPosition ();
+		Vector3 pos_player = cameraPoint.transform.position;
+
+		Vector2 pos_cursor2 = new Vector2 (pos_cursor.x, pos_cursor.y);
+		Vector2 pos_player2 = new Vector2 (pos_player.x, pos_player.y);
+		Vector2 direction2 = (pos_player2 - pos_cursor2);
+		RaycastHit2D[] cacca =  Physics2D.RaycastAll(pos_cursor2, direction2, Mathf.Infinity);
+		for (int i = 0; i< cacca.Length; i++)
+		{
+			//Debug.Log (cacca[i].transform.gameObject.name);
+		}
+		//Debug.Log (cacca.Length);
+
+		//Vector3 pos_player = player.transform.position;
+		float distance = Vector3.Distance (pos_player, pos_cursor);
+		//Debug.Log (Mathf.Abs (distance));
+		if (Mathf.Abs (distance) < 0.3f)
+			return true;
+		else
+			return false;
+	}
+
 	//funzione per aggiornare le variabili contenenti le sprites
 	//----!!!!! il cambiamento di queste variabili non modifica ciò che viene mostrato a schermo, a meno di un aggiornamento
 	void glassSpriteUpdate()
@@ -287,52 +335,76 @@ public class MagicLantern : Tool {
 
 	//movimenti del raggio e della proiezione in relazione alla posizione del player e del cursore
 	void normalMovementsUnderMouse(){
-		
-		//posiziono la lenterna di fronte al personaggio (ora non serve, la lanterna è "child" del player, da verificare la correttezza della cosa
-		//toolGameObject.transform.position = new Vector3(player.transform.position.x+0.4f,player.transform.position.y+0.8f,player.transform.position.z);
-		
-		//posiziono l'origine del cerchio sotto il mouse
-		if (limitProjectionDistance && verifyIfTooFar ())
-			raggio_cerchio.transform.position = getPositionAlongDirection (cameraPoint.transform.position, cursorHandler.getCursorWorldPosition (), maxProjectingDistance);
-		else
-			raggio_cerchio.transform.position = cursorHandler.getCursorWorldPosition ();
-		
-		//prendo la posizione del punto frontale della sprite della camera, e ci piazzo l'origine del raggio
-		cameraPointPos = cameraPoint.transform.position;
-		raggio.transform.position = cameraPointPos;
-		
-		//prendo la direzione tra l'inizio del raggio e la posizione del cerchio
-		_direction = (raggio_cerchio.transform.position - cameraPointPos).normalized;
-		
-		//cambio la scala del raggio in base alla distanza tra camera e cerchio
-		float distance = Vector3.Distance (raggio_cerchio.transform.position, cameraPointPos);
-		raggio.transform.localScale = new Vector3(distance / xSize,distance / (ySize*resizeFactor),1);
-		raggio_cerchio.transform.localScale = new Vector3(raggio.transform.localScale.y,raggio.transform.localScale.y,1);
-		
-		//setto la direzione del raggio
-		//se il personaggio non sta guardando verso destra la sua scala è -1, devo perciò correggere quella della direzione, di conseguenza
-		PlayerMovements PM = player.GetComponent<PlayerMovements> ();
-		if (!PM.FacingRight) {
-			_direction = new Vector3 (-_direction.x, _direction.y,_direction.z);
-			//il cerchio e la proiezione contenuta in esso non devono flippare insieme al personaggio
-			raggio_cerchio.transform.localScale = new Vector3(-raggio_cerchio.transform.localScale.x,raggio_cerchio.transform.localScale.y,raggio_cerchio.transform.localScale.z);
-		}
-		raggio.transform.right = _direction;
-		
-		//setto la direzione della camera
-		if (raggio.transform.localEulerAngles.z > 180)
-			camera.transform.localEulerAngles = new Vector3 (raggio.transform.localEulerAngles.x, raggio.transform.localEulerAngles.x, (raggio.transform.localEulerAngles.z-360) / 2);
-		else
-			camera.transform.localEulerAngles = new Vector3 (raggio.transform.localEulerAngles.x, raggio.transform.localEulerAngles.x, raggio.transform.localEulerAngles.z / 2);
-		
-		//test flipping personaggio
-		//flippa se il raggio punta dietro al personaggio
-		/*
+		//primo if per verificare che il cursore non sia troppo vicino alla lanterna, per evitare strani flipping
+		//si potrebbe pensare di limitare il cursore, ma per ora troppo complesso
+		if (!verifyIfCursorCameraTooNear ()) {
+
+			//posiziono la lenterna di fronte al personaggio (ora non serve, la lanterna è "child" del player, da verificare la correttezza della cosa
+			//toolGameObject.transform.position = new Vector3(player.transform.position.x+0.4f,player.transform.position.y+0.8f,player.transform.position.z);
+			
+			//posiziono l'origine del cerchio sotto il mouse
+			if (limitProjectionDistance && verifyIfTooFar ())
+				raggio_cerchio.transform.position = getPositionAlongDirection (cameraPoint.transform.position, cursorHandler.getCursorWorldPosition (), maxProjectingDistance);
+			else if (limitProjectionDistance && verifyIfTooNear ())
+				raggio_cerchio.transform.position = getPositionAlongDirection (cameraPoint.transform.position, cursorHandler.getCursorWorldPosition (), minProjectingDistance);
+			else
+				raggio_cerchio.transform.position = cursorHandler.getCursorWorldPosition ();
+			
+			//prendo la posizione del punto frontale della sprite della camera, e ci piazzo l'origine del raggio
+			cameraPointPos = cameraPoint.transform.position;
+			raggio.transform.position = cameraPointPos;
+			
+			//prendo la direzione tra l'inizio del raggio e la posizione del cerchio
+			_direction = (raggio_cerchio.transform.position - cameraPointPos).normalized;
+			
+			//cambio la scala del raggio in base alla distanza tra camera e cerchio
+			float distance = Vector3.Distance (raggio_cerchio.transform.position, cameraPointPos);
+
+			//calcolo della scala
+			if (newSizeImplementation)
+			{
+				float actualSize = defaultCircleSize + (defaultCircleSize*(distance-defaultDircleDistance)*changeSizeMultiplier/10.0f);
+				raggio.transform.localScale = new Vector3(distance / xSize,actualSize,1);
+				raggio_cerchio.transform.localScale = new Vector3(raggio.transform.localScale.y,raggio.transform.localScale.y,1);
+			}else{
+				raggio.transform.localScale = new Vector3(distance / xSize,distance / (ySize*resizeFactor),1);
+				raggio_cerchio.transform.localScale = new Vector3(raggio.transform.localScale.y,raggio.transform.localScale.y,1);
+			}
+
+
+
+			
+			//setto la direzione del raggio
+			//se il personaggio non sta guardando verso destra la sua scala è -1, devo perciò correggere quella della direzione, di conseguenza
+			PlayerMovements PM = player.GetComponent<PlayerMovements> ();
+			if (!PM.FacingRight) {
+				_direction = new Vector3 (-_direction.x, _direction.y,_direction.z);
+				//il cerchio e la proiezione contenuta in esso non devono flippare insieme al personaggio
+				raggio_cerchio.transform.localScale = new Vector3(-raggio_cerchio.transform.localScale.x,raggio_cerchio.transform.localScale.y,raggio_cerchio.transform.localScale.z);
+			}
+			raggio.transform.right = _direction;
+
+			Debug.Log (raggio.transform.localEulerAngles.z);
+
+			//setto la direzione della camera
+			if (!(raggio.transform.localEulerAngles.z > 179 && raggio.transform.localEulerAngles.z < 220)) {
+				if (raggio.transform.localEulerAngles.z > 180)
+					camera.transform.localEulerAngles = new Vector3 (raggio.transform.localEulerAngles.x, raggio.transform.localEulerAngles.x, (raggio.transform.localEulerAngles.z-360) / 2);
+				else
+					camera.transform.localEulerAngles = new Vector3 (raggio.transform.localEulerAngles.x, raggio.transform.localEulerAngles.x, raggio.transform.localEulerAngles.z / 2);
+			}
+			
+			
+			//test flipping personaggio
+			//flippa se il raggio punta dietro al personaggio
+			/*
 		if (((PM.FacingRight && raggio_cerchio.transform.position.x < player.transform.position.x)
 		    || (!PM.FacingRight && raggio_cerchio.transform.position.x > player.transform.position.x))
 		    && !player.GetComponent<PlayerMovements>().running)
 			PM.c_flip ();
 			*/
+		}
+
 	}
 
 
