@@ -8,7 +8,9 @@ public class MagicLantern : Tool {
 
 	Glass[] glassList;
 	int glassIndex;
-	Glass actualGlass;
+	//Glass actualGlass;
+
+	int projectedGlass;
 
 	//public GameObject glasses;
 	GameObject raggio_cerchio;
@@ -136,7 +138,7 @@ public class MagicLantern : Tool {
 			//viene fatto ad ogni update, da verificare se troppo pesante, precedentemente queste funzioni erano poste in modo più intelligente,
 			//sono state inserite nell'update per semplificare
 			if (glassesManager.isThereAUsableGlass ()) {
-				actualGlass = glassesManager.getActualGlass();
+				//actualGlass = glassesManager.getActualGlass();
 				glassSpriteUpdate ();
 			}
 
@@ -150,7 +152,8 @@ public class MagicLantern : Tool {
 
 			changeRayAndCircleSprites (normalRay, normalCircle);
 			changeProjectionSprite (projectionSprite);
-			deleteActualProjection ();
+			deleteInstantiatedPrefab();
+			//deleteActualProjection ();
 
 			if (verifyIfTooFar () && !limitProjectionDistance)
 				changeProjectionSprite (blurredSprite);
@@ -196,7 +199,8 @@ public class MagicLantern : Tool {
 			//se ripremo il tasto, la riprendo in mano
 			if (Input.GetButtonDown("Mira"))
 			{
-				deleteOldProjection();
+				//deleteOldProjection();
+				//deleteInstantiatedPrefab();
 				leftLantern = false;
 				setPlayerAsParent();
 			}
@@ -217,14 +221,14 @@ public class MagicLantern : Tool {
 	void slowTime()
 	{
 		float tempoLento = 0.1f;
-		Time.timeScale = Mathf.Lerp (1.0f, tempoLento, 0.5f);
+		Time.timeScale = Mathf.Lerp (1.0f, tempoLento, 0.5f*Time.deltaTime);
 
 	}
 
 	void fastTime()
 	{
 		float tempoLento = 0.1f;
-		Time.timeScale = Mathf.Lerp (tempoLento, 1.0f, 1.0f);
+		Time.timeScale = Mathf.Lerp (tempoLento, 1.0f, 1.0f*Time.deltaTime);
 	}
 
 	//impone il player come oggetto parent della lanterna
@@ -271,12 +275,12 @@ public class MagicLantern : Tool {
 	//----!!!!! il cambiamento di queste variabili non modifica ciò che viene mostrato a schermo, a meno di un aggiornamento
 	void glassSpriteUpdate()
 	{
-		if (actualGlass != null) {
-			goodGlassSprite = actualGlass.goodProjection;
-			badGlassSprite = actualGlass.badProjection;
-			projectionSprite = actualGlass.spriteObject;
-			blurredSprite = actualGlass.blurredProjection;
-			emptySprite = actualGlass.emptySprite;
+		if (glassesManager.getActualGlass() != null) {
+			goodGlassSprite = glassesManager.getActualGlass().goodProjection;
+			badGlassSprite = glassesManager.getActualGlass().badProjection;
+			projectionSprite = glassesManager.getActualGlass().spriteObject;
+			blurredSprite = glassesManager.getActualGlass().blurredProjection;
+			emptySprite = glassesManager.getActualGlass().emptySprite;
 		}
 
 	}
@@ -358,65 +362,72 @@ public class MagicLantern : Tool {
 	//funzione per istanziare il prefab dell'oggetto relativo al vetrino, sotto il cursore
 	void instantiatePrefab()
 	{
-		if (actualGlass.prefabObject) {
+		if (glassesManager.getActualGlass().prefabObject) {
 			//istanzio un prefab e lo sposto sotto il mouse
-			actualGlass.projectionObject = Instantiate <GameObject> (actualGlass.prefabObject);
-			actualGlass.projectionObject.transform.position = raggio_cerchio.transform.position;
+			glassesManager.getActualGlass().projectionObject = Instantiate <GameObject> (glassesManager.getActualGlass().prefabObject);
+			glassesManager.getActualGlass().projectionObject.transform.position = raggio_cerchio.transform.position;
 			//actualGlass.projectionObject.transform.position = new Vector3(actualMousePosition.x, actualMousePosition.y, zPositionEnvironment);
 			
 			//prendo i bounds della sprite della proiezione
 			Bounds objBounds = PC.getSpriteBounds ();
 			//prendo lo spriteRenderer del prefab ed i suoi bounds
-			SpriteRenderer actualSprite = actualGlass.projectionObject.transform.GetComponent<SpriteRenderer> ();
+			SpriteRenderer actualSprite = glassesManager.getActualGlass().projectionObject.transform.GetComponent<SpriteRenderer> ();
 			//actualSprite.sprite = projectionSprite;
 			Bounds newObjBounds = actualSprite.bounds;
 			
 			//scalo l'oggetto per far sì che la sua sprite coincida con quella sottostante (teoricamente vuota)
 			float spriteScale = objBounds.size.x / newObjBounds.size.x;
-			actualGlass.projectionObject.transform.localScale = new Vector3 (spriteScale, spriteScale, spriteScale);
+			glassesManager.getActualGlass().projectionObject.transform.localScale = new Vector3 (spriteScale, spriteScale, spriteScale);
 			
 			//metto l'oggetto come figlio del raggio_cerchio
-			actualGlass.projectionObject.transform.parent = raggio_cerchio.transform;
+			glassesManager.getActualGlass().projectionObject.transform.parent = raggio_cerchio.transform;
 			
-			actualGlass.projectionObject.SetActive (true);
+			glassesManager.getActualGlass().projectionObject.SetActive (true);
+
+			projectedGlass = glassesManager.getActualGlassIndex();
+			Debug.Log(projectedGlass);
 		}
 
 	}
 
+	void deleteInstantiatedPrefab()
+	{
+		//cancello solo la proiezione creata (se dovessero esserci problemi, prova ad usare il ciclo sotto
+		//Destroy (glassesManager.getGlassList () [projectedGlass].projectionObject);
 
+		createdProjection = false;
+
+		//cancella tutte le proiezioni
+
+		for (int i = 0; i< glassesManager.getGlassList().Length; i++) {
+			if (glassesManager.getGlassList()[i].projectionObject != null)
+				Destroy (glassesManager.getGlassList()[i].projectionObject);
+		}
+
+	}
 
 	//chiamato quando è necessario eliminare il vecchio prefab istanziato (quando si cambia vetrino, quando si esce da un muro o si va fuori fuoco)
+	/*
 	void deleteActualProjection()
 	{
 		createdProjection = false;
 
-		/*
-		for (int i = 0; i<glassList.Length; i++) {
-			if (glassList[i].projectionObject)
-				Destroy (actualGlass.projectionObject);
-		}
-		*/
-
-		if (actualGlass) {
-			if (actualGlass.projectionObject)
-				Destroy (actualGlass.projectionObject);
+		if (glassesManager.getActualGlass()) {
+			if (glassesManager.getActualGlass().projectionObject)
+				Destroy (glassesManager.getActualGlass().projectionObject);
 		}
 
 	}
+
 
 	//cancella il vecchio oggetto instanziato
 	void deleteOldProjection()
 	{
-		/*
-		for (int i = 0; i<glassList.Length; i++) {
-			if (glassList[i].projectionObject)
-				Destroy (glassList[i].projectionObject);
-		}
-		*/
-		if (actualGlass.projectionObject)
-			Destroy (actualGlass.projectionObject);
-	}
 
+		if (glassesManager.getActualGlass().projectionObject)
+			Destroy (glassesManager.getActualGlass().projectionObject);
+	}
+	*/
 
 	void takeObjectsFromScene()
 	{
