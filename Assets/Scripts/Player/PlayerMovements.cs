@@ -3,7 +3,75 @@ using System.Collections;
 
 public class PlayerMovements : MonoBehaviour {
 
+	//parametri di stato, per ora alcuni sono visibili nell'inspector, per debug
+	[System.Serializable]
+	public class StateParameters {
+		bool onGround = false;
+		public bool OnGround { get; set; }
+		bool facingRight = true;
+		public bool FacingRight { get; set; }
+		bool jumping = false;
+		public bool Jumping { get; set; }
+		bool collidingLadder = false;
+		public bool CollidingLadder { get; set; }
+		public bool onLadder = false;
+		public bool OnLadder { get; set; }
+		bool running;
+		public bool Running { get; set; }
+	}
 
+	/*
+	public bool OnGround02 {
+		get{ return stateParameters.OnGround}
+	}
+	*/
+	class UsedComponents{
+		Rigidbody2D rigBody;
+		public Rigidbody2D RigBody{ get; set; }
+		Animator anim;
+		public Animator Anim{ get; set; }
+	}
+
+	[System.Serializable]
+	class FallingForcesVariables{
+		[Range(1.0f,5.0f)]
+		[SerializeField]
+		float gravityMultiplier = 1.0f;
+		public float GravityMultiplier{ get;set;}
+
+		bool addFallingForceRight = false;
+		public bool AddFallingForceRight{ get; set; }
+		bool addFallingForceLeft = false;
+		public bool AddFallingForceLeft{ get; set; }
+		bool removeFallingNegForce = false;
+		public bool RemoveFallingNegForce{ get; set; }
+		bool removeFallingPosForce = false;
+		public bool RemoveFallingPosForce{ get; set; }
+		bool removeFallingForce = false;
+		public bool RemoveFallingForce{ get; set; }
+	}
+
+	[System.Serializable]
+	class OnGroundVariables{
+
+	}
+
+	class OnLadderVariables{
+		bool climbingUp = false;
+		public bool ClimbingUp{ get; set; }
+		bool climbingDown = false;
+		public bool ClimbingDown{ get; set; }
+		bool jumpFromLadderRight = false;
+		public bool JumpFromLadderRight{ get; set; }
+		bool jumpFromLadderLeft = false;
+		public bool JumpFromLadderLeft{ get; set; }
+	}
+
+	[SerializeField]
+	StateParameters stateParameters;
+	UsedComponents usedComponents;
+	[SerializeField]
+	FallingForcesVariables fallingForcesVariables;
 
 	Rigidbody2D RigBody;
 	Animator anim;
@@ -20,6 +88,7 @@ public class PlayerMovements : MonoBehaviour {
 	bool removeFallingNegForce = false;
 	bool removeFallingPosForce = false;
 	bool removeFallingForce = false;
+
 	bool climbingUp = false;
 	bool climbingDown = false;
 	bool jumpFromLadderRight = false;
@@ -39,11 +108,12 @@ public class PlayerMovements : MonoBehaviour {
 	//------------------------------------
 	public float jumpFactor = 2.0f;
 	public float forceOnAirFactor = 10.0f;
+	public float airXDeceleration = 5.0f;
+	public float maxFallingSpeed = 12.0f;
+
 	public float LadderLateralLimit = 0.1f;
 	public float onLadderMovement = 0.1f;
 	public float fromLadderForce = 100.0f;
-	public float airXDeceleration = 5.0f;
-	public float maxFallingSpeed = 12.0f;
 
 	//gestione rimbalzi
 	public bool FallingVelocityDependence = false;
