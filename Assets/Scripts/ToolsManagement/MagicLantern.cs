@@ -61,7 +61,8 @@ public class MagicLantern : Tool {
 	GlassesManager glassesManager;
 
 	bool createdProjection = false;
-	bool leftLantern = false;
+	[HideInInspector]
+	public bool leftLantern = false;
 
 	//parametri per il fine livello
 	//bool endedProjected = false;
@@ -227,14 +228,14 @@ public class MagicLantern : Tool {
 	void slowTime()
 	{
 		float tempoLento = 0.1f;
-		Time.timeScale = Mathf.Lerp (1.0f, tempoLento, 0.5f*Time.deltaTime);
+		Time.timeScale = Mathf.Lerp (Time.timeScale, tempoLento, 0.5f*Time.deltaTime);
 
 	}
 
 	void fastTime()
 	{
 		float tempoLento = 0.1f;
-		Time.timeScale = Mathf.Lerp (tempoLento, 1.0f, 1.0f*Time.deltaTime);
+		Time.timeScale = Mathf.Lerp (Time.timeScale, 1.0f, 1.0f*Time.deltaTime);
 	}
 
 	//impone il player come oggetto parent della lanterna
@@ -384,7 +385,7 @@ public class MagicLantern : Tool {
 			}
 			raggio.transform.right = _direction;
 
-			Debug.Log (raggio.transform.localEulerAngles.z);
+			//Debug.Log (raggio.transform.localEulerAngles.z);
 
 			//setto la direzione della camera
 			if (!(raggio.transform.localEulerAngles.z > 179 && raggio.transform.localEulerAngles.z < 220)) {
@@ -457,7 +458,7 @@ public class MagicLantern : Tool {
 			glassesManager.getActualGlass().projectionObject.SetActive (true);
 
 			projectedGlass = glassesManager.getActualGlassIndex();
-			Debug.Log(projectedGlass);
+			//Debug.Log(projectedGlass);
 		}
 
 	}

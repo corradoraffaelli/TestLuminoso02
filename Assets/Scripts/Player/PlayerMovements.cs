@@ -183,6 +183,8 @@ public class PlayerMovements : MonoBehaviour {
 	gameSet gs;
 	//private GameObject myToStun;
 
+	MagicLantern magicLanternLogic;
+
 	void Start () {
 
 		RigBody = transform.GetComponent<Rigidbody2D>();
@@ -193,6 +195,7 @@ public class PlayerMovements : MonoBehaviour {
 		if (!AIControl){
 			getRespawnPoint ();
 			getCursorHandler ();
+			getMagicLanternLogic();
 
 			gs = controller.GetComponent<gameSet>();
 
@@ -221,6 +224,16 @@ public class PlayerMovements : MonoBehaviour {
 		if (warning)
 			Debug.Log ("attenzione, manca un oggetto stunning sotto il player");
 		*/
+	}
+
+	private void getMagicLanternLogic()
+	{
+		GameObject magicLanternObject = GameObject.FindGameObjectWithTag ("MagicLanternLogic");
+		
+		if (magicLanternLogic == null)
+			Debug.Log ("ATTENZIONE - oggetto MagicLanternLogic non trovato");
+
+		magicLanternLogic = magicLanternObject.GetComponent<MagicLantern> ();
 	}
 
 	private void getGameController(){
@@ -300,10 +313,10 @@ public class PlayerMovements : MonoBehaviour {
 				//gestione del girarsi o meno
 				//if ((facingRight == true && Input.GetAxis ("Horizontal") < 0) || (facingRight == false && Input.GetAxis ("Horizontal") > 0))
 				//	Flip ();
-				
-				if (((cursorHandler.getCursorWorldPosition ().x > transform.position.x) && !FacingRight) ||
-					((cursorHandler.getCursorWorldPosition ().x < transform.position.x) && FacingRight))
-					Flip ();
+
+				flipHandling();
+
+
 				
 				//se tocco terra
 				if (onGround) {
@@ -384,6 +397,39 @@ public class PlayerMovements : MonoBehaviour {
 		
 		setAnimations ();
 
+	}
+
+	void flipHandling()
+	{
+		if (magicLanternLogic.active && !magicLanternLogic.leftLantern)
+		{
+			if (((cursorHandler.getCursorWorldPosition ().x > transform.position.x) && !FacingRight) ||
+			    ((cursorHandler.getCursorWorldPosition ().x < transform.position.x) && FacingRight))
+			{
+				Flip ();
+				//Debug.Log ("girando 1");
+			}	
+		}
+
+		if (cursorHandler.isCursorMoving())
+		{
+			if (((cursorHandler.getCursorWorldPosition ().x > transform.position.x) && !FacingRight) ||
+			    ((cursorHandler.getCursorWorldPosition ().x < transform.position.x) && FacingRight))
+			{
+				Flip ();
+				//Debug.Log ("girando 2");
+			}	
+		}
+
+		//se la lanterna è attiva ma l'ho lasciata, oppure non è attiva, il player gira in base al suo movimento solo se non sto muovendo il cursore
+		if (((magicLanternLogic.active && magicLanternLogic.leftLantern) || (!magicLanternLogic.active)) && !cursorHandler.isCursorMoving ()) {
+			if ((Input.GetAxis("Horizontal") < -0.2f && facingRight) || (Input.GetAxis("Horizontal") > 0.2f && !facingRight))
+			{
+				Flip ();
+				//Debug.Log ("girando 3");
+			}
+			   
+		}
 	}
 
 	void setAnimations()
@@ -1088,6 +1134,21 @@ public class PlayerMovements : MonoBehaviour {
 
 		}
 
+	}
+
+	public void c_crushKill(){
+		Debug.Log ("AAAAAAAAAAAAAAAA");
+		if (!AIControl) {
+			
+			if(OnGround) {
+				StartCoroutine (handlePlayerKill ());
+				c_stunned (true);
+			}
+		} else {
+			//se ne occupa lo script dell'AI, riceve anche lui il messaggio
+			
+		}
+		
 	}
 
 	private IEnumerator handlePlayerKill() {

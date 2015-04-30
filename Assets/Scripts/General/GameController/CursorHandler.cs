@@ -26,6 +26,13 @@ public class CursorHandler : MonoBehaviour {
 	float xDistFromBeginning;
 	float yDistFromBeginning;
 
+	//variabili per determinare se il cursore si sta muovendo o meno
+	//[HideInInspector]
+	public bool cursorIsMoving;
+	Vector3 oldCursorPosition;
+	bool firstCursorPosition = true;
+	public float ScreenRatioMovement = 0.01f;
+
 	// Use this for initialization
 	void Start () {
 		Cursor.lockState = CursorLockMode.Confined;
@@ -48,6 +55,7 @@ public class CursorHandler : MonoBehaviour {
 	void Update () {
 		setCursorPosition ();
 		//Debug.Log (getCursorScreenPosition());
+		verifyCursorMoving ();
 	}
 
 	void setCursorPosition()
@@ -138,6 +146,29 @@ public class CursorHandler : MonoBehaviour {
 
 	float findY(float m, float a, float x){
 		return m * x + a;
+	}
+
+	void verifyCursorMoving()
+	{
+		//cursorIsMoving = false;
+		if (firstCursorPosition) {
+			oldCursorPosition = getCursorScreenPosition();
+			firstCursorPosition = false;
+		}
+		else {
+			if ((Mathf.Abs(oldCursorPosition.x - getCursorScreenPosition().x) > ScreenRatioMovement*xDistFromBeginning)||
+			    (Mathf.Abs(oldCursorPosition.y - getCursorScreenPosition().y) > ScreenRatioMovement*yDistFromBeginning))
+				cursorIsMoving = true;
+			else
+				cursorIsMoving = false;
+
+			oldCursorPosition = getCursorScreenPosition();
+		}
+	}
+
+	public bool isCursorMoving()
+	{
+		return cursorIsMoving;
 	}
 
 	public Vector3 getCursorWorldPosition()
