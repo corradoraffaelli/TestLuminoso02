@@ -73,7 +73,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 168940}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.51525307, y: -1.31456757, z: 0}
+  m_LocalPosition: {x: 5.82999992, y: -2.66000009, z: 0}
   m_LocalScale: {x: .579999983, y: .730000019, z: 1}
   m_Children: []
   m_Father: {fileID: 495876}
@@ -85,7 +85,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 189142}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.5252533, y: 3.62543249, z: 0}
+  m_LocalPosition: {x: 5.84000015, y: 2.27999997, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 495876}
@@ -97,8 +97,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 117344}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.75474548, y: -6.06556749, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -2.5, y: -4.46000004, z: 0}
+  m_LocalScale: {x: 7, y: 3, z: 1}
   m_Children: []
   m_Father: {fileID: 495876}
   m_RootOrder: 1
@@ -109,7 +109,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 111696}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 2.93510175, y: -1.65466404, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 455522}
@@ -158,6 +158,7 @@ MonoBehaviour:
   triggerTagList:
   - Player
   - Enemy
+  - GeneralPhysicObject
   NeedInteractionButton: 0
 --- !u!114 &11473012
 MonoBehaviour:
@@ -170,12 +171,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e5c5683652594612ab45d9d79afc669, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buttonType: 0
+  buttonType: 1
   movementType: 0
-  endActionType: 0
+  endActionType: 1
   targetPos: {fileID: 479560}
   tForwardLenght: 1.29999995
-  tBackwardLenght: 3.5
+  tBackwardLenght: .699999988
 --- !u!212 &21230744
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -227,7 +228,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: b63eff45190ba427b91160a83030482b, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: .992647052, g: .0145977642, b: .0145977642, a: 1}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
