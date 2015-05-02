@@ -1,10 +1,18 @@
 ﻿using UnityEngine;
+using UnityEngine.Events;
 using System.Collections;
 
 public class gameSet : MonoBehaviour {
 
 	public GameObject []checkPoints;
-	
+
+	[SerializeField]
+	public StringEvent ciao;
+
+	[SerializeField]
+	public StringiEvent ciao1;
+
+
 	public int starterPoint = 0;
 
 	// Use this for initialization
@@ -63,4 +71,14 @@ public class gameSet : MonoBehaviour {
 	void Update () {
 	
 	}
+
 }
+
+[System.Serializable]
+public class StringiEvent : UnityEvent <bool> { }
+
+[System.Serializable]
+public class StringEvent : UnityEvent  {
+
+}
+

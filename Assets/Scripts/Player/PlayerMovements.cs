@@ -3,7 +3,75 @@ using System.Collections;
 
 public class PlayerMovements : MonoBehaviour {
 
+	//parametri di stato, per ora alcuni sono visibili nell'inspector, per debug
+	[System.Serializable]
+	public class StateParameters {
+		bool onGround = false;
+		public bool OnGround { get; set; }
+		bool facingRight = true;
+		public bool FacingRight { get; set; }
+		bool jumping = false;
+		public bool Jumping { get; set; }
+		bool collidingLadder = false;
+		public bool CollidingLadder { get; set; }
+		public bool onLadder = false;
+		public bool OnLadder { get; set; }
+		bool running;
+		public bool Running { get; set; }
+	}
 
+	/*
+	public bool OnGround02 {
+		get{ return stateParameters.OnGround}
+	}
+	*/
+	class UsedComponents{
+		Rigidbody2D rigBody;
+		public Rigidbody2D RigBody{ get; set; }
+		Animator anim;
+		public Animator Anim{ get; set; }
+	}
+
+	[System.Serializable]
+	class FallingForcesVariables{
+		[Range(1.0f,5.0f)]
+		[SerializeField]
+		float gravityMultiplier = 1.0f;
+		public float GravityMultiplier{ get;set;}
+
+		bool addFallingForceRight = false;
+		public bool AddFallingForceRight{ get; set; }
+		bool addFallingForceLeft = false;
+		public bool AddFallingForceLeft{ get; set; }
+		bool removeFallingNegForce = false;
+		public bool RemoveFallingNegForce{ get; set; }
+		bool removeFallingPosForce = false;
+		public bool RemoveFallingPosForce{ get; set; }
+		bool removeFallingForce = false;
+		public bool RemoveFallingForce{ get; set; }
+	}
+
+	[System.Serializable]
+	class OnGroundVariables{
+
+	}
+
+	class OnLadderVariables{
+		bool climbingUp = false;
+		public bool ClimbingUp{ get; set; }
+		bool climbingDown = false;
+		public bool ClimbingDown{ get; set; }
+		bool jumpFromLadderRight = false;
+		public bool JumpFromLadderRight{ get; set; }
+		bool jumpFromLadderLeft = false;
+		public bool JumpFromLadderLeft{ get; set; }
+	}
+
+	[SerializeField]
+	StateParameters stateParameters;
+	UsedComponents usedComponents;
+	[SerializeField]
+	FallingForcesVariables fallingForcesVariables;
 
 	Rigidbody2D RigBody;
 	Animator anim;
@@ -20,6 +88,7 @@ public class PlayerMovements : MonoBehaviour {
 	bool removeFallingNegForce = false;
 	bool removeFallingPosForce = false;
 	bool removeFallingForce = false;
+
 	bool climbingUp = false;
 	bool climbingDown = false;
 	bool jumpFromLadderRight = false;
@@ -39,11 +108,12 @@ public class PlayerMovements : MonoBehaviour {
 	//------------------------------------
 	public float jumpFactor = 2.0f;
 	public float forceOnAirFactor = 10.0f;
+	public float airXDeceleration = 5.0f;
+	public float maxFallingSpeed = 12.0f;
+
 	public float LadderLateralLimit = 0.1f;
 	public float onLadderMovement = 0.1f;
 	public float fromLadderForce = 100.0f;
-	public float airXDeceleration = 5.0f;
-	public float maxFallingSpeed = 12.0f;
 
 	//gestione rimbalzi
 	public bool FallingVelocityDependence = false;
@@ -113,6 +183,8 @@ public class PlayerMovements : MonoBehaviour {
 	gameSet gs;
 	//private GameObject myToStun;
 
+	MagicLantern magicLanternLogic;
+
 	void Start () {
 
 		RigBody = transform.GetComponent<Rigidbody2D>();
@@ -123,6 +195,7 @@ public class PlayerMovements : MonoBehaviour {
 		if (!AIControl){
 			getRespawnPoint ();
 			getCursorHandler ();
+			getMagicLanternLogic();
 
 			gs = controller.GetComponent<gameSet>();
 
@@ -151,6 +224,16 @@ public class PlayerMovements : MonoBehaviour {
 		if (warning)
 			Debug.Log ("attenzione, manca un oggetto stunning sotto il player");
 		*/
+	}
+
+	private void getMagicLanternLogic()
+	{
+		GameObject magicLanternObject = GameObject.FindGameObjectWithTag ("MagicLanternLogic");
+		
+		if (magicLanternLogic == null)
+			Debug.Log ("ATTENZIONE - oggetto MagicLanternLogic non trovato");
+
+		magicLanternLogic = magicLanternObject.GetComponent<MagicLantern> ();
 	}
 
 	private void getGameController(){
@@ -230,10 +313,10 @@ public class PlayerMovements : MonoBehaviour {
 				//gestione del girarsi o meno
 				//if ((facingRight == true && Input.GetAxis ("Horizontal") < 0) || (facingRight == false && Input.GetAxis ("Horizontal") > 0))
 				//	Flip ();
-				
-				if (((cursorHandler.getCursorWorldPosition ().x > transform.position.x) && !FacingRight) ||
-					((cursorHandler.getCursorWorldPosition ().x < transform.position.x) && FacingRight))
-					Flip ();
+
+				flipHandling();
+
+
 				
 				//se tocco terra
 				if (onGround) {
@@ -314,6 +397,39 @@ public class PlayerMovements : MonoBehaviour {
 		
 		setAnimations ();
 
+	}
+
+	void flipHandling()
+	{
+		if (magicLanternLogic.active && !magicLanternLogic.leftLantern)
+		{
+			if (((cursorHandler.getCursorWorldPosition ().x > transform.position.x) && !FacingRight) ||
+			    ((cursorHandler.getCursorWorldPosition ().x < transform.position.x) && FacingRight))
+			{
+				Flip ();
+				//Debug.Log ("girando 1");
+			}	
+		}
+
+		if (cursorHandler.isCursorMoving())
+		{
+			if (((cursorHandler.getCursorWorldPosition ().x > transform.position.x) && !FacingRight) ||
+			    ((cursorHandler.getCursorWorldPosition ().x < transform.position.x) && FacingRight))
+			{
+				Flip ();
+				//Debug.Log ("girando 2");
+			}	
+		}
+
+		//se la lanterna è attiva ma l'ho lasciata, oppure non è attiva, il player gira in base al suo movimento solo se non sto muovendo il cursore
+		if (((magicLanternLogic.active && magicLanternLogic.leftLantern) || (!magicLanternLogic.active)) && !cursorHandler.isCursorMoving ()) {
+			if ((Input.GetAxis("Horizontal") < -0.2f && facingRight) || (Input.GetAxis("Horizontal") > 0.2f && !facingRight))
+			{
+				Flip ();
+				//Debug.Log ("girando 3");
+			}
+			   
+		}
 	}
 
 	void setAnimations()
@@ -1018,6 +1134,21 @@ public class PlayerMovements : MonoBehaviour {
 
 		}
 
+	}
+
+	public void c_crushKill(){
+		Debug.Log ("AAAAAAAAAAAAAAAA");
+		if (!AIControl) {
+			
+			if(OnGround) {
+				StartCoroutine (handlePlayerKill ());
+				c_stunned (true);
+			}
+		} else {
+			//se ne occupa lo script dell'AI, riceve anche lui il messaggio
+			
+		}
+		
 	}
 
 	private IEnumerator handlePlayerKill() {

@@ -39,6 +39,8 @@ public class ActivableObject : MonoBehaviour {
 	private float forwardSpeed;
 	private float backwardSpeed;
 
+	killWhatever kw;
+
 	// Use this for initialization
 	void Start () {
 
@@ -49,6 +51,17 @@ public class ActivableObject : MonoBehaviour {
 		checkTargetPos ();
 
 		setSpeeds ();
+
+		getKillWhateverScript ();
+
+	}
+
+	private void getKillWhateverScript(){
+
+		kw = GetComponentInChildren<killWhatever> ();
+
+		if (kw == null)
+			Debug.Log ("ATTENZIONE - manca il crusher figlio della porta");
 
 	}
 
@@ -105,6 +118,7 @@ public class ActivableObject : MonoBehaviour {
 
 		if (forwardActionEnable) {
 
+			kw.turnOn = false;
 			move (targetPos.position, true);
 
 		}
@@ -112,6 +126,7 @@ public class ActivableObject : MonoBehaviour {
 
 			if(backwardActionEnable) {
 
+				kw.turnOn = true;
 				move (defaultPos, false);
 
 			}
