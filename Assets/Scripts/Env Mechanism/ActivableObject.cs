@@ -36,8 +36,12 @@ public class ActivableObject : MonoBehaviour {
 
 	private Transform myTrasform;
 
+
+	private float distanceToCover;
 	private float forwardSpeed;
 	private float backwardSpeed;
+
+	killWhatever kw;
 
 	// Use this for initialization
 	void Start () {
@@ -48,13 +52,34 @@ public class ActivableObject : MonoBehaviour {
 
 		checkTargetPos ();
 
-		setSpeeds ();
+		//setSpeeds ();
+
+		setDistanceToCover ();
+
+		getKillWhateverScript ();
+
+	}
+
+	private void getKillWhateverScript(){
+
+		kw = GetComponentInChildren<killWhatever> ();
+
+		if (kw == null)
+			Debug.Log ("ATTENZIONE - manca il crusher figlio della porta");
 
 	}
 
 	private void setDefaultPos(){
 
 		defaultPos = new Vector3(transform.position.x, transform.position.y, transform.position.z); 
+
+	}
+
+	private void setDistanceToCover(){
+
+		Vector3 dist = targetPos.position - myTrasform.position;
+
+		distanceToCover = dist.magnitude;
 
 	}
 
@@ -105,12 +130,18 @@ public class ActivableObject : MonoBehaviour {
 
 		if (forwardActionEnable) {
 
+			if(kw != null)
+				kw.turnOn = false;
+
 			move (targetPos.position, true);
 
 		}
 		else {
 
 			if(backwardActionEnable) {
+
+				if(kw != null)
+					kw.turnOn = true;
 
 				move (defaultPos, false);
 
@@ -140,7 +171,14 @@ public class ActivableObject : MonoBehaviour {
 	private void translate(Vector3 target, bool isForward) {
 		
 		Vector3 dist = target - myTrasform.position;
-		
+
+		if (isForward) {
+			forwardSpeed = distanceToCover / tForwardLenght;
+		}
+		else {
+			backwardSpeed = distanceToCover / tBackwardLenght;
+		}
+
 		if (dist.magnitude > 0.1f)
 			myTrasform.Translate (dist.normalized * (isForward ? forwardSpeed : backwardSpeed) * Time.deltaTime );
 		else {
