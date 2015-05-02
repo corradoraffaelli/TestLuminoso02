@@ -794,6 +794,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   oneKill: 0
+  turnOn: 1
+  crusher: 0
 --- !u!61 &124438293
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1648,6 +1650,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   oneKill: 0
+  turnOn: 1
+  crusher: 0
 --- !u!61 &358846274
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -3719,6 +3723,14 @@ MonoBehaviour:
   - {fileID: 2075218480}
   - {fileID: 1541835256}
   - {fileID: 1278244754}
+  ciao:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: StringEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+  ciao1:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: StringiEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   starterPoint: 0
 --- !u!1 &980039859
 GameObject:
@@ -4753,6 +4765,10 @@ Prefab:
       propertyPath: toDisappear.Array.data[1]
       value: 
       objectReference: {fileID: 1746667316}
+    - target: {fileID: 11451080, guid: 31ee4228d98f04eb09b7be7aae9cdec6, type: 2}
+      propertyPath: TimeToAppearDisappear
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 6133616, guid: 31ee4228d98f04eb09b7be7aae9cdec6, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 31ee4228d98f04eb09b7be7aae9cdec6, type: 2}
@@ -5695,6 +5711,10 @@ Prefab:
       propertyPath: toAppear.Array.data[1]
       value: 
       objectReference: {fileID: 1746667316}
+    - target: {fileID: 11451080, guid: 31ee4228d98f04eb09b7be7aae9cdec6, type: 2}
+      propertyPath: TimeToAppearDisappear
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 6133616, guid: 31ee4228d98f04eb09b7be7aae9cdec6, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 31ee4228d98f04eb09b7be7aae9cdec6, type: 2}
@@ -5899,6 +5919,10 @@ Prefab:
       propertyPath: toAppear.Array.data[0]
       value: 
       objectReference: {fileID: 424388714}
+    - target: {fileID: 11451080, guid: 31ee4228d98f04eb09b7be7aae9cdec6, type: 2}
+      propertyPath: TimeToAppearDisappear
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 6133616, guid: 31ee4228d98f04eb09b7be7aae9cdec6, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 31ee4228d98f04eb09b7be7aae9cdec6, type: 2}
@@ -6300,11 +6324,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 851d31c61a1c64414813a118982c051e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  disableActualGameObject: 1
+  respawnPosition: 1
   toDisappear: []
   toAppear:
   - {fileID: 1425573172}
   - {fileID: 1096925675}
   defaultVerseRight: 1
+  TimeToAppearDisappear: 2
 --- !u!1 &1746667316
 GameObject:
   m_ObjectHideFlags: 0
@@ -6552,6 +6579,10 @@ Prefab:
       propertyPath: toDisappear.Array.data[0]
       value: 
       objectReference: {fileID: 686473162}
+    - target: {fileID: 11451080, guid: 31ee4228d98f04eb09b7be7aae9cdec6, type: 2}
+      propertyPath: TimeToAppearDisappear
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 6133616, guid: 31ee4228d98f04eb09b7be7aae9cdec6, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 31ee4228d98f04eb09b7be7aae9cdec6, type: 2}
@@ -7513,6 +7544,10 @@ Prefab:
       propertyPath: toAppear.Array.data[0]
       value: 
       objectReference: {fileID: 645621244}
+    - target: {fileID: 11451080, guid: 31ee4228d98f04eb09b7be7aae9cdec6, type: 2}
+      propertyPath: TimeToAppearDisappear
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 6133616, guid: 31ee4228d98f04eb09b7be7aae9cdec6, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 31ee4228d98f04eb09b7be7aae9cdec6, type: 2}
