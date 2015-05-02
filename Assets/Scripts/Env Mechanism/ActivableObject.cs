@@ -36,6 +36,8 @@ public class ActivableObject : MonoBehaviour {
 
 	private Transform myTrasform;
 
+
+	private float distanceToCover;
 	private float forwardSpeed;
 	private float backwardSpeed;
 
@@ -50,7 +52,9 @@ public class ActivableObject : MonoBehaviour {
 
 		checkTargetPos ();
 
-		setSpeeds ();
+		//setSpeeds ();
+
+		setDistanceToCover ();
 
 		getKillWhateverScript ();
 
@@ -68,6 +72,14 @@ public class ActivableObject : MonoBehaviour {
 	private void setDefaultPos(){
 
 		defaultPos = new Vector3(transform.position.x, transform.position.y, transform.position.z); 
+
+	}
+
+	private void setDistanceToCover(){
+
+		Vector3 dist = targetPos.position - myTrasform.position;
+
+		distanceToCover = dist.magnitude;
 
 	}
 
@@ -118,7 +130,9 @@ public class ActivableObject : MonoBehaviour {
 
 		if (forwardActionEnable) {
 
-			kw.turnOn = false;
+			if(kw != null)
+				kw.turnOn = false;
+
 			move (targetPos.position, true);
 
 		}
@@ -126,7 +140,9 @@ public class ActivableObject : MonoBehaviour {
 
 			if(backwardActionEnable) {
 
-				kw.turnOn = true;
+				if(kw != null)
+					kw.turnOn = true;
+
 				move (defaultPos, false);
 
 			}
@@ -155,7 +171,14 @@ public class ActivableObject : MonoBehaviour {
 	private void translate(Vector3 target, bool isForward) {
 		
 		Vector3 dist = target - myTrasform.position;
-		
+
+		if (isForward) {
+			forwardSpeed = distanceToCover / tForwardLenght;
+		}
+		else {
+			backwardSpeed = distanceToCover / tBackwardLenght;
+		}
+
 		if (dist.magnitude > 0.1f)
 			myTrasform.Translate (dist.normalized * (isForward ? forwardSpeed : backwardSpeed) * Time.deltaTime );
 		else {
