@@ -3,6 +3,9 @@ using System.Collections;
 
 public class sceneChanger : MonoBehaviour {
 
+	public bool disableActualGameObject = true;
+	public bool respawnPosition = true;
+
 	public GameObject []toDisappear;
 	public GameObject []toAppear;
 	public bool defaultVerseRight = true;
@@ -15,12 +18,13 @@ public class sceneChanger : MonoBehaviour {
 
 	public float TimeToAppearDisappear = 2.0f;
 
+
 	void Start () {
 
 		tryInitializeSceneChanger ();
 
 		takeSpriteRenderers ();
-		changeSpriteRenderersAlpha (spriteRenderersToAppear, 0.0f);
+		//changeSpriteRenderersAlpha (spriteRenderersToAppear, 0.0f);
 	}
 
 	void Update()
@@ -107,8 +111,9 @@ public class sceneChanger : MonoBehaviour {
 				//Debug.Log ("attivato l'oggetto " + go.name);
 			}
 		}
-		
-		setRespawnPosition();
+
+		if (respawnPosition)
+			setRespawnPosition();
 
 		//this.gameObject.SetActive(false);
 		hideGameObject();
@@ -189,8 +194,10 @@ public class sceneChanger : MonoBehaviour {
 			//se ho finito di abilitare/disabilitare, disabilito l'oggetto e la lista di oggetti passata in ingresso
 			if (appearAlpha == 1.0f && disappearAlpha == 0.0f) 
 			{
+				needChange = false;
 				disactiveGameObjectsList();
-				disactiveGameObject();
+				if (disableActualGameObject)
+					disactiveGameObject();
 			}
 				
 		}
