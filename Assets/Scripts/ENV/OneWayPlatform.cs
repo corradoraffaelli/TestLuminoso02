@@ -13,14 +13,16 @@ public class OneWayPlatform : MonoBehaviour {
 	bool playerWasOver = false;
 	bool playerOver = false;
 	float sogliaControllo = 0.0f;
+
 	//public float maxSogliaControllo = 0.6f;
 	//bool playerWasBelow = false;
 	//bool needToIgnore = false;
 	//bool needToNotIgnore = false;
-	int toIgnoreProgressive = 0;
 
+	int toIgnoreProgressive = 0;
 	public bool debugVariables = false;
 	public int threshBeforeIgnore = 10;
+
 	public bool useSpriteLimits = false;
 
 	// Use this for initialization
@@ -30,10 +32,15 @@ public class OneWayPlatform : MonoBehaviour {
 		platformCollider = transform.GetComponent<Collider2D> ();
 		rigidBody = player.GetComponent<Rigidbody2D>();
 		maxFallingSpeed = player.GetComponent<PlayerMovements> ().maxFallingSpeed;
+
+		//prima inizializzazione del collider
+		colliderInit ();
+		//playerWasOver = isPlayerOver (getPlayerBottomCollider (), platformCollider);
 	}
 	
 	// Update is called once per frame
 	void Update () {
+		/*
 		if (useSpriteLimits) {
 			spriteRenderer = player.GetComponent<SpriteRenderer> ();
 
@@ -50,37 +57,67 @@ public class OneWayPlatform : MonoBehaviour {
 				changeIgnoreCollider(true);
 			}
 		}
+		*/
 	}
 
 	void FixedUpdate()
 	{
 		if (!useSpriteLimits) {
-			playerOver = isPlayerOver (getPlayerBottomCollider (), platformCollider);
-			if (playerOver)
-				toIgnoreProgressive = 0;
-			//Debug.Log (playerOver);
-			if (playerOver && !playerWasOver) {
-				changeIgnoreCollider (false);
-				playerWasOver = true;
-				if (debugVariables)
-					Debug.Log ("da settare");
-			}
-			
-			if (!playerOver && playerWasOver && toIgnoreProgressive < threshBeforeIgnore) {
-				toIgnoreProgressive ++;
-				if (debugVariables)
-					Debug.Log (toIgnoreProgressive);
-			}
-			
-			if (!playerOver && playerWasOver && toIgnoreProgressive == threshBeforeIgnore) {
-				changeIgnoreCollider(true);
-				playerWasOver = false;
-				toIgnoreProgressive = 0;
-				if (debugVariables)
-					Debug.Log ("da ignorare");
-			}
+			playerOver = isPlayerOver (getPlayerBottomCollider ().bounds, platformCollider.bounds);
+		} else {
+			spriteRenderer = player.GetComponent<SpriteRenderer> ();
+			playerOver = isPlayerOver (getPlayerBottomCollider ().bounds, spriteRenderer.bounds);
 		}
 
+		if (playerOver)
+			toIgnoreProgressive = 0;
+		//Debug.Log (playerOver);
+		if (playerOver && !playerWasOver) {
+			changeIgnoreCollider (false);
+			playerWasOver = true;
+			if (debugVariables)
+				Debug.Log ("da settare");
+		}
+		
+		if (!playerOver && playerWasOver && toIgnoreProgressive < threshBeforeIgnore) {
+			toIgnoreProgressive ++;
+			if (debugVariables)
+				Debug.Log (toIgnoreProgressive);
+		}
+		
+		if (!playerOver && playerWasOver && toIgnoreProgressive == threshBeforeIgnore) {
+			changeIgnoreCollider(true);
+			playerWasOver = false;
+			toIgnoreProgressive = 0;
+			if (debugVariables)
+				Debug.Log ("da ignorare");
+		}
+		
+
+	}
+
+	void colliderInit()
+	{
+		if (!useSpriteLimits) {
+			playerOver = isPlayerOver (getPlayerBottomCollider ().bounds, platformCollider.bounds);
+		} else {
+			spriteRenderer = player.GetComponent<SpriteRenderer> ();
+			playerOver = isPlayerOver (getPlayerBottomCollider ().bounds, spriteRenderer.bounds);
+		}
+
+		if (playerOver) {
+			changeIgnoreCollider (false);
+			playerWasOver = true;
+			if (debugVariables)
+				Debug.Log ("init settato");
+		}
+
+		if (!playerOver) {
+			changeIgnoreCollider(true);
+			playerWasOver = false;
+			if (debugVariables)
+				Debug.Log ("init ignorato");
+		}
 	}
 
 	//ritorna il collider con la y più bassa
@@ -106,7 +143,7 @@ public class OneWayPlatform : MonoBehaviour {
 		return basso;
 	}
 
-	bool isPlayerOver(Collider2D playerCollider, Collider2D platCollider)
+	bool isPlayerOver(Bounds playerCollider, Bounds platCollider)
 	{
 		//Debug.Log (platCollider.bounds.max.y - platCollider.bounds.min.y);
 		//se il player sta cadendo, aumento la soglia
@@ -119,8 +156,8 @@ public class OneWayPlatform : MonoBehaviour {
 		}
 		//Debug.Log (sogliaControllo);
 
-		float playerLimit = playerCollider.bounds.min.y;
-		float platLimit = platCollider.bounds.max.y;
+		float playerLimit = playerCollider.min.y;
+		float platLimit = platCollider.max.y;
 		if (playerLimit > (platLimit-sogliaControllo))
 			return true;
 		else
