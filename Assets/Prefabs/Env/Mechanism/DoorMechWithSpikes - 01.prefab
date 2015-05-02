@@ -75,6 +75,8 @@ GameObject:
   m_Component:
   - 4: {fileID: 431076}
   - 212: {fileID: 21224026}
+  - 114: {fileID: 11446790}
+  - 61: {fileID: 6167602}
   m_Layer: 0
   m_Name: Spikes
   m_TagString: Untagged
@@ -89,8 +91,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 141076}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -2.5, z: 0}
-  m_LocalScale: {x: 1.72413802, y: 1.36986303, z: 1}
+  m_LocalPosition: {x: 0, y: -2.4000001, z: 0}
+  m_LocalScale: {x: 1.5, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 465860}
   m_RootOrder: 0
@@ -101,7 +103,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 129684}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5, y: -1.76999998, z: 0}
+  m_LocalPosition: {x: -3.57999992, y: -4.51000023, z: 0}
   m_LocalScale: {x: 7, y: 3, z: 1}
   m_Children: []
   m_Father: {fileID: 464550}
@@ -113,7 +115,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 134268}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 22.8040466, y: 4.92245007, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 465860}
@@ -141,7 +143,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 140072}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 7.78000021, y: .209999993, z: 0}
+  m_LocalPosition: {x: 0, y: 2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 464550}
@@ -159,6 +161,19 @@ BoxCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Size: {x: .170000002, y: .230000004}
+--- !u!61 &6167602
+BoxCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 141076}
+  m_Enabled: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_Offset: {x: 0, y: -4.76837158e-07}
+  serializedVersion: 2
+  m_Size: {x: 1.29999995, y: .289999992}
 --- !u!61 &6174868
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -189,6 +204,20 @@ MonoBehaviour:
   - Enemy
   - GeneralPhysicObject
   NeedInteractionButton: 0
+--- !u!114 &11446790
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 141076}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c93b61cfb669f4f88a01537f468b8b98, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  oneKill: 0
+  turnOn: 1
+  crusher: 1
 --- !u!114 &11448384
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -204,10 +233,9 @@ MonoBehaviour:
   buttonType: 0
   movementType: 0
   endActionType: 0
-  killWithSpikes: 1
   targetPos: {fileID: 473042}
-  tForwardLenght: 1.29999995
-  tBackwardLenght: 1.5
+  tForwardLenght: 3.79999995
+  tBackwardLenght: 3.5999999
 --- !u!212 &21219906
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -257,7 +285,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -664804789
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: a37c7a70c1c2d403588cde9e6b3d9bb3, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!212 &21236416

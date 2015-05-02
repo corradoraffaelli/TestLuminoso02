@@ -8,7 +8,6 @@ public class ActivableObject : MonoBehaviour {
 	public enum buttonActivationType {
 		OnePush,
 		LongPush,
-		StayPush,
 	}
 	public buttonActivationType buttonType;
 
