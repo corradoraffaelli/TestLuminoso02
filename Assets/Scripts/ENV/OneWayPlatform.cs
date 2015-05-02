@@ -22,6 +22,8 @@ public class OneWayPlatform : MonoBehaviour {
 
 	float sogliaControllo = 0.0f;
 
+	public float threshControl = 0.2f;
+
 	//public float maxSogliaControllo = 0.6f;
 	//bool playerWasBelow = false;
 	//bool needToIgnore = false;
@@ -129,7 +131,7 @@ public class OneWayPlatform : MonoBehaviour {
 				Collider2D bottomCollider = getPlayerBottomCollider (enemyColliders[i]);
 				if (bottomCollider != null)
 				{
-					enemyOver[i] = isPlayerOver (bottomCollider.bounds, platformCollider.bounds);
+					enemyOver[i] = isPlayerOver (bottomCollider.bounds, platformCollider.bounds, true);
 					
 					if (enemyOver[i])
 						enemyToIgnoreProgressive[i] = 0;
@@ -188,7 +190,7 @@ public class OneWayPlatform : MonoBehaviour {
 		return basso;
 	}
 
-	bool isPlayerOver(Bounds playerCollider, Bounds platCollider)
+	bool isPlayerOver(Bounds playerCollider, Bounds platCollider, bool useThreshControl = false)
 	{
 		//Debug.Log (platCollider.bounds.max.y - platCollider.bounds.min.y);
 		//se il player sta cadendo, aumento la soglia
@@ -203,10 +205,21 @@ public class OneWayPlatform : MonoBehaviour {
 
 		float playerLimit = playerCollider.min.y;
 		float platLimit = platCollider.max.y;
-		if (playerLimit > (platLimit-sogliaControllo))
-			return true;
-		else
-			return false;
+		//aggiunge un'ulteriore soglia di controllo, per ora usato con i nemici
+		if (useThreshControl) {
+			if (playerLimit > (platLimit-sogliaControllo-threshControl))
+				return true;
+			else
+				return false;
+
+		} else {
+			if (playerLimit > (platLimit-sogliaControllo))
+				return true;
+			else
+				return false;
+
+		}
+
 	}
 
 	void changeIgnoreCollider(Collider2D[] inputColliders, bool ignoreOrNot = true)

@@ -14,7 +14,7 @@ public class sceneChanger : MonoBehaviour {
 	void Start () {
 
 		tryInitializeSceneChanger ();
-
+		takeSpriteRenderers ();
 	}
 
 	private void tryInitializeSceneChanger(){
@@ -98,7 +98,7 @@ public class sceneChanger : MonoBehaviour {
 		}
 		
 		setRespawnPosition();
-		
+
 		this.gameObject.SetActive(false);
 		
 	}
@@ -113,6 +113,19 @@ public class sceneChanger : MonoBehaviour {
 
 	}
 
+	//-----------CORRADO----------------
 
+	SpriteRenderer[][] spriteRenderers;
+	void takeSpriteRenderers()
+	{
+		spriteRenderers = new SpriteRenderer[toAppear.Length][];
+
+		for (int i = 0; i< spriteRenderers.Length; i++) {
+			if (toAppear[i] != null) {
+				spriteRenderers[i] = toAppear[i].GetComponentsInChildren<SpriteRenderer> ();
+			}
+		}
+
+	}
 
 }
