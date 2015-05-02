@@ -3,9 +3,11 @@ using System.Collections;
 
 public class ActivableObject : MonoBehaviour {
 
+	public bool DEBUG_transition = false;
 
 	public enum buttonActivationType {
 		OnePush,
+		LongPush,
 		StayPush,
 	}
 	public buttonActivationType buttonType;
@@ -21,7 +23,9 @@ public class ActivableObject : MonoBehaviour {
 		Stay,
 	}
 	public endReactionType endActionType;
-	
+
+	//public bool killWithSpikes = true;
+
 	Vector3 defaultPos;
 	public Transform targetPos;
 
@@ -41,6 +45,9 @@ public class ActivableObject : MonoBehaviour {
 	private float forwardSpeed;
 	private float backwardSpeed;
 
+	private bool freezePosition = false;
+	private bool canReturn = true;
+
 	killWhatever kw;
 
 	// Use this for initialization
@@ -54,15 +61,80 @@ public class ActivableObject : MonoBehaviour {
 
 		//setSpeeds ();
 
+
 		setDistanceToCover ();
 
 		getKillWhateverScript ();
+
+		checkSpikes ();
+	}
+
+	private void checkSpikes(){
+
+		if (!kw.crusher) {
+
+			bool found = false;
+
+			foreach(Transform child in transform) {
+
+				if(child.name == "Spikes"){
+
+					SpriteRenderer sr = child.GetComponent<SpriteRenderer>();
+
+					if(sr != null) {
+						found = true;
+					}
+					break;
+				}
+
+			}
+
+			if(!found) {
+
+				Debug.Log ("ATTENZIONE - spuntoni non trovati");
+
+			}
+
+		} 
+		else {
+
+			bool found = false;
+
+			foreach(Transform child in transform) {
+				
+				if(child.name == "Spikes"){
+					
+					SpriteRenderer sr = child.GetComponent<SpriteRenderer>();
+					
+					if(sr != null) {
+						found = true;
+					}
+					break;
+				}
+				
+			}
+
+			if(!found) {
+				
+				Debug.Log ("ATTENZIONE - spuntoni presenti, sarebbe meglio rimuoverli!");
+				
+			}
+
+		}
 
 	}
 
 	private void getKillWhateverScript(){
 
-		kw = GetComponentInChildren<killWhatever> ();
+		foreach (Transform child in transform) {
+			
+			if (child.name == "Spikes") {
+
+				kw = child.GetComponentInChildren<killWhatever> ();
+
+			}
+
+		}
 
 		if (kw == null)
 			Debug.Log ("ATTENZIONE - manca il crusher figlio della porta");
@@ -130,8 +202,11 @@ public class ActivableObject : MonoBehaviour {
 
 		if (forwardActionEnable) {
 
-			if(kw != null)
-				kw.turnOn = false;
+			if(kw != null) {
+				if(kw.crusher)
+					kw.turnOn = false;
+
+			}
 
 			move (targetPos.position, true);
 
@@ -140,8 +215,10 @@ public class ActivableObject : MonoBehaviour {
 
 			if(backwardActionEnable) {
 
-				if(kw != null)
-					kw.turnOn = true;
+				if(kw != null){
+					if(kw.crusher)
+						kw.turnOn = true;
+				}
 
 				move (defaultPos, false);
 
@@ -151,22 +228,7 @@ public class ActivableObject : MonoBehaviour {
 		}
 
 	}
-
-	/*
-	private void translate() {
-
-		Vector3 dist = targetPos.position - myTrasform.position;
-
-		if (dist.magnitude > 0.5f)
-			myTrasform.Translate (dist.normalized * forwardSpeed);
-		else {
-			Debug.Log ("arrivato");
-			backwardActionEnable = true;
-		}
-		//myTrasform.Translate(
-
-	}
-	*/
+	
 
 	private void translate(Vector3 target, bool isForward) {
 		
@@ -179,18 +241,25 @@ public class ActivableObject : MonoBehaviour {
 			backwardSpeed = distanceToCover / tBackwardLenght;
 		}
 
-		if (dist.magnitude > 0.1f)
-			myTrasform.Translate (dist.normalized * (isForward ? forwardSpeed : backwardSpeed) * Time.deltaTime );
+		if (dist.magnitude > 0.1f) {
+			if(!freezePosition)
+				myTrasform.Translate (dist.normalized * (isForward ? forwardSpeed : backwardSpeed) * Time.deltaTime);
+
+		}
 		else {
 
 
 			switch(endActionType) {
 
 				case endReactionType.ComeBack : 
-					Debug.Log ("arrivato a " + (isForward ? "target" : "inizio"));
+					if(DEBUG_transition) {
+						Debug.Log ("arrivato a " + (isForward ? "target" : "inizio"));
+					}
 					if(isForward) {
-						forwardActionEnable = false;
-						backwardActionEnable = true;
+						if(canReturn) {
+							forwardActionEnable = false;
+							backwardActionEnable = true;
+						}
 					}
 					else {
 						backwardActionEnable = false;
@@ -199,7 +268,9 @@ public class ActivableObject : MonoBehaviour {
 					break;
 
 				case endReactionType.Stay :
-					Debug.Log ("arrivato a " + (isForward ? "target" : "inizio") + ", sto fermo");
+					if(DEBUG_transition) {
+						Debug.Log ("arrivato a " + (isForward ? "target" : "inizio") + ", sto fermo");
+					}
 					break;
 
 				default :
@@ -239,53 +310,91 @@ public class ActivableObject : MonoBehaviour {
 		}
 
 	}
+	
+
 
 	public void buttonPushed(bool bp){
-
+		
 		switch (endActionType) {
-
+			
 		case endReactionType.ComeBack :
+
+			freezePosition = false;
+
 			switch(buttonType) {
 				
 				case buttonActivationType.OnePush :
 					if(bp) {
-						forwardActionEnable = bp;
-						backwardActionEnable = !bp;
+						//attivazione bottone
+						forwardActionEnable = true;
+						backwardActionEnable = false;
+						canReturn = false;
+
+					}
+					else {
+						canReturn = true;
 					}
 					break;
-				case buttonActivationType.StayPush :
-					Debug.Log ("Questa configurazione non ha molto senso");
+				case buttonActivationType.LongPush :
+					if(bp) {
+						//attivazione bottone
+						forwardActionEnable = true;
+						backwardActionEnable = false;
+						canReturn = false;
+					}
+					else {
+						//caso non di interesse per ora...
+						forwardActionEnable = false;
+						backwardActionEnable = true;
+						canReturn = true;
+					}
 					break;
 				default :
 					break;
 			}
-
+			
 			break;
 
 		case endReactionType.Stay :
 
 			switch(buttonType) {
-
+				
 				case buttonActivationType.OnePush :
-					forwardActionEnable = !forwardActionEnable;
-					backwardActionEnable = !forwardActionEnable;
+					if(bp) {
+						//attivazione bottone
+						forwardActionEnable = true;
+						backwardActionEnable = false;
+					}
+					else {
+						//non faccio niente...
+					}
 					break;
-				case buttonActivationType.StayPush :
-					forwardActionEnable = bp;
-					backwardActionEnable = !bp;
+				case buttonActivationType.LongPush :
+					if(bp) {
+						//attivazione bottone
+						forwardActionEnable = true;
+						backwardActionEnable = false;
+						freezePosition = false;
+					}
+					else {
+						//caso non di interesse per ora...
+						forwardActionEnable = false;
+						backwardActionEnable = true;
+						freezePosition = true;
+					}
 					break;
 				default :
 					break;
 			}
 
 			break;
-
+			
 		default :
 			break;
-
+			
 		}
-
-
+		
+		
 	}
 
 }

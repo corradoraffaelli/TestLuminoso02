@@ -8,6 +8,8 @@ public class ButtonTrigger : MonoBehaviour {
 	public bool NeedInteractionButton = false;
 	int realTriggerTagListLength;
 
+	private GameObject whoIsActivatingMe;
+
 	// Use this for initialization
 	void Start () {
 
@@ -39,11 +41,15 @@ public class ButtonTrigger : MonoBehaviour {
 		if (NeedInteractionButton)
 			return;
 
+		if (whoIsActivatingMe != null)
+			return;
+
 		for (int i=0; i< triggerTagList.Length; i++) {
 
 			if(c.tag== triggerTagList[i]) {
 
 				if(objectToActivate!=null) {
+					whoIsActivatingMe = c.gameObject;
 					objectToActivate.SendMessage("buttonPushed", true);
 				}
 				else {
@@ -63,12 +69,16 @@ public class ButtonTrigger : MonoBehaviour {
 		if (NeedInteractionButton)
 			return;
 
+		if (whoIsActivatingMe != c.gameObject)
+			return;
+
 		for (int i=0; i< triggerTagList.Length; i++) {
 			
 			if(c.tag== triggerTagList[i]) {
 				
 				if(objectToActivate!=null) {
 					objectToActivate.SendMessage("buttonPushed", false);
+					whoIsActivatingMe = null;
 				}
 				else {
 					Debug.Log ("ATTENZIONE - L'OGGETTO DA ATTIVARE NON E' STATO ASSEGNATO");
@@ -84,7 +94,12 @@ public class ButtonTrigger : MonoBehaviour {
 
 
 	public void OnTriggerStay2D(Collider2D c) {
-		
+
+		if (whoIsActivatingMe == null) {
+			OnTriggerEnter2D (c);
+			return;
+		}
+
 		if (!NeedInteractionButton)
 			return;
 

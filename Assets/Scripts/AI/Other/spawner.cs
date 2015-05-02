@@ -8,9 +8,16 @@ public class spawner : MonoBehaviour {
 	public GameObject mold;
 	public Sprite normalS;
 	public Sprite activatingS;
+	[Range(1,10)]
+	public int numberOfEnemies = 1;
+	[Range(0.1f,10.0f)]
+	public float tBeetingSpawn = 2.0f;
 	private SpriteRenderer mySR;
 	private GameObject myMold;
 	private string moldName;
+
+	int numberOfAliveEnemies = 1;
+
 	int number = 0;
 
 	void Start () {
@@ -25,13 +32,29 @@ public class spawner : MonoBehaviour {
 			//myMold.transform.localScale = new Vector2(Mathf.Abs(myMold.transform.localScale.x), Mathf.Abs(myMold.transform.localScale.y));
 			myMold.SetActive(false);
 		}
-		//StartCoroutine (createMold());
 
+		StartCoroutine (createMold());
+		StartCoroutine (checkSpawnNeed ());
 	}
 
 	// Update is called once per frame
 	void Update () {
-	
+
+	}
+
+	private IEnumerator checkSpawnNeed() {
+
+		while (true) {
+			yield return new WaitForSeconds(tBeetingSpawn);
+
+			if(numberOfAliveEnemies<numberOfEnemies) {
+
+				StartCoroutine (SpawnCoroutine ());
+				numberOfAliveEnemies++;
+
+			}
+		}
+
 	}
 
 	private IEnumerator createMold() {
@@ -48,11 +71,13 @@ public class spawner : MonoBehaviour {
 
 	public void letsSpawn() {
 
-		StartCoroutine (animateSpawn ());
+		numberOfAliveEnemies--;
+
+		//StartCoroutine (SpawnCoroutine ());
 
 	}
 
-	private IEnumerator animateSpawn() {
+	private IEnumerator SpawnCoroutine() {
 
 		for (int i= 0; i<7; i++) {
 
