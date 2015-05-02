@@ -4,14 +4,22 @@ using System.Collections;
 public class OneWayPlatform : MonoBehaviour {
 
 	GameObject player;
+	GameObject[] enemies;
 	Collider2D[] playerColliders;
 	Collider2D platformCollider;
+	Collider2D[][] enemyColliders;
+
 	Rigidbody2D rigidBody;
 	SpriteRenderer spriteRenderer;
 	float maxFallingSpeed;
 
 	bool playerWasOver = false;
 	bool playerOver = false;
+
+	bool[] enemyWasOver;
+	bool[] enemyOver;
+	int[] enemyToIgnoreProgressive;
+
 	float sogliaControllo = 0.0f;
 
 	//public float maxSogliaControllo = 0.6f;
@@ -25,6 +33,8 @@ public class OneWayPlatform : MonoBehaviour {
 
 	public bool useSpriteLimits = false;
 
+	public float refreshEnemyTime = 2.0f;
+
 	// Use this for initialization
 	void Start () {
 		player = GameObject.FindGameObjectWithTag ("Player");
@@ -35,45 +45,62 @@ public class OneWayPlatform : MonoBehaviour {
 
 		//prima inizializzazione del collider
 		colliderInit ();
-		//playerWasOver = isPlayerOver (getPlayerBottomCollider (), platformCollider);
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		/*
-		if (useSpriteLimits) {
-			spriteRenderer = player.GetComponent<SpriteRenderer> ();
 
-			float playerLimit = spriteRenderer.bounds.min.y;
-			float platLimit = platformCollider.bounds.max.y;
-			if (playerLimit >= platLimit && !playerWasOver)
-			{
-				playerWasOver = true;
-				changeIgnoreCollider(false);
-			}
-			else if (playerLimit < platLimit && playerWasOver)
-			{
-				playerWasOver = false;
-				changeIgnoreCollider(true);
-			}
-		}
-		*/
+		//ogni due secondi aggiorna gli array dei nemici e dei loro colliders
+		InvokeRepeating("findEnemiesCollidersAndInit", 1, refreshEnemyTime);
 	}
 
 	void FixedUpdate()
 	{
+		setCollidersPlayerFU ();
+		setCollidersEnemiesFU ();
+	}
+
+	//chiamata allo start, per inizializzare i colliders
+	void colliderInit()
+	{
+		//player
 		if (!useSpriteLimits) {
-			playerOver = isPlayerOver (getPlayerBottomCollider ().bounds, platformCollider.bounds);
+			playerOver = isPlayerOver (getPlayerBottomCollider (playerColliders).bounds, platformCollider.bounds);
 		} else {
 			spriteRenderer = player.GetComponent<SpriteRenderer> ();
-			playerOver = isPlayerOver (getPlayerBottomCollider ().bounds, spriteRenderer.bounds);
+			playerOver = isPlayerOver (getPlayerBottomCollider (playerColliders).bounds, spriteRenderer.bounds);
+		}
+		
+		if (playerOver) {
+			changeIgnoreCollider (playerColliders, false);
+			playerWasOver = true;
+			if (debugVariables)
+				Debug.Log ("init settato");
+		}
+		
+		if (!playerOver) {
+			changeIgnoreCollider(playerColliders, true);
+			playerWasOver = false;
+			if (debugVariables)
+				Debug.Log ("init ignorato");
 		}
 
+		//enemies
+		findEnemiesCollidersAndInit ();
+	}
+
+
+
+	void setCollidersPlayerFU()
+	{
+		if (!useSpriteLimits) {
+			playerOver = isPlayerOver (getPlayerBottomCollider (playerColliders).bounds, platformCollider.bounds);
+		} else {
+			spriteRenderer = player.GetComponent<SpriteRenderer> ();
+			playerOver = isPlayerOver (getPlayerBottomCollider (playerColliders).bounds, spriteRenderer.bounds);
+		}
+		
 		if (playerOver)
 			toIgnoreProgressive = 0;
 		//Debug.Log (playerOver);
 		if (playerOver && !playerWasOver) {
-			changeIgnoreCollider (false);
+			changeIgnoreCollider (playerColliders, false);
 			playerWasOver = true;
 			if (debugVariables)
 				Debug.Log ("da settare");
@@ -86,59 +113,77 @@ public class OneWayPlatform : MonoBehaviour {
 		}
 		
 		if (!playerOver && playerWasOver && toIgnoreProgressive == threshBeforeIgnore) {
-			changeIgnoreCollider(true);
+			changeIgnoreCollider(playerColliders, true);
 			playerWasOver = false;
 			toIgnoreProgressive = 0;
 			if (debugVariables)
 				Debug.Log ("da ignorare");
 		}
-		
-
 	}
 
-	void colliderInit()
+	void setCollidersEnemiesFU()
 	{
-		if (!useSpriteLimits) {
-			playerOver = isPlayerOver (getPlayerBottomCollider ().bounds, platformCollider.bounds);
-		} else {
-			spriteRenderer = player.GetComponent<SpriteRenderer> ();
-			playerOver = isPlayerOver (getPlayerBottomCollider ().bounds, spriteRenderer.bounds);
-		}
+		for (int i = 0; i<enemyColliders.Length; i++) {
+			if (enemyColliders[i] != null)
+			{
+				Collider2D bottomCollider = getPlayerBottomCollider (enemyColliders[i]);
+				if (bottomCollider != null)
+				{
+					enemyOver[i] = isPlayerOver (bottomCollider.bounds, platformCollider.bounds);
+					
+					if (enemyOver[i])
+						enemyToIgnoreProgressive[i] = 0;
+					
+					if (enemyOver[i] && !enemyWasOver[i]) {
+						changeIgnoreCollider (enemyColliders[i], false);
+						enemyWasOver[i] = true;
+						if (debugVariables)
+							Debug.Log ("enemy da settare");
+					}
+					
+					if (!enemyOver[i] && enemyWasOver[i] && enemyToIgnoreProgressive[i] < threshBeforeIgnore) {
+						enemyToIgnoreProgressive[i] ++;
+						if (debugVariables)
+							Debug.Log (enemyToIgnoreProgressive[i]);
+					}
+					
+					if (!enemyOver[i] && enemyWasOver[i] && enemyToIgnoreProgressive[i] == threshBeforeIgnore) {
+						changeIgnoreCollider(enemyColliders[i], true);
+						enemyWasOver[i] = false;
+						enemyToIgnoreProgressive[i] = 0;
+						if (debugVariables)
+							Debug.Log (" enemy da ignorare");
+					}
+				}
 
-		if (playerOver) {
-			changeIgnoreCollider (false);
-			playerWasOver = true;
-			if (debugVariables)
-				Debug.Log ("init settato");
-		}
+			}
 
-		if (!playerOver) {
-			changeIgnoreCollider(true);
-			playerWasOver = false;
-			if (debugVariables)
-				Debug.Log ("init ignorato");
 		}
 	}
 
 	//ritorna il collider con la y più bassa
-	Collider2D getPlayerBottomCollider()
+	Collider2D getPlayerBottomCollider(Collider2D[] inputColliders)
 	{
 		bool primo = true;
 		float limit = 0.0f;
 		Collider2D basso= null;
-		for (int i = 0; i< playerColliders.Length; i++) {
-			if (primo)
+		for (int i = 0; i< inputColliders.Length; i++) {
+			if (inputColliders[i]!= null)
 			{
-				limit = playerColliders[i].bounds.min.y;
-				basso = playerColliders[i];
-				primo = true;
-			}else{
-				if (playerColliders[i].bounds.min.y < limit)
+				if (primo)
 				{
-					limit = playerColliders[i].bounds.min.y;
-					basso = playerColliders[i];
+					limit = inputColliders[i].bounds.min.y;
+					basso = inputColliders[i];
+					primo = true;
+				}else{
+					if (playerColliders[i].bounds.min.y < limit)
+					{
+						limit = inputColliders[i].bounds.min.y;
+						basso = inputColliders[i];
+					}
 				}
 			}
+
 		}
 		return basso;
 	}
@@ -164,10 +209,44 @@ public class OneWayPlatform : MonoBehaviour {
 			return false;
 	}
 
-	void changeIgnoreCollider(bool ignoreOrNot = true)
+	void changeIgnoreCollider(Collider2D[] inputColliders, bool ignoreOrNot = true)
 	{
-		for (int i = 0; i< playerColliders.Length; i++) {
-			Physics2D.IgnoreCollision(playerColliders[i], platformCollider, ignoreOrNot);
+		for (int i = 0; i< inputColliders.Length; i++) {
+			Physics2D.IgnoreCollision(inputColliders[i], platformCollider, ignoreOrNot);
 		}
+	}
+
+	void findEnemiesCollidersAndInit()
+	{
+		enemies = GameObject.FindGameObjectsWithTag ("Enemy");
+		
+		enemyColliders = new Collider2D[enemies.Length][];
+		enemyOver = new bool[enemies.Length];
+		enemyWasOver = new bool[enemies.Length];
+		enemyToIgnoreProgressive = new int[enemies.Length];
+		
+		//scorro i nemici e riempio l'array di colliders
+		for (int i = 0; i<enemies.Length; i++) {
+			enemyColliders[i] = enemies[i].GetComponents<Collider2D>();
+
+			enemyToIgnoreProgressive[i] = 0;
+		}
+
+		for (int i = 0; i<enemyColliders.Length; i++) {
+			enemyOver[i] = isPlayerOver (getPlayerBottomCollider (enemyColliders[i]).bounds, platformCollider.bounds);
+			
+			if (enemyOver[i]) {
+				changeIgnoreCollider (enemyColliders[i], false);
+				enemyWasOver[i] = true;
+				if (debugVariables)
+					Debug.Log ("init enemy settato");
+			}else{
+				changeIgnoreCollider(enemyColliders[i], true);
+				enemyWasOver[i] = false;
+				if (debugVariables)
+					Debug.Log ("init enemy ignorato");
+			}
+		}
+
 	}
 }
