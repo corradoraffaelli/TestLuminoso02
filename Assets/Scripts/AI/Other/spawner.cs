@@ -64,6 +64,11 @@ public class spawner : MonoBehaviour {
 		if (mold != null) {
 			myMold = (GameObject) Instantiate(mold, transform.position, Quaternion.identity);
 			//myMold.transform.localScale = new Vector2(Mathf.Abs(myMold.transform.localScale.x), Mathf.Abs(myMold.transform.localScale.y));
+
+			//CORRADO MOD
+			SpriteRenderer moldSpriteRenderer = myMold.GetComponent<SpriteRenderer>();
+			myMold.GetComponent<SpriteRenderer>().color = new Color(moldSpriteRenderer.color.r, moldSpriteRenderer.color.g, moldSpriteRenderer.color.b, 1.0f);
+
 			myMold.SetActive(false);
 			myMold.name = moldName;
 		}
