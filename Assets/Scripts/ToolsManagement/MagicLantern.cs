@@ -64,6 +64,9 @@ public class MagicLantern : Tool {
 	[HideInInspector]
 	public bool leftLantern = false;
 
+	ReturnParticles returnParticles;
+	public Vector3 lastLanternPosition;
+
 	//parametri per il fine livello
 	//bool endedProjected = false;
 	//bool timerStarted = false;
@@ -188,6 +191,8 @@ public class MagicLantern : Tool {
 					
 					leftLantern = true;
 					toolGameObject.transform.parent = transform;
+
+					lastLanternPosition = camera.transform.position;
 					
 				}else{
 					//disattivo la lanterna se non è nella buona posizione
@@ -209,7 +214,12 @@ public class MagicLantern : Tool {
 				//deleteOldProjection();
 				//deleteInstantiatedPrefab();
 				leftLantern = false;
+				returnParticles.activeParticles();
+				//activable = false;
+
 				setPlayerAsParent();
+
+
 			}
 		}
 
@@ -548,5 +558,7 @@ public class MagicLantern : Tool {
 		spRendCircle = raggio_cerchio.GetComponent<SpriteRenderer> ();
 
 		glassesManager = transform.GetComponent<GlassesManager> ();
+
+		returnParticles = GetComponentInChildren<ReturnParticles> ();
 	}
 }

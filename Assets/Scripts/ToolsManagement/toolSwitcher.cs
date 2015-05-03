@@ -11,7 +11,7 @@ public class toolSwitcher : MonoBehaviour {
 
 	public bool useTapOnPlayer = false;
 
-	
+	ReturnParticles returnParticles;
 	
 	public GlassesUIManager glassesUIManager;
 
@@ -20,6 +20,7 @@ public class toolSwitcher : MonoBehaviour {
 	void Start () {
 		//setActiveTool (activeToolIndex, true);
 		player = GameObject.FindGameObjectWithTag ("Player");
+		returnParticles = GetComponentInChildren<ReturnParticles> ();
 	}
 
 	void Update () {
@@ -63,7 +64,7 @@ public class toolSwitcher : MonoBehaviour {
 
 		if (Input.GetButtonUp("PickLantern"))
 		{
-
+			//returnParticles.activeParticles();
 			useTool (false);
 			switchUsingTool (false);
 		}
