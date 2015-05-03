@@ -15,6 +15,7 @@ public class sceneChanger : MonoBehaviour {
 
 	SpriteRenderer[][] spriteRenderersToAppear;
 	SpriteRenderer[][] spriteRenderersToDisappear;
+	GameObject[] tempDisappearGameObject;
 
 	public float TimeToAppearDisappear = 2.0f;
 
@@ -23,7 +24,7 @@ public class sceneChanger : MonoBehaviour {
 
 		tryInitializeSceneChanger ();
 
-		takeSpriteRenderers ();
+		//takeSpriteRenderers ();
 		//changeSpriteRenderersAlpha (spriteRenderersToAppear, 0.0f);
 	}
 
@@ -95,6 +96,7 @@ public class sceneChanger : MonoBehaviour {
 
 	public void c_manualActivation(){
 
+		takeSpriteRenderers ();
 		//Debug.Log ("attivazione by " + gameObject.name);
 		/*
 		foreach(GameObject go in toDisappear) {
@@ -143,12 +145,24 @@ public class sceneChanger : MonoBehaviour {
 		}
 
 		spriteRenderersToDisappear = new SpriteRenderer[toDisappear.Length][];
-		
+		//tempDisappearGameObject = new GameObject[toDisappear.Length];
+
+
 		for (int i = 0; i< spriteRenderersToDisappear.Length; i++) {
 			if (toDisappear[i] != null) {
+				//disabilito tutti i component
+				foreach (Behaviour childCompnent in toDisappear[i].GetComponentsInChildren<Behaviour>())
+					childCompnent.enabled = false;
+
+				//prendo solo i component sprite renderer e li attivo
 				spriteRenderersToDisappear[i] = toDisappear[i].GetComponentsInChildren<SpriteRenderer> (true);
+				for (int j=0;j<spriteRenderersToDisappear[i].Length;j++)
+				{
+					spriteRenderersToDisappear[i][j].enabled = true;
+				}
 			}
 		}
+	
 	}
 
 	void changeSpriteRenderersAlpha(SpriteRenderer[][] spriteRend, float newAlpha)
