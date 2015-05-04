@@ -18,6 +18,8 @@ public class PlayerMovements : MonoBehaviour {
 		public bool OnLadder { get; set; }
 		bool running;
 		public bool Running { get; set; }
+		public bool underWater = false;
+		public bool UnderWater { get; set; }
 	}
 
 	/*
@@ -82,6 +84,9 @@ public class PlayerMovements : MonoBehaviour {
 	public bool onGround = false;
 	public bool onLadder = false;
 	bool collidingLadder = false;
+
+	public bool underWater = false;
+	//public bool UnderWater { get; set; }
 
 	bool addFallingForceRight = false;
 	bool addFallingForceLeft = false;
@@ -333,6 +338,13 @@ public class PlayerMovements : MonoBehaviour {
 				} else {
 					
 					//salvo le posizioni utili a calcolare le forze di rimbalzo
+
+					if(underWater) {
+
+						underWaterManagement();
+
+					}
+
 					saveFallingPositionsManagement ();
 					
 				}
@@ -876,6 +888,12 @@ public class PlayerMovements : MonoBehaviour {
 		}
 	}
 
+	void underWaterManagement () {
+
+		RigBody.AddForce (new Vector2 (Input.GetAxis ("Horizontal") * 10.0f, Input.GetAxis ("Vertical") * 20.0f));
+
+	}
+
 	void movingPlatformManagement()
 	{
 		if (onGround) {
@@ -1181,6 +1199,12 @@ public class PlayerMovements : MonoBehaviour {
 
 		setAscForce ();
 		addEnemyCount ();
+
+	}
+
+	public void c_setUnderWater(bool uw) {
+
+		underWater = uw;
 
 	}
 
