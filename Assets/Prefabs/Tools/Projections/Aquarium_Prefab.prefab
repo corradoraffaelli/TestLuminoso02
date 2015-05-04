@@ -11,7 +11,7 @@ GameObject:
   - 61: {fileID: 6137034}
   - 249: {fileID: 24939638}
   m_Layer: 0
-  m_Name: HorizontalBarrierRight
+  m_Name: BarrierRight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -28,7 +28,7 @@ GameObject:
   - 61: {fileID: 6195284}
   - 249: {fileID: 24944706}
   m_Layer: 0
-  m_Name: HorizontalBarrierLeft
+  m_Name: BarrierLeft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -83,7 +83,7 @@ GameObject:
   - 61: {fileID: 6124810}
   - 249: {fileID: 24903642}
   m_Layer: 0
-  m_Name: Vertical1
+  m_Name: BasilarSpring
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -121,7 +121,7 @@ Transform:
   m_GameObject: {fileID: 169372}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 12.3800001, y: 2.21000004, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 1}
   m_Children:
   - {fileID: 426054}
   - {fileID: 493140}
@@ -259,6 +259,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ab548bd930a5479583424f6e28daf37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxHorizontalForce: 8
+  tBetweenChangeHorForce: .5
+  maxVerticalForce: 10
+  tBetweenChangeVertForce: .5
+  lateralBarrier: 1
+  lateralBarrierForce: 10
+  basilarSpring: 1
+  basilarSpringForce: 10
 --- !u!212 &21299730
 SpriteRenderer:
   m_ObjectHideFlags: 1
