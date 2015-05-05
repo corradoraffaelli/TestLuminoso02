@@ -59,6 +59,7 @@ GameObject:
   - 114: {fileID: 11433436}
   - 114: {fileID: 11418064}
   - 114: {fileID: 11414134}
+  - 114: {fileID: 11423180}
   m_Layer: 0
   m_Name: MagicLanternLogic
   m_TagString: MagicLanternLogic
@@ -83,7 +84,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &160798
 GameObject:
   m_ObjectHideFlags: 1
@@ -400,7 +401,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 153822}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7da78f3a0c2daa642bd203b1a51e2b58, type: 3}
   m_Name: 
@@ -419,9 +420,32 @@ MonoBehaviour:
   toolList:
   - {fileID: 11433436}
   activeToolIndex: 0
-  usingTool: 0
-  useTapOnPlayer: 0
-  glassesUIManager: {fileID: 11495192, guid: b2ad164a7d19276419097c284043e40e, type: 2}
+  usingTool: 1
+--- !u!114 &11423180
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 153822}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab3258109d8169a4b8492786206736ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  zPositionEnvironment: 0
+  resizeFactor: 4
+  maxProjectingDistance: 8.5
+  minProjectingDistance: 1
+  newSizeImplementation: 1
+  defaultCircleSize: 3.5
+  defaultDircleDistance: 4
+  changeSizeMultiplier: 1.79999995
+  limitProjectionDistance: 1
+  alphaProjection: .5
+  normalRay: {fileID: 21300006, guid: 3c09fae1fc827b34f9bbe6516a68eb0b, type: 3}
+  normalCircle: {fileID: 21300002, guid: 3c09fae1fc827b34f9bbe6516a68eb0b, type: 3}
+  pressedRay: {fileID: 21300004, guid: 3c09fae1fc827b34f9bbe6516a68eb0b, type: 3}
+  pressedCircle: {fileID: 21300000, guid: 3c09fae1fc827b34f9bbe6516a68eb0b, type: 3}
 --- !u!114 &11430456
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -462,24 +486,10 @@ MonoBehaviour:
   active: 0
   activable: 1
   freezingTool: 0
-  inventory: {fileID: 0}
-  tType: 2
-  zPositionEnvironment: 0
-  resizeFactor: 1.5
-  maxProjectingDistance: 7.5
-  minProjectingDistance: 1
-  newSizeImplementation: 1
-  defaultCircleSize: 3.5
-  defaultDircleDistance: 4
-  changeSizeMultiplier: 1.79999995
-  limitProjectionDistance: 1
-  alphaProjection: .5
-  normalRay: {fileID: 21300006, guid: 3c09fae1fc827b34f9bbe6516a68eb0b, type: 3}
-  normalCircle: {fileID: 21300002, guid: 3c09fae1fc827b34f9bbe6516a68eb0b, type: 3}
-  pressedRay: {fileID: 21300004, guid: 3c09fae1fc827b34f9bbe6516a68eb0b, type: 3}
-  pressedCircle: {fileID: 21300000, guid: 3c09fae1fc827b34f9bbe6516a68eb0b, type: 3}
-  projectionPrefab: {fileID: 146854, guid: e903df3634975d94d8f090cffe868ace, type: 2}
+  actualState: 1
   leftLantern: 0
+  projectionPrefab: {fileID: 146854, guid: e903df3634975d94d8f090cffe868ace, type: 2}
+  disabledByEnemy: 1
   lastLanternPosition: {x: 0, y: 0, z: 0}
 --- !u!114 &11434798
 MonoBehaviour:
@@ -492,7 +502,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d528b953161387942976b4620f5a3fa6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  usable: 0
+  usable: 1
   canBeEnabled: 0
   spriteObject: {fileID: 21300000, guid: 55a32b8f669f22d438c8f6ee380986ea, type: 3}
   goodProjection: {fileID: 21300000, guid: 64fef828077b20a4b94856d7163028c9, type: 3}

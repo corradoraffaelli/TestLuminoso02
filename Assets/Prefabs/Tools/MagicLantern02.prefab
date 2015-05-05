@@ -74,6 +74,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 473694}
   - 212: {fileID: 21280786}
+  - 61: {fileID: 6138180}
   m_Layer: 0
   m_Name: Proiettore
   m_TagString: Untagged
@@ -156,7 +157,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 193264}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 24.5680008, y: 15.1540003, z: 0}
+  m_LocalPosition: {x: 56, y: 17.2900009, z: 0}
   m_LocalScale: {x: .5, y: .5, z: .5}
   m_Children:
   - {fileID: 473694}
@@ -202,6 +203,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 422690}
   m_RootOrder: 0
+--- !u!61 &6138180
+BoxCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 134202}
+  m_Enabled: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Size: {x: 1.38, y: 1.33000004}
 --- !u!198 &19850546
 ParticleSystem:
   m_ObjectHideFlags: 1
