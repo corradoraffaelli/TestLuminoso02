@@ -66,6 +66,7 @@ public class CursorHandler : MonoBehaviour {
 		if (!useController) {
 			Vector3 actualMousePosition = Camera.main.ScreenToWorldPoint (new Vector3 (Input.mousePosition.x, Input.mousePosition.y, 0.0f));
 			cursorPosition = new Vector3 (actualMousePosition.x, actualMousePosition.y, zPositionEnvironment);
+			cursorPosition = limitCursorScreenPosition(cursorPosition);
 		} else {
 			float xSumPosition, ySumPosition;
 

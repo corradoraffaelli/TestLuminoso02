@@ -22,7 +22,7 @@ public class MagicLantern : Tool {
 
 	public lanternState actualState = lanternState.NotUsed;
 	//utile per verificare i primi cambiamenti
-	lanternState previousState;
+	lanternState previousState = lanternState.NotUsed;
 	
 	//indica se posso prendere in mano la lanterna o meno, ad esempio può essere utile per le particles
 	bool usable = true;
