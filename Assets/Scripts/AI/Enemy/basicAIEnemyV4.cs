@@ -3459,6 +3459,24 @@ public class basicAIEnemyV4 : MonoBehaviour {
 
 	}
 
+	public void OnTriggerEnter2D(Collider2D c) {
+
+		if (c.name == "Proiettore") {
+
+			if(c.gameObject.transform.parent.tag == "Lantern") {
+				//Debug.Log ("ciao2");
+				GameObject o = GameObject.FindGameObjectWithTag("MagicLanternLogic");
+				if(o != null) {
+
+					o.SendMessage("c_touchedByEnemy");
+				}
+			}
+			//mia reazione?
+
+		}
+
+	}
+
 	public void OnCollisionStay2D(Collision2D c) {
 
 		if (c.gameObject == actualGround)
