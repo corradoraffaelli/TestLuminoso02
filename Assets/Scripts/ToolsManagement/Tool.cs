@@ -22,35 +22,11 @@ abstract public class Tool : MonoBehaviour {
 	//il tool può essere bloccante per il controllo del giocatore o meno
 	public bool freezingTool;
 
-	//prevedo una possibile interazione con un gameobject inventario
-	public GameObject inventory;
-
-	//lista di sotto oggetti usati dal tool, per esempio vetrini nel caso 
-	protected ArrayList subTools;
-	protected int subToolActiveIndex;
-
 	//riferimento al player
 	protected GameObject player;
 
 	//possibile riferimento ad un gameobject che rappresenta il mio tool
 	protected GameObject toolGameObject;
-
-	public enum toolType {
-		oneClick,
-		twoClick,
-		dragClick,
-	}
-
-	//tipo di tool che voglio implementare, in base al tipo di input
-	public toolType tType;
-
-	protected bool usingOneClick = false;
-	protected bool[] usingTwoClick = {false, true};
-	protected bool usingDrag = false;
-
-
-	Vector3 clickMousePosition;
-	protected Vector3 actualMousePosition;
 
 	protected GameObject controller;
 	protected CursorHandler cursorHandler;
@@ -77,101 +53,16 @@ abstract public class Tool : MonoBehaviour {
 			return;
 		} 
 		else {
-
 			if(activation) {
-
 				activation = false;
-
 				if(freezingTool)
 					freezeController(true);
-
 				activationToolFunc();
-
 			}
-
-			setActualMousePosition ();
-
-			switch (tType) {
-
-			case toolType.oneClick:
-				if (Input.GetMouseButtonUp (0)) {
-					//è responsabilità del tool esteso come e quando riportare la variabile a false
-					usingOneClick = true;
-					setClickMousePosition ();
-				}
-
-				break;
-
-			case toolType.twoClick:
-				if (Input.GetMouseButtonUp (0)) {
-
-					if (!usingTwoClick [0]) {
-
-						usingTwoClick [0] = true;
-						usingTwoClick [1] = false;
-						setClickMousePosition ();
-					} else {
-						if (!usingTwoClick [1]) {
-
-							usingTwoClick [0] = false;
-							usingTwoClick [1] = true;
-							setClickMousePosition ();
-						}
-
-					}
-
-				}
-
-				break;
-
-			case toolType.dragClick:
-				if (Input.GetMouseButton (0)) {
-					setClickMousePosition ();
-					usingDrag = true;
-
-				} 
-				else {
-
-					usingDrag = false;
-
-				}
-
-				break;
-
-			default :
-				break;
-			}
-
 			useTool ();
-
 		}
 	}
 
-	//BASIC FUNCTIONS--------------------------------------------------------------------------------------------------------------------------
-
-	//funzione per usare il prossimo subTool, per esempio il prossimo vetrino
-	void switchSubTool(){
-		
-		subToolActiveIndex++;
-		
-		subToolActiveIndex = subToolActiveIndex % subTools.Count;
-
-	}
-
-	
-	void setClickMousePosition() {
-		clickMousePosition = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x,Input.mousePosition.y, 1.0f));
-	}
-	
-	void setActualMousePosition() {
-		actualMousePosition = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x,Input.mousePosition.y, 1.0f));
-	}
-	
-	void followMouse() {
-		
-		transform.position = actualMousePosition;
-		
-	}
 
 	//VIRTUAL FUNCTIONS--------------------------------------------------------------------------------------------------------------------------
 
@@ -206,6 +97,7 @@ abstract public class Tool : MonoBehaviour {
 	public void Active(bool act) {
 
 		//se lavoro con un gameobject esterno, lo attivo/disattivo
+		//la lanterna non lo usa per ora, fa in altro modo
 		if(toolGameObject!=null)
 			toolGameObject.SetActive (act);
 
@@ -218,10 +110,7 @@ abstract public class Tool : MonoBehaviour {
 			freezeController(false);
 			activation = true;
 			disactivationToolFunc();
-
-			
 		}
-		
 	}
 	
 	public virtual bool canBeActivated(){

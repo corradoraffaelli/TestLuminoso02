@@ -20,6 +20,7 @@ public class ProjectionCollision : MonoBehaviour {
 
 	void Update()
 	{
+		/*
 		//si adatta automaticamente alla nuova sprite o a cambiamenti di sprite
 		objBounds = projectionObject.transform.GetComponent<SpriteRenderer> ().bounds;
 
@@ -37,7 +38,7 @@ public class ProjectionCollision : MonoBehaviour {
 				break;
 			}
 		} 
-
+		*/
 		//-----------------DEBUG--------------------
 		//Vector3 center = projectionObject.transform.position;
 		//cubo1.transform.position = new Vector3 (center.x - objBounds.extents.x , center.y - objBounds.extents.y , 0.0f);

@@ -54,7 +54,7 @@ public class CursorHandler : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		setCursorPosition ();
-		//Debug.Log (getCursorScreenPosition());
+		//Debug.Log (getCursorWorldPosition());
 		verifyCursorMoving ();
 	}
 
