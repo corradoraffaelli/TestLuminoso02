@@ -129,7 +129,7 @@ public class acquariumHandle : MonoBehaviour {
 			}
 			else {
 
-				aeHorizontal.forceMagnitude = maxHorizontalForce;
+				aeHorizontal.forceMagnitude = maxHorizontalForce / 2;
 				yield return new WaitForSeconds (tBetweenChangeHorForce);
 				aeHorizontal.forceMagnitude = maxHorizontalForce;
 

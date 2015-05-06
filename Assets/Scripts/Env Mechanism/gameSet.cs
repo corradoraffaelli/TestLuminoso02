@@ -4,14 +4,7 @@ using System.Collections;
 
 public class gameSet : MonoBehaviour {
 
-	public GameObject []checkPoints;
-
-	[SerializeField]
-	public StringEvent ciao;
-
-	[SerializeField]
-	public StringiEvent ciao1;
-
+	public GameObject[]checkPoints;
 
 	public int starterPoint = 0;
 
