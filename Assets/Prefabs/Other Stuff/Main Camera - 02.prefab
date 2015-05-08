@@ -16,10 +16,7 @@ GameObject:
   - 114: {fileID: 11455850}
   - 114: {fileID: 11436702}
   - 114: {fileID: 11484882}
-  - 114: {fileID: 11401380}
-  - 114: {fileID: 11427960}
-  - 114: {fileID: 11435174}
-  - 114: {fileID: 11461208}
+  - 114: {fileID: 11442546}
   m_Layer: 0
   m_Name: Main Camera - 02
   m_TagString: MainCamera
@@ -188,61 +185,6 @@ Behaviour:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 101814}
   m_Enabled: 1
---- !u!114 &11401380
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 101814}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9191284b058eef549b7108b5f04e1117, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  intensityMultiplier: 8.77999973
-  generalIntensity: 3.05999994
-  blackIntensity: 5.40999985
-  whiteIntensity: 14.7299995
-  midGrey: .200000003
-  dx11Grain: 1
-  softness: 0
-  monochrome: 0
-  intensities: {x: 1, y: 1, z: 1}
-  tiling: {x: 64, y: 64, z: 64}
-  monochromeTiling: 64
-  filterMode: 1
-  noiseTexture: {fileID: 2800000, guid: 7a632f967e8ad42f5bd275898151ab6a, type: 3}
-  noiseShader: {fileID: 4800000, guid: b0249d8c935344451aa4de6db76f0688, type: 3}
-  dx11NoiseShader: {fileID: 4800000, guid: 8b30686bb4322ab42ad5eb50a0210b58, type: 3}
---- !u!114 &11427960
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 101814}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4739c22ef73ad62488fe344c8fe9addd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  strengthX: .319999993
-  strengthY: .119999997
-  fishEyeShader: {fileID: 4800000, guid: 874ceab4425f64bccb1d14032f4452b1, type: 3}
---- !u!114 &11435174
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 101814}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bdda781cad112c75d0008dfa8d76c639, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  shader: {fileID: 4800000, guid: 641b781cad112c75d0008dfa8d76c639, type: 3}
-  radius: {x: .300000012, y: .300000012}
-  angle: 90
-  center: {x: .5, y: .5}
 --- !u!114 &11436702
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -260,6 +202,17 @@ MonoBehaviour:
   blurIterations: 1
   blurType: 0
   fastBloomShader: {fileID: 4800000, guid: 68a00c837b82e4c6d92e7da765dc5f1d, type: 3}
+--- !u!114 &11442546
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 101814}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17a8f3978a87efd44a7d1cda43c8c829, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &11455850
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -275,21 +228,6 @@ MonoBehaviour:
   intensity: 1
   texture: {fileID: 2800000, guid: 9306197b653d25e4386c0a6a80e790c0, type: 3}
   overlayShader: {fileID: 4800000, guid: 8c81db0e527d24acc9bcec04e87781bd, type: 3}
---- !u!114 &11461208
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 101814}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a94b781cad112c75d0008dfa8d76c639, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  shader: {fileID: 4800000, guid: 708b781cad112c75d0008dfa8d76c639, type: 3}
-  radius: {x: .460000008, y: .400000006}
-  angle: 50
-  center: {x: .5, y: .5}
 --- !u!114 &11478616
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -305,6 +243,10 @@ MonoBehaviour:
   limitCameraMovements: 0
   RatioDistanceFromPlayer: .150000006
   smooth: 10
+  changeSize: 1
+  defaultSize: 5.5
+  enlargment: 1
+  ratioBeforeEnlargment: .75
 --- !u!114 &11484882
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -321,39 +263,29 @@ MonoBehaviour:
     m_Curve:
     - time: 0
       value: 0
-      inSlope: 2
-      outSlope: 2
-      tangentMode: 0
-    - time: .436200857
-      value: .573250592
-      inSlope: 1.22755766
-      outSlope: 1.22755766
-      tangentMode: 0
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 10
     - time: 1
       value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 10
     m_PreInfinity: 2
     m_PostInfinity: 2
   greenChannel:
     serializedVersion: 2
     m_Curve:
     - time: 0
-      value: -.0124999993
-      inSlope: .676056325
-      outSlope: .676056325
-      tangentMode: 0
-    - time: .526722312
-      value: .409012556
-      inSlope: 1.06739056
-      outSlope: 1.06739056
-      tangentMode: 0
+      value: 0
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 10
     - time: 1
-      value: .987500012
-      inSlope: 1.25000036
-      outSlope: 1.25000036
-      tangentMode: 0
+      value: 1
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 10
     m_PreInfinity: 2
     m_PostInfinity: 2
   blueChannel:
@@ -361,19 +293,14 @@ MonoBehaviour:
     m_Curve:
     - time: 0
       value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    - time: .748977065
-      value: .231455401
-      inSlope: 1.17316842
-      outSlope: 1.17316842
-      tangentMode: 0
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 10
     - time: 1
       value: 1
-      inSlope: 2
-      outSlope: 2
-      tangentMode: 0
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 10
     m_PreInfinity: 2
     m_PostInfinity: 2
   useDepthCorrection: 0
@@ -437,8 +364,8 @@ MonoBehaviour:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-  saturation: .300000012
-  selectiveCc: 1
+  saturation: .5
+  selectiveCc: 0
   selectiveFromColor: {r: 1, g: 1, b: 1, a: 1}
   selectiveToColor: {r: 1, g: 1, b: 1, a: 1}
   mode: 0

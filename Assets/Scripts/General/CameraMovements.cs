@@ -29,6 +29,14 @@ public class CameraMovements : MonoBehaviour {
 
 	Vector3 BLActualLimit;
 	Vector3 URActualLimit;
+
+	CameraHandler cameraHandler;
+	CursorHandler cursorHandler;
+
+	public bool changeSize = true;
+	public float defaultSize = 5.5f;
+	public float enlargment = 1.0f;
+	public float ratioBeforeEnlargment = 0.75f;
 	
 	void Start () {
 		player = GameObject.FindGameObjectWithTag ("Player");
@@ -40,15 +48,24 @@ public class CameraMovements : MonoBehaviour {
 		controller = GameObject.FindGameObjectWithTag ("Controller");
 		CH = controller.GetComponent<CursorHandler> ();
 
+		cameraHandler = Camera.main.gameObject.GetComponent<CameraHandler> ();
+
 		UpperLimit = CH.getUpperLimit();
 		BottomLimit = CH.getBottomLimit();
 		RightLimit = CH.getRightLimit();
 		LeftLimit = CH.getLeftLimit();
 
-		cameraCenter = new Vector3 (Camera.main.gameObject.transform.position.x, Camera.main.gameObject.transform.position.y, player.transform.position.z);
-		beginCamera = Camera.main.ScreenToWorldPoint (new Vector3 (0.0f, 0.0f, player.transform.position.z));
-		xDistFromBeginning = Mathf.Abs (cameraCenter.x - beginCamera.x);
-		yDistFromBeginning = Mathf.Abs (cameraCenter.y - beginCamera.y);
+		if (cameraHandler == null) {
+			cameraCenter = new Vector3 (Camera.main.gameObject.transform.position.x, Camera.main.gameObject.transform.position.y, player.transform.position.z);
+			beginCamera = Camera.main.ScreenToWorldPoint (new Vector3 (0.0f, 0.0f, player.transform.position.z));
+			xDistFromBeginning = Mathf.Abs (cameraCenter.x - beginCamera.x);
+			yDistFromBeginning = Mathf.Abs (cameraCenter.y - beginCamera.y);
+
+			Debug.Log ("CameraHandler non trovato nell'oggetto Camera");
+		} else {
+			xDistFromBeginning = cameraHandler.getXDistFromBeginning();
+			yDistFromBeginning = cameraHandler.getYDistFromBeginning();
+		}
 	}
 
 	private void assignMainCameraToPlayer(){
@@ -76,6 +93,11 @@ public class CameraMovements : MonoBehaviour {
 	}
 
 	void Update () {
+		if (cameraHandler != null) {
+			xDistFromBeginning = cameraHandler.getXDistFromBeginning();
+			yDistFromBeginning = cameraHandler.getYDistFromBeginning();
+		}
+
 		if (newImplementation) {
 
 			cursorWorldPosition = CH.getCursorWorldPosition ();
@@ -107,6 +129,9 @@ public class CameraMovements : MonoBehaviour {
 				Camera.main.gameObject.transform.position = new Vector3 (Camera.main.gameObject.transform.position.x, player.transform.position.y, Camera.main.gameObject.transform.position.z);
 			}
 		}
+
+		if (changeSize)
+			sizeManagement ();
 	}
 
 	//piazza la camera lungo la direzione tra il player ed il cursore, alla distanza passata come parametro
@@ -116,6 +141,34 @@ public class CameraMovements : MonoBehaviour {
 		float yCamera = (curPos.y - plPos.y) * distanceRatioFromPlayer + plPos.y;
 		Vector3 cameraPos = new Vector3(xCamera, yCamera, Camera.main.transform.position.z);
 		return cameraPos;
+	}
+
+	void setCameraSize(float sizeInput)
+	{
+		Camera.main.orthographicSize = sizeInput;
+	}
+
+	void sizeManagement()
+	{
+		float diffX = 0.0f;
+		float xDistanceAllowed = Mathf.Abs (cameraHandler.getXDistFromBeginning ()) * ratioBeforeEnlargment;
+		float xDistanceEffective = Mathf.Abs (cameraHandler.getCameraPositionZEnvironment ().x - CH.getCursorWorldPosition ().x);
+
+		if (xDistanceAllowed < xDistanceEffective) {
+			diffX = xDistanceEffective - xDistanceAllowed;
+		}
+
+		float diffY = 0.0f;
+		float yDistanceAllowed = Mathf.Abs (cameraHandler.getYDistFromBeginning ()) * ratioBeforeEnlargment;
+		float yDistanceEffective = Mathf.Abs (cameraHandler.getCameraPositionZEnvironment ().y - CH.getCursorWorldPosition ().y);
+
+		if (yDistanceAllowed < yDistanceEffective) {
+			diffY = yDistanceEffective - yDistanceAllowed;
+		}
+
+		float newSize = defaultSize + enlargment * 0.05f * diffX + enlargment * 0.05f * diffY;
+		setCameraSize (newSize);
+
 	}
 
 	//limita i movimenti della camera a seconda della scena

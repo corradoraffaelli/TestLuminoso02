@@ -33,10 +33,13 @@ public class CursorHandler : MonoBehaviour {
 	bool firstCursorPosition = true;
 	public float ScreenRatioMovement = 0.01f;
 
+	CameraHandler cameraHandler;
+
 	// Use this for initialization
 	void Start () {
 		Cursor.lockState = CursorLockMode.Confined;
 		player = GameObject.FindGameObjectWithTag ("Player");
+		cameraHandler = Camera.main.gameObject.GetComponent<CameraHandler> ();
 
 		standardPosition = new Vector3 (Camera.main.gameObject.transform.position.x, Camera.main.gameObject.transform.position.z, zPositionEnvironment);
 
@@ -45,14 +48,32 @@ public class CursorHandler : MonoBehaviour {
 		xDiffPlayer = 1.0f;
 		yDiffPlayer = 1.0f;
 
+		if (cameraHandler == null) {
+			cameraCenter = new Vector3 (Camera.main.gameObject.transform.position.x, Camera.main.gameObject.transform.position.y, player.transform.position.z);
+			beginCamera = Camera.main.ScreenToWorldPoint (new Vector3 (0.0f, 0.0f, player.transform.position.z));
+			xDistFromBeginning = Mathf.Abs (cameraCenter.x - beginCamera.x);
+			yDistFromBeginning = Mathf.Abs (cameraCenter.y - beginCamera.y);
+			
+			Debug.Log ("CameraHandler non trovato nell'oggetto Camera");
+		} else {
+			xDistFromBeginning = cameraHandler.getXDistFromBeginning();
+			yDistFromBeginning = cameraHandler.getYDistFromBeginning();
+		}
+		/*
 		cameraCenter = new Vector3 (Camera.main.gameObject.transform.position.x, Camera.main.gameObject.transform.position.y, player.transform.position.z);
 		beginCamera = Camera.main.ScreenToWorldPoint (new Vector3 (0.0f, 0.0f, player.transform.position.z));
 		xDistFromBeginning = Mathf.Abs (cameraCenter.x - beginCamera.x);
 		yDistFromBeginning = Mathf.Abs (cameraCenter.y - beginCamera.y);
+		*/
 	}
 	
 	// Update is called once per frame
 	void Update () {
+		if (cameraHandler != null) {
+			xDistFromBeginning = cameraHandler.getXDistFromBeginning();
+			yDistFromBeginning = cameraHandler.getYDistFromBeginning();
+		}
+
 		setCursorPosition ();
 		//Debug.Log (getCursorWorldPosition());
 		verifyCursorMoving ();
