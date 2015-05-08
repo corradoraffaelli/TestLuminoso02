@@ -130,7 +130,7 @@ public class CameraMovements : MonoBehaviour {
 			}
 		}
 
-		if (changeSize)
+		if (changeSize && cameraHandler!=null)
 			sizeManagement ();
 	}
 
