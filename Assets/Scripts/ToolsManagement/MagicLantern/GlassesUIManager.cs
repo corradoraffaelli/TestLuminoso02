@@ -9,6 +9,10 @@ public class GlassesUIManager : MonoBehaviour {
 
 	Glass[] usableGlassList;
 
+	public bool newImplementation; 
+	public Sprite KeyboardSprite;
+	public Sprite ControllerSprite;
+
 	public GameObject GlassOnScreenPrefab;
 
 	[Range(10.0f,200.0f)]
@@ -20,6 +24,8 @@ public class GlassesUIManager : MonoBehaviour {
 	
 	[Range(1.0f,2.0f)]
 	public float enlargement = 1.3f;
+	[Range(0.2f,2.0f)]
+	public float buttonScale = 1.3f;
 	[Range(0.0f,1.0f)]
 	public float alphaNotSelected = 0.3f;
 
@@ -30,11 +36,16 @@ public class GlassesUIManager : MonoBehaviour {
 	
 	int actualGlassIndex;
 
+	GameObject controller;
+	CursorHandler cursorHandler;
+
 	void Start () {
 
 		MLLogic = GameObject.FindGameObjectWithTag ("MagicLanternLogic");
 		MLScript = MLLogic.GetComponent<MagicLantern> ();
 		glassesManager = MLLogic.GetComponent<GlassesManager> ();
+		controller = GameObject.FindGameObjectWithTag ("Controller");
+		cursorHandler = controller.GetComponent<CursorHandler> ();
 
 		//salvo la larghezza e l'altezza dell'oggetto
 		if (GlassOnScreenPrefab != null) {
@@ -43,17 +54,9 @@ public class GlassesUIManager : MonoBehaviour {
 		}
 
 		//initialization
-		reloadGlasses ();
-		initializeGlassPrefabList ();
-		setSpritesToPrefabs ();
-		setGlassPositions ();
-		setGlassSize ();
-	
-	}
+		if (newImplementation) {
 
-	void Update () {
-
-		if (Input.GetKeyUp (KeyCode.P)) {
+		} else {
 			reloadGlasses ();
 			initializeGlassPrefabList ();
 			setSpritesToPrefabs ();
@@ -61,13 +64,39 @@ public class GlassesUIManager : MonoBehaviour {
 			setGlassSize ();
 		}
 
-		if (actualGlassIndex != glassesManager.getActualGlassIndexUsableList ())
-			setGlassSize ();
 
-		if (usableGlassList != glassesManager.getUsableGlassList ()) {
-			reinitialization ();
+	
+	}
+
+	void Update () {
+
+		/*
+		if (Input.GetKeyUp (KeyCode.P)) {
+			reloadGlasses ();
+			initializeGlassPrefabList ();
+			setSpritesToPrefabs ();
+			setGlassPositions ();
+			setGlassSize ();
 		}
-		//reinitialization ();
+		*/
+
+		if (newImplementation) {
+			if (actualGlassIndex != glassesManager.getActualGlassIndexUsableList ())
+				newImplementationGlass();
+			
+			if (usableGlassList != glassesManager.getUsableGlassList ()) {
+				newImplementationGlass();
+			}
+			//newImplementationGlass();
+		} else {
+			if (actualGlassIndex != glassesManager.getActualGlassIndexUsableList ())
+				setGlassSize ();
+
+			if (usableGlassList != glassesManager.getUsableGlassList ()) {
+				reinitialization ();
+			}
+			//reinitialization ();
+		}
 
 	}
 
@@ -201,6 +230,63 @@ public class GlassesUIManager : MonoBehaviour {
 			}
 		}
 		
+	}
+
+	void newImplementationGlass()
+	{
+		actualGlassIndex = glassesManager.getActualGlassIndexUsableList ();
+		usableGlassList = glassesManager.getUsableGlassList ();
+
+		if (GlassPrefabList != null)
+		{
+			//cancello tutti i prefab esistenti
+			for (int i = 0; i< GlassPrefabList.Length; i++)
+			{
+				Destroy(GlassPrefabList[i]);
+			}
+			
+			//pulisco la lista
+			System.Array.Clear(GlassPrefabList,0,GlassPrefabList.Length);
+		}
+
+		//istanzio la lista di oggetti (prevedendo anche il tasto da premere)
+		GlassPrefabList = new GameObject[2];
+
+		//istanzio il prefab per il glass
+		GlassPrefabList[0] = Instantiate(GlassOnScreenPrefab);
+		GlassPrefabList[0].transform.parent = transform;
+
+		//setto la sprite del vetrino
+		GlassPrefabList [0].GetComponent<UnityEngine.UI.Image> ().sprite = glassesManager.getActualGlass ().spriteObject;
+
+		//setto la posizione della sprite del vetrino
+		float xPosition = xDistance + (xPrefabSize/2);
+		GlassPrefabList[0].GetComponent<RectTransform>().anchoredPosition = new Vector2(- xPosition, yDistance);
+
+		//setto la dimensione
+		GlassPrefabList[0].GetComponent<RectTransform>().localScale = new Vector3(enlargement,enlargement,1.0f);
+
+		//se ho più di un vetrino usabile, mostro il tasto per switcharli
+		if (usableGlassList.Length > 1) {
+			//istanzio il prefab per il button
+			GlassPrefabList[1] = Instantiate(GlassOnScreenPrefab);
+			GlassPrefabList[1].transform.parent = transform;
+			
+			//setto la sprite del button
+			if (cursorHandler.useController)
+				GlassPrefabList [1].GetComponent<UnityEngine.UI.Image> ().sprite = ControllerSprite;
+			else
+				GlassPrefabList [1].GetComponent<UnityEngine.UI.Image> ().sprite = KeyboardSprite;
+			
+			//setto la posizione della sprite del button
+			//float xPosition = xDistance + (xPrefabSize/2) + (tempIndex*xPrefabSize) + (tempIndex*xDistanceBetween);
+			float xPositionButton = xDistance + (xPrefabSize/2) + xPrefabSize + xDistanceBetween - 20;
+			GlassPrefabList[1].GetComponent<RectTransform>().anchoredPosition = new Vector2(- xPositionButton, yDistance - 10);
+			
+			//setto la dimensione
+			GlassPrefabList[1].GetComponent<RectTransform>().localScale = new Vector3(buttonScale,buttonScale,1.0f);
+		}
+
 	}
 
 }
