@@ -24,6 +24,9 @@ public class MagicLantern : Tool {
 	//utile per verificare i primi cambiamenti
 	lanternState previousState = lanternState.NotUsed;
 	
+	float turnedOffTime = 0.0f;
+	public float timeReturnFalling = 1.5f;
+
 	//indica se posso prendere in mano la lanterna o meno, ad esempio può essere utile per le particles
 	bool usable = true;
 	bool touchedByEnemy = false;
@@ -92,6 +95,7 @@ public class MagicLantern : Tool {
 	GraphicLantern graphicLantern;
 
 	public bool disabledByEnemy = true;
+	public bool canFall = true;
 
 	bool createdProjection = false;
 	
@@ -204,6 +208,8 @@ public class MagicLantern : Tool {
 				graphicLantern.setLeftLanternRaySrites();
 
 				instantiatePrefab();
+
+				graphicLantern.putLanternOnPlayer();
 			}
 			
 		}
@@ -216,6 +222,27 @@ public class MagicLantern : Tool {
 				enemyTouchLantern(false);
 			}
 			
+		}
+
+		if (actualState == lanternState.Falling) {
+			if (previousState != actualState)
+			{
+				graphicLantern.switchOffRay();
+				graphicLantern.addRigidbody();
+
+				turnedOffTime = Time.time;
+			}
+
+			//dopo un po' che la lanterna sta cadendo, mi torna in mano, come NotUsed
+			if (Mathf.Abs (Time.time - turnedOffTime) > timeReturnFalling)
+				actualState = lanternState.NotUsed;
+		}
+
+		if (actualState != lanternState.Falling) {
+			if (previousState != actualState)
+			{
+				graphicLantern.removeRigidbody();
+			}
 		}
 
 		//aggiorno il previousState con quello attuale, al prossimo frame servirà per i controlli
@@ -338,12 +365,16 @@ public class MagicLantern : Tool {
 			}
 		}
 
-
-		if (actualState == lanternState.TurnedOff || actualState == lanternState.Left)
-		{
-			if (!graphicLantern.isOnGround())
-				actualState = lanternState.Falling;
+		if (canFall) {
+			if (actualState == lanternState.TurnedOff || actualState == lanternState.Left)
+			{
+				if (!graphicLantern.groundCheck() && graphicLantern.LanternOnPlayerPosition)
+				{
+					actualState = lanternState.Falling;
+				}
+			}
 		}
+
 			
 	}
 

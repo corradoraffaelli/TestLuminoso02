@@ -380,6 +380,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab3258109d8169a4b8492786206736ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  GroundLayers:
+    serializedVersion: 2
+    m_Bits: 768
   zPositionEnvironment: 0
   resizeFactor: 4
   maxProjectingDistance: 8.5
@@ -500,9 +503,11 @@ MonoBehaviour:
   activable: 1
   freezingTool: 0
   actualState: 1
+  timeReturnFalling: 1.5
   leftLantern: 0
   projectionPrefab: {fileID: 146854, guid: e903df3634975d94d8f090cffe868ace, type: 2}
   disabledByEnemy: 1
+  canFall: 1
   lastLanternPosition: {x: 0, y: 0, z: 0}
 --- !u!114 &11443812
 MonoBehaviour:

@@ -10,6 +10,10 @@ public class GraphicLantern : MonoBehaviour {
 	GameObject projectionObject;
 	SpriteRenderer spriteRendererFakeProjection;
 
+	GameObject GroundCheckUpperLeft;
+	GameObject GroundCheckBottomRight;
+	public LayerMask GroundLayers;
+
 	public float zPositionEnvironment = 0.0f;
 	public float resizeFactor = 4.0f;
 	public float maxProjectingDistance = 8.5f;
@@ -50,6 +54,11 @@ public class GraphicLantern : MonoBehaviour {
 	CursorHandler cursorHandler;
 	GlassesManager glassesManager;
 
+	bool lanternOnPlayerPosition;
+	public bool LanternOnPlayerPosition{
+		get{return lanternOnPlayerPosition;}
+	}
+
 	public void switchOffRay()
 	{
 		raggio_cerchio.SetActive (false);
@@ -87,6 +96,8 @@ public class GraphicLantern : MonoBehaviour {
 		lantern.transform.localPosition = new Vector3(0.4f,0.8f,0.0f);
 		Vector3 actualScale = lantern.transform.localScale;
 		lantern.transform.localScale = new Vector3 (Mathf.Abs(actualScale.x),Mathf.Abs(actualScale.y),Mathf.Abs(actualScale.z));
+
+		lanternOnPlayerPosition = false;
 	}
 
 	public void setNormalFakeProjectionSprite()
@@ -104,12 +115,6 @@ public class GraphicLantern : MonoBehaviour {
 	{
 		Color oldColor = spriteRendererFakeProjection.color;
 		spriteRendererFakeProjection.color = new Color(oldColor.r, oldColor.g, oldColor.b, newAlpha);
-	}
-
-	//deve ritornare la verifica dello stato onGround della lanterna o meno
-	public bool isOnGround()
-	{
-		return true;
 	}
 
 	public Transform getCircleRay()
@@ -131,6 +136,81 @@ public class GraphicLantern : MonoBehaviour {
 			spRendRay.sprite = normalRay;
 			spRendCircle.sprite = normalCircle;
 		}
+	}
+
+	public bool groundCheck()
+	{
+		if (GroundCheckBottomRight != null)
+			return Physics2D.OverlapArea (new Vector2 (GroundCheckUpperLeft.transform.position.x, GroundCheckUpperLeft.transform.position.y), 
+		                              new Vector2 (GroundCheckBottomRight.transform.position.x, GroundCheckBottomRight.transform.position.y), GroundLayers);
+		else
+			return true;
+	}
+
+	public void addRigidbody()
+	{
+		Rigidbody2D RB = lantern.AddComponent<Rigidbody2D>() as Rigidbody2D;
+		//RB.mass = 0.5f;
+		RB.gravityScale = 0.5f;
+		/*
+		Rigidbody2D RB = new Rigidbody2D ();
+		lantern.AddComponent<Rigidbody2D> (RB);
+		>*/
+	}
+
+	public void removeRigidbody()
+	{
+		Rigidbody2D RB = lantern.GetComponent<Rigidbody2D> ();
+		Destroy (RB);
+	}
+
+	//da chiamare dopo che la lanterna non è più figlia del player, così che i parametri di posizione siano globali
+	public void putLanternOnPlayer()
+	{
+		//salvo posizioni salienti prima di cambiarle
+		Vector3 circlePosition = raggio_cerchio.transform.position;
+		Vector3 playerPosition = player.transform.position;
+
+		//setto la posizione della lanterna
+		//di default diffX e diffY dovrebbero essere 0, invece si devono fare dei piccoli aggiustamenti...
+		float diffX = 0.25f;
+		float diffY = 0.62f;
+		if (lantern.transform.localScale.x < 0.0f)
+			lantern.transform.position = new Vector3(playerPosition.x + diffX, playerPosition.y + diffY,playerPosition.z);
+		else
+			lantern.transform.position = new Vector3(playerPosition.x - diffX, playerPosition.y + diffY,playerPosition.z);
+
+		//risetto la posizione del cerchio
+		raggio_cerchio.transform.position = circlePosition;
+
+		//prendo la posizione del punto frontale della sprite della camera, e ci piazzo l'origine del raggio
+		cameraPointPos = cameraPoint.transform.position;
+		raggio.transform.position = cameraPointPos;
+
+		//prendo la direzione tra l'inizio del raggio e la posizione del cerchio
+		_direction = (raggio_cerchio.transform.position - cameraPointPos).normalized;
+
+		//cambio la scala del raggio in base alla distanza tra camera e cerchio
+		float distance = Vector3.Distance (raggio_cerchio.transform.position, cameraPointPos);
+		
+		//calcolo della scala
+		float actualSize = raggio_cerchio.transform.localScale.x;
+		raggio.transform.localScale = new Vector3(distance / xSize,actualSize,1);
+		//raggio_cerchio.transform.localScale = new Vector3(raggio.transform.localScale.y,raggio.transform.localScale.y,1);
+
+		if (lantern.transform.localScale.x<0.0f)
+			_direction = new Vector3 (-_direction.x, _direction.y,_direction.z);
+
+		raggio.transform.right = _direction;
+
+		if (!(raggio.transform.localEulerAngles.z > 179 && raggio.transform.localEulerAngles.z < 220)) {
+			if (raggio.transform.localEulerAngles.z > 180)
+				camera.transform.localEulerAngles = new Vector3 (raggio.transform.localEulerAngles.x, raggio.transform.localEulerAngles.x, (raggio.transform.localEulerAngles.z-360) / 2);
+			else
+				camera.transform.localEulerAngles = new Vector3 (raggio.transform.localEulerAngles.x, raggio.transform.localEulerAngles.x, raggio.transform.localEulerAngles.z / 2);
+		}
+
+		lanternOnPlayerPosition = true;
 	}
 
 	void Awake()
@@ -331,6 +411,11 @@ public class GraphicLantern : MonoBehaviour {
 						projectionObject = subChild.gameObject;
 					}
 				}
+			}else if(child.name == "GroundCheckBR") {
+				GroundCheckBottomRight = child.gameObject;
+			}
+			else if(child.name == "GroundCheckUL") {
+				GroundCheckUpperLeft = child.gameObject;
 			}
 		}
 	}
