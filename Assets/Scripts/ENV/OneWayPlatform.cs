@@ -22,6 +22,7 @@ public class OneWayPlatform : MonoBehaviour {
 
 	float sogliaControllo = 0.0f;
 
+	public bool useThreshControl = true;
 	public float threshControl = 0.2f;
 
 	//public float maxSogliaControllo = 0.6f;
@@ -92,10 +93,10 @@ public class OneWayPlatform : MonoBehaviour {
 	void setCollidersPlayerFU()
 	{
 		if (!useSpriteLimits) {
-			playerOver = isPlayerOver (getPlayerBottomCollider (playerColliders).bounds, platformCollider.bounds);
+			playerOver = isPlayerOver (getPlayerBottomCollider (playerColliders).bounds, platformCollider.bounds, useThreshControl);
 		} else {
 			spriteRenderer = player.GetComponent<SpriteRenderer> ();
-			playerOver = isPlayerOver (getPlayerBottomCollider (playerColliders).bounds, spriteRenderer.bounds);
+			playerOver = isPlayerOver (getPlayerBottomCollider (playerColliders).bounds, spriteRenderer.bounds, useThreshControl);
 		}
 		
 		if (playerOver)
@@ -190,7 +191,7 @@ public class OneWayPlatform : MonoBehaviour {
 		return basso;
 	}
 
-	bool isPlayerOver(Bounds playerCollider, Bounds platCollider, bool useThreshControl = false)
+	bool isPlayerOver(Bounds playerCollider, Bounds platCollider, bool useThreshControlInput = false)
 	{
 		//Debug.Log (platCollider.bounds.max.y - platCollider.bounds.min.y);
 		//se il player sta cadendo, aumento la soglia
@@ -206,7 +207,7 @@ public class OneWayPlatform : MonoBehaviour {
 		float playerLimit = playerCollider.min.y;
 		float platLimit = platCollider.max.y;
 		//aggiunge un'ulteriore soglia di controllo, per ora usato con i nemici
-		if (useThreshControl) {
+		if (useThreshControlInput) {
 			if (playerLimit > (platLimit-sogliaControllo-threshControl))
 				return true;
 			else

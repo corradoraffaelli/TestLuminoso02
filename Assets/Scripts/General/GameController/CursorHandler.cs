@@ -32,6 +32,7 @@ public class CursorHandler : MonoBehaviour {
 	Vector3 oldCursorPosition;
 	bool firstCursorPosition = true;
 	public float ScreenRatioMovement = 0.01f;
+	public float ScreenControllerRatioMovement = 0.1f;
 
 	CameraHandler cameraHandler;
 
@@ -92,13 +93,23 @@ public class CursorHandler : MonoBehaviour {
 			float xSumPosition, ySumPosition;
 
 			if (Input.GetAxis("CursorHorizontal") > 0.2f || Input.GetAxis("CursorHorizontal") < -0.2f)
-				xSumPosition = xControllerMultiplier * Time.deltaTime * Input.GetAxis("CursorHorizontal");
+			{
+				xSumPosition = xControllerMultiplier * Time.deltaTime * Input.GetAxis("CursorHorizontal")* Input.GetAxis("CursorHorizontal")* Input.GetAxis("CursorHorizontal");
+				//if (Input.GetAxis("CursorHorizontal") < 0.0f)
+				//	xSumPosition = -xSumPosition;
+			}
+				
 			else
 				//xSumPosition = xDiffPlayer;
 				xSumPosition = 0.0f;
 
 			if (Input.GetAxis("CursorVertical") > 0.2f || Input.GetAxis("CursorVertical") < -0.2f)
-				ySumPosition = yControllerMultiplier * Time.deltaTime * Input.GetAxis("CursorVertical");
+			{
+				ySumPosition = yControllerMultiplier * Time.deltaTime * Input.GetAxis("CursorVertical")* Input.GetAxis("CursorVertical")* Input.GetAxis("CursorVertical");
+				//if (Input.GetAxis("CursorVertical") < 0.0f)
+				//	ySumPosition = -ySumPosition;
+			}
+				
 			else
 				//ySumPosition = yDiffPlayer;
 				ySumPosition = 0.0f;
@@ -178,8 +189,14 @@ public class CursorHandler : MonoBehaviour {
 			firstCursorPosition = false;
 		}
 		else {
-			if ((Mathf.Abs(oldCursorPosition.x - getCursorScreenPosition().x) > ScreenRatioMovement*xDistFromBeginning)||
-			    (Mathf.Abs(oldCursorPosition.y - getCursorScreenPosition().y) > ScreenRatioMovement*yDistFromBeginning))
+			float ratioTemp;
+			if (useController)
+				ratioTemp = ScreenControllerRatioMovement;
+			else
+				ratioTemp = ScreenRatioMovement;
+
+			if ((Mathf.Abs(oldCursorPosition.x - getCursorScreenPosition().x) > ratioTemp*xDistFromBeginning)||
+			    (Mathf.Abs(oldCursorPosition.y - getCursorScreenPosition().y) > ratioTemp*yDistFromBeginning))
 				cursorIsMoving = true;
 			else
 				cursorIsMoving = false;
