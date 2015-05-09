@@ -25,6 +25,7 @@ public class CameraMovements : MonoBehaviour {
 	Transform RightLimit;
 	Transform LeftLimit;
 
+	public bool cameraOnPlayer = false;
 	public float standardRatioDistance = 0.15f;
 	public float aimingRatioDistance = 0.3f;
 	float ratioDistanceFromPlayer;
@@ -112,13 +113,21 @@ public class CameraMovements : MonoBehaviour {
 
 		if (newImplementation) {
 
+			float tempStandardRatioDistance;
+			if (cameraOnPlayer)
+				tempStandardRatioDistance = 0.0f;
+			else
+				tempStandardRatioDistance = standardRatioDistance;
+
 			if (changeRatioIfAiming){
 				if (magicLanternLogic.actualState == MagicLantern.lanternState.InHand)
 					setRatioDistance(aimingRatioDistance, true);
 				else if (magicLanternLogic.actualState != MagicLantern.lanternState.InHand)
-					setRatioDistance(standardRatioDistance, true);
+					setRatioDistance(tempStandardRatioDistance, true);
 
 			}
+
+
 				
 
 			cursorWorldPosition = CH.getCursorWorldPosition ();
