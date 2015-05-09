@@ -72,6 +72,8 @@ public class CameraMovements : MonoBehaviour {
 			xDistFromBeginning = cameraHandler.getXDistFromBeginning();
 			yDistFromBeginning = cameraHandler.getYDistFromBeginning();
 		}
+
+		setCameraSize (defaultSize);
 	}
 
 	private void assignMainCameraToPlayer(){
