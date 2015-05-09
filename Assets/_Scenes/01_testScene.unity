@@ -1078,6 +1078,14 @@ Prefab:
       propertyPath: orthographic size
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 11478616, guid: f4c01e0da7972514b8345910753c5ecd, type: 2}
+      propertyPath: changingSizeVelocity
+      value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 11478616, guid: f4c01e0da7972514b8345910753c5ecd, type: 2}
+      propertyPath: fixedChangedSize
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f4c01e0da7972514b8345910753c5ecd, type: 2}
   m_IsPrefabParent: 0
@@ -2197,6 +2205,9 @@ MonoBehaviour:
   RatioDistanceFromPlayer: .150000006
   smooth: 10
   changeSize: 1
+  onlyIfAiming: 1
+  fixedChangedSize: 0
+  changingSizeVelocity: .800000012
   defaultSize: 5.5
   enlargment: 1
   ratioBeforeEnlargment: .75
