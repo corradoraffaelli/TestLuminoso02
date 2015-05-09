@@ -26,9 +26,17 @@ public class CameraMovements : MonoBehaviour {
 	Transform LeftLimit;
 
 	public bool cameraOnPlayer = false;
+	public bool changeRatioIfAiming = true;
+	public bool changeSize = true;
+	public bool onlyIfAiming = true;
+	public bool fixedChangedSize = false;
+
+	[Range(0,0.5f)]
 	public float standardRatioDistance = 0.15f;
+	[Range(0,0.5f)]
 	public float aimingRatioDistance = 0.3f;
 	float ratioDistanceFromPlayer;
+	[Range(0.1f,30)]
 	public float smooth = 10.0f;
 
 	Vector3 BLActualLimit;
@@ -37,13 +45,13 @@ public class CameraMovements : MonoBehaviour {
 	CameraHandler cameraHandler;
 	CursorHandler cursorHandler;
 
-	public bool changeRatioIfAiming = true;
-	public bool changeSize = true;
-	public bool onlyIfAiming = true;
-	public bool fixedChangedSize = false;
+	[Range(0.1f,30)]
 	public float changingSizeVelocity = 2.5f;
+	[Range(1,30)]
 	public float defaultSize = 5.5f;
+	[Range(1,7)]
 	public float enlargment = 1.0f;
+	[Range(0,1)]
 	public float ratioBeforeEnlargment = 0.75f;
 	
 	void Start () {
@@ -134,6 +142,8 @@ public class CameraMovements : MonoBehaviour {
 			//uso il centro della sprite anzichè la base del personaggio
 			playerPosition = player.GetComponent<SpriteRenderer>().bounds.center;
 			//playerPosition = player.transform.position;
+
+
 
 			Vector3 newPosition =  getCameraPosition (ratioDistanceFromPlayer, cursorWorldPosition, playerPosition);
 			//transform.position = newPosition;
