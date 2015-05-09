@@ -8,6 +8,7 @@ public class CameraMovements : MonoBehaviour {
 
 	GameObject player;
 	GameObject GameOverObj;
+	MagicLantern magicLanternLogic;
 
 	Vector3 cameraCenter;
 	Vector3 beginCamera;
@@ -34,6 +35,9 @@ public class CameraMovements : MonoBehaviour {
 	CursorHandler cursorHandler;
 
 	public bool changeSize = true;
+	public bool onlyIfAiming = true;
+	public bool fixedChangedSize = false;
+	public float changingSizeVelocity = 2.5f;
 	public float defaultSize = 5.5f;
 	public float enlargment = 1.0f;
 	public float ratioBeforeEnlargment = 0.75f;
@@ -49,6 +53,8 @@ public class CameraMovements : MonoBehaviour {
 		CH = controller.GetComponent<CursorHandler> ();
 
 		cameraHandler = Camera.main.gameObject.GetComponent<CameraHandler> ();
+
+		magicLanternLogic = GameObject.FindGameObjectWithTag ("MagicLanternLogic").GetComponent<MagicLantern> ();
 
 		UpperLimit = CH.getUpperLimit();
 		BottomLimit = CH.getBottomLimit();
@@ -143,32 +149,51 @@ public class CameraMovements : MonoBehaviour {
 		return cameraPos;
 	}
 
-	void setCameraSize(float sizeInput)
+	void setCameraSize(float sizeInput, bool lerping = false)
 	{
-		Camera.main.orthographicSize = sizeInput;
+		if (!lerping)
+			Camera.main.orthographicSize = sizeInput;
+		else
+			Camera.main.orthographicSize = Mathf.Lerp (Camera.main.orthographicSize, sizeInput, changingSizeVelocity * Time.deltaTime);
 	}
 
 	void sizeManagement()
 	{
-		float diffX = 0.0f;
-		float xDistanceAllowed = Mathf.Abs (cameraHandler.getXDistFromBeginning ()) * ratioBeforeEnlargment;
-		float xDistanceEffective = Mathf.Abs (cameraHandler.getCameraPositionZEnvironment ().x - CH.getCursorWorldPosition ().x);
+		if (!fixedChangedSize) {
+			if (!onlyIfAiming || (onlyIfAiming && magicLanternLogic.actualState == MagicLantern.lanternState.InHand))
+			{
+				float diffX = 0.0f;
+				float xDistanceAllowed = Mathf.Abs (cameraHandler.getXDistFromBeginning ()) * ratioBeforeEnlargment;
+				float xDistanceEffective = Mathf.Abs (cameraHandler.getCameraPositionZEnvironment ().x - CH.getCursorWorldPosition ().x);
+				
+				if (xDistanceAllowed < xDistanceEffective) {
+					diffX = xDistanceEffective - xDistanceAllowed;
+				}
+				
+				float diffY = 0.0f;
+				float yDistanceAllowed = Mathf.Abs (cameraHandler.getYDistFromBeginning ()) * ratioBeforeEnlargment;
+				float yDistanceEffective = Mathf.Abs (cameraHandler.getCameraPositionZEnvironment ().y - CH.getCursorWorldPosition ().y);
+				
+				if (yDistanceAllowed < yDistanceEffective) {
+					diffY = yDistanceEffective - yDistanceAllowed;
+				}
+				
+				float newSize = defaultSize + enlargment * 0.05f * diffX + enlargment * 0.05f * diffY;
+				setCameraSize (newSize, true);
+			}
 
-		if (xDistanceAllowed < xDistanceEffective) {
-			diffX = xDistanceEffective - xDistanceAllowed;
 		}
 
-		float diffY = 0.0f;
-		float yDistanceAllowed = Mathf.Abs (cameraHandler.getYDistFromBeginning ()) * ratioBeforeEnlargment;
-		float yDistanceEffective = Mathf.Abs (cameraHandler.getCameraPositionZEnvironment ().y - CH.getCursorWorldPosition ().y);
-
-		if (yDistanceAllowed < yDistanceEffective) {
-			diffY = yDistanceEffective - yDistanceAllowed;
+		if (fixedChangedSize) {
+			if (onlyIfAiming && magicLanternLogic.actualState == MagicLantern.lanternState.InHand) {
+				float newSize = defaultSize + enlargment * 0.4f;
+				setCameraSize (newSize, true);
+			}
 		}
 
-		float newSize = defaultSize + enlargment * 0.05f * diffX + enlargment * 0.05f * diffY;
-		setCameraSize (newSize);
-
+		if (onlyIfAiming && magicLanternLogic.actualState != MagicLantern.lanternState.InHand) {
+			setCameraSize (defaultSize, true);
+		}
 	}
 
 	//limita i movimenti della camera a seconda della scena
