@@ -1076,7 +1076,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 2072192, guid: f4c01e0da7972514b8345910753c5ecd, type: 2}
       propertyPath: orthographic size
-      value: 5
+      value: 5.5
       objectReference: {fileID: 0}
     - target: {fileID: 11478616, guid: f4c01e0da7972514b8345910753c5ecd, type: 2}
       propertyPath: changingSizeVelocity
@@ -1084,7 +1084,27 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11478616, guid: f4c01e0da7972514b8345910753c5ecd, type: 2}
       propertyPath: fixedChangedSize
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11478616, guid: f4c01e0da7972514b8345910753c5ecd, type: 2}
+      propertyPath: changeSize
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11478616, guid: f4c01e0da7972514b8345910753c5ecd, type: 2}
+      propertyPath: RatioDistanceFromPlayer
+      value: .150000006
+      objectReference: {fileID: 0}
+    - target: {fileID: 11478616, guid: f4c01e0da7972514b8345910753c5ecd, type: 2}
+      propertyPath: ratioDistanceFromPlayer
+      value: .150000006
+      objectReference: {fileID: 0}
+    - target: {fileID: 11478616, guid: f4c01e0da7972514b8345910753c5ecd, type: 2}
+      propertyPath: changeRatioIfAiming
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11478616, guid: f4c01e0da7972514b8345910753c5ecd, type: 2}
+      propertyPath: onlyIfAiming
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f4c01e0da7972514b8345910753c5ecd, type: 2}
@@ -2202,8 +2222,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   newImplementation: 1
   limitCameraMovements: 0
-  RatioDistanceFromPlayer: .150000006
+  standardRatioDistance: .150000006
+  aimingRatioDistance: .300000012
   smooth: 10
+  changeRatioIfAiming: 1
   changeSize: 1
   onlyIfAiming: 1
   fixedChangedSize: 0

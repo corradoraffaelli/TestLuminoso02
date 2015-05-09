@@ -25,7 +25,9 @@ public class CameraMovements : MonoBehaviour {
 	Transform RightLimit;
 	Transform LeftLimit;
 
-	public float RatioDistanceFromPlayer = 0.3f;
+	public float standardRatioDistance = 0.15f;
+	public float aimingRatioDistance = 0.3f;
+	float ratioDistanceFromPlayer;
 	public float smooth = 10.0f;
 
 	Vector3 BLActualLimit;
@@ -34,6 +36,7 @@ public class CameraMovements : MonoBehaviour {
 	CameraHandler cameraHandler;
 	CursorHandler cursorHandler;
 
+	public bool changeRatioIfAiming = true;
 	public bool changeSize = true;
 	public bool onlyIfAiming = true;
 	public bool fixedChangedSize = false;
@@ -73,6 +76,7 @@ public class CameraMovements : MonoBehaviour {
 			yDistFromBeginning = cameraHandler.getYDistFromBeginning();
 		}
 
+		ratioDistanceFromPlayer = standardRatioDistance;
 		setCameraSize (defaultSize);
 	}
 
@@ -108,12 +112,21 @@ public class CameraMovements : MonoBehaviour {
 
 		if (newImplementation) {
 
+			if (changeRatioIfAiming){
+				if (magicLanternLogic.actualState == MagicLantern.lanternState.InHand)
+					setRatioDistance(aimingRatioDistance, true);
+				else if (magicLanternLogic.actualState != MagicLantern.lanternState.InHand)
+					setRatioDistance(standardRatioDistance, true);
+
+			}
+				
+
 			cursorWorldPosition = CH.getCursorWorldPosition ();
 			//uso il centro della sprite anzichè la base del personaggio
 			playerPosition = player.GetComponent<SpriteRenderer>().bounds.center;
 			//playerPosition = player.transform.position;
 
-			Vector3 newPosition =  getCameraPosition (RatioDistanceFromPlayer, cursorWorldPosition, playerPosition);
+			Vector3 newPosition =  getCameraPosition (ratioDistanceFromPlayer, cursorWorldPosition, playerPosition);
 			//transform.position = newPosition;
 			transform.position = Vector3.Lerp (transform.position, newPosition, Time.deltaTime * smooth);
 
@@ -157,6 +170,15 @@ public class CameraMovements : MonoBehaviour {
 			Camera.main.orthographicSize = sizeInput;
 		else
 			Camera.main.orthographicSize = Mathf.Lerp (Camera.main.orthographicSize, sizeInput, changingSizeVelocity * Time.deltaTime);
+	}
+
+	void setRatioDistance(float distanceInput, bool lerping = false)
+	{
+		if (!lerping)
+			ratioDistanceFromPlayer = distanceInput;
+		else
+			ratioDistanceFromPlayer = Mathf.Lerp (ratioDistanceFromPlayer, distanceInput, changingSizeVelocity * Time.deltaTime);
+
 	}
 
 	void sizeManagement()
