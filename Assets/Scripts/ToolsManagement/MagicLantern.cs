@@ -102,12 +102,15 @@ public class MagicLantern : Tool {
 	ReturnParticles returnParticles;
 	Vector3 lastLanternPosition;
 
+	AudioHandler audioHandler;
+
 	//--------INITIALIZATION AND ACTIVATION-------------------------------------
 
 	protected override void initializeTool() {
 		glassesManager = transform.GetComponent<GlassesManager> ();
 		graphicLantern = GetComponent<GraphicLantern> ();
 		returnParticles = GetComponentInChildren<ReturnParticles> ();
+		audioHandler = GetComponent<AudioHandler> ();
 
 		/*
 		//prendo gli oggetti dalla scena e li salvo nelle rispettive variabili
@@ -174,7 +177,8 @@ public class MagicLantern : Tool {
 			if (previousState != actualState)
 			{
 				if (previousState != lanternState.NotUsed)
-					returnParticles.activeParticles(graphicLantern.getLanternPosition());
+					callParticles();
+					
 
 				graphicLantern.switchOnLantern();
 				graphicLantern.takeLantern();
@@ -201,7 +205,7 @@ public class MagicLantern : Tool {
 			if (previousState != actualState)
 			{
 				if (previousState != lanternState.InHand)
-					returnParticles.activeParticles(graphicLantern.getLanternPosition());
+					callParticles();
 
 				graphicLantern.switchOffLantern();
 			}
@@ -220,6 +224,8 @@ public class MagicLantern : Tool {
 				instantiatePrefab();
 
 				graphicLantern.putLanternOnPlayer();
+
+				audioHandler.playClipByName("Left");
 			}
 			
 		}
@@ -230,6 +236,8 @@ public class MagicLantern : Tool {
 			{
 				graphicLantern.switchOffRay();
 				enemyTouchLantern(false);
+
+				audioHandler.playClipByName("TurnedOff");
 			}
 			
 		}
@@ -241,12 +249,14 @@ public class MagicLantern : Tool {
 				graphicLantern.addRigidbody();
 
 				turnedOffTime = Time.time;
+
+				audioHandler.playClipByName("FallingLantern");
 			}
 
 			//dopo un po' che la lanterna sta cadendo, mi torna in mano, come NotUsed
 			if (Mathf.Abs (Time.time - turnedOffTime) > timeReturnFalling)
 			{
-				returnParticles.activeParticles(graphicLantern.getLanternPosition());
+				callParticles();
 				actualState = lanternState.NotUsed;
 			}
 				
@@ -305,7 +315,11 @@ public class MagicLantern : Tool {
 			
 	}
 
-
+	void callParticles()
+	{
+		audioHandler.playClipByName("Ritorno");
+		returnParticles.activeParticles(graphicLantern.getLanternPosition());
+	}
 
 	//da implementare, dovrebbe ritornare se il nemico tocca la lanterna, così da spegnerla
 	bool enemyTouchLantern(bool touchedOrNot)

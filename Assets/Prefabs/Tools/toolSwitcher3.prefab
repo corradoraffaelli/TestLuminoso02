@@ -158,6 +158,8 @@ GameObject:
   - 114: {fileID: 11443812}
   - 114: {fileID: 11401502}
   - 114: {fileID: 11413742}
+  - 82: {fileID: 8291998}
+  - 114: {fileID: 11470136}
   m_Layer: 0
   m_Name: MagicLanternLogic
   m_TagString: MagicLanternLogic
@@ -323,6 +325,75 @@ Transform:
   m_Children: []
   m_Father: {fileID: 484852}
   m_RootOrder: 1
+--- !u!82 &8291998
+AudioSource:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 192212}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
 --- !u!114 &11401502
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -545,6 +616,27 @@ MonoBehaviour:
   toOverlap: {fileID: 0}
   overlapPercentage: 10
   endedProjected: 0
+--- !u!114 &11470136
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 192212}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db8ec66bee508ec4a8754d0738e984cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clips:
+  - clip: {fileID: 8300000, guid: f204ce2e9d032b14fa3952612644694f, type: 3}
+    clipName: Ritorno
+  - clip: {fileID: 8300000, guid: 3b5c8842b8353744f95a523c71aaa67e, type: 3}
+    clipName: Left
+  - clip: {fileID: 8300000, guid: a571c7a173d246643a8d294ac0ca16d0, type: 3}
+    clipName: FallingLantern
+  - clip: {fileID: 8300000, guid: 8c5631a6f4418b54eb4e00cbb880bf98, type: 3}
+    clipName: TurnedOff
+  audioSource: {fileID: 0}
 --- !u!114 &11474340
 MonoBehaviour:
   m_ObjectHideFlags: 1
