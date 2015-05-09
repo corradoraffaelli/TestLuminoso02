@@ -246,6 +246,10 @@ public class GraphicLantern : MonoBehaviour {
 		}
 	}
 
+	public Vector3 getLanternPosition()
+	{
+		return lantern.transform.position;
+	}
 
 	//movimenti del raggio e della proiezione in relazione alla posizione del player e del cursore
 	public void normalMovementsUnderMouse(){

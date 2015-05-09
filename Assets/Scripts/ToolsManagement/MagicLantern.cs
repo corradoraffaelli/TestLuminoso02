@@ -100,13 +100,15 @@ public class MagicLantern : Tool {
 	bool createdProjection = false;
 	
 	ReturnParticles returnParticles;
-	public Vector3 lastLanternPosition;
+	Vector3 lastLanternPosition;
 
 	//--------INITIALIZATION AND ACTIVATION-------------------------------------
 
 	protected override void initializeTool() {
 		glassesManager = transform.GetComponent<GlassesManager> ();
 		graphicLantern = GetComponent<GraphicLantern> ();
+		returnParticles = GetComponentInChildren<ReturnParticles> ();
+
 		/*
 		//prendo gli oggetti dalla scena e li salvo nelle rispettive variabili
 		takeObjectsFromScene ();
@@ -171,12 +173,17 @@ public class MagicLantern : Tool {
 			//AZIONI DA FARE APPENA PRESA IN MANO
 			if (previousState != actualState)
 			{
+				if (previousState != lanternState.NotUsed)
+					returnParticles.activeParticles(graphicLantern.getLanternPosition());
+
 				graphicLantern.switchOnLantern();
 				graphicLantern.takeLantern();
 
 				graphicLantern.setLeftLanternRaySrites(false);
 
 				deleteInstantiatedPrefab();
+
+				//returnParticles.activeParticles(graphicLantern.getLanternPosition());
 			}
 
 			//AZIONI CHE VENGONO FATTE SEMPRE CON LA LANTERNA IN MANO
@@ -193,6 +200,9 @@ public class MagicLantern : Tool {
 			//AZIONI DA FARE APPENA LA LANTERNA SCOMPARE (NOT ON GROUND oppure TASTO SINISTRO)
 			if (previousState != actualState)
 			{
+				if (previousState != lanternState.InHand)
+					returnParticles.activeParticles(graphicLantern.getLanternPosition());
+
 				graphicLantern.switchOffLantern();
 			}
 			
@@ -250,93 +260,6 @@ public class MagicLantern : Tool {
 
 		updateLeftLantern ();
 
-
-		/*
-		//caso in cui la lanterna non è lasciata a terra
-		if (!leftLantern) {
-			//slowTime();
-			//movimenti del raggio e della proiezione sotto al mouse
-			normalMovementsUnderMouse ();
-
-			//si aggiornano le sprites del vetrino
-			//viene fatto ad ogni update, da verificare se troppo pesante, precedentemente queste funzioni erano poste in modo più intelligente,
-			//sono state inserite nell'update per semplificare
-			if (glassesManager.isThereAUsableGlass ()) {
-				//actualGlass = glassesManager.getActualGlass();
-				glassSpriteUpdate ();
-			}
-
-			//disattivo la lanterna se non sono a terra
-			if (!player.GetComponent<PlayerMovements>().OnGround)
-			{
-				toolSwitcher TS = transform.parent.gameObject.GetComponent<toolSwitcher> ();
-				TS.useTool (false);
-				TS.switchUsingTool (false);
-			}
-
-			changeRayAndCircleSprites (normalRay, normalCircle);
-			changeProjectionSprite (projectionSprite);
-			deleteInstantiatedPrefab();
-			//deleteActualProjection ();
-
-			if (verifyIfTooFar () && !limitProjectionDistance)
-				changeProjectionSprite (blurredSprite);
-
-			//abbasso l'alpha della sprite in modalità "mira"
-			PC.setAlphaSprite(alphaProjection);
-
-			//se lascio il tasto
-			//if (Input.GetButtonUp("Mira") || (Input.GetAxis("Mira")<0.5f))
-			//Debug.Log (Input.GetAxisRaw("Mira"));
-			if (Input.GetButtonUp("Mira"))
-			{
-				//fastTime();
-
-				//la lascio e proietto se sono nella buona posizione
-				if (!verifyIfTooFar () || limitProjectionDistance) {
-					
-					//è un vetrino normale
-					changeRayAndCircleSprites (pressedRay, pressedCircle);
-					changeProjectionSprite (emptySprite);
-					if (!createdProjection) {
-						createdProjection = true;
-						instantiatePrefab ();
-					}
-					
-					leftLantern = true;
-					toolGameObject.transform.parent = transform;
-
-					lastLanternPosition = camera.transform.position;
-					
-				}else{
-					//disattivo la lanterna se non è nella buona posizione
-					toolSwitcher TS = transform.parent.gameObject.GetComponent<toolSwitcher> ();
-					TS.useTool (false);
-					TS.switchUsingTool (false);
-				}
-			}
-
-
-		}
-
-		//se ho lasciato la lanterna
-		else 
-		{
-			//se ripremo il tasto, la riprendo in mano
-			if (Input.GetButtonDown("Mira"))
-			{
-				//deleteOldProjection();
-				//deleteInstantiatedPrefab();
-				leftLantern = false;
-				returnParticles.activeParticles();
-				//activable = false;
-
-				setPlayerAsParent();
-
-
-			}
-		}
-		*/
 
 	}
 

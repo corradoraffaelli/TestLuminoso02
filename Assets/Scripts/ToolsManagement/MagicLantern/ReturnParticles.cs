@@ -18,7 +18,7 @@ public class ReturnParticles : MonoBehaviour {
 	ParticleSystem particleSystem;
 	float defaultEmission;
 
-	GameObject lanternLogic;
+	//GameObject lanternLogic;
 
 	//Vector3 playerPosition;
 
@@ -26,15 +26,16 @@ public class ReturnParticles : MonoBehaviour {
 	void Start () {
 		player = GameObject.FindGameObjectWithTag ("Player");
 
-		lanternLogic = GameObject.FindGameObjectWithTag ("MagicLanternLogic");
+		//lanternLogic = GameObject.FindGameObjectWithTag ("MagicLanternLogic");
 
 		particleSystem = GetComponent<ParticleSystem> ();
 		playerSpriteRenderer = player.GetComponent<SpriteRenderer> ();
 
 		defaultEmission = particleSystem.emissionRate;
 		particleSystem.emissionRate = 0;
+		particleSystem.enableEmission = true;
 
-		Invoke ("activeParticles", 4.0f);
+		//Invoke ("activeParticles", 4.0f);
 	}
 	
 	// Update is called once per frame
@@ -43,11 +44,14 @@ public class ReturnParticles : MonoBehaviour {
 		if (needToMove) {
 		//lantern = GameObject.FindGameObjectWithTag ("Lantern");
 			//if (lantern != null) {
-				particleSystem.emissionRate = defaultEmission;
-				moving = true;
-				needToMove = false;
-				arrived = false;
-				transform.position = lanternLogic.GetComponent<MagicLantern>().lastLanternPosition;
+			needToMove = false;	
+
+			particleSystem.emissionRate = defaultEmission;
+			moving = true;
+				
+			arrived = false;
+
+				//transform.position = lanternLogic.GetComponent<MagicLantern>().lastLanternPosition;
 				//playerPosition = playerSpriteRenderer.bounds.center;
 			//} else {
 				//Debug.Log ("ATTENZIONE! Probabilmente non hai settato il tag della lanterna a Lantern. Oppure al momento della chiamata, la lanterna non era attiva." +
@@ -68,8 +72,9 @@ public class ReturnParticles : MonoBehaviour {
 
 	}
 
-	public void activeParticles()
+	public void activeParticles(Vector3 startingPosition)
 	{
+		transform.position = startingPosition;
 		needToMove = true;
 	}
 
