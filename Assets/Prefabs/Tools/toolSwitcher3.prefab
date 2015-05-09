@@ -97,7 +97,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &184096
 GameObject:
   m_ObjectHideFlags: 1
@@ -486,7 +486,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1016b151238c1c645adb40352f50b504, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  particlesVelocity: 10
+  particlesVelocity: 12.5
   distanceFromPlayer: .400000006
 --- !u!114 &11442146
 MonoBehaviour:
@@ -508,7 +508,6 @@ MonoBehaviour:
   projectionPrefab: {fileID: 146854, guid: e903df3634975d94d8f090cffe868ace, type: 2}
   disabledByEnemy: 1
   canFall: 1
-  lastLanternPosition: {x: 0, y: 0, z: 0}
 --- !u!114 &11443812
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -656,7 +655,7 @@ ParticleSystem:
   InitialModule:
     enabled: 1
     startLifetime:
-      scalar: 1
+      scalar: .699999988
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -689,7 +688,7 @@ ParticleSystem:
         m_PostInfinity: 2
       minMaxState: 0
     startSpeed:
-      scalar: .689999998
+      scalar: .5
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -816,7 +815,7 @@ ParticleSystem:
         rgba: 4294963956
       minMaxState: 0
     startSize:
-      scalar: .129999995
+      scalar: .25
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -902,7 +901,7 @@ ParticleSystem:
     enabled: 1
     m_Type: 0
     rate:
-      scalar: 100
+      scalar: 500
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -1019,10 +1018,10 @@ ParticleSystem:
       maxGradient:
         key0:
           serializedVersion: 2
-          rgba: 4294222497
+          rgba: 4294967295
         key1:
           serializedVersion: 2
-          rgba: 4294967295
+          rgba: 4294222497
         key2:
           serializedVersion: 2
           rgba: 0
@@ -1151,7 +1150,7 @@ ParticleSystem:
     cycles: 1
     randomRow: 1
   VelocityModule:
-    enabled: 0
+    enabled: 1
     x:
       scalar: 0
       maxCurve:
@@ -1186,7 +1185,7 @@ ParticleSystem:
         m_PostInfinity: 2
       minMaxState: 0
     y:
-      scalar: 0
+      scalar: .300000012
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -1702,7 +1701,7 @@ ParticleSystemRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_Materials:
-  - {fileID: 10301, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: e9d68d7505b50fc4288795cc18526687, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 1

@@ -245,7 +245,11 @@ public class MagicLantern : Tool {
 
 			//dopo un po' che la lanterna sta cadendo, mi torna in mano, come NotUsed
 			if (Mathf.Abs (Time.time - turnedOffTime) > timeReturnFalling)
+			{
+				returnParticles.activeParticles(graphicLantern.getLanternPosition());
 				actualState = lanternState.NotUsed;
+			}
+				
 		}
 
 		if (actualState != lanternState.Falling) {
