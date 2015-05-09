@@ -1120,7 +1120,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11478616, guid: f4c01e0da7972514b8345910753c5ecd, type: 2}
       propertyPath: cameraOnPlayer
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f4c01e0da7972514b8345910753c5ecd, type: 2}
@@ -2962,7 +2962,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 19857426, guid: e5b8a6fc8d1506a4eb0de02965cd896c, type: 2}
       propertyPath: InitialModule.startSize.scalar
-      value: .400000006
+      value: .25
       objectReference: {fileID: 0}
     - target: {fileID: 19857426, guid: e5b8a6fc8d1506a4eb0de02965cd896c, type: 2}
       propertyPath: ColorModule.gradient.maxGradient.ctime0
@@ -2979,6 +2979,34 @@ Prefab:
     - target: {fileID: 19857426, guid: e5b8a6fc8d1506a4eb0de02965cd896c, type: 2}
       propertyPath: ColorModule.gradient.maxGradient.key1.rgba
       value: 4294222497
+      objectReference: {fileID: 0}
+    - target: {fileID: 19985768, guid: e5b8a6fc8d1506a4eb0de02965cd896c, type: 2}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: e9d68d7505b50fc4288795cc18526687, type: 2}
+    - target: {fileID: 19857426, guid: e5b8a6fc8d1506a4eb0de02965cd896c, type: 2}
+      propertyPath: EmissionModule.rate.scalar
+      value: 500
+      objectReference: {fileID: 0}
+    - target: {fileID: 19857426, guid: e5b8a6fc8d1506a4eb0de02965cd896c, type: 2}
+      propertyPath: EmissionModule.m_Type
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 19857426, guid: e5b8a6fc8d1506a4eb0de02965cd896c, type: 2}
+      propertyPath: VelocityModule.enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 19857426, guid: e5b8a6fc8d1506a4eb0de02965cd896c, type: 2}
+      propertyPath: VelocityModule.y.scalar
+      value: .300000012
+      objectReference: {fileID: 0}
+    - target: {fileID: 19857426, guid: e5b8a6fc8d1506a4eb0de02965cd896c, type: 2}
+      propertyPath: InitialModule.startLifetime.scalar
+      value: .699999988
+      objectReference: {fileID: 0}
+    - target: {fileID: 19857426, guid: e5b8a6fc8d1506a4eb0de02965cd896c, type: 2}
+      propertyPath: InitialModule.startSpeed.scalar
+      value: .5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e5b8a6fc8d1506a4eb0de02965cd896c, type: 2}
