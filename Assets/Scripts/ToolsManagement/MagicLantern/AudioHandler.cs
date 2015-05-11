@@ -41,8 +41,16 @@ public class AudioHandler : MonoBehaviour {
 	void Start () {
 		if (audioSource == null)
 			audioSource = GetComponent<AudioSource> ();
+
+		if (audioSource == null) {
+			audioSource = gameObject.AddComponent<AudioSource> ();
+		}
+
 		if (audioSource == null)
 			Debug.Log ("Attenzione!! L'oggetto " + gameObject.name + " non è riuscito a trovare un Audio Source valido!!");
+
+		if (audioSource != null)
+			audioSource.playOnAwake = false;
 	}
 	
 	// Update is called once per frame
