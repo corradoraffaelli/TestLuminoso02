@@ -29,7 +29,7 @@ public class MagicLantern : Tool {
 
 	//indica se posso prendere in mano la lanterna o meno, ad esempio può essere utile per le particles
 	bool usable = true;
-	bool touchedByEnemy = false;
+	public bool touchedByEnemy = false;
 
 	//Glass[] glassList;
 	//int glassIndex;
@@ -198,6 +198,8 @@ public class MagicLantern : Tool {
 
 			graphicLantern.normalMovementsUnderMouse();
 			graphicLantern.setNormalFakeProjectionSprite();
+
+			touchedByEnemy = false;
 		}
 
 		if (actualState == lanternState.NotUsed) {
@@ -269,6 +271,7 @@ public class MagicLantern : Tool {
 			}
 		}
 
+
 		//aggiorno il previousState con quello attuale, al prossimo frame servirà per i controlli
 		previousState = actualState;
 
@@ -292,16 +295,8 @@ public class MagicLantern : Tool {
 			actualState = lanternState.NotUsed;
 		}
 
-		if (actualState == lanternState.InHand && Input.GetButtonUp("Mira")) {
-			actualState = lanternState.Left;
-		}
-
-		if (disabledByEnemy) {
-			if (actualState == lanternState.Left && touchedByEnemy) {
-				actualState = lanternState.TurnedOff;
-			}
-		}
-
+		//questo controllo va prima di quando si setta a Left o TurnedOff, per evitare che nel setStates venga prima messo a Left e, subito dopo, a Falling,
+		//così da perdere ciò che si fa nell'update del Left
 		if (canFall) {
 			if (actualState == lanternState.TurnedOff || actualState == lanternState.Left)
 			{
@@ -311,6 +306,18 @@ public class MagicLantern : Tool {
 				}
 			}
 		}
+
+		//questo controllo va prima di quando si setta a Left, per evitare che nel setStates venga prima messo a Left e, subito dopo, a TurnedOff,
+		//così da perdere ciò che si fa nell'update del Left
+		if (actualState == lanternState.Left && touchedByEnemy) {
+			actualState = lanternState.TurnedOff;
+		}
+
+		if (actualState == lanternState.InHand && Input.GetButtonUp("Mira")) {
+			actualState = lanternState.Left;
+		}
+
+
 
 			
 	}
@@ -331,6 +338,7 @@ public class MagicLantern : Tool {
 	public void c_touchedByEnemy()
 	{
 		enemyTouchLantern (true);
+		Debug.Log ("spenta dal nemico");
 	}
 		
 
