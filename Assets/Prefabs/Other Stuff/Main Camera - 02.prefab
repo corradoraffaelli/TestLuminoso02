@@ -241,9 +241,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   newImplementation: 1
   limitCameraMovements: 0
-  RatioDistanceFromPlayer: .150000006
-  smooth: 10
+  cameraOnPlayer: 0
+  changeRatioIfAiming: 1
   changeSize: 1
+  onlyIfAiming: 1
+  fixedChangedSize: 0
+  standardRatioDistance: .150000006
+  aimingRatioDistance: .300000012
+  smooth: 10
+  changingSizeVelocity: 2.5
   defaultSize: 5.5
   enlargment: 1
   ratioBeforeEnlargment: .75
@@ -253,7 +259,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 101814}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1fd999d1b2cf94a45a5b0a47ce074bef, type: 3}
   m_Name: 
