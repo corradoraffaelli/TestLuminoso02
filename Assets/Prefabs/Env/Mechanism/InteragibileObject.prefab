@@ -11,6 +11,7 @@ GameObject:
   - 212: {fileID: 21216324}
   - 61: {fileID: 6149346}
   - 114: {fileID: 11457118}
+  - 114: {fileID: 11462024}
   m_Layer: 0
   m_Name: InteragibileObject
   m_TagString: Untagged
@@ -88,6 +89,25 @@ MonoBehaviour:
   oneTimeInteraction: 0
   activeDisabledObject: 1
   indicationScale: 2
+--- !u!114 &11462024
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 134006}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db8ec66bee508ec4a8754d0738e984cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  updateAudioClips: 0
+  clips:
+  - clipName: Leva
+    clip: {fileID: 8300000, guid: edb0dd0dba6be6d4bb23906a37f1d4e9, type: 3}
+    loop: 0
+    volume: 1
+    pitch: 1
+    audioSource: {fileID: 0}
 --- !u!212 &21207718
 SpriteRenderer:
   m_ObjectHideFlags: 1

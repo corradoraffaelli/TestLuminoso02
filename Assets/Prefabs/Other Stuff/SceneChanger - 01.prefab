@@ -11,6 +11,7 @@ GameObject:
   - 212: {fileID: 21284606}
   - 61: {fileID: 6133616}
   - 114: {fileID: 11451080}
+  - 114: {fileID: 11488952}
   m_Layer: 0
   m_Name: SceneChanger - 01
   m_TagString: Untagged
@@ -54,10 +55,39 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 851d31c61a1c64414813a118982c051e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  disableActualGameObject: 1
+  respawnPosition: 1
   toDisappear:
   - {fileID: 0}
   toAppear:
   - {fileID: 0}
+  defaultVerseRight: 1
+  TimeToAppearDisappear: 2
+--- !u!114 &11488952
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 157464}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db8ec66bee508ec4a8754d0738e984cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  updateAudioClips: 0
+  clips:
+  - clipName: Stella
+    clip: {fileID: 8300000, guid: 440030d483552134a9b207c0e8c82b77, type: 3}
+    loop: 0
+    volume: 1
+    pitch: 1
+    audioSource: {fileID: 0}
+  - clipName: Comparsa
+    clip: {fileID: 8300000, guid: 887909cd3573de84caab6fad7d51e44a, type: 3}
+    loop: 0
+    volume: 1
+    pitch: 1
+    audioSource: {fileID: 0}
 --- !u!212 &21284606
 SpriteRenderer:
   m_ObjectHideFlags: 1

@@ -187,6 +187,8 @@ public class MagicLantern : Tool {
 
 				deleteInstantiatedPrefab();
 
+				audioHandler.playClipByName("Accensione");
+				audioHandler.playClipByName("Mira");
 				//returnParticles.activeParticles(graphicLantern.getLanternPosition());
 			}
 
@@ -206,6 +208,7 @@ public class MagicLantern : Tool {
 			//AZIONI DA FARE APPENA LA LANTERNA SCOMPARE (NOT ON GROUND oppure TASTO SINISTRO)
 			if (previousState != actualState)
 			{
+				audioHandler.playClipByName("Spegnimento");
 				if (previousState != lanternState.InHand)
 					callParticles();
 
@@ -227,7 +230,7 @@ public class MagicLantern : Tool {
 
 				graphicLantern.putLanternOnPlayer();
 
-				audioHandler.playClipByName("Left");
+				audioHandler.playClipByName("ApparizioneProiezione");
 			}
 			
 		}
@@ -239,7 +242,7 @@ public class MagicLantern : Tool {
 				graphicLantern.switchOffRay();
 				enemyTouchLantern(false);
 
-				audioHandler.playClipByName("TurnedOff");
+				audioHandler.playClipByName("Spegnimento");
 			}
 			
 		}
@@ -252,7 +255,9 @@ public class MagicLantern : Tool {
 
 				turnedOffTime = Time.time;
 
-				audioHandler.playClipByName("FallingLantern");
+				if (previousState != lanternState.TurnedOff)
+					audioHandler.playClipByName("Spegnimento");
+				//audioHandler.playClipByName("FallingLantern");
 			}
 
 			//dopo un po' che la lanterna sta cadendo, mi torna in mano, come NotUsed
@@ -267,10 +272,14 @@ public class MagicLantern : Tool {
 		if (actualState != lanternState.Falling) {
 			if (previousState != actualState)
 			{
+
 				graphicLantern.removeRigidbody();
 			}
 		}
 
+		if (actualState != lanternState.InHand) {
+			audioHandler.stopClipByName("Mira");
+		}
 
 		//aggiorno il previousState con quello attuale, al prossimo frame servirà per i controlli
 		previousState = actualState;

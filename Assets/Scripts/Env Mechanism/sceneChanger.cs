@@ -16,6 +16,7 @@ public class sceneChanger : MonoBehaviour {
 	SpriteRenderer[][] spriteRenderersToAppear;
 	SpriteRenderer[][] spriteRenderersToDisappear;
 	GameObject[] tempDisappearGameObject;
+	AudioHandler audioHandler;
 
 	public float TimeToAppearDisappear = 2.0f;
 
@@ -26,6 +27,9 @@ public class sceneChanger : MonoBehaviour {
 
 		//takeSpriteRenderers ();
 		//changeSpriteRenderersAlpha (spriteRenderersToAppear, 0.0f);
+
+		audioHandler = GetComponent<AudioHandler> ();
+
 	}
 
 	void Update()
@@ -118,6 +122,7 @@ public class sceneChanger : MonoBehaviour {
 			setRespawnPosition();
 
 		//this.gameObject.SetActive(false);
+		audioHandler.playClipByName ("Stella");
 		hideGameObject();
 		needChange = true;
 	}
@@ -129,7 +134,7 @@ public class sceneChanger : MonoBehaviour {
 			c_manualActivation();
 
 		}
-
+		audioHandler.playClipByName ("Comparsa");
 	}
 
 	//-----------CORRADO----------------
@@ -229,7 +234,7 @@ public class sceneChanger : MonoBehaviour {
 
 	void disactiveGameObject()
 	{
-		this.gameObject.SetActive(false);
+		//this.gameObject.SetActive(false);
 	}
 
 	void hideGameObject()

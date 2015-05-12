@@ -189,11 +189,13 @@ public class PlayerMovements : MonoBehaviour {
 	//private GameObject myToStun;
 
 	MagicLantern magicLanternLogic;
+	AudioHandler audioHandler;
 
 	void Start () {
 
 		RigBody = transform.GetComponent<Rigidbody2D>();
 		anim = transform.GetComponent<Animator> ();
+		audioHandler = GetComponent<AudioHandler> ();
 
 		getGameController ();
 
@@ -406,7 +408,14 @@ public class PlayerMovements : MonoBehaviour {
 			//gestione del movimento lungo la scala
 			OnLadderManagement ();
 		}
-		
+
+		if (!AIControl && audioHandler != null) {
+			if (running)
+				audioHandler.playClipByName ("Passi");
+			if (!running || (!onGround && running))
+				audioHandler.stopClipByName("Passi");
+		}
+
 		setAnimations ();
 
 	}
@@ -570,7 +579,10 @@ public class PlayerMovements : MonoBehaviour {
 			}
 
 			RigBody.AddForce(new Vector2 (0.0f,addedForceDebug));
+
 		}
+		if (audioHandler != null)
+			audioHandler.playClipByName ("RimbalzoNemico");
 	}
 
 	public void addEnemyCount()
@@ -599,6 +611,8 @@ public class PlayerMovements : MonoBehaviour {
 	void jumpingManagementFU()
 	{
 		if (Jumping == true) {
+			if (audioHandler != null)
+				audioHandler.playClipByName("Salto");
 			RigBody.AddForce (new Vector2 (0.0f, 150.0f * jumpFactor));
 			Jumping = false;
 		}
@@ -1170,7 +1184,10 @@ public class PlayerMovements : MonoBehaviour {
 	}
 
 	private IEnumerator handlePlayerKill() {
-		
+
+		if (audioHandler != null)
+			audioHandler.playClipByName ("Morte");
+
 		yield return new WaitForSeconds(0.1f);
 		
 		BoxCollider2D b2d = GetComponent<BoxCollider2D> ();
@@ -1192,6 +1209,7 @@ public class PlayerMovements : MonoBehaviour {
 		b2d.isTrigger = false;
 		c2d.isTrigger = false;
 		bringMeToRespawnPosition ();
+
 
 	}
 

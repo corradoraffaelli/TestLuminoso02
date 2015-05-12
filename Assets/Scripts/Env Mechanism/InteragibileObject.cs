@@ -13,12 +13,14 @@ public class InteragibileObject : MonoBehaviour {
 	bool playerColliding = false;
 	GameObject player;
 	GameObject indication;
+	AudioHandler audioHandler;
 
 
 	void Start () {
 		player = GameObject.FindGameObjectWithTag ("Player");
 		indication = transform.GetChild (0).gameObject;
 		setIndicationScale ();
+		audioHandler = GetComponent<AudioHandler> ();
 	}
 
 	void Update () {
@@ -33,6 +35,14 @@ public class InteragibileObject : MonoBehaviour {
 			
 			//scorre l'array di gameObject e chiama il metodo
 			if (Input.GetButtonUp ("Interaction") && ((oneTimeInteraction && !interacted) || !oneTimeInteraction)) {
+
+				if (audioHandler != null)
+				{
+					Debug.Log ("i'm in");
+					audioHandler.playClipByName("Leva");
+				}
+					
+
 				interacted = true;
 				for (int i = 0; i<objectsWithMethods.Length; i++)
 				{
