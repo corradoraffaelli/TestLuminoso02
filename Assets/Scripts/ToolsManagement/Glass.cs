@@ -20,6 +20,8 @@ public class Glass : MonoBehaviour
 	public Sprite badProjection;
 	public Sprite blurredProjection;
 	public Sprite emptySprite;
+	public Sprite glassSprite;
+
 	public string glassType;
 
 	public GameObject[] subGlassList;

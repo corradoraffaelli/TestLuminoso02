@@ -40,15 +40,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   usable: 1
+  canBeEnabled: 1
   spriteObject: {fileID: 21300000, guid: 4ee18d1beb64a32448911d15bbba5262, type: 3}
   goodProjection: {fileID: 21300000, guid: 1e2f61b4771c5b941b549ec940cb22ff, type: 3}
   badProjection: {fileID: 21300000, guid: 1e2f61b4771c5b941b549ec940cb22ff, type: 3}
   blurredProjection: {fileID: 21300000, guid: 4ec62d54cdbb8a54097cb0be14eabafb, type: 3}
   emptySprite: {fileID: 21300000, guid: 5107ae915a71b72479b27f4233ed125d, type: 3}
+  glassSprite: {fileID: 21300000, guid: be2ac2a0adae60c45b6be0b41379a056, type: 3}
   glassType: Cage
   subGlassList: []
   projectionObject: {fileID: 0}
   prefabObject: {fileID: 160210, guid: 8f7a92d0e8888f844844bd524bbe7cbc, type: 2}
+  endingLevelGlass: 0
+  toOverlap: {fileID: 0}
+  overlapPercentage: 10
+  endedProjected: 0
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

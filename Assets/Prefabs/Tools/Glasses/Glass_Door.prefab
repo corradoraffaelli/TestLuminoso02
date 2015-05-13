@@ -40,15 +40,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   usable: 1
+  canBeEnabled: 1
   spriteObject: {fileID: 21300000, guid: 55a32b8f669f22d438c8f6ee380986ea, type: 3}
   goodProjection: {fileID: 21300000, guid: 64fef828077b20a4b94856d7163028c9, type: 3}
   badProjection: {fileID: 21300000, guid: f1f1f9b406faddf4fb2dee832b14468a, type: 3}
   blurredProjection: {fileID: 21300000, guid: da6aaacaee3b40c4da19cbfe8d7ee636, type: 3}
   emptySprite: {fileID: 21300000, guid: 1172cc0229ae017458e3b7497760daad, type: 3}
+  glassSprite: {fileID: 21300000, guid: f3a21c607025ebd47b11d39ed5285fb4, type: 3}
   glassType: Door
   subGlassList: []
   projectionObject: {fileID: 0}
   prefabObject: {fileID: 160210, guid: 76cc0afb07544d441bd5cde8699e39a7, type: 2}
+  endingLevelGlass: 0
+  toOverlap: {fileID: 0}
+  overlapPercentage: 10
+  endedProjected: 0
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

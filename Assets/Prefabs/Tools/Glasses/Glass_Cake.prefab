@@ -40,15 +40,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   usable: 1
+  canBeEnabled: 1
   spriteObject: {fileID: 21300000, guid: cdb3bd5efd992d74eb44df6ea6ca67c1, type: 3}
   goodProjection: {fileID: 21300000, guid: 162107af128bf9a4a815a0ff47130f7b, type: 3}
   badProjection: {fileID: 21300000, guid: 162107af128bf9a4a815a0ff47130f7b, type: 3}
   blurredProjection: {fileID: 21300000, guid: 20129ed1b13df234c92be07778a14a9d, type: 3}
   emptySprite: {fileID: 21300000, guid: 39c99c64947336841bcc0ff945c05a40, type: 3}
+  glassSprite: {fileID: 21300000, guid: eb07a659136f6b640ac7ea50b6d821b2, type: 3}
   glassType: Cake
   subGlassList: []
   projectionObject: {fileID: 0}
   prefabObject: {fileID: 142134, guid: cc2571bb609cda14b8279c003069c067, type: 2}
+  endingLevelGlass: 0
+  toOverlap: {fileID: 0}
+  overlapPercentage: 10
+  endedProjected: 0
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
