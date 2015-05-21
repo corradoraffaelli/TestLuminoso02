@@ -14,6 +14,7 @@ public class ActivableObject : MonoBehaviour {
 	public enum movementTyp {
 		Translation,
 		Rotation,
+		RotoTranslation,
 	}
 	public movementTyp movementType;
 
@@ -22,6 +23,12 @@ public class ActivableObject : MonoBehaviour {
 		Stay,
 	}
 	public endReactionType endActionType;
+
+	public enum mechanismChainType {
+		End,
+		ContinueChain,
+
+	}
 
 	//public bool killWithSpikes = true;
 
