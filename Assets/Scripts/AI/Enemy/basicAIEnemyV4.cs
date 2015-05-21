@@ -2505,6 +2505,8 @@ public class basicAIEnemyV4 : MonoBehaviour {
 
 		myToStun.SendMessage ("c_chargedAttack");
 
+		turnOffProjector ();
+
 		attackCharged = false;
 		attackCharging = false;
 
@@ -3464,15 +3466,21 @@ public class basicAIEnemyV4 : MonoBehaviour {
 		if (c.name == "Proiettore") {
 
 			if(c.gameObject.transform.parent.tag == "Lantern") {
-				//Debug.Log ("ciao2");
-				GameObject o = GameObject.FindGameObjectWithTag("MagicLanternLogic");
-				if(o != null) {
 
-					o.SendMessage("c_touchedByEnemy");
-				}
+				turnOffProjector();
 			}
 			//mia reazione?
 
+		}
+
+	}
+
+	private void turnOffProjector() {
+
+		GameObject o = GameObject.FindGameObjectWithTag("MagicLanternLogic");
+		if(o != null) {
+			
+			o.SendMessage("c_touchedByEnemy");
 		}
 
 	}

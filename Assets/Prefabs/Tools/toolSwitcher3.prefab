@@ -123,6 +123,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 462230}
   - 114: {fileID: 11496732}
+  - 50: {fileID: 5051600}
   m_Layer: 0
   m_Name: Glass_Ghost
   m_TagString: Untagged
@@ -296,6 +297,21 @@ Transform:
   - {fileID: 462230}
   m_Father: {fileID: 421450}
   m_RootOrder: 0
+--- !u!50 &5051600
+Rigidbody2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 186334}
+  m_Mass: 9.99999975e-05
+  m_LinearDrag: 0
+  m_AngularDrag: .0500000007
+  m_GravityScale: 1
+  m_FixedAngle: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
 --- !u!114 &11401502
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -622,7 +638,7 @@ MonoBehaviour:
   glassType: Cake
   subGlassList: []
   projectionObject: {fileID: 0}
-  prefabObject: {fileID: 142134, guid: cc2571bb609cda14b8279c003069c067, type: 2}
+  prefabObject: {fileID: 142134, guid: a16272cd4759a4497ba05b0ed44ad1b8, type: 2}
   endingLevelGlass: 0
   toOverlap: {fileID: 0}
   overlapPercentage: 10
@@ -638,8 +654,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d528b953161387942976b4620f5a3fa6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  usable: 0
-  canBeEnabled: 0
+  usable: 1
+  canBeEnabled: 1
   spriteObject: {fileID: 21300000, guid: f75e460e1846a97499f695c24e2ad848, type: 3}
   goodProjection: {fileID: 21300000, guid: d529531f29c89954f864702bd5583a2b, type: 3}
   badProjection: {fileID: 21300000, guid: d529531f29c89954f864702bd5583a2b, type: 3}
@@ -649,7 +665,7 @@ MonoBehaviour:
   glassType: Ghost
   subGlassList: []
   projectionObject: {fileID: 0}
-  prefabObject: {fileID: 174594, guid: 7dc86dd05a962f44399a04afad2fa71d, type: 2}
+  prefabObject: {fileID: 174594, guid: 5d47b0dfd62c34e2583eb2c63f6c3625, type: 2}
   endingLevelGlass: 0
   toOverlap: {fileID: 0}
   overlapPercentage: 10
