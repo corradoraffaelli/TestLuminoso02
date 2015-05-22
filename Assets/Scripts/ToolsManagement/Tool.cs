@@ -31,6 +31,7 @@ abstract public class Tool : MonoBehaviour {
 	protected GameObject controller;
 	protected CursorHandler cursorHandler;
 
+	protected InputKeeper inputKeeper;
 	//true se sto riattivando il tool, quindi è true se fino a quel momento è stato
 	//inattivo, sarà false lungo tutto il suo utilizzo, tornerà true a fine utilizzo
 	bool activation = true;
@@ -42,6 +43,7 @@ abstract public class Tool : MonoBehaviour {
 		player = GameObject.FindGameObjectWithTag ("Player");
 		controller = GameObject.FindGameObjectWithTag ("Controller");
 		cursorHandler = controller.GetComponent<CursorHandler> ();
+		inputKeeper = controller.GetComponent<InputKeeper> ();
 		initializeTool ();
 	}
 

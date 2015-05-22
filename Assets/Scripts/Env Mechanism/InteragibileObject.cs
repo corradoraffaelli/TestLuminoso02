@@ -15,12 +15,15 @@ public class InteragibileObject : MonoBehaviour {
 	GameObject indication;
 	AudioHandler audioHandler;
 
+	InputKeeper inputKeeper;
+
 
 	void Start () {
 		player = GameObject.FindGameObjectWithTag ("Player");
 		indication = transform.GetChild (0).gameObject;
 		setIndicationScale ();
 		audioHandler = GetComponent<AudioHandler> ();
+		inputKeeper = GameObject.FindGameObjectWithTag ("Controller").GetComponent<InputKeeper> ();
 	}
 
 	void Update () {
@@ -34,7 +37,7 @@ public class InteragibileObject : MonoBehaviour {
 			indication.SetActive(playerColliding);
 			
 			//scorre l'array di gameObject e chiama il metodo
-			if (Input.GetButtonUp ("Interaction") && ((oneTimeInteraction && !interacted) || !oneTimeInteraction)) {
+			if (inputKeeper!= null && inputKeeper.isButtonUp("Interaction") && ((oneTimeInteraction && !interacted) || !oneTimeInteraction)) {
 
 				if (audioHandler != null)
 				{

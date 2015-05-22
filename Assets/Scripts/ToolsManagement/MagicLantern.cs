@@ -166,6 +166,19 @@ public class MagicLantern : Tool {
 	//qui va inserita la logica del tool, usata nell'update...
 	protected override void useTool() {
 
+		if (inputKeeper!=null && inputKeeper.isButtonUp ("GlassModifier") && glassesManager.isGlassModifiable ())
+			glassesManager.callGlassModifier ();
+
+		if (actualState != lanternState.Left) {
+			if (!glassesManager.getActualGlass ().rotateWithLantern)
+				graphicLantern.resetCircleAngle ();
+			
+			if (!glassesManager.getActualGlass ().canBeModified)
+				graphicLantern.resetTempProjectionAngle ();
+		}
+
+
+
 		//DEBUG
 		if (Input.GetKeyUp(KeyCode.G))
 			enemyTouchLantern(true);
@@ -200,6 +213,9 @@ public class MagicLantern : Tool {
 
 			graphicLantern.normalMovementsUnderMouse();
 			graphicLantern.setNormalFakeProjectionSprite();
+
+			//if (glassesManager.getActualGlass().rotateWithLantern)
+			//	graphicLantern.rotateCircle();
 
 			touchedByEnemy = false;
 		}
@@ -292,39 +308,42 @@ public class MagicLantern : Tool {
 
 	void setStates()
 	{
-		if (Input.GetButton ("Mira") && player.GetComponent<PlayerMovements> ().OnGround && usable) {
-			actualState = lanternState.InHand;
-		}
-
-		if (Input.GetButton ("Mira") && !player.GetComponent<PlayerMovements> ().OnGround) {
-			actualState = lanternState.NotUsed;
-		}
-
-		if (Input.GetButtonUp ("PickLantern") && (actualState == lanternState.Left || actualState == lanternState.TurnedOff)) {
-			actualState = lanternState.NotUsed;
-		}
-
-		//questo controllo va prima di quando si setta a Left o TurnedOff, per evitare che nel setStates venga prima messo a Left e, subito dopo, a Falling,
-		//così da perdere ciò che si fa nell'update del Left
-		if (canFall) {
-			if (actualState == lanternState.TurnedOff || actualState == lanternState.Left)
-			{
-				if (!graphicLantern.groundCheck() && graphicLantern.LanternOnPlayerPosition)
+		if (inputKeeper != null) {
+			if (inputKeeper.isButtonPressed ("Mira") && player.GetComponent<PlayerMovements> ().OnGround && usable) {
+				actualState = lanternState.InHand;
+			}
+			
+			if (inputKeeper.isButtonPressed ("Mira") && !player.GetComponent<PlayerMovements> ().OnGround) {
+				actualState = lanternState.NotUsed;
+			}
+			
+			if (inputKeeper.isButtonUp ("PickLantern") && (actualState == lanternState.Left || actualState == lanternState.TurnedOff)) {
+				actualState = lanternState.NotUsed;
+			}
+			
+			//questo controllo va prima di quando si setta a Left o TurnedOff, per evitare che nel setStates venga prima messo a Left e, subito dopo, a Falling,
+			//così da perdere ciò che si fa nell'update del Left
+			if (canFall) {
+				if (actualState == lanternState.TurnedOff || actualState == lanternState.Left)
 				{
-					actualState = lanternState.Falling;
+					if (!graphicLantern.groundCheck() && graphicLantern.LanternOnPlayerPosition)
+					{
+						actualState = lanternState.Falling;
+					}
 				}
+			}
+			
+			//questo controllo va prima di quando si setta a Left, per evitare che nel setStates venga prima messo a Left e, subito dopo, a TurnedOff,
+			//così da perdere ciò che si fa nell'update del Left
+			if (actualState == lanternState.Left && touchedByEnemy) {
+				actualState = lanternState.TurnedOff;
+			}
+			
+			if (actualState == lanternState.InHand && inputKeeper.isButtonUp("Mira")) {
+				actualState = lanternState.Left;
 			}
 		}
 
-		//questo controllo va prima di quando si setta a Left, per evitare che nel setStates venga prima messo a Left e, subito dopo, a TurnedOff,
-		//così da perdere ciò che si fa nell'update del Left
-		if (actualState == lanternState.Left && touchedByEnemy) {
-			actualState = lanternState.TurnedOff;
-		}
-
-		if (actualState == lanternState.InHand && Input.GetButtonUp("Mira")) {
-			actualState = lanternState.Left;
-		}
 
 
 
@@ -384,11 +403,23 @@ public class MagicLantern : Tool {
 	{
 
 		if (glassesManager.getActualGlass().prefabObject) {
+			//cancello un eventuale vecchio prefab
+			deleteInstantiatedPrefab();
+			if (glassesManager.getActualGlass().projectionObject != null)
+				Destroy(glassesManager.getActualGlass().projectionObject);
+
 			//istanzio un prefab e lo sposto sotto il mouse
 			glassesManager.getActualGlass().projectionObject = Instantiate <GameObject> (glassesManager.getActualGlass().prefabObject);
 			glassesManager.getActualGlass().projectionObject.transform.position = graphicLantern.getCircleRay().position;
 			//actualGlass.projectionObject.transform.position = new Vector3(actualMousePosition.x, actualMousePosition.y, zPositionEnvironment);
-			
+
+			//3 righe inutili nel caso in cui la proiezione non debba ruotare insieme alla lanterna
+			//glassesManager.getActualGlass().projectionObject.transform.parent = graphicLantern.getCircleRay();
+			//glassesManager.getActualGlass().projectionObject.transform.localEulerAngles = new Vector3(0.0f,0.0f,0.0f);
+			//glassesManager.getActualGlass().projectionObject.transform.parent = null;
+
+			//vecchia implementazione, da vedere, attualmente funziona solo se la scala è la stessa, sia della sprite della proiezione che della sagoma
+			/*
 			//prendo i bounds della sprite della proiezione
 			Bounds objBounds = graphicLantern.getProjectionBounds();
 			//prendo lo spriteRenderer del prefab ed i suoi bounds
@@ -402,7 +433,18 @@ public class MagicLantern : Tool {
 			
 			//metto l'oggetto come figlio del raggio_cerchio
 			glassesManager.getActualGlass().projectionObject.transform.parent = graphicLantern.getCircleRay();
-			
+			*/
+
+			//nuova implementazione - INIZIO
+			glassesManager.getActualGlass().projectionObject.transform.parent = graphicLantern.getCircleRay();
+			glassesManager.getActualGlass().projectionObject.transform.localScale = graphicLantern.getTempProjectionScale();
+
+
+			//glassesManager.getActualGlass().projectionObject.transform.localEulerAngles = graphicLantern.getTempProjectionAngle();
+			glassesManager.getActualGlass().projectionObject.transform.localEulerAngles = new Vector3(0.0f,0.0f,graphicLantern.getStandardFakeProjectionRotation());
+			//nuova implementazione - FINE
+
+
 			glassesManager.getActualGlass().projectionObject.SetActive (true);
 
 			projectedGlass = glassesManager.getActualGlassIndex();
@@ -424,6 +466,11 @@ public class MagicLantern : Tool {
 			if (glassesManager.getGlassList()[i].projectionObject != null)
 				Destroy (glassesManager.getGlassList()[i].projectionObject);
 		}
+
+	}
+
+	void deleteInstantiatedPrefabNew()
+	{
 
 	}
 	

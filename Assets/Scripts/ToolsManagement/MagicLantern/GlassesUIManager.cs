@@ -5,8 +5,12 @@ public class GlassesUIManager : MonoBehaviour {
 
 	GlassesManager glassesManager;
 	
-	public Sprite KeyboardSprite;
-	public Sprite ControllerSprite;
+	public Sprite keyboardSprite;
+	public Sprite controllerSprite;
+
+	public Sprite modify;
+	public Sprite modKeyboardSprite;
+	public Sprite modControllerSprite;
 
 	GameObject controller;
 	CursorHandler cursorHandler;
@@ -52,11 +56,13 @@ public class GlassesUIManager : MonoBehaviour {
 				if (actualGlass != glassesManager.getActualGlass ()) {
 					actualGlass = glassesManager.getActualGlass ();
 					updateUI();
+					updateModifyUI();
 				}
 				
 				if (actualUseController != cursorHandler.useController) {
 					actualUseController = cursorHandler.useController;
 					updateButtonUI();
+					updateModifyUI();
 				}
 				
 				if (actualActive != magicLanternLogic.active)
@@ -64,6 +70,7 @@ public class GlassesUIManager : MonoBehaviour {
 					actualActive = magicLanternLogic.active;
 					updateUI();
 					updateButtonUI();
+					updateModifyUI();
 				}
 			}else{
 				if (actualActive != magicLanternLogic.active)
@@ -75,7 +82,7 @@ public class GlassesUIManager : MonoBehaviour {
 		}
 	}
 
-	void updateUI()
+	public void updateUI()
 	{
 		Sprite[] tempSpriteList = new Sprite[1];
 		tempSpriteList[0] = actualGlass.glassSprite;
@@ -85,22 +92,70 @@ public class GlassesUIManager : MonoBehaviour {
 		playingUI.updateSpritesOnScreen (PlayingUI.UIPosition.BottomRight);
 	}
 
-	void updateButtonUI()
+	public void updateButtonUI()
 	{
 		if (actualUseController)
-			playingUI.setButtonSprite (PlayingUI.UIPosition.BottomRight, ControllerSprite);
+			playingUI.setButtonSprite (PlayingUI.UIPosition.BottomRight, controllerSprite);
 		else
-			playingUI.setButtonSprite (PlayingUI.UIPosition.BottomRight, KeyboardSprite);
+			playingUI.setButtonSprite (PlayingUI.UIPosition.BottomRight, keyboardSprite);
 		
 		playingUI.updateSpritesOnScreen (PlayingUI.UIPosition.BottomRight);
 	}
 
+	public void updateModifyUI()
+	{
+		if (actualGlass.canBeModified) {
+			Sprite[] tempSpriteList = new Sprite[1];
+			tempSpriteList [0] = modify;
+
+			playingUI.setSprites (tempSpriteList, PlayingUI.UIPosition.BottomLeft);
+			if (actualUseController)
+				playingUI.setButtonSprite (PlayingUI.UIPosition.BottomLeft, modControllerSprite);
+			else
+				playingUI.setButtonSprite (PlayingUI.UIPosition.BottomLeft, modKeyboardSprite);
+
+			playingUI.setSpritesSize(PlayingUI.UIPosition.BottomLeft, PlayingUI.UISize.Big);
+			playingUI.setVerticalButton(PlayingUI.UIPosition.BottomLeft, false);
+
+		} else {
+			/*
+			Sprite[] tempSpriteList = new Sprite[1];
+			tempSpriteList [0] = new Sprite ();
+
+			playingUI.setSprites (tempSpriteList, PlayingUI.UIPosition.BottomLeft);
+			playingUI.setButtonSprite (PlayingUI.UIPosition.BottomLeft, tempSpriteList [0]);
+			playingUI.updateSpritesOnScreen (PlayingUI.UIPosition.BottomLeft);
+			*/
+			playingUI.cleanPositionGameObjects (PlayingUI.UIPosition.BottomLeft);
+			playingUI.cleanPositionButtonObject (PlayingUI.UIPosition.BottomLeft);
+			playingUI.updateSpritesOnScreen (PlayingUI.UIPosition.BottomLeft);
+		}
+
+		playingUI.updateSpritesOnScreen (PlayingUI.UIPosition.BottomLeft);
+			
+	}
+
 	void deleteUI()
 	{
+		playingUI.cleanPositionGameObjects (PlayingUI.UIPosition.BottomLeft);
+		playingUI.cleanPositionButtonObject (PlayingUI.UIPosition.BottomLeft);
+		playingUI.updateSpritesOnScreen (PlayingUI.UIPosition.BottomLeft);
+
+		playingUI.cleanPositionGameObjects (PlayingUI.UIPosition.BottomRight);
+		playingUI.cleanPositionButtonObject (PlayingUI.UIPosition.BottomRight);
+		playingUI.updateSpritesOnScreen (PlayingUI.UIPosition.BottomRight);
+		/*
 		Sprite[] tempSpriteList = new Sprite[1];
 		tempSpriteList [0] = new Sprite ();
+
 		playingUI.setSprites (tempSpriteList, PlayingUI.UIPosition.BottomRight);
 		playingUI.setButtonSprite (PlayingUI.UIPosition.BottomRight, tempSpriteList [0]);
 		playingUI.updateSpritesOnScreen (PlayingUI.UIPosition.BottomRight);
+
+		playingUI.setSprites (tempSpriteList, PlayingUI.UIPosition.BottomLeft);
+		playingUI.setButtonSprite (PlayingUI.UIPosition.BottomLeft, tempSpriteList [0]);
+		playingUI.updateSpritesOnScreen (PlayingUI.UIPosition.BottomLeft);
+		*/
 	}
+	
 }

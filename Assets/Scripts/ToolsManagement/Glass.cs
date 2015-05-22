@@ -15,6 +15,11 @@ public class Glass : MonoBehaviour
 		}
 	}
 
+	public bool actual = false;
+
+	public bool rotateWithLantern = false;
+	public bool canBeModified = false;
+
 	public Sprite spriteObject;
 	public Sprite goodProjection;
 	public Sprite badProjection;
@@ -27,7 +32,7 @@ public class Glass : MonoBehaviour
 	public GameObject[] subGlassList;
 
 	//oggetto proiettato ddal vetrino, public perché deve essere usato dallo script della lanterna
-	[HideInInspector]
+	//[HideInInspector]
 	public GameObject projectionObject;
 
 
@@ -91,6 +96,11 @@ public class Glass : MonoBehaviour
 		foreach (Transform child in toOverlap.transform) {
 			child.gameObject.SetActive(true);
 		}
+	}
+
+	public void changeGlassSprite(Sprite inputSprite)
+	{
+		glassSprite = inputSprite;
 	}
 
 }

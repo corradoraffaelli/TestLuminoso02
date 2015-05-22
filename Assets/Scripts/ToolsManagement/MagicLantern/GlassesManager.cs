@@ -3,12 +3,16 @@ using System.Collections;
 
 public class GlassesManager : MonoBehaviour {
 
+	public string modifierMethodName = "glassModifier";
 	public Glass[] glassList;
-
+	
 	Glass[] usableGlassList;
 
 	int actualGlassIndex = 0;
 	int actualGlassIndexUsableList = 0;
+
+	GameObject controller;
+	InputKeeper inputKeeper;
 	//public Glass actualGlass;
 
 	void Awake(){
@@ -17,13 +21,16 @@ public class GlassesManager : MonoBehaviour {
 	}
 
 	void Start () {
+		controller = GameObject.FindGameObjectWithTag ("Controller");
+		if (controller != null)
+			inputKeeper = controller.GetComponent<InputKeeper> ();
 		//prima inizializzazione della lista di vetrini usabili
 
 	}
 
 	void Update () {
 		//DEBUG----------
-		if (Input.GetButtonUp("NextGlass")) {
+		if (inputKeeper!=null && inputKeeper.isButtonUp("NextGlass")) {
 			nextUsableGlass ();
 		}
 		/*
@@ -47,6 +54,28 @@ public class GlassesManager : MonoBehaviour {
 			}
 		}
 		//updateUsableGlassList ();
+		updateActualGlassBool ();
+
+	}
+
+	void updateActualGlassBool()
+	{
+		for (int i = 0; i<glassList.Length; i++) {
+			if (glassList[i] != null)
+				glassList[i].actual = false;
+		}
+
+		glassList [actualGlassIndex].actual = true;
+	}
+
+	public void callGlassModifier()
+	{
+		getActualGlass ().SendMessage (modifierMethodName, SendMessageOptions.DontRequireReceiver);
+	}
+
+	public bool isGlassModifiable()
+	{
+		return getActualGlass ().canBeModified;
 	}
 
 	//controllo dei frammenti del vetrino passato come input

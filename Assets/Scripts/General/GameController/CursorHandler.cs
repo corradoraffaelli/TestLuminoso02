@@ -36,11 +36,14 @@ public class CursorHandler : MonoBehaviour {
 
 	CameraHandler cameraHandler;
 
+	InputKeeper inputKeeper;
+
 	// Use this for initialization
 	void Start () {
 		Cursor.lockState = CursorLockMode.Confined;
 		player = GameObject.FindGameObjectWithTag ("Player");
 		cameraHandler = Camera.main.gameObject.GetComponent<CameraHandler> ();
+		inputKeeper = GetComponent<InputKeeper> ();
 
 		standardPosition = new Vector3 (Camera.main.gameObject.transform.position.x, Camera.main.gameObject.transform.position.z, zPositionEnvironment);
 
@@ -75,7 +78,8 @@ public class CursorHandler : MonoBehaviour {
 			yDistFromBeginning = cameraHandler.getYDistFromBeginning();
 		}
 
-		setCursorPosition ();
+		if(inputKeeper != null)
+			setCursorPosition ();
 		//Debug.Log (getCursorWorldPosition());
 		verifyCursorMoving ();
 	}
@@ -86,15 +90,15 @@ public class CursorHandler : MonoBehaviour {
 
 
 		if (!useController) {
-			Vector3 actualMousePosition = Camera.main.ScreenToWorldPoint (new Vector3 (Input.mousePosition.x, Input.mousePosition.y, 0.0f));
+			Vector3 actualMousePosition = Camera.main.ScreenToWorldPoint (new Vector3 (inputKeeper.getMousePosition().x, inputKeeper.getMousePosition().y, 0.0f));
 			cursorPosition = new Vector3 (actualMousePosition.x, actualMousePosition.y, zPositionEnvironment);
 			cursorPosition = limitCursorScreenPosition(cursorPosition);
 		} else {
 			float xSumPosition, ySumPosition;
 
-			if (Input.GetAxis("CursorHorizontal") > 0.2f || Input.GetAxis("CursorHorizontal") < -0.2f)
+			if (inputKeeper.getAxis("CursorHorizontal") > 0.2f || inputKeeper.getAxis("CursorHorizontal") < -0.2f)
 			{
-				xSumPosition = xControllerMultiplier * Time.deltaTime * Input.GetAxis("CursorHorizontal")* Input.GetAxis("CursorHorizontal")* Input.GetAxis("CursorHorizontal");
+				xSumPosition = xControllerMultiplier * Time.deltaTime * inputKeeper.getAxis("CursorHorizontal")* inputKeeper.getAxis("CursorHorizontal")* inputKeeper.getAxis("CursorHorizontal");
 				//if (Input.GetAxis("CursorHorizontal") < 0.0f)
 				//	xSumPosition = -xSumPosition;
 			}
@@ -103,9 +107,9 @@ public class CursorHandler : MonoBehaviour {
 				//xSumPosition = xDiffPlayer;
 				xSumPosition = 0.0f;
 
-			if (Input.GetAxis("CursorVertical") > 0.2f || Input.GetAxis("CursorVertical") < -0.2f)
+			if (inputKeeper.getAxis("CursorVertical") > 0.2f || inputKeeper.getAxis("CursorVertical") < -0.2f)
 			{
-				ySumPosition = yControllerMultiplier * Time.deltaTime * Input.GetAxis("CursorVertical")* Input.GetAxis("CursorVertical")* Input.GetAxis("CursorVertical");
+				ySumPosition = yControllerMultiplier * Time.deltaTime * inputKeeper.getAxis("CursorVertical")* inputKeeper.getAxis("CursorVertical")* inputKeeper.getAxis("CursorVertical");
 				//if (Input.GetAxis("CursorVertical") < 0.0f)
 				//	ySumPosition = -ySumPosition;
 			}

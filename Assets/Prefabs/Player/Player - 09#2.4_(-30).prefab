@@ -361,22 +361,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5675304ff344eb3409dac57d91b4ec93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stateParameters:
+    onLadder: 0
+    underWater: 0
+  fallingForcesVariables:
+    gravityMultiplier: 1
   onGround: 0
   onLadder: 0
-  collidingLadder: 0
-  addFallingForceRight: 0
-  addFallingForceLeft: 0
+  underWater: 0
   gravityMultiplier: 1.5
   speedFactor: 5
   AI_walkSpeed: 4
   AI_runSpeed: 5
   jumpFactor: 4
   forceOnAirFactor: 16
+  airXDeceleration: 8
+  maxFallingSpeed: 14
   LadderLateralLimit: .300000012
   onLadderMovement: .100000001
   fromLadderForce: 100
-  airXDeceleration: 8
-  maxFallingSpeed: 14
+  FallingVelocityDependence: 0
   baseAscForce: 350
   baseAscForceSpring: 450
   addEnemyAscForce: 100
@@ -386,6 +390,7 @@ MonoBehaviour:
   diffHeight: 0
   maxDiffHeight: 9
   addedForceDebug: 0
+  diffBounceTime: .5
   AIControl: 0
   GroundCheckUpperLeft: {fileID: 435464}
   GroundCheckBottomRight: {fileID: 429942}
@@ -401,7 +406,6 @@ MonoBehaviour:
   PlayerStunnedLayer:
     serializedVersion: 2
     m_Bits: 2048
-  running: 0
   respawnPoint: {fileID: 0}
 --- !u!198 &19846670
 ParticleSystem:
@@ -1618,7 +1622,7 @@ SpriteRenderer:
   m_AutoUVMaxDistance: .5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -664804789
+  m_SortingLayerID: 280547145
   m_SortingOrder: 5
   m_Sprite: {fileID: 21300000, guid: 9736a56a605494643a4a79c89a4bc778, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

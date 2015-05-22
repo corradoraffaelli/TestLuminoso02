@@ -188,6 +188,8 @@ public class PlayerMovements : MonoBehaviour {
 	gameSet gs;
 	//private GameObject myToStun;
 
+	InputKeeper inputKeeper;
+
 	MagicLantern magicLanternLogic;
 	AudioHandler audioHandler;
 
@@ -198,6 +200,8 @@ public class PlayerMovements : MonoBehaviour {
 		audioHandler = GetComponent<AudioHandler> ();
 
 		getGameController ();
+
+		inputKeeper = controller.GetComponent<InputKeeper> ();
 
 		if (!AIControl){
 			getRespawnPoint ();
@@ -422,7 +426,7 @@ public class PlayerMovements : MonoBehaviour {
 
 	void flipHandling()
 	{
-		if (magicLanternLogic.active && !magicLanternLogic.leftLantern)
+		if (magicLanternLogic!= null && magicLanternLogic.active && !magicLanternLogic.leftLantern)
 		{
 			if (((cursorHandler.getCursorWorldPosition ().x > transform.position.x) && !FacingRight) ||
 			    ((cursorHandler.getCursorWorldPosition ().x < transform.position.x) && FacingRight))
@@ -432,7 +436,7 @@ public class PlayerMovements : MonoBehaviour {
 			}	
 		}
 
-		if (cursorHandler.isCursorMoving())
+		if (cursorHandler!=null && cursorHandler.isCursorMoving())
 		{
 			if (((cursorHandler.getCursorWorldPosition ().x > transform.position.x) && !FacingRight) ||
 			    ((cursorHandler.getCursorWorldPosition ().x < transform.position.x) && FacingRight))
@@ -443,8 +447,8 @@ public class PlayerMovements : MonoBehaviour {
 		}
 
 		//se la lanterna è attiva ma l'ho lasciata, oppure non è attiva, il player gira in base al suo movimento solo se non sto muovendo il cursore
-		if (((magicLanternLogic.active && magicLanternLogic.leftLantern) || (!magicLanternLogic.active)) && !cursorHandler.isCursorMoving ()) {
-			if ((Input.GetAxis("Horizontal") < -0.2f && facingRight) || (Input.GetAxis("Horizontal") > 0.2f && !facingRight))
+		if (inputKeeper != null && ((magicLanternLogic.active && magicLanternLogic.leftLantern) || (!magicLanternLogic.active)) && !cursorHandler.isCursorMoving ()) {
+			if ((inputKeeper.getAxis("Horizontal") < -0.2f && facingRight) || (inputKeeper.getAxis("Horizontal") > 0.2f && !facingRight))
 			{
 				Flip ();
 				//Debug.Log ("girando 3");
@@ -603,7 +607,7 @@ public class PlayerMovements : MonoBehaviour {
 
 	void jumpingManagement()
 	{
-		if (Input.GetButtonDown ("Jump")) {
+		if (inputKeeper!=null && inputKeeper.isButtonDown ("Jump")) {
 			Jumping = true;
 		}
 	}
@@ -627,8 +631,8 @@ public class PlayerMovements : MonoBehaviour {
 
 	void notGroundManagement()
 	{
-		if (!onGround && !onLadder) {
-			if (Input.GetAxis ("Horizontal") == 0.0f)
+		if (inputKeeper!=null && !onGround && !onLadder) {
+			if (inputKeeper.getAxis ("Horizontal") == 0.0f)
 			{
 				addFallingForceRight = false;
 				addFallingForceLeft = false;
@@ -639,13 +643,13 @@ public class PlayerMovements : MonoBehaviour {
 			}
 
 			else{
-				if (Input.GetAxis ("Horizontal") > 0.0f){
+				if (inputKeeper.getAxis ("Horizontal") > 0.0f){
 					addFallingForceRight = true;
 					//se supero la velocità massima non aggiungo forza
 					if ((RigBody.velocity.x > 0.0f) && (Mathf.Abs (RigBody.velocity.x) > speedFactor)){
 						addFallingForceRight = false;
 					}
-				}else if (Input.GetAxis ("Horizontal") < 0.0f){
+				}else if (inputKeeper.getAxis ("Horizontal") < 0.0f){
 					addFallingForceLeft = true;
 					//se supero la velocità massima non aggiungo forza
 					if ((RigBody.velocity.x < 0.0f) && (Mathf.Abs (RigBody.velocity.x) > speedFactor)){
@@ -747,9 +751,9 @@ public class PlayerMovements : MonoBehaviour {
 	void CollidingLadderManagement()
 	{
 		//se decido di salire sulla scala
-		if (collidingLadder && !onLadder) {
+		if (inputKeeper!=null && collidingLadder && !onLadder) {
 
-			if (((Input.GetAxisRaw ("Vertical") > 0.5f) || (Input.GetAxisRaw ("Vertical") < -0.5f && !groundCheckOnLadder()))) 
+			if (((inputKeeper.getAxisRaw ("Vertical") > 0.5f) || (inputKeeper.getAxisRaw ("Vertical") < -0.5f && !groundCheckOnLadder()))) 
 			{
 				//controllo sulla distanza dalla scala, si può sostituire diminuendo la dimensione del collider, ma così ho più controllo
 				if (Mathf.Abs (actualLadder.transform.position.x - transform.position.x) < LadderLateralLimit) {
@@ -768,7 +772,7 @@ public class PlayerMovements : MonoBehaviour {
 	void OnLadderManagement ()
 	{
 
-		if (onLadder == true) {
+		if (inputKeeper!=null && onLadder == true) {
 
 			//onGround = false;
 
@@ -780,18 +784,18 @@ public class PlayerMovements : MonoBehaviour {
 			//transform.position = new Vector3 (actualLadder.transform.position.x, transform.position.y, transform.position.z);
 
 			//se non premo più verso il basso o l'alto, il personaggio si ferma
-			if (Input.GetAxisRaw("Vertical") == 0.0f)
+			if (inputKeeper.getAxisRaw("Vertical") == 0.0f)
 			{
 				//if (onGround)
 				//	onLadder = false;
 				RigBody.velocity = vec2Null;
-			}else if(Input.GetAxisRaw("Vertical") > 0.5f && isUpperOnLadder())
+			}else if(inputKeeper.getAxisRaw("Vertical") > 0.5f && isUpperOnLadder())
 			{
 				RigBody.velocity = new Vector2(0.0f, onLadderMovement*40.0f);
-			}else if(Input.GetAxisRaw("Vertical") > 0.5f && !isUpperOnLadder())
+			}else if(inputKeeper.getAxisRaw("Vertical") > 0.5f && !isUpperOnLadder())
 			{
 				RigBody.velocity = vec2Null;
-			}else if(Input.GetAxisRaw("Vertical") < -0.5f && isMiddleOnLadder())
+			}else if(inputKeeper.getAxisRaw("Vertical") < -0.5f && isMiddleOnLadder())
 			{
 				if (!groundCheckOnLadder())
 					RigBody.velocity = new Vector2(0.0f, -onLadderMovement*40.0f);
@@ -802,7 +806,7 @@ public class PlayerMovements : MonoBehaviour {
 				}
 					
 
-			}else if(Input.GetAxisRaw("Vertical") < -0.5f && !isMiddleOnLadder())
+			}else if(inputKeeper.getAxisRaw("Vertical") < -0.5f && !isMiddleOnLadder())
 			{
 				//dovrebbe cadere
 				RigBody.velocity = vec2Null;
@@ -812,9 +816,9 @@ public class PlayerMovements : MonoBehaviour {
 
 
 
-			float HorInput = Input.GetAxisRaw("Horizontal");
+			float HorInput = inputKeeper.getAxisRaw("Horizontal");
 			//se mi muovo lateralmente dalla scala
-			if (HorInput != 0.0f && Input.GetAxisRaw("Vertical") > -0.4f && Input.GetAxisRaw("Vertical") < 0.4f)
+			if (HorInput != 0.0f && inputKeeper.getAxisRaw("Vertical") > -0.4f && inputKeeper.getAxisRaw("Vertical") < 0.4f)
 			{
 				leaveLadder();
 				RigBody.velocity = vec2Null;
@@ -859,11 +863,11 @@ public class PlayerMovements : MonoBehaviour {
 	//i
 	void runningManagement(bool facingLeftAI = false, bool facingRightAI = false, bool isWalkSpeed = true, float scaleFactorAI = 1)
 	{
-		if (!AIControl) {
-			RigBody.velocity = new Vector2 (Input.GetAxis ("Horizontal") * speedFactor, RigBody.velocity.y);
+		if (inputKeeper!=null && !AIControl) {
+			RigBody.velocity = new Vector2 (inputKeeper.getAxis ("Horizontal") * speedFactor, RigBody.velocity.y);
 
 			//stoppo immediatamente il movimento non appena si lascia il tasto per la corsa
-			if (Input.GetAxisRaw ("Horizontal") == 0)
+			if (inputKeeper.getAxisRaw ("Horizontal") == 0)
 				RigBody.velocity = new Vector2 (0.0f, RigBody.velocity.y);
 		}
 		else {
@@ -903,8 +907,8 @@ public class PlayerMovements : MonoBehaviour {
 	}
 
 	void underWaterManagement () {
-
-		RigBody.AddForce (new Vector2 (Input.GetAxis ("Horizontal") * 10.0f, Input.GetAxis ("Vertical") * 20.0f));
+		if (inputKeeper!=null)
+			RigBody.AddForce (new Vector2 (inputKeeper.getAxis ("Horizontal") * 10.0f, inputKeeper.getAxis ("Vertical") * 20.0f));
 
 	}
 

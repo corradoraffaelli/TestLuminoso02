@@ -74,6 +74,51 @@ public class PlayingUI : MonoBehaviour {
 	[SerializeField]
 	SizeVariables sizeVariables;
 
+	public void cleanPositionGameObjects(UIPosition pos)
+	{
+		for (int i = 0; i < spritesGroup.Length; i++) {
+			if (spritesGroup[i].position != null && spritesGroup[i].position == pos)
+			{
+				if (spritesGroup[i].sprites != null)
+				{
+					for (int j=0; j<spritesGroup[i].sprites.Length; j++)
+					{
+						spritesGroup[i].sprites[j] = null;
+					}
+
+					spritesGroup[i].sprites = null;
+				}
+
+				if (spritesGroup[i].imagesObject != null)
+				{
+					for (int j=0; j<spritesGroup[i].imagesObject.Length; j++)
+					{
+						if (spritesGroup[i].imagesObject != null)
+							Destroy(spritesGroup[i].imagesObject[j]);
+					}
+
+					spritesGroup[i].imagesObject = null;
+				}
+
+				break;
+			}
+		}
+	}
+
+	public void cleanPositionButtonObject(UIPosition pos)
+	{
+		for (int i = 0; i < spritesGroup.Length; i++) {
+			if (spritesGroup[i].position != null && spritesGroup[i].position == pos)
+			{
+				spritesGroup[i].buttonSprite = null;
+
+				Destroy(spritesGroup[i].imageButtonObject);
+				
+				break;
+			}
+		}
+	}
+
 	//serve per cambiare le sprites
 	public void setSprites(Sprite[] sprites, UIPosition pos)
 	{
@@ -183,12 +228,12 @@ public class PlayingUI : MonoBehaviour {
 			if (spritesGroup[i].position != null && spritesGroup[i].position == pos)
 			{
 
-				if (spritesGroup[i].sprites.Length != 0)
+				if (spritesGroup[i].sprites!= null && spritesGroup[i].sprites.Length != 0)
 				{
 					//Debug.Log ("sono dentro" + spritesGroup[i].position.ToString());
 
 					//se esiste già un array di oggetti, lo pulisco
-					if (spritesGroup[i].imagesObject.Length != 0)
+					if (spritesGroup[i].imagesObject != null && spritesGroup[i].imagesObject.Length != 0)
 					{
 						for (int j = 0; j<spritesGroup[i].imagesObject.Length; j++)
 						{
@@ -260,107 +305,111 @@ public class PlayingUI : MonoBehaviour {
 		for (int i = 0; i < spritesGroup.Length; i++) {
 			if (spritesGroup[i].position != null && spritesGroup[i].position == pos)
 			{
-				//controllo sul posizionamento Fixed, per ora non è gestito quello proporzionale
-				if (spritesGroup[i].distance == UIDistance.Fixed)
+				if (spritesGroup[i].imagesObject != null)
 				{
-					if (spritesGroup[i].horizontal)
+					//controllo sul posizionamento Fixed, per ora non è gestito quello proporzionale
+					if (spritesGroup[i].distance == UIDistance.Fixed)
 					{
-						int tempSize = getSpritesGroupSize(pos);
-
-						switch(spritesGroup[i].position)
+						if (spritesGroup[i].horizontal)
 						{
-						case UIPosition.UpperRight:
-							for (int j=0; j<spritesGroup[i].imagesObject.Length;j++)
+							int tempSize = getSpritesGroupSize(pos);
+							
+							switch(spritesGroup[i].position)
 							{
-								//ordine inverso delle sprite passate in ingresso
-								int k = spritesGroup[i].imagesObject.Length-j-1;
-
-								RectTransform rectTransform = spritesGroup[i].imagesObject[k].GetComponent<RectTransform>();
-
-								int XPosition = distanceVariables.XPadding + (j*tempSize) + (j*distanceVariables.XDistance);
-								rectTransform.anchoredPosition = new Vector2(-XPosition, -distanceVariables.YPadding);
+							case UIPosition.UpperRight:
+								for (int j=0; j<spritesGroup[i].imagesObject.Length;j++)
+								{
+									//ordine inverso delle sprite passate in ingresso
+									int k = spritesGroup[i].imagesObject.Length-j-1;
+									
+									RectTransform rectTransform = spritesGroup[i].imagesObject[k].GetComponent<RectTransform>();
+									
+									int XPosition = distanceVariables.XPadding + (j*tempSize) + (j*distanceVariables.XDistance);
+									rectTransform.anchoredPosition = new Vector2(-XPosition, -distanceVariables.YPadding);
+								}
+								break;
+							case UIPosition.UpperLeft:
+								for (int j=0; j<spritesGroup[i].imagesObject.Length;j++)
+								{
+									RectTransform rectTransform = spritesGroup[i].imagesObject[j].GetComponent<RectTransform>();
+									
+									int XPosition = distanceVariables.XPadding + (j*tempSize) + (j*distanceVariables.XDistance);
+									rectTransform.anchoredPosition = new Vector2(XPosition,- distanceVariables.YPadding);
+								}
+								break;
+							case UIPosition.BottomRight:
+								for (int j=0; j<spritesGroup[i].imagesObject.Length;j++)
+								{
+									//ordine inverso delle sprite passate in ingresso
+									int k = spritesGroup[i].imagesObject.Length-j-1;
+									
+									RectTransform rectTransform = spritesGroup[i].imagesObject[k].GetComponent<RectTransform>();
+									
+									int XPosition = distanceVariables.XPadding + (j*tempSize) + (j*distanceVariables.XDistance);
+									rectTransform.anchoredPosition = new Vector2(-XPosition, distanceVariables.YPadding);
+								}
+								break;
+							case UIPosition.BottomLeft:
+								for (int j=0; j<spritesGroup[i].imagesObject.Length;j++)
+								{
+									RectTransform rectTransform = spritesGroup[i].imagesObject[j].GetComponent<RectTransform>();
+									
+									int XPosition = distanceVariables.XPadding + (j*tempSize) + (j*distanceVariables.XDistance);
+									rectTransform.anchoredPosition = new Vector2(XPosition,distanceVariables.YPadding);
+								}
+								break;
 							}
-							break;
-						case UIPosition.UpperLeft:
-							for (int j=0; j<spritesGroup[i].imagesObject.Length;j++)
+							
+							//VERTICALE
+						}else{
+							
+							int tempSize = getSpritesGroupSize(pos);
+							
+							switch(spritesGroup[i].position)
 							{
-								RectTransform rectTransform = spritesGroup[i].imagesObject[j].GetComponent<RectTransform>();
-								
-								int XPosition = distanceVariables.XPadding + (j*tempSize) + (j*distanceVariables.XDistance);
-								rectTransform.anchoredPosition = new Vector2(XPosition,- distanceVariables.YPadding);
+							case UIPosition.UpperRight:
+								for (int j=0; j<spritesGroup[i].imagesObject.Length;j++)
+								{
+									RectTransform rectTransform = spritesGroup[i].imagesObject[j].GetComponent<RectTransform>();
+									
+									int YPosition = distanceVariables.YPadding + (j*tempSize) + (j*distanceVariables.YPadding);
+									rectTransform.anchoredPosition = new Vector2(-distanceVariables.XPadding,- YPosition);
+								}
+								break;
+							case UIPosition.UpperLeft:
+								for (int j=0; j<spritesGroup[i].imagesObject.Length;j++)
+								{
+									RectTransform rectTransform = spritesGroup[i].imagesObject[j].GetComponent<RectTransform>();
+									
+									int YPosition = distanceVariables.YPadding + (j*tempSize) + (j*distanceVariables.YPadding);
+									rectTransform.anchoredPosition = new Vector2( distanceVariables.XPadding,- YPosition);
+								}
+								break;
+							case UIPosition.BottomRight:
+								for (int j=0; j<spritesGroup[i].imagesObject.Length;j++)
+								{
+									RectTransform rectTransform = spritesGroup[i].imagesObject[j].GetComponent<RectTransform>();
+									
+									int YPosition = distanceVariables.YPadding + (j*tempSize) + (j*distanceVariables.YPadding);
+									rectTransform.anchoredPosition = new Vector2(-distanceVariables.XPadding, YPosition);
+								}
+								break;
+							case UIPosition.BottomLeft:
+								for (int j=0; j<spritesGroup[i].imagesObject.Length;j++)
+								{
+									RectTransform rectTransform = spritesGroup[i].imagesObject[j].GetComponent<RectTransform>();
+									
+									int YPosition = distanceVariables.YPadding + (j*tempSize) + (j*distanceVariables.YPadding);
+									rectTransform.anchoredPosition = new Vector2(distanceVariables.XPadding, YPosition);
+								}
+								break;
 							}
-							break;
-						case UIPosition.BottomRight:
-							for (int j=0; j<spritesGroup[i].imagesObject.Length;j++)
-							{
-								//ordine inverso delle sprite passate in ingresso
-								int k = spritesGroup[i].imagesObject.Length-j-1;
-								
-								RectTransform rectTransform = spritesGroup[i].imagesObject[k].GetComponent<RectTransform>();
-								
-								int XPosition = distanceVariables.XPadding + (j*tempSize) + (j*distanceVariables.XDistance);
-								rectTransform.anchoredPosition = new Vector2(-XPosition, distanceVariables.YPadding);
-							}
-							break;
-						case UIPosition.BottomLeft:
-							for (int j=0; j<spritesGroup[i].imagesObject.Length;j++)
-							{
-								RectTransform rectTransform = spritesGroup[i].imagesObject[j].GetComponent<RectTransform>();
-								
-								int XPosition = distanceVariables.XPadding + (j*tempSize) + (j*distanceVariables.XDistance);
-								rectTransform.anchoredPosition = new Vector2(XPosition,distanceVariables.YPadding);
-							}
-							break;
+							
 						}
-
-					//VERTICALE
-					}else{
-
-						int tempSize = getSpritesGroupSize(pos);
 						
-						switch(spritesGroup[i].position)
-						{
-						case UIPosition.UpperRight:
-							for (int j=0; j<spritesGroup[i].imagesObject.Length;j++)
-							{
-								RectTransform rectTransform = spritesGroup[i].imagesObject[j].GetComponent<RectTransform>();
-								
-								int YPosition = distanceVariables.YPadding + (j*tempSize) + (j*distanceVariables.YPadding);
-								rectTransform.anchoredPosition = new Vector2(-distanceVariables.XPadding,- YPosition);
-							}
-							break;
-						case UIPosition.UpperLeft:
-							for (int j=0; j<spritesGroup[i].imagesObject.Length;j++)
-							{
-								RectTransform rectTransform = spritesGroup[i].imagesObject[j].GetComponent<RectTransform>();
-								
-								int YPosition = distanceVariables.YPadding + (j*tempSize) + (j*distanceVariables.YPadding);
-								rectTransform.anchoredPosition = new Vector2( distanceVariables.XPadding,- YPosition);
-							}
-							break;
-						case UIPosition.BottomRight:
-							for (int j=0; j<spritesGroup[i].imagesObject.Length;j++)
-							{
-								RectTransform rectTransform = spritesGroup[i].imagesObject[j].GetComponent<RectTransform>();
-								
-								int YPosition = distanceVariables.YPadding + (j*tempSize) + (j*distanceVariables.YPadding);
-								rectTransform.anchoredPosition = new Vector2(-distanceVariables.XPadding, YPosition);
-							}
-							break;
-						case UIPosition.BottomLeft:
-							for (int j=0; j<spritesGroup[i].imagesObject.Length;j++)
-							{
-								RectTransform rectTransform = spritesGroup[i].imagesObject[j].GetComponent<RectTransform>();
-								
-								int YPosition = distanceVariables.YPadding + (j*tempSize) + (j*distanceVariables.YPadding);
-								rectTransform.anchoredPosition = new Vector2(distanceVariables.XPadding, YPosition);
-							}
-							break;
-						}
-
 					}
-
 				}
+
 			}
 		}
 	}
@@ -451,29 +500,36 @@ public class PlayingUI : MonoBehaviour {
 					{
 						int maxX = 0;
 
-						//prendo la sprite con la posizione più centrale (prendo quella col modulo della posizione maggiore)
-						for (int j = 0; j<spritesGroup[i].imagesObject.Length; j++)
+						if (spritesGroup[i].imagesObject != null)
 						{
-							if (spritesGroup[i].imagesObject[j] != null)
+							//prendo la sprite con la posizione più centrale (prendo quella col modulo della posizione maggiore)
+							for (int j = 0; j<spritesGroup[i].imagesObject.Length; j++)
 							{
-								int spritePos = System.Convert.ToInt16(spritesGroup[i].imagesObject[j].GetComponent<RectTransform>().anchoredPosition.x);
-								if (Mathf.Abs (spritePos) > maxX)
-									maxX = Mathf.Abs(spritePos);
+								if (spritesGroup[i].imagesObject[j] != null)
+								{
+									int spritePos = System.Convert.ToInt16(spritesGroup[i].imagesObject[j].GetComponent<RectTransform>().anchoredPosition.x);
+									if (Mathf.Abs (spritePos) > maxX)
+										maxX = Mathf.Abs(spritePos);
+								}
 							}
 						}
+
 						XPosition = maxX + tempSize + distanceVariables.XDistance;
 						YPosition = distanceVariables.YPadding;
 					}else{
 						int maxY = 0;
-						
-						//prendo la sprite con la posizione più centrale (prendo quella col modulo della posizione maggiore)
-						for (int j = 0; j<spritesGroup[i].imagesObject.Length; j++)
+
+						if (spritesGroup[i].imagesObject != null)
 						{
-							if (spritesGroup[i].imagesObject[j] != null)
+							//prendo la sprite con la posizione più centrale (prendo quella col modulo della posizione maggiore)
+							for (int j = 0; j<spritesGroup[i].imagesObject.Length; j++)
 							{
-								int spritePos = System.Convert.ToInt16(spritesGroup[i].imagesObject[j].GetComponent<RectTransform>().anchoredPosition.y);
-								if (Mathf.Abs (spritePos) > maxY)
-									maxY = Mathf.Abs(spritePos);
+								if (spritesGroup[i].imagesObject[j] != null)
+								{
+									int spritePos = System.Convert.ToInt16(spritesGroup[i].imagesObject[j].GetComponent<RectTransform>().anchoredPosition.y);
+									if (Mathf.Abs (spritePos) > maxY)
+										maxY = Mathf.Abs(spritePos);
+								}
 							}
 						}
 

@@ -54,6 +54,8 @@ public class GraphicLantern : MonoBehaviour {
 	CursorHandler cursorHandler;
 	GlassesManager glassesManager;
 
+	public float standardFakeProjectionRotation = 0.0f;
+
 	bool lanternOnPlayerPosition;
 	public bool LanternOnPlayerPosition{
 		get{return lanternOnPlayerPosition;}
@@ -225,13 +227,18 @@ public class GraphicLantern : MonoBehaviour {
 		controller = GameObject.FindGameObjectWithTag ("Controller");
 		cursorHandler = controller.GetComponent<CursorHandler> ();
 
-		lantern.SetActive (false);
-		takeComponentsFromObjects ();
+		if (lantern != null) {
+			lantern.SetActive (false);
+			takeComponentsFromObjects ();
 
-		//valori dei bounds di default del raggio
-		boundsRay = spRendRay.bounds;
-		xSize = boundsRay.size.x;
-		ySize = boundsRay.size.y;
+			//valori dei bounds di default del raggio
+			boundsRay = spRendRay.bounds;
+			xSize = boundsRay.size.x;
+			ySize = boundsRay.size.y;
+		}
+
+
+
 	}
 
 	//update delle variabili locali in relazione al vetrino attuale, gestito dal glassedManager
@@ -259,7 +266,10 @@ public class GraphicLantern : MonoBehaviour {
 			
 			//posiziono la lenterna di fronte al personaggio (ora non serve, la lanterna è "child" del player, da verificare la correttezza della cosa
 			//toolGameObject.transform.position = new Vector3(player.transform.position.x+0.4f,player.transform.position.y+0.8f,player.transform.position.z);
-			
+
+			//serve nel caso ci sia un vetrino sensibile alla rotazione
+			//raggio_cerchio.transform.right = new Vector3(1.0f,0.0f,0.0f);
+
 			//posiziono l'origine del cerchio sotto il mouse
 			if (limitProjectionDistance && verifyIfTooFar ())
 				raggio_cerchio.transform.position = getPositionAlongDirection (cameraPoint.transform.position, cursorHandler.getCursorWorldPosition (), maxProjectingDistance);
@@ -309,9 +319,79 @@ public class GraphicLantern : MonoBehaviour {
 				else
 					camera.transform.localEulerAngles = new Vector3 (raggio.transform.localEulerAngles.x, raggio.transform.localEulerAngles.x, raggio.transform.localEulerAngles.z / 2);
 			}
+
+
+			//------------NUOVO------------
+			if (!glassesManager.getActualGlass().canBeModified && !glassesManager.getActualGlass().rotateWithLantern)
+				standardFakeProjectionRotation = 0.0f;
+			projectionObject.transform.localEulerAngles = new Vector3 (0.0f, 0.0f, standardFakeProjectionRotation);
+
+			if (glassesManager.getActualGlass().rotateWithLantern)
+			{
+				_direction = (raggio_cerchio.transform.position - cameraPointPos).normalized;
+
+				projectionObject.transform.right = _direction;
+
+				standardFakeProjectionRotation = projectionObject.transform.localEulerAngles.z;
+			}
 		}
 	}
-	
+
+
+
+	public Vector3 getTempProjectionScale()
+	{
+		return projectionObject.transform.localScale;
+	}
+
+	public void rotateTempProjectionByAngle(float inputAngle)
+	{
+		/*
+		_direction = (raggio_cerchio.transform.position - cameraPointPos).normalized;
+		PlayerMovements PM = player.GetComponent<PlayerMovements> ();
+		if (!PM.FacingRight) {
+			_direction = new Vector3 (-_direction.x, _direction.y,_direction.z);
+			//raggio_cerchio.transform.localEulerAngles = new Vector3(0.0f,0.0f,raggio_cerchio.transform.localEulerAngles.z + 180);
+			raggio_cerchio.transform.localScale = new Vector3(-raggio_cerchio.transform.localScale.x, raggio_cerchio.transform.localScale.y, raggio_cerchio.transform.localScale.z);
+		}
+		
+		raggio_cerchio.transform.right = _direction;
+
+
+
+		PlayerMovements PM = player.GetComponent<PlayerMovements> ();
+		if (raggio_cerchio.transform.localScale.x < 0.0f && inputAngle != 0.0f && inputAngle != 180.0f) {
+			inputAngle = inputAngle +180.0f;
+			Debug.Log ("I'm in");
+		}
+		raggio_cerchio.transform.localEulerAngles = new Vector3 (0.0f, 0.0f, inputAngle);
+		*/
+		//projectionObject.transform.localEulerAngles = new Vector3 (0.0f, 0.0f, inputAngle);
+
+		standardFakeProjectionRotation = inputAngle;
+	}
+
+	public void resetCircleAngle()
+	{
+		raggio_cerchio.transform.right = new Vector3(1.0f,0.0f,0.0f);
+
+	}
+
+	public void resetTempProjectionAngle()
+	{
+		projectionObject.transform.localEulerAngles = new Vector3 (0.0f, 0.0f, 0.0f);
+	}
+
+	public Vector3 getTempProjectionAngle()
+	{
+		return projectionObject.transform.localEulerAngles;
+	}
+
+	public float getStandardFakeProjectionRotation()
+	{
+		return standardFakeProjectionRotation;
+	}
+
 	bool verifyIfCursorCameraTooNear()
 	{
 		Vector3 pos_cursor = cursorHandler.getCursorWorldPosition ();
@@ -394,34 +474,38 @@ public class GraphicLantern : MonoBehaviour {
 		}
 		*/
 		lantern = GameObject.FindGameObjectWithTag ("Lantern");
-		
-		foreach (Transform child in lantern.transform) {
-			if (child.name == "Proiettore")
-			{
-				camera = child.gameObject;
-				foreach (Transform subChild in child.transform) {
-					if (subChild.name == "Proiettore_punta")
-					{
-						cameraPoint = subChild.gameObject;
+
+		if (lantern != null) {
+			foreach (Transform child in lantern.transform) {
+				if (child.name == "Proiettore")
+				{
+					camera = child.gameObject;
+					foreach (Transform subChild in child.transform) {
+						if (subChild.name == "Proiettore_punta")
+						{
+							cameraPoint = subChild.gameObject;
+						}
 					}
-				}
-			}else if(child.name == "raggio"){
-				raggio = child.gameObject;
-			}else if (child.name == "raggio_cerchio"){
-				raggio_cerchio = child.gameObject;
-				foreach (Transform subChild in child.transform) {
-					if (subChild.name == "ProjectedObject")
-					{
-						projectionObject = subChild.gameObject;
+				}else if(child.name == "raggio"){
+					raggio = child.gameObject;
+				}else if (child.name == "raggio_cerchio"){
+					raggio_cerchio = child.gameObject;
+					foreach (Transform subChild in child.transform) {
+						if (subChild.name == "ProjectedObject")
+						{
+							projectionObject = subChild.gameObject;
+						}
 					}
+				}else if(child.name == "GroundCheckBR") {
+					GroundCheckBottomRight = child.gameObject;
 				}
-			}else if(child.name == "GroundCheckBR") {
-				GroundCheckBottomRight = child.gameObject;
-			}
-			else if(child.name == "GroundCheckUL") {
-				GroundCheckUpperLeft = child.gameObject;
+				else if(child.name == "GroundCheckUL") {
+					GroundCheckUpperLeft = child.gameObject;
+				}
 			}
 		}
+
+
 	}
 
 	void takeComponentsFromObjects()

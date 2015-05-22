@@ -28,8 +28,8 @@ public class InfoManager : MonoBehaviour {
 		sprites [0] = info;
 
 
-
-		playingUI.setSprites (sprites, PlayingUI.UIPosition.UpperRight);
+		if (playingUI != null)
+			playingUI.setSprites (sprites, PlayingUI.UIPosition.UpperRight);
 
 
 	
@@ -45,12 +45,15 @@ public class InfoManager : MonoBehaviour {
 		else
 			buttonSprite = keyboardButton;
 
-		playingUI.setButtonSprite (PlayingUI.UIPosition.UpperRight, buttonSprite);
+		if (playingUI != null) {
+			playingUI.setButtonSprite (PlayingUI.UIPosition.UpperRight, buttonSprite);
+			
+			playingUI.setVerticalButton (PlayingUI.UIPosition.UpperRight, false);
+			playingUI.setSpritesSize (PlayingUI.UIPosition.UpperRight, PlayingUI.UISize.Big);
+			
+			playingUI.updateSpritesOnScreen (PlayingUI.UIPosition.UpperRight);
+		}
 
-		playingUI.setVerticalButton (PlayingUI.UIPosition.UpperRight, false);
-		playingUI.setSpritesSize (PlayingUI.UIPosition.UpperRight, PlayingUI.UISize.Big);
-
-		playingUI.updateSpritesOnScreen (PlayingUI.UIPosition.UpperRight);
 
 	}
 }
