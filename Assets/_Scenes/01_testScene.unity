@@ -2281,7 +2281,7 @@ AudioSource:
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Priority: 128
   DopplerLevel: 1
@@ -3405,12 +3405,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe9ceeb657298084b8235d0ba4342cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  disableObject: 0
+  intermittance: 1
   actualState: 1
   continuousFollow: 0
-  turningOnTime: 5
+  turningOnTime: 2
   glassesToEnable:
   - {fileID: 696511341}
   glassesToDisable: []
+  enableLantern: 1
 --- !u!114 &867681671
 MonoBehaviour:
   m_ObjectHideFlags: 0
