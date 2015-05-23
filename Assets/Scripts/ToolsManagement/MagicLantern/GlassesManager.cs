@@ -232,6 +232,8 @@ public class GlassesManager : MonoBehaviour {
 
 	public void enableGlass(int glassIndexToEnable, bool enable = true)
 	{
+		Debug.Log ("abilitato glass " + glassIndexToEnable);
+
 		if (enable) {
 			glassList[glassIndexToEnable].usable = true;
 			actualGlassIndex = glassIndexToEnable;
@@ -240,7 +242,7 @@ public class GlassesManager : MonoBehaviour {
 			if (actualGlassIndex == glassIndexToEnable)
 			{
 				nextUsableGlass();
-				actualGlassIndex = actualGlassIndex;
+				//actualGlassIndex = actualGlassIndex;
 			}
 		}
 
@@ -249,5 +251,37 @@ public class GlassesManager : MonoBehaviour {
 		updateActualGlassIndexUsableList();
 	}
 
+	public void enableGlassByName(string glassName, bool enable = true)
+	{
+		Debug.Log ("abilitato glass " + glassName);
+
+		if (enable) {
+			for (int i = 0; i<glassList.Length; i++)
+			{
+				if (glassList[i] != null && glassList[i].glassType == glassName)
+				{
+					glassList[i].usable = true;
+					actualGlassIndex = i;
+				}
+			}
+		}else{
+			for (int i = 0; i<glassList.Length; i++)
+			{
+				if (glassList[i] != null && glassList[i].glassType == glassName)
+				{
+					glassList[i].usable = false;
+					if (actualGlassIndex == i)
+					{
+						nextUsableGlass();
+						//actualGlassIndex = actualGlassIndex;
+					}
+				}
+			}
+		}
+		
+		//ogni volta che si aggiorna la lista di vetrini, bisogna riaggiornare anche quella di quelli usabili
+		updateUsableGlassList ();
+		updateActualGlassIndexUsableList();
+	}
 
 }

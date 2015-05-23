@@ -31,6 +31,8 @@ public class MagicLantern : Tool {
 	bool usable = true;
 	public bool touchedByEnemy = false;
 
+	public bool collidingBadWall = false;
+
 	//Glass[] glassList;
 	//int glassIndex;
 	//Glass actualGlass;
@@ -196,13 +198,26 @@ public class MagicLantern : Tool {
 				graphicLantern.switchOnLantern();
 				graphicLantern.takeLantern();
 
-				graphicLantern.setLeftLanternRaySrites(false);
+				if (!collidingBadWall)
+					graphicLantern.setLeftLanternRaySrites(false);
+				else
+				{
+					graphicLantern.setBadRaySprites(true);
+				}
+					
 
 				deleteInstantiatedPrefab();
 
 				audioHandler.playClipByName("Accensione");
 				audioHandler.playClipByName("Mira");
 				//returnParticles.activeParticles(graphicLantern.getLanternPosition());
+			}
+
+			if (!collidingBadWall)
+				graphicLantern.setLeftLanternRaySrites(false);
+			else
+			{
+				graphicLantern.setBadRaySprites(true);
 			}
 
 			//AZIONI CHE VENGONO FATTE SEMPRE CON LA LANTERNA IN MANO
@@ -338,9 +353,20 @@ public class MagicLantern : Tool {
 			if (actualState == lanternState.Left && touchedByEnemy) {
 				actualState = lanternState.TurnedOff;
 			}
-			
+
+			/*
+			if (actualState == lanternState.InHand && inputKeeper.isButtonUp("Mira") && collidingBadWall) {
+				actualState = lanternState.NotUsed;
+			}
+			*/
+
 			if (actualState == lanternState.InHand && inputKeeper.isButtonUp("Mira")) {
 				actualState = lanternState.Left;
+			}
+
+			if (actualState == lanternState.Left && collidingBadWall) {
+				actualState = lanternState.NotUsed;
+				collidingBadWall = false;
 			}
 		}
 
@@ -469,9 +495,9 @@ public class MagicLantern : Tool {
 
 	}
 
-	void deleteInstantiatedPrefabNew()
+	public void setCollidingBadWall(bool colliding)
 	{
-
+		collidingBadWall = colliding;
 	}
 	
 }

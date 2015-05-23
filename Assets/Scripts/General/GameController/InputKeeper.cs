@@ -273,6 +273,7 @@ public class InputKeeper : MonoBehaviour {
 				changedMouseList.Add (tempChanged);
 			}
 
+			/*
 			//salvataggio delle variabili del component transform degli oggetti da "correggere"
 			if ((Mathf.Abs (Time.time - lastCorrectionTime)) > correctionTime)
 			{
@@ -299,6 +300,7 @@ public class InputKeeper : MonoBehaviour {
 					}
 				}
 			}
+			*/
 
 
 		}
@@ -315,6 +317,34 @@ public class InputKeeper : MonoBehaviour {
 	//nel LateUpdate correggo le posizioni ed eventuali derive degli oggetti specificati
 	void LateUpdate()
 	{
+		if (loadSaveState == LoadSaveState.Save) {
+			if ((Mathf.Abs (Time.time - lastCorrectionTime)) > correctionTime)
+			{
+				lastCorrectionTime = Time.time;
+				for (int i = 0; i<gameObjectsToControl.Count; i++)
+				{
+					if (gameObjectsToControl[i] != null && gameObjectsToControl[i].tag != "")
+					{
+						GameObjectToControl tempGOTC = new GameObjectToControl();
+						
+						GameObject tempGO = GameObject.FindGameObjectWithTag(gameObjectsToControl[i].tag);
+						
+						tempGOTC.tag = gameObjectsToControl[i].tag;
+						//tempGOTC.gameObject = gameObjectsToControl[i].gameObject;
+						Vector3 tempPos = tempGO.transform.position;
+						tempGOTC.position = new Vect3(tempPos.x, tempPos.y, tempPos.z);
+						Vector3 tempScale = tempGO.transform.localScale;
+						tempGOTC.scale = new Vect3(tempScale.x, tempScale.y, tempScale.z);
+						Quaternion tempQuaternion = tempGO.transform.rotation;
+						tempGOTC.rotation = new Quat(tempQuaternion.x, tempQuaternion.y, tempQuaternion.z, tempQuaternion.w);
+						
+						ChangedObjects tempChanged = new ChangedObjects(Time.time, tempGOTC);
+						changedObjectsList.Add(tempChanged);
+					}
+				}
+			}
+		}
+
 		//List<string> stringList = new List<string>();
 		if (loadSaveState == LoadSaveState.Load && adjustPositions) {
 			for (int i = 0; i< changedObjectsList.Count; i++)

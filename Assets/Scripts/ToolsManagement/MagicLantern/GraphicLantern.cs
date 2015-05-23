@@ -31,6 +31,8 @@ public class GraphicLantern : MonoBehaviour {
 	public Sprite normalCircle;
 	public Sprite pressedRay;
 	public Sprite pressedCircle;
+	public Sprite badRay;
+	public Sprite badCircle;
 
 	Sprite goodGlassSprite;
 	Sprite badGlassSprite;
@@ -53,6 +55,13 @@ public class GraphicLantern : MonoBehaviour {
 	GameObject controller;
 	CursorHandler cursorHandler;
 	GlassesManager glassesManager;
+
+	//3 variabili per ora inutili, pensate nel caso debbano essere presenti muri su cui poter proiettare
+	float lastTimeUpdate = 0.0f;
+	float timeToUpdate = 1.3f;
+	public GameObject[] walls;
+
+	bool touchingBadWall = false;
 
 	public float standardFakeProjectionRotation = 0.0f;
 
@@ -139,6 +148,18 @@ public class GraphicLantern : MonoBehaviour {
 			spRendCircle.sprite = normalCircle;
 		}
 	}
+
+	public void setBadRaySprites(bool bad = true)
+	{
+		if (bad) {
+			spRendRay.sprite = badRay;
+			spRendCircle.sprite = badCircle;
+		} else {
+			spRendRay.sprite = normalRay;
+			spRendCircle.sprite = normalCircle;
+		}
+	}
+
 
 	public bool groundCheck()
 	{
@@ -240,6 +261,13 @@ public class GraphicLantern : MonoBehaviour {
 
 
 	}
+
+	/*
+	void Update()
+	{
+		updateWalls ();
+	}
+	*/
 
 	//update delle variabili locali in relazione al vetrino attuale, gestito dal glassedManager
 	public void glassSpriteUpdate()
@@ -390,6 +418,30 @@ public class GraphicLantern : MonoBehaviour {
 	public float getStandardFakeProjectionRotation()
 	{
 		return standardFakeProjectionRotation;
+	}
+
+	public bool verifyIfInsideWall()
+	{
+		return false;
+	}
+
+	void updateWalls()
+	{
+		if (Mathf.Abs (Time.time - lastTimeUpdate) > timeToUpdate) {
+			lastTimeUpdate = Time.time;
+			walls = GameObject.FindGameObjectsWithTag("ProjectionWall");
+		}
+	}
+
+	void OnTriggerEnter2D(Collider2D other) {
+		if (other.gameObject.tag == "ProjectionWall") {
+			touchingBadWall = true;
+		}
+	}
+
+	void OnTriggerExit2D(Collider2D other)
+	{
+
 	}
 
 	bool verifyIfCursorCameraTooNear()
