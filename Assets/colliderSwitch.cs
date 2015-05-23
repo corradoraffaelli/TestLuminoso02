@@ -12,7 +12,7 @@ public class colliderSwitch : MonoBehaviour
 		{
 			other.tag = "SuperPlayer";
 			Debug.Log("Cambiato Tag in:" + other.tag);
-			other.gameObject.layer = 19;
+			other.gameObject.layer = 19; //SuperPlayer
 			super = true;
 		}
 
@@ -25,16 +25,16 @@ public class colliderSwitch : MonoBehaviour
 		{
 			other.tag = "Player";
 			Debug.Log("Cambiato Tag in:" + other.tag);
-			other.gameObject.layer = 12;
+			other.gameObject.layer = 12; //Player
 			super = false;
 		}
 			
 	}
 
-	/*void Change
+	/*void Change ()
 	{
 		if (super)
-
+		sendmessage?
 
 	}*/
 }
