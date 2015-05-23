@@ -253,7 +253,7 @@ public class GlassesManager : MonoBehaviour {
 
 	public void enableGlassByName(string glassName, bool enable = true)
 	{
-		Debug.Log ("abilitato glass " + glassName);
+
 
 		if (enable) {
 			for (int i = 0; i<glassList.Length; i++)
@@ -262,6 +262,7 @@ public class GlassesManager : MonoBehaviour {
 				{
 					glassList[i].usable = true;
 					actualGlassIndex = i;
+					Debug.Log ("abilitato glass " + glassName);
 				}
 			}
 		}else{
@@ -273,6 +274,7 @@ public class GlassesManager : MonoBehaviour {
 					if (actualGlassIndex == i)
 					{
 						nextUsableGlass();
+						Debug.Log ("Disabilitato glass " + glassName);
 						//actualGlassIndex = actualGlassIndex;
 					}
 				}

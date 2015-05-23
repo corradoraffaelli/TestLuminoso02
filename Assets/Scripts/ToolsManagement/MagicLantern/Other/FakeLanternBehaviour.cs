@@ -3,6 +3,9 @@ using System.Collections;
 
 public class FakeLanternBehaviour : MonoBehaviour {
 
+	public bool disableObject = false;
+	public bool intermittance = false;
+
 	public enum fakeLanternState
 	{
 		None,
@@ -22,8 +25,11 @@ public class FakeLanternBehaviour : MonoBehaviour {
 	[Range(0.1f, 10.0f)]
 	public float turningOnTime = 5.0f;
 
+	float startOffTime = 0.0f;
+
 	public Glass[] glassesToEnable;
 	public Glass[] glassesToDisable;
+	public bool enableLantern = true;
 
 	GameObject magicLanternLogicOBJ;
 	AudioHandler audioHandler;
@@ -88,9 +94,17 @@ public class FakeLanternBehaviour : MonoBehaviour {
 			{
 				actualState = fakeLanternState.On;
 			}
+
+			startOffTime = Time.time;
 		}
 
 		if (actualState == fakeLanternState.On) {
+
+			if (intermittance && Mathf.Abs(Time.time - startOffTime) > turningOnTime)
+			{
+				actualState = fakeLanternState.Off;
+			}
+
 			startTime = Time.time;
 		}
 	}
@@ -182,14 +196,14 @@ public class FakeLanternBehaviour : MonoBehaviour {
 
 	public void InteractingMethod()
 	{
-		Debug.Log ("Interagito");
+		Debug.Log ("Interagito con fake lantern");
 		changeLanternState (fakeLanternState.Off);
 		canLanternBeEnabled (false);
 
 		if (audioHandler != null)
 			audioHandler.playClipByName ("Leva");
 
-		if (magicLanternLogicOBJ != null)
+		if (enableLantern && magicLanternLogicOBJ != null)
 			magicLanternLogicOBJ.GetComponent<MagicLantern> ().setActivable (true);
 
 		for (int i = 0; i<glassesToEnable.Length; i++) {
@@ -204,34 +218,23 @@ public class FakeLanternBehaviour : MonoBehaviour {
 
 			}
 		}
-		/*
-			if (glassList[i].Usable == false && glassList[i].canBeEnabled)
-				{
 
-					if (controlSubGlassList(glassList[i]))
-					    enableGlass (i, true);
+		for (int i = 0; i<glassesToDisable.Length; i++) {
+			if (glassesToDisable[i] !=null)
+			{
+				
+				if (glassesManager != null){
+					glassesManager.enableGlassByName(glassesToDisable[i].glassType, false);
+					glassesToDisable[i].canBeEnabled = false;
 				}
-
-		//attiva la lanterna magica, se disattiva
-		if (magicLanternLogicOBJ != null)
-			magicLanternLogicOBJ.GetComponent<MagicLantern> ().setActivable (true);
-
-		//ora inutile
-		if (CanvasGlasses)
-			CanvasGlasses.SetActive (true);
-
-		
-		if (audioHandler != null)
-			audioHandler.playClipByName ("Leva");
-		
-		//GameObject[] child = gameObject.transform.
-		foreach (Transform child in transform) {
-			child.gameObject.SetActive(false);
+			}
 		}
-		
-		//gameObject.SetActive (false);
-		*/
-		
+
+		if (disableObject) {
+			foreach (Transform child in transform) {
+				child.gameObject.SetActive(false);
+			}
+		}
 	}
 
 }
