@@ -10,6 +10,7 @@ public class HeavyAttackCheck : MonoBehaviour {
 	public LayerMask targetLayers;
 	basicAIEnemyV4 bai;
 	public GameObject actualTarget;
+	bool isFakeProjection = false;
 
 	
 	void Start() {
@@ -41,6 +42,13 @@ public class HeavyAttackCheck : MonoBehaviour {
 					Debug.Log("Io sono " + transform.gameObject.name + " e mi preparo a colpire la proiezione " + c.gameObject.name);
 					
 				}
+
+				if(c.tag=="FakeProjection"){
+
+					isFakeProjection = true;
+
+				}
+
 				actualTarget = c.gameObject;
 				i_targetNear (true);
 				
@@ -57,6 +65,8 @@ public class HeavyAttackCheck : MonoBehaviour {
 			i_targetNear (false);
 			
 		}
+
+		isFakeProjection = false;
 		
 	}
 	
@@ -96,11 +106,31 @@ public class HeavyAttackCheck : MonoBehaviour {
 			if(DEBUG_CHECKHA) {
 				
 				Debug.Log("Io sono " + transform.gameObject.name + " e ho colpito la proiezione " + actualTarget.name);
-				
+
 			}
 
 			//comportamento da implementare per le proiezioni
-			
+			if(isFakeProjection) {
+
+				GameObject fl = GameObject.FindGameObjectWithTag("FakeMagicLanternLogic");
+
+				if(fl!=null){
+
+					fl.transform.SendMessage ("c_turnOnLantern", false);
+				
+				}
+			}
+			else {
+
+				GameObject o = GameObject.FindGameObjectWithTag("MagicLanternLogic");
+				if(o != null) {
+					
+					o.SendMessage("c_touchedByEnemy");
+				
+				}
+
+			}
+
 
 		}
 

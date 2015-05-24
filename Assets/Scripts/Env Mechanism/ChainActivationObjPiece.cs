@@ -271,8 +271,10 @@ public class ChainActivationObjPiece : MonoBehaviour {
 		case movementTyp.Translation:
 
 			dist = target - myTrasform.position;
-			if(dist.magnitude < 0.2f) {
-				Debug.Log ("arrived translation");
+			if(dist.magnitude < 0.1f) {
+				if(DEBUG_transition)
+					Debug.Log ("arrived translation");
+
 				return true;
 			}
 			break;
@@ -281,14 +283,16 @@ public class ChainActivationObjPiece : MonoBehaviour {
 
 			if(isForward) {
 				if(transform.localRotation.eulerAngles.z >= (targetDegree - 0.5f)) {
-					Debug.Log ("arrived targetpos rotation");
+					if(DEBUG_transition)
+						Debug.Log ("arrived targetpos rotation");
 					return true;
 				}
 
 			}
 			else {
 				if(transform.localRotation.eulerAngles.z < startDegree + 0.5f) {
-					Debug.Log ("arrived startpos rotation");
+					if(DEBUG_transition)
+						Debug.Log ("arrived startpos rotation");
 					return true;
 				}
 
@@ -302,7 +306,8 @@ public class ChainActivationObjPiece : MonoBehaviour {
 
 			dist = target - myTrasform.position;
 			if(transform.localRotation.eulerAngles.z >= (targetDegree - 5.0f) && dist.magnitude < 0.2f){
-				Debug.Log ("arrived rototranslation");
+				if(DEBUG_transition)
+					Debug.Log ("arrived rototranslation");
 				return true;
 			}
 
@@ -353,7 +358,8 @@ public class ChainActivationObjPiece : MonoBehaviour {
 				else {
 					backwardSpeed = distanceToCover / tBackwardLenght;
 				}
-				Debug.Log ("translo");
+				if(DEBUG_transition)
+					Debug.Log ("translo");
 				myTrasform.Translate (dist.normalized * (isForward ? forwardSpeed : backwardSpeed) * Time.deltaTime);
 				
 				break;
@@ -365,7 +371,8 @@ public class ChainActivationObjPiece : MonoBehaviour {
 				else {
 					backwardSpeed = targetDegree / tBackwardLenght;
 				}
-				Debug.Log ("ruoto");
+				if(DEBUG_transition)
+					Debug.Log ("ruoto");
 				myTrasform.Rotate(Vector3.forward, (isForward ? forwardSpeed : -backwardSpeed) * Time.deltaTime);
 				
 				break;
@@ -390,7 +397,8 @@ public class ChainActivationObjPiece : MonoBehaviour {
 				
 				myTrasform.Rotate(Vector3.forward, (isForward ? forwardSpeed : -backwardSpeed) * Time.deltaTime);
 				
-				Debug.Log ("rototraslo");
+				if(DEBUG_transition)
+					Debug.Log ("rototraslo");
 				
 				break;
 			default :
@@ -405,30 +413,35 @@ public class ChainActivationObjPiece : MonoBehaviour {
 		
 		if(!isForward && chainPieceType == ChainPieceType.NotLastPiece && nextChainPiece!=null && nextChainPieceStarted) {
 			
-			Debug.Log ("il meccanismo " + gameObject.name + " inizia a tornare indietro e avvisa quello dopo");
+			if(DEBUG_transition)
+				Debug.Log ("il meccanismo " + gameObject.name + " inizia a tornare indietro e avvisa quello dopo");
+
 			nextChainPiece.SendMessage("buttonPushed", false);
 			nextChainPieceStarted = false;
 			
 		}
-		
-		switch (nextActivationTime) {
-		case nextPieceActivationType.AtEndPosition :
+
+		if (chainPieceType == ChainPieceType.NotLastPiece) {
+
+			switch (nextActivationTime) {
+			case nextPieceActivationType.AtEndPosition:
 			
-			break;
+				break;
 			
-		case nextPieceActivationType.Immediately :
-			if(nextChainPiece!=null) {
+			case nextPieceActivationType.Immediately:
+				if (nextChainPiece != null) {
 				
-				if(!nextChainPieceStarted && isForward) {
-					Debug.Log ("il meccanismo " + gameObject.name + " è arrivato alla fine e avvisa il mecc dopo");
-					nextChainPiece.SendMessage("buttonPushed", true);
-					nextChainPieceStarted = true;
+					if (!nextChainPieceStarted && isForward) {
+						Debug.Log ("il meccanismo " + gameObject.name + " è arrivato alla fine e avvisa il mecc dopo");
+						nextChainPiece.SendMessage ("buttonPushed", true);
+						nextChainPieceStarted = true;
+					}
 				}
-			}
-			break;
+				break;
 			
-		default :
-			break;
+			default :
+				break;
+			}
 		}
 
 	}
@@ -475,7 +488,9 @@ public class ChainActivationObjPiece : MonoBehaviour {
 				if(nextChainPiece!=null) {
 					
 					if(!nextChainPieceStarted && isForward) {
-						Debug.Log ("il meccanismo " + gameObject.name + " è arrivato alla fine e avvisa il mecc dopo");
+						if(DEBUG_transition)
+							Debug.Log ("il meccanismo " + gameObject.name + " è arrivato alla fine e avvisa il mecc dopo");
+
 						nextChainPiece.SendMessage("buttonPushed", true);
 						nextChainPieceStarted = true;
 					}

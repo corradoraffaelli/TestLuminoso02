@@ -100,7 +100,7 @@ public class basicAIEnemyV4 : MonoBehaviour {
 	}
 	fleeSubState flSS;
 
-	bool killable = false;
+	public bool killable = false;
 
 	public GameObject Spawner;
 
@@ -803,7 +803,7 @@ public class basicAIEnemyV4 : MonoBehaviour {
 
 
 	private void setStatusSprite(string statusType = " ") {
-
+		//Debug.Log ("setto status" + gameObject.name);
 		if (statusImg == null)
 			return;
 
@@ -2505,7 +2505,7 @@ public class basicAIEnemyV4 : MonoBehaviour {
 
 		myToStun.SendMessage ("c_chargedAttack");
 
-		turnOffProjector ();
+		//turnOffProjector ();
 
 		attackCharged = false;
 		attackCharging = false;
@@ -2571,7 +2571,9 @@ public class basicAIEnemyV4 : MonoBehaviour {
 					if(killable) {
 						StartCoroutine(handleKill());
 					}
-					setStatusSprite();
+					else {
+						setStatusSprite();
+					}
 					break;
 				default :
 					break;
@@ -3463,6 +3465,7 @@ public class basicAIEnemyV4 : MonoBehaviour {
 
 	public void OnTriggerEnter2D(Collider2D c) {
 
+		/*
 		if (c.name == "Proiettore") {
 
 			if(c.gameObject.transform.parent.tag == "Lantern") {
@@ -3472,7 +3475,7 @@ public class basicAIEnemyV4 : MonoBehaviour {
 			//mia reazione?
 
 		}
-
+		*/
 	}
 
 	private void turnOffProjector() {

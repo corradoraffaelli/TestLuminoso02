@@ -191,6 +191,12 @@ public class FakeLanternBehaviour : MonoBehaviour {
 		raggio_cerchio.SetActive (turnOn);
 	}
 
+	public void c_turnOnLantern(bool turnOn) {
+
+		turnOnLantern (turnOn);
+
+	}
+
 	public void changeLanternState(fakeLanternState state)
 	{
 		actualState = state;
