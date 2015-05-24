@@ -5,6 +5,7 @@ public class FakeLanternBehaviour : MonoBehaviour {
 
 	public bool disableObject = false;
 	public bool intermittance = false;
+	public bool disabledByEnemy = true;
 
 	public enum fakeLanternState
 	{
@@ -17,8 +18,7 @@ public class FakeLanternBehaviour : MonoBehaviour {
 	fakeLanternState previousState = fakeLanternState.On;
 
 	public bool continuousFollow = false;
-
-	bool touchedByEnemy = false;
+	
 	bool canBeReenabled = true;
 
 	float startTime = 0.0f;
@@ -70,6 +70,7 @@ public class FakeLanternBehaviour : MonoBehaviour {
 		if (actualState == fakeLanternState.Off) {
 			if (actualState != previousState){
 				turnOnLantern(false);
+				audioHandler.playClipByName("Clic");
 			}
 
 		}
@@ -77,6 +78,7 @@ public class FakeLanternBehaviour : MonoBehaviour {
 		if (actualState == fakeLanternState.On) {
 			if (actualState != previousState){
 				turnOnLantern(true);
+				audioHandler.playClipByName("Clic");
 			}
 			
 		}

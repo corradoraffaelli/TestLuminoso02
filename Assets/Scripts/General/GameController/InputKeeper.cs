@@ -264,10 +264,17 @@ public class InputKeeper : MonoBehaviour {
 			{
 				Vector3 tempInputMouse = Input.mousePosition;
 
+				//sarebbe meglio salvare le posizioni nel worldSpace, altrimenti sono in pixel, perciò relative alla risoluzione
 				InputMousePosition tempInputMousePosition = new InputMousePosition();
+				/*
 				tempInputMousePosition.inputX = Input.mousePosition.x;
 				tempInputMousePosition.inputY = Input.mousePosition.y;
 				tempInputMousePosition.inputZ = Input.mousePosition.z;
+				*/
+
+				tempInputMousePosition.inputX = Camera.main.ScreenToWorldPoint(Input.mousePosition).x;
+				tempInputMousePosition.inputY = Camera.main.ScreenToWorldPoint(Input.mousePosition).y;
+				tempInputMousePosition.inputZ = Camera.main.ScreenToWorldPoint(Input.mousePosition).z;
 
 				ChangedMouse tempChanged = new ChangedMouse(Time.time, tempInputMousePosition);
 				changedMouseList.Add (tempChanged);
@@ -412,9 +419,9 @@ public class InputKeeper : MonoBehaviour {
 
 	void setMouse()
 	{
-		mousePosition.inputX = Input.mousePosition.x;
-		mousePosition.inputY = Input.mousePosition.y;
-		mousePosition.inputZ = Input.mousePosition.z;
+		mousePosition.inputX = Camera.main.ScreenToWorldPoint(Input.mousePosition).x;
+		mousePosition.inputY = Camera.main.ScreenToWorldPoint(Input.mousePosition).y;
+		mousePosition.inputZ = Camera.main.ScreenToWorldPoint(Input.mousePosition).z;
 	}
 
 	void save()
@@ -511,11 +518,11 @@ public class InputKeeper : MonoBehaviour {
 
 	bool verifyIfMouseChanged()
 	{
-		if (Input.mousePosition.x != mousePosition.inputX)
+		if (Input.mousePosition.x != Camera.main.ScreenToWorldPoint(Input.mousePosition).x)
 			return true;
-		if (Input.mousePosition.y != mousePosition.inputY)
+		if (Input.mousePosition.y != Camera.main.ScreenToWorldPoint(Input.mousePosition).y)
 			return true;
-		if (Input.mousePosition.z != mousePosition.inputZ)
+		if (Input.mousePosition.z != Camera.main.ScreenToWorldPoint(Input.mousePosition).z)
 			return true;
 		return false;
 	}
@@ -697,6 +704,7 @@ public class InputKeeper : MonoBehaviour {
 	public Vector3 getMousePosition()
 	{
 		Vector3 tempPosition = new Vector3(mousePosition.inputX, mousePosition.inputY, mousePosition.inputZ);
-		return tempPosition;
+		Vector3 tempPositionScreen = Camera.main.WorldToScreenPoint (tempPosition);
+		return tempPositionScreen;
 	}
 }

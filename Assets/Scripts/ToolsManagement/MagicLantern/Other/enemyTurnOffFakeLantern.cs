@@ -15,7 +15,7 @@ public class enemyTurnOffFakeLantern : MonoBehaviour {
 
 	void OnTriggerEnter2D(Collider2D other)
 	{
-		if (other.gameObject.tag == "Enemy")
+		if (other.gameObject.tag == "Enemy" && fakeLanternBehaviour.disabledByEnemy)
 			fakeLanternBehaviour.changeLanternState (FakeLanternBehaviour.fakeLanternState.Off);
 	}
 
