@@ -129,16 +129,20 @@ public class GlassPiecesUIManager : MonoBehaviour {
 
 			for (int j=0; j< glassElement[i].glass.subGlassList.Length; j++)
 			{
-				subGlass sottoVetrino = glassElement[i].glass.subGlassList[j].GetComponent<subGlass>();
-				if (sottoVetrino.taken)
+				if (glassElement[i].glass.subGlassList[j] != null)
 				{
-					tempSprites[tempSpriteNum] = glassElement[i].glassPiecesImages[spriteElementNum].takenSprite;
-				}else{
-					tempSprites[tempSpriteNum] = glassElement[i].glassPiecesImages[spriteElementNum].notTakenSprite;
-				}
+					subGlass sottoVetrino = glassElement[i].glass.subGlassList[j].GetComponent<subGlass>();
+					if (sottoVetrino.taken)
+					{
+						tempSprites[tempSpriteNum] = glassElement[i].glassPiecesImages[spriteElementNum].takenSprite;
+					}else{
+						tempSprites[tempSpriteNum] = glassElement[i].glassPiecesImages[spriteElementNum].notTakenSprite;
+					}
 					
-				spriteElementNum++;
-				tempSpriteNum++;
+					spriteElementNum++;
+					tempSpriteNum++;
+				}
+
 			}
 		}
 
@@ -156,8 +160,12 @@ public class GlassPiecesUIManager : MonoBehaviour {
 			
 			for (int j=0; j< glassElement[i].glass.subGlassList.Length; j++)
 			{
-				subGlassList[subGlassListNum] = glassElement[i].glass.subGlassList[j].GetComponent<subGlass>();
-				subGlassListNum ++;
+				if (glassElement[i].glass.subGlassList[j] != null)
+				{
+					subGlassList[subGlassListNum] = glassElement[i].glass.subGlassList[j].GetComponent<subGlass>();
+					subGlassListNum ++;
+				}
+
 			}
 		}
 
@@ -169,7 +177,7 @@ public class GlassPiecesUIManager : MonoBehaviour {
 		if (oldSubGlassListTaken != null) {
 			for (int i = 0; i<subGlassList.Length; i++)
 			{
-				if (oldSubGlassListTaken[i] != subGlassList[i].taken)
+				if (subGlassList[i]!=null && oldSubGlassListTaken[i] != subGlassList[i].taken)
 				{
 					oldSubGlassListTaken[i] = subGlassList[i].taken;
 					//Debug.Log ("cambiato");
