@@ -9,6 +9,7 @@ public class ChainActivationObjStarter : MonoBehaviour {
 	int realTriggerTagListLength;
 	
 	private GameObject whoIsActivatingMe;
+	bool processInCourse = false;
 	
 	// Use this for initialization
 	void Start () {
@@ -16,6 +17,27 @@ public class ChainActivationObjStarter : MonoBehaviour {
 		checkTagList ();
 		checkObjectToActivate ();
 		
+	}
+
+	void Update() {
+
+		if(processInCourse && whoIsActivatingMe!=null){
+			if (!whoIsActivatingMe.activeInHierarchy) {
+				//OnTriggerEnter2D (c);
+				//Debug.Log ("DISATTIVOOOOOOOOOOOOOOOOOOOOOOOO");
+				if(firstChainPiece!=null) {
+					Debug.Log ("A!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+					firstChainPiece.SendMessage("buttonPushed", false);
+					whoIsActivatingMe = null;
+				}
+				return;
+			}
+			else {
+				//Debug.Log ("ATTIVOOOOOOOOOOOOOOOOOOOOOOOO");
+
+			}
+		}
+
 	}
 	
 	private void checkTagList(){
@@ -55,6 +77,7 @@ public class ChainActivationObjStarter : MonoBehaviour {
 				
 				if(firstChainPiece!=null) {
 					whoIsActivatingMe = c.gameObject;
+					processInCourse = true;
 					firstChainPiece.SendMessage("buttonPushed", true);
 				}
 				else {
@@ -84,6 +107,7 @@ public class ChainActivationObjStarter : MonoBehaviour {
 				if(firstChainPiece!=null) {
 					firstChainPiece.SendMessage("buttonPushed", false);
 					whoIsActivatingMe = null;
+					processInCourse = false;
 				}
 				else {
 					Debug.Log ("ATTENZIONE - L'OGGETTO DA ATTIVARE NON E' STATO ASSEGNATO");
@@ -99,23 +123,30 @@ public class ChainActivationObjStarter : MonoBehaviour {
 	
 	
 	public void OnTriggerStay2D(Collider2D c) {
-		
-		if (whoIsActivatingMe == null) {
-			OnTriggerEnter2D (c);
-			return;
-		}
-		
-		if (!NeedInteractionButton)
-			return;
-		
-		if (!Input.GetKeyUp (KeyCode.Return))
-			return;
-		
-		
+
 		for (int i=0; i< triggerTagList.Length; i++) {
-			
+
 			if(c.tag== triggerTagList[i]) {
+
+				/*
+				if (whoIsActivatingMe == null) {
+					//OnTriggerEnter2D (c);
+					if(firstChainPiece!=null) {
+						Debug.Log ("A!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+						firstChainPiece.SendMessage("buttonPushed", false);
+						whoIsActivatingMe = null;
+						processInCourse = false;
+					}
+					return;
+				}
+				*/
+				if (!NeedInteractionButton)
+					return;
 				
+				if (!Input.GetKeyUp (KeyCode.Return))
+					return;
+
+						
 				if(firstChainPiece!=null) {
 					firstChainPiece.SendMessage("buttonPushed", true);
 				}
@@ -123,7 +154,7 @@ public class ChainActivationObjStarter : MonoBehaviour {
 					Debug.Log ("ATTENZIONE - L'OGGETTO DA ATTIVARE NON E' STATO ASSEGNATO");
 				}
 				break;
-				
+					
 			}
 			
 		}

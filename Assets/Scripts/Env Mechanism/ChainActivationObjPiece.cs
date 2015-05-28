@@ -36,14 +36,22 @@ public class ChainActivationObjPiece : MonoBehaviour {
 	}
 	public nextPieceActivationType nextActivationTime;
 	
+	public enum transportPieceType
+	{
+		NoTransport,
+		Transport,
 
-
+	}
+	public transportPieceType transportType = transportPieceType.NoTransport;
 	//public bool killWithSpikes = true;
 	
-	Vector3 defaultPos;
+
 	public Transform targetPos;
-	public float targetDegree = 360.0f;
-	private float startDegree;
+	Vector3 defaultPos;
+
+	[Range(0.1f,180.0f)]
+	public float targetDegree = 180.0f;
+	private float defaultDegree;
 
 	public GameObject nextChainPiece;
 	private bool nextChainPieceStarted = false;
@@ -88,7 +96,7 @@ public class ChainActivationObjPiece : MonoBehaviour {
 
 	private void getDefaultAngle() {
 
-		startDegree = transform.rotation.z;
+		defaultDegree = transform.rotation.z;
 
 	}
 
@@ -272,6 +280,12 @@ public class ChainActivationObjPiece : MonoBehaviour {
 
 			dist = target - myTrasform.position;
 			if(dist.magnitude < 0.1f) {
+
+				if(isForward)
+					transform.position = new Vector3(targetPos.position.x, targetPos.position.y, transform.position.z);
+				else
+					transform.position = new Vector3(defaultPos.x, defaultPos.y, transform.position.z);
+
 				if(DEBUG_transition)
 					Debug.Log ("arrived translation");
 
@@ -282,7 +296,10 @@ public class ChainActivationObjPiece : MonoBehaviour {
 		case movementTyp.Rotation:
 
 			if(isForward) {
-				if(transform.localRotation.eulerAngles.z >= (targetDegree - 0.5f)) {
+				if(transform.localRotation.eulerAngles.z >= (targetDegree - 5.0f)) {
+
+					transform.localRotation = Quaternion.Euler(transform.localRotation.eulerAngles.x, transform.localRotation.eulerAngles.y, targetDegree);
+
 					if(DEBUG_transition)
 						Debug.Log ("arrived targetpos rotation");
 					return true;
@@ -290,7 +307,10 @@ public class ChainActivationObjPiece : MonoBehaviour {
 
 			}
 			else {
-				if(transform.localRotation.eulerAngles.z < startDegree + 0.5f) {
+				if(transform.localRotation.eulerAngles.z < defaultDegree + 5.0f) {
+
+					transform.localRotation = Quaternion.Euler(transform.localRotation.eulerAngles.x, transform.localRotation.eulerAngles.y, defaultDegree);
+
 					if(DEBUG_transition)
 						Debug.Log ("arrived startpos rotation");
 					return true;
@@ -600,5 +620,50 @@ public class ChainActivationObjPiece : MonoBehaviour {
 		
 		
 	}
-	
+	/*
+	public void OnCollisionEnter2D(Collision2D c) {
+
+		Debug.Log ("entro");
+
+		if (c.gameObject.tag == "Player" || c.gameObject.tag == "Enemy") {
+			Debug.Log ("entro1");
+			Vector2 posC = c.transform.position;
+
+			BoxCollider2D myBox = GetComponent<BoxCollider2D>();
+
+			//CircleCollider2D cCircle = c.gameObject.GetComponent<CircleCollider2D>();
+			//Vector2 cBottom = new Vector2(cCircle.bounds.center.x, cCircle.bounds.center.y - cCircle.bounds.extents.y);
+
+			Vector2 cBottom = new Vector2(c.transform.position.x, c.transform.position.y);
+
+			Vector2 posMeTopLeft = new Vector2(myBox.bounds.center.x - myBox.bounds.extents.x, myBox.bounds.center.y + myBox.bounds.extents.y);
+			Vector2 posMeTopRight = new Vector2(myBox.bounds.center.x + myBox.bounds.extents.x, myBox.bounds.center.y + myBox.bounds.extents.y);
+
+			Debug.Log ("mia pos bottom " + posMeTopLeft.y + " - " + cBottom.y);
+
+			if(cBottom.x > posMeTopLeft.x && cBottom.x < posMeTopRight.x) {
+				Debug.Log ("parentizzo");
+				c.gameObject.transform.SetParent(gameObject.transform);
+
+			}
+
+
+		}
+
+
+	}
+
+	public void OnCollisionExit2D(Collision2D c) {
+
+		Debug.Log ("esco");
+
+		if (c.gameObject.tag == "Player" || c.gameObject.tag == "Enemy") {
+
+			if(c.gameObject.transform.parent == gameObject.transform.parent)
+				c.gameObject.transform.parent = null;
+
+		}
+
+	}
+	*/
 }
