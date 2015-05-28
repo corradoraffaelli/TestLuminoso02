@@ -193,6 +193,8 @@ public class PlayerMovements : MonoBehaviour {
 	MagicLantern magicLanternLogic;
 	AudioHandler audioHandler;
 
+	GameObject windPrefab;
+
 	void Start () {
 
 		RigBody = transform.GetComponent<Rigidbody2D>();
@@ -681,6 +683,24 @@ public class PlayerMovements : MonoBehaviour {
 			{
 				RigBody.velocity = new Vector2(RigBody.velocity.x, -maxFallingSpeed);
 			}
+
+			//gestione vento
+			//--------------DA OTTIMIZZARE!!!!!!-----------------
+			//------------LE OPERAZIONI DOVREBBE FARLE SOLO AL PRIMO LEFT!!!------------------
+			/*
+			if (magicLanternLogic.actualState == MagicLantern.lanternState.Left)
+			{
+				windPrefab = GameObject.FindGameObjectWithTag("WindPrefab");
+				if (windPrefab != null)
+				{
+					WindBehaviour windBehaviour = windPrefab.GetComponent<WindBehaviour>();
+					if (windBehaviour.isGameObjectOnWind(gameObject) && RigBody.velocity.y < 0.0f)
+					{
+						RigBody.velocity = new Vector2(RigBody.velocity.x, RigBody.velocity.y/4);
+					}
+				}
+			}
+			*/
 		}
 	}
 
@@ -1024,6 +1044,16 @@ public class PlayerMovements : MonoBehaviour {
 	{
 		freezedByTool = UseOrNot;
 		//anim.SetBool("usingTool",UseOrNot);
+	}
+
+	void OnTriggerEnter2D (Collider2D other)
+	{
+		/*
+		if (other.gameObject.tag == "WindPrefab" && RigBody.velocity.y < 0.0f)
+			//RigBody.velocity = new Vector2 (0.0f,0.0f);
+			RigBody.velocity = new Vector2(RigBody.velocity.x, RigBody.velocity.y/4);
+
+		*/
 	}
 
 	//funzione temporanea per conversione del layer
