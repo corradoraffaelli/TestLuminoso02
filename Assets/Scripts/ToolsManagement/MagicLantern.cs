@@ -191,6 +191,8 @@ public class MagicLantern : Tool {
 			//AZIONI DA FARE APPENA PRESA IN MANO
 			if (previousState != actualState)
 			{
+				deleteInstantiatedPrefab();
+
 				if (previousState != lanternState.NotUsed)
 					callParticles();
 					
@@ -205,7 +207,6 @@ public class MagicLantern : Tool {
 					graphicLantern.setBadRaySprites(true);
 				}
 					
-
 				deleteInstantiatedPrefab();
 
 				audioHandler.playClipByName("Accensione");

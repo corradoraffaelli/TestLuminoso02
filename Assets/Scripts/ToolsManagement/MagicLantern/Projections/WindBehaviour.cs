@@ -16,6 +16,8 @@ public class WindBehaviour : MonoBehaviour {
 	PlayerMovements playerMovements;
 	bool activeOnPlayer = true;
 
+	public float adaptingSpeed = 100f;
+
 	// Use this for initialization
 	void Start () {
 		magicLanternLogicObject = GameObject.FindGameObjectWithTag ("MagicLanternLogic");
@@ -60,6 +62,13 @@ public class WindBehaviour : MonoBehaviour {
 	void OnTriggerEnter2D(Collider2D other)
 	{
 		collidingObjects [firstEmptyIndex()] = other.gameObject;
+
+		Rigidbody2D rigidbody = other.GetComponent<Rigidbody2D>();
+		if (rigidbody != null && !rigidbody.isKinematic)
+		{
+			//if (rigidbody.velocity.y < 0.0f)
+				//rigidbody.velocity = new Vector2(rigidbody.velocity.x, rigidbody.velocity.y/3);
+		}
 	}
 
 	void OnTriggerExit2D(Collider2D other)
@@ -88,5 +97,77 @@ public class WindBehaviour : MonoBehaviour {
 		}
 
 		return false;
+	}
+
+	void LateUpdate()
+	{
+		/*
+		for (int i = 0; i<collidingObjects.Length; i++) {
+
+			if (collidingObjects[i] != null)
+			{
+				Rigidbody2D rigidbody = collidingObjects[i].GetComponent<Rigidbody2D>();
+				if (rigidbody != null && !rigidbody.isKinematic)
+				{
+					//controllo anche se è onground
+					PlayerMovements movements = collidingObjects[i].GetComponent<PlayerMovements>();
+					//procedo solo se l'oggetto non ha lo script playerMovements o, nel caso ce l'abbia, che non sia onGround
+					if (movements == null || (movements != null && !movements.onGround))
+					{
+						//deve adattare gli angoli
+						Debug.Log (collidingObjects[i].gameObject.name);
+
+						/*
+						if (rigidbody.velocity.y < 0.0f)
+							rigidbody.velocity = new Vector2(rigidbody.velocity.x, rigidbody.velocity.y/3);
+						*/
+						//rigidbody.velocity = vectorAdaptation(rigidbody.velocity);
+		/*
+					}
+					
+				}
+			}
+		}
+		*/
+	}
+
+	void OnTriggerStay2D(Collider2D other)
+	{
+		/*
+		Rigidbody2D rigidbody = other.GetComponent<Rigidbody2D>();
+		if (rigidbody != null && !rigidbody.isKinematic)
+		{
+			//controllo anche se è onground
+			PlayerMovements movements = other.GetComponent<PlayerMovements>();
+			//procedo solo se l'oggetto non ha lo script playerMovements o, nel caso ce l'abbia, che non sia onGround
+			if (movements == null || (movements != null && !movements.onGround))
+			{
+				//deve adattare gli angoli
+				Debug.Log (other.gameObject.name);
+
+				rigidbody.velocity = vectorAdaptation(rigidbody.velocity);
+			}
+
+		}
+		*/
+	
+	}
+
+	Vector2 vectorAdaptation(Vector2 inputVector)
+	{
+		//prendo la direzione del vento come "right" del gameObject
+		Vector3 objDirectionVec3 = transform.right;
+		Vector2 objDirectionVec2 = new Vector2 (objDirectionVec3.x, objDirectionVec3.y);
+
+		float directionMagn = objDirectionVec2.magnitude;
+		float velocityMagn = inputVector.magnitude;
+
+		float newX = velocityMagn * objDirectionVec2.x / directionMagn;
+		float newY = velocityMagn * objDirectionVec2.y / directionMagn;
+
+		Vector2 objDirection = new Vector2(newX, newY);
+
+		Vector2 newVector = Vector2.Lerp(inputVector, objDirection, adaptingSpeed*Time.deltaTime*100);
+		return (newVector);
 	}
 }

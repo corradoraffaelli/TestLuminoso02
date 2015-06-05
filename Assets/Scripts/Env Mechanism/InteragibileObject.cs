@@ -10,7 +10,7 @@ public class InteragibileObject : MonoBehaviour {
 	public float indicationScale = 2.0f;
 
 	bool interacted = false;
-	bool playerColliding = false;
+	public bool playerColliding = false;
 	GameObject player;
 	GameObject indication;
 	AudioHandler audioHandler;
@@ -35,29 +35,38 @@ public class InteragibileObject : MonoBehaviour {
 		if (((oneTimeInteraction && !interacted) || !oneTimeInteraction)) {
 			//mostra la E
 			indication.SetActive(playerColliding);
-			
+
+			//Debug.Log (gameObject.name +" "+ (inputKeeper!= null && inputKeeper.isButtonUp("Interaction") && ((oneTimeInteraction && !interacted) || !oneTimeInteraction) && playerColliding));
+			//Debug.Log (gameObject.name +" "+ (((oneTimeInteraction && !interacted) || !oneTimeInteraction) && playerColliding));
+
 			//scorre l'array di gameObject e chiama il metodo
-			if (inputKeeper!= null && inputKeeper.isButtonUp("Interaction") && ((oneTimeInteraction && !interacted) || !oneTimeInteraction)) {
-
-				if (audioHandler != null)
+			if (((oneTimeInteraction && !interacted) || !oneTimeInteraction) && playerColliding) {
+				if (inputKeeper!= null && inputKeeper.isButtonUp("Interaction"))
 				{
-					Debug.Log ("i'm in");
-					audioHandler.playClipByName("Leva");
-				}
-					
-
-				interacted = true;
-				for (int i = 0; i<objectsWithMethods.Length; i++)
-				{
-					if (objectsWithMethods[i] != null)
+					//Debug.Log ("inviato messaggio di interazione ad oggetto ");
+					if (audioHandler != null)
 					{
-						if (activeDisabledObject)
-							objectsWithMethods[i].SetActive(true);
-						objectsWithMethods[i].SendMessage(methodToCall,SendMessageOptions.DontRequireReceiver);
-
+						//Debug.Log ("i'm in");
+						audioHandler.playClipByName("Leva");
 					}
+					
+					
+					interacted = true;
+					
+					for (int i = 0; i<objectsWithMethods.Length; i++)
+					{
+						if (objectsWithMethods[i] != null)
+						{
+							if (activeDisabledObject)
+								objectsWithMethods[i].SetActive(true);
+							objectsWithMethods[i].SendMessage(methodToCall,SendMessageOptions.DontRequireReceiver);
+							
+							Debug.Log ("inviato messaggio di interazione ad oggetto "+objectsWithMethods[i].name);
+						}
+					}
+					indication.SetActive(false);
 				}
-				indication.SetActive(false);
+
 			}
 		}
 

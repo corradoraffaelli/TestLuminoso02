@@ -21,16 +21,26 @@ public class ExternalWind : MonoBehaviour {
 	public GameObject masterWind;
 	ExternalWind masterExtWind;
 
+	//usato per evitare problemi lungo la scala
+	GameObject player;
+	PlayerMovements playerMovements;
+	bool activeOnPlayer = true;
 
 	// Use this for initialization
 	void Start () {
 		areaEffector = GetComponent<AreaEffector2D>();
 		if (subWind && masterWind != null)
 			masterExtWind = masterWind.GetComponent<ExternalWind>();
+
+		player = GameObject.FindGameObjectWithTag ("Player");
+		if (player != null)
+			playerMovements = player.GetComponent<PlayerMovements> ();
 	}
 	
 	// Update is called once per frame
 	void Update () {
+		playerLadderManagement();
+
 		if (!subWind)
 		{
 			if (intermittance)
@@ -68,6 +78,29 @@ public class ExternalWind : MonoBehaviour {
 					
 		}
 
+	}
+
+	void playerLadderManagement()
+	{
+		if (playerMovements.onLadder && activeOnPlayer) {
+			activeOnPlayer = false;
+			
+			// Bit shift dell'indice del player per avere una layer mask con solo il bit del player attivo
+			int layerMask = 1 << (LayerMask.NameToLayer ("Player"));
+			
+			//L'operatore ~ inverte una layerMask (perciò si ottiene la layerMask con tutto, escluso il player
+			layerMask = ~layerMask;
+			
+			//cambio quindi la layermask su cui ha effetto il vento
+			areaEffector.colliderMask = layerMask;
+		}
+		
+		if (!playerMovements.onLadder && !activeOnPlayer) {
+			//la layer mask -1 indica tutti i layer
+			areaEffector.colliderMask = -1;
+			
+			activeOnPlayer = true;
+		}
 	}
 
 	void flipDirection()

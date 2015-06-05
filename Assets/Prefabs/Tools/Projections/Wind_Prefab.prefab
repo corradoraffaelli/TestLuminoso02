@@ -12,6 +12,7 @@ GameObject:
   - 61: {fileID: 6107590}
   - 249: {fileID: 24913026}
   - 114: {fileID: 11486956}
+  - 61: {fileID: 6112350}
   m_Layer: 0
   m_Name: Wind_Prefab
   m_TagString: WindPrefab
@@ -43,7 +44,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 160210}
   m_LocalRotation: {x: 0, y: 0, z: .707106829, w: .707106709}
-  m_LocalPosition: {x: 12.4099998, y: 11.7600002, z: 0}
+  m_LocalPosition: {x: 262.157776, y: -91.7578812, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 444358}
@@ -74,6 +75,19 @@ BoxCollider2D:
   m_Offset: {x: 2.0999999, y: 0}
   serializedVersion: 2
   m_Size: {x: 4.28999996, y: 1.01999998}
+--- !u!61 &6112350
+BoxCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 160210}
+  m_Enabled: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 1
+  m_Offset: {x: 2.9000001, y: 0}
+  serializedVersion: 2
+  m_Size: {x: 2.68000007, y: 1.86000001}
 --- !u!114 &11486956
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -85,6 +99,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ff60ba2bb8543b4da78c09f5a91a485, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  adaptingSpeed: .100000001
 --- !u!198 &19831800
 ParticleSystem:
   m_ObjectHideFlags: 1

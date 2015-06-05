@@ -11,6 +11,7 @@ public class FlagBehaviour : MonoBehaviour {
 	Animator animator;
 
 	bool needToReset = true;
+	bool colliding = false;
 
 	// Use this for initialization
 	void Start () {
@@ -25,7 +26,7 @@ public class FlagBehaviour : MonoBehaviour {
 
 		if (areaEffector != null)
 		{
-			if(areaEffector.enabled)
+			if(areaEffector.enabled && colliding)
 			{
 				if ((areaEffector.forceDirection < 90 && areaEffector.forceDirection > -90) || (areaEffector.forceDirection > 270) || (areaEffector.forceDirection < -270))
 					transform.localScale = new Vector2(Mathf.Abs(transform.localScale.x), transform.localScale.y);
@@ -66,9 +67,27 @@ public class FlagBehaviour : MonoBehaviour {
 			{
 				windGO = other.gameObject;
 				savedGO = true;
+				colliding = true;
 			}
 
 		}
 
+	}
+
+	void OnTriggerExit2D(Collider2D other)
+	{
+		//Debug.Log ("Esco01");
+		if (savedGO) 
+		{
+			if (other.gameObject == windGO)
+			{
+				//Debug.Log ("Esco");
+				colliding = false;
+				active = false;
+				animator.SetBool("Active", false);
+			}
+			
+		}
+		
 	}
 }
