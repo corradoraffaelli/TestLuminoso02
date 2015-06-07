@@ -221,7 +221,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 158486}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.51999998, y: 1, z: 0}
+  m_LocalPosition: {x: 10, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 422886}
@@ -247,7 +247,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: .0500000007
-  m_GravityScale: 2
+  m_GravityScale: 1
   m_FixedAngle: 1
   m_IsKinematic: 0
   m_Interpolate: 0
@@ -358,8 +358,8 @@ MonoBehaviour:
   underWater: 0
   gravityMultiplier: 1
   speedFactor: 2
-  AI_walkSpeed: 1
-  AI_runSpeed: 2.5
+  AI_walkSpeed: 2.5
+  AI_runSpeed: 5.5999999
   jumpFactor: 3
   forceOnAirFactor: 10
   airXDeceleration: 5
@@ -435,6 +435,7 @@ MonoBehaviour:
   DEBUG_COLLISION: 000000
   eMS: 0
   eType: 2
+  killable: 0
   Spawner: {fileID: 0}
   targetLayers:
     serializedVersion: 2
@@ -457,18 +458,18 @@ MonoBehaviour:
   - {fileID: 21300000, guid: b6b54dd1e8bb046168f5fe1df42e3d3a, type: 3}
   pointPrefab: {fileID: 186992, guid: 49e83c496a1b5654ab08f42747acf236, type: 2}
   patrolPoints: []
-  DefaultVerseRight: 1
+  DefaultVerseRight: 0
   tSearchLenght: 2.5
-  DEFAULT_DUMB_SPEED: .699999988
+  DEFAULT_DUMB_SPEED: 2.29999995
   fTargetFar: 2
-  tChargingChase: 1
+  tChargingChase: .5
   tToMaxVelocity: .5
-  tLosingTargerLenght: 5.5
-  tChargingAttack: .5
+  tLosingTargerLenght: 1
+  tChargingAttack: .200000003
   tStuckLenght: 2
   tSurpriceLenght: 2.5
   tEscapeLenght: 4
-  tStunnedLenght: 4
+  tStunnedLenght: 2
 --- !u!114 &11451574
 MonoBehaviour:
   m_ObjectHideFlags: 1

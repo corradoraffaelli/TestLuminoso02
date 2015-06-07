@@ -22,6 +22,11 @@ public class InputKeeper : MonoBehaviour {
 		public bool buttonUp = false;
 		[HideInInspector]
 		public bool buttonDown = false;
+
+		[HideInInspector]
+		public bool needToResetUp = false;
+		[HideInInspector]
+		public bool needToResetDown = false;
 	}
 
 	[SerializeField]
@@ -324,6 +329,9 @@ public class InputKeeper : MonoBehaviour {
 	//nel LateUpdate correggo le posizioni ed eventuali derive degli oggetti specificati
 	void LateUpdate()
 	{
+		//se un evento di un bottone è stato consumato, lo resetto
+		resetButtons();
+
 		if (loadSaveState == LoadSaveState.Save) {
 			if ((Mathf.Abs (Time.time - lastCorrectionTime)) > correctionTime)
 			{
@@ -380,6 +388,22 @@ public class InputKeeper : MonoBehaviour {
 			}
 		}
 
+	}
+
+	void resetButtons()
+	{
+		for (int i = 0; i< inputButtons.Length; i++) {
+			if (inputButtons[i].needToResetDown)
+			{
+				inputButtons[i].needToResetDown = false;
+				inputButtons[i].buttonDown = false;
+			}
+			if (inputButtons[i].needToResetUp)
+			{
+				inputButtons[i].needToResetUp = false;
+				inputButtons[i].buttonUp = false;
+			}
+		}
 	}
 
 	void setButtons()
@@ -658,6 +682,7 @@ public class InputKeeper : MonoBehaviour {
 			{
 				//viene messo a false per eviare che la lettura su due successivi update dia due volte true
 				bool actualValue = inputButtons[i].buttonDown;
+				//inputButtons[i].needToResetDown = true;
 				inputButtons[i].buttonDown = false;
 				return actualValue;
 			}
@@ -672,6 +697,7 @@ public class InputKeeper : MonoBehaviour {
 			{
 				//viene messo a false per eviare che la lettura su due successivi update dia due volte true
 				bool actualValue = inputButtons[i].buttonUp;
+				//inputButtons[i].needToResetUp = true;
 				inputButtons[i].buttonUp = false;
 				return actualValue;
 			}

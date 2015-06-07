@@ -119,7 +119,11 @@ public class PlayingUI : MonoBehaviour {
 		}
 	}
 
-	//serve per cambiare le sprites
+	/*
+	 * assegna le sprites da mostrare nella posizione specificata, 
+	 * come parametro viene passato un array di sprites, 
+	 * chiaramente, se l’array contiene una sola sprite, ne verrà mostrata solo una
+	*/
 	public void setSprites(Sprite[] sprites, UIPosition pos)
 	{
 		for (int i = 0; i < spritesGroup.Length; i++) {
