@@ -105,10 +105,29 @@ public class PlayerMovements : MonoBehaviour {
 	public float speedFactor = 4.0f;
 
 	//solo per AI-------------------------
+
 	[Range(0.1f,10.0f)]
 	public float AI_walkSpeed = 4.0f;
 	[Range(0.1f,10.0f)]
 	public float AI_runSpeed = 5.0f;
+
+
+	//HERE...
+	//TODO: da valutare se lasciare o meno il set
+	/*
+	public AIParameters ai_par;
+
+	public float AI_walkSpeed {
+		get{return ai_par._AIwalkSpeed;}
+		set{ ai_par._AIwalkSpeed = value;}
+	}
+
+	public float AI_runSpeed {
+		get{ return ai_par._AIrunSpeed;}
+		set{ ai_par._AIrunSpeed = value;}
+	}
+	*/
+	
 	
 	//------------------------------------
 	public float jumpFactor = 2.0f;
@@ -196,6 +215,16 @@ public class PlayerMovements : MonoBehaviour {
 	GameObject windPrefab;
 
 	void Start () {
+		//HERE...
+		if (AIControl) {
+			/*
+			ai_par = GetComponent<AIParameters>();
+
+			if(ai_par==null)
+				Debug.Log ("ATTENZIONE - AIParameters non trovato da playermovements");
+			*/
+		}
+
 
 		RigBody = transform.GetComponent<Rigidbody2D>();
 		anim = transform.GetComponent<Animator> ();
@@ -880,8 +909,8 @@ public class PlayerMovements : MonoBehaviour {
 	}
 
 	//gestione della corsa
-	//i
-	void runningManagement(bool facingLeftAI = false, bool facingRightAI = false, bool isWalkSpeed = true, float scaleFactorAI = 1)
+	//HERE...
+	void runningManagement(bool facingLeftAI = false, bool facingRightAI = false, float speedAI = 1.0f)
 	{
 		if (inputKeeper!=null && !AIControl) {
 			RigBody.velocity = new Vector2 (inputKeeper.getAxis ("Horizontal") * speedFactor, RigBody.velocity.y);
@@ -895,16 +924,12 @@ public class PlayerMovements : MonoBehaviour {
 			if (facingLeftAI && !facingRightAI)
 			{
 				directionAI = -1;
-
+			
 			}else if (!facingLeftAI && facingRightAI)
 				directionAI = 1;
 
-			if(isWalkSpeed) {
-				RigBody.velocity = new Vector2 (scaleFactorAI * AI_walkSpeed * directionAI, RigBody.velocity.y);
-			}
-			else {
-				RigBody.velocity = new Vector2 (scaleFactorAI * AI_runSpeed * directionAI, RigBody.velocity.y);
-			}
+			RigBody.velocity = new Vector2 (directionAI * speedAI, RigBody.velocity.y);
+
 		}
 		
 
@@ -917,6 +942,51 @@ public class PlayerMovements : MonoBehaviour {
 				//else
 					//anim.SetBool ("Backwards", false);
 
+			}
+			running = true;
+			//anim.SetBool ("Running", true);
+		} else {
+			running = false;
+			//anim.SetBool ("Running", false);
+		}
+	}
+
+	void runningManagement1(bool facingLeftAI = false, bool facingRightAI = false, bool isWalkSpeed = true, float scaleFactorAI = 1)
+	{
+		if (inputKeeper!=null && !AIControl) {
+			RigBody.velocity = new Vector2 (inputKeeper.getAxis ("Horizontal") * speedFactor, RigBody.velocity.y);
+			
+			//stoppo immediatamente il movimento non appena si lascia il tasto per la corsa
+			if (inputKeeper.getAxisRaw ("Horizontal") == 0)
+				RigBody.velocity = new Vector2 (0.0f, RigBody.velocity.y);
+		}
+		else {
+			int directionAI = 1;
+			if (facingLeftAI && !facingRightAI)
+			{
+				directionAI = -1;
+				
+			}else if (!facingLeftAI && facingRightAI)
+				directionAI = 1;
+			
+			if(isWalkSpeed) {
+				RigBody.velocity = new Vector2 (scaleFactorAI * AI_walkSpeed * directionAI, RigBody.velocity.y);
+			}
+			else {
+				RigBody.velocity = new Vector2 (scaleFactorAI * AI_runSpeed * directionAI, RigBody.velocity.y);
+			}
+		}
+		
+		
+		
+		if (RigBody.velocity.x != 0) {
+			if (!AIControl)
+			{
+				//if (((RigBody.velocity.x > 0.0f) && !facingRight) || ((RigBody.velocity.x < 0.0f) && facingRight))
+				//anim.SetBool ("Backwards", true);
+				//else
+				//anim.SetBool ("Backwards", false);
+				
 			}
 			running = true;
 			//anim.SetBool ("Running", true);
@@ -1145,10 +1215,20 @@ public class PlayerMovements : MonoBehaviour {
 		jumpingManagementFU ();
 	}
 
+	
+	//HERE...
 	public void c_runningManagement(bool AIfacingLeft, bool AIfacingRight, bool isWalkSpeed = true, float AIscaleFactor = 1)
 	{
-		runningManagement (AIfacingLeft, AIfacingRight, isWalkSpeed, AIscaleFactor);
+		runningManagement1 (AIfacingLeft, AIfacingRight, isWalkSpeed, AIscaleFactor);
 		
+	}
+
+
+	//HERE...
+	public void c_moveManagement(bool AIfacingLeft, bool AIfacingRight, float speed) {
+
+		runningManagement (AIfacingLeft, AIfacingRight, speed);
+
 	}
 
 	public void c_flip()

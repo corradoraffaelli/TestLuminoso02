@@ -215,22 +215,24 @@ public class FunctionDemoEditor : Editor
 	{
 		string [] metodiTemp;
 		int finalSize = 0;
-
+		Debug.Log ("finalsize : " + finalSize);
 		foreach(string s in componentiNomi) {
-
-			Type tipo = Type.GetType(s);
-
+			Debug.Log ("s : " + s);
+			//Type tipo = Type.GetType(s);
+			//if(tipo==null)
+			//	Debug.Log ("nullo");
+			//Debug.Log ("tipo : " + tipo==null ? "null" : tipo.ToString());
 			metodiTemp =
-				tipo
+				typeof(FunctionDemo)
 					.GetMethods(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public) // Instance methods, both public and private/protected
-					.Where(x => x.DeclaringType == tipo) // Only list methods defined in our own class
+					.Where(x => x.DeclaringType == typeof(FunctionDemo)) // Only list methods defined in our own class
 					.Where(x => x.GetParameters().Length == 0) // Make sure we only get methods with zero argumenrts
 					.Where(x => !ignoreMethods.Any(n => n == x.Name)) // Don't list methods in the ignoreMethods array (so we can exclude Unity specific methods, etc.)
 					.Select(x => x.Name)
 					.ToArray();
 
 			finalSize = finalSize + metodiTemp.Length;
-
+			Debug.Log ("finalsize : " + finalSize);
 		}
 
 		metodi = new string[finalSize];
@@ -239,12 +241,12 @@ public class FunctionDemoEditor : Editor
 
 		foreach(string s in componentiNomi) {
 			
-			Type tipo = Type.GetType(s);
+			//Type tipo = Type.GetType(s);
 			
 			metodiTemp =
-				tipo
+				typeof(FunctionDemo)
 					.GetMethods(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public) // Instance methods, both public and private/protected
-					.Where(x => x.DeclaringType == tipo) // Only list methods defined in our own class
+					.Where(x => x.DeclaringType == typeof(FunctionDemo)) // Only list methods defined in our own class
 					.Where(x => x.GetParameters().Length == 0) // Make sure we only get methods with zero argumenrts
 					.Where(x => !ignoreMethods.Any(n => n == x.Name)) // Don't list methods in the ignoreMethods array (so we can exclude Unity specific methods, etc.)
 					.Select(x => x.Name)

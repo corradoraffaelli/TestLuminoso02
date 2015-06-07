@@ -62,7 +62,7 @@ public class FiniteStateEditor : Editor
 
 				obj.initializeFunc = fillInitializeMethod (obj , "Initilize");
 			
-				obj.stateFunc = fillStateMethod (obj, "Update");
+				obj.updateFunc = fillStateMethod (obj, "Update");
 
 
 			}
@@ -176,7 +176,7 @@ public class FiniteStateEditor : Editor
 		try {
 			index = metodi
 				.Select ((v, i) => new { Name = v, Index = i })
-					.First (x => x.Name == obj.stateFunc)
+					.First (x => x.Name == obj.updateFunc)
 					.Index;
 		} catch {
 			index = 0;
@@ -312,7 +312,7 @@ public class FiniteStateEditor : Editor
 			
 			obj.initializeFunc = fillInitializeMethod(obj, "Initilize");
 			
-			obj.stateFunc = fillStateMethod(obj, "Update");
+			obj.updateFunc = fillStateMethod(obj, "Update");
 			
 			transitionSize = EditorGUILayout.IntField("Transitions ", transitionSize);
 			

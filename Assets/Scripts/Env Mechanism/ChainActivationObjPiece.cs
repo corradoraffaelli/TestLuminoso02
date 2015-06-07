@@ -169,7 +169,7 @@ public class ChainActivationObjPiece : MonoBehaviour {
 		
 		if (kw == null) {
 
-			Debug.Log ("ATTENZIONE - manca il crusher figlio della porta");
+			//Debug.Log ("ATTENZIONE - manca il crusher figlio della porta");
 			return false;
 		}
 		else {
