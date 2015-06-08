@@ -22,10 +22,7 @@ public class AIAgent1 : MonoBehaviour {
 	public HStateFSM []hstates;
 
 	public HStateRecords statesMap;
-
-
-
-
+	
 	public HStateFSM activeState;
 	
 	protected int activeHStateIndex = 0;
@@ -33,7 +30,11 @@ public class AIAgent1 : MonoBehaviour {
 	
 	protected AIParameters par;
 	
-	
+	//DEBUG
+
+	bool debugPlay = false;
+
+
 	//AI Parameters
 	
 	Transform myTransform;
@@ -222,25 +223,35 @@ public class AIAgent1 : MonoBehaviour {
 	
 	// Update is called once per frame
 	protected virtual void Update () {
-		
+
+		if (!PlayStatusTracker.inPlay)
+			return;
+
 		int nextState = activeState.StateID;
 		
 		if (hstates [activeHStateIndex].myHTransition != null) {
 
 			int result = hstates [activeHStateIndex].myHTransition(ref nextState);
 
-			Debug.Log(" > result " + result + " ref id " + nextState);
+			if(debugPlay)
+				Debug.Log(" > result " + result + " ref id " + nextState);
 
 			if(result != -1 ) {
 				if(nextState != activeState.StateID) {
 
 					if(nextState != -1) {
-						Debug.Log (". transizione a ref id " + nextState);
+						if(debugPlay)
+							Debug.Log ("TRANSITION - transizione a ref id " + nextState);
 						makeTransition(nextState);
 
 					}
-					else
+					else {
 						Debug.Log ("ATTENZIONE - CASO NON PREVISTO, NEXTSTATE = -1");
+					}
+				}
+				else {
+
+					Debug.Log ("ATTENZIONE - lo stato destinazione è uguale a quello attuale" + activeState.StateName);
 
 				}
 			}
@@ -279,10 +290,12 @@ public class AIAgent1 : MonoBehaviour {
 
 			setHStatesActiveIndexes(hierarchy);
 
+			activeState = hstates[activeHStateIndex];
+
 			if (targetState.myInitialize != null) {
-				
+
 				targetState.myInitialize (ref ob);
-				
+
 			}
 
 
@@ -380,7 +393,7 @@ public class AIAgent1 : MonoBehaviour {
 
 	
 	public void setStunned(bool st) {
-		Debug.Log ("ahi!!!!!!!!!!!!!!!!!!");
+
 		par.stunnedReceived = st;
 		
 		//if (eType == enemyType.Guard)
@@ -429,6 +442,7 @@ public class HStateRecords {
 	int index = 0;
 
 	public HStateRecords() {
+		//TODO: da ottimizzare
 		mappedStates = new HStateFSM[20];
 	}
 
@@ -477,7 +491,10 @@ public class HStateRecords {
 	public HStateFSM getStateByName(string _stateName) {
 
 		for(int i=0; i<mappedStates.Length; i++) {
-			
+			//TODO: da ottimizzare
+			if(i>=index)
+				break;
+
 			if(_stateName == mappedStates[i].StateName) {
 				
 				return mappedStates[i];
@@ -493,6 +510,9 @@ public class HStateRecords {
 	public int getStateIDByName(string _stateName) {
 
 		for(int i=0; i<mappedStates.Length; i++) {
+			//TODO: da ottimizzare
+			if(i>=index)
+				break;
 
 			if(_stateName == mappedStates[i].StateName) {
 

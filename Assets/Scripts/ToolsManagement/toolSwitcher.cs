@@ -20,6 +20,10 @@ public class toolSwitcher : MonoBehaviour {
 	}
 
 	void Update () {
+
+		if (!PlayStatusTracker.inPlay)
+			return;
+
 		//cambio il parametro di usabilità o meno dei tool o cambio tool quando il parametro di usabilità è attivo
 		if ((actualUsingTool != usingTool) || ((actualActiveToolIndex != activeToolIndex) && usingTool) || (usingTool && !toolList[activeToolIndex].active))
 		{

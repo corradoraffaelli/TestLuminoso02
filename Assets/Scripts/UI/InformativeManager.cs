@@ -542,7 +542,8 @@ public class InformativeManager : MonoBehaviour {
 			canvasMenu.SetActive(true);
 		
 		if (act) {
-			menuMan.c_switchMenuSection (null, canvasInformative);
+			menuMan.c_enableMenu(true);
+			menuMan.c_switchMenuSection (canvasIntro, canvasInformative);
 		} 
 		else {
 			menuMan.c_switchMenuSection (canvasInformative, canvasIntro);

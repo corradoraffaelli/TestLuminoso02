@@ -51,6 +51,9 @@ abstract public class Tool : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
+		if (!PlayStatusTracker.inPlay)
+			return;
+
 		if (!active) {
 			return;
 		} 

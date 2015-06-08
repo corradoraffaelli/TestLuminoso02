@@ -347,6 +347,9 @@ public class PlayerMovements : MonoBehaviour {
 	void Update () {
 		//verifico se il player è a terra ed aggiorno l'animator
 
+		if (!PlayStatusTracker.inPlay)
+			return;
+
 		if (!onLadder) {
 			onGround = groundCheck ();
 

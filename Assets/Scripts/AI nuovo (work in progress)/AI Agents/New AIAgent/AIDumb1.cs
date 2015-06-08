@@ -35,7 +35,7 @@ public class AIDumb1 : AIAgent1 {
 		hstates [0] = new HWanderFSM (0, this.gameObject, 0, null, this);
 		//statesMap.addState (hstates [0]);
 
-		hstates [1] = new HStunnedFSM (1, this.gameObject, 0, null, this);
+		hstates [1] = new HStunnedFSM (1, this.gameObject, 0, null, this,false);
 		//statesMap.addState (hstates [1]);
 
 		//hstates = new HStateFSM[stati.Length];

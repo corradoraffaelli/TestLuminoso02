@@ -33,6 +33,9 @@ public class HStateFSM : MonoBehaviour {
 
 	}
 
+	//DEBUG
+	bool debugPlay = false;
+
 	//sotto stati
 	public HStateFSM []states;
 
@@ -287,7 +290,8 @@ public class HStateFSM : MonoBehaviour {
 
 			result = handleLastHLevel(ref _id);
 
-			Debug.Log("-> result " + result + " e il ref id è " + _id);
+			if(debugPlay)
+				Debug.Log("-> result " + result + " e il ref id è " + _id);
 
 		}
 		else {
@@ -309,11 +313,18 @@ public class HStateFSM : MonoBehaviour {
 		bool transitionDone = false;
 		int result = -1;
 
+		if (myTransitions == null) {
+			//TODO: mettere debug
+			Debug.Log ("ATTENZIONE - livello gerarchia " + myHLevel + ", NESSUNA TRANSIZIONE presente nello stato " + stateName);
+			return result;
+		}
+
 		for (int tn=0; tn<myTransitions.Length; tn++) {
 
 			if(myTransitions[tn] != null) {
 				result = myTransitions[tn](ref _id);
-				Debug.Log("-> -> result è " + result + " e ref id " + _id);
+				if(debugPlay)
+					Debug.Log("-> -> result è " + result + " e ref id " + _id);
 
 				if(result != -1)
 					return result;
@@ -412,7 +423,7 @@ public class HStateFSM : MonoBehaviour {
 
 	protected void wanderHandleCollisionEnter(Collision2D c) {
 		
-		if(par.DEBUG_COLLISION[0])
+		if(debugPlay)
 			Debug.Log ("COLL - entrato in collisione con " + c.gameObject.name);
 		
 		if (c.gameObject.tag != "Player") {
@@ -422,5 +433,16 @@ public class HStateFSM : MonoBehaviour {
 		}
 		
 	}
+
+	protected int getIndexState (string _stateName) {
+
+		int ind = agentScript.statesMap.getStateIDByName (_stateName);
+		if(debugPlay)
+			Debug.Log ("stato " + _stateName + " preso");
+
+		return ind;
+		
+	}
+	
 
 }

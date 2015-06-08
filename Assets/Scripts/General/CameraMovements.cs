@@ -114,6 +114,10 @@ public class CameraMovements : MonoBehaviour {
 	}
 
 	void Update () {
+
+		if (!PlayStatusTracker.inPlay)
+			return;
+
 		if (cameraHandler != null) {
 			xDistFromBeginning = cameraHandler.getXDistFromBeginning();
 			yDistFromBeginning = cameraHandler.getYDistFromBeginning();

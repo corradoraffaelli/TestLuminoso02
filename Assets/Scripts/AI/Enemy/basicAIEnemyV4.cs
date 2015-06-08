@@ -573,7 +573,10 @@ public class basicAIEnemyV4 : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+
+		if (!PlayStatusTracker.inPlay)
+			return;
+
 		//used to be sure to not fall
 
 		checkPriorities ();

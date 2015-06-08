@@ -4,6 +4,7 @@ using UnityEngine.UI;
 
 public class MenuManager : MonoBehaviour {
 
+	PlayStatusTracker statusTracker;
 	InformativeManager informativeMan;
 
 	public GameObject canvasMenu;
@@ -21,6 +22,8 @@ public class MenuManager : MonoBehaviour {
 	void Start () {
 
 		informativeMan = UtilFinder._GetComponentOfGameObjectWithTag<InformativeManager> ("Controller");
+
+		statusTracker = UtilFinder._GetComponentOfGameObjectWithTag<PlayStatusTracker> ("Controller");
 
 		initializeReferencesOfMenu ();
 
@@ -133,7 +136,7 @@ public class MenuManager : MonoBehaviour {
 
 	public void returnToPlay() {
 
-		enableMenu(false);
+		c_enableMenu(false);
 
 
 	}
@@ -155,7 +158,28 @@ public class MenuManager : MonoBehaviour {
 	public void reloadThisLevel() {
 
 		Application.LoadLevel (Application.loadedLevel);
-		Time.timeScale = 1.0f;
+		statusTracker.inPlayMode = true;
+	}
+
+	public void c_enableMenu(bool enable) {
+		
+		if (enable) {
+			//blocco input
+			
+			//Time.timeScale = 0.0f;
+			statusTracker.inPlayMode = false;
+			c_switchMenuSection(null, canvasIntro);
+			
+		} 
+		else {
+			//sblocco input
+			
+			//Time.timeScale = 1.0f;
+			statusTracker.inPlayMode = true;
+			c_switchMenuSection(canvasIntro, null);
+			
+		}
+		
 	}
 
 	#endregion CALLBACKS
@@ -174,7 +198,7 @@ public class MenuManager : MonoBehaviour {
 			if(!canvasMenu.activeSelf || canvasActive == canvasIntro) {
 				//caso in cui siamo in game o dentro la scheda intro del menu
 				//quindi o stiamo entrando in pausa adesso, o ne stiamo uscendo
-				enableMenu(!statusMenu);
+				c_enableMenu(!statusMenu);
 			}
 			else {
 				//caso di navigazione dentro al menu, quindi di ritorno alla scheda intro
@@ -186,26 +210,7 @@ public class MenuManager : MonoBehaviour {
 
 	}
 
-	void enableMenu(bool enable) {
 
-		if (enable) {
-			//blocco input
-
-			Time.timeScale = 0.0f;
-
-			c_switchMenuSection(null, canvasIntro);
-
-		} 
-		else {
-			//sblocco input
-
-			Time.timeScale = 1.0f;
-
-			c_switchMenuSection(canvasIntro, null);
-
-		}
-
-	}
 	
 
 	public void c_switchMenuSection(GameObject toDeactivate, GameObject toActivate ) {
