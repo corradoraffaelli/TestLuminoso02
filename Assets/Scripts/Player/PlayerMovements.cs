@@ -497,7 +497,7 @@ public class PlayerMovements : MonoBehaviour {
 			anim.SetTrigger("StartStunned");
 		
 		anim.SetBool ("Stunned", stunned);
-		if (onGround && RigBody.velocity.y <= 0.0f)
+		if (onGround && ((onLadder && RigBody.velocity.y <= 0.0f) || (!onLadder)))
 			anim.SetBool ("onGround", true);
 		else
 			anim.SetBool ("onGround", false);
