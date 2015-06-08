@@ -134,7 +134,7 @@ public class sceneChanger : MonoBehaviour {
 			c_manualActivation();
 
 		}
-		audioHandler.playClipByName ("Comparsa");
+		//audioHandler.playClipByName ("Comparsa");
 	}
 
 	//-----------CORRADO----------------
