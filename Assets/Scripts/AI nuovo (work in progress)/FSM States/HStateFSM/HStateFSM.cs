@@ -3,6 +3,7 @@ using System.Collections;
 
 public class HStateFSM : MonoBehaviour {
 
+	#region VARIABLES
 	protected GameObject myGameObject;
 	
 	protected string stateName;
@@ -13,6 +14,7 @@ public class HStateFSM : MonoBehaviour {
 	protected int stateId;
 	public int StateID {
 		get{ return stateId;}
+		set{ stateId = value;}
 	}
 
 	protected int myHLevel = 0;
@@ -34,7 +36,7 @@ public class HStateFSM : MonoBehaviour {
 	}
 
 	//DEBUG
-	bool debugPlay = false;
+	public bool debugPlay = false;
 
 	//sotto stati
 	public HStateFSM []states;
@@ -48,12 +50,92 @@ public class HStateFSM : MonoBehaviour {
 	protected PlayerMovements playerScript;
 	protected AIParameters par;
 
-	//DELEGATES
+	#region QUICKOWNREF
 
+	Transform myTransform;
+	
+	protected Transform transform {
+		
+		get{ 
+			if(myTransform==null)
+				myTransform = myGameObject.transform;
+			
+			return myTransform;}
+		
+	}
+	
+	protected Rigidbody2D _rigidbody {
+		get{ return par._rigidbody;}
+		set{ par._rigidbody = value;}
+		
+	}
+	
+	protected BoxCollider2D _boxCollider {
+		get{ return par._boxCollider;}
+		set{ par._boxCollider = value;}
+		
+	}
+	
+	protected CircleCollider2D _circleCollider {
+		get{ return par._circleCollider;}
+		set{ par._circleCollider = value;}
+		
+	}
+
+	#endregion QUICKOWNREF
+
+	protected GameObject _target {
+		get{ return par._target;}
+		set{ par._target = value;}
+		
+	}
+
+	protected GameObject _fleeTarget {
+		get{ return par._fleeTarget;}
+		set{ par._fleeTarget = value;}
+		
+	}
+
+	#region LAYERMASKS
+
+	
+	protected LayerMask targetLayers {
+		get{ return par.targetLayers;}
+		set{ par.targetLayers = value;}
+	}
+	protected LayerMask fleeLayer{
+		get{ return par.fleeLayer;}
+		set{ par.fleeLayer = value;}
+	}
+	protected LayerMask hidingLayer{
+		get{ return par.hidingLayer;}
+		set{ par.hidingLayer = value;}
+	}
+	protected LayerMask cloneLayer{
+		get{ return par.cloneLayer;}
+		set{ par.cloneLayer = value;}
+	}
+	protected LayerMask obstacleLayers{
+		get{ return par.obstacleLayers;}
+		set{ par.obstacleLayers = value;}
+	}
+
+
+	#endregion LAYERMASKS
+
+
+
+	#endregion VARIABLES
+
+	//DELEGATES
+	#region DELEGATES
 	//----
 
 	public delegate void myHStateInitialize(ref object ob);
-	public myHStateInitialize myHInitialize;
+	private myHStateInitialize myHInitialize;
+	public myHStateInitialize MyHInitialize {
+		get{ return myHInitialize;}
+	}
 
 	public delegate void myStateInitialize(ref object ob);
 	public myStateInitialize myInitialize;
@@ -61,7 +143,10 @@ public class HStateFSM : MonoBehaviour {
 	//----
 
 	public delegate void myHStateUpdate();
-	public myHStateUpdate myHUpdate;
+	private myHStateUpdate myHUpdate;
+	public myHStateUpdate MyHUpdate {
+		get{ return myHUpdate;}
+	}
 
 	public delegate void myStateUpdate();
 	public myStateUpdate myUpdate;
@@ -69,7 +154,10 @@ public class HStateFSM : MonoBehaviour {
 	//----
 
 	public delegate object myHStateFinalize();
-	public myStateFinalize myHFinalize;
+	private myStateFinalize myHFinalize;
+	public myStateFinalize MyHFinalize {
+		get{ return myHFinalize;}
+	}
 
 	public delegate object myStateFinalize();
 	public myStateFinalize myFinalize;
@@ -78,11 +166,18 @@ public class HStateFSM : MonoBehaviour {
 
 	//se ho stati sotto di me devo invocare questo
 	public delegate int myHStateTransition(ref int id);
-	public myHStateTransition myHTransition;
+	private myHStateTransition myHTransition;
+	public myHStateTransition MyHTransition {
+		get{ return myHTransition;}
+	}
 
 	//se sono uno stato finale, invoco queste
 	public delegate int myStateTransition(ref int id);
 	public myStateTransition []myTransitions;
+
+	private int indexTransitions = 0;
+	public string[]targetStateNameTransitions;
+	public int []targetStateIndexTransitions;
 
 	//-----
 
@@ -101,6 +196,7 @@ public class HStateFSM : MonoBehaviour {
 	public delegate void myStateHandleTriggerEnter(Collider2D c);
 	public myStateHandleTriggerEnter myHandleTriggerEnter;
 
+	#endregion DELEGATES
 	//-----
 
 	public HStateFSM() {
@@ -326,8 +422,21 @@ public class HStateFSM : MonoBehaviour {
 				if(debugPlay)
 					Debug.Log("-> -> result è " + result + " e ref id " + _id);
 
-				if(result != -1)
+				if(result != -1) {
+					Debug.Log("ciao1");
+					//TODO: NEWVERSION
+					if(result == -2) {
+						Debug.Log("ciao2");
+						if(targetStateIndexTransitions[tn]==-1) {
+							targetStateIndexTransitions[tn] = getState(targetStateNameTransitions[tn]);
+						}
+						_id = targetStateIndexTransitions[tn];
+						return targetStateIndexTransitions[tn];
+
+					}
+
 					return result;
+				}
 
 			}
 			else {
@@ -434,7 +543,54 @@ public class HStateFSM : MonoBehaviour {
 		
 	}
 
-	protected int getIndexState (string _stateName) {
+	protected void moveTowardTarget(GameObject myTarget, float speed) {
+		
+		
+		if (Mathf.Abs (myTarget.transform.position.y - transform.position.y) > 1.0f) {
+			//diversa dalla mia altezza
+			
+			if (Mathf.Abs (myTarget.transform.position.x - transform.position.x) > 1.0f) {
+				
+				if (par.DEBUG_ASTAR [1])
+					Debug.Log ("TARGET - target più alto di me e distante");
+				
+				i_move (speed * 0.85f);
+			} else {
+				
+				if (par.DEBUG_ASTAR [1])
+					Debug.Log ("TARGET - target più alto di me e sopra di me");
+				
+				i_move (speed * 0.7f);
+			}
+			
+		} 
+		else {
+			//stessa mia altezza
+			
+			if (par.DEBUG_ASTAR [1])
+				Debug.Log ("TARGET - target alla mia stessa altezza");
+			
+			moveCorrectVerse (myTarget, speed);
+			
+		}
+	}
+	
+	protected void moveCorrectVerse(GameObject myTarget, float speed) {
+		
+		
+		if( (myTarget.transform.position.x > transform.position.x ) && !i_facingRight()) {
+			i_flip ();
+		}
+		
+		if( (myTarget.transform.position.x < transform.position.x ) && i_facingRight()) {
+			i_flip ();
+		}
+		
+		i_move (speed);
+		
+	}
+
+	private int getIndexState (string _stateName) {
 
 		int ind = agentScript.statesMap.getStateIDByName (_stateName);
 		if(debugPlay)
@@ -443,6 +599,92 @@ public class HStateFSM : MonoBehaviour {
 		return ind;
 		
 	}
-	
+
+	protected int getState (string _stateName) {
+
+		int output = getIndexState (_stateName);
+
+		if (output == -1) {
+
+			Debug.Log ("ATTENZIONE - stato " + _stateName + " rimasto a -1");
+			
+		}
+
+		return output;
+
+	}
+
+	public void addTransition(myStateTransition _method, string _stateName) {
+
+
+		allocateMyTransitions (indexTransitions + 1);
+
+		myTransitions [indexTransitions] += _method;
+
+		targetStateNameTransitions [indexTransitions] = _stateName;
+
+		targetStateIndexTransitions [indexTransitions] = -1;
+
+		indexTransitions++;
+
+	}
+
+	void allocateMyTransitions(int len) {
+
+		if (len==1) {
+			//first allocation
+			myTransitions = new myStateTransition[len];
+			targetStateIndexTransitions = new int[len];
+			targetStateNameTransitions = new string[len];
+			//firsta allocation index
+		} 
+		else {
+
+			//reallocate
+			myStateTransition []tempTrans = new myStateTransition[len];
+			int []tempIndex = new int[len];
+			string []tempString = new string[len];
+
+			//reallocate transition
+			int i = 0;
+			foreach(myStateTransition tr in myTransitions) {
+
+				tempTrans[i] = tr;
+				i++;
+			}
+
+			i = 0;
+
+			foreach(int tr in targetStateIndexTransitions) {
+				
+				tempIndex[i] = tr;
+				i++;
+			}
+
+			i = 0;
+
+			foreach(string tr in targetStateNameTransitions) {
+				
+				tempString[i] = tr;
+				i++;
+			}
+
+			myTransitions = tempTrans;
+			targetStateIndexTransitions = tempIndex;
+			targetStateNameTransitions = tempString;
+
+
+		}
+
+	}
+
+	public IEnumerator ciaosequenza() {
+		Debug.Log ("ciao 1 CHASE --------------------------------");
+		
+		yield return new WaitForSeconds(1.0f);
+		Debug.Log ("ciao 2 CHASE --------------------------------");
+		
+	}
 
 }
+

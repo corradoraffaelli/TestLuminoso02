@@ -48,6 +48,9 @@ public class AIParameters : MonoBehaviour {
 	[SerializeField]
 	public ChaseParameters chaseParameters;
 
+	[SerializeField]
+	public FleeParameters fleeParameters;
+
 	//NASCOSTI------------------
 	[HideInInspector]
 	public Rigidbody2D _rigidbody;
@@ -192,7 +195,7 @@ public class ChaseParameters {
 
 	//nuovi parametri
 
-	public float chaseSpeed = 5.0f;
+	public float chaseSpeed = 6.0f;
 
 	//[HideInInspector]
 	public GameObject chaseTarget;
@@ -224,3 +227,13 @@ public class ChaseParameters {
 	float tStartLosingTarget = -3.0f;
 }
 
+[System.Serializable]
+public class FleeParameters {
+	
+	//nuovi parametri
+	public float fleeSpeed = 6.0f;
+	
+	//[HideInInspector]
+	public GameObject fleeTarget;
+
+}

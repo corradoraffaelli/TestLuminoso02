@@ -6,10 +6,14 @@ public class HStunnedFSM : HStateFSM {
 	float startStunnedTime = 0.0f;
 	float timeToStayStunned = 3.0f;
 
+	bool killingState = false;
+
 	int stateAfterStunnedID = -1;
 
-	public HStunnedFSM(int _stateId, GameObject _gameo, int _hLevel, HStateFSM _fatherState, AIAgent1 _scriptAIAgent, bool killingState=true) 
+	public HStunnedFSM(int _stateId, GameObject _gameo, int _hLevel, HStateFSM _fatherState, AIAgent1 _scriptAIAgent, bool _killingState=true) 
 	: base("Stunned", _stateId, _gameo, _hLevel, true, _fatherState, _scriptAIAgent) {
+
+		killingState = _killingState;
 
 		if (!killingState) {
 			myInitialize += normalStunnedInitialize;
@@ -22,16 +26,47 @@ public class HStunnedFSM : HStateFSM {
 
 		myFinalize += stunnedFinalize;
 
+
+		
+	}
+
+	public void setDefaultTransitions(HPatrolFSM patrolState) {
+
+
+		addTransition (S2PcountDownStunned, "Patrol");
+
+		/*
 		if (!killingState) {
-			myTransitions = new myStateTransition[1];
-			myTransitions[0] += S2PcountDownStunned;
+			
+			addTransition (S2PcountDownStunned, "Patrol");
+			
 			Debug.Log ("trans messa");
-		}
+		} 
 		else {
+			
 
-
+			
 		}
+		*/
+		
+	}
 
+	public void setDefaultTransitions(HWanderFSM wanderState) {
+		
+		addTransition (S2PcountDownStunned, "Wander");
+		/*
+		if (!killingState) {
+			
+			addTransition (S2PcountDownStunned, "Patrol");
+			
+			Debug.Log ("trans messa");
+		} 
+		else {
+			
+			addTransition (S2PcountDownStunned, "Wander");
+			
+		}
+		*/
 		
 	}
 
@@ -39,32 +74,15 @@ public class HStunnedFSM : HStateFSM {
 		
 		Debug.Log ("inizio stunn --------------------------------");
 
-		if (stateAfterStunnedID == -1) {
-
-			stateAfterStunnedID = getIndexState ("Patrol");
-
-			if(stateAfterStunnedID == -1) {
-
-				stateAfterStunnedID = getIndexState ("Wander");
-
-			}
-		}
 		i_stunned (true);
 
-
 		startStunnedTime = Time.time;
-		//Invoke ("countDown", countDownStunned);
-
-		//StartCoroutine (countDownn());
 
 	}
 
 	protected void killingStunnedInitialize(ref object ob){
 		
 		Debug.Log ("inizio stunn --------------------------------");
-
-		if(stateAfterStunnedID!=-1)
-			stateAfterStunnedID = getIndexState ("Patrol");
 
 		i_stunned (true);
 		
@@ -101,27 +119,15 @@ public class HStunnedFSM : HStateFSM {
 		return null;
 	}
 
-	protected int S2PcountDownStunned(ref int _id){
+	public int S2PcountDownStunned(ref int _id){
 		Debug.Log ("controll");
 		if(Time.time - startStunnedTime > timeToStayStunned) {
-
-			_id = stateAfterStunnedID;
-			Debug.Log ("_id ritornato " + _id);
-			return 0;
+			par.stunnedReceived = false;
+			return -2;
 		}
 		else {
 			return -1;
 		}
-		/*
-		if (finishStunned) {
-			_id = stateAfterStunnedID;
-			finishStunned = false;
-			return 0;
-		}
-		else {
-			return -1;
-		}
-		*/
 
 	}
 

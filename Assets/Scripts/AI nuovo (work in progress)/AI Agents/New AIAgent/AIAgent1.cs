@@ -2,30 +2,19 @@
 using System.Collections;
 
 public class AIAgent1 : MonoBehaviour {
-	
-	//da eliminare
 
-	//[HideInInspector]
-	//public StateFSM.myStateName []stati;
-	
-	//protected string []nomiStati;
+	#region LAYERMASKS
 
-	//public StateFSM.myStateName activeStateName;
-	//[HideInInspector]
+	private HStateFSM []hstates;
 
-	//da tenere...
+	private int hstatesIndex = 0;
 
-	public provandosi PROVA = new provandosi ("cacca");
-
-	public HStateFSM statoprova = new HStateFSM();
-
-	public HStateFSM []hstates;
-
-	public HStateRecords statesMap;
+	public HStateRecords statesMap = new HStateRecords();
 	
 	public HStateFSM activeState;
-	
-	protected int activeHStateIndex = 0;
+	public HStateFSM previousState;
+
+	//protected int activeHStateIndex = 0;
 	protected int prevActiveStateIndex = 0;
 	
 	protected AIParameters par;
@@ -36,7 +25,9 @@ public class AIAgent1 : MonoBehaviour {
 
 
 	//AI Parameters
-	
+
+	#region QUICKOWNREF
+
 	Transform myTransform;
 	
 	protected Transform transform {
@@ -71,6 +62,10 @@ public class AIAgent1 : MonoBehaviour {
 		set{ par._target = value;}
 		
 	}
+
+	#endregion QUICKOWNREF
+
+	#region LAYERMASKS
 	
 	protected LayerMask targetLayers {
 		get{ return par.targetLayers;}
@@ -92,6 +87,10 @@ public class AIAgent1 : MonoBehaviour {
 		get{ return par.obstacleLayers;}
 		set{ par.obstacleLayers = value;}
 	}
+
+	#endregion LAYERMASKS
+
+	#endregion VARIABLES
 	
 	// Use this for initialization
 	protected virtual void Start () {
@@ -103,123 +102,22 @@ public class AIAgent1 : MonoBehaviour {
 			Debug.Log ("ATTENZIONE - non trovato par da aiagent");
 
 		initializeHStates ();
+		/*
 		setStartState ();
-
 		initializeConditions ();
+		*/
+		object ob = null;
 		
-	}
-	
-	protected virtual void setStartState() {
-		
-		//activeStateName = StateFSM.myStateName.Patrol;
-		
-	}
-	
-	protected virtual void initializeConditions() {
+		activeState.MyHInitialize (ref ob);
 		
 	}
 
 	protected virtual void initializeHStates() {
 
-		//hstates = new HStateFSM[stati.Length];
-		
-		//int count = 0;
-		/*
-		foreach (StateFSM.myStateName st in stati) {
-			
-			switch(st) {
-				
-			case StateFSM.myStateName.Patrol :
 
-				//HStateFSM pHFSM = new HStateFSM
-				PatrolFSM pFSM = new PatrolFSM(this.gameObject, PatrolFSM.patrolSubState.Walk);
-				states[count] = pFSM;
-				
-				break;
-				
-			case StateFSM.myStateName.Chase :
-				
-				ChaseFSM cFSM = new ChaseFSM(this.gameObject);
-				states[count] = cFSM;
-				
-				break;
-				
-			case StateFSM.myStateName.Wander :
-				
-				WanderFSM wFSM = new WanderFSM(this.gameObject);
-				states[count] = wFSM;
-				
-				break;
-				
-			case StateFSM.myStateName.Stunned :
-				StunnedFSM sFSM = new StunnedFSM(this.gameObject);
-				states[count] = sFSM;
-				
-				break;
-				
-			}
-			
-			if(activeStateName == st) {
-				activeHStateIndex = count;
-			}
-			
-			count++;
-			
-		}
-*/
 	}
 
-	protected virtual void initializeStates(){
-		
-		//esempio di initialize...
-		//if(stati.Length==0)
-		/*
-		states = new StateFSM[stati.Length];
-		
-		int count = 0;
-		
-		foreach (StateFSM.myStateName st in stati) {
-			
-			switch(st) {
-				
-			case StateFSM.myStateName.Patrol :
-				
-				PatrolFSM pFSM = new PatrolFSM(this.gameObject, PatrolFSM.patrolSubState.Walk);
-				states[count] = pFSM;
-				
-				break;
-				
-			case StateFSM.myStateName.Chase :
-				
-				ChaseFSM cFSM = new ChaseFSM(this.gameObject);
-				states[count] = cFSM;
-				
-				break;
-				
-			case StateFSM.myStateName.Wander :
-				
-				WanderFSM wFSM = new WanderFSM(this.gameObject);
-				states[count] = wFSM;
-				
-				break;
-				
-			case StateFSM.myStateName.Stunned :
-				StunnedFSM sFSM = new StunnedFSM(this.gameObject);
-				states[count] = sFSM;
-				
-				break;
-				
-			}
-			
-			if(activeStateName == st) {
-				activeHStateIndex = count;
-			}
-			
-			count++;
-			
-		}
-		*/
-	}
+
 	
 	// Update is called once per frame
 	protected virtual void Update () {
@@ -229,38 +127,82 @@ public class AIAgent1 : MonoBehaviour {
 
 		int nextState = activeState.StateID;
 		
-		if (hstates [activeHStateIndex].myHTransition != null) {
+		if (activeState.MyHTransition != null) {
 
-			int result = hstates [activeHStateIndex].myHTransition(ref nextState);
+			int result = -1;
+
+			nextState = activeState.MyHTransition(ref result);
 
 			if(debugPlay)
 				Debug.Log(" > result " + result + " ref id " + nextState);
 
-			if(result != -1 ) {
+			if(nextState != -1 ) {
+
 				if(nextState != activeState.StateID) {
 
-					if(nextState != -1) {
-						if(debugPlay)
-							Debug.Log ("TRANSITION - transizione a ref id " + nextState);
-						makeTransition(nextState);
 
-					}
-					else {
-						Debug.Log ("ATTENZIONE - CASO NON PREVISTO, NEXTSTATE = -1");
-					}
+					if(debugPlay)
+						Debug.Log ("TRANSITION - transizione a ref id " + nextState);
+
+					makeTransition(nextState);
+
+					
 				}
 				else {
 
-					Debug.Log ("ATTENZIONE - lo stato destinazione è uguale a quello attuale" + activeState.StateName);
+					Debug.Log ("ATTENZIONE - lo stato destinazione (indice " + nextState + ") è uguale a quello attuale" + activeState.StateName);
 
 				}
 			}
 
 		}
 
+		activeState.myUpdate ();
+		
+	}
+
+	/*
+	protected virtual void Update1 () {
+		
+		if (!PlayStatusTracker.inPlay)
+			return;
+		
+		int nextState = activeState.StateID;
+		
+		if (hstates [activeHStateIndex].MyHTransition != null) {
+			
+			int result = -1;
+			
+			nextState = hstates [activeHStateIndex].MyHTransition(ref result);
+			
+			if(debugPlay)
+				Debug.Log(" > result " + result + " ref id " + nextState);
+			
+			if(nextState != -1 ) {
+				
+				if(nextState != activeState.StateID) {
+					
+					
+					if(debugPlay)
+						Debug.Log ("TRANSITION - transizione a ref id " + nextState);
+					
+					makeTransition(nextState);
+					
+					
+				}
+				else {
+					
+					Debug.Log ("ATTENZIONE - lo stato destinazione (indice " + nextState + ") è uguale a quello attuale" + activeState.StateName);
+					
+				}
+			}
+			
+		}
+		
 		hstates[activeHStateIndex].myUpdate ();
 		
 	}
+	*/
 
 	protected virtual void makeTransition(int _targetStateID) {
 
@@ -276,21 +218,21 @@ public class AIAgent1 : MonoBehaviour {
 		object ob = null;
 
 		int [] hierarchy;
-
+		int nextStateInd = -1;
 		if(activeState.myFinalize != null) {
 			ob = activeState.myFinalize();
 		}
 
 		hierarchy = getHierarchyIndexes (targetState);
-		activeHStateIndex = hierarchy [hierarchy.Length - 1];
+		nextStateInd = hierarchy [hierarchy.Length - 1];
 
 
 
-		if (activeHStateIndex != -1) {
+		if (nextStateInd != -1) {
 
 			setHStatesActiveIndexes(hierarchy);
 
-			activeState = hstates[activeHStateIndex];
+			activeState = hstates[nextStateInd];
 
 			if (targetState.myInitialize != null) {
 
@@ -307,6 +249,81 @@ public class AIAgent1 : MonoBehaviour {
 		}
 
 
+
+	}
+
+	public void addState(HStateFSM _hstate) {
+
+		if (hstatesIndex == 0) {
+
+			hstates = new HStateFSM[1];
+
+		}
+		else {
+			reallocateHStates();
+		}
+
+		hstates [hstatesIndex] = _hstate;
+
+		if (activeState == null) {
+			Debug.Log("setto come active state " + _hstate.StateName);
+			//activeState = hstates [hstatesIndex];
+			activeState = _hstate;
+		}
+
+		hstatesIndex++;
+
+	}
+
+	void reallocateHStates() {
+
+		HStateFSM [] tempStates = new HStateFSM[hstatesIndex + 1];
+
+		int i = 0;
+		foreach (HStateFSM hst in hstates) {
+
+			tempStates[i] = hst;
+			i++;
+
+		}
+
+		hstates = tempStates;
+
+	}
+
+	public bool setActiveState(string _stateName) {
+
+		for (int i=0; i<hstates.Length; i++) {
+			
+			if(hstates[i].StateName == _stateName) {
+				
+				activeState = hstates[i];
+				
+				//activeHStateIndex = i;
+				
+				return true;
+			}
+			
+		}
+		
+		return false;
+
+	}
+
+	public bool setActiveState(HStateFSM _state) {
+
+		for (int i=0; i<hstates.Length; i++) {
+			
+			if(hstates[i] == _state) {
+				
+				activeState = hstates[i];
+				
+				return true;
+			}
+			
+		}
+
+		return false;
 
 	}
 
@@ -413,8 +430,8 @@ public class AIAgent1 : MonoBehaviour {
 
 	protected virtual void OnCollisionEnter2D(Collision2D c) {
 		
-		if(hstates [activeHStateIndex].myHHandleCollisionEnter!=null)
-			hstates [activeHStateIndex].myHHandleCollisionEnter (c);
+		if(activeState.myHHandleCollisionEnter!=null)
+			activeState.myHHandleCollisionEnter (c);
 		
 	}
 
@@ -426,8 +443,8 @@ public class AIAgent1 : MonoBehaviour {
 			return;
 		}
 		
-		if(hstates [activeHStateIndex].myHHandleTriggerEnter!=null)
-			hstates [activeHStateIndex].myHHandleTriggerEnter (c);
+		if(activeState.myHHandleTriggerEnter!=null)
+			activeState.myHHandleTriggerEnter (c);
 	}
 
 
@@ -453,10 +470,10 @@ public class HStateRecords {
 			reallocateMappedStates();
 
 		}
-		Debug.Log ("aggiungo lo stato " + state.StateName + " all'indice " + index);
+		//Debug.Log ("aggiungo lo stato " + state.StateName + " all'indice " + index);
 		mappedStates [index] = state;
 
-		Debug.Log ("ho aggiunto lo stato " + mappedStates [index].StateName + " all'indice " + index);
+		//Debug.Log ("ho aggiunto lo stato " + mappedStates [index].StateName + " all'indice " + index);
 
 		index++;
 
