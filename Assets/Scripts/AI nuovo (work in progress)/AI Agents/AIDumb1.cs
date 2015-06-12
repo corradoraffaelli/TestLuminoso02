@@ -19,6 +19,7 @@ public class AIDumb1 : AIAgent1 {
 
 		addState (hs);
 
+
 		//-------
 
 		setActiveState (hw);

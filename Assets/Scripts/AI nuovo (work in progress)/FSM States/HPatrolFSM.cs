@@ -1,8 +1,11 @@
-﻿using UnityEngine;
+﻿//#define _DEBUG
+using UnityEngine;
 using System.Collections;
 
-public class PatrolFSM : StateFSM {
-	
+
+
+public class HPatrolFSM : HStateFSM {
+
 	public enum patrolSubState {
 		Walk,
 		Stand,
@@ -13,23 +16,25 @@ public class PatrolFSM : StateFSM {
 	patrolSubState defaultPaType;
 	//PatrolParameters pa;
 
-	public PatrolParameters patrolPar;
+	#region QUICKPATROLPARAMETERS
 
+	public PatrolParameters patrolPar;
+	
 	float RangeOfView {
 		get{ 
 			if(patrolPar!=null) return patrolPar.RangeOfView;
 			else return 0.0f;}
-		set{ 
+		set{
 			if(patrolPar!=null) patrolPar.RangeOfView = value;}
-
+		
 	}
-
+	
 	GameObject patrolTarget {
 		get{ 
 			if(patrolPar!=null) return patrolPar.patrolTarget;
 			else return null;}
 		set{ if(patrolPar!=null) patrolPar.patrolTarget = value;}
-
+		
 	}
 	
 	GameObject foundTarget {
@@ -39,14 +44,16 @@ public class PatrolFSM : StateFSM {
 		set{ if(patrolPar!=null) patrolPar.foundTarget = value;}
 		
 	}
-
+	
 	float patrolSpeed {
 		get{ 
 			if(patrolPar!=null) return patrolPar.patrolSpeed;
 			else return 0.0f;}
 		set{ if(patrolPar!=null) patrolPar.patrolSpeed = value;}
-
+		
 	}
+
+	#endregion QUICKPATROLPARAMETERS
 	/*
 	public GameObject []patrolPoints;
 	//verso di default dove puntare lo sguardo nel caso di un singolo punto di patrol
@@ -71,70 +78,65 @@ public class PatrolFSM : StateFSM {
 	float backDistanceOfView = 2.0f;
 
 	*/
-
+	
 	//CONSTRUCTOR----------------------------------------------------------------------------------------------------------------------------------
 	//-----------------------------------------------------------------------------------------------------------------------------------------------
+	public HPatrolFSM(int _stateId, GameObject _gameo, int _hLevel, HStateFSM _fatherState, AIAgent1 _scriptAIAgent, patrolSubState patrolT) 
+	: base("Patrol", _stateId, _gameo, _hLevel, true, _fatherState, _scriptAIAgent) {
 
-	public PatrolFSM(GameObject gameo, patrolSubState patrolT) : base(gameo) {
-
-		//GameObject gameo = this.gameObject;
-
-		//myGameObject = gameo;
-
-		state = myStateName.Patrol;
-		stateName = "Patrol";
-
-
-
-		//paSS = patrolSubState.Walk;
-
-		//if(par!=null)
-		//	setPatrolPar(ref par.patrolParameters);
-
-		//myInitialize += initializePatrol;
-		
-		myUpdate -= updateState;
+		myInitialize += patrolInitialize;
 
 		switch (patrolT) {
-
+			
 		case patrolSubState.Walk :
 			myUpdate += updatePatrolWalk;
 			myHandleCollisionEnter += wanderHandleCollisionEnter;
 			break;
-
+			
 		case patrolSubState.Area :
 			myUpdate += updatePatrolArea;
 			break;
-
+			
 		case patrolSubState.Stand :
 			//myUpdate += updatePatrolPoint;
 			break;
 		}
 		
-		//myFinalize += finalizePatrol;
+		myFinalize += patrolFinalize;
 
-		myTransitions = new myStateTransition[2];
-
-		myTransitions[0] += P2FcheckDanger;
-
-		myTransitions[1] += P2CcheckChaseTarget;
-
-		//IEnumerator
+		myHandleCollisionEnter += checkPlayerCollision;
 
 		initializePatrolParameters ();
-		//myHandleCollision;
 
 	}
 
+	public void setDefaultTransitions(HStunnedFSM stunState, HChaseFSM chaseState) {
+
+			
+		//addTransition (P2FcheckDanger, "Flee");
+			
+		//addTransition (P2CcheckChaseTarget, "Chase");
+			
+		//addTransition (P2ScheckStunned, "Stunned");
+		addTransition (P2ScheckStunned, stunState);
+
+		//addTransition (P2CcheckChaseTarget, "Chase");
+		addTransition (P2CcheckChaseTarget, chaseState);
+	}
+
+	public void setDefaultTransitions(HStunnedFSM stunState, HChase1FSM chaseState) {
+
+		addTransition (P2ScheckStunned, stunState);
+		
+		addTransition (P2CcheckChaseTarget, chaseState);
+	}
+
+	#region INITIALIZEPATROLPARAMETERS
+
 	void initializePatrolParameters(){
-
-		//Debug.Log ("mio game object" + myGameObject.name);
-		//Debug.Log ("ecco " + myGameObject.GetComponent<AIParameters> ()._AIwalkSpeed);
-
-		//patrolPar = new PatrolParameters ();
-
+		
 		patrolPar = myGameObject.GetComponent<AIParameters> ().patrolParameters;
-
+		
 		if (patrolPar != null) {
 			if(!getRangeOfView()) {
 				//arbitrario valore di default 
@@ -144,13 +146,13 @@ public class PatrolFSM : StateFSM {
 		else {
 			Debug.Log ("ATTENZIONE - PatrolParameters non trovato perché non è stato trovato AIParameters");
 		}
-
+		
 	}
-
+	
 	bool getRangeOfView(){
 		
 		GameObject range = null;
-
+		
 		foreach (Transform child in transform) {
 			if(child.gameObject.name=="RangeOfView") {
 				range = child.gameObject;
@@ -176,48 +178,40 @@ public class PatrolFSM : StateFSM {
 		
 	}
 
-	private void setPatrolPar(ref PatrolParameters p) {
+	#endregion INITIALIZEPATROLPARAMETERS
+	
+	#region MYINITIALIZE
 
-		//pa = p;
-
-	}
-
-	//END CONSTRUCTOR------------------------------------------------------------------------------------------------------------------------------
-	//-----------------------------------------------------------------------------------------------------------------------------------------------
-
-
-	//INITIALIZE---------------------------------------------------------------------------------------------------------------------------------
-
-	protected override void initializeState(ref object ob) {
-
+	protected void patrolInitialize(ref object ob) {
+	#if _DEBUG
+			Debug.Log ("inizio patrol--------------------------------");
+	#endif
 		patrolTarget = null;
 
 	}
-
-	//END INITIALIZE---------------------------------------------------------------------------------------------------------------------------------
-
 	
-	//UPDATES---------------------------------------------------------------------------------------------------------------------------------
-	//---------------------------------------------------------------------------------------------------------------------------------------
+	#endregion MYINITIALIZE
+	
+	#region MYUPDATE
 
-	protected override void updateState() {
-
+	protected void updateState() {
+		
 	}
-
+	
 	void updatePatrolWalk(){
-
+		
 		i_move (patrolSpeed);
-
+		
 	}
-
+	
 	void updatePatrolArea(){
-
+		
 		patrolBetweenPoints ();
-
+		
 	}
-
+	
 	private void patrolBetweenPoints() {
-
+		
 		if (patrolTarget == null) {
 			if(patrolPar.patrolPoints.Length > 1) {
 				if(patrolPar.patrolPoints[0] != null && patrolPar.patrolPoints[1]!= null) {
@@ -234,100 +228,98 @@ public class PatrolFSM : StateFSM {
 				return;
 			}
 		}
-
+		
 		//TODO: gestire meglio l'arrivo?
 		if (Vector3.Distance (transform.position, patrolTarget.transform.position) < 1.0f) {
-			//Debug.Log ("cambio target");
+
 			if(patrolTarget != patrolPar.patrolPoints[0])
 				patrolTarget = patrolPar.patrolPoints[0];
 			else
 				patrolTarget = patrolPar.patrolPoints[1];
+			
+		} 
+		else {
+			
+			moveTowardTarget (patrolTarget, patrolSpeed);
+			
+		}
+		
+		
+		
+		
+	}
+	
+	
+	void updatePatrolPoint() {
+		//TODO: fare caso stand, unico punto
+		
+	}
+	
+	#endregion MYUPDATE
+
+	#region MYFINALIZE
+
+	protected object patrolFinalize() {
+		#if _DEBUG
+			Debug.Log ("finisco patrol--------------------------------");
+		#endif
+
+		object ob;
+
+		if (foundTarget != null) {
+			#if _DEBUG
+				Debug.Log (" PATROL - ritorno foundtarget : " + foundTarget.name);
+			#endif
 
 		} 
 		else {
-
-			moveTowardTarget (patrolTarget, patrolSpeed);
+			#if _DEBUG
+				Debug.Log ("PATROL - ritorno NULL come foundtarget");
+			#endif
 
 		}
-
-
-
-
-	}
-
-
-	void updatePatrolPoint() {
-		//TODO: fare caso stand, unico punto
-
-	}
-
-	//END UPDATES---------------------------------------------------------------------------------------------------------------------------------
-	//-------------------------------------------------------------------------------------------------------------------------------------------
-
-	//FINALIZE---------------------------------------------------------------------------------------------------------------------------------
-	//-------------------------------------------------------------------------------------------------------------------------------------------
-	
-	protected override object finalizeState() {
-
-		object ob;
-		Debug.Log (" PATROL - ritorno foundtarget : " + foundTarget.name);
 
 		ob = (object)foundTarget;
 		return ob;
-
+		
 	}
 
-	//TRANSITIONS---------------------------------------------------------------------------------------------------------------------------------
-	//-------------------------------------------------------------------------------------------------------------------------------------------
-
-
-	private void patrolToChaseTransition(ref myStateName nextState){
-
-		//if (nextState != state)
-		//	return;
-
-		if (Input.GetKeyUp(KeyCode.C)) {
-			nextState = myStateName.Chase;
-		} else {
-			return;
-		}
-	}
+	#endregion MYFINALIZE
 	
-	private void P2FcheckDanger(ref myStateName st){
+	#region MYTRANSITIONS
 
-		if (st != state)
-			return;
+	private bool P2FcheckDanger(){
 
 		RaycastHit2D hit;
-
-
+		
 		Debug.DrawLine (new Vector2(transform.position.x, transform.position.y + 0.8f), i_facingRight () ? new Vector2 (transform.position.x + RangeOfView, transform.position.y + 0.8f) : new Vector2 (transform.position.x - RangeOfView, transform.position.y + 0.8f), Color.yellow);
 		hit = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y + 0.8f) , i_facingRight()? Vector2.right : -Vector2.right, RangeOfView, fleeLayer);
 		
 		if (hit.collider != null) {
 			
-			st = myStateName.Flee;
 			_fleeTarget = hit.transform.gameObject;
-			return;
+			return true;
 		}
 
+		return false;
+		
 	}
 
 
-	private void P2CcheckChaseTarget(ref myStateName st){
 
-		//if (st != state)
-		//	return;
+	private bool P2CcheckChaseTarget(){
 
 		RaycastHit2D hit;
 		float obstacleDist = -1.0f;
-
+		
 		//controllo se ho degli OSTACOLI in mezzo...
 		hit = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y + 1.0f) , i_facingRight()? Vector2.right : -Vector2.right, RangeOfView, obstacleLayers);
 		if (hit.collider != null) {
 			obstacleDist = Vector2.Distance( hit.point, transform.position);
-			if(par.DEBUG_FSM_TRANSITION[1])
+			#if _DEBUG
 				Debug.Log ("PA -> CH - Raycast trova ostacolo : " + hit.transform.gameObject.name);
+			#endif
+
 		}
 		
 		Debug.DrawLine (new Vector2(transform.position.x, transform.position.y + 1.0f), i_facingRight () ? new Vector2 (transform.position.x + RangeOfView, transform.position.y + 1.0f) : new Vector2 (transform.position.x - RangeOfView, transform.position.y + 1.0f), Color.red);
@@ -336,50 +328,45 @@ public class PatrolFSM : StateFSM {
 			
 			foundTarget = hit.transform.gameObject;
 
-			if(par.DEBUG_FSM_TRANSITION[1])
+			#if _DEBUG
 				Debug.Log ("PA -> CH - Raycast trova target : " + foundTarget.name);
-
+			#endif
+			
 			if(obstacleDist == -1.0f) {
 
-				st = myStateName.Chase;
-				return;
+				return true;
 			}
 			else {
-
+				
 				float targetDist = Vector2.Distance( hit.point, transform.position);
 				if(targetDist < obstacleDist) {
-					st = myStateName.Chase;
-					return;
+
+					return true;
 				}
 			}
 		}
-
+		
 		foundTarget = null;
-		//non è stato rilevato nulla
-		return;
+
+		return false;
 		
 	}
 
-	//END TRANSITIONS---------------------------------------------------------------------------------------------------------------------------------
-	//-------------------------------------------------------------------------------------------------------------------------------------------
+	private bool P2ScheckStunned(){
+
+		if (par.stunnedReceived) {
+
+			par.stunnedReceived = false;
+			return true;
+		} 
+		else {
+			return false;
+		}
+	}
+
+	#endregion MYTRANSITIONS
 	
 
-
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 

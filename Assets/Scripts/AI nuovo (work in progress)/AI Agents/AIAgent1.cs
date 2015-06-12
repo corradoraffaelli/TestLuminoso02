@@ -9,7 +9,7 @@ public class AIAgent1 : MonoBehaviour {
 
 	private int hstatesIndex = 0;
 
-	public HStateRecords statesMap = new HStateRecords();
+	//public HStateRecords statesMap = new HStateRecords();
 	
 	public HStateFSM activeState;
 	public HStateFSM previousState;
@@ -117,10 +117,49 @@ public class AIAgent1 : MonoBehaviour {
 
 	}
 
-
-	
-	// Update is called once per frame
 	protected virtual void Update () {
+		
+		if (!PlayStatusTracker.inPlay)
+			return;
+		
+		HStateFSM _nextState = activeState;
+		
+		if (activeState.MyHTransition != null) {
+			
+			bool result = false;
+			
+			result = activeState.MyHTransition(ref _nextState);
+			
+			if(debugPlay)
+				Debug.Log(" > result " + result + " ref id " + _nextState);
+			
+			if(result != false ) {
+
+				bool found = false;
+
+				foreach(HStateFSM st in hstates) {
+
+					if(st == _nextState) {
+						found = true;
+						break;
+					}
+				}
+
+
+				makeTransition(_nextState);
+					
+					
+
+			}
+			
+		}
+		
+		activeState.MyHUpdate ();
+		
+	}
+	
+	/*
+	protected virtual void Update2 () {
 
 		if (!PlayStatusTracker.inPlay)
 			return;
@@ -160,6 +199,7 @@ public class AIAgent1 : MonoBehaviour {
 		activeState.myUpdate ();
 		
 	}
+	*/
 
 	/*
 	protected virtual void Update1 () {
@@ -204,16 +244,48 @@ public class AIAgent1 : MonoBehaviour {
 	}
 	*/
 
-	protected virtual void makeTransition(int _targetStateID) {
+	protected virtual void makeTransition(HStateFSM _targetState) {
+		
+		object ob = null;
+
+		if (activeState == _targetState) {
+
+			Debug.Log ("ATTENZIONE - stato destinazione uguale a stato attuale");
+			return;
+
+		}
+
+		if(activeState.MyHFinalize != null) {
+			ob = activeState.MyHFinalize();
+		}
+		/*
+		if(activeState.myFinalize != null) {
+			ob = activeState.myFinalize();
+		}
+		*/
+		activeState = _targetState;
+
+		if (activeState.MyHInitialize != null) {
+			
+			activeState.MyHInitialize (ref ob);
+			
+		}
+		/*
+		if (activeState.myInitialize != null) {
+			
+			activeState.myInitialize (ref ob);
+			
+		}
+		*/
+		
+	}
+
+	/*
+	protected virtual void makeTransition1(int _targetStateID) {
 
 		HStateFSM targetState = statesMap.getStateByID (_targetStateID);
 
-		/*
-		if (targetState == null) {
-			Debug.Log ("ATTENZIONE - target state non trovato fra i records");
-			return;
-		}
-		*/
+
 
 		object ob = null;
 
@@ -251,6 +323,7 @@ public class AIAgent1 : MonoBehaviour {
 
 
 	}
+	*/
 
 	public void addState(HStateFSM _hstate) {
 
@@ -266,8 +339,8 @@ public class AIAgent1 : MonoBehaviour {
 		hstates [hstatesIndex] = _hstate;
 
 		if (activeState == null) {
-			Debug.Log("setto come active state " + _hstate.StateName);
-			//activeState = hstates [hstatesIndex];
+			Debug.Log("Dentro AIAgent setto come active state " + _hstate.StateName);
+
 			activeState = _hstate;
 		}
 
@@ -327,6 +400,7 @@ public class AIAgent1 : MonoBehaviour {
 
 	}
 
+	/*
 	public void setHStatesActiveIndexes(int[] hierarchy) {
 
 		for(int i=0; i<hierarchy.Length; i++) {
@@ -355,7 +429,9 @@ public class AIAgent1 : MonoBehaviour {
 		}
 
 	}
+	*/
 
+	/*
 	public int[] getHierarchyIndexes(HStateFSM _state) {
 
 		HStateFSM father;
@@ -390,31 +466,18 @@ public class AIAgent1 : MonoBehaviour {
 
 		return hierarchy;
 
-		/*
-		for (int t=0; t<hstates.Length; t++) {
 
-			if(hstates[t].StateID==father.StateID) {
-
-				return t;
-
-			}
-
-		}
-		return -1;
-		*/
 
 
 	}
-
+	*/
 	
 
 	
 	public void setStunned(bool st) {
 
 		par.stunnedReceived = st;
-		
-		//if (eType == enemyType.Guard)
-		//	this.involveEType = true;
+
 	}
 	
 	public void handleClean() {

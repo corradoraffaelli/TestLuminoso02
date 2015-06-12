@@ -18,8 +18,8 @@ public class HWanderFSM : HStateFSM {
 	
 	public void setDefaultTransitions(HStunnedFSM stunState) {
 		
-		addTransition (W2ScheckStunned, "Stunned");
-		
+		//addTransition (W2ScheckStunned, "Stunned");
+		addTransition (W2ScheckStunned, stunState);
 	}
 
 
@@ -35,16 +35,18 @@ public class HWanderFSM : HStateFSM {
 
 	}
 	
-	private int W2ScheckStunned(ref int _id){
+	private bool W2ScheckStunned(){
 
-		//Debug.Log("check pre stun");
 		if (par.stunnedReceived) {
-			Debug.Log("STUNNNNNNNNNNNNNNNNNNNNNNNNNNNNN");
+			#if _DEBUG
+				Debug.Log("STUNNNNNNNNNNNNNNNNNNNNNNNNNNNNN");
+			#endif
+
 
 			par.stunnedReceived = false;
-			return -2;
+			return true;
 		} else {
-			return -1;
+			return false;
 		}
 	}
 

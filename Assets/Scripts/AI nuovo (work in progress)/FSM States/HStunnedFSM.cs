@@ -33,7 +33,9 @@ public class HStunnedFSM : HStateFSM {
 	public void setDefaultTransitions(HPatrolFSM patrolState) {
 
 
-		addTransition (S2PcountDownStunned, "Patrol");
+		//addTransition (S2PcountDownStunned, "Patrol");
+
+		addTransition (S2PcountDownStunned, patrolState);
 
 		/*
 		if (!killingState) {
@@ -53,7 +55,9 @@ public class HStunnedFSM : HStateFSM {
 
 	public void setDefaultTransitions(HWanderFSM wanderState) {
 		
-		addTransition (S2PcountDownStunned, "Wander");
+		//addTransition (S2PcountDownStunned, "Wander");
+		addTransition (S2PcountDownStunned, wanderState);
+
 		/*
 		if (!killingState) {
 			
@@ -71,8 +75,10 @@ public class HStunnedFSM : HStateFSM {
 	}
 
 	protected void normalStunnedInitialize(ref object ob){
-		
-		Debug.Log ("inizio stunn --------------------------------");
+
+		#if _DEBUG
+				Debug.Log ("inizio stunn --------------------------------");
+		#endif
 
 		i_stunned (true);
 
@@ -81,8 +87,10 @@ public class HStunnedFSM : HStateFSM {
 	}
 
 	protected void killingStunnedInitialize(ref object ob){
-		
+
+		#if _DEBUG
 		Debug.Log ("inizio stunn --------------------------------");
+		#endif
 
 		i_stunned (true);
 		
@@ -108,25 +116,29 @@ public class HStunnedFSM : HStateFSM {
 	}
 	
 	protected void stunnedUpdate(){
-		Debug.Log ("ciao da stunn");
+
 	}
 	
 	protected object stunnedFinalize(){
-		Debug.Log ("finisco stunn --------------------------------");
+
+		#if _DEBUG
+			Debug.Log ("finisco stunn --------------------------------");
+		#endif
+
 		//finishStunned = false;
 		i_stunned (false);
 		//TODO: inserire altra roba per cui serve riattivare altro...
 		return null;
 	}
 
-	public int S2PcountDownStunned(ref int _id){
-		Debug.Log ("controll");
+	public bool S2PcountDownStunned(){
+
 		if(Time.time - startStunnedTime > timeToStayStunned) {
 			par.stunnedReceived = false;
-			return -2;
+			return true;
 		}
 		else {
-			return -1;
+			return false;
 		}
 
 	}

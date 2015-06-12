@@ -1,10 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class ChaseFSM : StateFSM {
-
+public class HChaseFSM : HStateFSM {
+	
 	ChaseParameters chasePar;
-
+	
 	GameObject chaseTarget {
 		get{ 
 			if(chasePar!=null) return chasePar.chaseTarget;
@@ -20,7 +20,7 @@ public class ChaseFSM : StateFSM {
 		set{ if(chasePar!=null) chasePar.chaseSpeed = value;}
 		
 	}
-
+	
 	float RangeOfView {
 		get{ 
 			if(chasePar!=null) return chasePar.RangeOfView;
@@ -29,7 +29,7 @@ public class ChaseFSM : StateFSM {
 			if(chasePar!=null) chasePar.RangeOfView = value;}
 		
 	}
-
+	
 	float AdditionalROV {
 		get{ 
 			if(chasePar!=null) return chasePar.AdditionalROV;
@@ -38,36 +38,40 @@ public class ChaseFSM : StateFSM {
 			if(chasePar!=null) chasePar.AdditionalROV = value;}
 		
 	}
-
+	
 	//CONSTRUCTOR----------------------------------------------------------------------------------------------------------------------------------
 	//-----------------------------------------------------------------------------------------------------------------------------------------------
-	#region constructor
 
-	public ChaseFSM(GameObject gameo) : base(gameo) {
 
-		//GameObject gameo = this.gameObject;
+	public HChaseFSM(int _stateId, GameObject _gameo, int _hLevel, HStateFSM _fatherState, AIAgent1 _scriptAIAgent)  :
+		base("Chase", _stateId, _gameo, _hLevel, true, _fatherState, _scriptAIAgent) {
 
-		state = myStateName.Chase;
-
-		myInitialize -= initializeState;
+		
 		myInitialize += initializeChase;
-
-		myUpdate -= updateState;
+		
 		myUpdate += updateChase;
-
-		myFinalize -= finalizeState;
+		
 		myFinalize += finalizeChase;
-
-		myTransitions = new myStateTransition[1];
-
-		myTransitions[0] += C2PlostTarget;
-		//myTransitions[1] += chaseToFleeTransition;
 
 		initializeChaseParameters ();
 	}
 
-	void initializeChaseParameters(){
+	public void setDefaultTransitions(HStunnedFSM stunState, HPatrolFSM patrolState) {
 
+		//addTransition (C2ScheckStunned, "Stunned");
+
+		addTransition (C2ScheckStunned, stunState);
+		//addTransition (C2PlostTarget, "Patrol");
+		addTransition (C2PlostTarget, patrolState);
+
+		//addTransition( stun)
+
+	}
+
+	#region INITIALIZECHASEPARAMETERS
+
+	void initializeChaseParameters(){
+		
 		chasePar = myGameObject.GetComponent<AIParameters> ().chaseParameters;
 		
 		if (chasePar != null) {
@@ -81,7 +85,7 @@ public class ChaseFSM : StateFSM {
 		}
 		
 	}
-
+	
 	bool getRangeOfView(){
 		
 		GameObject range = null;
@@ -110,18 +114,20 @@ public class ChaseFSM : StateFSM {
 		}
 		
 	}
-
+	
 	void setAdditionalROVHalfOfROV(){
-
+		
 		if(RangeOfView != 0.0f)
 			AdditionalROV = RangeOfView / 2.0f;
-
+		
 	}
+	
+	#endregion INITIALIZECHASEPARAMETERS
 
-	#endregion constructor
+	#region MYINITIALIZE
 
 	private void initializeChase(ref object ob){
-
+		
 		if (ob != null) {
 			Debug.Log ("mi passano : " + ((GameObject) ob).name);
 			chaseTarget = ((GameObject) ob);
@@ -131,58 +137,103 @@ public class ChaseFSM : StateFSM {
 			Debug.Log (" CHASE NULL ");
 		}
 		Debug.Log ("inizio CHASE --------------------------------");
+
+		IEnumerator ciaone = inizioChase ();
+
+		Debug.Log ("ciaone è " + ciaone);
+
+		//StartCoroutine (ciaone);
+		_StartCoroutine (inizioChase ());
+		//agentScript.StartCoroutine (inizioChase ());
+
 	}
+
+	public IEnumerator inizioChase() {
+
+		Debug.Log ("ciao 1 CHASE --------------------------------");
+
+		yield return null;
+
+		Debug.Log ("ciao 2 CHASE --------------------------------");
+
+
+
+	}
+
+	#endregion MYINITIALIZE
+
+	#region MYUPDATE
 	
 	private void updateChase(){
-		Debug.Log ("ciao da CHASE");
+		Debug.Log ("update da CHASE");
+		moveTowardTarget (chaseTarget, chaseSpeed);
 	}
+
+	#endregion MYUPDATE
+
+	#region MYFINALIZE
 	
 	private object finalizeChase(){
 		Debug.Log ("finisco CHASE --------------------------------");
-
+		
 		return null;
 	}
 
-	private void C2PlostTarget(ref myStateName st){
+	#endregion MYFINALIZE
 
+	#region MYTRANSITIONS
+	
+	private bool C2PlostTarget(){
+		
 		//target -> NULL
 		if (chaseTarget == null) {
-
+			
 			if(par.DEBUG_FSM_TRANSITION[0])
 				Debug.Log ("CHASE 2 PATROL - target null");
-
-			st = myStateName.Patrol;
-			return;
+			
+			return true;
 		}
-
-
+		
+		
 		//target -> different height
 		if (Mathf.Abs (chaseTarget.transform.position.y - transform.position.y) > 2.0f) {
-
+			
 			if(par.DEBUG_FSM_TRANSITION[0])
 				Debug.Log ("CHASE 2 PATROL - target different height");
-
-			st = myStateName.Patrol;
-			return;
+			
+			return true;
+			
+		}
+		
+		
+		//target -> too distant
+		if (Vector3.Distance (chaseTarget.transform.position, transform.position) > RangeOfView + AdditionalROV) {
+			
+			if(par.DEBUG_FSM_TRANSITION[0])
+				Debug.Log ("CHASE 2 PATROL - target too far");
+			
+			return true;
 			
 		}
 
-
-		//target -> too distant
-		if (Vector3.Distance (chaseTarget.transform.position, transform.position) > RangeOfView + AdditionalROV) {
-
-			if(par.DEBUG_FSM_TRANSITION[0])
-				Debug.Log ("CHASE 2 PATROL - target too far");
-
-			st = myStateName.Patrol;
-			return;
-
-		}
-
+		return false;
+		
 	}
 
-
-
+	private bool C2ScheckStunned(){
+		
+		if (par.stunnedReceived) {
+			
+			par.stunnedReceived = false;
+			return true;
+		} 
+		else {
+			return false;
+		}
+	}
+	
+	#endregion MYTRANSITIONS
+	
 	/*
 	private void C2FcheckDanger(ref myStateName st){
 		

@@ -27,6 +27,7 @@ public class AIParameters : MonoBehaviour {
 	public GameObject _target;
 	public GameObject _fleeTarget;
 
+
 	public bool stunnedReceived = false;
 
 	bool killable = false;
@@ -43,6 +44,9 @@ public class AIParameters : MonoBehaviour {
 	public LayerMask obstacleLayers;
 
 	[SerializeField]
+	public StatusParameters statusParameters;
+
+	[SerializeField]
 	public PatrolParameters patrolParameters;
 	
 	[SerializeField]
@@ -50,6 +54,12 @@ public class AIParameters : MonoBehaviour {
 
 	[SerializeField]
 	public FleeParameters fleeParameters;
+
+
+
+	//[HideInInspector]
+	//public SpriteRenderer spriteRenderStatus;
+
 
 	//NASCOSTI------------------
 	[HideInInspector]
@@ -235,5 +245,14 @@ public class FleeParameters {
 	
 	//[HideInInspector]
 	public GameObject fleeTarget;
+
+}
+
+[System.Serializable]
+public class StatusParameters {
+
+	public Sprite alarmed;
+
+	public Sprite confused;
 
 }

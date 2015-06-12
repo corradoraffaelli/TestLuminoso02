@@ -43,8 +43,8 @@ public class HFleeFSM : HStateFSM {
 
 	public void setDefaultTransitions(HStunnedFSM stunState) {
 		
-		addTransition (F2ScheckStunned, "Stunned");
-		
+		//addTransition (F2ScheckStunned, "Stunned");
+		addTransition (F2ScheckStunned, stunState);
 	}
 	
 	
@@ -67,16 +67,15 @@ public class HFleeFSM : HStateFSM {
 		
 	}
 	
-	private int F2ScheckStunned(ref int _id){
+	private bool F2ScheckStunned(){
 		
 		//Debug.Log("check pre stun");
 		if (par.stunnedReceived) {
-			Debug.Log("STUNNNNNNNNNNNNNNNNNNNNNNNNNNNNN");
 			
 			par.stunnedReceived = false;
-			return -2;
+			return true;
 		} else {
-			return -1;
+			return false;
 		}
 	}
 	

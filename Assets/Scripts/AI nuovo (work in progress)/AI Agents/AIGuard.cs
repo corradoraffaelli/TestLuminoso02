@@ -1,71 +1,46 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class AIGuard : AIAgent {
+public class AIGuard : AIAgent1 {
 
-	protected virtual void setStartState() {
+	protected override void initializeHStates() {
+		//Time.timeScale = 0.3f;
+		HPatrolFSM hp = new HPatrolFSM (0, this.gameObject, 0, null, this, HPatrolFSM.patrolSubState.Walk);
+		
+		HStunnedFSM hs =  new HStunnedFSM (1, this.gameObject, 0, null, this, false);
+		//(string _stateName, GameObject _gameo, int _hLevel, AIAgent1 _scriptAIAgent)
+		HChase1FSM hc = new HChase1FSM ("Chase", this.gameObject, 0, this);
 
-		activeStateName = StateFSM.myStateName.Patrol;
-		activeStateIndex = 0;
+		HChargeChaseFSM hcc1 = new HChargeChaseFSM (this.gameObject, 1, hc, this);
+		HCrashChaseFSM hcc2 = new HCrashChaseFSM (this.gameObject, 1, hc, this);
+
+		addState (hp);
+		
+		addState (hs);
+		
+		addState (hc);
+
+		hc.setDefaultStates (hcc1, hcc2);
+		//hc.addState (hcc1);
+		//hc.addState (hcc2);
+
+		//hpadre.addState (hfiglio1);
+		//hpadre.addState (hfiglio2);
+
+		//------
+		
+		setActiveState (hp);
+		
+		hp.setDefaultTransitions (hs, hc);
+		
+		hs.setDefaultTransitions (hp);
+
+		hc.setDefaultInitialize ();
+		hc.setDefaultTransitions (hs, hp);
+		hc.setDefaultCollision ();
+
+		hcc1.setDefaultTransitions (hcc2);
+
+
 	}
-
-	protected override void initializeStates(){
-		
-		//esempio di initialize...
-		//if(stati.Length==0)
-		stati = new StateFSM.myStateName[4];
-
-		stati [0] = StateFSM.myStateName.Patrol;
-		stati [1] = StateFSM.myStateName.Chase;
-		stati [2] = StateFSM.myStateName.Wander;
-		stati [3] = StateFSM.myStateName.Flee;
-
-
-		states = new StateFSM[4];
-		
-		int count = 0;
-		
-		foreach (StateFSM.myStateName st in stati) {
-			
-			switch(st) {
-				
-			case StateFSM.myStateName.Patrol :
-				
-				PatrolFSM pFSM = new PatrolFSM(this.gameObject, PatrolFSM.patrolSubState.Area);
-				states[count] = pFSM;
-				
-				break;
-				
-			case StateFSM.myStateName.Chase :
-				
-				ChaseFSM cFSM = new ChaseFSM(this.gameObject);
-				states[count] = cFSM;
-				
-				break;
-				
-			case StateFSM.myStateName.Wander :
-				
-				//WanderFSM wFSM = new WanderFSM(this.gameObject);
-				//states[count] = wFSM;
-				
-				break;
-				
-			case StateFSM.myStateName.Stunned :
-				StunnedFSM sFSM = new StunnedFSM(this.gameObject);
-				states[count] = sFSM;
-				
-				break;
-				
-			}
-			
-			if(activeStateName == st) {
-				activeStateIndex = count;
-			}
-			
-			count++;
-			
-		}
-		
-	}
-
 }

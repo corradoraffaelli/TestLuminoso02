@@ -1,7 +1,11 @@
-﻿using UnityEngine;
+﻿//#define _DEBUG
+
+using UnityEngine;
 using System.Collections;
 
-public class HStateFSM : MonoBehaviour {
+
+
+public class HStateFSM {
 
 	#region VARIABLES
 	protected GameObject myGameObject;
@@ -36,12 +40,13 @@ public class HStateFSM : MonoBehaviour {
 	}
 
 	//DEBUG
-	public bool debugPlay = false;
+	//public bool _DEBUG_PLAY = false;
 
 	//sotto stati
 	public HStateFSM []states;
+	private int statesIndex = 0;
 
-	public int activeStateIndex = 0;
+	//public int activeStateIndex = 0;
 	public HStateFSM activeState;
 
 	//OTHER SCRIPTS
@@ -49,6 +54,7 @@ public class HStateFSM : MonoBehaviour {
 	protected AIAgent1 agentScript;
 	protected PlayerMovements playerScript;
 	protected AIParameters par;
+	protected StatusParameters statusPar;
 
 	#region QUICKOWNREF
 
@@ -83,6 +89,10 @@ public class HStateFSM : MonoBehaviour {
 	}
 
 	#endregion QUICKOWNREF
+
+	//protected SpriteRenderer statusSpriteRenderer;
+
+	//spriteRenderStatus
 
 	protected GameObject _target {
 		get{ return par._target;}
@@ -165,19 +175,22 @@ public class HStateFSM : MonoBehaviour {
 	//-----
 
 	//se ho stati sotto di me devo invocare questo
-	public delegate int myHStateTransition(ref int id);
+	public delegate bool myHStateTransition(ref HStateFSM _nextState);
 	private myHStateTransition myHTransition;
 	public myHStateTransition MyHTransition {
 		get{ return myHTransition;}
 	}
 
 	//se sono uno stato finale, invoco queste
-	public delegate int myStateTransition(ref int id);
+	public delegate bool myStateTransition();
 	public myStateTransition []myTransitions;
 
+
 	private int indexTransitions = 0;
-	public string[]targetStateNameTransitions;
-	public int []targetStateIndexTransitions;
+
+	public HStateFSM []targetStateTransitions;
+	//public string[]targetStateNameTransitions;
+	//public int []targetStateIndexTransitions;
 
 	//-----
 
@@ -244,7 +257,8 @@ public class HStateFSM : MonoBehaviour {
 		if (par == null) {
 			Debug.Log ("ATTENZIONE - script AIParameters non trovato");
 		}
-		
+
+		statusPar = par.statusParameters;
 		
 		myHInitialize += initializeHState;
 		
@@ -252,27 +266,59 @@ public class HStateFSM : MonoBehaviour {
 		
 		myHFinalize += finalizeHState;
 
-		myHTransition += handleHTransition;
+		myHTransition += checkHierarchyTransitions;
 
 		myHHandleCollisionEnter += handleHEnCollision;
 
 		myHHandleTriggerEnter += handleHEnTrigger;
 
-		agentScript.statesMap.addState (this);
+		//agentScript.statesMap.addState (this);
 
-		/*
-		myTransitions = new myStateTransition[1];
-		myTransitions [0] += nomefunctrans;
-		*/
-
-
-		
 	}
 
 	public void setSubStates(HStateFSM []_states) {
 
 		states = _states;
 
+	}
+
+	public void addState(HStateFSM _hstate) {
+		
+		if (statesIndex == 0) {
+			
+			states = new HStateFSM[1];
+			
+		}
+		else {
+			reallocateHStates();
+		}
+
+		states [statesIndex] = _hstate;
+		
+		if (activeState == null) {
+			Debug.Log("Dentro " + stateName + " setto come active state " + _hstate.StateName);
+			
+			activeState = _hstate;
+		}
+		
+		statesIndex++;
+		
+	}
+	
+	void reallocateHStates() {
+		
+		HStateFSM [] tempStates = new HStateFSM[statesIndex + 1];
+		
+		int i = 0;
+		foreach (HStateFSM hst in states) {
+			
+			tempStates[i] = hst;
+			i++;
+			
+		}
+		
+		states = tempStates;
+		
 	}
 
 	public int getSubStateIndex(HStateFSM state) {
@@ -288,10 +334,9 @@ public class HStateFSM : MonoBehaviour {
 
 	}
 
-	public void setActiveState(int i) {
+	public void setActiveState(HStateFSM _state) {
 
-		activeStateIndex = i;
-		activeState = states [activeStateIndex];
+		activeState = _state;
 
 	}
 
@@ -301,7 +346,7 @@ public class HStateFSM : MonoBehaviour {
 	protected virtual void initializeHState(ref object ob) {
 		Debug.Log ("HFSM - entro in stato generico");
 
-		if (finalHLevel = true) {
+		if (finalHLevel == true) {
 			
 			if(myInitialize!=null)
 				myInitialize(ref ob);
@@ -309,11 +354,17 @@ public class HStateFSM : MonoBehaviour {
 				Debug.Log ("ATTENZIONE - HFSM - initialize dello stato " + StateName  + " è nulla ");
 		} 
 		else {
-			
-			if(states [activeStateIndex].myHInitialize != null)
-				states [activeStateIndex].myHInitialize (ref ob);
+
+			if(myInitialize!=null)
+				myInitialize(ref ob);
 			else
-				Debug.Log ("ATTENZIONE - HFSM - initialize del sotto stato numero" + activeStateIndex + " : " + states[activeStateIndex].StateName + " è nulla ");
+				Debug.Log ("N.B. - HFSM - initialize dello stato " + StateName  + " è nulla ");
+
+
+			if(activeState.myHInitialize != null)
+				activeState.myHInitialize (ref ob);
+			else
+				Debug.Log ("ATTENZIONE - HFSM - initialize del sotto stato " + activeState.StateName + " è nulla ");
 			
 		}
 
@@ -323,22 +374,43 @@ public class HStateFSM : MonoBehaviour {
 	//-----------------------------------------------------------------------------------------------------------------------------------------------
 
 	protected virtual void updateHState() {
-		Debug.Log ("HFSM - stato generico");
 
-		if (finalHLevel = true) {
-			
+
+		if (finalHLevel == true) {
+
+			#if _DEBUG
+				Debug.Log ("Update di " + stateName + " stato finale");
+			#endif
+				
+
 			if(myUpdate!=null)
 				myUpdate();
 			else
 				Debug.Log ("ATTENZIONE - HFSM - update dello stato " + StateName  + " è nulla ");
 		} 
 		else {
-			
-			if(states [activeStateIndex].myHUpdate != null)
-				states [activeStateIndex].myHUpdate ();
-			else
-				Debug.Log ("ATTENZIONE - HFSM - update del sotto stato numero" + activeStateIndex + " : " + states[activeStateIndex].StateName + " è nulla ");
-			
+
+			#if _DEBUG
+				Debug.Log ("Update di " + stateName + " stato NON finale");
+			#endif
+				
+
+			if(myUpdate!=null)
+				myUpdate();
+			else {
+
+				#if _DEBUG
+					Debug.Log ("N.B. - HFSM - update dello stato " + StateName  + " è nulla ");
+				#endif
+
+			}
+
+			if(activeState.myHUpdate != null) {
+				activeState.myHUpdate ();
+			}
+			else {
+				Debug.Log ("ATTENZIONE - HFSM - update del sotto stato " + activeState.StateName + " è nulla ");
+			}
 		}
 
 
@@ -353,7 +425,7 @@ public class HStateFSM : MonoBehaviour {
 
 		object ob = null;
 
-		if (finalHLevel = true) {
+		if (finalHLevel == true) {
 
 			if(myFinalize!=null)
 				ob = myFinalize();
@@ -362,10 +434,15 @@ public class HStateFSM : MonoBehaviour {
 		} 
 		else {
 
-			if(states [activeStateIndex].myHFinalize != null)
-				ob = states [activeStateIndex].myHFinalize ();
+			if(myFinalize!=null)
+				ob = myFinalize();
 			else
-				Debug.Log ("ATTENZIONE - HFSM - finalize del sotto stato numero" + activeStateIndex + " : " + states[activeStateIndex].StateName + " è nulla ");
+				Debug.Log ("ATTENZIONE - HFSM - finalize dello stato " + StateName  + " è nulla ");
+
+			if(activeState.myHFinalize != null)
+				ob = activeState.myHFinalize ();
+			else
+				Debug.Log ("ATTENZIONE - HFSM - finalize del sotto stato " + activeState.StateName + " è nulla ");
 
 		}
 
@@ -377,25 +454,52 @@ public class HStateFSM : MonoBehaviour {
 	//TRANSITIONS
 	//-----------------------------------------------------------------------------------------------------------------------------------------------
 
-	protected virtual int handleHTransition(ref int _id) {
+	protected virtual bool checkHierarchyTransitions(ref HStateFSM _nextState) {
 
-		int result = -1;
+		bool result = false;
 
-		if (finalHLevel) {
-			//siamo all'ultimo livello
+		result = checkMyTransitions(ref _nextState);
+		
+		if(result != false)
+			Debug.Log("-> result " + result + ", nextstate : " + _nextState + " post transition of " + StateName);
 
-			result = handleLastHLevel(ref _id);
+		if (!finalHLevel && result==false) {
 
-			if(debugPlay)
-				Debug.Log("-> result " + result + " e il ref id è " + _id);
+			//se al mio livello non è stata rilevata nessuna transizione
+			//dobbiamo scavare ancora e scoprire se nei livelli sottostanti serve fare una transizione
+
+			if(activeState.myHTransition!=null)
+				result = activeState.myHTransition(ref _nextState);
+			else
+				Debug.Log ("ATTENZIONE - HFSM - finalize del sotto stato " + activeState.StateName + " è nulla ");
 
 		}
-		else {
-			//dobbiamo scavare ancora
-			if(states [activeStateIndex].myHTransition!=null)
-				result = states [activeStateIndex].myHTransition(ref _id);
-			else
-				Debug.Log ("ATTENZIONE - HFSM - finalize del sotto stato numero" + activeStateIndex + " : " + states[activeStateIndex].StateName + " è nulla ");
+
+		//se ho rilevato una transizione, devo capire se devo occuparmene io o meno
+		//in caso positivo, cioè lo stato finale è sotto uno dei miei, faccio la transizione e rimetto result a -1,
+		//così che sopra di me non si accorgano di nulla
+		//altrimenti, se non è di mia competenza, lascio result != -1 e se ne occuperà qualcuno sopra di me
+
+		if (/*HLevel == 0 &&*/ !finalHLevel && result!=false  ) {
+
+			//TODO: come fare per cambiare macro stato
+			Debug.Log ("devo faare qualcosa? sono " + StateName + " e devo passare a " + _nextState.StateName);
+
+			foreach(HStateFSM st in states) {
+
+				if(st==_nextState) {
+					//se appartiene a me, 
+					makeHTransition(_nextState);
+					
+					result = false;
+
+					break;
+
+				}
+
+			}
+
+
 
 		}
 
@@ -403,8 +507,100 @@ public class HStateFSM : MonoBehaviour {
 
 	}
 
+	protected virtual bool checkMyTransitions(ref HStateFSM _nextState) {
+		
+		bool transitionDone = false;
+		bool result = false;
+		
+		if (myTransitions == null) {
+			//TODO: mettere debug
+			Debug.Log ("ATTENZIONE - livello gerarchia " + myHLevel + ", NESSUNA TRANSIZIONE presente nello stato " + stateName);
+			return result;
+		}
+		
+		for (int tn=0; tn<myTransitions.Length; tn++) {
+			
+			if(myTransitions[tn] != null) {
+				result = myTransitions[tn]();
 
-	protected virtual int handleLastHLevel(ref int _id) {
+				#if _DEBUG
+					Debug.Log("-> -> result è " + result + " e ref id " + _nextState);
+				#endif
+					
+				
+				if(result != false) {
+
+					_nextState = targetStateTransitions[tn];
+					return true;
+					/*
+					bool isMyTransition = false;
+
+					foreach(HStateFSM targetS in targetStateTransitions) {
+
+						if(targetS==_nextState) {
+							isMyTransition = true;
+							break;
+						}
+
+
+					}
+
+					if(isMyTransition) {
+
+						makeHTransition( targetStateTransitions[tn] );
+						return -1;
+
+					}
+					else {
+
+						_nextState = targetStateTransitions[tn];
+						return -2;
+
+					}
+
+
+					*/
+
+				}
+				
+			}
+			else {
+				
+				Debug.Log ("ATTENZIONE - livello gerarchia " + myHLevel + ", la func transition numero " + tn + " dello stato " + StateName + " è null");
+			}
+		}
+		
+		//dovrebbe essere -1, cioè nessuna transizione
+		return result;
+		
+	}
+
+	protected void makeHTransition(HStateFSM _nextState) {
+
+		Debug.Log ("TRANSIZIONE INTERNA - sono " + stateName + " e passo da " + activeState.StateName + " a " + _nextState.StateName + "++++++++++++++++++++++++++");
+
+		object ob = null;
+
+		if (activeState == _nextState) {
+			Debug.Log ("ATTENZIONE - stato destinazione uguale a stato attuale");
+			return;
+		}
+
+		if(activeState.myFinalize!=null)
+			ob = activeState.myFinalize ();
+
+		activeState = _nextState;
+
+		Debug.Log ("sto per inizializzare " + activeState.stateName);
+
+		if(activeState.myInitialize!=null)
+			activeState.myInitialize (ref ob);
+
+	}
+
+	/*
+
+	protected virtual int handleLastHLevel(ref HStateFSM _nextState) {
 
 		bool transitionDone = false;
 		int result = -1;
@@ -418,9 +614,9 @@ public class HStateFSM : MonoBehaviour {
 		for (int tn=0; tn<myTransitions.Length; tn++) {
 
 			if(myTransitions[tn] != null) {
-				result = myTransitions[tn](ref _id);
-				if(debugPlay)
-					Debug.Log("-> -> result è " + result + " e ref id " + _id);
+				result = myTransitions[tn](ref _nextState);
+				if(_DEBUG_PLAY)
+					Debug.Log("-> -> result è " + result + " e ref id " + _nextState);
 
 				if(result != -1) {
 					Debug.Log("ciao1");
@@ -430,7 +626,7 @@ public class HStateFSM : MonoBehaviour {
 						if(targetStateIndexTransitions[tn]==-1) {
 							targetStateIndexTransitions[tn] = getState(targetStateNameTransitions[tn]);
 						}
-						_id = targetStateIndexTransitions[tn];
+						_nextState = targetStateIndexTransitions[tn];
 						return targetStateIndexTransitions[tn];
 
 					}
@@ -449,13 +645,14 @@ public class HStateFSM : MonoBehaviour {
 		return result;
 
 	}
+	*/
 
 	//COLLISION
 	//-----------------------------------------------------------------------------------------------------------------------------------------------
 
 	protected virtual void handleHEnCollision(Collision2D c) {
 
-		if (finalHLevel = true) {
+		if (finalHLevel == true) {
 
 			if(myHandleCollisionEnter!=null)
 				myHandleCollisionEnter(c);
@@ -463,11 +660,16 @@ public class HStateFSM : MonoBehaviour {
 				Debug.Log ("ATTENZIONE - HFSM - enter collision dello stato " + StateName  + " è nulla ");
 		} 
 		else {
-			
-			if(states [activeStateIndex].myHHandleCollisionEnter != null)
-				states [activeStateIndex].myHHandleCollisionEnter (c);
+
+			if(myHandleCollisionEnter!=null)
+				myHandleCollisionEnter(c);
 			else
-				Debug.Log ("ATTENZIONE - HFSM - enter collision del sotto stato numero" + activeStateIndex + " : " + states[activeStateIndex].StateName + " è nulla ");
+				Debug.Log ("N.B. - HFSM - enter collision dello stato " + StateName  + " è nulla ");
+
+			if(activeState.myHHandleCollisionEnter != null)
+				activeState.myHHandleCollisionEnter (c);
+			else
+				Debug.Log ("ATTENZIONE - HFSM - enter collision del sotto stato " + activeState.StateName + " è nulla ");
 			
 		}
 
@@ -478,25 +680,38 @@ public class HStateFSM : MonoBehaviour {
 
 	protected virtual void handleHEnTrigger(Collider2D c) {
 
-		if (finalHLevel = true) {
+		if (finalHLevel == true) {
 
 			if(myHandleTriggerEnter!=null)
 				myHandleTriggerEnter(c);
-			else
-				Debug.Log ("ATTENZIONE - HFSM - enter trigger dello stato " + StateName  + " è nulla ");
+			else {
+				#if _DEBUG
+					Debug.Log ("ATTENZIONE - HFSM - enter trigger dello stato " + StateName  + " è nulla, triggato da " + c.name);
+				#endif
+			}
 		} 
 		else {
-			
-			if(states [activeStateIndex].myHHandleTriggerEnter != null)
-				states [activeStateIndex].myHHandleTriggerEnter (c);
-			else
-				Debug.Log ("ATTENZIONE - HFSM - enter trigger del sotto stato numero" + activeStateIndex + " : " + states[activeStateIndex].StateName + " è nulla ");
-			
+
+			if(myHandleTriggerEnter!=null)
+				myHandleTriggerEnter(c);
+			else {
+				#if _DEBUG
+					Debug.Log ("N.B. - HFSM - enter trigger dello stato " + StateName  + " è nulla, triggato da " + c.name);
+				#endif
+			}
+			if(activeState.myHHandleTriggerEnter != null)
+				activeState.myHHandleTriggerEnter (c);
+			else {
+				#if _DEBUG
+					Debug.Log ("ATTENZIONE - HFSM - enter trigger del sotto stato " + activeState.StateName + " è nulla, triggato da " + c.name);
+				#endif
+			}
 		}
 
 	}
 
 	//USEFUL METHODS-------------------------------------
+	#region USEFULMETHODS
 	
 	protected void i_move(float speed){
 		
@@ -526,14 +741,14 @@ public class HStateFSM : MonoBehaviour {
 		}
 		//gameObject.SendMessage ("c_setBouncy", true);
 		
-		
-		
 	}
 
 	protected void wanderHandleCollisionEnter(Collision2D c) {
 		
-		if(debugPlay)
+		#if _DEBUG
 			Debug.Log ("COLL - entrato in collisione con " + c.gameObject.name);
+		#endif
+			
 		
 		if (c.gameObject.tag != "Player") {
 			Debug.Log("collisione! mi flippo!");
@@ -590,10 +805,11 @@ public class HStateFSM : MonoBehaviour {
 		
 	}
 
+	/*
 	private int getIndexState (string _stateName) {
 
 		int ind = agentScript.statesMap.getStateIDByName (_stateName);
-		if(debugPlay)
+		if(_DEBUG_PLAY)
 			Debug.Log ("stato " + _stateName + " preso");
 
 		return ind;
@@ -613,7 +829,22 @@ public class HStateFSM : MonoBehaviour {
 		return output;
 
 	}
+	*/
 
+	public void addTransition(myStateTransition _method, HStateFSM _state) {
+		
+		
+		allocateMyTransitions (indexTransitions + 1);
+		
+		myTransitions [indexTransitions] += _method;
+		
+		targetStateTransitions [indexTransitions] = _state;
+
+		indexTransitions++;
+		
+	}
+
+	/*
 	public void addTransition(myStateTransition _method, string _stateName) {
 
 
@@ -621,15 +852,57 @@ public class HStateFSM : MonoBehaviour {
 
 		myTransitions [indexTransitions] += _method;
 
-		targetStateNameTransitions [indexTransitions] = _stateName;
+		targetStateTransitions [indexTransitions] = _stateName;
 
 		targetStateIndexTransitions [indexTransitions] = -1;
 
 		indexTransitions++;
 
 	}
+	*/
 
 	void allocateMyTransitions(int len) {
+		
+		if (len==1) {
+			//first allocation
+			myTransitions = new myStateTransition[len];
+			targetStateTransitions = new HStateFSM[len];
+
+		} 
+		else {
+			
+			//reallocate
+			myStateTransition []tempTrans = new myStateTransition[len];
+			HStateFSM []tempStates = new HStateFSM[len];
+
+			//reallocate transition
+			int i = 0;
+			foreach(myStateTransition tr in myTransitions) {
+				
+				tempTrans[i] = tr;
+				i++;
+			}
+			
+			i = 0;
+			
+			foreach(HStateFSM tr in targetStateTransitions) {
+				
+				tempStates[i] = tr;
+				i++;
+			}
+
+			
+			myTransitions = tempTrans;
+			targetStateTransitions = tempStates;
+			//targetStateNameTransitions = tempString;
+			
+			
+		}
+		
+	}
+
+	/*
+	void allocateMyTransitions1(int len) {
 
 		if (len==1) {
 			//first allocation
@@ -677,6 +950,7 @@ public class HStateFSM : MonoBehaviour {
 		}
 
 	}
+	*/
 
 	public IEnumerator ciaosequenza() {
 		Debug.Log ("ciao 1 CHASE --------------------------------");
@@ -685,6 +959,64 @@ public class HStateFSM : MonoBehaviour {
 		Debug.Log ("ciao 2 CHASE --------------------------------");
 		
 	}
+
+	protected Coroutine _StartCoroutine(IEnumerator method) {
+
+		Coroutine co = agentScript.StartCoroutine (method);
+
+		return co;
+
+	}
+
+	protected void _StopCoroutine(IEnumerator method) {
+
+		agentScript.StopCoroutine (method);
+
+	}
+
+	protected void checkPlayerCollision(Collision2D co) {
+		
+		if (co.gameObject.tag == "Player") {
+			//co.gameObject.transform.SendMessage ("c_stunned", true);
+			co.gameObject.transform.SendMessage ("c_instantKill");
+			Vector2 dist = co.gameObject.transform.position - transform.position;
+			
+			Rigidbody2D r = co.gameObject.GetComponent<Rigidbody2D>();
+			r.velocity = new Vector2(0.0f, 0.0f);
+			r.AddForce(300.0f*dist.normalized);
+			//c_playerStunned(true);
+			//return true;
+		}
+		else {
+			
+			//return false;
+			
+		}
+	}
+
+	protected bool getStatusSpriteRenderer(ref SpriteRenderer _statusSR) {
+
+		GameObject statusImgObj = null;
+
+		foreach (Transform child in transform) {
+
+			if(child.gameObject.name=="StatusImg") {
+				statusImgObj = child.gameObject;
+			}
+
+		}
+
+		if (statusImgObj != null) {
+
+			_statusSR = statusImgObj.GetComponent<SpriteRenderer>();
+			return true;
+		}
+
+		return false;
+
+	}
+
+	#endregion USEFULMETHODS
 
 }
 
