@@ -33,7 +33,7 @@ public class WindBehaviour : MonoBehaviour {
 	void Update()
 	{
 		if (graphicLantern != null) {
-			GetComponent<AreaEffector2D>().forceDirection = graphicLantern.getStandardFakeProjectionRotation();
+			GetComponent<AreaEffector2D>().forceAngle = graphicLantern.getStandardFakeProjectionRotation();
 			//GetComponent<AreaEffector2D>().forceDirection = 120;
 		}
 

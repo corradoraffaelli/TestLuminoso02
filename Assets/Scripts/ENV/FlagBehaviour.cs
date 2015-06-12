@@ -28,7 +28,7 @@ public class FlagBehaviour : MonoBehaviour {
 		{
 			if(areaEffector.enabled && colliding)
 			{
-				if ((areaEffector.forceDirection < 90 && areaEffector.forceDirection > -90) || (areaEffector.forceDirection > 270) || (areaEffector.forceDirection < -270))
+				if ((areaEffector.forceAngle < 90 && areaEffector.forceAngle > -90) || (areaEffector.forceAngle > 270) || (areaEffector.forceAngle < -270))
 					transform.localScale = new Vector2(Mathf.Abs(transform.localScale.x), transform.localScale.y);
 				else
 					transform.localScale = new Vector2(-Mathf.Abs(transform.localScale.x), transform.localScale.y);
