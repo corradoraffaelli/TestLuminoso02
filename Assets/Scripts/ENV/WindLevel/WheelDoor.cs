@@ -39,14 +39,14 @@ public class WheelDoor : MonoBehaviour {
 		{
 			if (windFromLeft)
 			{
-				if ((actualAreaEffector.forceDirection < 90 && actualAreaEffector.forceDirection > -90) || (actualAreaEffector.forceDirection > 270) || (actualAreaEffector.forceDirection < -270))
+				if ((actualAreaEffector.forceAngle < 90 && actualAreaEffector.forceAngle > -90) || (actualAreaEffector.forceAngle > 270) || (actualAreaEffector.forceAngle < -270))
 				{
 					//Debug.Log ("girandola attivata da sinistra");
 					active = true;
 					activator = other.gameObject;
 				}
 			}else{
-				if ((actualAreaEffector.forceDirection < -90 && actualAreaEffector.forceDirection > -270) || (actualAreaEffector.forceDirection > 90 && actualAreaEffector.forceDirection < 270))
+				if ((actualAreaEffector.forceAngle < -90 && actualAreaEffector.forceAngle > -270) || (actualAreaEffector.forceAngle > 90 && actualAreaEffector.forceAngle < 270))
 				{
 					//Debug.Log ("girandola attivata da destra");
 					active = true;

@@ -22,7 +22,7 @@ public class SailsManagement : MonoBehaviour {
 		AreaEffector2D areaEffector = other.gameObject.GetComponent<AreaEffector2D>();
 		if (areaEffector != null && active == false)
 		{
-			if ((areaEffector.forceDirection < 90 && areaEffector.forceDirection > -90) || (areaEffector.forceDirection > 270) || (areaEffector.forceDirection < -270))
+			if ((areaEffector.forceAngle < 90 && areaEffector.forceAngle > -90) || (areaEffector.forceAngle > 270) || (areaEffector.forceAngle < -270))
 			{
 				Debug.Log ("vela attivata");
 				active = true;
