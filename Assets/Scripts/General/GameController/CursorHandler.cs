@@ -31,8 +31,18 @@ public class CursorHandler : MonoBehaviour {
 	public bool cursorIsMoving;
 	Vector3 oldCursorPosition;
 	bool firstCursorPosition = true;
-	public float ScreenRatioMovement = 0.01f;
-	public float ScreenControllerRatioMovement = 0.1f;
+	public float ScreenRatioMovement = 0.3f;
+	public float ScreenControllerRatioMovement = 0.3f;
+	int timesControllerMoving = 0;
+	public int maxTimesControllerMoving = 2;
+	float lastTimeControllerMovingCheck = 0.0f;
+	float timeBetweenControllerMoving = 0.1f;
+	public float timeAfterMoving = 1.0f;
+	float lastTimeMoving = 0.0f;
+
+	//indica se c'è un intervallo di tempo, dopo che il cursore si è fermato per considerarsi ancora in movimento
+	//settato di default per il mouse, la variabile indica se è necessario anche per il controller
+	public bool movingAfterController = false;
 
 	CameraHandler cameraHandler;
 
@@ -74,8 +84,14 @@ public class CursorHandler : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-		if (!PlayStatusTracker.inPlay)
+		if (PlayStatusTracker.inPlay)
+			Cursor.visible = false;
+		else if (!PlayStatusTracker.inPlay && !useController)
+		{
+			Cursor.visible = true;
 			return;
+		}
+			
 
 		if (cameraHandler != null) {
 			xDistFromBeginning = cameraHandler.getXDistFromBeginning();
@@ -191,7 +207,84 @@ public class CursorHandler : MonoBehaviour {
 
 	void verifyCursorMoving()
 	{
+		/*
+		 * nel caso di utilizzo del mouse faccio un controllo sulla posizione rispetto alla grandezza dello schermo.
+		 * nel caso di utilizzo del controller, è più opportuno fare un controllo sul valore dell'asse.
+		 */
+
+		bool actualCursorMoving = false;
+
+		if (!useController){
+			if (firstCursorPosition) {
+				oldCursorPosition = inputKeeper.getMousePosition();
+				firstCursorPosition = false;
+			}
+			else {
+				float ratioTemp;
+				ratioTemp = ScreenRatioMovement;
+
+				Vector3 actualCursorPosition = inputKeeper.getMousePosition();
+
+				if ((Mathf.Abs(oldCursorPosition.x - actualCursorPosition.x) > ratioTemp*xDistFromBeginning)||
+				    (Mathf.Abs(oldCursorPosition.y - actualCursorPosition.y) > ratioTemp*yDistFromBeginning))
+					actualCursorMoving = true;
+				else
+					actualCursorMoving = false;
+				//	cursorIsMoving = true;
+				//else
+				//	cursorIsMoving = false;
+				
+				oldCursorPosition = inputKeeper.getMousePosition();
+			}
+		}
+		else{
+			//Debug.Log ("Controller");
+
+			if (timesControllerMoving > maxTimesControllerMoving)
+				actualCursorMoving = true;
+			else
+				actualCursorMoving = false;
+			//	cursorIsMoving = true;
+			//else
+			//	cursorIsMoving = false;
+
+			if ((Time.time - lastTimeControllerMovingCheck) > timeBetweenControllerMoving)
+			{
+				if (inputKeeper.getAxis("CursorHorizontal") > ScreenControllerRatioMovement || inputKeeper.getAxis("CursorHorizontal") < -ScreenControllerRatioMovement ||
+				    inputKeeper.getAxis("CursorVertical") > ScreenControllerRatioMovement || inputKeeper.getAxis("CursorVertical") < -ScreenControllerRatioMovement)
+				{
+					lastTimeControllerMovingCheck = Time.time;
+					timesControllerMoving++;
+				}
+				else
+				{
+					timesControllerMoving = 0;
+				}
+			}
+
+		}
+
+		//per quanto tempo rimane moving anche se non muovo più
+		if (useController && !movingAfterController)
+		{
+			cursorIsMoving = actualCursorMoving;
+		}else{
+			if (actualCursorMoving)
+			{
+				cursorIsMoving = true;
+				lastTimeMoving = Time.time;
+			}
+			else if (Time.time - lastTimeMoving > timeAfterMoving)
+			{
+				cursorIsMoving = false;
+			}
+		}
+
+			
+
+
 		//cursorIsMoving = false;
+		/*
 		if (firstCursorPosition) {
 			oldCursorPosition = getCursorScreenPosition();
 			firstCursorPosition = false;
@@ -211,6 +304,7 @@ public class CursorHandler : MonoBehaviour {
 
 			oldCursorPosition = getCursorScreenPosition();
 		}
+		*/
 	}
 
 	public bool isCursorMoving()
