@@ -10,6 +10,7 @@ public class CursorHandler : MonoBehaviour {
 	Vector3 cursorPosition;
 	public float zPositionEnvironment = 0.0f;
 	GameObject player;
+	PlayerMovements playerMovements;
 	Vector3 playerPosition;
 
 	Vector3 standardPosition;
@@ -43,6 +44,9 @@ public class CursorHandler : MonoBehaviour {
 	//indica se c'è un intervallo di tempo, dopo che il cursore si è fermato per considerarsi ancora in movimento
 	//settato di default per il mouse, la variabile indica se è necessario anche per il controller
 	public bool movingAfterController = false;
+	public bool movingIfStanding = true;
+
+	bool oldGameState;
 
 	CameraHandler cameraHandler;
 
@@ -52,6 +56,8 @@ public class CursorHandler : MonoBehaviour {
 	void Start () {
 		Cursor.lockState = CursorLockMode.Confined;
 		player = GameObject.FindGameObjectWithTag ("Player");
+		if (player != null)
+			playerMovements = player.GetComponent<PlayerMovements>();
 		cameraHandler = Camera.main.gameObject.GetComponent<CameraHandler> ();
 		inputKeeper = GetComponent<InputKeeper> ();
 
@@ -73,6 +79,17 @@ public class CursorHandler : MonoBehaviour {
 			xDistFromBeginning = cameraHandler.getXDistFromBeginning();
 			yDistFromBeginning = cameraHandler.getYDistFromBeginning();
 		}
+
+		oldGameState = PlayStatusTracker.inPlay;
+		if (oldGameState)
+			Cursor.visible = false;
+		else if (!oldGameState && !useController)
+		{
+			Cursor.visible = true;
+		}
+
+		cursorIsMoving = false;
+
 		/*
 		cameraCenter = new Vector3 (Camera.main.gameObject.transform.position.x, Camera.main.gameObject.transform.position.y, player.transform.position.z);
 		beginCamera = Camera.main.ScreenToWorldPoint (new Vector3 (0.0f, 0.0f, player.transform.position.z));
@@ -84,14 +101,17 @@ public class CursorHandler : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-		if (PlayStatusTracker.inPlay)
-			Cursor.visible = false;
-		else if (!PlayStatusTracker.inPlay && !useController)
+		if (oldGameState != PlayStatusTracker.inPlay)
 		{
-			Cursor.visible = true;
-			return;
+			oldGameState = PlayStatusTracker.inPlay;
+			if (oldGameState)
+				Cursor.visible = false;
+			else if (!oldGameState && !useController)
+			{
+				Cursor.visible = true;
+				return;
+			}
 		}
-			
 
 		if (cameraHandler != null) {
 			xDistFromBeginning = cameraHandler.getXDistFromBeginning();
@@ -264,22 +284,82 @@ public class CursorHandler : MonoBehaviour {
 
 		}
 
+		if (!movingIfStanding)
+		{
+			//per quanto tempo rimane moving anche se non muovo più
+			if (useController && !movingAfterController)
+			{
+				cursorIsMoving = actualCursorMoving;
+			}else{
+				if (actualCursorMoving)
+				{
+					cursorIsMoving = true;
+					lastTimeMoving = Time.time;
+				}
+				else if (Time.time - lastTimeMoving > timeAfterMoving )
+				{
+					cursorIsMoving = false;
+				}
+			}
+		}
+		else
+		{
+
+			if (actualCursorMoving)
+			{
+				cursorIsMoving = true;
+				lastTimeMoving = Time.time;
+			}
+			else
+			{
+				Debug.Log ("non si muove");
+				if ((playerMovements.isRunning() && playerMovements.onGround) || !playerMovements.onGround)
+				{
+					if (((useController && movingAfterController) || !useController))
+					
+						cursorIsMoving = false;
+				}
+				//il player è a terra e fermo
+				//else
+				//{
+				//	cursorIsMoving = true;
+				//}
+			}
+		}
 		//per quanto tempo rimane moving anche se non muovo più
+		/*
 		if (useController && !movingAfterController)
 		{
-			cursorIsMoving = actualCursorMoving;
+			if (movingIfStanding)
+			{
+				if (actualCursorMoving)
+				{
+					cursorIsMoving = true;
+				}else
+				{
+					if(playerMovements.isRunning())
+						cursorIsMoving = false;
+				}
+			}
+			else
+				cursorIsMoving = actualCursorMoving;
 		}else{
 			if (actualCursorMoving)
 			{
 				cursorIsMoving = true;
 				lastTimeMoving = Time.time;
 			}
-			else if (Time.time - lastTimeMoving > timeAfterMoving)
+			else if (movingIfStanding)
+			{
+				if(((playerMovements.isRunning() && playerMovements.onGround) || !playerMovements.onGround) && (Time.time - lastTimeMoving > timeAfterMoving))
+					cursorIsMoving = false;
+			}
+			else if (Time.time - lastTimeMoving > timeAfterMoving )
 			{
 				cursorIsMoving = false;
 			}
 		}
-
+		*/
 			
 
 

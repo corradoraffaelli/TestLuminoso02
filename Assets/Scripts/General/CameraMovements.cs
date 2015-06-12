@@ -57,6 +57,7 @@ public class CameraMovements : MonoBehaviour {
 	[Range(0,5)]
 	public float timeBeforeGoingPlayer = 2.0f;
 	float lastTimeMouseMoved = 0.0f;
+	public float actualRatio = 0.0f;
 	
 	void Start () {
 		player = GameObject.FindGameObjectWithTag ("Player");
@@ -133,6 +134,8 @@ public class CameraMovements : MonoBehaviour {
 			if (!returnToPlayer || cursorHandler.isCursorMoving() || magicLanternLogic.actualState == MagicLantern.lanternState.InHand)
 			//if (!cursorHandler.useController || !returnToPlayer || cursorHandler.isCursorMoving())
 			{
+				//11/06/2015 IMPLEMENTATION
+				/*
 				float tempStandardRatioDistance;
 				if (cameraOnPlayer)
 					tempStandardRatioDistance = 0.0f;
@@ -170,23 +173,33 @@ public class CameraMovements : MonoBehaviour {
 				{
 					transform.position = Vector3.Lerp (transform.position, newPosition, Time.deltaTime * smooth);
 				}
+				*/
 
-				//if (!cursorHandler.useController && !cursorHandler.isCursorMoving())
-				//	lastTimeMouseMoved = Time.time;
-
+				//12/06/2015 IMPLEMENTATION
+				cursorWorldPosition = cursorHandler.getCursorWorldPosition ();
+				playerPosition = player.GetComponent<SpriteRenderer>().bounds.center;
+				actualRatio = Mathf.Lerp(actualRatio, standardRatioDistance, Time.deltaTime * smooth / 6);
+				Vector3 newPosition =  getCameraPosition (actualRatio, cursorWorldPosition, playerPosition);
+				transform.position = Vector3.Lerp (transform.position, newPosition, Time.deltaTime * smooth);
+				//transform.position = newPosition;
 			}
 			else
 			//tornare sul player
 			{
-				//if (cursorHandler.useController || (Time.time - lastTimeMouseMoved) > timeBeforeGoingPlayer)
-				//{
+				cursorWorldPosition = cursorHandler.getCursorWorldPosition ();
+				playerPosition = player.GetComponent<SpriteRenderer>().bounds.center;
+				actualRatio = Mathf.Lerp(actualRatio, 0.0f, Time.deltaTime * smooth / 10);
+				Vector3 newPosition =  getCameraPosition (actualRatio, cursorWorldPosition, playerPosition);
+				transform.position = Vector3.Lerp (transform.position, newPosition, Time.deltaTime * smooth);
+				//transform.position = newPosition;
+				/*
 					playerPosition = player.GetComponent<SpriteRenderer>().bounds.center;
 					Vector3 objVector = new Vector3(playerPosition.x, playerPosition.y, transform.position.z);
 					
 					float distance = Vector3.Distance(transform.position, objVector);
 					
 					transform.position = Vector3.Lerp (transform.position, objVector, Time.deltaTime * smooth  / (Mathf.Sqrt(distance) * 4));
-				//}
+				*/
 
 			}
 
