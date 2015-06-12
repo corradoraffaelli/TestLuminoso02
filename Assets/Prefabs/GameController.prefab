@@ -149,30 +149,44 @@ MonoBehaviour:
     buttonStay: 0
     buttonUp: 0
     buttonDown: 0
+    needToResetUp: 0
+    needToResetDown: 0
   - name: LanternaMagica
     buttonStay: 0
     buttonUp: 0
     buttonDown: 0
+    needToResetUp: 0
+    needToResetDown: 0
   - name: Mira
     buttonStay: 0
     buttonUp: 0
     buttonDown: 0
+    needToResetUp: 0
+    needToResetDown: 0
   - name: PickLantern
     buttonStay: 0
     buttonUp: 0
     buttonDown: 0
+    needToResetUp: 0
+    needToResetDown: 0
   - name: NextGlass
     buttonStay: 0
     buttonUp: 0
     buttonDown: 0
+    needToResetUp: 0
+    needToResetDown: 0
   - name: Interaction
     buttonStay: 0
     buttonUp: 0
     buttonDown: 0
+    needToResetUp: 0
+    needToResetDown: 0
   - name: GlassModifier
     buttonStay: 0
     buttonUp: 0
     buttonDown: 0
+    needToResetUp: 0
+    needToResetDown: 0
   inputAxis:
   - name: Horizontal
     getAxisNormal: 0
@@ -223,7 +237,7 @@ MonoBehaviour:
   savedObjectsFile: savedObjects
   savedFileExtention: .dat
   indexToLoad: 0
-  correctionTime: 1.5
+  correctionTime: .200000003
   adjustPositions: 1
   debugPath: 1
 --- !u!114 &11490140
@@ -246,8 +260,11 @@ MonoBehaviour:
   RightLimit: {fileID: 0}
   UpperLimit: {fileID: 0}
   cursorIsMoving: 0
-  ScreenRatioMovement: .00999999978
-  ScreenControllerRatioMovement: .100000001
+  ScreenRatioMovement: .300000012
+  ScreenControllerRatioMovement: .300000012
+  maxTimesControllerMoving: 2
+  timeAfterMoving: 1
+  movingAfterController: 0
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
