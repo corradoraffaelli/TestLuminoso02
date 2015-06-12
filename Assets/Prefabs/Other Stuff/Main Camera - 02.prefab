@@ -17,7 +17,7 @@ GameObject:
   - 114: {fileID: 11436702}
   - 114: {fileID: 11484882}
   - 114: {fileID: 11442546}
-  m_Layer: 0
+  m_Layer: 20
   m_Name: Main Camera - 02
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
@@ -51,7 +51,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 489876}
   - 212: {fileID: 21237890}
-  m_Layer: 0
+  m_Layer: 20
   m_Name: GameOver
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -65,7 +65,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 101814}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.52999997, y: 4.21000004, z: -10}
+  m_LocalPosition: {x: 13.8999996, y: 9.80000019, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 498722}
@@ -242,17 +242,19 @@ MonoBehaviour:
   newImplementation: 1
   limitCameraMovements: 0
   cameraOnPlayer: 0
-  changeRatioIfAiming: 1
-  changeSize: 1
-  onlyIfAiming: 1
+  changeRatioIfAiming: 0
+  changeSize: 0
+  onlyIfAiming: 0
   fixedChangedSize: 0
-  standardRatioDistance: .150000006
+  returnToPlayer: 1
+  standardRatioDistance: .370000005
   aimingRatioDistance: .300000012
   smooth: 10
   changingSizeVelocity: 2.5
   defaultSize: 5.5
-  enlargment: 1
-  ratioBeforeEnlargment: .75
+  enlargment: 2
+  ratioBeforeEnlargment: .5
+  timeBeforeGoingPlayer: 2
 --- !u!114 &11484882
 MonoBehaviour:
   m_ObjectHideFlags: 1

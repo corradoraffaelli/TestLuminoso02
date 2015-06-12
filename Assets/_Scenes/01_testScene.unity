@@ -332,7 +332,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!61 &48089309
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1408,11 +1408,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 474156, guid: f4c01e0da7972514b8345910753c5ecd, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 20.4799995
+      value: 6.19999981
       objectReference: {fileID: 0}
     - target: {fileID: 474156, guid: f4c01e0da7972514b8345910753c5ecd, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 16.4899998
+      value: 9.60000038
       objectReference: {fileID: 0}
     - target: {fileID: 474156, guid: f4c01e0da7972514b8345910753c5ecd, type: 2}
       propertyPath: m_LocalPosition.z
@@ -1437,66 +1437,6 @@ Prefab:
     - target: {fileID: 474156, guid: f4c01e0da7972514b8345910753c5ecd, type: 2}
       propertyPath: m_RootOrder
       value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 11478616, guid: f4c01e0da7972514b8345910753c5ecd, type: 2}
-      propertyPath: ratioBeforeEnlargment
-      value: .5
-      objectReference: {fileID: 0}
-    - target: {fileID: 11478616, guid: f4c01e0da7972514b8345910753c5ecd, type: 2}
-      propertyPath: enlargment
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 11484882, guid: f4c01e0da7972514b8345910753c5ecd, type: 2}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2072192, guid: f4c01e0da7972514b8345910753c5ecd, type: 2}
-      propertyPath: orthographic size
-      value: 5.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 11478616, guid: f4c01e0da7972514b8345910753c5ecd, type: 2}
-      propertyPath: changingSizeVelocity
-      value: 2.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 11478616, guid: f4c01e0da7972514b8345910753c5ecd, type: 2}
-      propertyPath: fixedChangedSize
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 11478616, guid: f4c01e0da7972514b8345910753c5ecd, type: 2}
-      propertyPath: changeSize
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 11478616, guid: f4c01e0da7972514b8345910753c5ecd, type: 2}
-      propertyPath: RatioDistanceFromPlayer
-      value: .150000006
-      objectReference: {fileID: 0}
-    - target: {fileID: 11478616, guid: f4c01e0da7972514b8345910753c5ecd, type: 2}
-      propertyPath: ratioDistanceFromPlayer
-      value: .150000006
-      objectReference: {fileID: 0}
-    - target: {fileID: 11478616, guid: f4c01e0da7972514b8345910753c5ecd, type: 2}
-      propertyPath: changeRatioIfAiming
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 11478616, guid: f4c01e0da7972514b8345910753c5ecd, type: 2}
-      propertyPath: onlyIfAiming
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 11436702, guid: f4c01e0da7972514b8345910753c5ecd, type: 2}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 11478616, guid: f4c01e0da7972514b8345910753c5ecd, type: 2}
-      propertyPath: standardRatioDistance
-      value: .150000006
-      objectReference: {fileID: 0}
-    - target: {fileID: 11478616, guid: f4c01e0da7972514b8345910753c5ecd, type: 2}
-      propertyPath: defaultSize
-      value: 5.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 11478616, guid: f4c01e0da7972514b8345910753c5ecd, type: 2}
-      propertyPath: cameraOnPlayer
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f4c01e0da7972514b8345910753c5ecd, type: 2}
@@ -3341,7 +3281,7 @@ GameObject:
   m_Icon: {fileID: 4476612413928447662, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!50 &929362384
 Rigidbody2D:
   m_ObjectHideFlags: 0
@@ -3967,13 +3907,13 @@ Prefab:
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 11453354, guid: ec102504c5a3ea84fa6e628e168bb9c7, type: 2}
-      propertyPath: loadSaveState
-      value: 1
+    - target: {fileID: 11490140, guid: ec102504c5a3ea84fa6e628e168bb9c7, type: 2}
+      propertyPath: useController
+      value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 11453354, guid: ec102504c5a3ea84fa6e628e168bb9c7, type: 2}
-      propertyPath: correctionTime
-      value: .200000003
+    - target: {fileID: 11490140, guid: ec102504c5a3ea84fa6e628e168bb9c7, type: 2}
+      propertyPath: movingIfStanding
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ec102504c5a3ea84fa6e628e168bb9c7, type: 2}
@@ -6142,6 +6082,10 @@ Prefab:
     - target: {fileID: 22445332, guid: 577134dccd1409045adcbafc8b5ff266, type: 2}
       propertyPath: m_Pivot.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 116578, guid: 577134dccd1409045adcbafc8b5ff266, type: 2}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 577134dccd1409045adcbafc8b5ff266, type: 2}

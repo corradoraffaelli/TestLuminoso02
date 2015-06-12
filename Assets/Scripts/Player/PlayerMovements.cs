@@ -176,6 +176,10 @@ public class PlayerMovements : MonoBehaviour {
 
 	bool running;
 
+	public bool isRunning(){
+		return running;
+	}
+
 	GameObject actualLadder;
 
 	GameObject controller;

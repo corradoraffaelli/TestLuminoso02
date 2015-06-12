@@ -18,7 +18,6 @@ public class CameraMovements : MonoBehaviour {
 	Vector3 playerPosition;
 	Vector3 cursorWorldPosition;
 	GameObject controller;
-	CursorHandler CH;
 
 	Transform UpperLimit;
 	Transform BottomLimit;
@@ -30,6 +29,7 @@ public class CameraMovements : MonoBehaviour {
 	public bool changeSize = true;
 	public bool onlyIfAiming = true;
 	public bool fixedChangedSize = false;
+	public bool returnToPlayer = true;
 
 	[Range(0,0.5f)]
 	public float standardRatioDistance = 0.15f;
@@ -53,6 +53,11 @@ public class CameraMovements : MonoBehaviour {
 	public float enlargment = 1.0f;
 	[Range(0,1)]
 	public float ratioBeforeEnlargment = 0.75f;
+
+	[Range(0,5)]
+	public float timeBeforeGoingPlayer = 2.0f;
+	float lastTimeMouseMoved = 0.0f;
+	public float actualRatio = 0.0f;
 	
 	void Start () {
 		player = GameObject.FindGameObjectWithTag ("Player");
@@ -62,16 +67,16 @@ public class CameraMovements : MonoBehaviour {
 		getGameOverObject ();
 
 		controller = GameObject.FindGameObjectWithTag ("Controller");
-		CH = controller.GetComponent<CursorHandler> ();
+		cursorHandler = controller.GetComponent<CursorHandler> ();
 
 		cameraHandler = Camera.main.gameObject.GetComponent<CameraHandler> ();
 
 		magicLanternLogic = GameObject.FindGameObjectWithTag ("MagicLanternLogic").GetComponent<MagicLantern> ();
 
-		UpperLimit = CH.getUpperLimit();
-		BottomLimit = CH.getBottomLimit();
-		RightLimit = CH.getRightLimit();
-		LeftLimit = CH.getLeftLimit();
+		UpperLimit = cursorHandler.getUpperLimit();
+		BottomLimit = cursorHandler.getBottomLimit();
+		RightLimit = cursorHandler.getRightLimit();
+		LeftLimit = cursorHandler.getLeftLimit();
 
 		if (cameraHandler == null) {
 			cameraCenter = new Vector3 (Camera.main.gameObject.transform.position.x, Camera.main.gameObject.transform.position.y, player.transform.position.z);
@@ -125,33 +130,79 @@ public class CameraMovements : MonoBehaviour {
 
 		if (newImplementation) {
 
-			float tempStandardRatioDistance;
-			if (cameraOnPlayer)
-				tempStandardRatioDistance = 0.0f;
-			else
-				tempStandardRatioDistance = standardRatioDistance;
+			//se il cursore si sta muovendo allora muovo la camera, altrimenti torno sul player
+			if (!returnToPlayer || cursorHandler.isCursorMoving() || magicLanternLogic.actualState == MagicLantern.lanternState.InHand)
+			//if (!cursorHandler.useController || !returnToPlayer || cursorHandler.isCursorMoving())
+			{
+				//11/06/2015 IMPLEMENTATION
+				/*
+				float tempStandardRatioDistance;
+				if (cameraOnPlayer)
+					tempStandardRatioDistance = 0.0f;
+				else
+					tempStandardRatioDistance = standardRatioDistance;
+				
+				if (changeRatioIfAiming){
+					if (magicLanternLogic.actualState == MagicLantern.lanternState.InHand)
+						setRatioDistance(aimingRatioDistance, true);
+					else if (magicLanternLogic.actualState != MagicLantern.lanternState.InHand)
+						setRatioDistance(tempStandardRatioDistance, true);
+					
+				}
+				
+				cursorWorldPosition = cursorHandler.getCursorWorldPosition ();
+				//uso il centro della sprite anzichè la base del personaggio
+				playerPosition = player.GetComponent<SpriteRenderer>().bounds.center;
+				//playerPosition = player.transform.position;
+				
+				
+				
+				Vector3 newPosition =  getCameraPosition (ratioDistanceFromPlayer, cursorWorldPosition, playerPosition);
+				//transform.position = newPosition;
 
-			if (changeRatioIfAiming){
-				if (magicLanternLogic.actualState == MagicLantern.lanternState.InHand)
-					setRatioDistance(aimingRatioDistance, true);
-				else if (magicLanternLogic.actualState != MagicLantern.lanternState.InHand)
-					setRatioDistance(tempStandardRatioDistance, true);
+				//ho pensato di aggiungere un moltiplicatore per fare in modo che, se il cursore è lontano dalla posizione attuale della camera, 
+				//lo smooth è più lento (altrimenti dovremmo togliere il moltiplicatore "distance")
+				float distance = Vector3.Distance(transform.position, newPosition);
+				//Debug.Log (distance);
+
+				if (distance > 1.0f)
+				{
+					transform.position = Vector3.Lerp (transform.position, newPosition, Time.deltaTime * smooth / distance);
+				}
+				else
+				{
+					transform.position = Vector3.Lerp (transform.position, newPosition, Time.deltaTime * smooth);
+				}
+				*/
+
+				//12/06/2015 IMPLEMENTATION
+				cursorWorldPosition = cursorHandler.getCursorWorldPosition ();
+				playerPosition = player.GetComponent<SpriteRenderer>().bounds.center;
+				actualRatio = Mathf.Lerp(actualRatio, standardRatioDistance, Time.deltaTime * smooth / 6);
+				Vector3 newPosition =  getCameraPosition (actualRatio, cursorWorldPosition, playerPosition);
+				transform.position = Vector3.Lerp (transform.position, newPosition, Time.deltaTime * smooth);
+				//transform.position = newPosition;
+			}
+			else
+			//tornare sul player
+			{
+				cursorWorldPosition = cursorHandler.getCursorWorldPosition ();
+				playerPosition = player.GetComponent<SpriteRenderer>().bounds.center;
+				actualRatio = Mathf.Lerp(actualRatio, 0.0f, Time.deltaTime * smooth / 10);
+				Vector3 newPosition =  getCameraPosition (actualRatio, cursorWorldPosition, playerPosition);
+				transform.position = Vector3.Lerp (transform.position, newPosition, Time.deltaTime * smooth);
+				//transform.position = newPosition;
+				/*
+					playerPosition = player.GetComponent<SpriteRenderer>().bounds.center;
+					Vector3 objVector = new Vector3(playerPosition.x, playerPosition.y, transform.position.z);
+					
+					float distance = Vector3.Distance(transform.position, objVector);
+					
+					transform.position = Vector3.Lerp (transform.position, objVector, Time.deltaTime * smooth  / (Mathf.Sqrt(distance) * 4));
+				*/
 
 			}
 
-
-				
-
-			cursorWorldPosition = CH.getCursorWorldPosition ();
-			//uso il centro della sprite anzichè la base del personaggio
-			playerPosition = player.GetComponent<SpriteRenderer>().bounds.center;
-			//playerPosition = player.transform.position;
-
-
-
-			Vector3 newPosition =  getCameraPosition (ratioDistanceFromPlayer, cursorWorldPosition, playerPosition);
-			//transform.position = newPosition;
-			transform.position = Vector3.Lerp (transform.position, newPosition, Time.deltaTime * smooth);
 
 			if (limitCameraMovements)
 				cameraLimitations();
@@ -211,7 +262,7 @@ public class CameraMovements : MonoBehaviour {
 			{
 				float diffX = 0.0f;
 				float xDistanceAllowed = Mathf.Abs (cameraHandler.getXDistFromBeginning ()) * ratioBeforeEnlargment;
-				float xDistanceEffective = Mathf.Abs (cameraHandler.getCameraPositionZEnvironment ().x - CH.getCursorWorldPosition ().x);
+				float xDistanceEffective = Mathf.Abs (cameraHandler.getCameraPositionZEnvironment ().x - cursorHandler.getCursorWorldPosition ().x);
 				
 				if (xDistanceAllowed < xDistanceEffective) {
 					diffX = xDistanceEffective - xDistanceAllowed;
@@ -219,7 +270,7 @@ public class CameraMovements : MonoBehaviour {
 				
 				float diffY = 0.0f;
 				float yDistanceAllowed = Mathf.Abs (cameraHandler.getYDistFromBeginning ()) * ratioBeforeEnlargment;
-				float yDistanceEffective = Mathf.Abs (cameraHandler.getCameraPositionZEnvironment ().y - CH.getCursorWorldPosition ().y);
+				float yDistanceEffective = Mathf.Abs (cameraHandler.getCameraPositionZEnvironment ().y - cursorHandler.getCursorWorldPosition ().y);
 				
 				if (yDistanceAllowed < yDistanceEffective) {
 					diffY = yDistanceEffective - yDistanceAllowed;

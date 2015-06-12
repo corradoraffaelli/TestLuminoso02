@@ -85,6 +85,13 @@ public class InputKeeper : MonoBehaviour {
 	//[SerializeField]
 	[System.Serializable]
 	public class InputMousePosition{
+		/*
+		public InputMousePosition(float inputX, float inputY, float inputZ){
+			this.inputX = inputX;
+			this.inputY = inputY;
+			this.inputZ = inputZ;
+		}
+		*/
 		public float inputX;
 		public float inputY;
 		public float inputZ;
@@ -221,6 +228,7 @@ public class InputKeeper : MonoBehaviour {
 			for (int i = 0; i<inputAxis.Length; i++)
 				changedAxisBool [i] = verifyIfAxisChanged (inputAxis [i].name);
 
+			//Debug.Log (verifyIfMouseChanged());
 			if (Input.mousePresent)
 				changedMouseBool = verifyIfMouseChanged();
 
@@ -277,9 +285,9 @@ public class InputKeeper : MonoBehaviour {
 				tempInputMousePosition.inputZ = Input.mousePosition.z;
 				*/
 
-				tempInputMousePosition.inputX = Camera.main.ScreenToWorldPoint(Input.mousePosition).x;
-				tempInputMousePosition.inputY = Camera.main.ScreenToWorldPoint(Input.mousePosition).y;
-				tempInputMousePosition.inputZ = Camera.main.ScreenToWorldPoint(Input.mousePosition).z;
+				tempInputMousePosition.inputX = Camera.main.ScreenToWorldPoint(tempInputMouse).x;
+				tempInputMousePosition.inputY = Camera.main.ScreenToWorldPoint(tempInputMouse).y;
+				tempInputMousePosition.inputZ = Camera.main.ScreenToWorldPoint(tempInputMouse).z;
 
 				ChangedMouse tempChanged = new ChangedMouse(Time.time, tempInputMousePosition);
 				changedMouseList.Add (tempChanged);
@@ -443,9 +451,16 @@ public class InputKeeper : MonoBehaviour {
 
 	void setMouse()
 	{
+		///*
+		mousePosition.inputX = Input.mousePosition.x;
+		mousePosition.inputY = Input.mousePosition.y;
+		mousePosition.inputZ = Input.mousePosition.z;
+		//*/
+		/*
 		mousePosition.inputX = Camera.main.ScreenToWorldPoint(Input.mousePosition).x;
 		mousePosition.inputY = Camera.main.ScreenToWorldPoint(Input.mousePosition).y;
 		mousePosition.inputZ = Camera.main.ScreenToWorldPoint(Input.mousePosition).z;
+		*/
 	}
 
 	void save()
@@ -542,6 +557,15 @@ public class InputKeeper : MonoBehaviour {
 
 	bool verifyIfMouseChanged()
 	{
+
+		if (mousePosition.inputX != Input.mousePosition.x)
+				return true;
+		if (mousePosition.inputY != Input.mousePosition.y)
+			return true;
+		if (mousePosition.inputZ != Input.mousePosition.z)
+			return true;
+		return false;
+		/*
 		if (Input.mousePosition.x != Camera.main.ScreenToWorldPoint(Input.mousePosition).x)
 			return true;
 		if (Input.mousePosition.y != Camera.main.ScreenToWorldPoint(Input.mousePosition).y)
@@ -549,6 +573,7 @@ public class InputKeeper : MonoBehaviour {
 		if (Input.mousePosition.z != Camera.main.ScreenToWorldPoint(Input.mousePosition).z)
 			return true;
 		return false;
+		*/
 	}
 
 	void setLoadedButtons()
@@ -650,7 +675,18 @@ public class InputKeeper : MonoBehaviour {
 				//se ho passato il tempo
 				if (changedMouseList [i].changingTime < Time.time)
 				{
-					mousePosition = changedMouseList[i].newMousePosition;
+					//mousePosition = changedMouseList[i].newMousePosition;
+
+					InputMousePosition mousePos = changedMouseList[i].newMousePosition;
+					Vector3 tempMouseWorldPos = new Vector3(mousePos.inputX, mousePos.inputY, mousePos.inputZ);
+					Vector3 tempMouseScreenPos = Camera.main.WorldToScreenPoint(tempMouseWorldPos);
+					InputMousePosition mousePosScreen = new InputMousePosition();
+					mousePosScreen.inputX = tempMouseScreenPos.x;
+					mousePosScreen.inputY = tempMouseScreenPos.y;
+					mousePosScreen.inputZ = tempMouseScreenPos.z;
+					//mousePosition = new InputMousePosition(tempMouseScreenPos.x, tempMouseScreenPos.y, tempMouseScreenPos.z);
+					mousePosition = mousePosScreen;
+
 					changedMouseList.RemoveAt(i);
 				}else{
 					return;
@@ -731,6 +767,7 @@ public class InputKeeper : MonoBehaviour {
 	{
 		Vector3 tempPosition = new Vector3(mousePosition.inputX, mousePosition.inputY, mousePosition.inputZ);
 		Vector3 tempPositionScreen = Camera.main.WorldToScreenPoint (tempPosition);
-		return tempPositionScreen;
+		return tempPosition;
+		//return tempPositionScreen;
 	}
 }
