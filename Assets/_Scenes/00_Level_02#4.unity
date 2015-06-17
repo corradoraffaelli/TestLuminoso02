@@ -727,6 +727,7 @@ MonoBehaviour:
   m_SubmitButton: Submit
   m_CancelButton: Cancel
   m_InputActionsPerSecond: 10
+  m_RepeatDelay: .5
   m_AllowActivationOnMobileDevice: 0
 --- !u!114 &93276563
 MonoBehaviour:
@@ -8637,6 +8638,7 @@ PlatformEffector2D:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1006547329}
   m_Enabled: 1
+  m_UseColliderMask: 1
   m_ColliderMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -9065,6 +9067,7 @@ PlatformEffector2D:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1067978660}
   m_Enabled: 1
+  m_UseColliderMask: 1
   m_ColliderMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -15073,6 +15076,7 @@ GameObject:
   m_IsActive: 1
 --- !u!50 &1862115346
 Rigidbody2D:
+  serializedVersion: 2
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
@@ -15081,11 +15085,11 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: .0500000007
   m_GravityScale: 1
-  m_FixedAngle: 1
   m_IsKinematic: 0
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
+  m_Constraints: 4
 --- !u!61 &1862115347
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -15315,42 +15319,6 @@ Prefab:
     - target: {fileID: 474156, guid: f4c01e0da7972514b8345910753c5ecd, type: 2}
       propertyPath: m_RootOrder
       value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 11484882, guid: f4c01e0da7972514b8345910753c5ecd, type: 2}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 11478616, guid: f4c01e0da7972514b8345910753c5ecd, type: 2}
-      propertyPath: changeRatioIfAiming
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 11478616, guid: f4c01e0da7972514b8345910753c5ecd, type: 2}
-      propertyPath: changeSize
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 11478616, guid: f4c01e0da7972514b8345910753c5ecd, type: 2}
-      propertyPath: onlyIfAiming
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 11478616, guid: f4c01e0da7972514b8345910753c5ecd, type: 2}
-      propertyPath: standardRatioDistance
-      value: .150000006
-      objectReference: {fileID: 0}
-    - target: {fileID: 11478616, guid: f4c01e0da7972514b8345910753c5ecd, type: 2}
-      propertyPath: enlargment
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 11478616, guid: f4c01e0da7972514b8345910753c5ecd, type: 2}
-      propertyPath: ratioBeforeEnlargment
-      value: .5
-      objectReference: {fileID: 0}
-    - target: {fileID: 11478616, guid: f4c01e0da7972514b8345910753c5ecd, type: 2}
-      propertyPath: cameraOnPlayer
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 11478616, guid: f4c01e0da7972514b8345910753c5ecd, type: 2}
-      propertyPath: fixedChangedSize
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f4c01e0da7972514b8345910753c5ecd, type: 2}
