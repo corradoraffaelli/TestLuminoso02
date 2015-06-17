@@ -196,8 +196,9 @@ public class MagicLantern : Tool {
 				if (previousState != lanternState.NotUsed)
 					callParticles();
 					
-
+				graphicLantern.setSuperSortingLayer();
 				graphicLantern.switchOnLantern();
+				graphicLantern.switchSupport(false);
 				graphicLantern.takeLantern();
 
 				if (!collidingBadWall)
@@ -253,6 +254,7 @@ public class MagicLantern : Tool {
 			//AZIONI DA FARE APPENA LA LANTERNA E' LASCIATA A TERRA
 			if (previousState != actualState)
 			{
+				graphicLantern.switchSupport();
 				graphicLantern.leaveLantern();
 				graphicLantern.changeAlphaFakeProjectionSprite(0.0f);
 
@@ -310,7 +312,12 @@ public class MagicLantern : Tool {
 		}
 
 		if (actualState != lanternState.InHand) {
-			audioHandler.stopClipByName("Mira");
+			if (previousState == lanternState.InHand)
+			{
+				graphicLantern.setSuperSortingLayer(false);
+				audioHandler.stopClipByName("Mira");
+			}
+
 		}
 
 		//aggiorno il previousState con quello attuale, al prossimo frame servirà per i controlli

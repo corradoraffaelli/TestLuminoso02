@@ -261,6 +261,8 @@ public class PlayingUI : MonoBehaviour {
 						UnityEngine.UI.Image tempImage = spritesGroup[i].imagesObject[j].AddComponent<UnityEngine.UI.Image>();
 						RectTransform rectTransform = spritesGroup[i].imagesObject[j].GetComponent<RectTransform>();
 
+						spritesGroup[i].imagesObject[j].name = pos.ToString() + "_" + j;
+
 						//a seconda della posizione setto parametri particolari
 						if (spritesGroup[i].position == UIPosition.UpperRight)
 						{
@@ -550,6 +552,8 @@ public class PlayingUI : MonoBehaviour {
 					//creo l'oggetto che contiene il component di tipo image
 					spritesGroup[i].imageButtonObject = new GameObject();
 					spritesGroup[i].imageButtonObject.transform.parent = transform;
+
+					spritesGroup[i].imageButtonObject.name = pos.ToString() + "_Button";
 					
 					//prendo i riferimenti ai component
 					UnityEngine.UI.Image tempImage = spritesGroup[i].imageButtonObject.AddComponent<UnityEngine.UI.Image>();

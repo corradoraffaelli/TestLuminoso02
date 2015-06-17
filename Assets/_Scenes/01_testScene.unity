@@ -367,6 +367,7 @@ HingeJoint2D:
     m_UpperAngle: 359
 --- !u!50 &48089311
 Rigidbody2D:
+  serializedVersion: 2
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
@@ -375,11 +376,11 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: .0500000007
   m_GravityScale: 1
-  m_FixedAngle: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!212 &48089312
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -657,6 +658,7 @@ MonoBehaviour:
   m_SubmitButton: Submit
   m_CancelButton: Cancel
   m_InputActionsPerSecond: 10
+  m_RepeatDelay: .5
   m_AllowActivationOnMobileDevice: 0
 --- !u!114 &93276563
 MonoBehaviour:
@@ -3092,7 +3094,7 @@ Prefab:
         type: 3}
     - target: {fileID: 11442146, guid: e5b8a6fc8d1506a4eb0de02965cd896c, type: 2}
       propertyPath: activable
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 11483678, guid: e5b8a6fc8d1506a4eb0de02965cd896c, type: 2}
       propertyPath: usable
@@ -3284,6 +3286,7 @@ GameObject:
   m_IsActive: 0
 --- !u!50 &929362384
 Rigidbody2D:
+  serializedVersion: 2
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
@@ -3292,11 +3295,11 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: .0500000007
   m_GravityScale: 1
-  m_FixedAngle: 0
   m_IsKinematic: 1
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!4 &929362385
 Transform:
   m_ObjectHideFlags: 0
@@ -3327,7 +3330,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 977038496}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 765bdb1b37be8a24cbcbab9b7732238c, type: 3}
   m_Name: 
@@ -3371,6 +3374,84 @@ MonoBehaviour:
 Transform:
   m_PrefabParentObject: {fileID: 473536, guid: 1a577d0648c1ded4f91c8e36600ddc06, type: 2}
   m_PrefabInternal: {fileID: 1344314696}
+--- !u!1 &1035204475 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 116578, guid: 577134dccd1409045adcbafc8b5ff266, type: 2}
+  m_PrefabInternal: {fileID: 1815973487}
+--- !u!114 &1035204476
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1035204475}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c9a366f14fe7eb4eace6c1119da814a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  right01:
+  - {fileID: 21300000, guid: 96c9ba673362d0242b0a0ee2a215afa2, type: 3}
+  - {fileID: 21300000, guid: 3b26dfce0dd14934f88abd9d0211d77a, type: 3}
+  - {fileID: 21300000, guid: 6db1405cf89ef1942a0b9016009d819e, type: 3}
+  - {fileID: 21300000, guid: d9a7b2b13ea58304e82347648bdf949e, type: 3}
+  - {fileID: 21300000, guid: a8b6754a11e76f348b8066082b6f0087, type: 3}
+  - {fileID: 21300000, guid: a8b6754a11e76f348b8066082b6f0087, type: 3}
+  right02:
+  - {fileID: 21300000, guid: 96c9ba673362d0242b0a0ee2a215afa2, type: 3}
+  - {fileID: 21300000, guid: 3b26dfce0dd14934f88abd9d0211d77a, type: 3}
+  - {fileID: 21300000, guid: 6db1405cf89ef1942a0b9016009d819e, type: 3}
+  - {fileID: 21300000, guid: 96801657a6a26894a9684a20bedac64e, type: 3}
+  - {fileID: 21300000, guid: a8b6754a11e76f348b8066082b6f0087, type: 3}
+  - {fileID: 21300000, guid: a8b6754a11e76f348b8066082b6f0087, type: 3}
+  left01:
+  - {fileID: 21300000, guid: 6db1405cf89ef1942a0b9016009d819e, type: 3}
+  - {fileID: 21300000, guid: d9a7b2b13ea58304e82347648bdf949e, type: 3}
+  - {fileID: 21300000, guid: a8b6754a11e76f348b8066082b6f0087, type: 3}
+  left02:
+  - {fileID: 21300000, guid: e5ffbc423cc7a824da7182fa2a365e6b, type: 3}
+  - {fileID: 21300000, guid: 4767e9c423949b8408ef3941c78b5ea0, type: 3}
+  - {fileID: 21300000, guid: 40630d002de383941906438af4e636ad, type: 3}
+  - {fileID: 21300000, guid: 57981149816181640ae69c101d8dce9b, type: 3}
+--- !u!114 &1035204477
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1035204475}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a241d1511eac9b84db14053af2e9eb07, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  exclamationMark: {fileID: 21300000, guid: d324627d699ca744e8f1418a857ed81b, type: 3}
+  spritesGroup:
+  - position: 0
+    backgroundSprite: {fileID: 21300000, guid: 741877f0e48674248bbb8f2c1a38f582, type: 3}
+    size: 1
+    fatherGO: {fileID: 0}
+    fatherRectTransform: {fileID: 0}
+    showing: 0
+    hiding: 1
+    spritesGroupElement: []
+  - position: 1
+    backgroundSprite: {fileID: 21300000, guid: 741877f0e48674248bbb8f2c1a38f582, type: 3}
+    size: 1
+    fatherGO: {fileID: 0}
+    fatherRectTransform: {fileID: 0}
+    showing: 0
+    hiding: 1
+    spritesGroupElement: []
+  positionVariables:
+    YPadding: 68
+    XShowPosition: 60
+    XHidePosition: 60
+    speedChangingPosition: 300
+  sizeVariables:
+    smallSprites: 40
+    normalSprites: 60
+    bigSprites: 80
+    backgroundSize: 450
+    exclamationSize: 30
 --- !u!1001 &1055517188
 Prefab:
   m_ObjectHideFlags: 0
@@ -3425,11 +3506,11 @@ Prefab:
         type: 3}
     - target: {fileID: 11439800, guid: 2e3cd22ce826fbf4d90c3c4aee10c4b9, type: 2}
       propertyPath: canBeEnabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 11439800, guid: 2e3cd22ce826fbf4d90c3c4aee10c4b9, type: 2}
       propertyPath: usable
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 11439800, guid: 2e3cd22ce826fbf4d90c3c4aee10c4b9, type: 2}
       propertyPath: glassType
@@ -4852,7 +4933,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!212 &1494482752
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -5701,6 +5782,7 @@ BoxCollider2D:
   m_Size: {x: .600000024, y: .600000024}
 --- !u!50 &1708154488
 Rigidbody2D:
+  serializedVersion: 2
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
@@ -5709,11 +5791,11 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: .0500000007
   m_GravityScale: 1
-  m_FixedAngle: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!212 &1708154489
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -5821,6 +5903,7 @@ PlatformEffector2D:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1755345784}
   m_Enabled: 1
+  m_UseColliderMask: 1
   m_ColliderMask:
     serializedVersion: 2
     m_Bits: 4294967295
