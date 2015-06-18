@@ -22,6 +22,8 @@ public class GlassesUIManager : MonoBehaviour {
 	bool actualUseController;
 	bool actualActive;
 
+	int usableGlassesNumber;
+
 	MagicLantern magicLanternLogic;
 
 	void Start () {
@@ -40,10 +42,12 @@ public class GlassesUIManager : MonoBehaviour {
 
 		actualGlass = glassesManager.getActualGlass ();
 		actualUseController = cursorHandler.useController;
+		usableGlassesNumber = glassesManager.getUsableGlassList().Length;
 
 		if (canvasPlayingUI != null && magicLanternLogic.active) {
 			updateUI ();
-			updateButtonUI ();
+			if (usableGlassesNumber > 1)
+				updateButtonUI ();
 		}
 
 	}
@@ -53,13 +57,16 @@ public class GlassesUIManager : MonoBehaviour {
 		if (canvasPlayingUI != null) {
 			if (magicLanternLogic.active)
 			{
+
+
 				if (actualGlass != glassesManager.getActualGlass ()) {
 					actualGlass = glassesManager.getActualGlass ();
 					updateUI();
 					updateModifyUI();
 				}
-				
-				if (actualUseController != cursorHandler.useController) {
+
+				if (actualUseController != cursorHandler.useController || usableGlassesNumber != glassesManager.getUsableGlassList().Length) {
+					usableGlassesNumber = glassesManager.getUsableGlassList().Length;
 					actualUseController = cursorHandler.useController;
 					updateButtonUI();
 					updateModifyUI();
@@ -92,14 +99,28 @@ public class GlassesUIManager : MonoBehaviour {
 		playingUI.updateSpritesOnScreen (PlayingUI.UIPosition.BottomRight);
 	}
 
+	public void removeButtonUI()
+	{
+		playingUI.cleanPositionButtonObject(PlayingUI.UIPosition.BottomRight);
+		playingUI.updateSpritesOnScreen (PlayingUI.UIPosition.BottomRight);
+	}
+
 	public void updateButtonUI()
 	{
-		if (actualUseController)
-			playingUI.setButtonSprite (PlayingUI.UIPosition.BottomRight, controllerSprite);
+		if (glassesManager.getUsableGlassList().Length > 1)
+		{
+			if (actualUseController)
+				playingUI.setButtonSprite (PlayingUI.UIPosition.BottomRight, controllerSprite);
+			else
+				playingUI.setButtonSprite (PlayingUI.UIPosition.BottomRight, keyboardSprite);
+		}
 		else
-			playingUI.setButtonSprite (PlayingUI.UIPosition.BottomRight, keyboardSprite);
-		
+		{
+			playingUI.cleanPositionButtonObject(PlayingUI.UIPosition.BottomRight);
+		}
+
 		playingUI.updateSpritesOnScreen (PlayingUI.UIPosition.BottomRight);
+
 	}
 
 	public void updateModifyUI()

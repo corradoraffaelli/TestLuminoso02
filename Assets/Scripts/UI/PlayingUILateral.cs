@@ -84,7 +84,7 @@ public class PlayingUILateral : MonoBehaviour {
 	SizeVariables sizeVariables;
 
 	//creo i padri che contengono la sprite contenitore
-	public void initializeFather(UIPosition pos)
+	void initializeFather(UIPosition pos)
 	{
 		for (int i = 0; i < spritesGroup.Length; i++) {
 			if (spritesGroup[i].position != null && spritesGroup[i].position == pos)
@@ -285,7 +285,7 @@ public class PlayingUILateral : MonoBehaviour {
 
 	}
 
-	int getSpritesGroupSize(UIPosition pos)
+	public int getSpritesGroupSize(UIPosition pos)
 	{
 		for (int i = 0; i < spritesGroup.Length; i++) {
 			if (spritesGroup[i].position != null && spritesGroup[i].position == pos)
@@ -435,8 +435,8 @@ public class PlayingUILateral : MonoBehaviour {
 			{
 				if (spritesGroup[i].spritesGroupElement != null && spritesGroup[i].spritesGroupElement.Length > index && spritesGroup[i].spritesGroupElement[index] != null && spritesGroup[i].spritesGroupElement[index].imageObject != null)
 					return spritesGroup[i].spritesGroupElement[index].imageObject;
+				break;
 			}
-			break;
 		}
 		return null;
 	}
@@ -448,5 +448,10 @@ public class PlayingUILateral : MonoBehaviour {
 
 	void Update () {
 		moveIcons();
+	}
+
+	public int getXWhenVisible()
+	{
+		return positionVariables.XShowPosition;
 	}
 }

@@ -11,6 +11,8 @@ public class PlayingUITests : MonoBehaviour {
 	public Sprite[] left01;
 	public Sprite[] left02;
 
+	public Sprite glassSprite;
+
 	bool left = true;
 	bool right = true;
 	
@@ -72,9 +74,29 @@ public class PlayingUITests : MonoBehaviour {
 		{
 			PulsingUIElement pulsing = gameObject.AddComponent<PulsingUIElement>();
 			pulsing.setVariables(playingUILateral.getImageObject(PlayingUILateral.UIPosition.Right, 1),10.0f, 1.5f, 4.0f);
+
 			PulsingUIElement pulsing02 = gameObject.AddComponent<PulsingUIElement>();
 			pulsing02.setVariables(playingUI.getImageObject(PlayingUI.UIPosition.UpperRight, 0),10.0f, 1.5f, 4.0f);
+
+
 		}
 			
+		if (Input.GetKeyUp(KeyCode.U))
+		{
+			PickingObjectGraphic pick = gameObject.AddComponent<PickingObjectGraphic>();
+			pick.setVariables(glassSprite, PlayingUI.UIPosition.BottomRight, 0);
+		}
+
+		if (Input.GetKeyUp(KeyCode.Y))
+		{
+			PickingObjectGraphic pick = gameObject.AddComponent<PickingObjectGraphic>();
+			pick.setVariables(glassSprite, PlayingUILateral.UIPosition.Right, 2);
+		}
+
+		if (Input.GetKeyUp(KeyCode.T))
+		{
+			PickingObjectGraphic pick = gameObject.AddComponent<PickingObjectGraphic>();
+			pick.setVariables(glassSprite, PlayingUILateral.UIPosition.Left, 0);
+		}
 	}
 }
