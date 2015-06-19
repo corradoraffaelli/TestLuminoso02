@@ -13,6 +13,8 @@ public class InfoManager : MonoBehaviour {
 
 	GameObject canvasPlayingUI;
 	PlayingUI playingUI;
+
+	bool useController = false;
 	
 	void Start () {
 		canvasPlayingUI = GameObject.FindGameObjectWithTag ("CanvasPlayingUI");
@@ -31,20 +33,13 @@ public class InfoManager : MonoBehaviour {
 		if (playingUI != null)
 			playingUI.setSprites (sprites, PlayingUI.UIPosition.UpperRight);
 
-
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-
 		Sprite buttonSprite;
-
+		
 		if (cursorHandler.useController)
 			buttonSprite = controllerButton;
 		else
 			buttonSprite = keyboardButton;
-
+		
 		if (playingUI != null) {
 			playingUI.setButtonSprite (PlayingUI.UIPosition.UpperRight, buttonSprite);
 			
@@ -53,6 +48,33 @@ public class InfoManager : MonoBehaviour {
 			
 			playingUI.updateSpritesOnScreen (PlayingUI.UIPosition.UpperRight);
 		}
+	
+	}
+	
+	// Update is called once per frame
+	void Update () {
+
+		if (useController != cursorHandler.useController)
+		{
+			useController = cursorHandler.useController;
+			Sprite buttonSprite;
+			
+			if (cursorHandler.useController)
+				buttonSprite = controllerButton;
+			else
+				buttonSprite = keyboardButton;
+			
+			if (playingUI != null) {
+				playingUI.setButtonSprite (PlayingUI.UIPosition.UpperRight, buttonSprite);
+				
+				playingUI.setVerticalButton (PlayingUI.UIPosition.UpperRight, false);
+				playingUI.setSpritesSize (PlayingUI.UIPosition.UpperRight, PlayingUI.UISize.Big);
+				
+				playingUI.updateSpritesOnScreen (PlayingUI.UIPosition.UpperRight);
+			}
+		}
+
+
 
 
 	}

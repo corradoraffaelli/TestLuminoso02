@@ -39,7 +39,7 @@ public class PlayingUI : MonoBehaviour {
 		[Range(20, 130)]
 		public int smallSprites = 40;
 		[Range(20, 130)]
-		public int noramlSprites = 60;
+		public int normalSprites = 60;
 		[Range(20, 130)]
 		public int bigSprites = 80;
 		[Range(20, 130)]
@@ -261,6 +261,8 @@ public class PlayingUI : MonoBehaviour {
 						UnityEngine.UI.Image tempImage = spritesGroup[i].imagesObject[j].AddComponent<UnityEngine.UI.Image>();
 						RectTransform rectTransform = spritesGroup[i].imagesObject[j].GetComponent<RectTransform>();
 
+						spritesGroup[i].imagesObject[j].name = pos.ToString() + "_" + j;
+
 						//a seconda della posizione setto parametri particolari
 						if (spritesGroup[i].position == UIPosition.UpperRight)
 						{
@@ -452,7 +454,7 @@ public class PlayingUI : MonoBehaviour {
 	}
 	*/
 
-	int getSpritesGroupSize(UIPosition pos)
+	public int getSpritesGroupSize(UIPosition pos)
 	{
 		for (int i = 0; i < spritesGroup.Length; i++) {
 			if (spritesGroup[i].position != null && spritesGroup[i].position == pos)
@@ -460,7 +462,7 @@ public class PlayingUI : MonoBehaviour {
 				if (spritesGroup[i].size == UISize.Big)
 					return sizeVariables.bigSprites;
 				else if (spritesGroup[i].size == UISize.Normal)
-					return sizeVariables.noramlSprites;
+					return sizeVariables.normalSprites;
 				else if (spritesGroup[i].size == UISize.Small)
 					return sizeVariables.smallSprites;
 			}
@@ -468,6 +470,15 @@ public class PlayingUI : MonoBehaviour {
 		return 0;
 	}
 
+	public float getYPadding()
+	{
+		return distanceVariables.YPadding;
+	}
+
+	public float getXPadding()
+	{
+		return distanceVariables.XPadding;
+	}
 
 	//metodo per settare la sprite del bottone
 	public void setButtonSprite(UIPosition pos, Sprite sprite)
@@ -550,6 +561,8 @@ public class PlayingUI : MonoBehaviour {
 					//creo l'oggetto che contiene il component di tipo image
 					spritesGroup[i].imageButtonObject = new GameObject();
 					spritesGroup[i].imageButtonObject.transform.parent = transform;
+
+					spritesGroup[i].imageButtonObject.name = pos.ToString() + "_Button";
 					
 					//prendo i riferimenti ai component
 					UnityEngine.UI.Image tempImage = spritesGroup[i].imageButtonObject.AddComponent<UnityEngine.UI.Image>();
