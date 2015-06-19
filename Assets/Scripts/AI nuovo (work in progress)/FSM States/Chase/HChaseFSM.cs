@@ -72,7 +72,7 @@ public class HChaseFSM : HStateFSM {
 
 	void initializeChaseParameters(){
 		
-		chasePar = myGameObject.GetComponent<AIParameters> ().chaseParameters;
+		chasePar = gameObject.GetComponent<AIParameters> ().chaseParameters;
 		
 		if (chasePar != null) {
 			if(!getRangeOfView()) {

@@ -102,6 +102,9 @@ public class HStunnedFSM : HStateFSM {
 		par._rigidbody.AddForce(new Vector2(100.0f,300.0f));
 		par._boxCollider.isTrigger = true;
 		par._circleCollider.isTrigger = true;
+
+
+
 		
 	}
 	

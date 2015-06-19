@@ -12,7 +12,7 @@ public class HWanderFSM : HStateFSM {
 
 		myUpdate += wanderUpdate;
 
-		myHandleCollisionEnter += wanderHandleCollisionEnter;
+		myHandleCollisionEnter += checkFlipNeedForCollision;
 
 	}
 	

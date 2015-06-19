@@ -90,7 +90,7 @@ public class HPatrolFSM : HStateFSM {
 			
 		case patrolSubState.Walk :
 			myUpdate += updatePatrolWalk;
-			myHandleCollisionEnter += wanderHandleCollisionEnter;
+			myHandleCollisionEnter += checkFlipNeedForCollision;
 			break;
 			
 		case patrolSubState.Area :
@@ -135,7 +135,7 @@ public class HPatrolFSM : HStateFSM {
 
 	void initializePatrolParameters(){
 		
-		patrolPar = myGameObject.GetComponent<AIParameters> ().patrolParameters;
+		patrolPar = gameObject.GetComponent<AIParameters> ().patrolParameters;
 		
 		if (patrolPar != null) {
 			if(!getRangeOfView()) {
