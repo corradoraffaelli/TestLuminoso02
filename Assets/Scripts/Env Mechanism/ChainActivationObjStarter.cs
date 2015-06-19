@@ -161,6 +161,12 @@ public class ChainActivationObjStarter : MonoBehaviour {
 		
 		
 	}
+
+	public void c_manualActivation() {
+
+		firstChainPiece.SendMessage("buttonPushed", true);
+
+	}
 	
 	
 }

@@ -312,7 +312,7 @@ public class CursorHandler : MonoBehaviour {
 			}
 			else
 			{
-				Debug.Log ("non si muove");
+				//Debug.Log ("non si muove");
 				if ((playerMovements.isRunning() && playerMovements.onGround) || !playerMovements.onGround)
 				{
 					if (((useController && movingAfterController) || !useController))

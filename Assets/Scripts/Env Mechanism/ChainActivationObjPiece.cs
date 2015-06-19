@@ -76,6 +76,9 @@ public class ChainActivationObjPiece : MonoBehaviour {
 	private bool canReturn = true;
 	
 	killWhatever kw;
+
+	public bool sequenceButtonCase = false;
+	public float stepMax = 0;
 	
 	// Use this for initialization
 	void Start () {
@@ -279,7 +282,7 @@ public class ChainActivationObjPiece : MonoBehaviour {
 		case movementTyp.Translation:
 
 			dist = target - myTrasform.position;
-			if(dist.magnitude < 0.1f) {
+			if(dist.magnitude < 0.1f ) {
 
 				if(isForward)
 					transform.position = new Vector3(targetPos.position.x, targetPos.position.y, transform.position.z);
@@ -291,6 +294,25 @@ public class ChainActivationObjPiece : MonoBehaviour {
 
 				return true;
 			}
+
+			//TODO: PARTESEQUENCE NOTSAFE
+			if(sequenceButtonCase && isForward) {
+
+				if(dist.magnitude < (0.1f + distanceToCover * (1.0f - stepMax*0.16f)) ) {
+					
+					if(DEBUG_transition)
+						Debug.Log ("STEP arrived translation");
+					
+					return true;
+				}
+
+			}
+			else {
+				if(DEBUG_transition)
+					Debug.Log ("distanza : " + dist.magnitude + " limite : " + (distanceToCover * (1.0f - stepMax*0.05f)) );
+
+			}
+
 			break;
 			
 		case movementTyp.Rotation:
@@ -537,8 +559,26 @@ public class ChainActivationObjPiece : MonoBehaviour {
 
 	}
 
-	public void buttonPushed(bool bp){
-		
+	public void buttonPushed(bool bp, float _stepMax = -1){
+
+		//just for sequence buttons
+		//TODO: PARTESEQUENCE NOTSAFE
+		if (sequenceButtonCase) {
+
+			if(bp) {
+				forwardActionEnable = true;
+				backwardActionEnable = false;
+				//canReturn = false;
+			}
+			else {
+				forwardActionEnable = false;
+				backwardActionEnable = true;
+				//canReturn = true;
+			}
+			stepMax = _stepMax;
+
+			return;
+		}
 		switch (endActionType) {
 			
 		case endReactionType.ComeBack :
