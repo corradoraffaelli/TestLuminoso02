@@ -31,13 +31,13 @@ public class HFleeFSM : HStateFSM {
 		
 		myUpdate += fleeUpdate;
 		
-		myHandleCollisionEnter += wanderHandleCollisionEnter;
+		myHandleCollisionEnter += checkFlipNeedForCollision;
 		
 	}
 
 	void initializePatrolParameters(){
 		
-		fleePar = myGameObject.GetComponent<AIParameters> ().fleeParameters;
+		fleePar = gameObject.GetComponent<AIParameters> ().fleeParameters;
 
 	}
 

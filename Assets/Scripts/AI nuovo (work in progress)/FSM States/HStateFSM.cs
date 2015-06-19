@@ -8,8 +8,11 @@ using System.Collections;
 public class HStateFSM {
 
 	#region VARIABLES
-	protected GameObject myGameObject;
-	
+	protected GameObject gameObject;
+
+	protected int defaultLayer;
+	protected int deadLayer;
+
 	protected string stateName;
 	public string StateName {
 		get{ return stateName;}
@@ -64,7 +67,7 @@ public class HStateFSM {
 		
 		get{ 
 			if(myTransform==null)
-				myTransform = myGameObject.transform;
+				myTransform = gameObject.transform;
 			
 			return myTransform;}
 		
@@ -224,7 +227,7 @@ public class HStateFSM {
 
 		stateId = _stateId;
 
-		myGameObject = _gameo;
+		gameObject = _gameo;
 
 		myHLevel = _hLevel;
 
@@ -235,24 +238,23 @@ public class HStateFSM {
 
 		//states = _states;
 
-		agentScript = myGameObject.GetComponent<AIAgent1> ();
+		agentScript = gameObject.GetComponent<AIAgent1> ();
 
 
 
-		//TODO : NOW
+
 		agentScript = _scriptAIAgent;
 
-		//if (agentScript == null) {
-		//	Debug.Log ("ATTENZIONE - script AIAgent non trovato");
-		//}
+		defaultLayer = gameObject.layer;
+		deadLayer = LayerMask.NameToLayer("");
 		
-		playerScript = myGameObject.GetComponent<PlayerMovements> ();
+		playerScript = gameObject.GetComponent<PlayerMovements> ();
 		
 		if (playerScript == null) {
 			Debug.Log ("ATTENZIONE - script PlayerMovements non trovato");
 		}
 		
-		par = myGameObject.GetComponent<AIParameters> ();
+		par = gameObject.GetComponent<AIParameters> ();
 		
 		if (par == null) {
 			Debug.Log ("ATTENZIONE - script AIParameters non trovato");
@@ -743,7 +745,7 @@ public class HStateFSM {
 		
 	}
 
-	protected void wanderHandleCollisionEnter(Collision2D c) {
+	protected void checkFlipNeedForCollision(Collision2D c) {
 		
 		#if _DEBUG
 			Debug.Log ("COLL - entrato in collisione con " + c.gameObject.name);
@@ -751,11 +753,44 @@ public class HStateFSM {
 			
 		
 		if (c.gameObject.tag != "Player") {
-			Debug.Log("collisione! mi flippo!");
-			i_flip();
+
+			if(!isUnderMyFeet(c)) {
+
+				#if _DEBUG
+				Debug.Log("Collisione! mi flippo!");ame);
+				#endif
+
+				i_flip();
 			
+			}
 		}
 		
+	}
+
+	bool isUnderMyFeet(Collision2D c) {
+
+		GameObject collisionObj = c.gameObject;
+
+		BoxCollider2D bc = collisionObj.GetComponent<BoxCollider2D> ();
+
+		ContactPoint2D []contactPoints =  c.contacts;
+
+		bool underMyFeet = false;
+
+		foreach (ContactPoint2D cp in contactPoints) {
+
+			Debug.Log ("I'm at : x " + transform.position.x + " y " + transform.position.y + " and the contact point is at : x " + cp.point.x + " y " + cp.point.y);
+
+			//TODO: dovrei prendere meglio le misure, in base alla larghezza del player, o meglio, del suo collider
+			if( (cp.point.x - transform.position.x) > 0.3f)
+				underMyFeet = false;
+			else
+				underMyFeet = true;
+
+		}
+
+		return underMyFeet;
+
 	}
 
 	protected void moveTowardTarget(GameObject myTarget, float speed) {
@@ -1013,6 +1048,11 @@ public class HStateFSM {
 		}
 
 		return false;
+
+	}
+
+	protected void changeLayer(string layerName) {
+
 
 	}
 
