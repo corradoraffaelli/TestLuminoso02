@@ -4,11 +4,34 @@ using System.Collections;
 public class CheckPointUpdate : MonoBehaviour {
 
 	public bool respawnPosition = true;
-
 	public bool defaultVerseRight = true;
+
+	public bool gameStarterCheckpoint = false;
 	
 	private GameObject controller;
 	private GameObject respawnPoint;
+
+	public int optionalOrder = -1;
+
+	public Transform respawnTransform {
+		
+		get {
+			foreach(Transform child in transform) {
+
+				if(child.name=="Light") {
+
+					return child.transform;
+
+				}
+
+
+			}
+
+			return transform;
+			
+		}
+		
+	}
 
 
 	void Start () {
@@ -87,8 +110,9 @@ public class CheckPointUpdate : MonoBehaviour {
 	private void setRespawnPosition(bool recursive = false){
 		
 		if (respawnPoint != null) {
-			
-			respawnPoint.transform.position = transform.position;
+			//TODO : change
+			//respawnPoint.transform.position = transform.position;
+			respawnPoint.transform.position = respawnTransform.position;
 			respawnPoint.transform.localScale = new Vector3 ((defaultVerseRight ? 1.0f : -1.0f), respawnPoint.transform.localScale.y, respawnPoint.transform.localScale.z);
 		} 
 		else {

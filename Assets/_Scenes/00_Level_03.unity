@@ -498,6 +498,7 @@ BoxCollider2D:
   m_Size: {x: .600000024, y: .600000024}
 --- !u!50 &18705464
 Rigidbody2D:
+  serializedVersion: 2
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
@@ -506,11 +507,11 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: .0500000007
   m_GravityScale: 1
-  m_FixedAngle: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!212 &18705465
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -894,6 +895,7 @@ BoxCollider2D:
   m_Size: {x: .600000024, y: .600000024}
 --- !u!50 &43522123
 Rigidbody2D:
+  serializedVersion: 2
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
@@ -902,11 +904,11 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: .0500000007
   m_GravityScale: 1
-  m_FixedAngle: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!212 &43522124
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1207,6 +1209,7 @@ Transform:
   m_RootOrder: 5
 --- !u!50 &53454844
 Rigidbody2D:
+  serializedVersion: 2
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
@@ -1215,11 +1218,11 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: .0500000007
   m_GravityScale: 1
-  m_FixedAngle: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!61 &53454845
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2148,6 +2151,7 @@ MonoBehaviour:
   m_SubmitButton: Submit
   m_CancelButton: Cancel
   m_InputActionsPerSecond: 10
+  m_RepeatDelay: .5
   m_AllowActivationOnMobileDevice: 0
 --- !u!114 &93276563
 MonoBehaviour:
@@ -2465,6 +2469,48 @@ Prefab:
 Transform:
   m_PrefabParentObject: {fileID: 453848, guid: 4f8ce935f1493450fb52beeda608187f, type: 2}
   m_PrefabInternal: {fileID: 118572160}
+--- !u!1001 &119324183
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 590893073}
+    m_Modifications:
+    - target: {fileID: 440636, guid: 0f6691a25cead471290659e0af28dfc8, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 19.0799999
+      objectReference: {fileID: 0}
+    - target: {fileID: 440636, guid: 0f6691a25cead471290659e0af28dfc8, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 22.6200008
+      objectReference: {fileID: 0}
+    - target: {fileID: 440636, guid: 0f6691a25cead471290659e0af28dfc8, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: -.300000012
+      objectReference: {fileID: 0}
+    - target: {fileID: 440636, guid: 0f6691a25cead471290659e0af28dfc8, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 440636, guid: 0f6691a25cead471290659e0af28dfc8, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 440636, guid: 0f6691a25cead471290659e0af28dfc8, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 440636, guid: 0f6691a25cead471290659e0af28dfc8, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 440636, guid: 0f6691a25cead471290659e0af28dfc8, type: 2}
+      propertyPath: m_RootOrder
+      value: 6
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 0f6691a25cead471290659e0af28dfc8, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1001 &124738781
 Prefab:
   m_ObjectHideFlags: 0
@@ -3274,6 +3320,7 @@ HingeJoint2D:
     m_UpperAngle: 359
 --- !u!50 &170433737
 Rigidbody2D:
+  serializedVersion: 2
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
@@ -3282,11 +3329,11 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: .0500000007
   m_GravityScale: 1
-  m_FixedAngle: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!58 &170433738
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -8395,15 +8442,18 @@ BoxCollider2D:
   m_Size: {x: 11.25, y: 16.2800007}
 --- !u!249 &389213883
 AreaEffector2D:
+  serializedVersion: 2
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 389213879}
   m_Enabled: 1
+  m_UseColliderMask: 1
   m_ColliderMask:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_ForceDirection: 90
+  m_UseGlobalAngle: 1
+  m_ForceAngle: 90
   m_ForceMagnitude: 16
   m_ForceVariation: 0
   m_Drag: 0
@@ -10614,6 +10664,7 @@ BoxCollider2D:
   m_Size: {x: .600000024, y: .600000024}
 --- !u!50 &538884112
 Rigidbody2D:
+  serializedVersion: 2
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
@@ -10622,11 +10673,11 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: .0500000007
   m_GravityScale: 1
-  m_FixedAngle: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!212 &538884113
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -10722,103 +10773,10 @@ Transform:
   - {fileID: 1945128969}
   m_Father: {fileID: 1061924453}
   m_RootOrder: 6
---- !u!1 &552346710
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 552346712}
-  - 82: {fileID: 552346711}
-  m_Layer: 0
-  m_Name: Music
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!82 &552346711
-AudioSource:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 552346710}
-  m_Enabled: 1
-  serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 51e0aacb041c2a64d9b8ead7b5c00532, type: 3}
-  m_PlayOnAwake: 1
-  m_Volume: 1
-  m_Pitch: 1
-  Loop: 1
-  Mute: 0
-  Priority: 128
-  DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
-  Pan2D: 0
-  rolloffMode: 0
-  BypassEffects: 0
-  BypassListenerEffects: 0
-  BypassReverbZones: 0
-  rolloffCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    - time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-  panLevelCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-  spreadCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-  reverbZoneMixCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
---- !u!4 &552346712
+--- !u!4 &552346712 stripped
 Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 552346710}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 19.0799999, y: 22.6200008, z: -.300000012}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 590893073}
-  m_RootOrder: 6
+  m_PrefabParentObject: {fileID: 440636, guid: 0f6691a25cead471290659e0af28dfc8, type: 2}
+  m_PrefabInternal: {fileID: 119324183}
 --- !u!1 &555833056
 GameObject:
   m_ObjectHideFlags: 0
@@ -12879,6 +12837,7 @@ MonoBehaviour:
   active: 0
 --- !u!50 &644395794
 Rigidbody2D:
+  serializedVersion: 2
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
@@ -12887,11 +12846,11 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: .0500000007
   m_GravityScale: 1
-  m_FixedAngle: 0
   m_IsKinematic: 1
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!4 &646544612 stripped
 Transform:
   m_PrefabParentObject: {fileID: 453848, guid: 4f8ce935f1493450fb52beeda608187f, type: 2}
@@ -16036,15 +15995,18 @@ BoxCollider2D:
   m_Size: {x: 118.57, y: 16.2800007}
 --- !u!249 &811913863
 AreaEffector2D:
+  serializedVersion: 2
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 811913859}
   m_Enabled: 1
+  m_UseColliderMask: 1
   m_ColliderMask:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_ForceDirection: 0
+  m_UseGlobalAngle: 1
+  m_ForceAngle: 0
   m_ForceMagnitude: 10
   m_ForceVariation: 0
   m_Drag: 0
@@ -18991,6 +18953,7 @@ WheelJoint2D:
     m_MaximumMotorForce: 10000
 --- !u!50 &966602994
 Rigidbody2D:
+  serializedVersion: 2
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
@@ -18999,11 +18962,11 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: .0500000007
   m_GravityScale: 1
-  m_FixedAngle: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!212 &966602995
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -19512,6 +19475,7 @@ WheelJoint2D:
     m_MaximumMotorForce: 10000
 --- !u!50 &983818444
 Rigidbody2D:
+  serializedVersion: 2
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
@@ -19520,11 +19484,11 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: .0500000007
   m_GravityScale: 1
-  m_FixedAngle: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!212 &983818445
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -20257,15 +20221,18 @@ BoxCollider2D:
   m_Size: {x: 118.57, y: 22.25}
 --- !u!249 &1025777956
 AreaEffector2D:
+  serializedVersion: 2
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1025777954}
   m_Enabled: 1
+  m_UseColliderMask: 1
   m_ColliderMask:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_ForceDirection: 0
+  m_UseGlobalAngle: 1
+  m_ForceAngle: 0
   m_ForceMagnitude: 10
   m_ForceVariation: 0
   m_Drag: 0
@@ -20528,15 +20495,18 @@ BoxCollider2D:
   m_Size: {x: 36.9000015, y: 5}
 --- !u!249 &1053008588
 AreaEffector2D:
+  serializedVersion: 2
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1053008584}
   m_Enabled: 1
+  m_UseColliderMask: 1
   m_ColliderMask:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_ForceDirection: 0
+  m_UseGlobalAngle: 1
+  m_ForceAngle: 0
   m_ForceMagnitude: 16
   m_ForceVariation: 0
   m_Drag: 0
@@ -21077,6 +21047,7 @@ BoxCollider2D:
   m_Size: {x: .600000024, y: .600000024}
 --- !u!50 &1079987265
 Rigidbody2D:
+  serializedVersion: 2
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
@@ -21085,11 +21056,11 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: .0500000007
   m_GravityScale: 1
-  m_FixedAngle: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!212 &1079987266
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -22376,6 +22347,7 @@ BoxCollider2D:
   m_Size: {x: .600000024, y: .600000024}
 --- !u!50 &1156834093
 Rigidbody2D:
+  serializedVersion: 2
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
@@ -22384,11 +22356,11 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: .0500000007
   m_GravityScale: 1
-  m_FixedAngle: 0
   m_IsKinematic: 1
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!4 &1157546955 stripped
 Transform:
   m_PrefabParentObject: {fileID: 453848, guid: 4f8ce935f1493450fb52beeda608187f, type: 2}
@@ -26327,6 +26299,7 @@ HingeJoint2D:
     m_UpperAngle: 359
 --- !u!50 &1357169648
 Rigidbody2D:
+  serializedVersion: 2
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
@@ -26335,11 +26308,11 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: .0500000007
   m_GravityScale: 1
-  m_FixedAngle: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!58 &1357169649
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -28397,6 +28370,7 @@ BoxCollider2D:
   m_Size: {x: 4.51000023, y: 1}
 --- !u!50 &1487994920
 Rigidbody2D:
+  serializedVersion: 2
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
@@ -28405,11 +28379,11 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: .0500000007
   m_GravityScale: 1
-  m_FixedAngle: 0
   m_IsKinematic: 1
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!114 &1487994921
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -29409,6 +29383,7 @@ MonoBehaviour:
   lerpSpeed: 1
 --- !u!50 &1571773153
 Rigidbody2D:
+  serializedVersion: 2
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
@@ -29417,11 +29392,11 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: .0500000007
   m_GravityScale: 1
-  m_FixedAngle: 0
   m_IsKinematic: 1
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!61 &1571773154
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -35388,15 +35363,18 @@ BoxCollider2D:
   m_Size: {x: 50, y: 26.6100006}
 --- !u!249 &1948767934
 AreaEffector2D:
+  serializedVersion: 2
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1948767930}
   m_Enabled: 1
+  m_UseColliderMask: 1
   m_ColliderMask:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_ForceDirection: 180
+  m_UseGlobalAngle: 1
+  m_ForceAngle: 180
   m_ForceMagnitude: 25
   m_ForceVariation: 0
   m_Drag: 0
@@ -38563,15 +38541,18 @@ BoxCollider2D:
   m_Size: {x: 118.57, y: 22.25}
 --- !u!249 &2143496737
 AreaEffector2D:
+  serializedVersion: 2
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2143496733}
   m_Enabled: 1
+  m_UseColliderMask: 1
   m_ColliderMask:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_ForceDirection: 0
+  m_UseGlobalAngle: 1
+  m_ForceAngle: 0
   m_ForceMagnitude: 10
   m_ForceVariation: 0
   m_Drag: 0
