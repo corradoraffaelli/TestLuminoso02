@@ -84,6 +84,8 @@ public class HStunnedFSM : HStateFSM {
 
 		startStunnedTime = Time.time;
 
+		setEnemiesStunnedLayer ();
+
 	}
 
 	protected void killingStunnedInitialize(ref object ob){
@@ -95,13 +97,15 @@ public class HStunnedFSM : HStateFSM {
 		i_stunned (true);
 		
 		handleKillo ();
+
+		setDeadLayer ();
 	}
 
 	protected void handleKillo() {
 
-		par._rigidbody.AddForce(new Vector2(100.0f,300.0f));
-		par._boxCollider.isTrigger = true;
-		par._circleCollider.isTrigger = true;
+		_rigidbody.AddForce(new Vector2(100.0f,300.0f));
+		_boxCollider.isTrigger = true;
+		_circleCollider.isTrigger = true;
 
 
 
@@ -131,6 +135,8 @@ public class HStunnedFSM : HStateFSM {
 		//finishStunned = false;
 		i_stunned (false);
 		//TODO: inserire altra roba per cui serve riattivare altro...
+		setDefaultLayer ();
+
 		return null;
 	}
 

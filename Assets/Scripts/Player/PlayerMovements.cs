@@ -1206,7 +1206,9 @@ public class PlayerMovements : MonoBehaviour {
 
 		if (Time.time > tStartStunned + tToReturnFromStunned) {
 			stunned = false;
-			gameObject.layer = convertBinToDec(PlayerLayer.value);
+
+			if(!AIControl)
+				gameObject.layer = LayerMask.NameToLayer("Player"); //convertBinToDec(PlayerLayer.value);
 			//myToStun.layer = convertBinToDec(PlayerLayer.value);
 			//anim.SetBool ("Stunned", false);
 			//Debug.Log ("fin (e STUNNNNNNN");
@@ -1257,7 +1259,9 @@ public class PlayerMovements : MonoBehaviour {
 				stunned = true;
 				if(!AIControl) {
 					tStartStunned = Time.time;
-					gameObject.layer = convertBinToDec(PlayerStunnedLayer.value);
+
+					if(!AIControl)
+						gameObject.layer = LayerMask.NameToLayer("PlayerStunned");// convertBinToDec(PlayerStunnedLayer.value);
 					//myToStun.layer = convertBinToDec(PlayerStunnedLayer.value);
 					
 				}
@@ -1267,12 +1271,12 @@ public class PlayerMovements : MonoBehaviour {
 		else {
 			
 			//parte di codice chiamata ESCLUSIVAMENTE da AI quando si esce da stunned
-			
-			//anim.SetBool ("Stunned", false);
-			gameObject.layer = convertBinToDec(PlayerLayer.value);
+
+			if(!AIControl)
+				gameObject.layer = LayerMask.NameToLayer("Player");//convertBinToDec(PlayerLayer.value);
+
 			stunned = false;
-			//myToStun.layer = convertBinToDec(PlayerLayer.value);
-			//qualcosa per riporlarlo allo stato idle
+
 		}
 		
 	}

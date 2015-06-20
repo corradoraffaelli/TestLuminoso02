@@ -19,7 +19,7 @@ public class killWhatever : MonoBehaviour {
 		if (c.gameObject.tag == "Player" || c.gameObject.tag == "Enemy") {
 
 			
-			Debug.Log ("entro");
+			//Debug.Log ("entro");
 
 			if(crusher) {
 				objectToCrush = c.gameObject;
@@ -29,7 +29,7 @@ public class killWhatever : MonoBehaviour {
 			}
 
 			else {
-				Debug.Log ("uccido e io sono" + gameObject.name);
+				//Debug.Log ("uccido e io sono" + gameObject.name);
 				c.gameObject.SendMessage("c_instantKill");
 				
 				if(oneKill)
@@ -41,7 +41,7 @@ public class killWhatever : MonoBehaviour {
 	}
 
 	private IEnumerator handleCrushKill() {
-		Debug.Log ("routine inizio");
+		//Debug.Log ("routine inizio");
 		yield return new WaitForSeconds (0.3f);
 
 		if (turnOn && objectToCrush != null) {

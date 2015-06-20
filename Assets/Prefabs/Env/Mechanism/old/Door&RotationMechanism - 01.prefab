@@ -239,6 +239,7 @@ Transform:
   m_RootOrder: 0
 --- !u!50 &5051076
 Rigidbody2D:
+  serializedVersion: 2
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
@@ -247,11 +248,11 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: .0500000007
   m_GravityScale: 1
-  m_FixedAngle: 0
   m_IsKinematic: 1
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!61 &6115490
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -342,7 +343,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 048d87fddbbb94826814971213e361c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  firstChainPiece: {fileID: 161132}
+  firstChainPieceObj: {fileID: 0}
   triggerTagList:
   - WindPrefab
   NeedInteractionButton: 0
@@ -383,6 +384,8 @@ MonoBehaviour:
   nextChainPiece: {fileID: 173698}
   tForwardLenght: 3
   tBackwardLenght: 4
+  sequenceButtonCase: 0
+  stepMax: 0
 --- !u!114 &11492622
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -406,6 +409,8 @@ MonoBehaviour:
   nextChainPiece: {fileID: 0}
   tForwardLenght: 3
   tBackwardLenght: 4
+  sequenceButtonCase: 0
+  stepMax: 0
 --- !u!212 &21221360
 SpriteRenderer:
   m_ObjectHideFlags: 1

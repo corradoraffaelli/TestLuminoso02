@@ -128,12 +128,12 @@ public class ButtonSequenceHandler : MonoBehaviour {
 
 			if(actualIndex==buttons.Length) {
 
-				doorScript.buttonPushed(true, 6.25f);
+				doorScript.c_buttonPushed(true, 6.25f);
 				
 			}
 			else {
 
-				doorScript.buttonPushed(true, actualIndex);
+				doorScript.c_buttonPushed(true, actualIndex);
 
 			}
 		}
@@ -236,7 +236,7 @@ public class ButtonSequenceHandler : MonoBehaviour {
 
 		if (feedbackType == buttonSequenceType.ImmediateFeedback) {
 
-			doorScript.buttonPushed(false, 0);
+			doorScript.c_buttonPushed(false, 0);
 
 		}
 

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class streetLampCheckpoint : MonoBehaviour {
+public class streetLampAnimation : MonoBehaviour {
 
 	SpriteRenderer lampLight;
 	SpriteRenderer lampConeLight;
@@ -77,7 +77,7 @@ public class streetLampCheckpoint : MonoBehaviour {
 		lampLight.enabled = true;
 		lampConeLight.enabled = true;
 
-		for (int i=1; i<7; i++) {
+		for (int i=1; i<5; i++) {
 
 			yield return new WaitForSeconds (0.05f + (0.3f / i));
 

@@ -18,7 +18,25 @@ public class AIAgent1 : MonoBehaviour {
 	protected int prevActiveStateIndex = 0;
 	
 	protected AIParameters par;
-	
+
+	public GameObject Spawner {
+		get{
+			if (par != null) {
+				if (par.Spawner != null) {
+					return par.Spawner;
+				}
+			}
+
+			return null;
+		}
+		set {
+			if (par != null) {
+				par.Spawner = value;
+
+			}
+
+		}
+	}
 	//DEBUG
 
 	bool debugPlay = false;
@@ -510,6 +528,33 @@ public class AIAgent1 : MonoBehaviour {
 			activeState.myHHandleTriggerEnter (c);
 	}
 
+	public void c_autoDestroy() {
+		
+		checkForSpawner ();
+
+		Destroy (this.gameObject);
+
+		//StartCoroutine(handleDestroy(timer));
+		
+	}
+	
+	private void checkForSpawner() {
+		
+		if (Spawner != null) {
+			
+			Spawner.SendMessage("letsSpawn");
+			//Debug.Log("spawn - enemy");
+			
+		}
+	}
+	
+	private IEnumerator handleLateDestroy(float timer) {
+		
+		yield return new WaitForSeconds(timer);
+		Destroy (this.gameObject);
+		
+	}
+
 
 }
 
@@ -605,6 +650,10 @@ public class HStateRecords {
 		return -1;
 
 	}
+
+
+
+
 
 }
 
