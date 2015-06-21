@@ -7,11 +7,49 @@ using System.Collections;
 
 public class HStateFSM {
 
+	protected AIAgent1 agentScript;
+	protected PlayerMovements playerScript;
+	protected AIParameters par;
+	protected StatusParameters statusPar;
+
 	#region VARIABLES
+
 	protected GameObject gameObject;
 
-	protected int defaultLayer;
-	protected int deadLayer;
+	protected int defaultLayer {
+		get{
+			if (par != null) {
+				return par.defaultLayer;
+
+			}
+			return -1;
+		}
+		set {
+			if (par != null) {
+				par.defaultLayer = value;
+				
+			}
+
+		}
+
+	}
+	protected int deadLayer {
+		get{
+			if (par != null) {
+				return par.deadLayer;
+				
+			}
+			return -1;
+		}
+		set {
+			if (par != null) {
+				par.deadLayer = value;
+				
+			}
+			
+		}
+		
+	}
 
 	protected string stateName;
 	public string StateName {
@@ -54,10 +92,7 @@ public class HStateFSM {
 
 	//OTHER SCRIPTS
 	
-	protected AIAgent1 agentScript;
-	protected PlayerMovements playerScript;
-	protected AIParameters par;
-	protected StatusParameters statusPar;
+	
 
 	#region QUICKOWNREF
 
@@ -245,8 +280,7 @@ public class HStateFSM {
 
 		agentScript = _scriptAIAgent;
 
-		defaultLayer = gameObject.layer;
-		deadLayer = LayerMask.NameToLayer("");
+
 		
 		playerScript = gameObject.GetComponent<PlayerMovements> ();
 		
@@ -346,7 +380,10 @@ public class HStateFSM {
 	//-----------------------------------------------------------------------------------------------------------------------------------------------
 
 	protected virtual void initializeHState(ref object ob) {
+		#if _DEBUG
 		Debug.Log ("HFSM - entro in stato generico");
+		#endif
+
 
 		if (finalHLevel == true) {
 			
@@ -387,8 +424,11 @@ public class HStateFSM {
 
 			if(myUpdate!=null)
 				myUpdate();
-			else
+			else{
+				#if _DEBUG
 				Debug.Log ("ATTENZIONE - HFSM - update dello stato " + StateName  + " è nulla ");
+				#endif
+			}
 		} 
 		else {
 
@@ -423,7 +463,10 @@ public class HStateFSM {
 	//-----------------------------------------------------------------------------------------------------------------------------------------------
 
 	protected virtual object finalizeHState() {
+		#if _DEBUG
 		Debug.Log ("HFSM - esco da stato generico");
+		#endif
+
 
 		object ob = null;
 
@@ -461,9 +504,10 @@ public class HStateFSM {
 		bool result = false;
 
 		result = checkMyTransitions(ref _nextState);
-		
-		if(result != false)
-			Debug.Log("-> result " + result + ", nextstate : " + _nextState + " post transition of " + StateName);
+
+		//TODO : e qui?
+		//if(result != false)
+			//Debug.Log("-> result " + result + ", nextstate : " + _nextState + " post transition of " + StateName);
 
 		if (!finalHLevel && result==false) {
 
@@ -485,7 +529,7 @@ public class HStateFSM {
 		if (/*HLevel == 0 &&*/ !finalHLevel && result!=false  ) {
 
 			//TODO: come fare per cambiare macro stato
-			Debug.Log ("devo faare qualcosa? sono " + StateName + " e devo passare a " + _nextState.StateName);
+			//Debug.Log ("devo faare qualcosa? sono " + StateName + " e devo passare a " + _nextState.StateName);
 
 			foreach(HStateFSM st in states) {
 
@@ -579,7 +623,9 @@ public class HStateFSM {
 
 	protected void makeHTransition(HStateFSM _nextState) {
 
+		#if _DEBUG
 		Debug.Log ("TRANSIZIONE INTERNA - sono " + stateName + " e passo da " + activeState.StateName + " a " + _nextState.StateName + "++++++++++++++++++++++++++");
+		#endif
 
 		object ob = null;
 
@@ -593,7 +639,10 @@ public class HStateFSM {
 
 		activeState = _nextState;
 
+		#if _DEBUG
 		Debug.Log ("sto per inizializzare " + activeState.stateName);
+		#endif
+
 
 		if(activeState.myInitialize!=null)
 			activeState.myInitialize (ref ob);
@@ -777,17 +826,21 @@ public class HStateFSM {
 
 		bool underMyFeet = false;
 
+		//TODO : scorrere tutti i punti?
 		foreach (ContactPoint2D cp in contactPoints) {
 
-			Debug.Log ("I'm at : x " + transform.position.x + " y " + transform.position.y + " and the contact point is at : x " + cp.point.x + " y " + cp.point.y);
+			//Debug.Log ("I'm at : x " + transform.position.x + " y " + transform.position.y + " and the contact point is at : x " + cp.point.x + " y " + cp.point.y);
 
 			//TODO: dovrei prendere meglio le misure, in base alla larghezza del player, o meglio, del suo collider
-			if( (cp.point.x - transform.position.x) > 0.3f)
+			if( Mathf.Abs(cp.point.x - transform.position.x) > 0.2f)
 				underMyFeet = false;
 			else
 				underMyFeet = true;
 
 		}
+
+		//Debug.Log ("fine punti contatto");
+
 
 		return underMyFeet;
 
@@ -1009,7 +1062,7 @@ public class HStateFSM {
 
 	}
 
-	protected void checkPlayerCollision(Collision2D co) {
+	protected void checkKillPlayerCollision(Collision2D co) {
 		
 		if (co.gameObject.tag == "Player") {
 			//co.gameObject.transform.SendMessage ("c_stunned", true);
@@ -1051,10 +1104,37 @@ public class HStateFSM {
 
 	}
 
-	protected void changeLayer(string layerName) {
+
+	protected void setLayer(int _layer) {
+
+		gameObject.layer = _layer;
 
 
 	}
+
+
+
+	protected void setDefaultLayer() {
+
+		gameObject.layer = defaultLayer;
+
+	}
+
+	protected void setEnemiesStunnedLayer() {
+
+		gameObject.layer = LayerMask.NameToLayer("EnemiesStunned");
+		
+	}
+
+	protected void setDeadLayer() {
+
+		Debug.Log("il deadlayer è " + deadLayer.ToString());
+
+		//gameObject.layer = deadLayer;
+		gameObject.layer = deadLayer;
+		
+	}
+
 
 	#endregion USEFULMETHODS
 

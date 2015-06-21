@@ -3,7 +3,8 @@ using System.Collections;
 
 public class ChainActivationObjStarter : MonoBehaviour {
 	
-	public GameObject firstChainPiece;
+	public GameObject firstChainPieceObj;
+	private ChainActivationObjPiece firstChainPieceScript;
 	public string []triggerTagList;
 	public bool NeedInteractionButton = false;
 	int realTriggerTagListLength;
@@ -15,8 +16,8 @@ public class ChainActivationObjStarter : MonoBehaviour {
 	void Start () {
 		
 		checkTagList ();
-		checkObjectToActivate ();
-		
+		if(checkObjectToActivate ())
+			getFirstChainPieceScript ();
 	}
 
 	void Update() {
@@ -25,9 +26,10 @@ public class ChainActivationObjStarter : MonoBehaviour {
 			if (!whoIsActivatingMe.activeInHierarchy) {
 				//OnTriggerEnter2D (c);
 				//Debug.Log ("DISATTIVOOOOOOOOOOOOOOOOOOOOOOOO");
-				if(firstChainPiece!=null) {
-					Debug.Log ("A!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-					firstChainPiece.SendMessage("buttonPushed", false);
+				if(firstChainPieceScript!=null) {
+					//Debug.Log ("A!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+					//firstChainPieceObj.SendMessage("buttonPushed", false);
+					firstChainPieceScript.c_buttonPushed(false);
 					whoIsActivatingMe = null;
 				}
 				return;
@@ -55,13 +57,22 @@ public class ChainActivationObjStarter : MonoBehaviour {
 		}
 	}
 	
-	private void checkObjectToActivate(){
+	private bool checkObjectToActivate(){
 		
-		if(firstChainPiece==null)
+		if (firstChainPieceObj == null) {
 			Debug.Log ("ATTENZIONE - L'OGGETTO DA ATTIVARE NON E' STATO ASSEGNATO");
-		
+			return false;
+		}
+		return true;
 	}
-	
+
+	private void getFirstChainPieceScript() {
+
+		firstChainPieceScript = firstChainPieceObj.GetComponent<ChainActivationObjPiece> ();
+		if(firstChainPieceScript==null)
+			Debug.Log ("ATTENZIONE - NON trovato lo script chainactivationobjpiece");
+	}
+
 	//TODO: implementare controllo su chi fa push, tengo variabile conservata e confronto all'exit
 	public void OnTriggerEnter2D(Collider2D c) {
 		
@@ -75,10 +86,11 @@ public class ChainActivationObjStarter : MonoBehaviour {
 			
 			if(c.tag== triggerTagList[i]) {
 				
-				if(firstChainPiece!=null) {
+				if(firstChainPieceScript!=null) {
 					whoIsActivatingMe = c.gameObject;
 					processInCourse = true;
-					firstChainPiece.SendMessage("buttonPushed", true);
+					//firstChainPieceObj.SendMessage("buttonPushed", true);
+					firstChainPieceScript.c_buttonPushed(true);
 				}
 				else {
 					Debug.Log ("ATTENZIONE - L'OGGETTO DA ATTIVARE NON E' STATO ASSEGNATO");
@@ -104,8 +116,9 @@ public class ChainActivationObjStarter : MonoBehaviour {
 			
 			if(c.tag== triggerTagList[i]) {
 				
-				if(firstChainPiece!=null) {
-					firstChainPiece.SendMessage("buttonPushed", false);
+				if(firstChainPieceScript!=null) {
+					//firstChainPieceObj.SendMessage("buttonPushed", false);
+					firstChainPieceScript.c_buttonPushed(false);
 					whoIsActivatingMe = null;
 					processInCourse = false;
 				}
@@ -147,8 +160,9 @@ public class ChainActivationObjStarter : MonoBehaviour {
 					return;
 
 						
-				if(firstChainPiece!=null) {
-					firstChainPiece.SendMessage("buttonPushed", true);
+				if(firstChainPieceScript!=null) {
+					//firstChainPieceObj.SendMessage("buttonPushed", true);
+					firstChainPieceScript.c_buttonPushed(true);
 				}
 				else {
 					Debug.Log ("ATTENZIONE - L'OGGETTO DA ATTIVARE NON E' STATO ASSEGNATO");
@@ -164,8 +178,12 @@ public class ChainActivationObjStarter : MonoBehaviour {
 
 	public void c_manualActivation() {
 
-		firstChainPiece.SendMessage("buttonPushed", true);
-
+		//firstChainPieceObj.SendMessage("buttonPushed", true);
+		if(firstChainPieceScript!=null)
+			firstChainPieceScript.c_buttonPushed(true);
+		else {
+			Debug.Log ("ATTENZIONE - L'OGGETTO DA ATTIVARE NON E' STATO ASSEGNATO");
+		}
 	}
 	
 	

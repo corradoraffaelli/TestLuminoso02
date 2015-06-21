@@ -1,0 +1,251 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &139418
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 430008}
+  - 114: {fileID: 11490140}
+  - 114: {fileID: 11421212}
+  - 114: {fileID: 11453354}
+  - 114: {fileID: 11451616}
+  - 114: {fileID: 11420750}
+  m_Layer: 0
+  m_Name: GameController
+  m_TagString: Controller
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &143054
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 477176}
+  m_Layer: 0
+  m_Name: RespawnPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &430008
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 139418}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 9.95528793, y: -9.39180374, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 477176}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+--- !u!4 &477176
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 143054}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -7.13999987, y: .340000004, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 430008}
+  m_RootOrder: 0
+--- !u!114 &11420750
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 139418}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ded59d7cf68394c978e5c079b6669bdf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  checkPoints:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  starterPoint: 0
+--- !u!114 &11421212
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 139418}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 342100b8d8d3fd04598aa46d7c8ea441, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gravityValue: -30
+--- !u!114 &11451616
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 139418}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5442d15e7657b0548b4c4e7f747c01a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  info: {fileID: 21300000, guid: f8ae3d8366d6f35429481eaebe8be557, type: 3}
+  noInfo: {fileID: 21300000, guid: a2258f472fa1fcc428d11e23cb221afb, type: 3}
+  controllerButton: {fileID: 21300000, guid: 8e9b94ab582b71c4db3312e298ccade1, type: 3}
+  keyboardButton: {fileID: 21300000, guid: dd963e6007da5334d838312776b44d5c, type: 3}
+--- !u!114 &11453354
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 139418}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6dc06056c120dd438b68ef515af9393, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inputButtons:
+  - name: Jump
+    buttonStay: 0
+    buttonUp: 0
+    buttonDown: 0
+    needToResetUp: 0
+    needToResetDown: 0
+  - name: LanternaMagica
+    buttonStay: 0
+    buttonUp: 0
+    buttonDown: 0
+    needToResetUp: 0
+    needToResetDown: 0
+  - name: Mira
+    buttonStay: 0
+    buttonUp: 0
+    buttonDown: 0
+    needToResetUp: 0
+    needToResetDown: 0
+  - name: PickLantern
+    buttonStay: 0
+    buttonUp: 0
+    buttonDown: 0
+    needToResetUp: 0
+    needToResetDown: 0
+  - name: NextGlass
+    buttonStay: 0
+    buttonUp: 0
+    buttonDown: 0
+    needToResetUp: 0
+    needToResetDown: 0
+  - name: Interaction
+    buttonStay: 0
+    buttonUp: 0
+    buttonDown: 0
+    needToResetUp: 0
+    needToResetDown: 0
+  - name: GlassModifier
+    buttonStay: 0
+    buttonUp: 0
+    buttonDown: 0
+    needToResetUp: 0
+    needToResetDown: 0
+  inputAxis:
+  - name: Horizontal
+    getAxisNormal: 0
+    getAxisRaw: 0
+  - name: Vertical
+    getAxisNormal: 0
+    getAxisRaw: 0
+  - name: CursorHorizontal
+    getAxisNormal: 0
+    getAxisRaw: 0
+  - name: CursorVertical
+    getAxisNormal: 0
+    getAxisRaw: 0
+  gameObjectsToControl:
+  - tag: Player
+    position:
+      x: 0
+      y: 0
+      z: 0
+    scale:
+      x: 0
+      y: 0
+      z: 0
+    rotation:
+      x: 0
+      y: 0
+      z: 0
+      w: 0
+  - tag: Cursor
+    position:
+      x: 0
+      y: 0
+      z: 0
+    scale:
+      x: 0
+      y: 0
+      z: 0
+    rotation:
+      x: 0
+      y: 0
+      z: 0
+      w: 0
+  changedObjectsList: []
+  loadSaveState: 0
+  savedButtonFile: savedInputButtons
+  savedAxisFile: savedInputAxis
+  savedMouseFile: savedInputMouse
+  savedObjectsFile: savedObjects
+  savedFileExtention: .dat
+  indexToLoad: 0
+  correctionTime: .200000003
+  adjustPositions: 1
+  debugPath: 1
+--- !u!114 &11490140
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 139418}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd0f2b1d5fdd4b342972ac16e6fec475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  useController: 0
+  xControllerMultiplier: 25
+  yControllerMultiplier: 25
+  zPositionEnvironment: 0
+  BottomLimit: {fileID: 0}
+  LeftLimit: {fileID: 0}
+  RightLimit: {fileID: 0}
+  UpperLimit: {fileID: 0}
+  cursorIsMoving: 0
+  ScreenRatioMovement: .300000012
+  ScreenControllerRatioMovement: .300000012
+  maxTimesControllerMoving: 2
+  timeAfterMoving: 1
+  movingAfterController: 0
+  movingIfStanding: 1
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 139418}
+  m_IsPrefabParent: 1

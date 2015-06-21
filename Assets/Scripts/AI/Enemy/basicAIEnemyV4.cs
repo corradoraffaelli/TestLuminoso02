@@ -3516,7 +3516,7 @@ public class basicAIEnemyV4 : MonoBehaviour {
 		//se l'AI è stunnata non reca danno al player, per ora...
 		if (eMS == enemyMachineState.Stunned) {
 			handlingCollision = false;
-			return true;
+			yield break;
 		}
 
 

@@ -98,13 +98,13 @@ public class HPatrolFSM : HStateFSM {
 			break;
 			
 		case patrolSubState.Stand :
-			//myUpdate += updatePatrolPoint;
+			myUpdate += updatePatrolStand;
 			break;
 		}
 		
 		myFinalize += patrolFinalize;
 
-		myHandleCollisionEnter += checkPlayerCollision;
+		myHandleCollisionEnter += checkKillPlayerCollision;
 
 		initializePatrolParameters ();
 
@@ -186,7 +186,15 @@ public class HPatrolFSM : HStateFSM {
 	#if _DEBUG
 			Debug.Log ("inizio patrol--------------------------------");
 	#endif
+
+		if(ob!=null) {
+
+			//patrolSubState patrolType = (patrolSubState
+
+		}
+
 		patrolTarget = null;
+
 
 	}
 	
@@ -194,10 +202,6 @@ public class HPatrolFSM : HStateFSM {
 	
 	#region MYUPDATE
 
-	protected void updateState() {
-		
-	}
-	
 	void updatePatrolWalk(){
 		
 		i_move (patrolSpeed);
@@ -209,7 +213,37 @@ public class HPatrolFSM : HStateFSM {
 		patrolBetweenPoints ();
 		
 	}
-	
+
+	void updatePatrolStand() {
+
+		patrolOnePoint ();
+
+	}
+
+	void patrolOnePoint() {
+
+		if(patrolPar.patrolPoints.Length > 0) {
+			if (Vector3.Distance (transform.position, patrolPar.patrolPoints[0].transform.position) < 0.5f) {
+
+				if((!i_facingRight() && patrolPar.DefaultVerseRight == true) ||
+				   (i_facingRight() && patrolPar.DefaultVerseRight == false) )
+					i_flip();
+
+			} 
+			else {
+				
+				moveTowardTarget (patrolPar.patrolPoints[0], patrolSpeed);
+				
+			}
+		}
+		else {
+
+			Debug.Log("ATTENZIONE - single patrol point NOT assigned");
+
+		}
+	}
+
+
 	private void patrolBetweenPoints() {
 		
 		if (patrolTarget == null) {
@@ -230,7 +264,7 @@ public class HPatrolFSM : HStateFSM {
 		}
 		
 		//TODO: gestire meglio l'arrivo?
-		if (Vector3.Distance (transform.position, patrolTarget.transform.position) < 1.0f) {
+		if (Vector3.Distance (transform.position, patrolTarget.transform.position) < 0.5f) {
 
 			if(patrolTarget != patrolPar.patrolPoints[0])
 				patrolTarget = patrolPar.patrolPoints[0];

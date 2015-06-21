@@ -43,6 +43,9 @@ public class AIParameters : MonoBehaviour {
 	public LayerMask cloneLayer;
 	public LayerMask obstacleLayers;
 
+	public int defaultLayer;
+	public int deadLayer;
+
 	[SerializeField]
 	public StatusParameters statusParameters;
 
@@ -95,6 +98,15 @@ public class AIParameters : MonoBehaviour {
 			Debug.Log ("ATTENZIONE - circlecollider non trovato da AIParameters");
 
 		getMyWeakPoint ();
+
+		setLayers ();
+
+	}
+
+	void setLayers() {
+
+		defaultLayer = gameObject.layer;
+		deadLayer = LayerMask.NameToLayer("Dead");
 
 	}
 

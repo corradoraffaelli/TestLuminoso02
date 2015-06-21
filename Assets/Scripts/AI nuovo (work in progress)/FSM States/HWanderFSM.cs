@@ -13,7 +13,7 @@ public class HWanderFSM : HStateFSM {
 		myUpdate += wanderUpdate;
 
 		myHandleCollisionEnter += checkFlipNeedForCollision;
-
+		myHandleCollisionEnter += checkKillPlayerCollision;
 	}
 	
 	public void setDefaultTransitions(HStunnedFSM stunState) {

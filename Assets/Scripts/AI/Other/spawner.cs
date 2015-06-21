@@ -24,15 +24,24 @@ public class spawner : MonoBehaviour {
 
 		mySR = GetComponent<SpriteRenderer> ();
 
+		setSpawnerReference ();
+
+		StartCoroutine (createMold());
+		StartCoroutine (checkSpawnNeed ());
+	}
+
+	void setSpawnerReference() {
+
 		if (mold != null) {
 
+			//TODO: funziona temporaneamente con entrambi i tipi di AI
 			if(mold.GetComponent<basicAIEnemyV4>()!=null) {
 				mold.GetComponent<basicAIEnemyV4>().Spawner = this.gameObject;
 			}
 			else {
 				mold.GetComponent<AIParameters>().Spawner = this.gameObject;
 			}
-
+			
 			moldName = mold.name;
 			moldName = moldName + " - ";
 			myMold = (GameObject) Instantiate(mold, transform.position, Quaternion.identity);
@@ -40,8 +49,6 @@ public class spawner : MonoBehaviour {
 			myMold.SetActive(false);
 		}
 
-		StartCoroutine (createMold());
-		StartCoroutine (checkSpawnNeed ());
 	}
 
 	// Update is called once per frame

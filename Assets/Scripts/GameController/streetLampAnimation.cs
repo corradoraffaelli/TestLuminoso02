@@ -1,28 +1,40 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class streetLampCheckpoint : MonoBehaviour {
+public class streetLampAnimation : MonoBehaviour {
 
 	SpriteRenderer lampLight;
 	SpriteRenderer lampConeLight;
 
 	AudioHandler ah; 
 	GameObject gameController;
-	gameSet gs;
+	//gameSet gs;
 
 	private bool lampIsOn = false;
-
+	private bool initialized= false;
 	// Use this for initialization
 	void Start () {
 
+		tryInitialization ();
+
+	}
+
+	void tryInitialization() {
+
+		if (initialized)
+			return;
+
 		getLights ();
 		getAudioHandler ();
+
+		initialized = true;
+
 	}
 
 	private void getGameSet(){
 
 		gameController = GameObject.FindGameObjectWithTag ("Controller");
-		gs = gameController.GetComponent<gameSet> ();
+		//gs = gameController.GetComponent<gameSet> ();
 		
 	}
 
@@ -70,6 +82,16 @@ public class streetLampCheckpoint : MonoBehaviour {
 
 	}
 
+	public void c_manualCheckPointActivation() {
+
+		tryInitialization ();
+
+		StartCoroutine( turnOnCheckpoint() );
+
+		lampIsOn = true;
+
+	}
+
 	private IEnumerator turnOnCheckpoint(){
 
 		ah.playClipByName ("ClickActivating");
@@ -77,7 +99,7 @@ public class streetLampCheckpoint : MonoBehaviour {
 		lampLight.enabled = true;
 		lampConeLight.enabled = true;
 
-		for (int i=1; i<7; i++) {
+		for (int i=1; i<5; i++) {
 
 			yield return new WaitForSeconds (0.05f + (0.3f / i));
 

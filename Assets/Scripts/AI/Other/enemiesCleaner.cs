@@ -22,7 +22,13 @@ public class enemiesCleaner : MonoBehaviour {
 		if (c.gameObject.tag=="Enemy") {
 
 			if(c.GetType() == typeof( CircleCollider2D) ) {
-				c.gameObject.GetComponent<basicAIEnemyV4>().c_startAutoDestroy(0.2f);
+				//c.gameObject.GetComponent<basicAIEnemyV4>().c_startAutoDestroy(0.2f);
+				if(c.gameObject.GetComponent<basicAIEnemyV4>()) {
+					c.gameObject.GetComponent<basicAIEnemyV4>().c_startAutoDestroy(0.0f);
+				}
+				else {
+					c.gameObject.GetComponent<AIAgent1>().c_autoDestroy();
+				}
 				if(DEBUG_CLEANING)
 					Debug.Log ("Colliso con " + c.gameObject.name);
 			}

@@ -162,7 +162,7 @@ public class HChase1FSM : HStateFSM {
 
 	public void setDefaultCollision() {
 
-		myHandleCollisionEnter += checkPlayerCollision;
+		myHandleCollisionEnter += checkKillPlayerCollision;
 
 	}
 
@@ -340,7 +340,7 @@ public class HChargeChaseFSM : HChase1FSM {
 public class HCrashChaseFSM : HChase1FSM {
 	
 	IEnumerator chargeCor;
-	
+	bool wallCollision = false;
 	public HCrashChaseFSM(GameObject _gameo, int _hLevel, HStateFSM _fatherState, AIAgent1 _scriptAIAgent) 
 	: base ("CrashChase", _gameo, _hLevel, _scriptAIAgent) {
 		
@@ -351,6 +351,15 @@ public class HCrashChaseFSM : HChase1FSM {
 		myUpdate += updateCrashChase;
 
 		myFinalize += finalizeCrashChase;
+
+		myHandleCollisionEnter += checkCrashWallCollision;
+
+		
+	}
+
+	public void setDefaultTransitions(HStunnedFSM hstunn) {
+		
+		addTransition (CC2ScheckWallStun, hstunn);
 		
 	}
 
@@ -365,8 +374,8 @@ public class HCrashChaseFSM : HChase1FSM {
 	protected void updateCrashChase() {
 
 		//Debug.Log ("udpate CRASSSHHHH");
-
-		moveTowardTarget (chaseTarget, chaseSpeed);
+		i_move (chaseSpeed);
+		//moveTowardTarget (chaseTarget, chaseSpeed);
 
 
 	}
@@ -381,6 +390,54 @@ public class HCrashChaseFSM : HChase1FSM {
 
 		return ob;
 
+		
+	}
+
+	bool CC2ScheckWallStun() {
+
+		if (wallCollision) {
+
+			wallCollision = false;
+			
+			return true;
+		} 
+		else {
+			return false;
+		}
+		
+	}
+
+
+
+	protected void checkCrashWallCollision(Collision2D co) {
+
+		if (co.gameObject.tag != "Player") {
+
+			wallCollision = true;
+			wallCrashRepercussion(co);
+
+		}
+		else {
+
+		}
+	}
+
+	private void wallCrashRepercussion(Collision2D co) {
+
+		int verseRepercussion = 1;
+
+		ContactPoint2D []contactPoints =  co.contacts;
+
+		
+		foreach (ContactPoint2D cp in contactPoints) {
+
+			if( (cp.point.x - transform.position.x ) > 0.0f)
+				verseRepercussion = -1;
+			else
+				verseRepercussion = 1;
+		}
+
+		_rigidbody.AddForce(new Vector2(verseRepercussion*150.0f,30.0f));
 		
 	}
 

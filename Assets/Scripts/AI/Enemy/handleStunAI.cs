@@ -8,6 +8,8 @@ public class handleStunAI : MonoBehaviour {
 	public float sprintForce = 350.0f;
 	public bool newImplementation = true;
 
+	int defaultParentLayer = 0;
+
 	private GameObject helmet;
 	
 	public enum stunType {
@@ -18,6 +20,7 @@ public class handleStunAI : MonoBehaviour {
 	public stunType IAM;
 	// Use this for initialization
 	void Start () {
+		defaultParentLayer = transform.parent.gameObject.layer;
 
 	}
 	
@@ -45,7 +48,8 @@ public class handleStunAI : MonoBehaviour {
 					transform.parent.SendMessage ("setStunned", true);
 					
 					//MODIFICA GESTIONE BOUNCE
-					if(bouncy) {
+					
+					if(bouncy && transform.parent.gameObject.layer==defaultParentLayer) {
 						if(newImplementation) {
 							c.gameObject.SendMessage("c_jumpEnemy");
 						}

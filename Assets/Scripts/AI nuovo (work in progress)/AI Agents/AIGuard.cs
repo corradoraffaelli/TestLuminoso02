@@ -3,9 +3,12 @@ using System.Collections;
 
 public class AIGuard : AIAgent1 {
 
+	public HPatrolFSM.patrolSubState patrolType;
+
 	protected override void initializeHStates() {
 		//Time.timeScale = 0.3f;
-		HPatrolFSM hp = new HPatrolFSM (0, this.gameObject, 0, null, this, HPatrolFSM.patrolSubState.Walk);
+
+		HPatrolFSM hp = new HPatrolFSM (0, this.gameObject, 0, null, this, patrolType);
 		
 		HStunnedFSM hs =  new HStunnedFSM (1, this.gameObject, 0, null, this, false);
 		//(string _stateName, GameObject _gameo, int _hLevel, AIAgent1 _scriptAIAgent)
@@ -40,7 +43,7 @@ public class AIGuard : AIAgent1 {
 		hc.setDefaultCollision ();
 
 		hcc1.setDefaultTransitions (hcc2);
-
+		hcc2.setDefaultTransitions (hs);
 
 	}
 }
