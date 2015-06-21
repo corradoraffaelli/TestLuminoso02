@@ -136,11 +136,18 @@ public class HPatrolFSM : HStateFSM {
 	void initializePatrolParameters(){
 		
 		patrolPar = gameObject.GetComponent<AIParameters> ().patrolParameters;
-		
+
+		float tempROV = 0;
+
 		if (patrolPar != null) {
-			if(!getRangeOfView()) {
+			if(!getRangeOfView(ref tempROV)) {
 				//arbitrario valore di default 
 				RangeOfView = 3.0f;
+			}
+			else {
+
+				RangeOfView = tempROV;
+
 			}
 		} 
 		else {

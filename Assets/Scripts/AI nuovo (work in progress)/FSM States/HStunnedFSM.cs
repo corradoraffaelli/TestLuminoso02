@@ -53,6 +53,29 @@ public class HStunnedFSM : HStateFSM {
 		
 	}
 
+	public void setDefaultTransitions(HPatrol1FSM patrolState) {
+		
+		
+		//addTransition (S2PcountDownStunned, "Patrol");
+		
+		addTransition (S2PcountDownStunned, patrolState);
+		
+		/*
+		if (!killingState) {
+			
+			addTransition (S2PcountDownStunned, "Patrol");
+			
+			Debug.Log ("trans messa");
+		} 
+		else {
+			
+
+			
+		}
+		*/
+		
+	}
+
 	public void setDefaultTransitions(HWanderFSM wanderState) {
 		
 		//addTransition (S2PcountDownStunned, "Wander");

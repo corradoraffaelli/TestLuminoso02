@@ -8,16 +8,13 @@ public class AIAgent1 : MonoBehaviour {
 	private HStateFSM []hstates;
 
 	private int hstatesIndex = 0;
-
-	//public HStateRecords statesMap = new HStateRecords();
 	
 	public HStateFSM activeState;
 	public HStateFSM previousState;
-
-	//protected int activeHStateIndex = 0;
-	protected int prevActiveStateIndex = 0;
 	
 	protected AIParameters par;
+
+	public ArrayList stackFinalizeMessages = new ArrayList();
 
 	public GameObject Spawner {
 		get{
@@ -357,8 +354,9 @@ public class AIAgent1 : MonoBehaviour {
 		hstates [hstatesIndex] = _hstate;
 
 		if (activeState == null) {
-			Debug.Log("Dentro AIAgent setto come active state " + _hstate.StateName);
-
+			#if _DEBUG
+				Debug.Log("Dentro AIAgent setto come active state " + _hstate.StateName);
+			#endif
 			activeState = _hstate;
 		}
 
