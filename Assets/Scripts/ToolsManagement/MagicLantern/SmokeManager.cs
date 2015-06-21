@@ -6,9 +6,10 @@ public class SmokeManager : MonoBehaviour {
 	ParticleSystem particleSystem;
 
 	float nextEmission;
+	float nextStop;
 
-	public float duration = 0.3f;
-	public float maxRandomRange = 2.0f;
+	public float maxDurationRange = 1.0f;
+	public float maxStopRange = 2.0f;
 	float beginEmission = 0.0f;
 	float stopEmission = 0.0f;
 
@@ -31,9 +32,14 @@ public class SmokeManager : MonoBehaviour {
 		handleEmission();
 	}
 
-	float getRandomNum()
+	float getRandomStop()
 	{
-		return Random.Range (0.2f, maxRandomRange);
+		return Random.Range (0.2f, maxStopRange);
+	}
+
+	float getRandomDuration()
+	{
+		return Random.Range (0.2f, maxDurationRange);
 	}
 
 	void handleTiming()
@@ -42,7 +48,12 @@ public class SmokeManager : MonoBehaviour {
 		{
 			//ad ogni emissione mi salvo il tempo, così quando smette, quello è l'ultimo istante
 			//stopEmission = Time.time;
-			if ((Time.time - beginEmission) > duration)
+			if (firstEmitting)
+			{
+				nextStop = getRandomDuration();
+				firstEmitting = false;
+			}
+			else if ((Time.time - beginEmission) > nextStop)
 			{
 				firstStop = true;
 				emitting = false;
@@ -54,7 +65,7 @@ public class SmokeManager : MonoBehaviour {
 		{
 			if (firstStop)
 			{
-				nextEmission = getRandomNum();
+				nextEmission = getRandomStop();
 				firstStop = false;
 			}
 			else
