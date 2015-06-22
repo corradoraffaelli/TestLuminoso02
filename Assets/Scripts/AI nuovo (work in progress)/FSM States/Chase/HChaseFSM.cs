@@ -32,10 +32,10 @@ public class HChaseFSM : HStateFSM {
 	
 	float AdditionalROV {
 		get{ 
-			if(chasePar!=null) return chasePar.AdditionalROV;
+			if(chasePar!=null) return chasePar.AdditionalROVBeforeLost;
 			else return 0.0f;}
 		set{ 
-			if(chasePar!=null) chasePar.AdditionalROV = value;}
+			if(chasePar!=null) chasePar.AdditionalROVBeforeLost = value;}
 		
 	}
 	
@@ -126,8 +126,8 @@ public class HChaseFSM : HStateFSM {
 
 	#region MYINITIALIZE
 
-	private void initializeChase(ref object ob){
-		
+	private void initializeChase(){
+		/*
 		if (ob != null) {
 			Debug.Log ("mi passano : " + ((GameObject) ob).name);
 			chaseTarget = ((GameObject) ob);
@@ -136,7 +136,8 @@ public class HChaseFSM : HStateFSM {
 		else {
 			Debug.Log (" CHASE NULL ");
 		}
-		Debug.Log ("inizio CHASE --------------------------------");
+		*/
+		Debug.Log ("inizio CHASE -----------------DA NON USAREE!!!!!!!!!!!!!!!!!!!!");
 
 		IEnumerator ciaone = inizioChase ();
 
@@ -173,10 +174,10 @@ public class HChaseFSM : HStateFSM {
 
 	#region MYFINALIZE
 	
-	private object finalizeChase(){
+	private void finalizeChase(){
 		Debug.Log ("finisco CHASE --------------------------------");
 		
-		return null;
+		//return null;
 	}
 
 	#endregion MYFINALIZE
@@ -187,9 +188,10 @@ public class HChaseFSM : HStateFSM {
 		
 		//target -> NULL
 		if (chaseTarget == null) {
-			
-			if(par.DEBUG_FSM_TRANSITION[0])
+
+			#if _TRANSITION_DEBUG
 				Debug.Log ("CHASE 2 PATROL - target null");
+			#endif	
 			
 			return true;
 		}
@@ -197,9 +199,9 @@ public class HChaseFSM : HStateFSM {
 		
 		//target -> different height
 		if (Mathf.Abs (chaseTarget.transform.position.y - transform.position.y) > 2.0f) {
-			
-			if(par.DEBUG_FSM_TRANSITION[0])
+			#if _TRANSITION_DEBUG
 				Debug.Log ("CHASE 2 PATROL - target different height");
+			#endif			
 			
 			return true;
 			
@@ -208,10 +210,11 @@ public class HChaseFSM : HStateFSM {
 		
 		//target -> too distant
 		if (Vector3.Distance (chaseTarget.transform.position, transform.position) > RangeOfView + AdditionalROV) {
-			
-			if(par.DEBUG_FSM_TRANSITION[0])
+
+			#if _TRANSITION_DEBUG
 				Debug.Log ("CHASE 2 PATROL - target too far");
-			
+			#endif
+
 			return true;
 			
 		}

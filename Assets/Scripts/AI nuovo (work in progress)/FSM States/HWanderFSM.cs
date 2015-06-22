@@ -7,6 +7,16 @@ public class HWanderFSM : HStateFSM {
 	Vector3 prevPosition;
 	public int stateStunnedID = -1;
 
+	WanderParameters wanderPar;
+
+	protected float wanderSpeed {
+		get{ 
+			if(wanderPar!=null) return wanderPar.wanderSpeed;
+			else return 0.0f;}
+		set{ if(wanderPar!=null) wanderPar.wanderSpeed = value;}
+		
+	}
+
 	public HWanderFSM(int _stateId, GameObject _gameo, int _hLevel, HStateFSM _fatherState, AIAgent1 _scriptAIAgent) 
 	: base("Wander", _stateId, _gameo, _hLevel, true, _fatherState, _scriptAIAgent) {
 
@@ -16,8 +26,15 @@ public class HWanderFSM : HStateFSM {
 
 		myHandleCollisionEnter += checkFlipNeedForCollision;
 		myHandleCollisionEnter += checkKillPlayerCollision;
+
+		initializeWanderParameters ();
 	}
+
+	protected void initializeWanderParameters(){
+		
+		wanderPar = gameObject.GetComponent<AIParameters> ().wanderParameters;
 	
+	}
 	public void setDefaultTransitions(HStunnedFSM stunState) {
 		
 		//addTransition (W2ScheckStunned, "Stunned");
@@ -28,13 +45,13 @@ public class HWanderFSM : HStateFSM {
 	protected void wanderUpdate(){
 		//Debug.Log ("stato wander");
 		//TODO : da cambiare
-		i_move (4.0f);
+		i_move (wanderSpeed);
 		
 	}
 
 
 
-	protected void wanderInitialize (ref object ob) {
+	protected void wanderInitialize () {
 
 		flipNeedCor = checkFlipNeed ();
 

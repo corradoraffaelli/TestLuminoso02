@@ -189,16 +189,10 @@ public class HPatrolFSM : HStateFSM {
 	
 	#region MYINITIALIZE
 
-	protected void patrolInitialize(ref object ob) {
-	#if _DEBUG
-			Debug.Log ("inizio patrol--------------------------------");
-	#endif
-
-		if(ob!=null) {
-
-			//patrolSubState patrolType = (patrolSubState
-
-		}
+	protected void patrolInitialize() {
+		#if _DEBUG
+				Debug.Log ("inizio patrol--------------------------------");
+		#endif
 
 		patrolTarget = null;
 
@@ -300,12 +294,12 @@ public class HPatrolFSM : HStateFSM {
 
 	#region MYFINALIZE
 
-	protected object patrolFinalize() {
+	protected void patrolFinalize() {
 		#if _DEBUG
 			Debug.Log ("finisco patrol--------------------------------");
 		#endif
 
-		object ob;
+		//object ob;
 
 		if (foundTarget != null) {
 			#if _DEBUG
@@ -320,8 +314,8 @@ public class HPatrolFSM : HStateFSM {
 
 		}
 
-		ob = (object)foundTarget;
-		return ob;
+		//ob = (object)foundTarget;
+		//return ob;
 		
 	}
 

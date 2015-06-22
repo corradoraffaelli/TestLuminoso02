@@ -3,13 +3,6 @@ using System.Collections;
 
 public class HPatrol1FSM : HStateFSM {
 
-	public enum patrolType {
-		Walk,
-		Stand,
-		Area,
-	}
-	public patrolType paType;
-
 	protected SpriteRenderer statusSpriteRend;
 
 	HSuspPatrolFSM suspChildPatrolState;
@@ -139,11 +132,11 @@ public class HPatrol1FSM : HStateFSM {
 
 	#region MYINITIALIZE
 
-	protected void patrolInitialize(ref object ob) {
+	protected void patrolInitialize() {
 		#if _DEBUG
 		Debug.Log ("inizio patrol--------------------------------");
 		#endif
-		
+		/*
 		if(ob!=null) {
 			
 			PatrolMessageFSM pame = (PatrolMessageFSM) ob;
@@ -161,6 +154,58 @@ public class HPatrol1FSM : HStateFSM {
 
 			}
 		}
+		*/
+
+		//Debug.Log ("sto per prendere i messaggi - by hpatrol1");
+
+		/*
+		ArrayList tempMess = takeFinalizeMessages ();
+
+		if (tempMess != null) {
+			if(tempMess.Count>0) {
+
+				foreach(object tempObj in tempMess) {
+
+					BasicMessageFSM tempPame = (BasicMessageFSM)tempObj;
+
+					if(tempPame.getInitializationType()== "Suspicious") {
+						
+						if(suspChildPatrolState!=null)
+							setActiveState(suspChildPatrolState);
+						else
+							Debug.Log("ATTENZIONE - suspChildPatrolState è NULL");
+					}
+					else {
+						
+						setActiveState(defaultChildPatrolState);
+						
+					}
+
+				}
+
+			}
+
+		}
+		*/
+
+		BasicMessageFSM []mess = takeFinalizeMessages<BasicMessageFSM> ();
+
+		if (mess != null) {
+
+			if(mess[0].getInitializationType()== "Suspicious") {
+				
+				if(suspChildPatrolState!=null)
+					setActiveState(suspChildPatrolState);
+				else
+					Debug.Log("ATTENZIONE - suspChildPatrolState è NULL");
+			}
+			else {
+				
+				setActiveState(defaultChildPatrolState);
+				
+			}
+
+		}
 		
 		patrolTarget = null;
 		
@@ -171,18 +216,24 @@ public class HPatrol1FSM : HStateFSM {
 
 	#region MYFINALIZE
 
-	protected object patrolFinalize() {
+	protected void patrolFinalize() {
 		#if _DEBUG
 		Debug.Log ("finisco patrol--------------------------------");
 		#endif
-		
-		object ob;
+
+
+
+		//object ob = null;
 		
 		if (foundTarget != null) {
 			#if _DEBUG
 			Debug.Log (" PATROL - ritorno foundtarget : " + foundTarget.name);
 			#endif
+
+			BasicMessageFSM mess = new BasicMessageFSM (foundTarget);
 			
+			addFinalizeMessage (mess);
+
 		} 
 		else {
 			#if _DEBUG
@@ -196,8 +247,12 @@ public class HPatrol1FSM : HStateFSM {
 		else
 			Debug.Log("ATTENZIONE - nel finalize defaultChildPatrolState è NULL");
 
-		ob = (object)foundTarget;
-		return ob;
+
+		//ob = (object)foundTarget;
+
+
+
+		//return ob;
 		
 	}
 
@@ -272,9 +327,41 @@ public class HSuspPatrolFSM : HPatrol1FSM {
 
 	IEnumerator checkAroundCor;
 
+	bool suspFinish = false;
+
 	bool finishSuspPatrol = false;
 	float startTime = 0.0f;
 	float suspLenght = 3.0f;
+
+	float tSuspiciousLenght {
+		get{ 
+			if (patrolPar != null)
+				return patrolPar.tSuspiciousLenght;
+			else
+				return 3.0f;
+		}
+		set {
+			if (patrolPar != null)
+				patrolPar.tSuspiciousLenght = value;
+		
+		}
+
+	}
+	
+	float tSuspiciousIntervalFlip {
+		get{ 
+			if (patrolPar != null)
+				return patrolPar.tSuspiciousIntervalFlip;
+			else
+				return 1.0f;
+		}
+		set {
+			if (patrolPar != null)
+				patrolPar.tSuspiciousIntervalFlip = value;
+			
+		}
+
+	}
 
 	public HSuspPatrolFSM(GameObject _gameo, int _hLevel, HStateFSM _fatherState, AIAgent1 _scriptAIAgent) 
 	: base ("SuspPatrol", _gameo, _hLevel, _scriptAIAgent) {
@@ -289,7 +376,7 @@ public class HSuspPatrolFSM : HPatrol1FSM {
 
 	#region MYINITIALIZE
 	
-	protected void initializeSuspPatrol(ref object ob) {
+	protected void initializeSuspPatrol() {
 		#if _DEBUG
 		Debug.Log ("inizio patrol--------------------------------");
 		#endif
@@ -335,13 +422,22 @@ public class HSuspPatrolFSM : HPatrol1FSM {
 
 	public IEnumerator checkAround() {
 
-		yield return new WaitForSeconds (1.0f);
+		float totalTime = 0;
 
-		i_flip ();
+		while (true) {
 
-		yield return new WaitForSeconds (1.0f);
+			yield return new WaitForSeconds (tSuspiciousIntervalFlip);
+			
+			i_flip ();
 
-		i_flip ();
+			totalTime += tSuspiciousIntervalFlip;
+
+			if(totalTime > tSuspiciousLenght)
+				break;
+
+		}
+
+		suspFinish = true;
 
 	}
 
@@ -350,7 +446,7 @@ public class HSuspPatrolFSM : HPatrol1FSM {
 
 	#region MYFINALIZE
 	
-	protected object finalizeSuspPatrol() {
+	protected void finalizeSuspPatrol() {
 
 		#if _DEBUG
 		Debug.Log ("finisco patrol--------------------------------");
@@ -358,7 +454,7 @@ public class HSuspPatrolFSM : HPatrol1FSM {
 
 		_StopCoroutine (checkAroundCor);
 
-		object ob = null;
+		//object ob = null;
 
 		GameObject.Destroy (suspPoints [0]);
 		GameObject.Destroy (suspPoints [1]);
@@ -367,7 +463,7 @@ public class HSuspPatrolFSM : HPatrol1FSM {
 
 		statusSpriteRend.sprite = null;
 
-		return ob;
+		suspFinish = false;
 		
 	}
 	
@@ -387,7 +483,7 @@ public class HSuspPatrolFSM : HPatrol1FSM {
 		}
 		*/
 
-		if (Time.time - startTime > suspLenght)
+		if (suspFinish)
 			return true;
 		else
 			return false;
@@ -415,8 +511,7 @@ public class HWalkPatrolFSM : HPatrol1FSM {
 
 		finalHLevel = true;
 		fatherState = _fatherState;
-		//myInitialize += initializeWalkPatrol;
-		//myFinalize += finalizeSuspPatrol;
+
 		myUpdate += updatePatrolWalk;
 
 		myInitialize += initializeWalkPatrol;
@@ -425,7 +520,7 @@ public class HWalkPatrolFSM : HPatrol1FSM {
 
 	}
 
-	void initializeWalkPatrol(ref object ob) {
+	void initializeWalkPatrol() {
 
 		flipNeedCor = checkFlipNeed ();
 		
@@ -440,19 +535,124 @@ public class HWalkPatrolFSM : HPatrol1FSM {
 		
 	}
 
-	object finalizeWalkPatrol() {
+	void finalizeWalkPatrol() {
 
-		object ob = null;
+		//object ob = null;
 
 		_StopCoroutine (flipNeedCor);
 
-		return null;
+		//return null;
 
 	}
 
 	public void setDefaultTransitions() {
 
 		
+	}
+
+}
+
+public class HAreaPatrolFSM : HPatrol1FSM {
+	
+	public HAreaPatrolFSM(GameObject _gameo, int _hLevel, HStateFSM _fatherState, AIAgent1 _scriptAIAgent) 
+	: base ("AreaPatrol", _gameo, _hLevel, _scriptAIAgent) {
+
+		finalHLevel = true;
+
+		fatherState = _fatherState;
+		
+		myUpdate += updatePatrolArea;
+	
+	}
+
+	void updatePatrolArea(){
+		
+		patrolBetweenPoints ();
+		
+	}
+	
+	private void patrolBetweenPoints() {
+		
+		if (patrolTarget == null) {
+			if(patrolPar.patrolPoints.Length > 1) {
+				if(patrolPar.patrolPoints[0] != null && patrolPar.patrolPoints[1]!= null) {
+					int randomIndex = Random.Range(0,2);
+					patrolTarget = patrolPar.patrolPoints[randomIndex];
+				}
+				else {
+					Debug.Log ("ATTENZIONE - problemi con i patrol points");
+					return;
+				}
+			}
+			else{
+				Debug.Log ("ATTENZIONE - problemi con i patrol points");
+				return;
+			}
+		}
+		
+		//TODO: gestire meglio l'arrivo?
+		if (Vector3.Distance (transform.position, patrolTarget.transform.position) < 0.3f) {
+			
+			if(patrolTarget != patrolPar.patrolPoints[0])
+				patrolTarget = patrolPar.patrolPoints[0];
+			else
+				patrolTarget = patrolPar.patrolPoints[1];
+			
+		} 
+		else {
+			
+			moveTowardTarget (patrolTarget, patrolSpeed);
+			
+		}
+		
+		
+		
+		
+	}
+
+}
+
+
+public class HStandPatrolFSM : HPatrol1FSM {
+	
+	public HStandPatrolFSM(GameObject _gameo, int _hLevel, HStateFSM _fatherState, AIAgent1 _scriptAIAgent) 
+	: base ("StandPatrol", _gameo, _hLevel, _scriptAIAgent) {
+		
+		finalHLevel = true;
+		
+		fatherState = _fatherState;
+		
+		myUpdate += updatePatrolStand;
+		
+	}
+	
+	void updatePatrolStand() {
+		
+		patrolOnePoint ();
+		
+	}
+
+	void patrolOnePoint() {
+		
+		if(patrolPar.patrolPoints.Length > 0) {
+			if (Vector3.Distance (transform.position, patrolPar.patrolPoints[0].transform.position) < 0.5f) {
+				
+				if((!i_facingRight() && patrolPar.DefaultVerseRight == true) ||
+				   (i_facingRight() && patrolPar.DefaultVerseRight == false) )
+					i_flip();
+				
+			} 
+			else {
+				
+				moveTowardTarget (patrolPar.patrolPoints[0], patrolSpeed);
+				
+			}
+		}
+		else {
+			
+			Debug.Log("ATTENZIONE - single patrol point NOT assigned");
+			
+		}
 	}
 
 }

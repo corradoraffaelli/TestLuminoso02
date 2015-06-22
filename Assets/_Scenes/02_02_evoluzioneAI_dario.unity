@@ -130,9 +130,13 @@ Prefab:
       propertyPath: patrolParameters.patrolPoints.Array.data[0]
       value: 
       objectReference: {fileID: 1094659607}
-    - target: {fileID: 188112, guid: bb2b298b86b5c4a2facf9da0fb4808e5, type: 2}
-      propertyPath: m_IsActive
-      value: 1
+    - target: {fileID: 11414652, guid: bb2b298b86b5c4a2facf9da0fb4808e5, type: 2}
+      propertyPath: patrolParameters.patrolPoints.Array.data[1]
+      value: 
+      objectReference: {fileID: 483874458}
+    - target: {fileID: 11402882, guid: bb2b298b86b5c4a2facf9da0fb4808e5, type: 2}
+      propertyPath: patrolType
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: bb2b298b86b5c4a2facf9da0fb4808e5, type: 2}
@@ -616,16 +620,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15d130ef54b6d439cb57c0f7eb81d900, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DEBUG_FSM_TRANSITION: 000000
-  DEBUG_RECOGNITION: 0000
-  DEBUG_ASTAR: 0000
-  DEBUG_FLIP: 0000
-  DEBUG_COLLISION: 000000
-  _AIwalkSpeed: 4
-  _AIrunSpeed: 5
-  _target: {fileID: 0}
-  _fleeTarget: {fileID: 0}
-  stunnedReceived: 0
   Spawner: {fileID: 0}
   targetLayers:
     serializedVersion: 2
@@ -636,42 +630,38 @@ MonoBehaviour:
   hidingLayer:
     serializedVersion: 2
     m_Bits: 65536
-  cloneLayer:
-    serializedVersion: 2
-    m_Bits: 0
   obstacleLayers:
     serializedVersion: 2
     m_Bits: 768
-  defaultLayer: 0
-  deadLayer: 0
   statusParameters:
     alarmed: {fileID: 0}
     confused: {fileID: 0}
+  wanderParameters:
+    wanderSpeed: 4
   patrolParameters:
     patrolSpeed: 4
     patrolTarget: {fileID: 0}
     foundTarget: {fileID: 0}
-    thresholdHeightDifference: 1
     patrolPoints:
     - {fileID: 1094659607}
     - {fileID: 483874458}
     RangeOfView: 0
     DefaultVerseRight: 1
-    patrolSuspiciousSpeed: 2
-    tSearchLenght: 2.5
-    DEFAULT_DUMB_SPEED: 2
+    tSuspiciousLenght: 2.5
+    tSuspiciousIntervalFlip: 1
   chaseParameters:
     chaseSpeed: 5
     chaseTarget: {fileID: 0}
     RangeOfView: 0
-    AdditionalROV: 2
-    fTargetFar: 2
-    tChargingChase: 1
-    tToMaxVelocity: .5
-    tLosingTargerLenght: 5.5
+    AdditionalROVBeforeLost: 2
   fleeParameters:
     fleeSpeed: 6
     fleeTarget: {fileID: 0}
+  stunnedReceived: 0
+  _target: {fileID: 0}
+  _fleeTarget: {fileID: 0}
+  defaultLayer: 0
+  deadLayer: 0
   _rigidbody: {fileID: 0}
   _boxCollider: {fileID: 0}
   _circleCollider: {fileID: 0}
@@ -1612,7 +1602,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 483874458}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 12.5100002, y: .219999999, z: 0}
+  m_LocalPosition: {x: 15.2200003, y: .219999999, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -5214,12 +5204,16 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 498782, guid: d1f0e3e6316d74b348c519273373140b, type: 2}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
-    - target: {fileID: 142468, guid: d1f0e3e6316d74b348c519273373140b, type: 2}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
+    - target: {fileID: 11424252, guid: d1f0e3e6316d74b348c519273373140b, type: 2}
+      propertyPath: patrolParameters.patrolPoints.Array.data[0]
+      value: 
+      objectReference: {fileID: 1094659607}
+    - target: {fileID: 11424252, guid: d1f0e3e6316d74b348c519273373140b, type: 2}
+      propertyPath: patrolParameters.patrolPoints.Array.data[1]
+      value: 
+      objectReference: {fileID: 483874458}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d1f0e3e6316d74b348c519273373140b, type: 2}
   m_IsPrefabParent: 0

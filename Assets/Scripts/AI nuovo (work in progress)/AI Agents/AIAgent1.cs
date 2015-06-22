@@ -94,10 +94,6 @@ public class AIAgent1 : MonoBehaviour {
 		get{ return par.hidingLayer;}
 		set{ par.hidingLayer = value;}
 	}
-	protected LayerMask cloneLayer{
-		get{ return par.cloneLayer;}
-		set{ par.cloneLayer = value;}
-	}
 	protected LayerMask obstacleLayers{
 		get{ return par.obstacleLayers;}
 		set{ par.obstacleLayers = value;}
@@ -123,7 +119,7 @@ public class AIAgent1 : MonoBehaviour {
 		*/
 		object ob = null;
 		
-		activeState.MyHInitialize (ref ob);
+		activeState.MyHInitialize ();
 		
 	}
 
@@ -271,27 +267,18 @@ public class AIAgent1 : MonoBehaviour {
 		}
 
 		if(activeState.MyHFinalize != null) {
-			ob = activeState.MyHFinalize();
+			//ob = activeState.MyHFinalize();
+			activeState.MyHFinalize();
 		}
-		/*
-		if(activeState.myFinalize != null) {
-			ob = activeState.myFinalize();
-		}
-		*/
+
 		activeState = _targetState;
 
 		if (activeState.MyHInitialize != null) {
 			
-			activeState.MyHInitialize (ref ob);
+			activeState.MyHInitialize ();
 			
 		}
-		/*
-		if (activeState.myInitialize != null) {
-			
-			activeState.myInitialize (ref ob);
-			
-		}
-		*/
+
 		
 	}
 
@@ -495,16 +482,14 @@ public class AIAgent1 : MonoBehaviour {
 		par.stunnedReceived = st;
 
 	}
-	
-	public void handleClean() {
+
+	private void checkForSpawner() {
 		
-		if (par.Spawner != null) {
+		if (Spawner != null) {
 			
-			par.Spawner.SendMessage("letsSpawn");
-			//Debug.Log("spawn - enemy");
-			
+			Spawner.SendMessage("letsSpawn");
+
 		}
-		
 	}
 
 	protected virtual void OnCollisionEnter2D(Collision2D c) {
@@ -515,13 +500,15 @@ public class AIAgent1 : MonoBehaviour {
 	}
 
 	public virtual void OnTriggerEnter2D(Collider2D c) {
-		
+
+		//TODO : valutare se meglio mettere qui l'iniziativa di spawn o meno
+		/*
 		if (c.tag == "Cleaner") {
-			handleClean();
+			checkForSpawner();
 			Destroy (this.gameObject);
 			return;
 		}
-		
+		*/
 		if(activeState.myHHandleTriggerEnter!=null)
 			activeState.myHHandleTriggerEnter (c);
 	}
@@ -535,22 +522,38 @@ public class AIAgent1 : MonoBehaviour {
 		//StartCoroutine(handleDestroy(timer));
 		
 	}
-	
-	private void checkForSpawner() {
-		
-		if (Spawner != null) {
-			
-			Spawner.SendMessage("letsSpawn");
-			//Debug.Log("spawn - enemy");
-			
-		}
-	}
+
 	
 	private IEnumerator handleLateDestroy(float timer) {
 		
 		yield return new WaitForSeconds(timer);
 		Destroy (this.gameObject);
 		
+	}
+
+	protected void addFinalizeMessage(MessageFSM message) {
+		
+		stackFinalizeMessages.Add (message);
+		
+	}
+	
+	protected ArrayList takeFinalizeMessages() {
+		
+		ArrayList tempArray = new ArrayList ();
+		
+		foreach (object ob in stackFinalizeMessages) {
+			
+			tempArray.Add(ob);
+		}
+		
+		return tempArray;
+		
+	}
+	
+	protected void emptyFinalizeMessages() {
+		
+		stackFinalizeMessages.RemoveRange(0, stackFinalizeMessages.Count);
+		Debug.Log ("svuotati i messaggi");
 	}
 
 

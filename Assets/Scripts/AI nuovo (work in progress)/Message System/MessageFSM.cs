@@ -9,21 +9,21 @@ public abstract class MessageFSM {
 
 }
 
-public class PatrolMessageFSM : MessageFSM {
+public class BasicMessageFSM : MessageFSM {
 
 	string initType;
 	GameObject target;
 
-	public PatrolMessageFSM(string _initType) {
+	public BasicMessageFSM(string _initType) {
 		initType = _initType;
 	}
 
-	public PatrolMessageFSM(string _initType, GameObject _target) {
+	public BasicMessageFSM(string _initType, GameObject _target) {
 		initType = _initType;
 		target = _target;
 	}
 
-	public PatrolMessageFSM(GameObject _target) {
+	public BasicMessageFSM(GameObject _target) {
 		target = _target;
 	}
 

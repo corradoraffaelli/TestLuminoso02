@@ -16,7 +16,7 @@ public class spawner : MonoBehaviour {
 	private GameObject myMold;
 	private string moldName;
 
-	int numberOfAliveEnemies = 1;
+	public int numberOfAliveEnemies = 1;
 
 	int number = 0;
 

@@ -4,11 +4,23 @@ using System.Collections;
 public class HStunnedFSM : HStateFSM {
 
 	float startStunnedTime = 0.0f;
-	float timeToStayStunned = 3.0f;
 
 	bool killingState = false;
 
 	int stateAfterStunnedID = -1;
+
+	IEnumerator stunnedCor;
+	bool stunnedFinish = false;
+
+	StunnedParameters stunnedPar;
+
+	protected float tStunnedLength {
+		get{ 
+			if(stunnedPar!=null) return stunnedPar.tStunnedLength;
+			else return 0.0f;}
+		set{ if(stunnedPar!=null) stunnedPar.tStunnedLength = value;}
+		
+	}
 
 	public HStunnedFSM(int _stateId, GameObject _gameo, int _hLevel, HStateFSM _fatherState, AIAgent1 _scriptAIAgent, bool _killingState=true) 
 	: base("Stunned", _stateId, _gameo, _hLevel, true, _fatherState, _scriptAIAgent) {
@@ -26,8 +38,15 @@ public class HStunnedFSM : HStateFSM {
 
 		myFinalize += stunnedFinalize;
 
-
+		initializeStunnedParameters ();
 		
+	}
+
+	protected void initializeStunnedParameters(){
+		
+		stunnedPar = gameObject.GetComponent<AIParameters> ().stunnedParameters;
+
+
 	}
 
 	public void setDefaultTransitions(HPatrolFSM patrolState) {
@@ -97,7 +116,7 @@ public class HStunnedFSM : HStateFSM {
 		
 	}
 
-	protected void normalStunnedInitialize(ref object ob){
+	protected void normalStunnedInitialize(){
 
 		#if _DEBUG
 				Debug.Log ("inizio stunn --------------------------------");
@@ -109,9 +128,23 @@ public class HStunnedFSM : HStateFSM {
 
 		setEnemiesStunnedLayer ();
 
+		stunnedFinish = false;
+
+		stunnedCor = stunnedCountDown ();
+
+		_StartCoroutine (stunnedCor);
+
 	}
 
-	protected void killingStunnedInitialize(ref object ob){
+	IEnumerator stunnedCountDown() {
+
+		yield return new WaitForSeconds (tStunnedLength);
+
+		stunnedFinish = true;
+
+	}
+
+	protected void killingStunnedInitialize(){
 
 		#if _DEBUG
 		Debug.Log ("inizio stunn --------------------------------");
@@ -149,24 +182,33 @@ public class HStunnedFSM : HStateFSM {
 
 	}
 	
-	protected object stunnedFinalize(){
+	protected void stunnedFinalize(){
 
 		#if _DEBUG
 			Debug.Log ("finisco stunn --------------------------------");
 		#endif
 
 		//finishStunned = false;
+
+		stunnedFinish = false;
+
+		_StopCoroutine (stunnedCor);
+
 		i_stunned (false);
 		//TODO: inserire altra roba per cui serve riattivare altro...
 		setDefaultLayer ();
 
-		return null;
+		BasicMessageFSM pame = new BasicMessageFSM("Suspicious");
+		addFinalizeMessage(pame);
+
+		//return null;
 	}
 
 	public bool S2PcountDownStunned(){
 
-		if(Time.time - startStunnedTime > timeToStayStunned) {
+		if(stunnedFinish) {
 			par.stunnedReceived = false;
+			stunnedFinish = false;
 			return true;
 		}
 		else {

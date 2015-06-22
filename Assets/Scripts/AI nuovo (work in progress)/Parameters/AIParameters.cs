@@ -5,49 +5,23 @@ public class AIParameters : MonoBehaviour {
 
 	PlayerMovements pm;
 
-	//TODO: capire se inglobare playermovements... derivandola?
-	//perché vorrei avere i parametri di velocità di movimento assieme agli altri parametri dell'AI
-
-	//DEBUG----------------------
-
-	//l'indice dell'array indica la profondità con cui si vuole scavare
-	public bool []DEBUG_FSM_TRANSITION = new bool[3];
-	public bool []DEBUG_RECOGNITION = new bool[2];
-	public bool []DEBUG_ASTAR = new bool[2];
-	public bool []DEBUG_FLIP = new bool[2];
-	public bool []DEBUG_COLLISION = new bool[3];
-
-	//GENERAL--------------------
-
-	[Range(0.1f,10.0f)]
-	public float _AIwalkSpeed = 4.0f;
-	[Range(0.1f,10.0f)]
-	public float _AIrunSpeed = 5.0f;
-
-	public GameObject _target;
-	public GameObject _fleeTarget;
-
-
-	public bool stunnedReceived = false;
-
-	bool killable = false;
-	
+	[HideInInspector]
 	public GameObject Spawner;
-	
-	//LAYER MASK da usare
-	//public LayerMask wallLayers;
-	//public LayerMask groundBasic;
+
 	public LayerMask targetLayers;
 	public LayerMask fleeLayer;
 	public LayerMask hidingLayer;
-	public LayerMask cloneLayer;
+	//public LayerMask cloneLayer;
 	public LayerMask obstacleLayers;
-
-	public int defaultLayer;
-	public int deadLayer;
 
 	[SerializeField]
 	public StatusParameters statusParameters;
+
+	[SerializeField]
+	public StunnedParameters stunnedParameters;
+
+	[SerializeField]
+	public WanderParameters wanderParameters;
 
 	[SerializeField]
 	public PatrolParameters patrolParameters;
@@ -57,20 +31,33 @@ public class AIParameters : MonoBehaviour {
 
 	[SerializeField]
 	public FleeParameters fleeParameters;
-
-
-
-	//[HideInInspector]
-	//public SpriteRenderer spriteRenderStatus;
-
-
+	
 	//NASCOSTI------------------
+
+	[HideInInspector]
+	public bool stunnedReceived = false;
+
+	[HideInInspector]
+	public GameObject _target;
+	
+	[HideInInspector]
+	public GameObject _fleeTarget;
+
+	[HideInInspector]
+	public int defaultLayer;
+	
+	[HideInInspector]
+	public int deadLayer;
+
 	[HideInInspector]
 	public Rigidbody2D _rigidbody;
+
 	[HideInInspector]
 	public BoxCollider2D _boxCollider;
+
 	[HideInInspector]
 	public CircleCollider2D _circleCollider;
+
 	[HideInInspector]
 	public GameObject myWeakPoint;
 
@@ -134,8 +121,6 @@ public class AIParameters : MonoBehaviour {
 
 	void Update(){
 
-		//pm.AI_walkSpeed = this.AI_walkSpeed;
-		//pm.AI_runSpeed = this.AI_runSpeed;
 
 	}
 
@@ -143,14 +128,25 @@ public class AIParameters : MonoBehaviour {
 
 }
 
-//-----------------------------------------------------------------------------------------------------------------------------------------------
-//-----------------------------------------------------------------------------------------------------------------------------------------------
+[System.Serializable]
+public class StunnedParameters {
+	
+	[Range(0.1f,10.0f)]
+	public float tStunnedLength = 3.0f;
+	
+}
+
+[System.Serializable]
+public class WanderParameters {
+	
+	[Range(0.1f,10.0f)]
+	public float wanderSpeed = 4.0f;
+
+}
 
 [System.Serializable]
 public class PatrolParameters {
-	
-	//nuovi parametri
-	
+
 	[Range(0.1f,10.0f)]
 	public float patrolSpeed = 4.0f;
 	
@@ -160,102 +156,47 @@ public class PatrolParameters {
 	[HideInInspector]
 	public GameObject foundTarget;
 	
-	//TODO: si dovrebbe eliminare...
-	[HideInInspector]
-	public float thresholdHeightDifference = 1f;
-	
 	public GameObject []patrolPoints;
 	
 	[HideInInspector]
 	public float RangeOfView;
-	//vecchi parametri
-	
-	//Gestione patrol----------------------------------------------------------------------------------
-	
-	//verso di default dove puntare lo sguardo nel caso di un singolo punto di patrol
-	public bool DefaultVerseRight = true;
-	
-	
-	
-	[Range(0.1f,10.0f)]
-	public float patrolSuspiciousSpeed = 2.0f;
-	
-	//nuova gestione suspicious
-	bool firstCheckDone_Suspicious = false;
-	[Range(0.1f,10.0f)]
-	public float tSearchLenght = 2.5f;
-	bool standingSusp = false;
-	
-	
-	bool exitSuspicious = false;
-	
-	bool ExitSuspicious {
-		get{ return exitSuspicious;}
-		set { exitSuspicious = value;}
-		
-	}
-	
-	//variabili da resettare ad inizio stato
-	bool patrollingTowardAPoint = false;
-	Transform patrolledTarget;//utile dichiararlo momentaneamente public per vedere che valore ha
-	
-	[Range(0.1f,10.0f)]
-	public float DEFAULT_DUMB_SPEED = 2.0f;
-	
-	//Gestione raycast target------------------------------------
-	//public LayerMask targetLayers; dichiarata su
-	float frontalDistanceOfView = 5.0f;
-	float scale_FrontalDistanceOfView_ToBeFar = 1.5f;
-	float backDistanceOfView = 2.0f;
-}
 
-//-----------------------------------------------------------------------------------------------------------------------------------------------
-//-----------------------------------------------------------------------------------------------------------------------------------------------
+	public bool DefaultVerseRight = true;
+
+	[Range(0.1f,10.0f)]
+	public float tSuspiciousLenght = 2.5f;
+
+	[Range(0.1f,10.0f)]
+	public float tSuspiciousIntervalFlip = 1.0f;
+
+
+}
 
 [System.Serializable]
 public class ChaseParameters {
-
-	//nuovi parametri
-
+	
 	public float chaseSpeed = 6.0f;
 
-	//[HideInInspector]
-	public GameObject chaseTarget;
-	//vecchi parametri
-
 	[HideInInspector]
+	public GameObject chaseTarget;
+
 	public float RangeOfView;
 
-	public float AdditionalROV = 2.0f;
-
-	//Gestione chase-----------------------------------------------------------------------------------
-	//Transform chasedTarget;
-	//bool avoidingObstacles = false;
-	[Range(0.1f,5.0f)]
-	public float fTargetFar = 2.0f;
+	public float AdditionalROVBeforeLost = 2.0f;
 	
-	//enemytype nojumpsoftchase
+	//[Range(0.1f,5.0f)]
+	//public float fTargetFar = 2.0f;
+
 	float offset_MaxDistanceReachable_FromChase = 5.0f;
-	bool chaseCharged = false;
-	bool chaseCharging = false;
-	[Range(0.1f,5.0f)]
-	public float tChargingChase = 1.0f;
-	float tStartCrash = -1.0f;
-	[Range(0.1f,5.0f)]
-	public float tToMaxVelocity = 0.5f;
-	[Range(0.1f,5.0f)]
-	public float tLosingTargerLenght = 5.5f;
-	bool losingTarget = false;
-	float tStartLosingTarget = -3.0f;
+
 }
 
 [System.Serializable]
 public class FleeParameters {
 	
-	//nuovi parametri
 	public float fleeSpeed = 6.0f;
 	
-	//[HideInInspector]
+	[HideInInspector]
 	public GameObject fleeTarget;
 
 }

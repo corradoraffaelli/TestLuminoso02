@@ -5,7 +5,7 @@ using System.Collections;
 
 
 
-public class HStateFSM {
+public abstract class HStateFSM {
 
 	protected AIAgent1 agentScript;
 	protected PlayerMovements playerScript;
@@ -20,11 +20,14 @@ public class HStateFSM {
 
 		get {
 			if(agentScript!=null) {
-				return agentScript.stackFinalizeMessages;
+
+				if(agentScript.stackFinalizeMessages!=null)
+					return agentScript.stackFinalizeMessages;
+
 			}
-			else {
-				return null;
-			}
+
+			return null;
+
 		}
 
 		set {
@@ -179,10 +182,6 @@ public class HStateFSM {
 		get{ return par.hidingLayer;}
 		set{ par.hidingLayer = value;}
 	}
-	protected LayerMask cloneLayer{
-		get{ return par.cloneLayer;}
-		set{ par.cloneLayer = value;}
-	}
 	protected LayerMask obstacleLayers{
 		get{ return par.obstacleLayers;}
 		set{ par.obstacleLayers = value;}
@@ -199,13 +198,13 @@ public class HStateFSM {
 	#region DELEGATES
 	//----
 
-	public delegate void myHStateInitialize(ref object ob);
+	public delegate void myHStateInitialize();
 	private myHStateInitialize myHInitialize;
 	public myHStateInitialize MyHInitialize {
 		get{ return myHInitialize;}
 	}
 
-	public delegate void myStateInitialize(ref object ob);
+	public delegate void myStateInitialize();
 	public myStateInitialize myInitialize;
 
 	//----
@@ -221,13 +220,13 @@ public class HStateFSM {
 
 	//----
 
-	public delegate object myHStateFinalize();
+	public delegate void myHStateFinalize();
 	private myStateFinalize myHFinalize;
 	public myStateFinalize MyHFinalize {
 		get{ return myHFinalize;}
 	}
 
-	public delegate object myStateFinalize();
+	public delegate void myStateFinalize();
 	public myStateFinalize myFinalize;
 
 	//-----
@@ -291,27 +290,27 @@ public class HStateFSM {
 		if (_fatherState == null)
 			fatherState = _fatherState;
 
-		//states = _states;
-
-		agentScript = gameObject.GetComponent<AIAgent1> ();
-
-
-
+		//TODO : ?
+		//agentScript = gameObject.GetComponent<AIAgent1> ();
 
 		agentScript = _scriptAIAgent;
 
-
-		
 		playerScript = gameObject.GetComponent<PlayerMovements> ();
 		
 		if (playerScript == null) {
+			#if _WARNING_DEBUG
 			Debug.Log ("ATTENZIONE - script PlayerMovements non trovato");
+			#endif
+
 		}
 		
 		par = gameObject.GetComponent<AIParameters> ();
 		
 		if (par == null) {
+			#if _WARNING_DEBUG
 			Debug.Log ("ATTENZIONE - script AIParameters non trovato");
+			#endif
+
 		}
 
 		statusPar = par.statusParameters;
@@ -404,14 +403,16 @@ public class HStateFSM {
 		if (found)
 			activeState = _state;
 		else {
-			Debug.Log("ATTENZIONE - tentativo di settare come stato attivo uno stato non figlio");
+			#if _WARNING_DEBUG
+				Debug.Log("ATTENZIONE - tentativo di settare come stato attivo uno stato non figlio");
+			#endif
 		}
 	}
 
 	//INITIALIZE
 	//-----------------------------------------------------------------------------------------------------------------------------------------------
 
-	protected virtual void initializeHState(ref object ob) {
+	protected virtual void initializeHState() {
 		#if _DEBUG
 		Debug.Log ("HFSM - entro in stato generico");
 		#endif
@@ -419,25 +420,39 @@ public class HStateFSM {
 
 		if (finalHLevel == true) {
 			
-			if(myInitialize!=null)
-				myInitialize(ref ob);
-			else
-				Debug.Log ("ATTENZIONE - HFSM - initialize dello stato " + StateName  + " è nulla ");
+			if(myInitialize!=null) {
+				myInitialize();
+			}
+			else{
+				#if _WARNING_DEBUG
+					Debug.Log ("ATTENZIONE - HFSM - initialize dello stato " + StateName  + " è nulla ");
+				#endif
+
+			}
+
+			emptyFinalizeMessages();
+
 		} 
 		else {
 
 			//first initialize father state, because it could need to set which child will be the active one
-			if(myInitialize!=null)
-				myInitialize(ref ob);
-			else
+			if(myInitialize!=null){
+				myInitialize();
+			}
+			else{
 				Debug.Log ("N.B. - HFSM - initialize dello stato " + StateName  + " è nulla ");
+			}
 
-
-			if(activeState.myHInitialize != null)
-				activeState.myHInitialize (ref ob);
-			else
+			if(activeState.myHInitialize != null) {
+				activeState.myHInitialize ();
+			}
+			else{
+				#if _WARNING_DEBUG
 				Debug.Log ("ATTENZIONE - HFSM - initialize del sotto stato " + activeState.StateName + " è nulla ");
-			
+				#endif
+
+			}
+
 		}
 
 	}
@@ -484,7 +499,10 @@ public class HStateFSM {
 				activeState.myHUpdate ();
 			}
 			else {
+				#if _WARNING_DEBUG
 				Debug.Log ("ATTENZIONE - HFSM - update del sotto stato " + activeState.StateName + " è nulla ");
+				#endif
+
 			}
 		}
 
@@ -495,51 +513,49 @@ public class HStateFSM {
 	//FINALIZE
 	//-----------------------------------------------------------------------------------------------------------------------------------------------
 
-	protected virtual object finalizeHState() {
+	protected virtual void finalizeHState() {
 		#if _DEBUG
 		Debug.Log ("HFSM - esco da stato generico");
 		#endif
 
 
-		object ob = null;
-
 		if (finalHLevel == true) {
 
 			if(myFinalize!=null) {
-				ob = myFinalize();
+				myFinalize();
 			}
 			else {
+				#if _WARNING_DEBUG
 				Debug.Log ("ATTENZIONE - HFSM - finalize dello stato " + StateName  + " è nulla ");
+				#endif
+
 			}
 
 		} 
 		else {
 
 			if(myFinalize!=null) {
-				ob = myFinalize();
+				myFinalize();
 			}
 			else {
+				#if _WARNING_DEBUG
 				Debug.Log ("ATTENZIONE - HFSM - finalize dello stato " + StateName  + " è nulla ");
+				#endif
+
 			}
 
 			if(activeState.myHFinalize != null) {
-				if(ob==null) {
-					ob = activeState.myHFinalize ();
-				}
-				else {
-					activeState.myHFinalize ();
-					Debug.Log ("ob riempito dal padre, ob finalize del figlio non preso");
-				}
+				activeState.myHFinalize ();
 			}
 			else {
-
+				#if _WARNING_DEBUG
 				Debug.Log ("ATTENZIONE - HFSM - finalize del sotto stato " + activeState.StateName + " è nulla ");
+				#endif
+
 			}
 		}
 
 
-
-		return ob;
 	}
 
 	//TRANSITIONS
@@ -562,9 +578,12 @@ public class HStateFSM {
 
 			if(activeState.myHTransition!=null)
 				result = activeState.myHTransition(ref _nextState);
-			else
+			else {
+				#if _WARNING_DEBUG
 				Debug.Log ("ATTENZIONE - HFSM - finalize del sotto stato " + activeState.StateName + " è nulla ");
+				#endif
 
+			}
 		}
 
 		//se ho rilevato una transizione, devo capire se devo occuparmene io o meno
@@ -625,41 +644,15 @@ public class HStateFSM {
 
 					_nextState = targetStateTransitions[tn];
 					return true;
-					/*
-					bool isMyTransition = false;
-
-					foreach(HStateFSM targetS in targetStateTransitions) {
-
-						if(targetS==_nextState) {
-							isMyTransition = true;
-							break;
-						}
-
-
-					}
-
-					if(isMyTransition) {
-
-						makeHTransition( targetStateTransitions[tn] );
-						return -1;
-
-					}
-					else {
-
-						_nextState = targetStateTransitions[tn];
-						return -2;
-
-					}
-
-
-					*/
 
 				}
 				
 			}
 			else {
-				
+				#if _WARNING_DEBUG
 				Debug.Log ("ATTENZIONE - livello gerarchia " + myHLevel + ", la func transition numero " + tn + " dello stato " + StateName + " è null");
+				#endif
+
 			}
 		}
 		
@@ -674,15 +667,17 @@ public class HStateFSM {
 		Debug.Log ("TRANSIZIONE INTERNA - sono " + stateName + " e passo da " + activeState.StateName + " a " + _nextState.StateName + "++++++++++++++++++++++++++");
 		#endif
 
-		object ob = null;
-
 		if (activeState == _nextState) {
+
+			#if _WARNING_DEBUG
 			Debug.Log ("ATTENZIONE - stato destinazione uguale a stato attuale");
+			#endif
+
 			return;
 		}
 
 		if(activeState.myFinalize!=null)
-			ob = activeState.myFinalize ();
+			activeState.myFinalize ();
 
 		activeState = _nextState;
 
@@ -692,7 +687,7 @@ public class HStateFSM {
 
 
 		if(activeState.myInitialize!=null)
-			activeState.myInitialize (ref ob);
+			activeState.myInitialize ();
 
 	}
 
@@ -752,10 +747,14 @@ public class HStateFSM {
 
 		if (finalHLevel == true) {
 
-			if(myHandleCollisionEnter!=null)
+			if(myHandleCollisionEnter!=null) {
 				myHandleCollisionEnter(c);
-			else
-				Debug.Log ("ATTENZIONE - HFSM - enter collision dello stato " + StateName  + " è nulla ");
+			}
+			else {
+				#if _WARNING_DEBUG
+					Debug.Log ("ATTENZIONE - HFSM - enter collision dello stato " + StateName  + " è nulla ");
+				#endif
+			}
 		} 
 		else {
 
@@ -766,9 +765,12 @@ public class HStateFSM {
 
 			if(activeState.myHHandleCollisionEnter != null)
 				activeState.myHHandleCollisionEnter (c);
-			else
+			else {
+				#if _WARNING_DEBUG
 				Debug.Log ("ATTENZIONE - HFSM - enter collision del sotto stato " + activeState.StateName + " è nulla ");
-			
+				#endif
+
+			}
 		}
 
 	}
@@ -783,7 +785,7 @@ public class HStateFSM {
 			if(myHandleTriggerEnter!=null)
 				myHandleTriggerEnter(c);
 			else {
-				#if _DEBUG
+				#if _WARNING_DEBUG
 					Debug.Log ("ATTENZIONE - HFSM - enter trigger dello stato " + StateName  + " è nulla, triggato da " + c.name);
 				#endif
 			}
@@ -800,7 +802,7 @@ public class HStateFSM {
 			if(activeState.myHHandleTriggerEnter != null)
 				activeState.myHHandleTriggerEnter (c);
 			else {
-				#if _DEBUG
+				#if _WARNING_DEBUG
 					Debug.Log ("ATTENZIONE - HFSM - enter trigger del sotto stato " + activeState.StateName + " è nulla, triggato da " + c.name);
 				#endif
 			}
@@ -914,14 +916,16 @@ public class HStateFSM {
 			
 			if (Mathf.Abs (myTarget.transform.position.x - transform.position.x) > 1.0f) {
 				
-				if (par.DEBUG_ASTAR [1])
+				#if _MOVEMENT_DEBUG
 					Debug.Log ("TARGET - target più alto di me e distante");
-				
+				#endif
+
 				i_move (speed * 0.85f);
 			} else {
-				
-				if (par.DEBUG_ASTAR [1])
+
+				#if _MOVEMENT_DEBUG
 					Debug.Log ("TARGET - target più alto di me e sopra di me");
+				#endif
 				
 				i_move (speed * 0.7f);
 			}
@@ -929,9 +933,10 @@ public class HStateFSM {
 		} 
 		else {
 			//stessa mia altezza
-			
-			if (par.DEBUG_ASTAR [1])
+
+			#if _MOVEMENT_DEBUG
 				Debug.Log ("TARGET - target alla mia stessa altezza");
+			#endif
 			
 			moveCorrectVerse (myTarget, speed);
 			
@@ -1210,17 +1215,21 @@ public class HStateFSM {
 		
 		if (range != null) {
 			
-			if(range.transform.localPosition.x < 0) 
+			if(range.transform.localPosition.x < 0) {
+				#if _WARNING_DEBUG
 				Debug.Log("ATTENZIONE - L'empty 'RangeOfView' è in una posizione negativa");
-			
+				#endif
+			}
 			_rov = Mathf.Abs( range.transform.localPosition.x ) * Mathf.Abs( transform.localScale.x );
 			
 			return true;
 			
 		}
 		else {
+			#if _WARNING_DEBUG
+				Debug.Log("ATTENZIONE - RangeOfView NON trovato");
+			#endif
 
-			Debug.Log("ATTENZIONE - RangeOfView NON trovato");
 			return false;
 			
 		}
@@ -1238,7 +1247,7 @@ public class HStateFSM {
 			Vector3 dist = transform.position - _prevPosition;
 			
 			if(dist.magnitude < 0.5f) {
-				#if _DEBUG
+				#if _MOVEMENT_DEBUG
 				Debug.Log ("FLIPPED");
 				#endif
 
@@ -1251,12 +1260,18 @@ public class HStateFSM {
 	}
 
 	protected void addFinalizeMessage(MessageFSM message) {
+		if (StackFinalizeMessages == null)
+			Debug.Log ("La coda dei messaggi è null");
 
-		StackFinalizeMessages.Add (message);
+		if(message==null)
+			Debug.Log ("Il messaggio da inserire nella coda è null");
+
+		if(message!=null && StackFinalizeMessages!=null)
+			StackFinalizeMessages.Add (message);
 
 	}
 
-	protected ArrayList takeFinalizeMessages(bool andEmpty) {
+	protected ArrayList takeFinalizeMessages() {
 
 		ArrayList tempArray = new ArrayList ();
 
@@ -1264,13 +1279,32 @@ public class HStateFSM {
 
 			tempArray.Add(ob);
 		}
-
-		if(andEmpty)
-			StackFinalizeMessages = null;
-
+		//Debug.Log ("presi i messaggi");
 		return tempArray;
 
 	}
+
+	protected T[] takeFinalizeMessages <T> () {
+
+		if (StackFinalizeMessages != null) {
+			if(StackFinalizeMessages.Count>0) {
+
+				return (T[]) StackFinalizeMessages.ToArray(typeof(T));
+
+			}
+
+		}
+
+		return null;
+	}
+
+	protected void emptyFinalizeMessages() {
+
+		StackFinalizeMessages.RemoveRange(0, StackFinalizeMessages.Count);
+		//Debug.Log ("svuotati i messaggi");
+	}
+
+
 
 	#endregion USEFULMETHODS
 

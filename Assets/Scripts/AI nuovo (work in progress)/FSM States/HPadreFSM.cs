@@ -11,7 +11,7 @@ public class HPadreFSM : HStateFSM {
 
 	}
 
-	protected void initPadre(ref object ob) {
+	protected void initPadre() {
 		Debug.Log ("ciao da " + stateName);
 	}
 
@@ -36,7 +36,7 @@ public class HFiglio1FSM : HPadreFSM {
 		Debug.Log ("up da " + stateName);
 	}
 
-	protected void initFiglio(ref object ob) {
+	protected void initFiglio() {
 		Debug.Log ("ciao da " + stateName);
 	}
 

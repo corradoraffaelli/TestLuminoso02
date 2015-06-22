@@ -11,7 +11,7 @@ public class HFatherFSM : HStateFSM {
 		
 	}
 	
-	protected void initChaseFather(ref object ob) {
+	protected void initChaseFather() {
 		Debug.Log ("ciao da " + stateName);
 	}
 	

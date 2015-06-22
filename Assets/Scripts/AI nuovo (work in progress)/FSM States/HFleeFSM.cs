@@ -61,7 +61,7 @@ public class HFleeFSM : HStateFSM {
 
 	}
 
-	protected void fleeInitialize (ref object ob) {
+	protected void fleeInitialize () {
 
 		//settare target flee
 		

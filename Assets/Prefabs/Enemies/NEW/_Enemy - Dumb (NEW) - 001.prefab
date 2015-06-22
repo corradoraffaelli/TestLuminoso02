@@ -261,60 +261,48 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15d130ef54b6d439cb57c0f7eb81d900, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DEBUG_FSM_TRANSITION: 000000
-  DEBUG_RECOGNITION: 0000
-  DEBUG_ASTAR: 0000
-  DEBUG_FLIP: 0000
-  DEBUG_COLLISION: 000000
-  _AIwalkSpeed: 4
-  _AIrunSpeed: 5
-  _target: {fileID: 0}
-  _fleeTarget: {fileID: 0}
-  stunnedReceived: 0
   Spawner: {fileID: 0}
   targetLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 20480
   fleeLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 32768
   hidingLayer:
     serializedVersion: 2
-    m_Bits: 0
-  cloneLayer:
-    serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 65536
   obstacleLayers:
     serializedVersion: 2
-    m_Bits: 0
-  defaultLayer: 0
-  deadLayer: 0
+    m_Bits: 768
   statusParameters:
-    alarmed: {fileID: 0}
-    confused: {fileID: 0}
+    alarmed: {fileID: 21300000, guid: 0fbab7b52ebf84263828e8eb5bfe65d2, type: 3}
+    confused: {fileID: 21300000, guid: a42bd6f919ef54b7aa43ce92ae5e8488, type: 3}
+  wanderParameters:
+    wanderSpeed: 2
   patrolParameters:
     patrolSpeed: 4
     patrolTarget: {fileID: 0}
     foundTarget: {fileID: 0}
-    thresholdHeightDifference: 1
-    patrolPoints: []
+    patrolPoints:
+    - {fileID: 0}
+    - {fileID: 0}
     RangeOfView: 0
     DefaultVerseRight: 1
-    patrolSuspiciousSpeed: 2
-    tSearchLenght: 2.5
-    DEFAULT_DUMB_SPEED: 2
+    tSuspiciousLenght: 3
+    tSuspiciousIntervalFlip: .699999988
   chaseParameters:
-    chaseSpeed: 5
+    chaseSpeed: 7
     chaseTarget: {fileID: 0}
     RangeOfView: 0
-    AdditionalROV: 2
-    fTargetFar: 2
-    tChargingChase: 1
-    tToMaxVelocity: .5
-    tLosingTargerLenght: 5.5
+    AdditionalROVBeforeLost: 2
   fleeParameters:
     fleeSpeed: 6
     fleeTarget: {fileID: 0}
+  stunnedReceived: 0
+  _target: {fileID: 0}
+  _fleeTarget: {fileID: 0}
+  defaultLayer: 0
+  deadLayer: 0
   _rigidbody: {fileID: 0}
   _boxCollider: {fileID: 0}
   _circleCollider: {fileID: 0}

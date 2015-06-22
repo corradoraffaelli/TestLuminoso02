@@ -41,10 +41,10 @@ public class HChase1FSM : HStateFSM {
 	
 	protected float AdditionalROV {
 		get{ 
-			if(chasePar!=null) return chasePar.AdditionalROV;
+			if(chasePar!=null) return chasePar.AdditionalROVBeforeLost;
 			else return 0.0f;}
 		set{ 
-			if(chasePar!=null) chasePar.AdditionalROV = value;}
+			if(chasePar!=null) chasePar.AdditionalROVBeforeLost = value;}
 		
 	}
 
@@ -185,10 +185,10 @@ public class HChase1FSM : HStateFSM {
 		
 	}
 
-	protected void initChaseFather(ref object ob) {
+	protected void initChaseFather() {
 
 		activeState = hChargeChase;
-
+		/*
 		if (ob != null) {
 
 			#if _DEBUG
@@ -201,6 +201,17 @@ public class HChase1FSM : HStateFSM {
 		else {
 			Debug.Log (" ATTENZIONE - CHASE NULL ");
 		}
+		*/
+
+		BasicMessageFSM [] mess = takeFinalizeMessages<BasicMessageFSM> ();
+
+		if (mess != null) {
+
+			chaseTarget = mess[0].getTarget();
+
+		}
+
+
 
 	}
 
@@ -269,18 +280,21 @@ public class HChase1FSM : HStateFSM {
 		
 	}
 
-	protected object finalizeChase() {
+	protected void finalizeChase() {
 		
-		object ob = null;
+		//object ob = null;
 
 		if (lostTarget) {
 
-			PatrolMessageFSM pame = new PatrolMessageFSM("Suspicious");
-			ob = (object) pame;
+			BasicMessageFSM pame = new BasicMessageFSM("Suspicious");
+			//ob = (object) pame;
+
+			//Debug.Log("aggiunto messaggio");
+			addFinalizeMessage(pame);
 
 		}
 
-		return ob;
+		//return ob;
 
 	}
 
@@ -313,7 +327,7 @@ public class HChargeChaseFSM : HChase1FSM {
 
 	}
 
-	protected void initializeChargeChase(ref object ob) {
+	protected void initializeChargeChase() {
 
 		#if _DEBUG
 			Debug.Log ("init da " + stateName + " ----------------------------------------");
@@ -346,7 +360,7 @@ public class HChargeChaseFSM : HChase1FSM {
 	bool CC2CCcheckFinishCharge() {
 
 		if(charged) {
-			_StopCoroutine(chargeCor);
+			//_StopCoroutine(chargeCor);
 			return true;
 		} 
 		else {
@@ -354,20 +368,21 @@ public class HChargeChaseFSM : HChase1FSM {
 		}
 	}
 
-	protected object finalizeChargeChase() {
+	protected void finalizeChargeChase() {
 
-		object ob = null;
+		//object ob = null;
 
 		#if _DEBUG
 			Debug.Log ("fine da " + stateName);
 		#endif
 
+		_StopCoroutine(chargeCor);
 		
 		charged = false;
 
 		statusSpriteRend.sprite = null;
 
-		return ob;
+		//return ob;
 	}
 
 }
@@ -398,7 +413,7 @@ public class HCrashChaseFSM : HChase1FSM {
 		
 	}
 
-	protected void initializeCrashChase(ref object ob) {
+	protected void initializeCrashChase() {
 
 		#if _DEBUG
 		Debug.Log ("init da " + stateName);
@@ -415,15 +430,15 @@ public class HCrashChaseFSM : HChase1FSM {
 
 	}
 
-	protected object finalizeCrashChase() {
+	protected void finalizeCrashChase() {
 
-		object ob = null;
+		//object ob = null;
 
 		#if _DEBUG
 		Debug.Log ("fine da " + stateName);
 		#endif
 
-		return ob;
+		//return ob;
 
 		
 	}
