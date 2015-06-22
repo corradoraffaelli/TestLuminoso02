@@ -29,6 +29,8 @@ public class handleStunAI : MonoBehaviour {
 	void Update () {
 		
 	}
+
+
 	
 	public void OnTriggerEnter2D(Collider2D c) {
 
@@ -38,7 +40,12 @@ public class handleStunAI : MonoBehaviour {
 			case stunType.AI :
 				
 				if (c.gameObject.tag=="Player") {
-
+					
+					//TODO: caso da vedere meglio
+					if(c.gameObject.transform.position.y < transform.parent.transform.position.y + 1.0f) {
+						return;
+					}
+					
 					if(DEBUG_STUNNED) {
 						
 						Debug.Log("Io sono " + transform.gameObject.name + " e sono stato colpito dal figlio di " + c.gameObject.name);

@@ -106,6 +106,8 @@ public class MagicLantern : Tool {
 
 	AudioHandler audioHandler;
 
+	Vector3 lastInstatiatePosition;
+
 	//--------INITIALIZATION AND ACTIVATION-------------------------------------
 
 	protected override void initializeTool() {
@@ -320,6 +322,14 @@ public class MagicLantern : Tool {
 
 		}
 
+		if (actualState != lanternState.Left)
+		{
+			if (previousState == lanternState.Left && lastInstatiatePosition!=null)
+			{
+				graphicLantern.instantiateClouds(lastInstatiatePosition);
+			}
+		}
+
 		//aggiorno il previousState con quello attuale, al prossimo frame servirà per i controlli
 		previousState = actualState;
 
@@ -482,6 +492,8 @@ public class MagicLantern : Tool {
 			glassesManager.getActualGlass().projectionObject.SetActive (true);
 
 			projectedGlass = glassesManager.getActualGlassIndex();
+
+			lastInstatiatePosition = glassesManager.getActualGlass().projectionObject.transform.position;
 			//Debug.Log(projectedGlass);
 		}
 

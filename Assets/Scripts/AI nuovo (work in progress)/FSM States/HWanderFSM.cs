@@ -3,6 +3,8 @@ using System.Collections;
 
 public class HWanderFSM : HStateFSM {
 
+	IEnumerator flipNeedCor;
+	Vector3 prevPosition;
 	public int stateStunnedID = -1;
 
 	public HWanderFSM(int _stateId, GameObject _gameo, int _hLevel, HStateFSM _fatherState, AIAgent1 _scriptAIAgent) 
@@ -30,8 +32,13 @@ public class HWanderFSM : HStateFSM {
 		
 	}
 
+
+
 	protected void wanderInitialize (ref object ob) {
 
+		flipNeedCor = checkFlipNeed ();
+
+		_StartCoroutine (flipNeedCor);
 
 	}
 	
@@ -48,6 +55,13 @@ public class HWanderFSM : HStateFSM {
 		} else {
 			return false;
 		}
+	}
+
+	private object finalizeWander() {
+
+		_StopCoroutine (flipNeedCor);
+
+		return null;
 	}
 
 

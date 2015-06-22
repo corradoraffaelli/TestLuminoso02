@@ -8,6 +8,8 @@ public class HChase1FSM : HStateFSM {
 	HChargeChaseFSM hChargeChase;
 	HCrashChaseFSM hCrashChase;
 
+	bool lostTarget = false;
+
 	protected SpriteRenderer statusSpriteRend;
 
 	protected ChaseParameters chasePar;
@@ -83,6 +85,8 @@ public class HChase1FSM : HStateFSM {
 
 		initializeChaseParameters ();
 
+		myFinalize += finalizeChase;
+
 		if (!getStatusSpriteRenderer (ref statusSpriteRend))
 			Debug.Log ("ATTENZIONE - spriterenderer di StatusImg non trovato");
 		//myHandleCollisionEnter
@@ -90,7 +94,8 @@ public class HChase1FSM : HStateFSM {
 
 	#region INITIALIZECHASEPARAMETERS
 	
-	void initializeChaseParameters(){
+
+	protected void initializeChaseParameters(){
 		
 		chasePar = gameObject.GetComponent<AIParameters> ().chaseParameters;
 		
@@ -173,6 +178,13 @@ public class HChase1FSM : HStateFSM {
 
 	}
 
+	public void setDefaultTransitions(HStunnedFSM hstun, HPatrol1FSM hpatrol) {
+		
+		addTransition (C2ScheckStun, hstun);
+		addTransition (C2PlostTarget, hpatrol);
+		
+	}
+
 	protected void initChaseFather(ref object ob) {
 
 		activeState = hChargeChase;
@@ -209,16 +221,18 @@ public class HChase1FSM : HStateFSM {
 	}
 
 	bool C2PlostTarget(){
-		
+
+
+		bool lost = false;
+
 		//target -> NULL
 		if (chaseTarget == null) {
 			
 			#if _DEBUG
 				Debug.Log ("CHASE 2 PATROL - target null");
 			#endif
-				
 			
-			return true;
+			lost = true;
 		}
 		
 		
@@ -229,7 +243,7 @@ public class HChase1FSM : HStateFSM {
 				Debug.Log ("CHASE 2 PATROL - target different height");
 			#endif
 
-			return true;
+			lost = true;
 			
 		}
 		
@@ -241,12 +255,33 @@ public class HChase1FSM : HStateFSM {
 				Debug.Log ("CHASE 2 PATROL - target too far");
 			#endif
 			
-			return true;
+			lost = true;
 			
 		}
+
+		if (lost) {
+
+			lostTarget = true;
+
+		}
+
+		return lost;
 		
-		return false;
+	}
+
+	protected object finalizeChase() {
 		
+		object ob = null;
+
+		if (lostTarget) {
+
+			PatrolMessageFSM pame = new PatrolMessageFSM("Suspicious");
+			ob = (object) pame;
+
+		}
+
+		return ob;
+
 	}
 
 }
@@ -437,7 +472,8 @@ public class HCrashChaseFSM : HChase1FSM {
 				verseRepercussion = 1;
 		}
 
-		_rigidbody.AddForce(new Vector2(verseRepercussion*150.0f,30.0f));
+		_rigidbody.velocity = new Vector2 (0.0f, 0.0f);
+		_rigidbody.AddForce(new Vector2(verseRepercussion*150.0f, 0.0f));
 		
 	}
 

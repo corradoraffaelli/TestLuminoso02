@@ -16,6 +16,26 @@ public class HStateFSM {
 
 	protected GameObject gameObject;
 
+	protected ArrayList StackFinalizeMessages {
+
+		get {
+			if(agentScript!=null) {
+				return agentScript.stackFinalizeMessages;
+			}
+			else {
+				return null;
+			}
+		}
+
+		set {
+			if(agentScript!=null) {
+				agentScript.stackFinalizeMessages = value;
+			}
+
+		}
+
+	}
+
 	protected int defaultLayer {
 		get{
 			if (par != null) {
@@ -332,8 +352,9 @@ public class HStateFSM {
 		states [statesIndex] = _hstate;
 		
 		if (activeState == null) {
-			Debug.Log("Dentro " + stateName + " setto come active state " + _hstate.StateName);
-			
+			#if _DEBUG
+				Debug.Log("Dentro " + stateName + " setto come active state " + _hstate.StateName);
+			#endif			
 			activeState = _hstate;
 		}
 		
@@ -372,8 +393,19 @@ public class HStateFSM {
 
 	public void setActiveState(HStateFSM _state) {
 
-		activeState = _state;
+		bool found = false;
 
+		foreach (HStateFSM st in states) {
+
+			if(_state==st)
+				found = true;
+		}
+
+		if (found)
+			activeState = _state;
+		else {
+			Debug.Log("ATTENZIONE - tentativo di settare come stato attivo uno stato non figlio");
+		}
 	}
 
 	//INITIALIZE
@@ -394,6 +426,7 @@ public class HStateFSM {
 		} 
 		else {
 
+			//first initialize father state, because it could need to set which child will be the active one
 			if(myInitialize!=null)
 				myInitialize(ref ob);
 			else
@@ -472,23 +505,36 @@ public class HStateFSM {
 
 		if (finalHLevel == true) {
 
-			if(myFinalize!=null)
+			if(myFinalize!=null) {
 				ob = myFinalize();
-			else
+			}
+			else {
 				Debug.Log ("ATTENZIONE - HFSM - finalize dello stato " + StateName  + " è nulla ");
+			}
+
 		} 
 		else {
 
-			if(myFinalize!=null)
+			if(myFinalize!=null) {
 				ob = myFinalize();
-			else
+			}
+			else {
 				Debug.Log ("ATTENZIONE - HFSM - finalize dello stato " + StateName  + " è nulla ");
+			}
 
-			if(activeState.myHFinalize != null)
-				ob = activeState.myHFinalize ();
-			else
+			if(activeState.myHFinalize != null) {
+				if(ob==null) {
+					ob = activeState.myHFinalize ();
+				}
+				else {
+					activeState.myHFinalize ();
+					Debug.Log ("ob riempito dal padre, ob finalize del figlio non preso");
+				}
+			}
+			else {
+
 				Debug.Log ("ATTENZIONE - HFSM - finalize del sotto stato " + activeState.StateName + " è nulla ");
-
+			}
 		}
 
 
@@ -559,8 +605,9 @@ public class HStateFSM {
 		bool result = false;
 		
 		if (myTransitions == null) {
-			//TODO: mettere debug
+			#if _DEBUG
 			Debug.Log ("ATTENZIONE - livello gerarchia " + myHLevel + ", NESSUNA TRANSIZIONE presente nello stato " + stateName);
+			#endif
 			return result;
 		}
 		
@@ -780,6 +827,19 @@ public class HStateFSM {
 	protected void i_flip() {
 		
 		playerScript.c_flip ();
+
+		//TODO: ottimizzare
+		foreach (Transform child in transform) {
+
+			if(child.name=="StatusImg") {
+
+				child.localScale = new Vector3(-child.localScale.x,child.localScale.y, child.localScale.z);
+
+				break;
+			}
+
+		}
+
 	}
 	
 	protected void i_stunned(bool isStun) {
@@ -806,7 +866,7 @@ public class HStateFSM {
 			if(!isUnderMyFeet(c)) {
 
 				#if _DEBUG
-				Debug.Log("Collisione! mi flippo!");ame);
+				Debug.Log("Collisione! mi flippo!");
 				#endif
 
 				i_flip();
@@ -1057,7 +1117,9 @@ public class HStateFSM {
 	}
 
 	protected void _StopCoroutine(IEnumerator method) {
-
+		#if _DEBUG
+		Debug.Log ("stop coroutine");
+		#endif
 		agentScript.StopCoroutine (method);
 
 	}
@@ -1135,6 +1197,80 @@ public class HStateFSM {
 		
 	}
 
+	protected bool getRangeOfView(ref float _rov){
+		
+		GameObject range = null;
+		
+		foreach (Transform child in transform) {
+			if(child.gameObject.name=="RangeOfView") {
+				range = child.gameObject;
+			}
+			
+		}
+		
+		if (range != null) {
+			
+			if(range.transform.localPosition.x < 0) 
+				Debug.Log("ATTENZIONE - L'empty 'RangeOfView' è in una posizione negativa");
+			
+			_rov = Mathf.Abs( range.transform.localPosition.x ) * Mathf.Abs( transform.localScale.x );
+			
+			return true;
+			
+		}
+		else {
+
+			Debug.Log("ATTENZIONE - RangeOfView NON trovato");
+			return false;
+			
+		}
+		
+	}
+
+	protected IEnumerator checkFlipNeed() {
+		
+		Vector3 _prevPosition = transform.position;
+		
+		while (true) {
+			
+			yield return new WaitForSeconds (1.5f);
+			
+			Vector3 dist = transform.position - _prevPosition;
+			
+			if(dist.magnitude < 0.5f) {
+				#if _DEBUG
+				Debug.Log ("FLIPPED");
+				#endif
+
+				i_flip();
+			}
+			
+			_prevPosition = transform.position;
+			
+		}
+	}
+
+	protected void addFinalizeMessage(MessageFSM message) {
+
+		StackFinalizeMessages.Add (message);
+
+	}
+
+	protected ArrayList takeFinalizeMessages(bool andEmpty) {
+
+		ArrayList tempArray = new ArrayList ();
+
+		foreach (object ob in StackFinalizeMessages) {
+
+			tempArray.Add(ob);
+		}
+
+		if(andEmpty)
+			StackFinalizeMessages = null;
+
+		return tempArray;
+
+	}
 
 	#endregion USEFULMETHODS
 
