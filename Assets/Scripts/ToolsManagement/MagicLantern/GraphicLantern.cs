@@ -449,11 +449,14 @@ public class GraphicLantern : MonoBehaviour {
 
 	public void instantiateClouds(Vector3 instantiatePosition)
 	{
-		if (instantiatePosition == null)
-			instantiatePosition = raggio_cerchio.transform.position;
-		GameObject instClouds = Instantiate(clouds, instantiatePosition, Quaternion.identity) as GameObject;
-		ParticleEmitter particleEmitter = instClouds.GetComponent<ParticleEmitter>();
-		particleEmitter.emit = true;
+		if (clouds != null)
+		{
+			if (instantiatePosition == null)
+				instantiatePosition = raggio_cerchio.transform.position;
+			GameObject instClouds = Instantiate(clouds, instantiatePosition, Quaternion.identity) as GameObject;
+			ParticleEmitter particleEmitter = instClouds.GetComponent<ParticleEmitter>();
+			particleEmitter.emit = true;
+		}
 	}
 
 	void updateWalls()
