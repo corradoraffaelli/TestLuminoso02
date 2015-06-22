@@ -57,6 +57,8 @@ public class GraphicLantern : MonoBehaviour {
 	CursorHandler cursorHandler;
 	GlassesManager glassesManager;
 
+	public GameObject clouds;
+
 	//3 variabili per ora inutili, pensate nel caso debbano essere presenti muri su cui poter proiettare
 	float lastTimeUpdate = 0.0f;
 	float timeToUpdate = 1.3f;
@@ -443,6 +445,15 @@ public class GraphicLantern : MonoBehaviour {
 	public bool verifyIfInsideWall()
 	{
 		return false;
+	}
+
+	public void instantiateClouds(Vector3 instantiatePosition)
+	{
+		if (instantiatePosition == null)
+			instantiatePosition = raggio_cerchio.transform.position;
+		GameObject instClouds = Instantiate(clouds, instantiatePosition, Quaternion.identity) as GameObject;
+		ParticleEmitter particleEmitter = instClouds.GetComponent<ParticleEmitter>();
+		particleEmitter.emit = true;
 	}
 
 	void updateWalls()
