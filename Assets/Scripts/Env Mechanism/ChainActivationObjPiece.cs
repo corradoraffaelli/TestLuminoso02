@@ -559,6 +559,12 @@ public class ChainActivationObjPiece : MonoBehaviour {
 
 	}
 
+	public void buttonPushed(bool bp){
+
+		c_buttonPushed (bp);
+
+	}
+
 	public void c_buttonPushed(bool bp, float _stepMax = -1){
 
 		//just for sequence buttons

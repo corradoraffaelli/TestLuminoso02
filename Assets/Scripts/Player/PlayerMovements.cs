@@ -524,12 +524,11 @@ public class PlayerMovements : MonoBehaviour {
 	void gravityManagement()
 	{
 
-		/*
 		if (RigBody.velocity.y < 0.0f)
 			RigBody.gravityScale = gravityMultiplier * standardGravity;
 		else
 			RigBody.gravityScale = standardGravity;
-		*/
+
 		//Debug.Log (RigBody.gravityScale);
 	}
 
@@ -657,7 +656,7 @@ public class PlayerMovements : MonoBehaviour {
 		if (Jumping == true) {
 			if (audioHandler != null)
 				audioHandler.playClipByName("Salto");
-			RigBody.AddForce (new Vector2 (0.0f, 150.0f * jumpFactor));
+			RigBody.AddForce (new Vector2 (0.0f, (transform.localScale.y) * 150.0f * jumpFactor));
 			Jumping = false;
 		}
 	}
