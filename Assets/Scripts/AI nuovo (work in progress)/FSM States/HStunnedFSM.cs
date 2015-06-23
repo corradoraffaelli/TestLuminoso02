@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class HStunnedFSM : HStateFSM {
+public class HStunnedFSM : HEnemyStateFSM {
 
 	float startStunnedTime = 0.0f;
 
@@ -22,7 +22,7 @@ public class HStunnedFSM : HStateFSM {
 		
 	}
 
-	public HStunnedFSM(int _stateId, GameObject _gameo, int _hLevel, HStateFSM _fatherState, AIAgent1 _scriptAIAgent, bool _killingState=true) 
+	public HStunnedFSM(int _stateId, GameObject _gameo, int _hLevel, HEnemyStateFSM _fatherState, AIAgent1 _scriptAIAgent, bool _killingState=true) 
 	: base("Stunned", _stateId, _gameo, _hLevel, true, _fatherState, _scriptAIAgent) {
 
 		killingState = _killingState;

@@ -29,8 +29,8 @@ GameObject:
   - 50: {fileID: 5058606}
   - 114: {fileID: 11419772}
   - 95: {fileID: 9525954}
-  - 114: {fileID: 11424252}
   - 114: {fileID: 11435228}
+  - 114: {fileID: 11424252}
   m_Layer: 13
   m_Name: _Enemy - Dumb (NEW) - 001
   m_TagString: Enemy
@@ -277,8 +277,10 @@ MonoBehaviour:
   statusParameters:
     alarmed: {fileID: 21300000, guid: 0fbab7b52ebf84263828e8eb5bfe65d2, type: 3}
     confused: {fileID: 21300000, guid: a42bd6f919ef54b7aa43ce92ae5e8488, type: 3}
+  stunnedParameters:
+    tStunnedLength: 3
   wanderParameters:
-    wanderSpeed: 2
+    wanderSpeed: 2.29999995
   patrolParameters:
     patrolSpeed: 4
     patrolTarget: {fileID: 0}

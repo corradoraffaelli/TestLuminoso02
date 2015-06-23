@@ -61,8 +61,8 @@ GameObject:
   - 50: {fileID: 5069902}
   - 114: {fileID: 11452716}
   - 95: {fileID: 9522644}
-  - 114: {fileID: 11414652}
   - 114: {fileID: 11402882}
+  - 114: {fileID: 11414652}
   m_Layer: 13
   m_Name: _Enemy - Guard (NEW) - 002
   m_TagString: Enemy
@@ -261,7 +261,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94e0e4c3615c240fb833f89cd2cda8e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  patrolType: 1
+  patrolType: 2
 --- !u!114 &11414652
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -289,10 +289,12 @@ MonoBehaviour:
   statusParameters:
     alarmed: {fileID: 21300000, guid: 0fbab7b52ebf84263828e8eb5bfe65d2, type: 3}
     confused: {fileID: 21300000, guid: a42bd6f919ef54b7aa43ce92ae5e8488, type: 3}
+  stunnedParameters:
+    tStunnedLength: 3
   wanderParameters:
     wanderSpeed: 4
   patrolParameters:
-    patrolSpeed: 4
+    patrolSpeed: 2.5
     patrolTarget: {fileID: 0}
     foundTarget: {fileID: 0}
     patrolPoints:
@@ -300,10 +302,10 @@ MonoBehaviour:
     - {fileID: 0}
     RangeOfView: 0
     DefaultVerseRight: 1
-    tSuspiciousLenght: 3
+    tSuspiciousLenght: 2.5
     tSuspiciousIntervalFlip: .699999988
   chaseParameters:
-    chaseSpeed: 7
+    chaseSpeed: 5.5999999
     chaseTarget: {fileID: 0}
     RangeOfView: 0
     AdditionalROVBeforeLost: 2

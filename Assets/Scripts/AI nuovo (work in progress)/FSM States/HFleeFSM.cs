@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class HFleeFSM : HStateFSM {
+public class HFleeFSM : HEnemyStateFSM {
 	
 	public int stateStunnedID = -1;
 	FleeParameters fleePar;
@@ -24,7 +24,7 @@ public class HFleeFSM : HStateFSM {
 		
 	}
 	
-	public HFleeFSM(int _stateId, GameObject _gameo, int _hLevel, HStateFSM _fatherState, AIAgent1 _scriptAIAgent) 
+	public HFleeFSM(int _stateId, GameObject _gameo, int _hLevel, HEnemyStateFSM _fatherState, AIAgent1 _scriptAIAgent) 
 	: base("Flee", _stateId, _gameo, _hLevel, true, _fatherState, _scriptAIAgent) {
 		
 		myInitialize += fleeInitialize;

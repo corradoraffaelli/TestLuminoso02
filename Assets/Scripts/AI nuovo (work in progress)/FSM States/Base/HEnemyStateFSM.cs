@@ -7,11 +7,35 @@ using System.Collections;
 
 public abstract class HEnemyStateFSM : HGenericStateFSM {
 
+
+	
+	#region VARIABLES
+
 	protected PlayerMovements playerScript;
 	protected AIParameters par;
 	protected StatusParameters statusPar;
+
+	#region QUICKOWNREF
 	
-	#region VARIABLES
+	protected Rigidbody2D _rigidbody {
+		get{ return par._rigidbody;}
+		set{ par._rigidbody = value;}
+		
+	}
+	
+	protected BoxCollider2D _boxCollider {
+		get{ return par._boxCollider;}
+		set{ par._boxCollider = value;}
+		
+	}
+	
+	protected CircleCollider2D _circleCollider {
+		get{ return par._circleCollider;}
+		set{ par._circleCollider = value;}
+		
+	}
+
+	#region LAYERS
 
 	protected int defaultLayer {
 		get{
@@ -47,36 +71,8 @@ public abstract class HEnemyStateFSM : HGenericStateFSM {
 		}
 		
 	}
-	
-	//OTHER SCRIPTS
-	
-	
-	
-	#region QUICKOWNREF
-	
-	protected Rigidbody2D _rigidbody {
-		get{ return par._rigidbody;}
-		set{ par._rigidbody = value;}
-		
-	}
-	
-	protected BoxCollider2D _boxCollider {
-		get{ return par._boxCollider;}
-		set{ par._boxCollider = value;}
-		
-	}
-	
-	protected CircleCollider2D _circleCollider {
-		get{ return par._circleCollider;}
-		set{ par._circleCollider = value;}
-		
-	}
-	
-	#endregion QUICKOWNREF
-	
-	//protected SpriteRenderer statusSpriteRenderer;
-	
-	//spriteRenderStatus
+
+	#endregion LAYERS
 	
 	protected GameObject _target {
 		get{ return par._target;}
@@ -113,7 +109,7 @@ public abstract class HEnemyStateFSM : HGenericStateFSM {
 	
 	#endregion LAYERMASKS
 	
-	
+	#endregion QUICKOWNREF
 	
 	#endregion VARIABLES
 
@@ -145,6 +141,31 @@ public abstract class HEnemyStateFSM : HGenericStateFSM {
 		
 	}
 
+	public HEnemyStateFSM(string _stateName, GameObject _gameo, bool _finalHLevel, HGenericStateFSM _fatherState, AIAgent1 _scriptAIAgent)
+	: base(_stateName, _gameo, _finalHLevel, _fatherState, _scriptAIAgent){
+		
+		playerScript = gameObject.GetComponent<PlayerMovements> ();
+		
+		if (playerScript == null) {
+			#if _WARNING_DEBUG
+			Debug.Log ("ATTENZIONE - script PlayerMovements non trovato");
+			#endif
+			
+		}
+		
+		par = gameObject.GetComponent<AIParameters> ();
+		
+		if (par == null) {
+			#if _WARNING_DEBUG
+			Debug.Log ("ATTENZIONE - script AIParameters non trovato");
+			#endif
+			
+		}
+		
+		statusPar = par.statusParameters;
+		
+	}
+	
 	
 	#region USEFULMETHODS
 	
@@ -422,6 +443,8 @@ public abstract class HEnemyStateFSM : HGenericStateFSM {
 			
 		}
 	}
+
+
 
 	
 	#endregion USEFULMETHODS

@@ -36,9 +36,9 @@ public class PlayerMovements : MonoBehaviour {
 
 	[System.Serializable]
 	class FallingForcesVariables{
-		[Range(1.0f,5.0f)]
+		[Range(-1.0f,5.0f)]
 		[SerializeField]
-		float gravityMultiplier = 1.0f;
+		public float gravityMultiplier = 1.0f;
 		public float GravityMultiplier{ get;set;}
 
 		bool addFallingForceRight = false;
@@ -523,11 +523,13 @@ public class PlayerMovements : MonoBehaviour {
 
 	void gravityManagement()
 	{
+
+		/*
 		if (RigBody.velocity.y < 0.0f)
 			RigBody.gravityScale = gravityMultiplier * standardGravity;
 		else
 			RigBody.gravityScale = standardGravity;
-
+		*/
 		//Debug.Log (RigBody.gravityScale);
 	}
 

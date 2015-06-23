@@ -152,7 +152,9 @@ public class MenuManager : MonoBehaviour {
 	}
 
 	public void exitFromLevel() {
-		
+
+		Application.LoadLevel ("00_startMenu");
+
 	}
 
 	public void reloadThisLevel() {

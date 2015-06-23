@@ -4,7 +4,7 @@ using System.Collections;
 
 
 
-public class HPatrolFSM : HStateFSM {
+public class HPatrolFSM : HEnemyStateFSM {
 
 	public enum patrolSubState {
 		Walk,
@@ -81,7 +81,7 @@ public class HPatrolFSM : HStateFSM {
 	
 	//CONSTRUCTOR----------------------------------------------------------------------------------------------------------------------------------
 	//-----------------------------------------------------------------------------------------------------------------------------------------------
-	public HPatrolFSM(int _stateId, GameObject _gameo, int _hLevel, HStateFSM _fatherState, AIAgent1 _scriptAIAgent, patrolSubState patrolT) 
+	public HPatrolFSM(int _stateId, GameObject _gameo, int _hLevel, HEnemyStateFSM _fatherState, AIAgent1 _scriptAIAgent, patrolSubState patrolT) 
 	: base("Patrol", _stateId, _gameo, _hLevel, true, _fatherState, _scriptAIAgent) {
 
 		myInitialize += patrolInitialize;

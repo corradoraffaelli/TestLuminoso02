@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class HWanderFSM : HStateFSM {
+public class HWanderFSM : HEnemyStateFSM {
 
 	IEnumerator flipNeedCor;
 	Vector3 prevPosition;
@@ -17,7 +17,7 @@ public class HWanderFSM : HStateFSM {
 		
 	}
 
-	public HWanderFSM(int _stateId, GameObject _gameo, int _hLevel, HStateFSM _fatherState, AIAgent1 _scriptAIAgent) 
+	public HWanderFSM(int _stateId, GameObject _gameo, int _hLevel, HEnemyStateFSM _fatherState, AIAgent1 _scriptAIAgent) 
 	: base("Wander", _stateId, _gameo, _hLevel, true, _fatherState, _scriptAIAgent) {
 
 		myInitialize += wanderInitialize;

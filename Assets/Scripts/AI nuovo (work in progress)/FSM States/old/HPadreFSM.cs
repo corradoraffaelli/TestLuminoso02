@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class HPadreFSM : HStateFSM {
+public class HPadreFSM : HGenericStateFSM {
 
 	public HPadreFSM(string _stateName, GameObject _gameo, int _hLevel, AIAgent1 _scriptAIAgent)
 		: base(_stateName, 0, _gameo, _hLevel, false, null, _scriptAIAgent) {
@@ -21,7 +21,7 @@ public class HPadreFSM : HStateFSM {
 
 public class HFiglio1FSM : HPadreFSM {
 
-	public HFiglio1FSM(string _stateName, GameObject _gameo, int _hLevel, HStateFSM _fatherState, AIAgent1 _scriptAIAgent) 
+	public HFiglio1FSM(string _stateName, GameObject _gameo, int _hLevel, HGenericStateFSM _fatherState, AIAgent1 _scriptAIAgent) 
 	: base (_stateName, _gameo, _hLevel, _scriptAIAgent) {
 
 		finalHLevel = true;

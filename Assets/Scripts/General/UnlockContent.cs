@@ -52,6 +52,10 @@ public class UnlockContent : MonoBehaviour {
 
 			contentUnlocked = true;
 
+			SpriteRenderer sr = GetComponent<SpriteRenderer>();
+
+			sr.enabled = false;
+
 		}
 
 

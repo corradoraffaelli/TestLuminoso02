@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class HChaseFSM : HStateFSM {
+public class HChaseFSM : HEnemyStateFSM {
 	
 	ChaseParameters chasePar;
 	
@@ -43,7 +43,7 @@ public class HChaseFSM : HStateFSM {
 	//-----------------------------------------------------------------------------------------------------------------------------------------------
 
 
-	public HChaseFSM(int _stateId, GameObject _gameo, int _hLevel, HStateFSM _fatherState, AIAgent1 _scriptAIAgent)  :
+	public HChaseFSM(int _stateId, GameObject _gameo, int _hLevel, HEnemyStateFSM _fatherState, AIAgent1 _scriptAIAgent)  :
 		base("Chase", _stateId, _gameo, _hLevel, true, _fatherState, _scriptAIAgent) {
 
 		

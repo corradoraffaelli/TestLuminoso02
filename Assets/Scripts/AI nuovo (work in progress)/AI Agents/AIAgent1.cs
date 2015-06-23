@@ -1,16 +1,16 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class AIAgent1 : MonoBehaviour {
+public abstract class AIAgent1 : MonoBehaviour {
 
 	#region LAYERMASKS
 
-	private HStateFSM []hstates;
+	private HGenericStateFSM []hstates;
 
 	private int hstatesIndex = 0;
 	
-	public HStateFSM activeState;
-	public HStateFSM previousState;
+	public HGenericStateFSM activeState;
+	public HGenericStateFSM previousState;
 	
 	protected AIParameters par;
 
@@ -117,23 +117,21 @@ public class AIAgent1 : MonoBehaviour {
 		setStartState ();
 		initializeConditions ();
 		*/
-		object ob = null;
 		
 		activeState.MyHInitialize ();
 		
 	}
 
-	protected virtual void initializeHStates() {
-
-
-	}
+	protected abstract void initializeHStates ();
 
 	protected virtual void Update () {
-		
+
+		//Debug.Log ("stato attivo : " + activeState.StateName);
+
 		if (!PlayStatusTracker.inPlay)
 			return;
 		
-		HStateFSM _nextState = activeState;
+		HGenericStateFSM _nextState = activeState;
 		
 		if (activeState.MyHTransition != null) {
 			
@@ -148,7 +146,7 @@ public class AIAgent1 : MonoBehaviour {
 
 				bool found = false;
 
-				foreach(HStateFSM st in hstates) {
+				foreach(HGenericStateFSM st in hstates) {
 
 					if(st == _nextState) {
 						found = true;
@@ -255,7 +253,7 @@ public class AIAgent1 : MonoBehaviour {
 	}
 	*/
 
-	protected virtual void makeTransition(HStateFSM _targetState) {
+	protected virtual void makeTransition(HGenericStateFSM _targetState) {
 		
 		object ob = null;
 
@@ -285,7 +283,7 @@ public class AIAgent1 : MonoBehaviour {
 	/*
 	protected virtual void makeTransition1(int _targetStateID) {
 
-		HStateFSM targetState = statesMap.getStateByID (_targetStateID);
+		HGenericStateFSM targetState = statesMap.getStateByID (_targetStateID);
 
 
 
@@ -327,11 +325,11 @@ public class AIAgent1 : MonoBehaviour {
 	}
 	*/
 
-	public void addState(HStateFSM _hstate) {
+	public void addState(HGenericStateFSM _hstate) {
 
 		if (hstatesIndex == 0) {
 
-			hstates = new HStateFSM[1];
+			hstates = new HGenericStateFSM[1];
 
 		}
 		else {
@@ -353,10 +351,10 @@ public class AIAgent1 : MonoBehaviour {
 
 	void reallocateHStates() {
 
-		HStateFSM [] tempStates = new HStateFSM[hstatesIndex + 1];
+		HGenericStateFSM [] tempStates = new HGenericStateFSM[hstatesIndex + 1];
 
 		int i = 0;
-		foreach (HStateFSM hst in hstates) {
+		foreach (HGenericStateFSM hst in hstates) {
 
 			tempStates[i] = hst;
 			i++;
@@ -386,7 +384,7 @@ public class AIAgent1 : MonoBehaviour {
 
 	}
 
-	public bool setActiveState(HStateFSM _state) {
+	public bool setActiveState(HGenericStateFSM _state) {
 
 		for (int i=0; i<hstates.Length; i++) {
 			
@@ -408,11 +406,11 @@ public class AIAgent1 : MonoBehaviour {
 
 		for(int i=0; i<hierarchy.Length; i++) {
 
-			HStateFSM tempState = statesMap.getStateByID(hierarchy[i]);
+			HGenericStateFSM tempState = statesMap.getStateByID(hierarchy[i]);
 
 			if(!tempState.FinalHLevel) {
 
-				HStateFSM tempChildState = statesMap.getStateByID(hierarchy[i+1]);
+				HGenericStateFSM tempChildState = statesMap.getStateByID(hierarchy[i+1]);
 
 				int index = tempState.getSubStateIndex(tempChildState);
 
@@ -435,10 +433,10 @@ public class AIAgent1 : MonoBehaviour {
 	*/
 
 	/*
-	public int[] getHierarchyIndexes(HStateFSM _state) {
+	public int[] getHierarchyIndexes(HGenericStateFSM _state) {
 
-		HStateFSM father;
-		HStateFSM temp = _state;
+		HGenericStateFSM father;
+		HGenericStateFSM temp = _state;
 		ArrayList alTemp = new ArrayList();
 		int[] hierarchy;
 
@@ -556,6 +554,13 @@ public class AIAgent1 : MonoBehaviour {
 		Debug.Log ("svuotati i messaggi");
 	}
 
+	public void c_instantKill(){
+
+		//TODO:
+		//makeStateTransition(eMS, enemyMachineState.Stunned);
+		
+	}
+
 
 }
 
@@ -564,15 +569,15 @@ public class AIAgent1 : MonoBehaviour {
 
 public class HStateRecords {
 
-	public HStateFSM []mappedStates;
+	public HGenericStateFSM []mappedStates;
 	int index = 0;
 
 	public HStateRecords() {
 		//TODO: da ottimizzare
-		mappedStates = new HStateFSM[20];
+		mappedStates = new HGenericStateFSM[20];
 	}
 
-	public void addState(HStateFSM state) {
+	public void addState(HGenericStateFSM state) {
 
 		if (index >= mappedStates.Length) {
 
@@ -592,7 +597,7 @@ public class HStateRecords {
 
 	}
 
-	public HStateFSM getStateByID(int _id) {
+	public HGenericStateFSM getStateByID(int _id) {
 
 		if (_id == -1 || _id > index) {
 			Debug.Log ("ATTENZIONE - tentativo di accesso errato alla mappa degli stati");
@@ -614,7 +619,7 @@ public class HStateRecords {
 
 	}
 
-	public HStateFSM getStateByName(string _stateName) {
+	public HGenericStateFSM getStateByName(string _stateName) {
 
 		for(int i=0; i<mappedStates.Length; i++) {
 			//TODO: da ottimizzare

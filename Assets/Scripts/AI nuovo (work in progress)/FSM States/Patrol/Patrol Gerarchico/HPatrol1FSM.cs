@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class HPatrol1FSM : HStateFSM {
+public class HPatrol1FSM : HEnemyStateFSM {
 
 	protected SpriteRenderer statusSpriteRend;
 
@@ -136,57 +136,7 @@ public class HPatrol1FSM : HStateFSM {
 		#if _DEBUG
 		Debug.Log ("inizio patrol--------------------------------");
 		#endif
-		/*
-		if(ob!=null) {
-			
-			PatrolMessageFSM pame = (PatrolMessageFSM) ob;
 
-			if(pame.getInitializationType()== "Suspicious") {
-
-				if(suspChildPatrolState!=null)
-					setActiveState(suspChildPatrolState);
-				else
-					Debug.Log("ATTENZIONE - suspChildPatrolState è NULL");
-			}
-			else {
-
-				setActiveState(defaultChildPatrolState);
-
-			}
-		}
-		*/
-
-		//Debug.Log ("sto per prendere i messaggi - by hpatrol1");
-
-		/*
-		ArrayList tempMess = takeFinalizeMessages ();
-
-		if (tempMess != null) {
-			if(tempMess.Count>0) {
-
-				foreach(object tempObj in tempMess) {
-
-					BasicMessageFSM tempPame = (BasicMessageFSM)tempObj;
-
-					if(tempPame.getInitializationType()== "Suspicious") {
-						
-						if(suspChildPatrolState!=null)
-							setActiveState(suspChildPatrolState);
-						else
-							Debug.Log("ATTENZIONE - suspChildPatrolState è NULL");
-					}
-					else {
-						
-						setActiveState(defaultChildPatrolState);
-						
-					}
-
-				}
-
-			}
-
-		}
-		*/
 
 		BasicMessageFSM []mess = takeFinalizeMessages<BasicMessageFSM> ();
 
@@ -208,8 +158,7 @@ public class HPatrol1FSM : HStateFSM {
 		}
 		
 		patrolTarget = null;
-		
-		
+
 	}
 
 	#endregion MYINITIALIZE
@@ -220,8 +169,6 @@ public class HPatrol1FSM : HStateFSM {
 		#if _DEBUG
 		Debug.Log ("finisco patrol--------------------------------");
 		#endif
-
-
 
 		//object ob = null;
 		
@@ -363,7 +310,7 @@ public class HSuspPatrolFSM : HPatrol1FSM {
 
 	}
 
-	public HSuspPatrolFSM(GameObject _gameo, int _hLevel, HStateFSM _fatherState, AIAgent1 _scriptAIAgent) 
+	public HSuspPatrolFSM(GameObject _gameo, int _hLevel, HEnemyStateFSM _fatherState, AIAgent1 _scriptAIAgent) 
 	: base ("SuspPatrol", _gameo, _hLevel, _scriptAIAgent) {
 		
 		finalHLevel = true;
@@ -427,7 +374,7 @@ public class HSuspPatrolFSM : HPatrol1FSM {
 		while (true) {
 
 			yield return new WaitForSeconds (tSuspiciousIntervalFlip);
-			
+
 			i_flip ();
 
 			totalTime += tSuspiciousIntervalFlip;
@@ -503,7 +450,7 @@ public class HWalkPatrolFSM : HPatrol1FSM {
 	
 	bool finishSuspPatrol = false;
 	
-	public HWalkPatrolFSM(GameObject _gameo, int _hLevel, HStateFSM _fatherState, AIAgent1 _scriptAIAgent) 
+	public HWalkPatrolFSM(GameObject _gameo, int _hLevel, HEnemyStateFSM _fatherState, AIAgent1 _scriptAIAgent) 
 	: base ("WalkPatrol", _gameo, _hLevel, _scriptAIAgent) {
 
 
@@ -554,7 +501,7 @@ public class HWalkPatrolFSM : HPatrol1FSM {
 
 public class HAreaPatrolFSM : HPatrol1FSM {
 	
-	public HAreaPatrolFSM(GameObject _gameo, int _hLevel, HStateFSM _fatherState, AIAgent1 _scriptAIAgent) 
+	public HAreaPatrolFSM(GameObject _gameo, int _hLevel, HEnemyStateFSM _fatherState, AIAgent1 _scriptAIAgent) 
 	: base ("AreaPatrol", _gameo, _hLevel, _scriptAIAgent) {
 
 		finalHLevel = true;
@@ -615,7 +562,7 @@ public class HAreaPatrolFSM : HPatrol1FSM {
 
 public class HStandPatrolFSM : HPatrol1FSM {
 	
-	public HStandPatrolFSM(GameObject _gameo, int _hLevel, HStateFSM _fatherState, AIAgent1 _scriptAIAgent) 
+	public HStandPatrolFSM(GameObject _gameo, int _hLevel, HEnemyStateFSM _fatherState, AIAgent1 _scriptAIAgent) 
 	: base ("StandPatrol", _gameo, _hLevel, _scriptAIAgent) {
 		
 		finalHLevel = true;

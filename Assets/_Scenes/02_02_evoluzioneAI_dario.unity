@@ -134,9 +134,13 @@ Prefab:
       propertyPath: patrolParameters.patrolPoints.Array.data[1]
       value: 
       objectReference: {fileID: 483874458}
-    - target: {fileID: 11402882, guid: bb2b298b86b5c4a2facf9da0fb4808e5, type: 2}
-      propertyPath: patrolType
-      value: 2
+    - target: {fileID: 188112, guid: bb2b298b86b5c4a2facf9da0fb4808e5, type: 2}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 488178, guid: bb2b298b86b5c4a2facf9da0fb4808e5, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: bb2b298b86b5c4a2facf9da0fb4808e5, type: 2}
@@ -636,6 +640,8 @@ MonoBehaviour:
   statusParameters:
     alarmed: {fileID: 0}
     confused: {fileID: 0}
+  stunnedParameters:
+    tStunnedLength: 3
   wanderParameters:
     wanderSpeed: 4
   patrolParameters:
@@ -1459,7 +1465,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 492030, guid: 4f9543b758b834f768cba2c1b060fa7e, type: 2}
       propertyPath: m_RootOrder
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 11454566, guid: 4f9543b758b834f768cba2c1b060fa7e, type: 2}
       propertyPath: patrolParameters.patrolPoints.Array.data[0]
@@ -5214,6 +5220,10 @@ Prefab:
       propertyPath: patrolParameters.patrolPoints.Array.data[1]
       value: 
       objectReference: {fileID: 483874458}
+    - target: {fileID: 142468, guid: d1f0e3e6316d74b348c519273373140b, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d1f0e3e6316d74b348c519273373140b, type: 2}
   m_IsPrefabParent: 0

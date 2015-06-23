@@ -210,6 +210,43 @@ public abstract class HGenericStateFSM {
 		myHHandleTriggerEnter += handleHEnTrigger;
 
 	}
+
+	public HGenericStateFSM(string _stateName, GameObject _gameo, bool _finalHLevel, HGenericStateFSM _fatherState, AIAgent1 _scriptAIAgent){
+		
+		stateName = _stateName;
+		
+		//stateId = _stateId;
+		
+		gameObject = _gameo;
+		
+		//myHLevel = _hLevel;
+		
+		finalHLevel = _finalHLevel;
+		
+		if (_fatherState == null) {
+			fatherState = null;
+			myHLevel = 0;
+		} 
+		else {
+			fatherState = _fatherState;
+			myHLevel = _fatherState.HLevel + 1;
+		}
+
+		agentScript = _scriptAIAgent;
+		
+		myHInitialize += initializeHState;
+		
+		myHUpdate += updateHState;
+		
+		myHFinalize += finalizeHState;
+		
+		myHTransition += checkHierarchyTransitions;
+		
+		myHHandleCollisionEnter += handleHEnCollision;
+		
+		myHHandleTriggerEnter += handleHEnTrigger;
+		
+	}
 	
 	public void setSubStates(HGenericStateFSM []_states) {
 		
@@ -398,33 +435,24 @@ public abstract class HGenericStateFSM {
 		Debug.Log ("HFSM - esco da stato generico");
 		#endif
 		
-		
 		if (finalHLevel == true) {
 			
 			if(myFinalize!=null) {
+
 				myFinalize();
 			}
 			else {
 				#if _WARNING_DEBUG
 				Debug.Log ("ATTENZIONE - HFSM - finalize dello stato " + StateName  + " è nulla ");
 				#endif
-				
+
 			}
 			
 		} 
 		else {
-			
-			if(myFinalize!=null) {
-				myFinalize();
-			}
-			else {
-				#if _WARNING_DEBUG
-				Debug.Log ("ATTENZIONE - HFSM - finalize dello stato " + StateName  + " è nulla ");
-				#endif
-				
-			}
-			
+
 			if(activeState.myHFinalize != null) {
+
 				activeState.myHFinalize ();
 			}
 			else {
@@ -433,6 +461,20 @@ public abstract class HGenericStateFSM {
 				#endif
 				
 			}
+
+			if(myFinalize!=null) {
+
+				myFinalize();
+
+			}
+			else {
+				#if _WARNING_DEBUG
+				Debug.Log ("ATTENZIONE - HFSM - finalize dello stato " + StateName  + " è nulla ");
+				#endif
+				
+			}
+			
+
 		}
 		
 		

@@ -1,6 +1,10 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
 using System.Collections;
+using System.Collections.Generic;
+using System.Xml;
+using System.Xml.Serialization;
+using System.IO;
+using UnityEngine.UI;
 
 public class InformativeManager : MonoBehaviour {
 
@@ -9,10 +13,11 @@ public class InformativeManager : MonoBehaviour {
 	#region PUBLICVARIABLES
 
 	public GameObject canvasMenu;
-	public GameObject canvasInformative;
-	public GameObject canvasIntro;
+	GameObject canvasInformative;
+	GameObject canvasIntro;
+	GameObject canvasPlayingUI;
 
-	public GameObject canvasPlayingUI;
+	public bool loadDefaultConf;
 
 	[SerializeField]
 	InformativeSection []sections;
@@ -47,6 +52,7 @@ public class InformativeManager : MonoBehaviour {
 	bool canShowTemporarely = false;
 
 	bool initialized = false;
+	
 
 	#endregion PRIVATEVARIABLES
 
@@ -55,6 +61,31 @@ public class InformativeManager : MonoBehaviour {
 	void Start () {
 
 		initializeReferences ();
+
+		InfoSectionContainer.tryLoadInformativeManagerConf (ref sections);
+
+		if (loadDefaultConf) {
+			//loadInformativeManagerConf ();
+			//saveInformativeManagerConf ();
+		}
+		else {
+
+
+		}
+
+		/*
+		InfoSectionContainer infocon = new InfoSectionContainer ();
+
+		TextAsset pi = Resources.Load("InformativeFileConf") as TextAsset;
+
+		//infocon = InfoSectionContainer.Load("/Users/dariorandazzo/Unity Projects/Magic 02/Assets/TextAssets/provainfo.xml");
+		infocon = InfoSectionContainer.LoadFromText (pi.text);
+
+		infocon.setConfiguration (ref sections);
+		*/
+		//infocon.sections = sections;
+
+		//infocon.Save ("/Users/dariorandazzo/Unity Projects/Magic 02/Assets/TextAssets/provainfo.xml");
 
 	}
 
@@ -466,6 +497,8 @@ public class InformativeManager : MonoBehaviour {
 
 	#endregion PRIVATEMETHODS
 
+
+
 	#region CALLBACKS
 
 	public void c_changeSection(bool forward) {
@@ -556,7 +589,7 @@ public class InformativeManager : MonoBehaviour {
 		
 	}
 
-	public void c_canShowNewContent(int sect, int cont, bool unlock = true) {
+	public void c_canShowNewContent(int sect, int cont) {
 		
 		canShowTemporarely = true;
 		
@@ -567,18 +600,69 @@ public class InformativeManager : MonoBehaviour {
 		
 		if(cont >= (sections [activeSection].contents.Length ) )
 			return;
-		
+
+		sections [activeSection].locked = false;
 		sections [activeSection].activeContent = cont;
-		
-		if (unlock) {
+
 			
-			sections [activeSection].contents[cont].locked = false;
+		sections [activeSection].contents[cont].locked = false;
 			
-		}
 		
 		StartCoroutine ("countDownShowNewContent");
+
 	}
 
+
+	public void c_canShowNewContent(string sect, string cont) {
+		
+		canShowTemporarely = true;
+
+		bool found = false;
+		int i = 0;
+		foreach (InformativeSection insec in sections) {
+
+			if(insec.title==sect) {
+				activeSection = i;
+				found = true;
+				break;
+			}
+
+			i++;
+		}
+
+		if (!found)
+			return;
+
+		found = false;
+		i = 0;
+
+		foreach (InformativeSet inset in sections[activeSection].contents) {
+
+			if(inset.name==cont) {
+				sections [activeSection].activeContent = i;
+
+				sections [activeSection].locked = false;
+
+				sections[activeSection].contents[i].locked = false;
+
+				found = true;
+				break;
+			}
+
+			i++;
+		}
+			
+		StartCoroutine ("countDownShowNewContent");
+		
+	}
+
+
+
+	public void c_saveInformativeConfig() {
+
+		InfoSectionContainer.saveInformativeManagerConf (sections);
+
+	}
 
 	#endregion CALLBACKS
 
@@ -601,7 +685,219 @@ public class InformativeManager : MonoBehaviour {
 	
 }
 
+[XmlRoot("InfoSectionCollection")]
+public class InfoSectionContainer
+{
+	[XmlArray("Sections"),XmlArrayItem("Section")]
+	public InformativeSection[] sections;
 
+	public static void saveInformativeManagerConf(InformativeSection []_sections) {
+		
+		InfoSectionContainer infoCon = new InfoSectionContainer ();
+		
+		//TextAsset pi = Resources.Load("InformativeFileConf") as TextAsset;
+		
+		infoCon.sections = _sections;
+		
+		infoCon.Save ("Config/informativeConf/InformativeFileConf1.xml");
+		
+	}
+
+	public void Save(string path)
+	{
+		try {
+			string dirName = Path.GetDirectoryName (path);
+			string fileName = Path.GetFileName (path);
+			
+			if (!Directory.Exists (dirName)) {
+				
+				Directory.CreateDirectory(dirName);
+				
+			}
+			
+			var serializer = new XmlSerializer(typeof(InfoSectionContainer));
+			using(var stream = new FileStream(path, FileMode.Create))
+			{
+				serializer.Serialize(stream, this);
+			}
+		}
+		catch(XmlException e) {
+
+			throw e;
+			
+		}
+		catch(System.Exception e) {
+			
+			throw e;
+			
+		}
+	}
+
+	public static void tryLoadInformativeManagerConf(ref InformativeSection []_sections) {
+		
+		
+		if (Directory.Exists ("Config/informativeConf/")) {
+			
+			try {
+				
+				string []files = Directory.GetFiles("Config/informativeConf/");
+				
+				foreach(string filePath in files) {
+					
+					string fileName = Path.GetFileName(filePath);
+					string fileExt = Path.GetExtension(filePath);
+					
+					#if _DEBUG
+					Debug.Log("file name " + fileName + " fileext " + fileExt);
+					#endif
+
+					//TODO: gestire meglio scelta file da caricare
+					//magari try catch dentro foreach così che passa al prossimo
+
+					if(fileName.Contains("InformativeFileConf") && fileExt==".xml") {
+						
+						InfoSectionContainer.loadInformativeManagerConf (ref _sections, filePath);
+						Debug.Log("CARICAMENTO RIUSCITO");
+						return;
+					}
+					
+				}
+				
+				
+			}
+			catch(XmlException e) {
+
+				Debug.Log(e.ToString());
+
+				InfoSectionContainer.loadInformativeManagerConf(ref _sections);
+				
+				return;
+				
+			}
+			catch(System.Exception e) {
+
+				Debug.Log(e.ToString());
+
+				InfoSectionContainer.loadInformativeManagerConf(ref _sections);
+				
+				return;
+				
+			}
+
+			
+		}
+		
+		
+		InfoSectionContainer.loadInformativeManagerConf(ref _sections);
+
+		Debug.Log("NESSUN FILE TROVATO, CARICATE CONFIG DI DEFAULT");
+	}
+	
+	public static void loadInformativeManagerConf(ref InformativeSection []_sections, string _path=null) {
+		
+		InfoSectionContainer infocon = new InfoSectionContainer ();
+		
+		if (_path == null) {
+			TextAsset pi = Resources.Load("InformativeFileConf") as TextAsset;
+			
+			infocon = InfoSectionContainer.LoadFromText (pi.text);
+			
+			infocon.setConfiguration (ref _sections);
+			
+		}
+		else {
+			infocon = InfoSectionContainer.Load(_path);
+			
+			infocon.setConfiguration (ref _sections);
+		}
+		
+		
+		
+		
+		
+		//infocon = InfoSectionContainer.Load("/Users/dariorandazzo/Unity Projects/Magic 02/Assets/TextAssets/provainfo.xml");
+		
+	}
+
+	public void setConfiguration(ref InformativeSection[] sectionsToSet) {
+
+		foreach (InformativeSection sectionToSet in sectionsToSet) {
+
+			foreach(InformativeSection loadedSection in sections) {
+
+				if(loadedSection.title==sectionToSet.title) {
+
+					foreach(InformativeSet contentToSet in sectionToSet.contents) {
+
+						foreach(InformativeSet loadedContent in loadedSection.contents) {
+
+							if(contentToSet.name == loadedContent.name) {
+
+								contentToSet.locked = loadedContent.locked;
+
+								break;
+							}
+
+						}
+
+					}
+
+					sectionToSet.locked = loadedSection.locked;
+
+					break;
+
+				}
+
+			}
+
+		}
+
+
+	}
+
+
+	
+	public static InfoSectionContainer Load(string path)
+	{
+		try{
+			var serializer = new XmlSerializer(typeof(InfoSectionContainer));
+			using(var stream = new FileStream(path, FileMode.Open))
+			{
+				return serializer.Deserialize(stream) as InfoSectionContainer;
+			}
+		}
+		catch(XmlException e) {
+
+			throw e;
+			
+		}
+		catch(System.Exception e) {
+			
+			throw e;
+			
+		}
+	}
+	
+	//Loads the xml directly from the given string. Useful in combination with www.text.
+	public static InfoSectionContainer LoadFromText(string text) 
+	{
+		try {
+			var serializer = new XmlSerializer(typeof(InfoSectionContainer));
+			return serializer.Deserialize(new StringReader(text)) as InfoSectionContainer;
+		}
+		catch(XmlException e) {
+
+			throw e;
+
+		}
+		catch(System.Exception e) {
+			
+			throw e;
+			
+		}
+
+	}
+}
 
 
 [System.Serializable]
@@ -626,18 +922,22 @@ public class InformativeSet {
 	[SerializeField]
 	public string name;
 
+	[XmlIgnoreAttribute]
 	[SerializeField]
 	public Sprite []mainImages;
 
 	[HideInInspector]
 	public int mainImageIndex = 0;
 
+	[XmlIgnoreAttribute]
 	[SerializeField]
 	public Sprite iconUnlock;
 
+	[XmlIgnoreAttribute]
 	[SerializeField]
 	public Sprite iconLock;
 
+	[XmlIgnoreAttribute]
 	[SerializeField]
 	public TextAsset infoText;
 

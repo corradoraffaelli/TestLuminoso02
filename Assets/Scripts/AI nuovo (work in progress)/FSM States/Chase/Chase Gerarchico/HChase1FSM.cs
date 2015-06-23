@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class HChase1FSM : HStateFSM {
+public class HChase1FSM : HEnemyStateFSM {
 
 	#region VARIABLES
 
@@ -311,7 +311,7 @@ public class HChargeChaseFSM : HChase1FSM {
 	IEnumerator chargeCor;
 	bool charged = false;
 
-	public HChargeChaseFSM(GameObject _gameo, int _hLevel, HStateFSM _fatherState, AIAgent1 _scriptAIAgent) 
+	public HChargeChaseFSM(GameObject _gameo, int _hLevel, HEnemyStateFSM _fatherState, AIAgent1 _scriptAIAgent) 
 	: base ("ChargeChase", _gameo, _hLevel, _scriptAIAgent) {
 
 		finalHLevel = true;
@@ -391,7 +391,7 @@ public class HCrashChaseFSM : HChase1FSM {
 	
 	IEnumerator chargeCor;
 	bool wallCollision = false;
-	public HCrashChaseFSM(GameObject _gameo, int _hLevel, HStateFSM _fatherState, AIAgent1 _scriptAIAgent) 
+	public HCrashChaseFSM(GameObject _gameo, int _hLevel, HEnemyStateFSM _fatherState, AIAgent1 _scriptAIAgent) 
 	: base ("CrashChase", _gameo, _hLevel, _scriptAIAgent) {
 		
 		finalHLevel = true;
