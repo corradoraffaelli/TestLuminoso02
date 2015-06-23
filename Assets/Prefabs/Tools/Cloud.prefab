@@ -42,13 +42,13 @@ ParticleAnimator:
     rgba: 16777215
   colorAnimation[1]:
     serializedVersion: 2
-    rgba: 1979711487
+    rgba: 1040187391
   colorAnimation[2]:
     serializedVersion: 2
-    rgba: 3238002687
+    rgba: 1610612735
   colorAnimation[3]:
     serializedVersion: 2
-    rgba: 2600468479
+    rgba: 1040187391
   colorAnimation[4]:
     serializedVersion: 2
     rgba: 184549375
@@ -71,15 +71,15 @@ EllipsoidParticleEmitter:
   m_Emit: 0
   minSize: 1
   maxSize: 3
-  minEnergy: 3
-  maxEnergy: 3
-  minEmission: 20
-  maxEmission: 20
+  minEnergy: 1.5
+  maxEnergy: 1.5
+  minEmission: 100
+  maxEmission: 100
   worldVelocity: {x: 0, y: .800000012, z: 0}
   localVelocity: {x: 0, y: 0, z: 0}
   rndVelocity: {x: 0, y: .5, z: 0}
   emitterVelocityScale: 8
-  tangentVelocity: {x: 0, y: .5, z: 0}
+  tangentVelocity: {x: 0, y: 0, z: 0}
   angularVelocity: .200000003
   rndAngularVelocity: 1
   rndRotation: 1
@@ -130,15 +130,39 @@ Prefab:
     m_Modifications:
     - target: {fileID: 0}
       propertyPath: maxEmission
-      value: 20
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: minEmission
-      value: 20
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: minSize
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: tangentVelocity.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: maxEnergy
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: minEnergy
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: colorAnimation[1].rgba
+      value: 1040187391
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: colorAnimation[2].rgba
+      value: 1610612735
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: colorAnimation[3].rgba
+      value: 1040187391
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
