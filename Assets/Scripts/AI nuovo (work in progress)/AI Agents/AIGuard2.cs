@@ -12,10 +12,14 @@ public class AIGuard2 : AIAgent1 {
 	}
 	public PatrolType patrolType;
 
+	public AIParameters aiParam;
+
 	protected override void initializeHStates() {
 		//Time.timeScale = 0.3f;
 		
 		//HPatrolFSM hp = new HPatrolFSM (0, this.gameObject, 0, null, this, patrolType);
+
+		aiParam = GetComponent<AIParameters> ();
 
 		HPatrol1FSM hP = new HPatrol1FSM ("Patrol", this.gameObject, 0, this);
 		HSuspPatrolFSM hps = new HSuspPatrolFSM (this.gameObject, 1, hP, this);
@@ -78,4 +82,23 @@ public class AIGuard2 : AIAgent1 {
 		
 
 	}
+
+	public void OnTriggerEnter2D(Collider2D c) {
+
+		if (c.tag == "Cleaner") {
+
+			Destroy(this.gameObject);
+
+		}
+
+	}
+
+	public void c_instantKill(){
+		
+		//TODO:
+		//makeStateTransition(eMS, enemyMachineState.Stunned);
+		aiParam.instantKill = true;
+
+	}
+
 }

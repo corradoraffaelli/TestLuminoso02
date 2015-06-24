@@ -523,12 +523,12 @@ public class PlayerMovements : MonoBehaviour {
 
 	void gravityManagement()
 	{
-
+		/*
 		if (RigBody.velocity.y < 0.0f)
 			RigBody.gravityScale = gravityMultiplier * standardGravity;
 		else
 			RigBody.gravityScale = standardGravity;
-
+		*/
 		//Debug.Log (RigBody.gravityScale);
 	}
 

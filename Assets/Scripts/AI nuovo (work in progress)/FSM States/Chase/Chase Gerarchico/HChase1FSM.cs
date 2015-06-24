@@ -175,6 +175,7 @@ public class HChase1FSM : HEnemyStateFSM {
 
 		addTransition (C2ScheckStun, hstun);
 		addTransition (C2PlostTarget, hpatrol);
+		addTransition (Any2KScheckInstantKill, hstun);
 
 	}
 

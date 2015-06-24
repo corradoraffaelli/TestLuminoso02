@@ -60,7 +60,7 @@ public class killWhatever : MonoBehaviour {
 
 		if (c.gameObject.tag == "Player" || c.gameObject.tag == "Enemy") {
 
-			Debug.Log ("esco");
+			//Debug.Log ("esco");
 
 
 			if (objectToCrush == null)

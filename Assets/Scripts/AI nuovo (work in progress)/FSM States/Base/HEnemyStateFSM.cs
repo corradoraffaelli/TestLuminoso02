@@ -6,8 +6,6 @@ using System.Collections;
 
 
 public abstract class HEnemyStateFSM : HGenericStateFSM {
-
-
 	
 	#region VARIABLES
 
@@ -16,7 +14,13 @@ public abstract class HEnemyStateFSM : HGenericStateFSM {
 	protected StatusParameters statusPar;
 
 	#region QUICKOWNREF
-	
+
+	protected bool _instantKill {
+		get{ return par.instantKill;}
+		set{ par.instantKill = value;}
+		
+	}
+
 	protected Rigidbody2D _rigidbody {
 		get{ return par._rigidbody;}
 		set{ par._rigidbody = value;}
@@ -185,6 +189,7 @@ public abstract class HEnemyStateFSM : HGenericStateFSM {
 	protected void i_flip() {
 		
 		playerScript.c_flip ();
+		//Debug.Log ("flippato : " + gameObject);
 		
 		//TODO: ottimizzare
 		foreach (Transform child in transform) {
@@ -243,18 +248,22 @@ public abstract class HEnemyStateFSM : HGenericStateFSM {
 		ContactPoint2D []contactPoints =  c.contacts;
 		
 		bool underMyFeet = false;
-		
+		//Debug.Log ("check se sotto i piedi");
 		//TODO : scorrere tutti i punti?
 		foreach (ContactPoint2D cp in contactPoints) {
 			
 			//Debug.Log ("I'm at : x " + transform.position.x + " y " + transform.position.y + " and the contact point is at : x " + cp.point.x + " y " + cp.point.y);
 			
 			//TODO: dovrei prendere meglio le misure, in base alla larghezza del player, o meglio, del suo collider
-			if( Mathf.Abs(cp.point.x - transform.position.x) > 0.2f)
+			if( Mathf.Abs(cp.point.x - transform.position.x) > 0.2f) {
+				//Debug.Log ("NON SOTTO");
 				underMyFeet = false;
-			else
+
+			}
+			else {
+				//Debug.Log ("SOTTO");
 				underMyFeet = true;
-			
+			}
 		}
 		
 		//Debug.Log ("fine punti contatto");
@@ -380,7 +389,7 @@ public abstract class HEnemyStateFSM : HGenericStateFSM {
 	
 	protected void setDeadLayer() {
 		
-		Debug.Log("il deadlayer è " + deadLayer.ToString());
+		//Debug.Log("il deadlayer è " + deadLayer.ToString());
 		
 		//gameObject.layer = deadLayer;
 		gameObject.layer = deadLayer;
@@ -430,8 +439,9 @@ public abstract class HEnemyStateFSM : HGenericStateFSM {
 			yield return new WaitForSeconds (1.5f);
 			
 			Vector3 dist = transform.position - _prevPosition;
-			
-			if(dist.magnitude < 0.5f) {
+
+			//TODO: valore da verificare se ottimale
+			if(dist.magnitude < 0.3f) {
 				#if _MOVEMENT_DEBUG
 				Debug.Log ("FLIPPED");
 				#endif
@@ -442,6 +452,12 @@ public abstract class HEnemyStateFSM : HGenericStateFSM {
 			_prevPosition = transform.position;
 			
 		}
+	}
+
+	protected bool Any2KScheckInstantKill() {
+
+		return _instantKill;
+
 	}
 
 

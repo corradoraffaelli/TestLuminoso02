@@ -554,12 +554,6 @@ public abstract class AIAgent1 : MonoBehaviour {
 		Debug.Log ("svuotati i messaggi");
 	}
 
-	public void c_instantKill(){
-
-		//TODO:
-		//makeStateTransition(eMS, enemyMachineState.Stunned);
-		
-	}
 
 
 }

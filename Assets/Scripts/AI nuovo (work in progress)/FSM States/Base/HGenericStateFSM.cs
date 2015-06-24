@@ -648,7 +648,9 @@ public abstract class HGenericStateFSM {
 	protected virtual void handleHEnCollision(Collision2D c) {
 		
 		if (finalHLevel == true) {
-			
+
+			//Debug.Log("sono " + gameObject +" e ho colliso con " + c.gameObject.name);
+
 			if(myHandleCollisionEnter!=null) {
 				myHandleCollisionEnter(c);
 			}

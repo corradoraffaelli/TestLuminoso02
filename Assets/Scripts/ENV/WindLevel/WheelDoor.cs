@@ -89,10 +89,12 @@ public class WheelDoor : MonoBehaviour {
 	{
 		if (chainPiece != null && active != oldActive)
 		{
-			if (active)
+			if (active) {
 				chainPiece.SendMessage("buttonPushed", true);
-			else
+			}
+			else {
 				chainPiece.SendMessage("buttonPushed", false);
+			}
 
 			oldActive = active;
 		}

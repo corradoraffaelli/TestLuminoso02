@@ -61,6 +61,9 @@ public class AIParameters : MonoBehaviour {
 	[HideInInspector]
 	public GameObject myWeakPoint;
 
+	[HideInInspector]
+	public bool instantKill = false;
+
 	void Start(){
 
 		pm = GetComponent<PlayerMovements> ();

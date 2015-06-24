@@ -39,6 +39,7 @@ public class HWanderFSM : HEnemyStateFSM {
 		
 		//addTransition (W2ScheckStunned, "Stunned");
 		addTransition (W2ScheckStunned, stunState);
+		addTransition (Any2KScheckInstantKill, stunState);
 	}
 
 

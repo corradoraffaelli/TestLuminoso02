@@ -90,6 +90,8 @@ public class HPatrol1FSM : HEnemyStateFSM {
 		addTransition (P2ScheckStunned, stunState);
 		
 		addTransition (P2CcheckChaseTarget, chaseState);
+
+		addTransition (Any2KScheckInstantKill, stunState);
 	}
 	
 

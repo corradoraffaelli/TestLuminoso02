@@ -122,17 +122,28 @@ public class HStunnedFSM : HEnemyStateFSM {
 				Debug.Log ("inizio stunn --------------------------------");
 		#endif
 
-		i_stunned (true);
+		if (_instantKill) {
 
-		startStunnedTime = Time.time;
+			i_stunned (true);
+			
+			handleKillo ();
+			
+			setDeadLayer ();
 
-		setEnemiesStunnedLayer ();
+		}
+		else {
+			i_stunned (true);
 
-		stunnedFinish = false;
+			startStunnedTime = Time.time;
 
-		stunnedCor = stunnedCountDown ();
+			setEnemiesStunnedLayer ();
 
-		_StartCoroutine (stunnedCor);
+			stunnedFinish = false;
+
+			stunnedCor = stunnedCountDown ();
+
+			_StartCoroutine (stunnedCor);
+		}
 
 	}
 
@@ -163,9 +174,18 @@ public class HStunnedFSM : HEnemyStateFSM {
 		_boxCollider.isTrigger = true;
 		_circleCollider.isTrigger = true;
 
-
+		checkForSpawner ();
 
 		
+	}
+
+	private void checkForSpawner() {
+		
+		if (par.Spawner != null) {
+			
+			par.Spawner.SendMessage("letsSpawn");
+			
+		}
 	}
 	
 	protected IEnumerator handleKill() {

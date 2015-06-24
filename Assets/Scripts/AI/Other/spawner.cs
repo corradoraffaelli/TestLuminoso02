@@ -8,7 +8,7 @@ public class spawner : MonoBehaviour {
 	public GameObject mold;
 	public Sprite normalS;
 	public Sprite activatingS;
-	[Range(1,10)]
+	[Range(1,40)]
 	public int numberOfEnemies = 1;
 	[Range(0.1f,10.0f)]
 	public float tBeetingSpawn = 2.0f;
