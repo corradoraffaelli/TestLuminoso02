@@ -3,6 +3,9 @@ using System.Collections;
 
 public class PlayerMovements : MonoBehaviour {
 
+	public bool jumpSLIDEMAN;
+	public PhysicsMaterial2D matFrictionZero; 
+
 	//parametri di stato, per ora alcuni sono visibili nell'inspector, per debug
 	[System.Serializable]
 	public class StateParameters {
@@ -411,6 +414,9 @@ public class PlayerMovements : MonoBehaviour {
 				//gestione collisioni con oggetti "softGround" (quelli in corrispondenza o meno di scale)
 				//softGroundCollManagement ();
 				//softGroundCollManagement_02();
+
+				slideManagement();
+
 			} else {
 				
 				if (stunned) {
@@ -459,6 +465,36 @@ public class PlayerMovements : MonoBehaviour {
 		}
 
 		setAnimations ();
+
+	}
+
+	void slideManagement() {
+
+		if (jumpSLIDEMAN)
+			return;
+
+		if (matFrictionZero == null)
+			return;
+
+		CircleCollider2D cc = GetComponent<CircleCollider2D> ();
+
+		//Debug.Log ("cc ha " + cc.sharedMaterial.ToString ());
+
+		if (!onGround && cc.sharedMaterial == null) {
+			Debug.Log ("attivo slide");
+			cc.sharedMaterial = matFrictionZero;
+			cc.enabled = false;
+			cc.enabled = true;
+
+		}
+
+		if (onGround && cc.sharedMaterial != null) {
+			Debug.Log ("DISattivo slide");
+			cc.sharedMaterial = null;
+			cc.enabled = false;
+			cc.enabled = true;
+
+		}
 
 	}
 
