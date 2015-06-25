@@ -400,10 +400,10 @@ MonoBehaviour:
   GroundCheckBottomRight: {fileID: 412268}
   GroundLayers:
     serializedVersion: 2
-    m_Bits: 402176
+    m_Bits: 393984
   hardGroundLayers:
     serializedVersion: 2
-    m_Bits: 401664
+    m_Bits: 393472
   PlayerLayer:
     serializedVersion: 2
     m_Bits: 4096
@@ -1717,7 +1717,15 @@ Prefab:
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: GroundLayers.m_Bits
+      value: 393984
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: hardGroundLayers.m_Bits
+      value: 393472
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 157518}
