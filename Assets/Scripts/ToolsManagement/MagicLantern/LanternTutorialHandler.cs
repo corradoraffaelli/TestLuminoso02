@@ -12,7 +12,7 @@ public class LanternTutorialHandler : MonoBehaviour {
 	public GameObject[] toEnable;
 	SpriteRenderer[] spriteRenderers;
 	
-	bool playerColliding;
+	public bool playerColliding;
 	bool enabling = false;
 
 	public LanternTutorialHandler[] tutToEnable;
@@ -75,6 +75,8 @@ public class LanternTutorialHandler : MonoBehaviour {
 		{
 			if (spriteRenderers[i] != null)
 			{
+				if (!spriteRenderers[i].enabled)
+					spriteRenderers[i].enabled = true;
 				float destAlpha = 0.0f;
 				float speedMultiplier = 4.0f;
 				if (enabling)
@@ -93,13 +95,13 @@ public class LanternTutorialHandler : MonoBehaviour {
 
 	void OnTriggerEnter2D(Collider2D other)
 	{
-		if (other.gameObject == player)
+		if (other.gameObject.tag == "Player")
 			playerColliding = true;
 	}
 
 	void OnTriggerExit2D(Collider2D other)
 	{
-		if (other.gameObject == player)
+		if (other.gameObject.tag == "Player")
 			playerColliding = false;
 	}
 

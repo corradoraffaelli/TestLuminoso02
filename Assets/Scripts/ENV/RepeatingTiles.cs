@@ -64,7 +64,7 @@ public class RepeatingTiles : MonoBehaviour {
 	void createTile(Vector3 position, int i = 0)
 	{
 		//istanzio un nuovo oggetto nella posizione specificata
-		GameObject tempGO = Instantiate(gameObject, position, Quaternion.identity) as GameObject;
+		GameObject tempGO = Instantiate(gameObject, position, gameObject.transform.rotation) as GameObject;
 		tiles[i] = tempGO;
 		//tempGO.transform.SetParent(transform);
 		//tempGO.transform.parent = transform;
