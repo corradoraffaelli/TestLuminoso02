@@ -204,6 +204,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5675304ff344eb3409dac57d91b4ec93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  jumpSLIDEMAN: 0
+  matFrictionZero: {fileID: 0}
   stateParameters:
     onLadder: 0
     underWater: 0
@@ -212,7 +214,7 @@ MonoBehaviour:
   onGround: 0
   onLadder: 0
   underWater: 0
-  gravityMultiplier: 3
+  gravityMultiplier: 1
   speedFactor: 100
   AI_walkSpeed: 4
   AI_runSpeed: 5
@@ -309,6 +311,7 @@ MonoBehaviour:
   _boxCollider: {fileID: 0}
   _circleCollider: {fileID: 0}
   myWeakPoint: {fileID: 0}
+  instantKill: 0
 --- !u!114 &11435228
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -368,7 +371,11 @@ Prefab:
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: gravityMultiplier
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 142468}
