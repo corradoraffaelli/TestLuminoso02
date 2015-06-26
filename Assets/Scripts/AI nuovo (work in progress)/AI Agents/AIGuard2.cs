@@ -57,7 +57,7 @@ public class AIGuard2 : AIAgent1 {
 
 		//patrol
 
-		hP.setDefaultStates (hps, defaultChildPatrol);
+		hP.setDefaultStates (hps, defaultChildPatrol, hpw);
 		hP.setDefaultTransitions (hs, hc);
 		hP.setDefaultDelegates ();
 

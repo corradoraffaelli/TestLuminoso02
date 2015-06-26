@@ -7,6 +7,7 @@ public class HPatrol1FSM : HEnemyStateFSM {
 
 	HSuspPatrolFSM suspChildPatrolState;
 	HPatrol1FSM defaultChildPatrolState;
+	HWalkPatrolFSM walkChildPatrolState;
 
 	#region QUICKPATROLPARAMETERS
 	
@@ -95,15 +96,17 @@ public class HPatrol1FSM : HEnemyStateFSM {
 	}
 	
 
-	public void setDefaultStates(HSuspPatrolFSM _suspPatrolState, HPatrol1FSM _defaultChildPatrolState) {
+	public void setDefaultStates(HSuspPatrolFSM _suspPatrolState, HPatrol1FSM _defaultChildPatrolState, HWalkPatrolFSM _walkChildPatrolState) {
 
 		suspChildPatrolState = _suspPatrolState;
 		
 		defaultChildPatrolState = _defaultChildPatrolState;
 
+		walkChildPatrolState = _walkChildPatrolState;
+
 		addState (defaultChildPatrolState);
 		addState (suspChildPatrolState);
-
+		addState (walkChildPatrolState);
 		
 	}
 

@@ -62,6 +62,8 @@ public class ButtonSequenceHandler : MonoBehaviour {
 
 			BoxCollider2D box = butt.buttObj.AddComponent<BoxCollider2D> ();
 
+			box.size = new Vector2(box.size.x, box.size.y / 2);
+			box.offset = new Vector2(0.0f, -0.18f);
 			box.isTrigger = true;
 
 			butt.tsb = butt.buttObj.AddComponent<TriggerSequenceButton>();
