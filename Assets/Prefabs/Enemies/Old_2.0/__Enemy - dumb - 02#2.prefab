@@ -154,6 +154,7 @@ Transform:
   m_RootOrder: 0
 --- !u!50 &5024526
 Rigidbody2D:
+  serializedVersion: 2
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
@@ -162,11 +163,11 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: .0500000007
   m_GravityScale: 2
-  m_FixedAngle: 1
   m_IsKinematic: 0
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
+  m_Constraints: 4
 --- !u!58 &5806160
 CircleCollider2D:
   m_ObjectHideFlags: 1
@@ -299,6 +300,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5675304ff344eb3409dac57d91b4ec93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  jumpSLIDEMAN: 0
+  matFrictionZero: {fileID: 0}
   stateParameters:
     onLadder: 0
     underWater: 0
@@ -363,6 +366,7 @@ MonoBehaviour:
   DEBUG_COLLISION: 000000
   eMS: 0
   eType: 0
+  killable: 0
   Spawner: {fileID: 0}
   targetLayers:
     serializedVersion: 2
@@ -427,6 +431,7 @@ PlatformEffector2D:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 129666}
   m_Enabled: 1
+  m_UseColliderMask: 1
   m_ColliderMask:
     serializedVersion: 2
     m_Bits: 4096
