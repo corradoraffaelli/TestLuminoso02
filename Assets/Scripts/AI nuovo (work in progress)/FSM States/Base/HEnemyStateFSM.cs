@@ -452,7 +452,7 @@ public abstract class HEnemyStateFSM : HGenericStateFSM {
 		
 		while (true) {
 			
-			yield return new WaitForSeconds (1.0f);
+			yield return new WaitForSeconds (1.5f);
 			
 			Vector3 dist = transform.position - _prevPosition;
 

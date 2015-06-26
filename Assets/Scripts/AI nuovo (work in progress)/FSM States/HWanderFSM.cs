@@ -54,9 +54,9 @@ public class HWanderFSM : HEnemyStateFSM {
 
 	protected void wanderInitialize () {
 
-		flipNeedCor = checkFlipNeed ();
+		//flipNeedCor = checkFlipNeed ();
 
-		_StartCoroutine (flipNeedCor);
+		//_StartCoroutine (flipNeedCor);
 
 	}
 	
@@ -77,7 +77,7 @@ public class HWanderFSM : HEnemyStateFSM {
 
 	private object finalizeWander() {
 
-		_StopCoroutine (flipNeedCor);
+		//_StopCoroutine (flipNeedCor);
 
 		return null;
 	}
