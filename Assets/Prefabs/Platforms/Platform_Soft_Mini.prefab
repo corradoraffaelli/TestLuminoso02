@@ -67,7 +67,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -694670471
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300004, guid: cf0b565374cfb274eb2f8da55d7d0897, type: 3}
+  m_Sprite: {fileID: 21300020, guid: cf0b565374cfb274eb2f8da55d7d0897, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!251 &25105838
 PlatformEffector2D:
@@ -76,6 +76,7 @@ PlatformEffector2D:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 198262}
   m_Enabled: 1
+  m_UseColliderMask: 1
   m_ColliderMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -89,7 +90,12 @@ Prefab:
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300020, guid: cf0b565374cfb274eb2f8da55d7d0897,
+        type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 198262}
