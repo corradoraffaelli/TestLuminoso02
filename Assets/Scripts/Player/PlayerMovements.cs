@@ -481,7 +481,7 @@ public class PlayerMovements : MonoBehaviour {
 		//Debug.Log ("cc ha " + cc.sharedMaterial.ToString ());
 
 		if (!onGround && cc.sharedMaterial == null) {
-			Debug.Log ("attivo slide");
+			//Debug.Log ("attivo slide");
 			cc.sharedMaterial = matFrictionZero;
 			cc.enabled = false;
 			cc.enabled = true;
@@ -489,7 +489,7 @@ public class PlayerMovements : MonoBehaviour {
 		}
 
 		if (onGround && cc.sharedMaterial != null) {
-			Debug.Log ("DISattivo slide");
+			//Debug.Log ("DISattivo slide");
 			cc.sharedMaterial = null;
 			cc.enabled = false;
 			cc.enabled = true;

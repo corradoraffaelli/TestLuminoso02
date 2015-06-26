@@ -231,15 +231,15 @@ public abstract class HEnemyStateFSM : HGenericStateFSM {
 				#if _DEBUG
 				Debug.Log("Collisione! mi flippo!");
 				#endif
-				
+				Debug.Log("mi flippo per " + c.gameObject.name);
 				i_flip();
 				
 			}
 		}
-		
+
 	}
 	
-	bool isUnderMyFeet(Collision2D c) {
+	protected bool isUnderMyFeet(Collision2D c) {
 		
 		GameObject collisionObj = c.gameObject;
 		
@@ -255,14 +255,30 @@ public abstract class HEnemyStateFSM : HGenericStateFSM {
 			//Debug.Log ("I'm at : x " + transform.position.x + " y " + transform.position.y + " and the contact point is at : x " + cp.point.x + " y " + cp.point.y);
 			
 			//TODO: dovrei prendere meglio le misure, in base alla larghezza del player, o meglio, del suo collider
-			if( Mathf.Abs(cp.point.x - transform.position.x) > 0.2f) {
+
+			float radius = _circleCollider.radius;
+
+			float threesh = radius * 0.9f;
+
+			if( Mathf.Abs(cp.point.x - transform.position.x) > threesh) {
 				//Debug.Log ("NON SOTTO");
 				underMyFeet = false;
-
+				//Debug.Log("NOT UNDER 1" + c.gameObject.name + " n punti " + contactPoints.Length);
 			}
 			else {
+
 				//Debug.Log ("SOTTO");
-				underMyFeet = true;
+				//TODO: dovrei prendere meglio le misure
+				if( Mathf.Abs(cp.point.y - transform.position.y) < 0.1f) {
+
+					//Debug.Log("UNDER" + c.gameObject.name + " n punti " + contactPoints.Length);
+					underMyFeet = true;
+					break;
+				}
+				else {
+					//Debug.Log("NOT UNDER 2" + c.gameObject.name + " n punti " + contactPoints.Length);
+				}
+
 			}
 		}
 		
@@ -445,7 +461,8 @@ public abstract class HEnemyStateFSM : HGenericStateFSM {
 				#if _MOVEMENT_DEBUG
 				Debug.Log ("FLIPPED");
 				#endif
-				
+
+
 				i_flip();
 			}
 			

@@ -262,6 +262,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   patrolType: 2
+  aiParam: {fileID: 0}
 --- !u!114 &11414652
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -321,6 +322,7 @@ MonoBehaviour:
   _boxCollider: {fileID: 0}
   _circleCollider: {fileID: 0}
   myWeakPoint: {fileID: 0}
+  instantKill: 0
 --- !u!114 &11447310
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -348,6 +350,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5675304ff344eb3409dac57d91b4ec93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  jumpSLIDEMAN: 0
+  matFrictionZero: {fileID: 0}
   stateParameters:
     onLadder: 0
     underWater: 0
@@ -383,7 +387,7 @@ MonoBehaviour:
   GroundCheckBottomRight: {fileID: 484138}
   GroundLayers:
     serializedVersion: 2
-    m_Bits: 768
+    m_Bits: 262912
   hardGroundLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -452,7 +456,11 @@ Prefab:
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: GroundLayers.m_Bits
+      value: 262912
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 188112}

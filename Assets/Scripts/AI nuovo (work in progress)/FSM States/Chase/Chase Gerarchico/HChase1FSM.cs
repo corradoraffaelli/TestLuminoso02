@@ -463,9 +463,17 @@ public class HCrashChaseFSM : HChase1FSM {
 	protected void checkCrashWallCollision(Collision2D co) {
 
 		if (co.gameObject.tag != "Player") {
+			//Debug.Log ("ho crashato con " + co.gameObject.name);
 
-			wallCollision = true;
-			wallCrashRepercussion(co);
+			if(!isUnderMyFeet(co)) {
+
+				//Debug.Log("mia altezza " + transform.position.y);
+
+				wallCollision = true;
+
+				wallCrashRepercussion(co);
+
+			}
 
 		}
 		else {

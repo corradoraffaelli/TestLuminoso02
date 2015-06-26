@@ -266,6 +266,24 @@ public class HPatrol1FSM : HEnemyStateFSM {
 		}
 	}
 
+	protected bool cantReachPatrolPoint() {
+		//Debug.Log ("controllo cant");
+		if (patrolTarget == null) {
+			Debug.Log ("target null");
+			return false;
+
+		}
+
+		if (Mathf.Abs (transform.position.y - patrolTarget.transform.position.y) > 1.0f) {
+			
+			return true;
+			
+		}
+		
+		return false;
+		
+	}
+
 	#endregion MYTRANSITIONS
 
 }
@@ -479,7 +497,7 @@ public class HWalkPatrolFSM : HPatrol1FSM {
 
 
 	void updatePatrolWalk(){
-
+		//Debug.Log ("walko");
 		i_move (patrolSpeed);
 		
 	}
@@ -511,7 +529,13 @@ public class HAreaPatrolFSM : HPatrol1FSM {
 		fatherState = _fatherState;
 		
 		myUpdate += updatePatrolArea;
-	
+
+	}
+
+	public void setDefaultTransitions(HWalkPatrolFSM _walkPatrolState) {
+
+		addTransition(cantReachPatrolPoint, _walkPatrolState); 
+
 	}
 
 	void updatePatrolArea(){
@@ -574,15 +598,31 @@ public class HStandPatrolFSM : HPatrol1FSM {
 		myUpdate += updatePatrolStand;
 		
 	}
-	
-	void updatePatrolStand() {
+
+	public void setDefaultTransitions(HWalkPatrolFSM _walkPatrolState) {
 		
+		addTransition(cantReachPatrolPoint, _walkPatrolState); 
+		
+	}
+
+	void updatePatrolStand() {
+		//Debug.Log ("stando");
 		patrolOnePoint ();
 		
 	}
 
 	void patrolOnePoint() {
-		
+
+		if (patrolTarget == null) {
+
+			if(patrolPar.patrolPoints.Length > 0) {
+
+				patrolTarget = patrolPar.patrolPoints[0];
+
+			}
+
+		}
+
 		if(patrolPar.patrolPoints.Length > 0) {
 			if (Vector3.Distance (transform.position, patrolPar.patrolPoints[0].transform.position) < 0.5f) {
 				

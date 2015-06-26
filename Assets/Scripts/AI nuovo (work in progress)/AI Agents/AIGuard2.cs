@@ -22,12 +22,13 @@ public class AIGuard2 : AIAgent1 {
 		aiParam = GetComponent<AIParameters> ();
 
 		HPatrol1FSM hP = new HPatrol1FSM ("Patrol", this.gameObject, 0, this);
+
 		HSuspPatrolFSM hps = new HSuspPatrolFSM (this.gameObject, 1, hP, this);
+		HWalkPatrolFSM hpw = new HWalkPatrolFSM (this.gameObject, 1, hP, this);
 		HPatrol1FSM defaultChildPatrol = null;
 
 		switch(patrolType) {
 			case PatrolType.Walk :
-				HWalkPatrolFSM hpw = new HWalkPatrolFSM (this.gameObject, 1, hP, this);
 				defaultChildPatrol = hpw;
 				break;
 			case PatrolType.Area :
@@ -59,7 +60,23 @@ public class AIGuard2 : AIAgent1 {
 		hP.setDefaultStates (hps, defaultChildPatrol);
 		hP.setDefaultTransitions (hs, hc);
 		hP.setDefaultDelegates ();
-		
+
+		switch(patrolType) {
+		case PatrolType.Walk :
+
+			break;
+		case PatrolType.Area :
+			((HAreaPatrolFSM)defaultChildPatrol).setDefaultTransitions(hpw);
+			break;
+			
+		case PatrolType.Stand :
+			((HStandPatrolFSM)defaultChildPatrol).setDefaultTransitions(hpw);
+			break;
+			
+		default:
+			break;
+		}
+
 		hps.setDefaultTransitions (defaultChildPatrol);
 
 		setActiveState (hP);

@@ -458,8 +458,15 @@ public class ChainActivationObjPiece : MonoBehaviour {
 			if(DEBUG_transition)
 				Debug.Log ("il meccanismo " + gameObject.name + " inizia a tornare indietro e avvisa quello dopo");
 
-			nextChainPiece.SendMessage("buttonPushed", false);
-			nextChainPieceStarted = false;
+			if(nextChainPiece!=null && nextChainPiece.activeSelf) {
+				nextChainPiece.SendMessage("buttonPushed", false);
+				nextChainPieceStarted = false;
+			}
+			else {
+
+				Debug.Log ("ATTENZIONE - nextchaingpiece settano a NULL, assegnare il gameobject o settare questo chainpiece come LASTPIECE "); 
+
+			}
 			
 		}
 
@@ -474,9 +481,18 @@ public class ChainActivationObjPiece : MonoBehaviour {
 				if (nextChainPiece != null) {
 				
 					if (!nextChainPieceStarted && isForward) {
-						Debug.Log ("il meccanismo " + gameObject.name + " è arrivato alla fine e avvisa il mecc dopo");
-						nextChainPiece.SendMessage ("buttonPushed", true);
-						nextChainPieceStarted = true;
+
+						//Debug.Log ("il meccanismo " + gameObject.name + " è arrivato alla fine e avvisa il mecc dopo");
+
+						if(nextChainPiece!=null && nextChainPiece.activeSelf) {
+							nextChainPiece.SendMessage ("buttonPushed", true);
+							nextChainPieceStarted = true;
+
+						}
+						else {
+							Debug.Log ("ATTENZIONE - nextchaingpiece settano a NULL, assegnare il gameobject o settare questo chainpiece come LASTPIECE "); 
+
+						}
 					}
 				}
 				break;
