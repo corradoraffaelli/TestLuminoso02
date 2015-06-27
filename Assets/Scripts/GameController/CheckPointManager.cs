@@ -7,8 +7,8 @@ public class CheckPointManager : MonoBehaviour {
 	GameObject respawnPoint;
 
 	GameObject player;
-	GameObject []checkpointObjs;
-	CheckPointUpdate []checkpointScripts;
+	ArrayList checkpointObjs = new ArrayList ();
+	ArrayList checkpointScripts = new ArrayList ();
 
 	bool initialized = false;
 
@@ -73,15 +73,16 @@ public class CheckPointManager : MonoBehaviour {
 
 	void getCheckpoints() {
 
-		checkpointObjs = GameObject.FindGameObjectsWithTag ("Checkpoint");
-		checkpointScripts = new CheckPointUpdate[checkpointObjs.Length];
+		GameObject []temp = GameObject.FindGameObjectsWithTag ("Checkpoint");
 
-		int i = 0;
+		//checkpointScripts = new CheckPointUpdate[checkpointObjs.Length];
 
-		foreach (GameObject ob in checkpointObjs) {
+		foreach (GameObject ob in temp) {
 
-			checkpointScripts[i] = ob.GetComponent<CheckPointUpdate>();
-			i++;
+			checkpointObjs.Add(ob);
+
+			checkpointScripts.Add(ob.GetComponent<CheckPointUpdate>());
+
 
 		}
 
@@ -91,9 +92,11 @@ public class CheckPointManager : MonoBehaviour {
 
 		bool found = false;
 
-		if (checkpointScripts != null) {
+		if (checkpointScripts.Count>0) {
 
-			foreach(CheckPointUpdate ch in checkpointScripts) {
+			foreach(object chObj in checkpointScripts) {
+
+				CheckPointUpdate ch = (CheckPointUpdate) chObj;
 
 				if(ch.gameStarterCheckpoint){
 
@@ -124,6 +127,51 @@ public class CheckPointManager : MonoBehaviour {
 		}
 
 	}
+
+	#region PUBLICMETHODS
+
+	public void c_setActiveLamp(CheckPointUpdate _checkpointScript) {
+
+		//check if it exists
+		Debug.Log ("set active lamp");
+		bool found = false;
+
+		foreach (object chObj in checkpointScripts) {
+
+			CheckPointUpdate ch = (CheckPointUpdate) chObj;
+
+			if(ch == _checkpointScript) {
+				found = true;
+				Debug.Log("found");
+				break;
+			}
+
+		}
+
+		if (!found) {
+			Debug.Log("NOT found");
+			checkpointScripts.Add(_checkpointScript);
+			checkpointObjs.Add(_checkpointScript.gameObject);
+
+		}
+
+		foreach (object chObj in checkpointScripts) {
+			
+			CheckPointUpdate ch = (CheckPointUpdate) chObj;
+			
+			if(ch != _checkpointScript) {
+				if(ch.Activated) {
+					ch.gameObject.GetComponent<streetLampAnimation>().c_deactivateLight();
+					Debug.Log("chiamo deactivate su " + ch.gameObject.name);
+				}
+
+			}
+			
+		}
+
+	}
+
+	#endregion PUBLICMETHODS
 
 	#endregion STARTMETHODS
 

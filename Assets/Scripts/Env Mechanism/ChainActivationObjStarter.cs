@@ -76,7 +76,7 @@ public class ChainActivationObjStarter : MonoBehaviour {
 	//TODO: implementare controllo su chi fa push, tengo variabile conservata e confronto all'exit
 	public void OnTriggerEnter2D(Collider2D c) {
 
-		Debug.Log ("entro");
+		//Debug.Log ("entro");
 
 		if (NeedInteractionButton)
 			return;
@@ -108,7 +108,7 @@ public class ChainActivationObjStarter : MonoBehaviour {
 	
 	public void OnTriggerExit2D(Collider2D c) {
 
-		Debug.Log ("esco");
+		//Debug.Log ("esco");
 
 		if (NeedInteractionButton)
 			return;
