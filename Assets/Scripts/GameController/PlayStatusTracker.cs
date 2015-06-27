@@ -9,6 +9,10 @@ public class PlayStatusTracker : MonoBehaviour {
 
 
 	public bool inPlayMode = true;
+
+	private float prevTimeScale = 1.0f;
+	[Range(0.1f, 30.0f)]
+	public float timeScale = 1.0f;
 	// Use this for initialization
 	void Start () {
 
@@ -32,6 +36,14 @@ public class PlayStatusTracker : MonoBehaviour {
 			}
 
 			inPlay = inPlayMode;
+
+		}
+
+		if (prevTimeScale != timeScale) {
+			Debug.Log("ciaone");
+			prevTimeScale = timeScale;
+
+			Time.timeScale = timeScale;
 
 		}
 
