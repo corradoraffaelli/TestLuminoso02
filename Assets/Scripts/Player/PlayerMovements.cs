@@ -1362,9 +1362,26 @@ public class PlayerMovements : MonoBehaviour {
 		yield return new WaitForSeconds(0.5f);
 
 		//transizione scura...
-		if(mainCamera!=null)
-			mainCamera.SendMessage ("GameOver");
 
+		GameObject canv = GameObject.FindGameObjectWithTag ("CanvasPlayingUI");
+
+		if (canv != null) {
+			//Debug.Log ("yeah0.0");
+			PlayingUIGameOver puigo = canv.GetComponent<PlayingUIGameOver>();
+
+			if(puigo!=null) {
+				puigo.c_GameOver();
+				//Debug.Log ("yeah0.1");
+			}
+			else {
+				//Debug.Log ("yeah0.2");
+			}
+		} 
+		else {
+			//Debug.Log ("yeah1");
+			if (mainCamera != null)
+				mainCamera.SendMessage ("GameOver");
+		}
 		yield return new WaitForSeconds(1.0f);
 
 		//riposizionamento all'ultimo checkpoint
