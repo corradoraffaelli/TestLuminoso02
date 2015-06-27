@@ -232,7 +232,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_Offset: {x: 0, y: .239999995}
   serializedVersion: 2
-  m_Size: {x: .449999988, y: .109999999}
+  m_Size: {x: .449999988, y: .239999995}
 --- !u!95 &9522644
 Animator:
   serializedVersion: 3
@@ -464,6 +464,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: m_LocalPosition.x
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_Size.y
+      value: .239999995
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

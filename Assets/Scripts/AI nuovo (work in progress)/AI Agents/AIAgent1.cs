@@ -507,8 +507,17 @@ public abstract class AIAgent1 : MonoBehaviour {
 			return;
 		}
 		*/
+
+		if (c.tag == "Cleaner") {
+			
+			Destroy(this.gameObject);
+			return;
+		}
+
 		if(activeState.myHHandleTriggerEnter!=null)
 			activeState.myHHandleTriggerEnter (c);
+
+
 	}
 
 	public void c_autoDestroy() {
@@ -519,6 +528,14 @@ public abstract class AIAgent1 : MonoBehaviour {
 
 		//StartCoroutine(handleDestroy(timer));
 		
+	}
+
+	public void c_instantKill(){
+		
+		//TODO:
+		//makeStateTransition(eMS, enemyMachineState.Stunned);
+		par.instantKill = true;
+
 	}
 
 	

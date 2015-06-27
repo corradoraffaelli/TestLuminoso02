@@ -100,6 +100,7 @@ public class AIGuard2 : AIAgent1 {
 
 	}
 
+	/*
 	public void OnTriggerEnter2D(Collider2D c) {
 
 		if (c.tag == "Cleaner") {
@@ -117,5 +118,5 @@ public class AIGuard2 : AIAgent1 {
 		aiParam.instantKill = true;
 
 	}
-
+	*/
 }
