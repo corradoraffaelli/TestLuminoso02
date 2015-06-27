@@ -3,6 +3,13 @@ using System.Collections;
 
 public class CheckPointUpdate : MonoBehaviour {
 
+
+	bool activated = false;
+	public bool Activated {
+		get{return activated; }
+
+	}
+
 	public bool respawnPosition = true;
 	public bool defaultVerseRight = true;
 
@@ -92,10 +99,18 @@ public class CheckPointUpdate : MonoBehaviour {
 	
 	public void OnTriggerEnter2D(Collider2D c) {
 		
-		if (c.tag == "Player") {
-			
+		if (c.tag == "Player" && !activated) {
+			Debug.Log ("trigger enter" + c.gameObject.name);
 			c_manualActivation();
-			
+
+			CheckPointManager cpm = GameObject.FindGameObjectWithTag("Controller").GetComponent<CheckPointManager>();
+
+			if(cpm!=null)
+				cpm.c_setActiveLamp(this);
+			else
+				Debug.Log ("ATTENZIONE game controller non trovato opp CheckPointManager non trovato");
+
+			activated = true;
 		}
 
 	}

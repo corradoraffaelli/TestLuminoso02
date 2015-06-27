@@ -98,6 +98,7 @@ public class streetLampAnimation : MonoBehaviour {
 
 		lampLight.enabled = true;
 		lampConeLight.enabled = true;
+		lampConeLight.color = new Color (lampConeLight.color.r, lampConeLight.color.g, lampConeLight.color.b, (156.0f / 255.0f));
 
 		for (int i=1; i<5; i++) {
 
@@ -116,4 +117,13 @@ public class streetLampAnimation : MonoBehaviour {
 		}
 
 	}
+
+
+	public void c_deactivateLight() {
+
+		lampLight.enabled = false;
+		lampConeLight.enabled = false;
+
+	}
+
 }
