@@ -272,7 +272,7 @@ public class HPatrol1FSM : HEnemyStateFSM {
 	protected bool cantReachPatrolPoint() {
 		//Debug.Log ("controllo cant");
 		if (patrolTarget == null) {
-			Debug.Log ("target null");
+			//Debug.Log ("target null");
 			return false;
 
 		}

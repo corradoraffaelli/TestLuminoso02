@@ -238,8 +238,9 @@ public abstract class HEnemyStateFSM : HGenericStateFSM {
 		}
 
 	}
-	
-	protected bool isUnderMyFeet(Collision2D c) {
+
+	/*
+	protected bool isUnderMyFeet1(Collision2D c) {
 		
 		GameObject collisionObj = c.gameObject;
 		
@@ -284,6 +285,44 @@ public abstract class HEnemyStateFSM : HGenericStateFSM {
 		
 		//Debug.Log ("fine punti contatto");
 		
+		
+		return underMyFeet;
+		
+	}
+	*/
+
+	protected bool isUnderMyFeet(Collision2D c) {
+		
+		GameObject collisionObj = c.gameObject;
+		
+		BoxCollider2D bc = collisionObj.GetComponent<BoxCollider2D> ();
+		
+		ContactPoint2D []contactPoints =  c.contacts;
+		
+		bool underMyFeet = false;
+
+		//TODO : scorrere tutti i punti?
+		foreach (ContactPoint2D cp in contactPoints) {
+			
+			//Debug.Log ("I'm at : x " + transform.position.x + " y " + transform.position.y + " and the contact point is at : x " + cp.point.x + " y " + cp.point.y);
+
+			float radius = _circleCollider.radius;
+
+			if( Mathf.Abs( _circleCollider.bounds.center.x - cp.point.x ) > radius * 0.8f && 
+			    (_circleCollider.bounds.center.y - cp.point.y) < radius * 0.5f ) {
+
+				underMyFeet = false;
+				break;
+
+			}
+			else {
+
+				underMyFeet = true;
+				break;
+
+			}
+
+		}
 		
 		return underMyFeet;
 		
