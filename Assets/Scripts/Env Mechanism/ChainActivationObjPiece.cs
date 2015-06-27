@@ -282,7 +282,7 @@ public class ChainActivationObjPiece : MonoBehaviour {
 		case movementTyp.Translation:
 
 			dist = target - myTrasform.position;
-			if(dist.magnitude < 0.1f ) {
+			if(dist.magnitude < 0.5f ) {
 
 				if(isForward)
 					transform.position = new Vector3(targetPos.position.x, targetPos.position.y, transform.position.z);
