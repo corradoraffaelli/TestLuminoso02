@@ -189,7 +189,7 @@ public abstract class HEnemyStateFSM : HGenericStateFSM {
 	protected void i_flip() {
 		
 		playerScript.c_flip ();
-		Debug.Log ("flippato : " + gameObject);
+		//Debug.Log ("flippato : " + gameObject);
 		
 		//TODO: ottimizzare
 		foreach (Transform child in transform) {
@@ -231,7 +231,7 @@ public abstract class HEnemyStateFSM : HGenericStateFSM {
 				#if _DEBUG
 				Debug.Log("Collisione! mi flippo!");
 				#endif
-				Debug.Log("sono " + gameObject.name + " e mi flippo per " + c.gameObject.name);
+				//Debug.Log("sono " + gameObject.name + " e mi flippo per " + c.gameObject.name);
 				i_flip();
 				
 			}
@@ -379,7 +379,9 @@ public abstract class HEnemyStateFSM : HGenericStateFSM {
 	}
 
 	protected void checkKillPlayerCollision(Collision2D co) {
-		
+
+		//Debug.Log ("KILL");
+
 		if (co.gameObject.tag == "Player") {
 			//co.gameObject.transform.SendMessage ("c_stunned", true);
 			co.gameObject.transform.SendMessage ("c_instantKill");
@@ -486,7 +488,9 @@ public abstract class HEnemyStateFSM : HGenericStateFSM {
 	}
 	
 	protected IEnumerator checkFlipNeed() {
-		
+
+		Debug.Log ("NEED");
+
 		Vector3 _prevPosition = transform.position;
 		
 		while (true) {

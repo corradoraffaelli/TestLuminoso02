@@ -757,7 +757,7 @@ public class InfoSectionContainer
 					if(fileName.Contains("InformativeFileConf") && fileExt==".xml") {
 						
 						InfoSectionContainer.loadInformativeManagerConf (ref _sections, filePath);
-						Debug.Log("CARICAMENTO RIUSCITO");
+						//Debug.Log("CARICAMENTO RIUSCITO");
 						return;
 					}
 					
