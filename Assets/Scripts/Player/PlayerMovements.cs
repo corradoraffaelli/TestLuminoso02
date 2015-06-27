@@ -483,16 +483,16 @@ public class PlayerMovements : MonoBehaviour {
 		if (!onGround && cc.sharedMaterial == null) {
 			//Debug.Log ("attivo slide");
 			cc.sharedMaterial = matFrictionZero;
-			cc.enabled = false;
-			cc.enabled = true;
+			//cc.enabled = false;
+			//cc.enabled = true;
 
 		}
 
 		if (onGround && cc.sharedMaterial != null) {
 			//Debug.Log ("DISattivo slide");
 			cc.sharedMaterial = null;
-			cc.enabled = false;
-			cc.enabled = true;
+			//cc.enabled = false;
+			//cc.enabled = true;
 
 		}
 
