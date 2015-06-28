@@ -37,7 +37,7 @@ public class AIDumb1 : AIAgent1 {
 		//TODO:
 		//makeStateTransition(eMS, enemyMachineState.Stunned);
 		aiParam.instantKill = true;
-		
+
 	}
 
 }

@@ -5,20 +5,45 @@ public class LanternTutorialHandler : MonoBehaviour {
 
 	//bool utile per settare in che situazioni l'aiuto deve comparire
 	public bool active = true;
+	bool wasActive = true;
 
 	GameObject player;
 	MagicLantern magicLantern;
 
-	public GameObject[] toEnable;
+	[Range (0.0f, 60.0f)]
+	public float timeToTrigger = 0.0f;
+	float totalTime = 0.0f;
+	[Range (0.0f, 60.0f)]
+	public float balloonTimeToDisable = 6.0f;
+	float balloonLastAppearTime;
+	[Range (0.0f, 60.0f)]
+	public float balloonReappearTime = 10.0f;
+	float balloonLastDisappearTime = 0.0f;
+
+	public GameObject[] gameObjectsToEnable;
+	public GameObject[] gameObjectsToEnableController;
 	SpriteRenderer[] spriteRenderers;
+
+	public string balloonString;
+	public string balloonStringController;
+	public GameObject balloonPrefab;
+	public bool balloonOnTheRight = true;
+	bool addedBalloon = false;
+	bool removedBalloon = true;
+	bool removeBalloon = false;
+	GameObject balloon;
+	ComicBalloonManager balloonManagerScript;
 	
-	public bool playerColliding;
+	bool playerColliding;
 	bool enabling = false;
+	bool wasEnabling = false;
 
 	public LanternTutorialHandler[] tutToEnable;
+	public LanternTutorialHandler[] tutToEnableOnDisable;
 	public LanternTutorialHandler[] tutToDisable;
+	public LanternTutorialHandler[] tutToDisableOnDisable;
 
-	public MagicLantern.lanternState[] triggerStates;
+	public MagicLantern.lanternState[] lanternStates;
 
 	public float changingAlphaSpeed = 1.0f;
 	
@@ -27,46 +52,90 @@ public class LanternTutorialHandler : MonoBehaviour {
 		magicLantern = UtilFinder._GetComponentOfGameObjectWithTag<MagicLantern>("MagicLanternLogic");
 
 		fillSpriteRenderers();
+
+		wasActive = active;
 	}
 	
 	void Update () {
 		if (active)
 		{
+			if (playerColliding && !enabling)
+				totalTime = totalTime + Time.deltaTime;
 			//abilito gli oggetti solo se il player è nel trigger e lo stato della lanterna è quello specificato
-			enabling = (playerColliding && controlIfState());
+			enabling = (playerColliding && controlIfState() && controlIfTime());
 			if (enabling)
 				enableDisableTut();
 			enablingObjects (enabling);
+
+			setBalloonDisappear();
+			balloonManager();
+
+			if (!enabling && wasEnabling)
+			{
+				enableDisableTutOnDisable();
+			}
+
+			wasEnabling = enabling;
 		}
+		else
+		{
+			if (wasActive)
+			{
+				if (balloon != null && balloonManagerScript != null)
+					balloonManagerScript.startDisappear();
+				enableDisableTutOnDisable();
+				totalTime = 0.0f;
+			}
+		}
+
+
+		wasActive = active;
 	}
 
 	void fillSpriteRenderers()
 	{
-		spriteRenderers = new SpriteRenderer[toEnable.Length];
+		spriteRenderers = new SpriteRenderer[gameObjectsToEnable.Length];
 		for (int i = 0; i< spriteRenderers.Length; i++)
 		{
-			if (toEnable[i] != null)
-				spriteRenderers[i] = toEnable[i].GetComponent<SpriteRenderer>();
+			if (gameObjectsToEnable[i] != null)
+			{
+				if (!GeneralFinder.cursorHandler.useController)
+					spriteRenderers[i] = gameObjectsToEnable[i].GetComponent<SpriteRenderer>();
+				else
+					spriteRenderers[i] = gameObjectsToEnableController[i].GetComponent<SpriteRenderer>();
+			}
+				
 			if (spriteRenderers[i] != null)
 			{
 				Color tempColor = spriteRenderers[i].color;
 				tempColor = new Color(tempColor.r, tempColor.g, tempColor.b, 0.0f);
 				spriteRenderers[i].color = tempColor;
 			}
-				
 		}
 	}
 
 	bool controlIfState()
 	{
-		for (int i = 0; i < triggerStates.Length; i++)
+		//ritorna vero anche se non è specificato nessun lanternState
+		if (lanternStates.Length == 0)
+			return true;
+
+		for (int i = 0; i < lanternStates.Length; i++)
 		{
-			if (triggerStates[i] != null && triggerStates[i] == magicLantern.actualState)
+			if (lanternStates[i] != null && lanternStates[i] == magicLantern.actualState)
 			{
 				return true;
 			}
 		}
 		return false;
+	}
+
+	bool controlIfTime()
+	{
+		if (totalTime > timeToTrigger)
+			return true;
+		else
+			return false;
 	}
 
 	void enablingObjects(bool enabling)
@@ -105,6 +174,50 @@ public class LanternTutorialHandler : MonoBehaviour {
 			playerColliding = false;
 	}
 
+	void balloonManager()
+	{
+		if ((balloonString != null && balloonString !="") )
+		{
+			if (enabling && !addedBalloon && (balloonLastDisappearTime == 0.0 || (Time.time - balloonLastDisappearTime) > balloonReappearTime))
+			{
+				Debug.Log ("creato balloon");
+				addedBalloon = true;
+				balloon = Instantiate(balloonPrefab);
+				balloonManagerScript = balloon.GetComponent<ComicBalloonManager>();
+				if (!GeneralFinder.cursorHandler.useController)
+					balloonManagerScript.setText(balloonString);
+				else
+					balloonManagerScript.setText(balloonStringController);
+				balloonManagerScript.setCirclesPosition(balloonOnTheRight);
+				removedBalloon = false;
+
+				balloonLastAppearTime = Time.time;
+				//removeBalloon = false;
+			}
+			if (removeBalloon)
+			{
+				if (balloonManagerScript != null)
+				{
+					Debug.Log ("togliendo balloon");
+					balloonManagerScript.startDisappear();
+					addedBalloon = false;
+					removedBalloon = true;
+				}
+				balloonLastDisappearTime = Time.time;
+				removeBalloon = false;
+			}
+		}
+	}
+
+	void setBalloonDisappear()
+	{
+		//if (!removedBalloon && !enabling )
+		if (!removedBalloon && (!enabling ||(balloonLastAppearTime != 0.0f && (Time.time - balloonLastAppearTime) > balloonTimeToDisable)))
+		{
+			removeBalloon = true;
+		}
+	}
+
 	void enableDisableTut()
 	{
 		for (int i = 0; i < tutToEnable.Length; i++)
@@ -119,6 +232,24 @@ public class LanternTutorialHandler : MonoBehaviour {
 			if (tutToDisable[i] != null)
 			{
 				tutToDisable[i].enableMe(false);
+			}
+		}
+	}
+
+	void enableDisableTutOnDisable()
+	{
+		for (int i = 0; i < tutToEnableOnDisable.Length; i++)
+		{
+			if (tutToEnableOnDisable[i] != null)
+			{
+				tutToEnableOnDisable[i].enableMe(true);
+			}
+		}
+		for (int i = 0; i < tutToDisableOnDisable.Length; i++)
+		{
+			if (tutToDisableOnDisable[i] != null)
+			{
+				tutToDisableOnDisable[i].enableMe(false);
 			}
 		}
 	}

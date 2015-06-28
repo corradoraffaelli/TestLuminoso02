@@ -31,6 +31,7 @@ GameObject:
   - 114: {fileID: 11439670}
   - 114: {fileID: 11429966}
   - 114: {fileID: 11482476}
+  - 114: {fileID: 11461560}
   m_Layer: 0
   m_Name: GameController - 01
   m_TagString: Controller
@@ -212,6 +213,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inPlayMode: 1
+  timeScale: 1
+--- !u!114 &11461560
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 165342}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a4729301addb25448b181acdd64e289, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &11470308
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -250,9 +263,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canvasMenu: {fileID: 0}
-  canvasInformative: {fileID: 0}
-  canvasIntro: {fileID: 0}
-  canvasPlayingUI: {fileID: 0}
+  loadDefaultConf: 0
   sections: []
   activeSection: 0
 --- !u!114 &11486512
