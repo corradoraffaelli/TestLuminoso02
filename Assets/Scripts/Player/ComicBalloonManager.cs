@@ -79,6 +79,7 @@ public class ComicBalloonManager : MonoBehaviour {
 			textMesh.characterSize = inputTextSize;
 
 		boxCollider = gameObject.AddComponent<BoxCollider2D>();
+		boxCollider.isTrigger = true;
 		player = GeneralFinder.player;
 		
 		setInitialPosition();
