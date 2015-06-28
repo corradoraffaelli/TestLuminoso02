@@ -384,6 +384,9 @@ public abstract class HEnemyStateFSM : HGenericStateFSM {
 
 		if (co.gameObject.tag == "Player") {
 			//co.gameObject.transform.SendMessage ("c_stunned", true);
+			
+			GameObject.FindGameObjectWithTag ("Controller").GetComponent<PlayStatusTracker> ().inPlayMode = false;
+
 			co.gameObject.transform.SendMessage ("c_instantKill");
 			Vector2 dist = co.gameObject.transform.position - transform.position;
 			
