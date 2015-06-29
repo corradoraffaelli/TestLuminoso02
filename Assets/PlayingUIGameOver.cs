@@ -4,10 +4,13 @@ using UnityEngine.UI;
 
 public class PlayingUIGameOver : MonoBehaviour {
 
+	GameObject controller;
 	GameObject canvasGameOver;
 	// Use this for initialization
 
 	void Start () {
+
+		controller = GameObject.FindGameObjectWithTag ("Controller");
 
 		foreach (Transform child in transform) {
 
@@ -25,17 +28,17 @@ public class PlayingUIGameOver : MonoBehaviour {
 	
 	}
 
-	public void c_GameOver() {
+	public void c_GameOver(float timeRespawn, float timeScale) {
 
 		if (canvasGameOver != null){
 
 			canvasGameOver.transform.SetAsLastSibling();
 
-			StartCoroutine (handleGameOver ());
+			StartCoroutine (handleGameOver (timeRespawn, timeScale));
 		}
 	}
 
-	private IEnumerator handleGameOver() {
+	private IEnumerator handleGameOver(float timeRespawn, float timeScale) {
 		
 		Image sr = canvasGameOver.GetComponent<Image> ();
 		sr.enabled = true;
@@ -45,8 +48,12 @@ public class PlayingUIGameOver : MonoBehaviour {
 			yield return new WaitForSeconds(0.01f);
 			
 		}
-		
-		yield return new WaitForSeconds(1.0f);
+
+		controller.GetComponent<PlayStatusTracker> ().timeScale = timeScale;
+
+		yield return new WaitForSeconds(timeRespawn);
+
+		controller.GetComponent<PlayStatusTracker> ().timeScale = 1.0f;
 		
 		for (int i = 20; i>=0; i--) {
 			sr.color = new Color(sr.color.r, sr.color.g, sr.color.b, ((float)i)/15);
