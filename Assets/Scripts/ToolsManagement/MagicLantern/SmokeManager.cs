@@ -10,6 +10,13 @@ public class SmokeManager : MonoBehaviour {
 
 	public float maxDurationRange = 1.0f;
 	public float maxStopRange = 2.0f;
+
+	public float maxEmission = 10.0f;
+	public float minEmission = 3.0f;
+	float actualRandomEmission;
+	//float actualEmission = 0.0f;
+	public float changingSpeed = 10.0f;
+
 	float beginEmission = 0.0f;
 	float stopEmission = 0.0f;
 
@@ -25,6 +32,9 @@ public class SmokeManager : MonoBehaviour {
 
 		standardEmission = particleSystem.emissionRate;
 		particleSystem.emissionRate = 0.0f;
+
+		actualRandomEmission = Random.Range(minEmission, maxEmission);
+		//actualEmission = 0.0f;
 	}
 
 	void Update () {
@@ -87,7 +97,11 @@ public class SmokeManager : MonoBehaviour {
 			if (particleSystem != null)
 			{
 				//Debug.Log("zaza");
-				particleSystem.emissionRate = standardEmission;
+				//particleSystem.emissionRate = standardEmission;
+
+				if (particleSystem.emissionRate == actualRandomEmission)
+					actualRandomEmission = Random.Range(minEmission, maxEmission);
+				particleSystem.emissionRate = Mathf.MoveTowards(particleSystem.emissionRate, actualRandomEmission, Time.deltaTime * changingSpeed);
 			}
 		}
 		else
@@ -97,5 +111,6 @@ public class SmokeManager : MonoBehaviour {
 				particleSystem.emissionRate = 0.0f;
 			}
 		}
+		//actualEmission = particleSystem.emissionRate;
 	}
 }
