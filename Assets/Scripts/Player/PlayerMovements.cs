@@ -6,6 +6,8 @@ public class PlayerMovements : MonoBehaviour {
 	public bool jumpSLIDEMAN;
 	public PhysicsMaterial2D matFrictionZero; 
 
+	bool respawningFromDeath;
+
 	//parametri di stato, per ora alcuni sono visibili nell'inspector, per debug
 	[System.Serializable]
 	public class StateParameters {
@@ -357,6 +359,11 @@ public class PlayerMovements : MonoBehaviour {
 		if (!PlayStatusTracker.inPlay)
 			return;
 
+		if (respawningFromDeath) {
+			setAnimations();
+			return;
+		}
+
 		if (!onLadder) {
 			onGround = groundCheck ();
 
@@ -450,7 +457,7 @@ public class PlayerMovements : MonoBehaviour {
 			}
 
 			gravityManagement();
-		} 
+		}
 		//sono sulla scala
 		else {
 			//gestione del movimento lungo la scala
@@ -1347,6 +1354,8 @@ public class PlayerMovements : MonoBehaviour {
 
 	private IEnumerator handlePlayerKill() {
 
+		respawningFromDeath = true;
+
 		if (audioHandler != null)
 			audioHandler.playClipByName ("Morte");
 
@@ -1356,8 +1365,8 @@ public class PlayerMovements : MonoBehaviour {
 		CircleCollider2D c2d = GetComponent<CircleCollider2D> ();
 		
 		RigBody.AddForce(new Vector2(100.0f,300.0f));
-		b2d.isTrigger = true;
-		c2d.isTrigger = true;
+		b2d.enabled = false;
+		c2d.enabled = false;
 
 		yield return new WaitForSeconds(0.5f);
 
@@ -1370,26 +1379,33 @@ public class PlayerMovements : MonoBehaviour {
 			PlayingUIGameOver puigo = canv.GetComponent<PlayingUIGameOver>();
 
 			if(puigo!=null) {
-				puigo.c_GameOver();
-				//Debug.Log ("yeah0.1");
+				puigo.c_GameOver(10.0f, 5.0f);
+				Debug.Log ("yeah0.1");
+				yield return new WaitForSeconds(10.0f);
 			}
 			else {
-				//Debug.Log ("yeah0.2");
+				Debug.Log ("yeah0.2");
+				yield return new WaitForSeconds(1.0f);
 			}
 		} 
 		else {
 			//Debug.Log ("yeah1");
 			if (mainCamera != null)
 				mainCamera.SendMessage ("GameOver");
+
+			yield return new WaitForSeconds(1.0f);
+
 		}
-		yield return new WaitForSeconds(1.0f);
 
 		//riposizionamento all'ultimo checkpoint
-		b2d.isTrigger = false;
-		c2d.isTrigger = false;
+		b2d.enabled = true;
+		c2d.enabled = true;
+
+		RigBody.velocity = new Vector2 (0.0f, 0.0f);
+
 		bringMeToRespawnPosition ();
 
-
+		respawningFromDeath = false;
 	}
 
 	public void c_jumpEnemy(){
