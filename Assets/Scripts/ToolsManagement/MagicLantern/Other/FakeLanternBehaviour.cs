@@ -24,6 +24,17 @@ public class FakeLanternBehaviour : MonoBehaviour {
 	float startTime = 0.0f;
 	[Range(0.1f, 10.0f)]
 	public float turningOnTime = 5.0f;
+	[Range(0.1f, 10.0f)]
+	public float turningOffTime = 5.0f;
+	[Range(0.1f, 10.0f)]
+	public float timeAfterFlashing = 2.0f;
+	[Range(0.1f, 10.0f)]
+	public float flashingTime = 0.15f;
+	[Range(0.0f, 1.0f)]
+	public float flashingAlpha = 0.25f;
+
+	bool flashingVisible = false;
+	bool actualFlashingVisible = false;
 
 	float startOffTime = 0.0f;
 
@@ -42,6 +53,9 @@ public class FakeLanternBehaviour : MonoBehaviour {
 	GameObject proiettore;
 	GameObject cerchio_collider;
 	GameObject sostegno;
+
+	SpriteRenderer rendererRay;
+	SpriteRenderer rendererCircle;
 
 	float xSize = 0.0f;
 
@@ -87,6 +101,8 @@ public class FakeLanternBehaviour : MonoBehaviour {
 
 		if (continuousFollow && actualState == fakeLanternState.On)
 			setLanternPosition ();
+
+		flashingHandler();
 	}
 
 	void setStates()
@@ -95,6 +111,9 @@ public class FakeLanternBehaviour : MonoBehaviour {
 			if (canBeReenabled && Mathf.Abs(Time.time - startTime) > turningOnTime)
 			{
 				actualState = fakeLanternState.On;
+				setRayAlpha(1.0f);
+				setCircleAlpha(1.0f);
+				//startTime = Time.time;
 			}
 
 			startOffTime = Time.time;
@@ -102,9 +121,10 @@ public class FakeLanternBehaviour : MonoBehaviour {
 
 		if (actualState == fakeLanternState.On) {
 
-			if (intermittance && Mathf.Abs(Time.time - startOffTime) > turningOnTime)
+			if (intermittance && Mathf.Abs(Time.time - startOffTime) > turningOffTime)
 			{
 				actualState = fakeLanternState.Off;
+				//startOffTime = Time.time;
 			}
 
 			startTime = Time.time;
@@ -183,6 +203,11 @@ public class FakeLanternBehaviour : MonoBehaviour {
 				raggio_cerchio = child.gameObject;
 			} 
 		}
+
+		if (raggio != null)
+			rendererRay = raggio.GetComponent<SpriteRenderer>();
+		if (raggio_cerchio != null)
+			rendererCircle = raggio_cerchio.GetComponent<SpriteRenderer>();
 	}
 
 	void turnOnLantern(bool turnOn)
@@ -241,6 +266,47 @@ public class FakeLanternBehaviour : MonoBehaviour {
 		if (disableObject) {
 			foreach (Transform child in transform) {
 				child.gameObject.SetActive(false);
+			}
+		}
+	}
+
+	void setRayAlpha(float inputAlpha)
+	{
+		if (rendererRay != null)
+		{
+			rendererRay.color = new Color (rendererRay.color.r, rendererRay.color.g, rendererRay.color.b, inputAlpha);
+		}
+	}
+
+	void setCircleAlpha(float inputAlpha)
+	{
+		if (rendererCircle != null)
+		{
+			rendererCircle.color = new Color (rendererCircle.color.r, rendererCircle.color.g, rendererCircle.color.b, inputAlpha);
+		}
+	}
+
+	void flashingHandler()
+	{
+		if (actualState == fakeLanternState.On) {
+
+			//float tempTempo = Mathf.Abs(Time.time - startOffTime);
+			if (intermittance && Mathf.Abs(Time.time - startOffTime) < turningOffTime)
+			{
+				if ((turningOffTime - Mathf.Abs(Time.time - startOffTime)) < timeAfterFlashing)
+				{
+					//Debug.Log(Mathf.FloorToInt((turningOffTime - Mathf.Abs(Time.time - startOffTime))/flashingTime));
+					if (Mathf.FloorToInt((turningOffTime - Mathf.Abs(Time.time - startOffTime))/flashingTime) % 2 == 0)
+					{
+						setRayAlpha (1.0f);
+						setCircleAlpha(1.0f);
+					}
+					else
+					{
+						setRayAlpha (flashingAlpha);
+						setCircleAlpha(flashingAlpha);
+					}
+				}
 			}
 		}
 	}

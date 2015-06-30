@@ -3,6 +3,13 @@ using System.Collections;
 
 public class ComicBalloonManager : MonoBehaviour {
 
+	public enum Type{
+		hint,
+		tutorial
+	}
+
+	Type type = Type.hint;
+
 	public float positionY = 3.0f;
 	public float lerpSpeed = 15.0f;
 	public float limitBalloonThreshold = 0.3f;
@@ -40,6 +47,16 @@ public class ComicBalloonManager : MonoBehaviour {
 
 	[SerializeField]
 	CirclesVariables circlesVariables;
+
+	[System.Serializable]
+	public class TutorialSprites{
+		public Sprite cornerSprite;
+		public Sprite borderSprite;
+		public Sprite centerSprite;
+	}
+	
+	[SerializeField]
+	TutorialSprites tutorialSprites;
 
 	GameObject player;
 	BoxCollider2D boxCollider;
@@ -170,7 +187,10 @@ public class ComicBalloonManager : MonoBehaviour {
 				spriteOBJGroup[i].transform.localScale = new Vector3(piecesScale, piecesScale, 1.0f);
 
 				renderersGroup[i] = spriteOBJGroup[i].AddComponent<SpriteRenderer>();
-				renderersGroup[i].sprite = balloonSprites.centerSprite;
+				if (type == Type.hint)
+					renderersGroup[i].sprite = balloonSprites.centerSprite;
+				else if (type == Type.tutorial)
+					renderersGroup[i].sprite = tutorialSprites.centerSprite;
 				renderersGroup[i].sortingLayerName = sortingLayerName;
 				renderersGroup[i].sortingOrder = sortingLayerInt;
 			}
@@ -188,17 +208,26 @@ public class ComicBalloonManager : MonoBehaviour {
 					{
 						if (j==0)
 						{
-							renderersGroup[totYNumber*i + j].sprite = balloonSprites.cornerSprite;
+							if (type == Type.hint)
+								renderersGroup[totYNumber*i + j].sprite = balloonSprites.cornerSprite;
+							else if (type == Type.tutorial)
+								renderersGroup[totYNumber*i + j].sprite = tutorialSprites.cornerSprite;
 							spriteOBJGroup[totYNumber*i + j].transform.eulerAngles = new Vector3(0.0f,0.0f,90.0f);
 						}
 						else if (j == totYNumber - 1)
 						{
-							renderersGroup[totYNumber*i + j].sprite = balloonSprites.cornerSprite;
+							if (type == Type.hint)
+								renderersGroup[totYNumber*i + j].sprite = balloonSprites.cornerSprite;
+							else if (type == Type.tutorial)
+								renderersGroup[totYNumber*i + j].sprite = tutorialSprites.cornerSprite;
 							//spriteOBJGroup[totYNumber*i + j].transform.eulerAngles = new Vector3(0.0f,0.0f,180.0f);
 						}
 						else
 						{
-							renderersGroup[totYNumber*i + j].sprite = balloonSprites.borderSprite;
+							if (type == Type.hint)
+								renderersGroup[totYNumber*i + j].sprite = balloonSprites.borderSprite;
+							else if (type == Type.tutorial)
+								renderersGroup[totYNumber*i + j].sprite = tutorialSprites.borderSprite;
 							spriteOBJGroup[totYNumber*i + j].transform.eulerAngles = new Vector3(0.0f,0.0f,90.0f);
 						}
 					}
@@ -206,28 +235,43 @@ public class ComicBalloonManager : MonoBehaviour {
 					{
 						if (j==0)
 						{
-							renderersGroup[totYNumber*i + j].sprite = balloonSprites.cornerSprite;
+							if (type == Type.hint)
+								renderersGroup[totYNumber*i + j].sprite = balloonSprites.cornerSprite;
+							else if (type == Type.tutorial)
+								renderersGroup[totYNumber*i + j].sprite = tutorialSprites.cornerSprite;
 							spriteOBJGroup[totYNumber*i + j].transform.eulerAngles = new Vector3(0.0f,0.0f,180.0f);
 						}
 						else if (j == totYNumber - 1)
 						{
-							renderersGroup[totYNumber*i + j].sprite = balloonSprites.cornerSprite;
+							if (type == Type.hint)
+								renderersGroup[totYNumber*i + j].sprite = balloonSprites.cornerSprite;
+							else if (type == Type.tutorial)
+								renderersGroup[totYNumber*i + j].sprite = tutorialSprites.cornerSprite;
 							spriteOBJGroup[totYNumber*i + j].transform.eulerAngles = new Vector3(0.0f,0.0f,-90.0f);
 						}
 						else
 						{
-							renderersGroup[totYNumber*i + j].sprite = balloonSprites.borderSprite;
+							if (type == Type.hint)
+								renderersGroup[totYNumber*i + j].sprite = balloonSprites.borderSprite;
+							else if (type == Type.tutorial)
+								renderersGroup[totYNumber*i + j].sprite = tutorialSprites.borderSprite;
 							spriteOBJGroup[totYNumber*i + j].transform.eulerAngles = new Vector3(0.0f,0.0f,-90.0f);
 						}
 					}
 					else if (j == totYNumber - 1)
 					{
-						renderersGroup[totYNumber*i + j].sprite = balloonSprites.borderSprite;
+						if (type == Type.hint)
+							renderersGroup[totYNumber*i + j].sprite = balloonSprites.borderSprite;
+						else if (type == Type.tutorial)
+							renderersGroup[totYNumber*i + j].sprite = tutorialSprites.borderSprite;
 						//spriteOBJGroup[totYNumber*i + j].transform.eulerAngles = new Vector3(0.0f,0.0f,-90.0f);
 					}
 					else if (j == 0)
 					{
-						renderersGroup[totYNumber*i + j].sprite = balloonSprites.borderSprite;
+						if (type == Type.hint)
+							renderersGroup[totYNumber*i + j].sprite = balloonSprites.borderSprite;
+						else if (type == Type.tutorial)
+							renderersGroup[totYNumber*i + j].sprite = tutorialSprites.borderSprite;
 						spriteOBJGroup[totYNumber*i + j].transform.eulerAngles = new Vector3(0.0f,0.0f,180.0f);
 					}
 				}
@@ -237,39 +281,43 @@ public class ComicBalloonManager : MonoBehaviour {
 
 	void createCirclesSprites()
 	{
-		bigCircleOBJ = new GameObject();
-		bigCircleOBJ.transform.parent = transform;
-		bigCircleOBJ.transform.localScale = new Vector3(circlesVariables.bigCircleScale, circlesVariables.bigCircleScale, 1.0f);
-
-		bigCircleRenderer = bigCircleOBJ.AddComponent<SpriteRenderer>();
-		bigCircleRenderer.sprite = balloonSprites.bigCircleSprite;
-
-		smallCircleOBJ = new GameObject();
-		smallCircleOBJ.transform.parent = transform;
-		smallCircleOBJ.transform.localScale = new Vector3(circlesVariables.smallCircleScale, circlesVariables.smallCircleScale, 1.0f);
+		if (type == Type.hint)
+		{
+			bigCircleOBJ = new GameObject();
+			bigCircleOBJ.transform.parent = transform;
+			bigCircleOBJ.transform.localScale = new Vector3(circlesVariables.bigCircleScale, circlesVariables.bigCircleScale, 1.0f);
 			
-		smallCircleRenderer = smallCircleOBJ.AddComponent<SpriteRenderer>();
-		smallCircleRenderer.sprite = balloonSprites.smallCircleSprite;
-
-		bigCircleRenderer.sortingLayerName = sortingLayerName;
-		bigCircleRenderer.sortingOrder = sortingLayerInt;
-		smallCircleRenderer.sortingLayerName = sortingLayerName;
-		smallCircleRenderer.sortingOrder = sortingLayerInt;
-
-		if (circlesOnRight)
-		{
-			bigCircleOBJ.transform.position = new Vector3(player.transform.position.x + circlesVariables.bigCircleXPosition, 
-			                                              player.transform.position.y + circlesVariables.bigCircleYPosition, player.transform.position.z);
-			smallCircleOBJ.transform.position = new Vector3(player.transform.position.x + circlesVariables.smallCircleXPosition, 
-			                                                player.transform.position.y + circlesVariables.smallCircleYPosition, player.transform.position.z);
+			bigCircleRenderer = bigCircleOBJ.AddComponent<SpriteRenderer>();
+			bigCircleRenderer.sprite = balloonSprites.bigCircleSprite;
+			
+			smallCircleOBJ = new GameObject();
+			smallCircleOBJ.transform.parent = transform;
+			smallCircleOBJ.transform.localScale = new Vector3(circlesVariables.smallCircleScale, circlesVariables.smallCircleScale, 1.0f);
+			
+			smallCircleRenderer = smallCircleOBJ.AddComponent<SpriteRenderer>();
+			smallCircleRenderer.sprite = balloonSprites.smallCircleSprite;
+			
+			bigCircleRenderer.sortingLayerName = sortingLayerName;
+			bigCircleRenderer.sortingOrder = sortingLayerInt;
+			smallCircleRenderer.sortingLayerName = sortingLayerName;
+			smallCircleRenderer.sortingOrder = sortingLayerInt;
+			
+			if (circlesOnRight)
+			{
+				bigCircleOBJ.transform.position = new Vector3(player.transform.position.x + circlesVariables.bigCircleXPosition, 
+				                                              player.transform.position.y + circlesVariables.bigCircleYPosition, player.transform.position.z);
+				smallCircleOBJ.transform.position = new Vector3(player.transform.position.x + circlesVariables.smallCircleXPosition, 
+				                                                player.transform.position.y + circlesVariables.smallCircleYPosition, player.transform.position.z);
+			}
+			else
+			{
+				bigCircleOBJ.transform.position = new Vector3(player.transform.position.x - circlesVariables.bigCircleXPosition, 
+				                                              player.transform.position.y + circlesVariables.bigCircleYPosition, player.transform.position.z);
+				smallCircleOBJ.transform.position = new Vector3(player.transform.position.x - circlesVariables.smallCircleXPosition, 
+				                                                player.transform.position.y + circlesVariables.smallCircleYPosition, player.transform.position.z);
+			}
 		}
-		else
-		{
-			bigCircleOBJ.transform.position = new Vector3(player.transform.position.x - circlesVariables.bigCircleXPosition, 
-			                                              player.transform.position.y + circlesVariables.bigCircleYPosition, player.transform.position.z);
-			smallCircleOBJ.transform.position = new Vector3(player.transform.position.x - circlesVariables.smallCircleXPosition, 
-			                                                player.transform.position.y + circlesVariables.smallCircleYPosition, player.transform.position.z);
-		}
+
 	}
 
 	//ritorna vero se tutte le sprites del fumetto non sono nulle
@@ -277,7 +325,9 @@ public class ComicBalloonManager : MonoBehaviour {
 	{
 		if (balloonSprites.centerSprite != null
 		    && balloonSprites.borderSprite != null && balloonSprites.cornerSprite != null
-		    && balloonSprites.smallCircleSprite != null && balloonSprites.bigCircleSprite != null)
+		    && balloonSprites.smallCircleSprite != null && balloonSprites.bigCircleSprite != null
+		    && tutorialSprites.borderSprite != null && tutorialSprites.cornerSprite != null
+		    &&tutorialSprites.centerSprite != null)
 			return true;
 		else
 			return false;
@@ -324,20 +374,33 @@ public class ComicBalloonManager : MonoBehaviour {
 	{
 		if (appearing)
 		{
-			if ((Time.time - lastAppear) > appearSpeed)
+			if (type == Type.hint)
 			{
-				//Debug.Log ("dentro");
-				if (smallCircleRenderer.color.a == 0.0f)
-					setSmallCircleAlpha(1.0f);
-				else if (bigCircleRenderer.color.a == 0.0)
-					setBigCircleAlpha(1.0f);
-				else
+				if ((Time.time - lastAppear) > appearSpeed)
+				{
+					//Debug.Log ("dentro");
+					if (smallCircleRenderer.color.a == 0.0f)
+						setSmallCircleAlpha(1.0f);
+					else if (bigCircleRenderer.color.a == 0.0)
+						setBigCircleAlpha(1.0f);
+					else
+					{
+						setBalloonAlpha(1.0f);
+						appearing = false;
+					}
+					
+					lastAppear = Time.time;
+				}
+			}
+			else if (type == Type.tutorial)
+			{
+				if ((Time.time - lastAppear) > appearSpeed)
 				{
 					setBalloonAlpha(1.0f);
 					appearing = false;
-				}
 
-				lastAppear = Time.time;
+					lastAppear = Time.time;
+				}
 			}
 		}
 	}
@@ -346,26 +409,42 @@ public class ComicBalloonManager : MonoBehaviour {
 	{
 		if (disappearing)
 		{
-			appearing = false;
-			if ((Time.time - lastDisappear) > appearSpeed)
+			if (type == Type.hint)
 			{
-				//Debug.Log ("dentro");
-				if (textMesh.color.a == 1.0)
-					setBalloonAlpha(0.0f);
-				else if (bigCircleRenderer.color.a == 1.0)
+				appearing = false;
+				if ((Time.time - lastDisappear) > appearSpeed)
 				{
-					Debug.Log ("cancellando coso grosso");
-					setBigCircleAlpha(0.0f);
+					//Debug.Log ("dentro");
+					if (textMesh.color.a == 1.0)
+						setBalloonAlpha(0.0f);
+					else if (bigCircleRenderer.color.a == 1.0)
+					{
+						Debug.Log ("cancellando coso grosso");
+						setBigCircleAlpha(0.0f);
+					}
+					else
+					{
+						Debug.Log ("cancellando coso piccolo");
+						setSmallCircleAlpha(0.0f);
+						disappearing = false;
+						Destroy(gameObject);
+					}
+					
+					lastDisappear = Time.time;
 				}
-				else
+			}
+			else if (type == Type.tutorial)
+			{
+				appearing = false;
+				if ((Time.time - lastDisappear) > appearSpeed)
 				{
-					Debug.Log ("cancellando coso piccolo");
-					setSmallCircleAlpha(0.0f);
+					setBalloonAlpha(0.0f);
+
 					disappearing = false;
 					Destroy(gameObject);
+
+					lastDisappear = Time.time;
 				}
-	
-				lastDisappear = Time.time;
 			}
 		}
 	}
@@ -418,5 +497,10 @@ public class ComicBalloonManager : MonoBehaviour {
 		circlesVariables.bigCircleYPosition = bigPosition.y;
 		circlesVariables.smallCircleXPosition = smallPosition.x;
 		circlesVariables.smallCircleYPosition = smallPosition.y;
+	}
+
+	public void setType (ComicBalloonManager.Type inputType)
+	{
+		type = inputType;
 	}
 }

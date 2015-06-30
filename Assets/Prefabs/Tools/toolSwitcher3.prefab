@@ -299,6 +299,7 @@ Transform:
   m_RootOrder: 0
 --- !u!50 &5051600
 Rigidbody2D:
+  serializedVersion: 2
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
@@ -307,11 +308,11 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: .0500000007
   m_GravityScale: 1
-  m_FixedAngle: 0
   m_IsKinematic: 1
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!114 &11401502
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -323,6 +324,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09dc669aa0a055742ab0ec514b8aa80e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  modifierMethodName: glassModifier
   glassList:
   - {fileID: 11476484}
   - {fileID: 11483678}
@@ -345,6 +347,8 @@ MonoBehaviour:
   GroundLayers:
     serializedVersion: 2
     m_Bits: 768
+  positionOnGround: {x: .25, y: .620000005}
+  positionOnPlayer: {x: -.25, y: .349999994}
   zPositionEnvironment: 0
   resizeFactor: 4
   maxProjectingDistance: 8.5
@@ -357,8 +361,13 @@ MonoBehaviour:
   alphaProjection: .5
   normalRay: {fileID: 21300006, guid: 3c09fae1fc827b34f9bbe6516a68eb0b, type: 3}
   normalCircle: {fileID: 21300002, guid: 3c09fae1fc827b34f9bbe6516a68eb0b, type: 3}
-  pressedRay: {fileID: 21300004, guid: 3c09fae1fc827b34f9bbe6516a68eb0b, type: 3}
-  pressedCircle: {fileID: 21300000, guid: 3c09fae1fc827b34f9bbe6516a68eb0b, type: 3}
+  pressedRay: {fileID: 21300002, guid: c92bde64a5ebca34f8c15a6a7146f1fa, type: 3}
+  pressedCircle: {fileID: 21300000, guid: c92bde64a5ebca34f8c15a6a7146f1fa, type: 3}
+  badRay: {fileID: 0}
+  badCircle: {fileID: 0}
+  clouds: {fileID: 0}
+  walls: []
+  standardFakeProjectionRotation: 0
 --- !u!114 &11433308
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -370,8 +379,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9b7ea00c1ca2ae42b9de289575f133d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  KeyboardSprite: {fileID: 21300000, guid: ea9fc52237651884b964eb4ce40cf4b4, type: 3}
-  ControllerSprite: {fileID: 21300000, guid: 77653abadaee547439a0deda03e86c60, type: 3}
+  keyboardSprite: {fileID: 0}
+  controllerSprite: {fileID: 0}
+  modify: {fileID: 0}
+  modKeyboardSprite: {fileID: 0}
+  modControllerSprite: {fileID: 0}
 --- !u!114 &11436440
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -385,6 +397,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   usable: 1
   canBeEnabled: 1
+  actual: 0
+  rotateWithLantern: 0
+  canBeModified: 0
   spriteObject: {fileID: 21300000, guid: 418ab5c27d3054eb89959d9c715e00c9, type: 3}
   goodProjection: {fileID: 21300000, guid: ccb7d92fcf2cd4647a6da08ac75139bb, type: 3}
   badProjection: {fileID: 21300000, guid: ccb7d92fcf2cd4647a6da08ac75139bb, type: 3}
@@ -429,6 +444,7 @@ MonoBehaviour:
   actualState: 1
   timeReturnFalling: 1.5
   touchedByEnemy: 0
+  collidingBadWall: 0
   leftLantern: 0
   projectionPrefab: {fileID: 146854, guid: e903df3634975d94d8f090cffe868ace, type: 2}
   disabledByEnemy: 1
@@ -457,6 +473,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   usable: 0
   canBeEnabled: 0
+  actual: 0
+  rotateWithLantern: 0
+  canBeModified: 0
   spriteObject: {fileID: 21300000, guid: 4ee18d1beb64a32448911d15bbba5262, type: 3}
   goodProjection: {fileID: 21300000, guid: 1e2f61b4771c5b941b549ec940cb22ff, type: 3}
   badProjection: {fileID: 21300000, guid: 1e2f61b4771c5b941b549ec940cb22ff, type: 3}
@@ -533,6 +552,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   usable: 0
   canBeEnabled: 0
+  actual: 0
+  rotateWithLantern: 0
+  canBeModified: 0
   spriteObject: {fileID: 21300000, guid: 6af22ad39387eb34bbf12093c3b99270, type: 3}
   goodProjection: {fileID: 21300000, guid: 15087dbd8a26cc34c8299d99b2911707, type: 3}
   badProjection: {fileID: 21300000, guid: 15087dbd8a26cc34c8299d99b2911707, type: 3}
@@ -560,6 +582,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   usable: 0
   canBeEnabled: 0
+  actual: 0
+  rotateWithLantern: 0
+  canBeModified: 0
   spriteObject: {fileID: 21300000, guid: 4d79b6618e41948c3b72ca0e7abdab43, type: 3}
   goodProjection: {fileID: 21300000, guid: 1e2f61b4771c5b941b549ec940cb22ff, type: 3}
   badProjection: {fileID: 21300000, guid: 1e2f61b4771c5b941b549ec940cb22ff, type: 3}
@@ -602,6 +627,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   usable: 1
   canBeEnabled: 1
+  actual: 0
+  rotateWithLantern: 0
+  canBeModified: 0
   spriteObject: {fileID: 21300000, guid: 55a32b8f669f22d438c8f6ee380986ea, type: 3}
   goodProjection: {fileID: 21300000, guid: 64fef828077b20a4b94856d7163028c9, type: 3}
   badProjection: {fileID: 21300000, guid: f1f1f9b406faddf4fb2dee832b14468a, type: 3}
@@ -629,6 +657,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   usable: 0
   canBeEnabled: 0
+  actual: 0
+  rotateWithLantern: 0
+  canBeModified: 0
   spriteObject: {fileID: 21300000, guid: cdb3bd5efd992d74eb44df6ea6ca67c1, type: 3}
   goodProjection: {fileID: 21300000, guid: 162107af128bf9a4a815a0ff47130f7b, type: 3}
   badProjection: {fileID: 21300000, guid: 162107af128bf9a4a815a0ff47130f7b, type: 3}
@@ -656,6 +687,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   usable: 1
   canBeEnabled: 1
+  actual: 0
+  rotateWithLantern: 0
+  canBeModified: 0
   spriteObject: {fileID: 21300000, guid: f75e460e1846a97499f695c24e2ad848, type: 3}
   goodProjection: {fileID: 21300000, guid: d529531f29c89954f864702bd5583a2b, type: 3}
   badProjection: {fileID: 21300000, guid: d529531f29c89954f864702bd5583a2b, type: 3}
@@ -1765,7 +1799,27 @@ Prefab:
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: normalCircle
+      value: 
+      objectReference: {fileID: 21300002, guid: 3c09fae1fc827b34f9bbe6516a68eb0b,
+        type: 3}
+    - target: {fileID: 0}
+      propertyPath: normalRay
+      value: 
+      objectReference: {fileID: 21300006, guid: 3c09fae1fc827b34f9bbe6516a68eb0b,
+        type: 3}
+    - target: {fileID: 0}
+      propertyPath: pressedRay
+      value: 
+      objectReference: {fileID: 21300002, guid: c92bde64a5ebca34f8c15a6a7146f1fa,
+        type: 3}
+    - target: {fileID: 0}
+      propertyPath: pressedCircle
+      value: 
+      objectReference: {fileID: 21300000, guid: c92bde64a5ebca34f8c15a6a7146f1fa,
+        type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 187622}
