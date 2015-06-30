@@ -2093,6 +2093,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   active: 1
+  type: 0
   timeToTrigger: 0
   balloonTimeToDisable: 10
   balloonReappearTime: 10
@@ -2980,6 +2981,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   active: 1
+  type: 1
   timeToTrigger: 1
   balloonTimeToDisable: 60
   balloonReappearTime: 0
@@ -3010,6 +3012,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   active: 1
+  type: 0
   timeToTrigger: 0
   balloonTimeToDisable: 10
   balloonReappearTime: 10
@@ -12721,7 +12724,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &878995234
 Transform:
   m_ObjectHideFlags: 0
@@ -19000,9 +19003,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   active: 1
+  type: 1
   timeToTrigger: 0
-  balloonTimeToDisable: 6
-  balloonReappearTime: 10
+  balloonTimeToDisable: 60
+  balloonReappearTime: 0
   gameObjectsToEnable: []
   gameObjectsToEnableController: []
   balloonString: 
@@ -24059,6 +24063,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   active: 1
+  type: 0
   timeToTrigger: 0
   balloonTimeToDisable: 10
   balloonReappearTime: 10
@@ -24100,7 +24105,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   active: 0
-  timeToTrigger: 1
+  type: 1
+  timeToTrigger: .5
   balloonTimeToDisable: 60
   balloonReappearTime: 0
   gameObjectsToEnable: []
@@ -24131,6 +24137,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   active: 1
+  type: 1
   timeToTrigger: 0
   balloonTimeToDisable: 60
   balloonReappearTime: 0
@@ -24161,7 +24168,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   active: 0
-  timeToTrigger: 1
+  type: 1
+  timeToTrigger: .5
   balloonTimeToDisable: 60
   balloonReappearTime: 0
   gameObjectsToEnable: []
