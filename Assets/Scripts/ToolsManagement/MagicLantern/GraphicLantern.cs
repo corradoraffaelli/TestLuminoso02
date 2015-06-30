@@ -15,6 +15,8 @@ public class GraphicLantern : MonoBehaviour {
 	GameObject GroundCheckBottomRight;
 	public LayerMask GroundLayers;
 
+	public Vector2 positionOnGround = new Vector2(0.25f, 0.62f);
+	public Vector2 positionOnPlayer = new Vector2(-0.25f, 0.35f);
 	public float zPositionEnvironment = 0.0f;
 	public float resizeFactor = 4.0f;
 	public float maxProjectingDistance = 8.5f;
@@ -124,7 +126,8 @@ public class GraphicLantern : MonoBehaviour {
 	{
 		lantern.transform.parent = player.transform;
 		//lantern.transform.localPosition = new Vector3(0.4f,0.8f,0.0f);
-		lantern.transform.localPosition = new Vector3(-0.25f,0.62f,0.0f);
+		//lantern.transform.localPosition = new Vector3(-0.25f,0.62f,0.0f);
+		lantern.transform.localPosition = new Vector3(positionOnPlayer.x,positionOnPlayer.y,0.0f);
 		Vector3 actualScale = lantern.transform.localScale;
 		lantern.transform.localScale = new Vector3 (Mathf.Abs(actualScale.x),Mathf.Abs(actualScale.y),Mathf.Abs(actualScale.z));
 
@@ -216,10 +219,12 @@ public class GraphicLantern : MonoBehaviour {
 
 		//setto la posizione della lanterna
 		//di default diffX e diffY dovrebbero essere 0, invece si devono fare dei piccoli aggiustamenti...
-		float diffX = 0.25f;
-		float diffY = 0.62f;
 		//float diffX = 0.0f;
 		//float diffY = 0.62f;
+		//float diffX = 0.25f;
+		//float diffY = 0.62f;
+		float diffX = positionOnGround.x;
+		float diffY = positionOnGround.y;
 		if (lantern.transform.localScale.x < 0.0f)
 			lantern.transform.position = new Vector3(playerPosition.x + diffX, playerPosition.y + diffY,playerPosition.z);
 		else

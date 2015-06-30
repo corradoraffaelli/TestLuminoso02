@@ -7,6 +7,8 @@ public class LanternTutorialHandler : MonoBehaviour {
 	public bool active = true;
 	bool wasActive = true;
 
+	public ComicBalloonManager.Type type;
+
 	GameObject player;
 	MagicLantern magicLantern;
 
@@ -180,7 +182,7 @@ public class LanternTutorialHandler : MonoBehaviour {
 		{
 			if (enabling && !addedBalloon && (balloonLastDisappearTime == 0.0 || (Time.time - balloonLastDisappearTime) > balloonReappearTime))
 			{
-				Debug.Log ("creato balloon");
+				//Debug.Log ("creato balloon");
 				addedBalloon = true;
 				balloon = Instantiate(balloonPrefab);
 				balloonManagerScript = balloon.GetComponent<ComicBalloonManager>();
@@ -188,6 +190,7 @@ public class LanternTutorialHandler : MonoBehaviour {
 					balloonManagerScript.setText(balloonString);
 				else
 					balloonManagerScript.setText(balloonStringController);
+				balloonManagerScript.setType(type);
 				balloonManagerScript.setCirclesPosition(balloonOnTheRight);
 				removedBalloon = false;
 
@@ -198,7 +201,7 @@ public class LanternTutorialHandler : MonoBehaviour {
 			{
 				if (balloonManagerScript != null)
 				{
-					Debug.Log ("togliendo balloon");
+					//Debug.Log ("togliendo balloon");
 					balloonManagerScript.startDisappear();
 					addedBalloon = false;
 					removedBalloon = true;
