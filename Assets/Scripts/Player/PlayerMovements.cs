@@ -360,6 +360,7 @@ public class PlayerMovements : MonoBehaviour {
 			return;
 
 		if (respawningFromDeath) {
+			handleAudioSteps();
 			setAnimations();
 			return;
 		}
@@ -464,15 +465,22 @@ public class PlayerMovements : MonoBehaviour {
 			OnLadderManagement ();
 		}
 
+
+		handleAudioSteps();
+
+
+		setAnimations ();
+
+	}
+
+	void handleAudioSteps() {
+
 		if (!AIControl && audioHandler != null) {
 			if (running)
 				audioHandler.playClipByName ("Passi");
 			if (!running || (!onGround && running))
 				audioHandler.stopClipByName("Passi");
 		}
-
-		setAnimations ();
-
 	}
 
 	void slideManagement() {
@@ -1353,6 +1361,9 @@ public class PlayerMovements : MonoBehaviour {
 	}
 
 	private IEnumerator handlePlayerKill() {
+
+		onGround = false;
+		running = false;
 
 		respawningFromDeath = true;
 
