@@ -1,5 +1,20 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &165610
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 407926}
+  m_Layer: 0
+  m_Name: FlarePosition
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &166356
 GameObject:
   m_ObjectHideFlags: 0
@@ -11,6 +26,7 @@ GameObject:
   - 212: {fileID: 21276436}
   - 114: {fileID: 11402490}
   - 61: {fileID: 6162946}
+  - 114: {fileID: 11485740}
   m_Layer: 0
   m_Name: SubGlass
   m_TagString: Untagged
@@ -18,6 +34,18 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!4 &407926
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 165610}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: .0670000017, y: .114, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 494908}
+  m_RootOrder: 0
 --- !u!4 &494908
 Transform:
   m_ObjectHideFlags: 1
@@ -25,9 +53,10 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 166356}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.30000019, y: 0, z: 0}
+  m_LocalPosition: {x: 15.8320379, y: 22.4357014, z: 0}
   m_LocalScale: {x: 4, y: 4, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 407926}
   m_Father: {fileID: 0}
   m_RootOrder: 0
 --- !u!61 &6162946
@@ -55,6 +84,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   taken: 0
+--- !u!114 &11485740
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 166356}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 010188326c8f49f4d839161fb754a65a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  flarePrefab: {fileID: 167542, guid: c766ddf7a5eec934c9c9e2df602f0bc6, type: 2}
+  flarePosition: {fileID: 407926}
+  distanceLimitPlayer: 8
+  onlyIfPlayerNear: 1
+  nearPlayer: 0
 --- !u!212 &21276436
 SpriteRenderer:
   m_ObjectHideFlags: 1
