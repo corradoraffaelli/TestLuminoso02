@@ -178,6 +178,49 @@ public class PlayingUILateral : MonoBehaviour {
 		}
 	}
 
+	public void showIconsImmediately(UIPosition pos, bool show = true)
+	{
+		for (int i = 0; i < spritesGroup.Length; i++) {
+			if (spritesGroup[i].position != null && spritesGroup[i].position == pos)
+			{
+				if (spritesGroup[i].fatherRectTransform != null)
+				{
+					float actualXPosition = spritesGroup[i].fatherRectTransform.anchoredPosition.x;
+					float objPosition = 0.0f;
+					if (show)
+					{
+						spritesGroup[i].hiding = false;
+						spritesGroup[i].showing = true;
+						if (spritesGroup[i].position == UIPosition.Right)
+						{
+							objPosition = -positionVariables.XShowPosition;
+						}
+						else if(spritesGroup[i].position == UIPosition.Left)
+						{
+							objPosition = positionVariables.XShowPosition;
+						}
+					}
+					else
+					{
+						spritesGroup[i].hiding = true;
+						spritesGroup[i].showing = false;
+						if (spritesGroup[i].position == UIPosition.Right)
+						{
+							objPosition = positionVariables.XHidePosition;
+						}
+						else if(spritesGroup[i].position == UIPosition.Left)
+						{
+							objPosition = -positionVariables.XHidePosition;
+						}
+					}
+					//actualXPosition = Mathf.MoveTowards(actualXPosition, objPosition, positionVariables.speedChangingPosition * Time.deltaTime);
+					spritesGroup[i].fatherRectTransform.anchoredPosition = new Vector2(objPosition, spritesGroup[i].fatherRectTransform.anchoredPosition.y);
+				}
+				break;
+			}
+		}
+	}
+
 	public void setSprites(Sprite[] sprites, UIPosition pos)
 	{
 		for (int i = 0; i < spritesGroup.Length; i++) {

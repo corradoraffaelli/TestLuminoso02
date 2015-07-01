@@ -91,12 +91,16 @@ public class PlayingUITests : MonoBehaviour {
 		{
 			PickingObjectGraphic pick = gameObject.AddComponent<PickingObjectGraphic>();
 			pick.setVariables(glassSprite, PlayingUILateral.UIPosition.Right, 2);
+			playingUILateral.showIconsImmediately(PlayingUILateral.UIPosition.Right, true);
+			playingUILateral.showIconsImmediately(PlayingUILateral.UIPosition.Left, true);
 		}
 
 		if (Input.GetKeyUp(KeyCode.T))
 		{
 			PickingObjectGraphic pick = gameObject.AddComponent<PickingObjectGraphic>();
 			pick.setVariables(glassSprite, PlayingUILateral.UIPosition.Left, 0);
+			playingUILateral.showIconsImmediately(PlayingUILateral.UIPosition.Right, false);
+			playingUILateral.showIconsImmediately(PlayingUILateral.UIPosition.Left, false);
 		}
 	}
 }
