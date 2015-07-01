@@ -13,7 +13,7 @@ GameObject:
   - 251: {fileID: 25175922}
   - 114: {fileID: 11443108}
   m_Layer: 18
-  m_Name: Platform_Prefab
+  m_Name: Platform_Prefab 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -71,9 +71,9 @@ BoxCollider2D:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_UsedByEffector: 1
-  m_Offset: {x: 0, y: -.170000002}
+  m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Size: {x: 3, y: .670000017}
+  m_Size: {x: 3.0181818, y: .670000017}
 --- !u!114 &11443108
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1204,7 +1204,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1706207911
   m_SortingOrder: 4
-  m_Sprite: {fileID: 21300000, guid: 2adceb14741f53e469be66196f683797, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 418ab5c27d3054eb89959d9c715e00c9, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!251 &25175922
 PlatformEffector2D:
@@ -1227,20 +1227,7 @@ Prefab:
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 0}
-      propertyPath: m_Size.x
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: m_Offset.y
-      value: -.170000002
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: 2adceb14741f53e469be66196f683797,
-        type: 3}
+    m_Modifications: []
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 174492}

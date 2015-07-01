@@ -10,6 +10,8 @@ public class InteragibleObjectFlare : MonoBehaviour {
 	public float distanceLimitPlayer = 6.0f;
 	public bool onlyIfPlayerNear = true;
 
+	SpriteRenderer spriteRenderer;
+
 	TimeSyncronizerInteragible sync;
 	GameObject player;
 	Transform playerTransform;
@@ -21,6 +23,8 @@ public class InteragibleObjectFlare : MonoBehaviour {
 	//public bool nearPlayer;
 
 	void Start () {
+		spriteRenderer = GetComponent<SpriteRenderer>();
+
 		GameObject controller = GeneralFinder.controller;
 		if (controller != null)
 			sync = controller.GetComponent<TimeSyncronizerInteragible>();
@@ -34,22 +38,26 @@ public class InteragibleObjectFlare : MonoBehaviour {
 	}
 
 	void Update () {
-		needToPulse = sync.NeedToPulse;
-		if (needToPulse && !wasNeedToPulse)
+		if (spriteRenderer.enabled && spriteRenderer.color.a != 0.0f)
 		{
-			timeToFlare = true;
+			needToPulse = sync.NeedToPulse;
+			if (needToPulse && !wasNeedToPulse)
+			{
+				timeToFlare = true;
+			}
+			wasNeedToPulse = needToPulse;
+			
+			if (timeToFlare)
+			{
+				if (isPlayerNear())
+					Instantiate(flarePrefab, flarePosition.position, Quaternion.identity);
+			}
+			
+			//nearPlayer = isPlayerNear();
+			
+			timeToFlare = false;
 		}
-		wasNeedToPulse = needToPulse;
 
-		if (timeToFlare)
-		{
-			if (isPlayerNear())
-				Instantiate(flarePrefab, flarePosition.position, Quaternion.identity);
-		}
-
-		//nearPlayer = isPlayerNear();
-		
-		timeToFlare = false;
 	}
 
 	bool verifyIfNull()

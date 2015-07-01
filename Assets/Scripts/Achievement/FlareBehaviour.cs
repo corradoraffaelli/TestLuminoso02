@@ -7,6 +7,8 @@ public class FlareBehaviour : MonoBehaviour {
 	public GameObject star;
 	public GameObject line;
 
+
+
 	SpriteRenderer[] circlesRenderers;
 	SpriteRenderer starRenderer;
 	SpriteRenderer lineRenderer;
@@ -34,13 +36,15 @@ public class FlareBehaviour : MonoBehaviour {
 	}
 
 	void Update () {
-		updateRefNumber();
 
-		updateStar();
-		updateLine();
-		updateCircles();
+			updateRefNumber();
+			
+			updateStar();
+			updateLine();
+			updateCircles();
+			
+			destroyManager();
 
-		destroyManager();
 	}
 
 	void updateRefNumber()
@@ -154,6 +158,8 @@ public class FlareBehaviour : MonoBehaviour {
 
 	void takeComponents()
 	{
+		//spriteRenderer = GetComponent<SpriteRenderer>();
+
 		if (circles != null)
 		{
 			circlesRenderers = new SpriteRenderer[circles.Length];
