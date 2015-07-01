@@ -77,7 +77,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 182756}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.04400003, z: 0}
+  m_LocalPosition: {x: 0, y: .949999988, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 498782}
@@ -113,7 +113,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 142468}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 10.5763798, y: .419443846, z: 0}
+  m_LocalPosition: {x: 113.281654, y: 13.3099899, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 494120}
@@ -147,9 +147,9 @@ CircleCollider2D:
   m_Material: {fileID: 6200000, guid: ee37e2215ee214ff0b84cf23668e3579, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
-  m_Offset: {x: 0, y: .300000012}
+  m_Offset: {x: 0, y: .389999986}
   serializedVersion: 2
-  m_Radius: .289999992
+  m_Radius: .389999986
 --- !u!61 &6110290
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -157,12 +157,12 @@ BoxCollider2D:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 142468}
   m_Enabled: 1
-  m_Material: {fileID: 6200000, guid: ee37e2215ee214ff0b84cf23668e3579, type: 2}
+  m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_UsedByEffector: 0
-  m_Offset: {x: 0, y: .790000021}
+  m_Offset: {x: 0, y: .727906227}
   serializedVersion: 2
-  m_Size: {x: .529999971, y: .899999976}
+  m_Size: {x: .349999994, y: .482271314}
 --- !u!61 &6178396
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -173,9 +173,9 @@ BoxCollider2D:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_UsedByEffector: 0
-  m_Offset: {x: 0, y: .239999995}
+  m_Offset: {x: 0, y: .150000006}
   serializedVersion: 2
-  m_Size: {x: .449999988, y: .239999995}
+  m_Size: {x: .75, y: .550000012}
 --- !u!95 &9525954
 Animator:
   serializedVersion: 3
@@ -378,7 +378,23 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_Size.y
-      value: .239999995
+      value: .550000012
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_Offset.y
+      value: .150000006
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_Size.x
+      value: .75
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_Radius
+      value: .389999986
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

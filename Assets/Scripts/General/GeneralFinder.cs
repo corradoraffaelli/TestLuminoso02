@@ -12,6 +12,10 @@ public class GeneralFinder : MonoBehaviour {
 	public static GameObject magicLantern;
 	public static GameObject controller;
 	public static CursorHandler cursorHandler;
+	public static GameObject canvasPlayingUI;
+	public static PlayingUI playingUI;
+	public static PlayingUILateral playingUILateral;
+	public static PlayingUIGameOver playingUIGameOver;
 
 	// Use this for initialization
 	void Awake () {
@@ -33,6 +37,14 @@ public class GeneralFinder : MonoBehaviour {
 		}
 
 		magicLantern = GameObject.FindGameObjectWithTag("Lantern");
+
+		canvasPlayingUI = GameObject.FindGameObjectWithTag("CanvasPlayingUI");
+		if (canvasPlayingUI != null)
+		{
+			playingUI = canvasPlayingUI.GetComponent<PlayingUI>();
+			playingUILateral = canvasPlayingUI.GetComponent<PlayingUILateral>();
+			playingUIGameOver = canvasPlayingUI.GetComponent<PlayingUIGameOver>();
+		}
 
 	}
 	
