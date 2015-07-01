@@ -20,7 +20,7 @@ public class InformativeManager : MonoBehaviour {
 	public bool loadDefaultConf;
 
 	[SerializeField]
-	InformativeSection []sections;
+	public InformativeSection []sections;
 
 	[SerializeField]
 	int activeSection;
@@ -636,7 +636,7 @@ public class InformativeManager : MonoBehaviour {
 		found = false;
 		i = 0;
 
-		foreach (InformativeSet inset in sections[activeSection].contents) {
+		foreach (InformativeContent inset in sections[activeSection].contents) {
 
 			if(inset.name==cont) {
 				sections [activeSection].activeContent = i;
@@ -827,9 +827,9 @@ public class InfoSectionContainer
 
 				if(loadedSection.title==sectionToSet.title) {
 
-					foreach(InformativeSet contentToSet in sectionToSet.contents) {
+					foreach(InformativeContent contentToSet in sectionToSet.contents) {
 
-						foreach(InformativeSet loadedContent in loadedSection.contents) {
+						foreach(InformativeContent loadedContent in loadedSection.contents) {
 
 							if(contentToSet.name == loadedContent.name) {
 
@@ -907,7 +907,10 @@ public class InformativeSection {
 	public string title;
 
 	[SerializeField]
-	public InformativeSet []contents;
+	public InformativeContent []contents;
+
+	[SerializeField]
+	public InformativeFragment []fragments;
 
 	public int activeContent;
 
@@ -917,7 +920,26 @@ public class InformativeSection {
 }
 
 [System.Serializable]
-public class InformativeSet {
+public class InformativeFragment {
+	
+	[SerializeField]
+	public int idFragm;
+
+	[XmlIgnoreAttribute]
+	[SerializeField]
+	public Sprite iconUnlockFrag;
+
+	[XmlIgnoreAttribute]
+	[SerializeField]
+	public Sprite iconLockFrag;
+
+	[SerializeField]
+	public bool locked = false;
+
+}
+
+[System.Serializable]
+public class InformativeContent {
 
 	[SerializeField]
 	public string name;
@@ -940,6 +962,10 @@ public class InformativeSet {
 	[XmlIgnoreAttribute]
 	[SerializeField]
 	public TextAsset infoText;
+
+	[XmlIgnoreAttribute]
+	[SerializeField]
+	public GameObject unlockerObject;
 
 	[SerializeField]
 	public bool locked = false;

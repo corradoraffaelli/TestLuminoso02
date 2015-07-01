@@ -201,6 +201,10 @@ public class MenuManager : MonoBehaviour {
 				//caso in cui siamo in game o dentro la scheda intro del menu
 				//quindi o stiamo entrando in pausa adesso, o ne stiamo uscendo
 				c_enableMenu(!statusMenu);
+
+				GeneralFinder.playingUILateral.showIconsImmediately(PlayingUILateral.UIPosition.Right , statusMenu);
+				GeneralFinder.playingUILateral.showIconsImmediately(PlayingUILateral.UIPosition.Left , statusMenu);
+
 			}
 			else {
 				//caso di navigazione dentro al menu, quindi di ritorno alla scheda intro
