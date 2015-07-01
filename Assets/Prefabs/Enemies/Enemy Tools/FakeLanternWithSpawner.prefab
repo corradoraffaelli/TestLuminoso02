@@ -275,7 +275,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 151628}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 13.5229864, y: 20.0441246, z: 0}
+  m_LocalPosition: {x: 29.6329193, y: 15.3729382, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 410036}
@@ -479,6 +479,10 @@ MonoBehaviour:
   actualState: 1
   continuousFollow: 0
   turningOnTime: 8
+  turningOffTime: 5
+  timeAfterFlashing: 2
+  flashingTime: .150000006
+  flashingAlpha: .25
   glassesToEnable:
   - {fileID: 0}
   glassesToDisable: []
@@ -2667,7 +2671,7 @@ ParticleSystemRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -45259249
-  m_SortingOrder: 20
+  m_SortingOrder: 3
   m_RenderMode: 0
   m_MaxParticleSize: 100
   m_CameraVelocityScale: 0
