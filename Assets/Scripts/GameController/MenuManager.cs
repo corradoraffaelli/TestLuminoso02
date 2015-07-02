@@ -4,10 +4,9 @@ using UnityEngine.UI;
 
 public class MenuManager : MonoBehaviour {
 
-	PlayStatusTracker statusTracker;
 	InformativeManager informativeMan;
 
-	public GameObject canvasMenu;
+	//public GameObject canvasMenu;
 
 	public GameObject canvasIntro;
 	public GameObject canvasInformative;
@@ -23,8 +22,6 @@ public class MenuManager : MonoBehaviour {
 
 		informativeMan = UtilFinder._GetComponentOfGameObjectWithTag<InformativeManager> ("Controller");
 
-		statusTracker = UtilFinder._GetComponentOfGameObjectWithTag<PlayStatusTracker> ("Controller");
-
 		initializeReferencesOfMenu ();
 
 	}
@@ -39,9 +36,9 @@ public class MenuManager : MonoBehaviour {
 
 	void initializeIntroOfMenu() {
 
-		if (canvasMenu != null) {
+		if (GeneralFinder.canvasMenu != null) {
 
-			foreach(Transform child in canvasMenu.transform) {
+			foreach(Transform child in GeneralFinder.canvasMenu.transform) {
 
 				if(child.name=="MainPanel-Intro") {
 
@@ -64,7 +61,7 @@ public class MenuManager : MonoBehaviour {
 			bool statusCanvasIntro = canvasIntro.activeSelf;
 
 
-			canvasMenu.SetActive(true);
+			GeneralFinder.canvasMenu.SetActive(true);
 			canvasIntro.SetActive(true);
 			
 			foreach (Transform child in canvasIntro.transform) {
@@ -83,7 +80,7 @@ public class MenuManager : MonoBehaviour {
 			}
 
 			canvasIntro.SetActive(statusCanvasIntro);
-			canvasMenu.SetActive(false);
+			GeneralFinder.canvasMenu.SetActive(false);
 
 		}
 		else {
@@ -160,24 +157,28 @@ public class MenuManager : MonoBehaviour {
 	public void reloadThisLevel() {
 
 		Application.LoadLevel (Application.loadedLevel);
-		statusTracker.inPlayMode = true;
+		PlayStatusTracker.inPlay = true;
 	}
 
-	public void c_enableMenu(bool enable) {
+	public void c_enableMenu(bool enable, GameObject canvasToShow=null) {
 		
 		if (enable) {
 			//blocco input
 			
 			//Time.timeScale = 0.0f;
-			statusTracker.inPlayMode = false;
-			c_switchMenuSection(null, canvasIntro);
-			
+			PlayStatusTracker.inPlay = false;
+			Debug.Log("setto in playmode");
+
+			if(canvasToShow==null)
+				c_switchMenuSection(null, canvasIntro);
+			else
+				c_switchMenuSection(null, canvasToShow);
 		} 
 		else {
 			//sblocco input
 			
 			//Time.timeScale = 1.0f;
-			statusTracker.inPlayMode = true;
+			PlayStatusTracker.inPlay = true;
 			c_switchMenuSection(canvasIntro, null);
 			
 		}
@@ -197,7 +198,7 @@ public class MenuManager : MonoBehaviour {
 		if ( Input.GetKeyUp (KeyCode.Escape)  ) {
 
 
-			if(!canvasMenu.activeSelf || canvasActive == canvasIntro) {
+			if(!GeneralFinder.canvasMenu.activeSelf || canvasActive == canvasIntro) {
 				//caso in cui siamo in game o dentro la scheda intro del menu
 				//quindi o stiamo entrando in pausa adesso, o ne stiamo uscendo
 				c_enableMenu(!statusMenu);
@@ -221,8 +222,8 @@ public class MenuManager : MonoBehaviour {
 
 	public void c_switchMenuSection(GameObject toDeactivate, GameObject toActivate ) {
 
-		if (!canvasMenu.activeSelf) {
-			canvasMenu.SetActive (true);
+		if (!GeneralFinder.canvasMenu.activeSelf) {
+			GeneralFinder.canvasMenu.SetActive (true);
 
 		}
 
@@ -240,10 +241,17 @@ public class MenuManager : MonoBehaviour {
 		if (toActivate != null) {
 			toActivate.SetActive (true);
 			canvasActive = toActivate;
+
+			if(canvasActive==canvasInformative) {
+
+				GeneralFinder.informativeManager.fillNavigation ();
+
+			}
+
 		} 
 		else {
 			//se non devo attivare nulla, sto uscendo dal menu
-			canvasMenu.SetActive (false);
+			GeneralFinder.canvasMenu.SetActive (false);
 			canvasActive = null;
 			statusMenu = false;
 		}

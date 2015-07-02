@@ -17,6 +17,8 @@ public class GeneralFinder : MonoBehaviour {
 	public static PlayingUILateral playingUILateral;
 	public static PlayingUIGameOver playingUIGameOver;
 
+
+	public static GameObject canvasMenu;
 	public static InformativeManager informativeManager;
 	public static MenuManager menuManager;
 	public static PlayStatusTracker playStatusTracker;
@@ -49,6 +51,8 @@ public class GeneralFinder : MonoBehaviour {
 			playingUILateral = canvasPlayingUI.GetComponent<PlayingUILateral>();
 			playingUIGameOver = canvasPlayingUI.GetComponent<PlayingUIGameOver>();
 		}
+
+		canvasMenu = UtilFinder._FindGameObjectByTag ("CanvasMenu");
 
 		informativeManager = UtilFinder._GetComponentOfGameObjectWithTag<InformativeManager> ("Controller");
 		menuManager = UtilFinder._GetComponentOfGameObjectWithTag<MenuManager> ("Controller");

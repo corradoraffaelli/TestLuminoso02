@@ -12,7 +12,7 @@ public class InformativeManager : MonoBehaviour {
 
 	#region PUBLICVARIABLES
 
-	public GameObject canvasMenu;
+	//public GameObject canvasMenu;
 	GameObject canvasInformative;
 	GameObject canvasIntro;
 
@@ -189,7 +189,7 @@ public class InformativeManager : MonoBehaviour {
 		menuMan = UtilFinder._GetComponentOfGameObjectWithTag<MenuManager> ("Controller");
 
 
-		if (canvasMenu != null) {
+		if (GeneralFinder.canvasMenu != null) {
 
 			//bool activeState = canvasMenu.activeSelf;
 
@@ -198,7 +198,7 @@ public class InformativeManager : MonoBehaviour {
 			if (getCanvas ()) {
 
 
-				canvasMenu.SetActive (true);
+				GeneralFinder.canvasMenu.SetActive (true);
 				activeTempCanvasInformative(true);
 
 				if(getSections()) {
@@ -219,7 +219,7 @@ public class InformativeManager : MonoBehaviour {
 
 				activeTempCanvasInformative (false);
 				
-				canvasMenu.SetActive (false);
+				GeneralFinder.canvasMenu.SetActive (false);
 
 
 			} else {
@@ -348,7 +348,7 @@ public class InformativeManager : MonoBehaviour {
 					if(nephew.name=="High") {
 
 						exitButton = nephew.GetComponentInChildren<Button>();
-						exitButton.onClick.AddListener(() => { c_activeInformative(false); });
+						exitButton.onClick.AddListener(() => { GeneralFinder.menuManager.c_switchMenuSection (canvasInformative, canvasIntro); });
 					}
 
 				}
@@ -382,7 +382,7 @@ public class InformativeManager : MonoBehaviour {
 
 	bool getCanvas() {
 
-		foreach (Transform child in canvasMenu.transform) {
+		foreach (Transform child in GeneralFinder.canvasMenu.transform) {
 			if(child.name=="MainPanel-Informative") {
 				canvasInformative = child.gameObject;
 			}
@@ -462,81 +462,6 @@ public class InformativeManager : MonoBehaviour {
 
 
 
-	void fillNavigation(int sectionN) {
-
-		int index = 0;
-
-		int numberOfContents = sections [sectionN].contents.Length;
-
-		sectionName.text = sections [sectionN].title;
-
-		foreach (GameObject item in iconItems) {
-
-			//Debug.Log ("passo l'item " + item.name + " contentsN " + numberOfContents);
-
-			if(index >= numberOfContents || sections [sectionN].contents[index]==null)
-				break;
-
-			item.SetActive(true);
-
-			if(!sections [sectionN].contents[index].locked) {
-				iconImages[index].sprite = sections [sectionN].contents[index].iconUnlock;
-				iconButtons[index].interactable = true;
-			}
-			else {
-				iconImages[index].sprite = sections [sectionN].contents[index].iconLock;
-				iconButtons[index].interactable = false;
-			}
-
-			index++;
-			//Debug.Log ("fine passata l'item " + item.name);
-		}
-
-		for (int rest=index; rest<iconItems.Length; rest++) {
-
-
-			iconItems[rest].SetActive(false);
-
-		}
-
-	}
-
-	void fillMultimedia(int sectionN, int contentN, int imageN=0) {
-
-		if (sections [sectionN].contents [contentN] == null){
-			Debug.Log ("ATTENZIONE - contenuto nullo");
-			return;
-		}
-
-		if (!sections [sectionN].contents [contentN].locked && sections [sectionN].contents [contentN].mainImages != null) {
-
-			if(sections [sectionN].contents [contentN].mainImages[imageN] != null) {
-				multimedia.sprite = sections [sectionN].contents [contentN].mainImages [imageN];
-			}
-
-		}
-	}
-
-	void fillDetail(int sectionN, int contentN) {
-
-		if (sections [sectionN].contents [contentN] == null){
-			Debug.Log ("ATTENZIONE - contenuto nullo");
-			return;
-		}
-
-		if (!sections [sectionN].contents [contentN].locked) {
-			if(sections [sectionN].contents [contentN].infoText != null) {
-
-				detail.text = sections [sectionN].contents [contentN].infoText.text;
-				detail.gameObject.GetComponent<RectTransform>().offsetMax = new Vector2(0.0f, 0.0f);
-				//TODO: adjust lenght of rect based on text lenght
-				detail.gameObject.GetComponent<RectTransform>().offsetMin = new Vector2(0.0f, -400.0f);
-			}
-			else {
-				detail.text = "";
-			}
-		}
-	}
 
 	void activeTempCanvasInformative(bool act) {
 
@@ -547,8 +472,8 @@ public class InformativeManager : MonoBehaviour {
 	void Update() {
 		
 		if (canShowTemporarely && Input.GetKey (KeyCode.I)) {
-			
-			c_activeInformative (true);
+
+			GeneralFinder.menuManager.c_enableMenu(true, canvasInformative);
 
 			GeneralFinder.playingUI.cleanPositionButtonObject (PlayingUI.UIPosition.UpperRight);
 			GeneralFinder.playingUI.cleanPositionGameObjects (PlayingUI.UIPosition.UpperRight);
@@ -564,22 +489,140 @@ public class InformativeManager : MonoBehaviour {
 
 	#region CALLBACKS
 
+	
+	public void fillNavigation(int sectionN=-5) {
+		
+		if (sectionN == -5) {
+			
+			sectionN = activeSection;
+			
+		}
+		
+		int index = 0;
+		
+		int numberOfContents = sections [sectionN].contents.Length;
+		
+		sectionName.text = sections [sectionN].title;
+		
+		foreach (GameObject item in iconItems) {
+			
+			//Debug.Log ("passo l'item " + item.name + " contentsN " + numberOfContents);
+			
+			if(index >= numberOfContents || sections [sectionN].contents[index]==null)
+				break;
+			
+			item.SetActive(true);
+			
+			if(!sections [sectionN].contents[index].locked) {
+				iconImages[index].sprite = sections [sectionN].contents[index].iconUnlock;
+				iconButtons[index].interactable = true;
+			}
+			else {
+				iconImages[index].sprite = sections [sectionN].contents[index].iconLock;
+				iconButtons[index].interactable = false;
+			}
+			
+			index++;
+			//Debug.Log ("fine passata l'item " + item.name);
+		}
+		
+		for (int rest=index; rest<iconItems.Length; rest++) {
+			
+			
+			iconItems[rest].SetActive(false);
+			
+		}
+		
+	}
+	
+	public void fillMultimedia(int sectionN = -3, int contentN = -1, int imageN=0) {
+
+		if (sectionN == -3) {
+			
+			sectionN = activeSection;
+			
+		}
+
+		if (contentN == -1) {
+
+			contentN = sections[sectionN].activeContent;
+
+		}
+
+		Debug.Log("section " + sectionN + " e content " + contentN);
+
+		if (sections [sectionN].contents [contentN] == null){
+			Debug.Log ("ATTENZIONE - contenuto nullo");
+			return;
+		}
+		
+		if (!sections [sectionN].contents [contentN].locked && sections [sectionN].contents [contentN].mainImages != null) {
+			
+			if(sections [sectionN].contents [contentN].mainImages[imageN] != null) {
+				multimedia.sprite = sections [sectionN].contents [contentN].mainImages [imageN];
+			}
+			
+		}
+	}
+	
+	public void fillDetail(int sectionN = -2, int contentN = -1) {
+
+		if (sectionN == -2) {
+			
+			sectionN = activeSection;
+			
+		}
+		
+		if (contentN == -1) {
+			
+			contentN = sections[sectionN].activeContent;
+			
+		}
+
+		if (sections [sectionN].contents [contentN] == null){
+			Debug.Log ("ATTENZIONE - contenuto nullo");
+			return;
+		}
+		
+		if (!sections [sectionN].contents [contentN].locked) {
+			if(sections [sectionN].contents [contentN].infoText != null) {
+				
+				detail.text = sections [sectionN].contents [contentN].infoText.text;
+				detail.gameObject.GetComponent<RectTransform>().offsetMax = new Vector2(0.0f, 0.0f);
+				//TODO: adjust lenght of rect based on text lenght
+				detail.gameObject.GetComponent<RectTransform>().offsetMin = new Vector2(0.0f, -400.0f);
+			}
+			else {
+				detail.text = "";
+			}
+		}
+	}
+
 	public void c_changeSection(bool forward) {
 
 		int nextIndex = 0;
+		int tempActiveSection = activeSection;
 
 		for (int i=0; i<sections.Length; i++) {
 
 			if (forward) {
-				activeSection = (activeSection + 1) % sections.Length;
+				tempActiveSection = (tempActiveSection + 1) % sections.Length;
 			} else {
-				activeSection = (activeSection - 1) % sections.Length;
+				tempActiveSection = (tempActiveSection - 1) % sections.Length;
+				if(tempActiveSection<0)
+					tempActiveSection = sections.Length-1;
 			}
 
-			if(!sections[activeSection].locked)
+			Debug.Log ("temp active sect " + tempActiveSection);
+
+			if(!sections[tempActiveSection].locked)
 				break;
 
 		}
+
+		if (tempActiveSection >= 0) 
+			activeSection = tempActiveSection;
+
 		fillNavigation (activeSection);
 
 		fillMultimedia (activeSection, sections [activeSection].activeContent);
@@ -634,8 +677,8 @@ public class InformativeManager : MonoBehaviour {
 
 	public void c_activeInformative(bool act) {
 		
-		if(!canvasMenu.activeSelf)
-			canvasMenu.SetActive(true);
+		if(!GeneralFinder.canvasMenu.activeSelf)
+			GeneralFinder.canvasMenu.SetActive(true);
 		
 		if (act) {
 			menuMan.c_enableMenu(true);
@@ -668,10 +711,10 @@ public class InformativeManager : MonoBehaviour {
 		sections [activeSection].locked = false;
 		sections [activeSection].activeContent = cont;
 
-			
+
 		sections [activeSection].contents[cont].locked = false;
 
-		fillNavigation (activeSection);
+		//fillNavigation (activeSection);
 
 		//TODO:
 		//GeneralFinder.playingUILateral
@@ -1033,6 +1076,7 @@ public class InformativeSection {
 	[SerializeField]
 	public InformativeFragment []fragments;
 
+	[HideInInspector]
 	public int activeContent;
 
 	[SerializeField]
@@ -1091,6 +1135,9 @@ public class InformativeContent {
 	[XmlIgnoreAttribute]
 	[SerializeField]
 	public GameObject unlockerObject;
+
+	[SerializeField]
+	public bool funFact = false;
 
 	[SerializeField]
 	public bool locked = false;
