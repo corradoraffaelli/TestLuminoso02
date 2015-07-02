@@ -33,6 +33,7 @@ GameObject:
   - 114: {fileID: 11482476}
   - 114: {fileID: 11461560}
   - 114: {fileID: 11403444}
+  - 114: {fileID: 11444634}
   m_Layer: 0
   m_Name: GameController - 01
   m_TagString: Controller
@@ -212,7 +213,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a5916987459241ee9629a5bf7fe98d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canvasMenu: {fileID: 0}
   canvasIntro: {fileID: 0}
   canvasInformative: {fileID: 0}
   canvasActive: {fileID: 0}
@@ -229,6 +229,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inPlayMode: 1
   timeScale: 1
+--- !u!114 &11444634
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 165342}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b7659367c5f02443819dd8af435c962, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &11461560
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -277,7 +288,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27bbf7c602cc34937928b28543c78386, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canvasMenu: {fileID: 0}
   loadDefaultConf: 0
   sections:
   - title: Livello 1
@@ -290,6 +300,7 @@ MonoBehaviour:
       iconLock: {fileID: 21300000, guid: e8e0e5fbdc02d08479315169884381a9, type: 3}
       infoText: {fileID: 4900000, guid: 9db8a5ddeb40a46539c70c65087f682c, type: 3}
       unlockerObject: {fileID: 0}
+      funFact: 0
       locked: 1
     - name: Lenti
       mainImages:
@@ -299,6 +310,17 @@ MonoBehaviour:
       iconLock: {fileID: 21300000, guid: d455354440f10824b89a1ca257cdfeb3, type: 3}
       infoText: {fileID: 4900000, guid: e410596c4ccf44f4bb06d444ad94e945, type: 3}
       unlockerObject: {fileID: 0}
+      funFact: 0
+      locked: 1
+    - name: Fan Fact 01
+      mainImages:
+      - {fileID: 21300000, guid: 574aa1ab0debe4719a620a3b903e0a54, type: 3}
+      mainImageIndex: 0
+      iconUnlock: {fileID: 21300000, guid: 57981149816181640ae69c101d8dce9b, type: 3}
+      iconLock: {fileID: 21300000, guid: a810ec5e64507b94aa79e77e6ebe02b0, type: 3}
+      infoText: {fileID: 4900000, guid: e410596c4ccf44f4bb06d444ad94e945, type: 3}
+      unlockerObject: {fileID: 0}
+      funFact: 1
       locked: 1
     fragments:
     - idFragm: fram1
@@ -327,7 +349,7 @@ MonoBehaviour:
       unlockerObject: {fileID: 0}
       locked: 1
     activeContent: 0
-    locked: 1
+    locked: 0
   - title: Livello 2
     contents:
     - name: Lanterna Magica
@@ -338,6 +360,7 @@ MonoBehaviour:
       iconLock: {fileID: 21300000, guid: 63ddfd2ccf3e54a439451d5cc9db86e3, type: 3}
       infoText: {fileID: 4900000, guid: 9db8a5ddeb40a46539c70c65087f682c, type: 3}
       unlockerObject: {fileID: 0}
+      funFact: 0
       locked: 1
     - name: Ciaone 1
       mainImages:
@@ -347,6 +370,7 @@ MonoBehaviour:
       iconLock: {fileID: 21300000, guid: 96801657a6a26894a9684a20bedac64e, type: 3}
       infoText: {fileID: 4900000, guid: 9db8a5ddeb40a46539c70c65087f682c, type: 3}
       unlockerObject: {fileID: 0}
+      funFact: 0
       locked: 1
     - name: Ciaone 2
       mainImages:
@@ -356,6 +380,7 @@ MonoBehaviour:
       iconLock: {fileID: 21300000, guid: caef394134f643843a7c838c930c22a2, type: 3}
       infoText: {fileID: 4900000, guid: 9db8a5ddeb40a46539c70c65087f682c, type: 3}
       unlockerObject: {fileID: 0}
+      funFact: 0
       locked: 1
     fragments:
     - idFragm: fram1
@@ -383,8 +408,8 @@ MonoBehaviour:
       iconLockFrag: {fileID: 21300000, guid: 6785775ee29df45ce918a6ed19d5bc96, type: 3}
       unlockerObject: {fileID: 0}
       locked: 1
-    activeContent: 5
-    locked: 1
+    activeContent: 0
+    locked: 0
   activeSection: 0
 --- !u!114 &11486512
 MonoBehaviour:
@@ -422,6 +447,10 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: sections.Array.data[1].contents.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: sections.Array.data[0].contents.Array.size
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 0}
@@ -474,7 +503,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: sections.Array.data[0].locked
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: sections.Array.data[0].fragments.Array.data[0].idFragm
@@ -572,7 +601,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: sections.Array.data[1].activeContent
-      value: 5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: sections.Array.data[0].contents.Array.data[0].iconUnlock
@@ -656,6 +685,10 @@ Prefab:
       value: 
       objectReference: {fileID: 21300000, guid: 6785775ee29df45ce918a6ed19d5bc96,
         type: 3}
+    - target: {fileID: 0}
+      propertyPath: sections.Array.data[1].locked
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 165342}

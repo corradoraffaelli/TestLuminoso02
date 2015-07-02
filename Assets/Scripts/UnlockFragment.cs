@@ -8,8 +8,7 @@ public class UnlockFragment : MonoBehaviour {
 	public Sprite keyboardButton;
 
 	CursorHandler cursorHandler;
-	InformativeManager informativeMan;
-	
+
 	public int sectionIndexToUnlock = -1;
 	public int fragmentIndexToUnlock = -1;
 	
@@ -27,9 +26,7 @@ public class UnlockFragment : MonoBehaviour {
 	void initializeComponents() {
 		
 		cursorHandler = UtilFinder._GetComponentOfGameObjectWithTag<CursorHandler> ("Controller");
-		
-		informativeMan = UtilFinder._GetComponentOfGameObjectWithTag<InformativeManager> ("Controller");
-		
+
 	}
 	
 	// Update is called once per frame
@@ -47,7 +44,7 @@ public class UnlockFragment : MonoBehaviour {
 			//informativeMan.c_canShowNewContent (sectionIndexToUnlock, fragmentIndexToUnlock);
 			//GeneralFinder.informativeManager.
 
-			informativeMan.c_UnlockFragment(sectionIndexToUnlock, fragmentIndexToUnlock);
+			GeneralFinder.informativeManager.c_UnlockFragment(sectionIndexToUnlock, fragmentIndexToUnlock);
 
 			disableThisObject();
 			
