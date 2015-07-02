@@ -280,29 +280,111 @@ MonoBehaviour:
   canvasMenu: {fileID: 0}
   loadDefaultConf: 0
   sections:
-  - title: Storia
+  - title: Livello 1
     contents:
-    - name: Origine
+    - name: Camera Oscura
       mainImages:
       - {fileID: 21300000, guid: 574aa1ab0debe4719a620a3b903e0a54, type: 3}
       mainImageIndex: 0
-      iconUnlock: {fileID: 21300000, guid: a2258f472fa1fcc428d11e23cb221afb, type: 3}
-      iconLock: {fileID: 21300000, guid: f8ae3d8366d6f35429481eaebe8be557, type: 3}
+      iconUnlock: {fileID: 21300000, guid: 96c9ba673362d0242b0a0ee2a215afa2, type: 3}
+      iconLock: {fileID: 21300000, guid: e8e0e5fbdc02d08479315169884381a9, type: 3}
       infoText: {fileID: 4900000, guid: 9db8a5ddeb40a46539c70c65087f682c, type: 3}
       unlockerObject: {fileID: 0}
-      locked: 0
-    - name: Origine1
+      locked: 1
+    - name: Lenti
       mainImages:
       - {fileID: 21300000, guid: 574aa1ab0debe4719a620a3b903e0a54, type: 3}
       mainImageIndex: 0
-      iconUnlock: {fileID: 21300000, guid: a2258f472fa1fcc428d11e23cb221afb, type: 3}
-      iconLock: {fileID: 21300000, guid: f8ae3d8366d6f35429481eaebe8be557, type: 3}
+      iconUnlock: {fileID: 21300000, guid: 3b26dfce0dd14934f88abd9d0211d77a, type: 3}
+      iconLock: {fileID: 21300000, guid: d455354440f10824b89a1ca257cdfeb3, type: 3}
       infoText: {fileID: 4900000, guid: e410596c4ccf44f4bb06d444ad94e945, type: 3}
       unlockerObject: {fileID: 0}
-      locked: 0
-    fragments: []
+      locked: 1
+    fragments:
+    - idFragm: fram1
+      iconUnlockFrag: {fileID: 21300000, guid: 33b684caadd9f47a681cf2253385aee5, type: 3}
+      iconLockFrag: {fileID: 21300000, guid: 6785775ee29df45ce918a6ed19d5bc96, type: 3}
+      unlockerObject: {fileID: 0}
+      locked: 1
+    - idFragm: fram2
+      iconUnlockFrag: {fileID: 21300000, guid: 33b684caadd9f47a681cf2253385aee5, type: 3}
+      iconLockFrag: {fileID: 21300000, guid: 6785775ee29df45ce918a6ed19d5bc96, type: 3}
+      unlockerObject: {fileID: 0}
+      locked: 1
+    - idFragm: fram3
+      iconUnlockFrag: {fileID: 21300000, guid: 33b684caadd9f47a681cf2253385aee5, type: 3}
+      iconLockFrag: {fileID: 21300000, guid: 6785775ee29df45ce918a6ed19d5bc96, type: 3}
+      unlockerObject: {fileID: 0}
+      locked: 1
+    - idFragm: fram4
+      iconUnlockFrag: {fileID: 21300000, guid: 33b684caadd9f47a681cf2253385aee5, type: 3}
+      iconLockFrag: {fileID: 21300000, guid: 6785775ee29df45ce918a6ed19d5bc96, type: 3}
+      unlockerObject: {fileID: 0}
+      locked: 1
+    - idFragm: fram5
+      iconUnlockFrag: {fileID: 21300000, guid: 33b684caadd9f47a681cf2253385aee5, type: 3}
+      iconLockFrag: {fileID: 21300000, guid: 6785775ee29df45ce918a6ed19d5bc96, type: 3}
+      unlockerObject: {fileID: 0}
+      locked: 1
     activeContent: 0
-    locked: 0
+    locked: 1
+  - title: Livello 2
+    contents:
+    - name: Lanterna Magica
+      mainImages:
+      - {fileID: 21300000, guid: 574aa1ab0debe4719a620a3b903e0a54, type: 3}
+      mainImageIndex: 0
+      iconUnlock: {fileID: 21300000, guid: 6db1405cf89ef1942a0b9016009d819e, type: 3}
+      iconLock: {fileID: 21300000, guid: 63ddfd2ccf3e54a439451d5cc9db86e3, type: 3}
+      infoText: {fileID: 4900000, guid: 9db8a5ddeb40a46539c70c65087f682c, type: 3}
+      unlockerObject: {fileID: 0}
+      locked: 1
+    - name: Ciaone 1
+      mainImages:
+      - {fileID: 21300000, guid: 574aa1ab0debe4719a620a3b903e0a54, type: 3}
+      mainImageIndex: 0
+      iconUnlock: {fileID: 21300000, guid: d9a7b2b13ea58304e82347648bdf949e, type: 3}
+      iconLock: {fileID: 21300000, guid: 96801657a6a26894a9684a20bedac64e, type: 3}
+      infoText: {fileID: 4900000, guid: 9db8a5ddeb40a46539c70c65087f682c, type: 3}
+      unlockerObject: {fileID: 0}
+      locked: 1
+    - name: Ciaone 2
+      mainImages:
+      - {fileID: 21300000, guid: 574aa1ab0debe4719a620a3b903e0a54, type: 3}
+      mainImageIndex: 0
+      iconUnlock: {fileID: 21300000, guid: a8b6754a11e76f348b8066082b6f0087, type: 3}
+      iconLock: {fileID: 21300000, guid: caef394134f643843a7c838c930c22a2, type: 3}
+      infoText: {fileID: 4900000, guid: 9db8a5ddeb40a46539c70c65087f682c, type: 3}
+      unlockerObject: {fileID: 0}
+      locked: 1
+    fragments:
+    - idFragm: fram1
+      iconUnlockFrag: {fileID: 21300000, guid: 33b684caadd9f47a681cf2253385aee5, type: 3}
+      iconLockFrag: {fileID: 21300000, guid: 6785775ee29df45ce918a6ed19d5bc96, type: 3}
+      unlockerObject: {fileID: 0}
+      locked: 1
+    - idFragm: fram2
+      iconUnlockFrag: {fileID: 21300000, guid: 33b684caadd9f47a681cf2253385aee5, type: 3}
+      iconLockFrag: {fileID: 21300000, guid: 6785775ee29df45ce918a6ed19d5bc96, type: 3}
+      unlockerObject: {fileID: 0}
+      locked: 1
+    - idFragm: fram3
+      iconUnlockFrag: {fileID: 21300000, guid: 33b684caadd9f47a681cf2253385aee5, type: 3}
+      iconLockFrag: {fileID: 21300000, guid: 6785775ee29df45ce918a6ed19d5bc96, type: 3}
+      unlockerObject: {fileID: 0}
+      locked: 1
+    - idFragm: fram4
+      iconUnlockFrag: {fileID: 21300000, guid: 33b684caadd9f47a681cf2253385aee5, type: 3}
+      iconLockFrag: {fileID: 21300000, guid: 6785775ee29df45ce918a6ed19d5bc96, type: 3}
+      unlockerObject: {fileID: 0}
+      locked: 1
+    - idFragm: fram5
+      iconUnlockFrag: {fileID: 21300000, guid: 33b684caadd9f47a681cf2253385aee5, type: 3}
+      iconLockFrag: {fileID: 21300000, guid: 6785775ee29df45ce918a6ed19d5bc96, type: 3}
+      unlockerObject: {fileID: 0}
+      locked: 1
+    activeContent: 5
+    locked: 1
   activeSection: 0
 --- !u!114 &11486512
 MonoBehaviour:
@@ -336,6 +418,26 @@ Prefab:
     m_Modifications:
     - target: {fileID: 0}
       propertyPath: sections.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: sections.Array.data[1].contents.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: sections.Array.data[0].fragments.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: sections.Array.data[1].fragments.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: sections.Array.data[1].contents.Array.data[0].mainImages.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: sections.Array.data[1].contents.Array.data[1].mainImages.Array.size
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 0}
@@ -346,6 +448,214 @@ Prefab:
       propertyPath: pulsingTimes
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: sections.Array.data[0].title
+      value: Livello 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: sections.Array.data[0].contents.Array.data[0].name
+      value: Camera Oscura
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: sections.Array.data[0].contents.Array.data[1].name
+      value: Lenti
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: sections.Array.data[0].fragments.Array.data[0].locked
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: sections.Array.data[0].contents.Array.data[0].locked
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: sections.Array.data[0].contents.Array.data[1].locked
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: sections.Array.data[0].locked
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: sections.Array.data[0].fragments.Array.data[0].idFragm
+      value: fram1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: sections.Array.data[0].fragments.Array.data[1].locked
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: sections.Array.data[0].fragments.Array.data[2].locked
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: sections.Array.data[0].fragments.Array.data[3].locked
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: sections.Array.data[0].fragments.Array.data[4].locked
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: sections.Array.data[0].fragments.Array.data[1].idFragm
+      value: fram2
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: sections.Array.data[0].fragments.Array.data[2].idFragm
+      value: fram3
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: sections.Array.data[0].fragments.Array.data[3].idFragm
+      value: fram4
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: sections.Array.data[0].fragments.Array.data[4].idFragm
+      value: fram5
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: sections.Array.data[1].title
+      value: Livello 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: sections.Array.data[1].contents.Array.data[0].name
+      value: Lanterna Magica
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: sections.Array.data[1].contents.Array.data[0].mainImages.Array.data[0]
+      value: 
+      objectReference: {fileID: 21300000, guid: 574aa1ab0debe4719a620a3b903e0a54,
+        type: 3}
+    - target: {fileID: 0}
+      propertyPath: sections.Array.data[1].contents.Array.data[0].iconUnlock
+      value: 
+      objectReference: {fileID: 21300000, guid: 6db1405cf89ef1942a0b9016009d819e,
+        type: 3}
+    - target: {fileID: 0}
+      propertyPath: sections.Array.data[1].contents.Array.data[0].iconLock
+      value: 
+      objectReference: {fileID: 21300000, guid: 63ddfd2ccf3e54a439451d5cc9db86e3,
+        type: 3}
+    - target: {fileID: 0}
+      propertyPath: sections.Array.data[1].contents.Array.data[0].infoText
+      value: 
+      objectReference: {fileID: 4900000, guid: 9db8a5ddeb40a46539c70c65087f682c, type: 3}
+    - target: {fileID: 0}
+      propertyPath: sections.Array.data[1].contents.Array.data[1].name
+      value: Ciaone 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: sections.Array.data[1].contents.Array.data[1].mainImages.Array.data[0]
+      value: 
+      objectReference: {fileID: 21300000, guid: 574aa1ab0debe4719a620a3b903e0a54,
+        type: 3}
+    - target: {fileID: 0}
+      propertyPath: sections.Array.data[1].contents.Array.data[1].iconUnlock
+      value: 
+      objectReference: {fileID: 21300000, guid: d9a7b2b13ea58304e82347648bdf949e,
+        type: 3}
+    - target: {fileID: 0}
+      propertyPath: sections.Array.data[1].contents.Array.data[1].iconLock
+      value: 
+      objectReference: {fileID: 21300000, guid: 96801657a6a26894a9684a20bedac64e,
+        type: 3}
+    - target: {fileID: 0}
+      propertyPath: sections.Array.data[1].contents.Array.data[1].infoText
+      value: 
+      objectReference: {fileID: 4900000, guid: e410596c4ccf44f4bb06d444ad94e945, type: 3}
+    - target: {fileID: 0}
+      propertyPath: sections.Array.data[1].contents.Array.data[1].locked
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: sections.Array.data[1].contents.Array.data[2].name
+      value: Ciaone 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: sections.Array.data[1].activeContent
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: sections.Array.data[0].contents.Array.data[0].iconUnlock
+      value: 
+      objectReference: {fileID: 21300000, guid: 96c9ba673362d0242b0a0ee2a215afa2,
+        type: 3}
+    - target: {fileID: 0}
+      propertyPath: sections.Array.data[0].contents.Array.data[0].iconLock
+      value: 
+      objectReference: {fileID: 21300000, guid: e8e0e5fbdc02d08479315169884381a9,
+        type: 3}
+    - target: {fileID: 0}
+      propertyPath: sections.Array.data[0].contents.Array.data[1].iconUnlock
+      value: 
+      objectReference: {fileID: 21300000, guid: 3b26dfce0dd14934f88abd9d0211d77a,
+        type: 3}
+    - target: {fileID: 0}
+      propertyPath: sections.Array.data[0].contents.Array.data[1].iconLock
+      value: 
+      objectReference: {fileID: 21300000, guid: d455354440f10824b89a1ca257cdfeb3,
+        type: 3}
+    - target: {fileID: 0}
+      propertyPath: sections.Array.data[1].contents.Array.data[2].iconUnlock
+      value: 
+      objectReference: {fileID: 21300000, guid: a8b6754a11e76f348b8066082b6f0087,
+        type: 3}
+    - target: {fileID: 0}
+      propertyPath: sections.Array.data[1].contents.Array.data[2].iconLock
+      value: 
+      objectReference: {fileID: 21300000, guid: caef394134f643843a7c838c930c22a2,
+        type: 3}
+    - target: {fileID: 0}
+      propertyPath: sections.Array.data[1].fragments.Array.data[0].iconUnlockFrag
+      value: 
+      objectReference: {fileID: 21300000, guid: 33b684caadd9f47a681cf2253385aee5,
+        type: 3}
+    - target: {fileID: 0}
+      propertyPath: sections.Array.data[1].fragments.Array.data[0].iconLockFrag
+      value: 
+      objectReference: {fileID: 21300000, guid: 6785775ee29df45ce918a6ed19d5bc96,
+        type: 3}
+    - target: {fileID: 0}
+      propertyPath: sections.Array.data[1].fragments.Array.data[1].idFragm
+      value: fram2
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: sections.Array.data[1].fragments.Array.data[1].locked
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: sections.Array.data[1].fragments.Array.data[2].idFragm
+      value: fram3
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: sections.Array.data[1].fragments.Array.data[2].locked
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: sections.Array.data[1].fragments.Array.data[3].idFragm
+      value: fram4
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: sections.Array.data[1].fragments.Array.data[3].locked
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: sections.Array.data[1].fragments.Array.data[4].idFragm
+      value: fram5
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: sections.Array.data[1].fragments.Array.data[4].locked
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: sections.Array.data[0].fragments.Array.data[0].iconUnlockFrag
+      value: 
+      objectReference: {fileID: 21300000, guid: 33b684caadd9f47a681cf2253385aee5,
+        type: 3}
+    - target: {fileID: 0}
+      propertyPath: sections.Array.data[0].fragments.Array.data[0].iconLockFrag
+      value: 
+      objectReference: {fileID: 21300000, guid: 6785775ee29df45ce918a6ed19d5bc96,
+        type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 165342}

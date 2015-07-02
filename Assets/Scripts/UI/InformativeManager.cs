@@ -15,7 +15,6 @@ public class InformativeManager : MonoBehaviour {
 	public GameObject canvasMenu;
 	GameObject canvasInformative;
 	GameObject canvasIntro;
-	GameObject canvasPlayingUI;
 
 	public bool loadDefaultConf;
 
@@ -28,8 +27,7 @@ public class InformativeManager : MonoBehaviour {
 	#endregion PUBLICVARIABLES
 
 	#region PRIVATEVARIABLES
-
-	PlayingUI playingUI;
+	
 	MenuManager menuMan;
 
 	GameObject multimediaSection;
@@ -58,11 +56,15 @@ public class InformativeManager : MonoBehaviour {
 
 	#endregion VARIABLES
 
+
+
 	void Start () {
 
 		initializeReferences ();
 
 		InfoSectionContainer.tryLoadInformativeManagerConf (ref sections);
+
+		setUnlockerOfThisLevel ();
 
 		if (loadDefaultConf) {
 			//loadInformativeManagerConf ();
@@ -89,7 +91,95 @@ public class InformativeManager : MonoBehaviour {
 
 	}
 
+	#region PRIVATEMETHODS
+
 	#region STARTMETHODS
+
+	void setUnlockerOfThisLevel() {
+		
+		//scorrere le sezioni
+		
+		bool found = false;
+
+		int sectionNumber = 0;
+		int contentNumber = 0;
+		int fragmentNumber = 0;
+
+		foreach (InformativeSection section in sections) {
+			
+			foreach(InformativeContent cont in section.contents) {
+				
+				if(cont.unlockerObject !=null) {
+					found = true;
+					break;
+					
+				}
+				
+			}
+
+			if(found)
+				break;
+
+			sectionNumber++;
+		}
+
+		if (sectionNumber >= sections.Length) {
+			Debug.Log ("nessun unlocker assegnato nella scena");
+			return;
+		}
+		
+		foreach (InformativeContent conte in sections[sectionNumber].contents) {
+
+			if(conte.unlockerObject!=null) {
+				if(!conte.locked) {
+				
+					conte.unlockerObject.SetActive(false);
+					
+				}
+				else {
+
+					conte.unlockerObject.SendMessage("c_setSectionInt", sectionNumber);
+					conte.unlockerObject.SendMessage("c_setContentInt", contentNumber);
+
+				}
+
+				
+			}
+
+			contentNumber++;
+			
+		}
+
+		
+		foreach (InformativeFragment fragme in sections[sectionNumber].fragments) {
+			
+			if(fragme.unlockerObject!=null) {
+				if(!fragme.locked) {
+					
+					fragme.unlockerObject.SetActive(false);
+					
+				}
+				else {
+					
+					fragme.unlockerObject.SendMessage("c_setSectionInt", sectionNumber);
+					fragme.unlockerObject.SendMessage("c_setFragmentInt", fragmentNumber);
+					
+				}
+				
+				
+			}
+			
+			fragmentNumber++;
+			
+		}
+		//trovare quella con degli unlocker != null
+		//disattivarli o meno in base al fatto che siano già stati scoperti
+		
+	}
+
+
+
+	#region GETGRAPHICREF
 
 	void initializeReferences() {
 
@@ -98,14 +188,6 @@ public class InformativeManager : MonoBehaviour {
 
 		menuMan = UtilFinder._GetComponentOfGameObjectWithTag<MenuManager> ("Controller");
 
-		if (canvasPlayingUI != null) {
-			playingUI = UtilFinder._GetComponent<PlayingUI> (canvasPlayingUI);
-		} 
-		else {
-
-			Debug.Log ("ATTENZIONE - canvasPlayingUI non assegnato a InformativeManager");
-		
-		}
 
 		if (canvasMenu != null) {
 
@@ -372,33 +454,13 @@ public class InformativeManager : MonoBehaviour {
 
 	}
 
+	#endregion GETGRAPHICREF
+
 	#endregion STARTMETHODS
 
-	//RIEMPIMENTO SEZIONE-----
-
-
-	/*
-	public void showContent() {
-
-		if (activeSection < 0)
-			return;
-
-		if (sections [activeSection] == null)
-			return;
-
-		fillNavigation (activeSection);
-
-		fillMultimedia (activeSection, sections [activeSection].activeContent);
-
-		fillDetail (activeSection, sections [activeSection].activeContent);
 
 
 
-
-	}
-	*/
-
-	#region PRIVATEMETHODS
 
 	void fillNavigation(int sectionN) {
 
@@ -487,8 +549,9 @@ public class InformativeManager : MonoBehaviour {
 		if (canShowTemporarely && Input.GetKey (KeyCode.I)) {
 			
 			c_activeInformative (true);
-			playingUI.cleanPositionButtonObject (PlayingUI.UIPosition.UpperRight);
-			playingUI.cleanPositionGameObjects (PlayingUI.UIPosition.UpperRight);
+
+			GeneralFinder.playingUI.cleanPositionButtonObject (PlayingUI.UIPosition.UpperRight);
+			GeneralFinder.playingUI.cleanPositionGameObjects (PlayingUI.UIPosition.UpperRight);
 			
 			canShowTemporarely = false;
 		}
@@ -589,6 +652,7 @@ public class InformativeManager : MonoBehaviour {
 		
 	}
 
+	//UNLOCK CONTENT
 	public void c_canShowNewContent(int sect, int cont) {
 		
 		canShowTemporarely = true;
@@ -606,13 +670,17 @@ public class InformativeManager : MonoBehaviour {
 
 			
 		sections [activeSection].contents[cont].locked = false;
-			
-		
+
+		fillNavigation (activeSection);
+
+		//TODO:
+		//GeneralFinder.playingUILateral
+
 		StartCoroutine ("countDownShowNewContent");
 
 	}
 
-
+	//UNLOCK CONTENT
 	public void c_canShowNewContent(string sect, string cont) {
 		
 		canShowTemporarely = true;
@@ -651,12 +719,34 @@ public class InformativeManager : MonoBehaviour {
 
 			i++;
 		}
-			
+
+		//TODO:
+		//GeneralFinder.playingUILateral
+
 		StartCoroutine ("countDownShowNewContent");
 		
 	}
 
+	public void c_UnlockFragment(int sect, int fragm) {
 
+		if (sect >= sections.Length)
+			return;
+		
+		//activeSection = sect;
+		
+		if(fragm >= (sections [activeSection].fragments.Length ) )
+			return;
+		
+		sections [activeSection].locked = false;
+		//sections [activeSection].activeContent = cont;
+		
+		
+		sections [activeSection].fragments[fragm].locked = false;
+
+		//TODO:
+		//GeneralFinder.playingUILateral
+		//gli passo la sprite del frammento? o basta il numero? e poi lui si prende ciò che serve da questo script?
+	}
 
 	public void c_saveInformativeConfig() {
 
@@ -672,8 +762,8 @@ public class InformativeManager : MonoBehaviour {
 		
 		yield return new WaitForSeconds (5.0f);
 		
-		playingUI.cleanPositionButtonObject(PlayingUI.UIPosition.UpperRight);
-		playingUI.cleanPositionGameObjects(PlayingUI.UIPosition.UpperRight);
+		GeneralFinder.playingUI.cleanPositionButtonObject(PlayingUI.UIPosition.UpperRight);
+		GeneralFinder.playingUI.cleanPositionGameObjects(PlayingUI.UIPosition.UpperRight);
 		
 		canShowTemporarely = false;
 		
@@ -827,18 +917,49 @@ public class InfoSectionContainer
 
 				if(loadedSection.title==sectionToSet.title) {
 
-					foreach(InformativeContent contentToSet in sectionToSet.contents) {
+					try {
 
-						foreach(InformativeContent loadedContent in loadedSection.contents) {
+						foreach(InformativeContent contentToSet in sectionToSet.contents) {
 
-							if(contentToSet.name == loadedContent.name) {
+							foreach(InformativeContent loadedContent in loadedSection.contents) {
 
-								contentToSet.locked = loadedContent.locked;
+								if(contentToSet.name == loadedContent.name) {
 
-								break;
+									contentToSet.locked = loadedContent.locked;
+
+									break;
+								}
+
 							}
 
 						}
+
+					}
+					catch(System.Exception e) {
+						
+						
+					}
+
+					try {
+
+						foreach(InformativeFragment fragToSet in sectionToSet.fragments) {
+
+							foreach(InformativeFragment loadedFrag in loadedSection.fragments) {
+								
+								if(fragToSet.idFragm == loadedFrag.idFragm) {
+									
+									fragToSet.locked = loadedFrag.locked;
+									
+									break;
+								}
+								
+							}
+
+						}
+
+					}
+					catch(System.Exception e) {
+
 
 					}
 
@@ -923,7 +1044,7 @@ public class InformativeSection {
 public class InformativeFragment {
 	
 	[SerializeField]
-	public int idFragm;
+	public string idFragm;
 
 	[XmlIgnoreAttribute]
 	[SerializeField]
@@ -932,6 +1053,10 @@ public class InformativeFragment {
 	[XmlIgnoreAttribute]
 	[SerializeField]
 	public Sprite iconLockFrag;
+
+	[XmlIgnoreAttribute]
+	[SerializeField]
+	public GameObject unlockerObject;
 
 	[SerializeField]
 	public bool locked = false;

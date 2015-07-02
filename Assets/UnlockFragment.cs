@@ -1,93 +1,80 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class UnlockContent : MonoBehaviour {
-
+public class UnlockFragment : MonoBehaviour {
+	
 	public Sprite unlockedObj;
 	public Sprite controllerButton;
 	public Sprite keyboardButton;
 
-	bool needButtonPress = false;
-
 	CursorHandler cursorHandler;
 	InformativeManager informativeMan;
-
+	
 	public int sectionIndexToUnlock = -1;
-	public int contentIndexToUnlock = -1;
-
-	bool contentUnlocked = false;
-
+	public int fragmentIndexToUnlock = -1;
+	
+	bool fragmentUnlocked = false;
+	
 	// Use this for initialization
 	void Start () {
-
+		
 		initializeComponents ();
 
-		checkNeedButtonPress ();
-
 	}
+	
 
-	void checkNeedButtonPress() {
-
-		InteragibileObject io = GetComponent<InteragibileObject> ();
-
-		if (io != null) {
-
-			needButtonPress = true;
-
-		} else {
-
-			needButtonPress = false;
-
-		}
-
-	}
-
+	
 	void initializeComponents() {
-
+		
 		cursorHandler = UtilFinder._GetComponentOfGameObjectWithTag<CursorHandler> ("Controller");
-
+		
 		informativeMan = UtilFinder._GetComponentOfGameObjectWithTag<InformativeManager> ("Controller");
-
+		
 	}
 	
 	// Update is called once per frame
 	void Update () {
-	
+		
 	}
+	
+	public void getFragment() {
+		
+		if (!fragmentUnlocked) {
 
-	public void getCollectible() {
-
-		if (!contentUnlocked) {
 
 			//GeneralFinder.playingUILateral
-			//lo richiamo da informative manager?
-			setUpPlayingUIForNewContent ();
 
-			//GeneralFinder.informativeManager
-			informativeMan.c_canShowNewContent (sectionIndexToUnlock, contentIndexToUnlock);
+			//informativeMan.c_canShowNewContent (sectionIndexToUnlock, fragmentIndexToUnlock);
+			//GeneralFinder.informativeManager.
+
+			informativeMan.c_UnlockFragment(sectionIndexToUnlock, fragmentIndexToUnlock);
 
 			disableThisObject();
-
+			
 		}
-
-
+		
+		
 	}
 
 	void disableThisObject() {
 
-		contentUnlocked = true;
-
-		SpriteRenderer []srs = GetComponentsInChildren<SpriteRenderer>();
+		fragmentUnlocked = true;
 		
-		foreach(SpriteRenderer sr in srs) {
-			
-			sr.enabled = false;
-			
-		}
+		SpriteRenderer sr = GetComponentInChildren<SpriteRenderer>();
+		
+		sr.enabled = false;
+
 	}
-
+	
+	public void OnTriggerEnter2D(Collider2D c) {
+		
+		if (c.tag == "Player")
+			getFragment ();
+		
+	}
+	
 	void setUpPlayingUIForNewContent() {
-
+		
 		Sprite buttonSprite;
 		
 		if (cursorHandler.useController)
@@ -99,9 +86,7 @@ public class UnlockContent : MonoBehaviour {
 			
 			Sprite[] sprites = new Sprite[1];
 			sprites [0] = unlockedObj;
-
-			//TODO: prendere le sprite da informativeMangager
-
+			
 			GeneralFinder.playingUI.setSprites (sprites, PlayingUI.UIPosition.UpperRight);
 			
 			GeneralFinder.playingUI.setButtonSprite (PlayingUI.UIPosition.UpperRight, buttonSprite);
@@ -114,20 +99,20 @@ public class UnlockContent : MonoBehaviour {
 			
 			
 		}
-
-	}
-
-
-	public void c_setSectionInt(int sec) {
-
-		sectionIndexToUnlock = sec;
-
-	}
-
-	public void c_setContentInt(int con) {
-
-		contentIndexToUnlock = con;
 		
 	}
-
+	
+	
+	public void c_setSectionInt(int sec) {
+		
+		sectionIndexToUnlock = sec;
+		
+	}
+	
+	public void c_setFragmentInt(int frag) {
+		
+		fragmentIndexToUnlock = frag;
+		
+	}
+	
 }

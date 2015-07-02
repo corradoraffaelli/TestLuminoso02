@@ -124,6 +124,7 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: .0219999999
+  m_StereoMirrorMode: 0
 --- !u!23 &2397094
 MeshRenderer:
   m_ObjectHideFlags: 1
@@ -194,8 +195,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   newImplementation: 1
   limitCameraMovements: 0
-  RatioDistanceFromPlayer: .150000006
+  cameraOnPlayer: 0
+  changeRatioIfAiming: 1
+  changeSize: 1
+  onlyIfAiming: 1
+  fixedChangedSize: 0
+  returnToPlayer: 1
+  standardRatioDistance: .150000006
+  aimingRatioDistance: .300000012
   smooth: 10
+  changingSizeVelocity: 2.5
+  defaultSize: 5.5
+  enlargment: 1
+  ratioBeforeEnlargment: .75
+  timeBeforeGoingPlayer: 2
+  actualRatio: 0
 --- !u!124 &12400452
 Behaviour:
   m_ObjectHideFlags: 1
