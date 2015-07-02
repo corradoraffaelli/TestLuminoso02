@@ -11,13 +11,13 @@ public class UnlockableContentUI : MonoBehaviour {
 	
 	}
 
-	public void unlockFragment(string id)
+	public void unlockFragment(string section, string id)
 	{
-		Debug.Log ("ho sbloccato il frammento "+id);
+		Debug.Log ("ho sbloccato il frammento "+id+ " del livello "+section);
 	}
 
-	public void unlockContent(string name)
+	public void unlockContent(string section, string name)
 	{
-		Debug.Log ("ho sbloccato l'oggetto "+name);
+		Debug.Log ("ho sbloccato l'oggetto "+name+ " del livello "+section);
 	}
 }
