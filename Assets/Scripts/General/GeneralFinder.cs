@@ -17,6 +17,10 @@ public class GeneralFinder : MonoBehaviour {
 	public static PlayingUILateral playingUILateral;
 	public static PlayingUIGameOver playingUIGameOver;
 
+	public static InformativeManager informativeManager;
+	public static MenuManager menuManager;
+	public static PlayStatusTracker playStatusTracker;
+
 	// Use this for initialization
 	void Awake () {
 
@@ -46,6 +50,9 @@ public class GeneralFinder : MonoBehaviour {
 			playingUIGameOver = canvasPlayingUI.GetComponent<PlayingUIGameOver>();
 		}
 
+		informativeManager = UtilFinder._GetComponentOfGameObjectWithTag<InformativeManager> ("Controller");
+		menuManager = UtilFinder._GetComponentOfGameObjectWithTag<MenuManager> ("Controller");
+		playStatusTracker =  UtilFinder._GetComponentOfGameObjectWithTag<PlayStatusTracker> ("Controller");
 	}
 	
 	// Update is called once per frame
