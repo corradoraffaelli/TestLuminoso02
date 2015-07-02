@@ -10,7 +10,6 @@ public class UnlockContent : MonoBehaviour {
 	bool needButtonPress = false;
 
 	CursorHandler cursorHandler;
-	InformativeManager informativeMan;
 
 	public int sectionIndexToUnlock = -1;
 	public int contentIndexToUnlock = -1;
@@ -46,8 +45,6 @@ public class UnlockContent : MonoBehaviour {
 
 		cursorHandler = UtilFinder._GetComponentOfGameObjectWithTag<CursorHandler> ("Controller");
 
-		informativeMan = UtilFinder._GetComponentOfGameObjectWithTag<InformativeManager> ("Controller");
-
 	}
 	
 	// Update is called once per frame
@@ -61,10 +58,10 @@ public class UnlockContent : MonoBehaviour {
 
 			//GeneralFinder.playingUILateral
 			//lo richiamo da informative manager?
-			setUpPlayingUIForNewContent ();
 
-			//GeneralFinder.informativeManager
-			informativeMan.c_canShowNewContent (sectionIndexToUnlock, contentIndexToUnlock);
+			//setUpPlayingUIForNewContent ();
+
+			GeneralFinder.informativeManager.c_canShowNewContent (sectionIndexToUnlock, contentIndexToUnlock);
 
 			disableThisObject();
 

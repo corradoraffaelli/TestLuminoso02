@@ -700,13 +700,17 @@ public class InformativeManager : MonoBehaviour {
 		
 		canShowTemporarely = true;
 		
-		if (sect >= sections.Length)
+		if (sect >= sections.Length) {
+			Debug.Log("ATTENZIONE - section oltre la size durante lo sblocco del contenuto");
 			return;
+		}
 		
 		activeSection = sect;
 		
-		if(cont >= (sections [activeSection].contents.Length ) )
+		if (cont >= (sections [activeSection].contents.Length)) {
+			Debug.Log("ATTENZIONE - contenuto oltre la size durante lo sblocco del contenuto");
 			return;
+		}
 
 		sections [activeSection].locked = false;
 		sections [activeSection].activeContent = cont;
@@ -714,10 +718,8 @@ public class InformativeManager : MonoBehaviour {
 
 		sections [activeSection].contents[cont].locked = false;
 
-		//fillNavigation (activeSection);
 
-		//TODO:
-		//GeneralFinder.playingUILateral
+		GeneralFinder.unlockableContentUI.unlockContent (sections[sect].title, sections[sect].contents[cont].name);
 
 		StartCoroutine ("countDownShowNewContent");
 
@@ -730,6 +732,10 @@ public class InformativeManager : MonoBehaviour {
 
 		bool found = false;
 		int i = 0;
+
+		int sectN = 0;
+		int contN = 0;
+
 		foreach (InformativeSection insec in sections) {
 
 			if(insec.title==sect) {
@@ -741,9 +747,11 @@ public class InformativeManager : MonoBehaviour {
 			i++;
 		}
 
-		if (!found)
+		if (!found) {
+			Debug.Log("ATTENZIONE - section non trovata durante lo sblocco del contenuto");
 			return;
-
+		}
+		sectN = i;
 		found = false;
 		i = 0;
 
@@ -763,8 +771,9 @@ public class InformativeManager : MonoBehaviour {
 			i++;
 		}
 
-		//TODO:
-		//GeneralFinder.playingUILateral
+		contN = i;
+
+		GeneralFinder.unlockableContentUI.unlockContent (sections[sectN].title, sections[sectN].contents[contN].name);
 
 		StartCoroutine ("countDownShowNewContent");
 		
@@ -772,13 +781,16 @@ public class InformativeManager : MonoBehaviour {
 
 	public void c_UnlockFragment(int sect, int fragm) {
 
-		if (sect >= sections.Length)
+		if (sect >= sections.Length) {
+			Debug.Log("ATTENZIONE - section oltre la size durante lo sblocco del contenuto");
 			return;
-		
+		}
 		//activeSection = sect;
 		
-		if(fragm >= (sections [activeSection].fragments.Length ) )
+		if (fragm >= (sections [activeSection].fragments.Length)) {
+			Debug.Log("ATTENZIONE - numero del fragment oltre la size durante lo sblocco del contenuto");
 			return;
+		}
 		
 		sections [activeSection].locked = false;
 		//sections [activeSection].activeContent = cont;
@@ -786,9 +798,8 @@ public class InformativeManager : MonoBehaviour {
 		
 		sections [activeSection].fragments[fragm].locked = false;
 
-		//TODO:
-		//GeneralFinder.playingUILateral
-		//gli passo la sprite del frammento? o basta il numero? e poi lui si prende ciò che serve da questo script?
+		GeneralFinder.unlockableContentUI.unlockFragment (sections [sect].title, sections [sect].fragments [fragm].idFragm);
+
 	}
 
 	public void c_saveInformativeConfig() {
