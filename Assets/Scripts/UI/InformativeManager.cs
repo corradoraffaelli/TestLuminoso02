@@ -774,8 +774,16 @@ public class InformativeManager : MonoBehaviour {
 		sections [activeSection].contents[cont].locked = false;
 
 		//TODO: cambiare?
+		if (sections [sect].contentType == infoContentType.Collectibles) {
 
-		GeneralFinder.unlockableContentUI.unlockContent (sections[sect].contents[cont].name);
+			GeneralFinder.unlockableContentUI.unlockContent (sections [sect].contents [cont].name);
+		
+		} 
+		else {
+
+			GeneralFinder.unlockableContentUI.unlockFact(sections [sect].contents [cont].name);
+
+		}
 
 		StartCoroutine ("countDownShowNewContent");
 
@@ -919,8 +927,8 @@ public class InformativeManager : MonoBehaviour {
 		
 		yield return new WaitForSeconds (5.0f);
 		
-		GeneralFinder.playingUI.cleanPositionButtonObject(PlayingUI.UIPosition.UpperRight);
-		GeneralFinder.playingUI.cleanPositionGameObjects(PlayingUI.UIPosition.UpperRight);
+		//GeneralFinder.playingUI.cleanPositionButtonObject(PlayingUI.UIPosition.UpperRight);
+		//GeneralFinder.playingUI.cleanPositionGameObjects(PlayingUI.UIPosition.UpperRight);
 		
 		canShowTemporarely = false;
 		
