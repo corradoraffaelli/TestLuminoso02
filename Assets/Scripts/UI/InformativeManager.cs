@@ -785,7 +785,7 @@ public class InformativeManager : MonoBehaviour {
 
 		}
 
-		StartCoroutine ("countDownShowNewContent");
+		//StartCoroutine ("countDownShowNewContent");
 
 	}
 
