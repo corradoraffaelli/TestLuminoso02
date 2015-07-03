@@ -9,6 +9,7 @@ public class InteragibleObjectFlare : MonoBehaviour {
 	[Range(0.0f, 15.0f)]
 	public float distanceLimitPlayer = 6.0f;
 	public bool onlyIfPlayerNear = true;
+	public bool setFlareAsChildren = true;
 
 	SpriteRenderer spriteRenderer;
 
@@ -19,6 +20,8 @@ public class InteragibleObjectFlare : MonoBehaviour {
 	bool timeToFlare = false;
 	bool needToPulse = false;
 	bool wasNeedToPulse = false;
+
+	GameObject flareGO;
 
 	//public bool nearPlayer;
 
@@ -50,14 +53,20 @@ public class InteragibleObjectFlare : MonoBehaviour {
 			if (timeToFlare)
 			{
 				if (isPlayerNear())
-					Instantiate(flarePrefab, flarePosition.position, Quaternion.identity);
+				{
+					flareGO = Instantiate(flarePrefab, flarePosition.position, Quaternion.identity) as GameObject;
+				}
 			}
 			
 			//nearPlayer = isPlayerNear();
 			
 			timeToFlare = false;
 		}
-
+		else
+		{
+			if (flareGO != null)
+				Destroy(flareGO);
+		}
 	}
 
 	bool verifyIfNull()
