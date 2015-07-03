@@ -8,10 +8,10 @@ public class MenuManager : MonoBehaviour {
 
 	//public GameObject canvasMenu;
 
-	public GameObject canvasIntro;
-	public GameObject canvasInformative;
+	GameObject canvasIntro;
+	GameObject canvasInformative;
 
-	public GameObject canvasActive;
+	GameObject canvasActive;
 
 	Button []menuButtons;
 
@@ -118,6 +118,12 @@ public class MenuManager : MonoBehaviour {
 				butt.onClick.AddListener(() => { openOptionsSection(); });
 
 			}
+
+			if(butt.gameObject.name=="Save Progress") {
+				
+				butt.onClick.AddListener(() => { GeneralFinder.informativeManager.c_saveData(); });
+				
+			}
 			
 			if(butt.gameObject.name=="Exit") {
 
@@ -158,6 +164,7 @@ public class MenuManager : MonoBehaviour {
 
 		Application.LoadLevel (Application.loadedLevel);
 		PlayStatusTracker.inPlay = true;
+		GeneralFinder.playStatusTracker.inPlayMode = true;
 	}
 
 	public void c_enableMenu(bool enable, GameObject canvasToShow=null) {
@@ -167,7 +174,8 @@ public class MenuManager : MonoBehaviour {
 			
 			//Time.timeScale = 0.0f;
 			PlayStatusTracker.inPlay = false;
-			Debug.Log("setto in playmode");
+			GeneralFinder.playStatusTracker.inPlayMode = false;
+			//Debug.Log("setto in playmode");
 
 			if(canvasToShow==null)
 				c_switchMenuSection(null, canvasIntro);
@@ -179,6 +187,7 @@ public class MenuManager : MonoBehaviour {
 			
 			//Time.timeScale = 1.0f;
 			PlayStatusTracker.inPlay = true;
+			GeneralFinder.playStatusTracker.inPlayMode = true;
 			c_switchMenuSection(canvasIntro, null);
 			
 		}

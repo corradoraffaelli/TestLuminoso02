@@ -5,6 +5,13 @@ using System.Xml;
 using System.Xml.Serialization;
 using System.IO;
 using UnityEngine.UI;
+using System;
+
+public enum infoContentType {
+	Fragments,
+	Collectibles,
+	FunFacts,
+}
 
 public class InformativeManager : MonoBehaviour {
 
@@ -23,6 +30,8 @@ public class InformativeManager : MonoBehaviour {
 
 	[SerializeField]
 	int activeSection;
+
+	public int actualLevelNumber = -1;
 
 	#endregion PUBLICVARIABLES
 
@@ -99,79 +108,119 @@ public class InformativeManager : MonoBehaviour {
 		
 		//scorrere le sezioni
 		
-		bool found = false;
-
-		int sectionNumber = 0;
-		int contentNumber = 0;
-		int fragmentNumber = 0;
+		bool levelFound = false;
 
 		foreach (InformativeSection section in sections) {
 			
 			foreach(InformativeContent cont in section.contents) {
 				
 				if(cont.unlockerObject !=null) {
-					found = true;
+					levelFound = true;
+					actualLevelNumber = section.levelN;
 					break;
 					
 				}
 				
 			}
 
-			if(found)
+			if(levelFound)
 				break;
 
-			sectionNumber++;
 		}
 
-		if (sectionNumber >= sections.Length) {
-			Debug.Log ("nessun unlocker assegnato nella scena");
+		if (actualLevelNumber < 0 || !levelFound) {
+			Debug.Log ("ATTENZIONE - NESSUN unlocker assegnato nella scena");
 			return;
 		}
-		
-		foreach (InformativeContent conte in sections[sectionNumber].contents) {
 
-			if(conte.unlockerObject!=null) {
-				if(!conte.locked) {
-				
-					conte.unlockerObject.SetActive(false);
+		int sectionIndex = 0;
+
+		foreach (InformativeSection section in sections) {
+
+			int contentIndex = 0;
+
+			if(section.levelN == actualLevelNumber){
+
+				switch(section.contentType) {
+				case infoContentType.Collectibles :
+					foreach (InformativeContent conte in section.contents) {
+
+						if(conte.unlockerObject!=null) {
+							if(!conte.locked) {
+								
+								conte.unlockerObject.SetActive(false);
+								
+							}
+							else {
+								
+								conte.unlockerObject.SendMessage("c_setSectionInt", sectionIndex);
+								conte.unlockerObject.SendMessage("c_setContentInt", contentIndex);
+								
+							}
+							
+							
+						}
+
+						contentIndex++;
+					}
+					break;
+
+				case infoContentType.FunFacts :
+					foreach (InformativeContent funfact in section.contents) {
+						
+						if(funfact.unlockerObject!=null) {
+							if(!funfact.locked) {
+								
+								funfact.unlockerObject.SetActive(false);
+								
+							}
+							else {
+								
+								funfact.unlockerObject.SendMessage("c_setSectionInt", sectionIndex);
+								funfact.unlockerObject.SendMessage("c_setContentInt", contentIndex);
+								
+							}
+							
+							
+							}
+							
+						
+						contentIndex++;
+					}
+					break;
 					
+				case infoContentType.Fragments :
+					foreach (InformativeContent fragme in section.contents) {
+						
+						if(fragme.unlockerObject!=null) {
+							if(!fragme.locked) {
+								
+								fragme.unlockerObject.SetActive(false);
+								
+							}
+							else {
+								
+								fragme.unlockerObject.SendMessage("c_setSectionInt", sectionIndex);
+								fragme.unlockerObject.SendMessage("c_setFragmentInt", contentIndex);
+								
+							}
+							
+							
+						}
+						
+						contentIndex++;
+					}
+					break;
+					
+
 				}
-				else {
 
-					conte.unlockerObject.SendMessage("c_setSectionInt", sectionNumber);
-					conte.unlockerObject.SendMessage("c_setContentInt", contentNumber);
-
-				}
-
-				
 			}
 
-			contentNumber++;
-			
+			sectionIndex++;
+
 		}
 
-		
-		foreach (InformativeFragment fragme in sections[sectionNumber].fragments) {
-			
-			if(fragme.unlockerObject!=null) {
-				if(!fragme.locked) {
-					
-					fragme.unlockerObject.SetActive(false);
-					
-				}
-				else {
-					
-					fragme.unlockerObject.SendMessage("c_setSectionInt", sectionNumber);
-					fragme.unlockerObject.SendMessage("c_setFragmentInt", fragmentNumber);
-					
-				}
-				
-				
-			}
-			
-			fragmentNumber++;
-			
-		}
 		//trovare quella con degli unlocker != null
 		//disattivarli o meno in base al fatto che siano già stati scoperti
 		
@@ -549,7 +598,7 @@ public class InformativeManager : MonoBehaviour {
 
 		}
 
-		Debug.Log("section " + sectionN + " e content " + contentN);
+		//Debug.Log("section " + sectionN + " e content " + contentN);
 
 		if (sections [sectionN].contents [contentN] == null){
 			Debug.Log ("ATTENZIONE - contenuto nullo");
@@ -613,9 +662,9 @@ public class InformativeManager : MonoBehaviour {
 					tempActiveSection = sections.Length-1;
 			}
 
-			Debug.Log ("temp active sect " + tempActiveSection);
+			//Debug.Log ("temp active sect " + tempActiveSection);
 
-			if(!sections[tempActiveSection].locked)
+			if(!sections[tempActiveSection].locked && sections[tempActiveSection].contentType != infoContentType.Fragments)
 				break;
 
 		}
@@ -704,6 +753,12 @@ public class InformativeManager : MonoBehaviour {
 			Debug.Log("ATTENZIONE - section oltre la size durante lo sblocco del contenuto");
 			return;
 		}
+
+		if (sections [sect].contentType != infoContentType.Collectibles || sections [sect].contentType != infoContentType.FunFacts) {
+			Debug.Log("ATTENZIONE - section NON di tipo collectibles o fun facts");
+			return;
+			
+		}
 		
 		activeSection = sect;
 		
@@ -718,6 +773,7 @@ public class InformativeManager : MonoBehaviour {
 
 		sections [activeSection].contents[cont].locked = false;
 
+		//TODO: cambiare?
 
 		GeneralFinder.unlockableContentUI.unlockContent (sections[sect].title, sections[sect].contents[cont].name);
 
@@ -725,59 +781,7 @@ public class InformativeManager : MonoBehaviour {
 
 	}
 
-	//UNLOCK CONTENT
-	public void c_canShowNewContent(string sect, string cont) {
-		
-		canShowTemporarely = true;
 
-		bool found = false;
-		int i = 0;
-
-		int sectN = 0;
-		int contN = 0;
-
-		foreach (InformativeSection insec in sections) {
-
-			if(insec.title==sect) {
-				activeSection = i;
-				found = true;
-				break;
-			}
-
-			i++;
-		}
-
-		if (!found) {
-			Debug.Log("ATTENZIONE - section non trovata durante lo sblocco del contenuto");
-			return;
-		}
-		sectN = i;
-		found = false;
-		i = 0;
-
-		foreach (InformativeContent inset in sections[activeSection].contents) {
-
-			if(inset.name==cont) {
-				sections [activeSection].activeContent = i;
-
-				sections [activeSection].locked = false;
-
-				sections[activeSection].contents[i].locked = false;
-
-				found = true;
-				break;
-			}
-
-			i++;
-		}
-
-		contN = i;
-
-		GeneralFinder.unlockableContentUI.unlockContent (sections[sectN].title, sections[sectN].contents[contN].name);
-
-		StartCoroutine ("countDownShowNewContent");
-		
-	}
 
 	public void c_UnlockFragment(int sect, int fragm) {
 
@@ -785,27 +789,124 @@ public class InformativeManager : MonoBehaviour {
 			Debug.Log("ATTENZIONE - section oltre la size durante lo sblocco del contenuto");
 			return;
 		}
+
+		if (sections [sect].contentType != infoContentType.Fragments) {
+			Debug.Log("ATTENZIONE - section NON di tipo fragments");
+			return;
+
+		}
 		//activeSection = sect;
 		
-		if (fragm >= (sections [activeSection].fragments.Length)) {
+		if (fragm >= (sections [activeSection].contents.Length)) {
 			Debug.Log("ATTENZIONE - numero del fragment oltre la size durante lo sblocco del contenuto");
 			return;
 		}
 		
 		sections [activeSection].locked = false;
-		//sections [activeSection].activeContent = cont;
 		
-		
-		sections [activeSection].fragments[fragm].locked = false;
+		sections [activeSection].contents[fragm].locked = false;
 
-		GeneralFinder.unlockableContentUI.unlockFragment (sections [sect].title, sections [sect].fragments [fragm].idFragm);
+		//TODO : cambiare
+		GeneralFinder.unlockableContentUI.unlockFragment (sections [sect].title, sections [sect].contents [fragm].name);
+
+	}
+	
+
+	public void c_saveData() {
+		Debug.Log ("ciaone");
+		InfoSectionContainer.saveInformativeManagerConf (sections, true);
+		
+	}
+
+	public void c_saveData1() {
+		Debug.Log ("ciaone");
+		InfoSectionContainer.saveInformativeManagerConf (sections, false);
 
 	}
 
-	public void c_saveInformativeConfig() {
 
-		InfoSectionContainer.saveInformativeManagerConf (sections);
+	public InformativeSection getActualCollectiblesSection (int levelN = -1) {
 
+		int levelNumber;
+
+		if (levelN >= 0) {
+
+			levelNumber = levelN;
+
+		} else {
+
+			levelNumber = actualLevelNumber;
+
+		}
+
+		foreach (InformativeSection sect in sections) {
+
+			if(sect.contentType== infoContentType.Collectibles && sect.levelN == levelNumber) {
+
+				return sect;
+
+			}
+
+		}
+
+		return null;
+
+	}
+
+	public InformativeSection getActualFragmentSection (int levelN = -1) {
+
+		int levelNumber;
+		
+		if (levelN >= 0) {
+			
+			levelNumber = levelN;
+			
+		} else {
+			
+			levelNumber = actualLevelNumber;
+			
+		}
+
+		foreach (InformativeSection sect in sections) {
+			
+			if(sect.contentType== infoContentType.Fragments && sect.levelN == levelNumber) {
+				
+				return sect;
+				
+			}
+			
+		}
+		
+		return null;
+		
+	}
+
+	public InformativeSection getActualFunFactsSection (int levelN = -1) {
+
+		int levelNumber;
+		
+		if (levelN >= 0) {
+			
+			levelNumber = levelN;
+			
+		} else {
+			
+			levelNumber = actualLevelNumber;
+			
+		}
+
+		foreach (InformativeSection sect in sections) {
+			
+			if(sect.contentType== infoContentType.FunFacts && sect.levelN == levelNumber) {
+				
+				return sect;
+				
+			}
+			
+		}
+		
+		return null;
+		
 	}
 
 	#endregion CALLBACKS
@@ -832,41 +933,82 @@ public class InformativeManager : MonoBehaviour {
 [XmlRoot("InfoSectionCollection")]
 public class InfoSectionContainer
 {
+
+	static string defaultPath = "Config/InformativeConf/";
+	static string defaultFileName = "InfoFileConf";
+
 	[XmlArray("Sections"),XmlArrayItem("Section")]
 	public InformativeSection[] sections;
 
-	public static void saveInformativeManagerConf(InformativeSection []_sections) {
+	public static void saveInformativeManagerConf(InformativeSection []_sections, bool defaultName) {
 		
 		InfoSectionContainer infoCon = new InfoSectionContainer ();
-		
-		//TextAsset pi = Resources.Load("InformativeFileConf") as TextAsset;
-		
 		infoCon.sections = _sections;
-		
-		infoCon.Save ("Config/informativeConf/InformativeFileConf1.xml");
+
+		if (defaultName) {
+			infoCon.Save (defaultPath + defaultFileName + "-0-.xml");
+
+		} else {
+			string pathToUse = "";
+
+			pathToUse = defaultPath + getAvailableName (defaultPath);
+
+			Debug.Log ("pathtouse >>>" + pathToUse + "<<<");
+
+			infoCon.Save (pathToUse);
+		}
 		
 	}
 
-	public void Save(string path)
-	{
+	static string getAvailableName(string defPath) {
+
 		try {
-			string dirName = Path.GetDirectoryName (path);
-			string fileName = Path.GetFileName (path);
+			string dirName = Path.GetDirectoryName (defPath);
+			//string fileName = Path.GetFileName (defPath);
 			
 			if (!Directory.Exists (dirName)) {
 				
 				Directory.CreateDirectory(dirName);
-				
+
+				return defaultFileName + "-0-" + ".xml";
 			}
-			
-			var serializer = new XmlSerializer(typeof(InfoSectionContainer));
-			using(var stream = new FileStream(path, FileMode.Create))
-			{
-				serializer.Serialize(stream, this);
+			else {
+
+				string []files = Directory.GetFiles(defPath);
+
+				int numAvailable = -1;
+
+				foreach(string fileName in files) {
+
+					if(fileName.Contains(defaultFileName)) {
+
+						string []sep = new string[1];
+
+						sep[0] = "-";
+
+						string []fileNameSplit = fileName.Split(sep, System.StringSplitOptions.RemoveEmptyEntries);
+
+						int num = 0;
+
+						if(Int32.TryParse(fileNameSplit[1], out num)) {
+
+							if(num>numAvailable)
+								numAvailable = num+1;
+
+						}
+
+
+					}
+
+				}
+
+				return defaultFileName + "-" + numAvailable + "-" + ".xml";
+
 			}
+
 		}
 		catch(XmlException e) {
-
+			
 			throw e;
 			
 		}
@@ -875,6 +1017,50 @@ public class InfoSectionContainer
 			throw e;
 			
 		}
+	}
+
+	public void Save(string path)
+	{
+		Debug.Log ("ciaone1");
+		try {
+			string dirName = Path.GetDirectoryName (path);
+			string fileName = Path.GetFileName (path);
+
+			Debug.Log ("path" + dirName + " e file " + fileName);
+
+			if (!Directory.Exists (dirName)) {
+				Debug.Log ("ciaone2");
+				Directory.CreateDirectory(dirName);
+				
+			}
+			Debug.Log ("ciaone3");
+			var serializer = new XmlSerializer(typeof(InfoSectionContainer));
+			using(var stream = new FileStream(path, FileMode.Create))
+			{
+				Debug.Log ("ciaone4");
+				serializer.Serialize(stream, this);
+			}
+
+			DirectoryInfo dir = new DirectoryInfo(dirName);
+
+			FileInfo file = new FileInfo(path);
+
+			dir.Refresh();
+
+			file.Refresh();
+
+		}
+		catch(XmlException e) {
+			Debug.Log ("ciaoneex1");
+			throw e;
+			
+		}
+		catch(System.Exception e) {
+			Debug.Log ("ciaoneex2");
+			throw e;
+			
+		}
+
 	}
 
 	public static void tryLoadInformativeManagerConf(ref InformativeSection []_sections) {
@@ -969,7 +1155,7 @@ public class InfoSectionContainer
 
 			foreach(InformativeSection loadedSection in sections) {
 
-				if(loadedSection.title==sectionToSet.title) {
+				if(loadedSection.title==sectionToSet.title && loadedSection.levelN == sectionToSet.levelN) {
 
 					try {
 
@@ -994,28 +1180,6 @@ public class InfoSectionContainer
 						
 					}
 
-					try {
-
-						foreach(InformativeFragment fragToSet in sectionToSet.fragments) {
-
-							foreach(InformativeFragment loadedFrag in loadedSection.fragments) {
-								
-								if(fragToSet.idFragm == loadedFrag.idFragm) {
-									
-									fragToSet.locked = loadedFrag.locked;
-									
-									break;
-								}
-								
-							}
-
-						}
-
-					}
-					catch(System.Exception e) {
-
-
-					}
 
 					sectionToSet.locked = loadedSection.locked;
 
@@ -1075,17 +1239,22 @@ public class InfoSectionContainer
 }
 
 
+
 [System.Serializable]
 public class InformativeSection {
 
 	[SerializeField]
 	public string title;
 
+	//TODO: parametro temporaneo
 	[SerializeField]
-	public InformativeContent []contents;
+	public int levelN;
 
 	[SerializeField]
-	public InformativeFragment []fragments;
+	public infoContentType contentType;
+
+	[SerializeField]
+	public InformativeContent []contents;
 
 	[HideInInspector]
 	public int activeContent;
@@ -1095,28 +1264,6 @@ public class InformativeSection {
 
 }
 
-[System.Serializable]
-public class InformativeFragment {
-	
-	[SerializeField]
-	public string idFragm;
-
-	[XmlIgnoreAttribute]
-	[SerializeField]
-	public Sprite iconUnlockFrag;
-
-	[XmlIgnoreAttribute]
-	[SerializeField]
-	public Sprite iconLockFrag;
-
-	[XmlIgnoreAttribute]
-	[SerializeField]
-	public GameObject unlockerObject;
-
-	[SerializeField]
-	public bool locked = false;
-
-}
 
 [System.Serializable]
 public class InformativeContent {
@@ -1146,9 +1293,6 @@ public class InformativeContent {
 	[XmlIgnoreAttribute]
 	[SerializeField]
 	public GameObject unlockerObject;
-
-	[SerializeField]
-	public bool funFact = false;
 
 	[SerializeField]
 	public bool locked = false;
