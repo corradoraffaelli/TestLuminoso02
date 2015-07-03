@@ -775,7 +775,7 @@ public class InformativeManager : MonoBehaviour {
 
 		//TODO: cambiare?
 
-		GeneralFinder.unlockableContentUI.unlockContent (sections[sect].title, sections[sect].contents[cont].name);
+		GeneralFinder.unlockableContentUI.unlockContent (sections[sect].contents[cont].name);
 
 		StartCoroutine ("countDownShowNewContent");
 
@@ -807,7 +807,7 @@ public class InformativeManager : MonoBehaviour {
 		sections [activeSection].contents[fragm].locked = false;
 
 		//TODO : cambiare
-		GeneralFinder.unlockableContentUI.unlockFragment (sections [sect].title, sections [sect].contents [fragm].name);
+		GeneralFinder.unlockableContentUI.unlockFragment (sections [sect].contents [fragm].name);
 
 	}
 	
