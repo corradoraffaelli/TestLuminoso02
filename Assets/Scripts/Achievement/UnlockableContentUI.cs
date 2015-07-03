@@ -10,7 +10,9 @@ public class UnlockableContentUI : MonoBehaviour {
 	public Sprite[] rightSprites;
 	public Sprite[] leftSprites;
 
-	public InformativeSection actualSection;
+	public InformativeSection actualContentSection;
+	public InformativeSection actualFactSection;
+	public InformativeSection actualFragmentSection;
 
 	bool showRight = false;
 	float showRightTime;
@@ -81,6 +83,7 @@ public class UnlockableContentUI : MonoBehaviour {
 		Debug.Log ("ho sbloccato il fun fact "+name);
 	}
 
+	/*
 	void hideLateralManager()
 	{
 		if (showRight)
@@ -210,4 +213,5 @@ public class UnlockableContentUI : MonoBehaviour {
 		}
 		return null;
 	}
+	*/
 }
