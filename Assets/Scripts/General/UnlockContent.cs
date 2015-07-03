@@ -70,6 +70,20 @@ public class UnlockContent : MonoBehaviour {
 
 	}
 
+	void OnTriggerEnter2D(Collider2D c) {
+
+		if (!needButtonPress) {
+
+			if(c.tag=="Player") {
+
+				getCollectible();
+
+			}
+
+		}
+
+	}
+
 	void disableThisObject() {
 
 		contentUnlocked = true;

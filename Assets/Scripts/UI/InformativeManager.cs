@@ -754,7 +754,7 @@ public class InformativeManager : MonoBehaviour {
 			return;
 		}
 
-		if (sections [sect].contentType != infoContentType.Collectibles || sections [sect].contentType != infoContentType.FunFacts) {
+		if (sections [sect].contentType != infoContentType.Collectibles && sections [sect].contentType != infoContentType.FunFacts) {
 			Debug.Log("ATTENZIONE - section NON di tipo collectibles o fun facts");
 			return;
 			
@@ -797,14 +797,16 @@ public class InformativeManager : MonoBehaviour {
 		}
 		//activeSection = sect;
 		
-		if (fragm >= (sections [activeSection].contents.Length)) {
+		if (fragm >= (sections [sect].contents.Length)) {
 			Debug.Log("ATTENZIONE - numero del fragment oltre la size durante lo sblocco del contenuto");
 			return;
 		}
+
+
+
+		sections [sect].locked = false;
 		
-		sections [activeSection].locked = false;
-		
-		sections [activeSection].contents[fragm].locked = false;
+		sections [sect].contents[fragm].locked = false;
 
 		//TODO : cambiare
 		GeneralFinder.unlockableContentUI.unlockFragment (sections [sect].contents [fragm].name);
