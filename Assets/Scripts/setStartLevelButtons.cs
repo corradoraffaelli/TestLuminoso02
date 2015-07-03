@@ -19,9 +19,11 @@ public class setStartLevelButtons : MonoBehaviour {
 
 			GameObject tempButt = (GameObject) Instantiate(buttonMold,Vector3.zero, Quaternion.identity);
 
-			tempButt.SetActive(true);
-
 			tempButt.transform.SetParent(transform);
+
+			tempButt.transform.localScale = new Vector3(1.0f,1.0f,1.0f);
+
+			tempButt.SetActive(true);
 
 			Button button = tempButt.GetComponent<Button>();
 			Text textButton = tempButt.GetComponentInChildren<Text>();
@@ -30,11 +32,36 @@ public class setStartLevelButtons : MonoBehaviour {
 
 			textButton.text = sceneName;
 
+			tempButt.name = sceneName + " Button";
+
 			tempButt.transform.SetAsFirstSibling();
 
 		}
 
+		setExitButton ();
 
+
+
+	}
+
+	void setExitButton() {
+
+		GameObject tempButt = (GameObject) Instantiate(buttonMold,Vector3.zero, Quaternion.identity);
+
+		tempButt.name = "Exit Button";
+		
+		tempButt.transform.SetParent(transform);
+
+		tempButt.transform.localScale = new Vector3(1.0f,1.0f,1.0f);
+
+		tempButt.SetActive(true);
+		
+		Button button = tempButt.GetComponent<Button>();
+		Text textButton = tempButt.GetComponentInChildren<Text>();
+		
+		button.onClick.AddListener(() => quitGame());
+		
+		textButton.text = "Exit Game";
 
 	}
 
