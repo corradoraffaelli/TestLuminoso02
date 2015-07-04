@@ -40,22 +40,21 @@ public class PulsingUIElement : MonoBehaviour {
 	}
 
 	void Update () {
-		if (rectTransform.localScale.x == pulseScale)
-			needToReachDest = false;
-		else if (rectTransform.localScale.x == 1.0f)
-		{
-			if ((Time.time - beginningTime) > totalPulsingTime)
-				Destroy(this);
-			needToReachDest = true;
-		}
-			
-
-		float destScale = 1.0f;
-		if (needToReachDest)
-			destScale = pulseScale;
-
 		if (rectTransform != null)
 		{
+			if (rectTransform.localScale.x == pulseScale)
+				needToReachDest = false;
+			else if (rectTransform.localScale.x == 1.0f)
+			{
+				if ((Time.time - beginningTime) > totalPulsingTime)
+					Destroy(this);
+				needToReachDest = true;
+			}
+
+			float destScale = 1.0f;
+			if (needToReachDest)
+				destScale = pulseScale;
+			
 			float tempScale = Mathf.MoveTowards(rectTransform.localScale.x, destScale, pulseSpeed*Time.deltaTime);
 			rectTransform.localScale = new Vector3(tempScale, tempScale, tempScale);
 		}
