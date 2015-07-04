@@ -60,7 +60,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 165342}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 9.95528793, y: -9.39180374, z: 0}
+  m_LocalPosition: {x: -2.82191372, y: 12.0067883, z: .273213387}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 436028}
@@ -193,7 +193,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 165342}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5442d15e7657b0548b4c4e7f747c01a5, type: 3}
   m_Name: 
@@ -237,26 +237,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b7659367c5f02443819dd8af435c962, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spritesBook:
+    normalBook: {fileID: 21300000, guid: a2258f472fa1fcc428d11e23cb221afb, type: 3}
+    exclamationBook: {fileID: 21300000, guid: f8ae3d8366d6f35429481eaebe8be557, type: 3}
+    keyboardButton: {fileID: 21300000, guid: 7d62f2c844a2fa34890f6a462ebdb50e, type: 3}
+    controllerButton: {fileID: 21300000, guid: 8e9b94ab582b71c4db3312e298ccade1, type: 3}
+    pageSprite: {fileID: 21300000, guid: d5af78a24f9df8543a272de39b4abe39, type: 3}
+  saveOnDestroy: 1
   timeToHideLateral: 4
   timeToPulse: 4
-  rightContents: []
-  rightSprites: []
-  leftSprites: []
+  timeToGetSmall: 1.5
   actualContentSection:
-    title: 
-    levelN: 0
-    contentType: 0
-    contents: []
-    activeContent: 0
-    locked: 0
-  actualFactSection:
-    title: 
-    levelN: 0
-    contentType: 0
-    contents: []
-    activeContent: 0
-    locked: 0
-  actualFragmentSection:
     title: 
     levelN: 0
     contentType: 0
