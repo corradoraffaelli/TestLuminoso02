@@ -14,7 +14,7 @@ public class PickingObjectGraphic : MonoBehaviour {
 
 	Sprite sprite;
 
-	Vector2 bigScale;
+	Vector2 bigScale = new Vector2(400.0f, 400.0f);
 
 	Vector2 destinationPosition;
 	Vector2 destinationSize;
@@ -27,9 +27,13 @@ public class PickingObjectGraphic : MonoBehaviour {
 	bool gettingSmall = false;
 	float beginningTime = 0.0f;
 
+	public bool bookPage = false;
+	float bookPageYPos = 250.0f;
+	Vector2 bigScaleBookPage = new Vector2(100.0f, 100.0f);
+
 	float timeToGetSmall = 3.0f;
 
-	float lerpSpeed = 1.0f;
+	float lerpSpeed = 4.0f;
 
 	public float canvasXSize;
 	public float canvasYSize;
@@ -69,26 +73,50 @@ public class PickingObjectGraphic : MonoBehaviour {
 		rectTransform.localScale = new Vector3(1.0f,1.0f,1.0f);
 	}
 
+	public void setTimeToGetSmall(float inputTime)
+	{
+		timeToGetSmall = inputTime;
+	}
+
+	public void setBookPage(bool bookPage = true)
+	{
+		this.bookPage = bookPage;
+	}
+
+	public void setBookPageYPos(float inputPos)
+	{
+		bookPageYPos = inputPos;
+	}
+
+	public void setBigScale(float inputScale)
+	{
+		this.bigScale = new Vector2(inputScale, inputScale);
+	}
+
+	public void setBigScaleBookPage(float inputScale)
+	{
+		this.bigScaleBookPage = new Vector2(inputScale, inputScale);
+	}
+
+	public void setLerpSpeed(float inputSpeed)
+	{
+		this.lerpSpeed = inputSpeed;
+	}
+
 	//setta le variabili da chiamare alla creazione del component, due metodi diversi
-	public void setVariables(Sprite sprite, PlayingUI.UIPosition pos, int index, float scale = 400.0f, float lerpSpeed = 4.0f, float timeToGetSmall = 3.0f)
+	public void setVariables(Sprite sprite, PlayingUI.UIPosition pos, int index)
 	{
 		this.sprite = sprite;
-		this.bigScale = new Vector2(scale, scale);
-		this.lerpSpeed = lerpSpeed;
 		this.posCorner = pos;
 		this.index = index;
-		this.timeToGetSmall = timeToGetSmall;
 		this.lateral = false;
 	}
 
-	public void setVariables(Sprite sprite, PlayingUILateral.UIPosition pos, int index, float scale = 400.0f, float lerpSpeed = 4.0f, float timeToGetSmall = 3.0f)
+	public void setVariables(Sprite sprite, PlayingUILateral.UIPosition pos, int index)
 	{
 		this.sprite = sprite;
-		this.bigScale = new Vector2(scale, scale);
-		this.lerpSpeed = lerpSpeed;
 		this.posLateral = pos;
 		this.index = index;
-		this.timeToGetSmall = timeToGetSmall;
 		this.lateral = true;
 	}
 
@@ -99,7 +127,10 @@ public class PickingObjectGraphic : MonoBehaviour {
 		rectTransform.anchorMin = new Vector2(0.5f,0.5f);
 		rectTransform.anchorMax = new Vector2(0.5f,0.5f);
 		rectTransform.pivot = new Vector2(0.5f,0.5f);
-		rectTransform.anchoredPosition = new Vector2(0.0f,0.0f);
+		if (!bookPage)
+			rectTransform.anchoredPosition = new Vector2(0.0f,0.0f);
+		else
+			rectTransform.anchoredPosition = new Vector2(0.0f,bookPageYPos);
 		rectTransform.sizeDelta = new Vector2 (0.0f, 0.0f);
 	}
 
@@ -179,7 +210,11 @@ public class PickingObjectGraphic : MonoBehaviour {
 			imageComponent.color = new Color(colorTemp.r, colorTemp.g, colorTemp.b, alpha);
 			
 			//Vector2 sizeTemp = rectTransform.sizeDelta;
-			Vector2 sizeTemp = Vector2.Lerp(rectTransform.sizeDelta, bigScale,  Time.deltaTime * lerpSpeed);
+			Vector2 sizeTemp = new Vector2(0.0f, 0.0f);
+			if (!bookPage)
+				sizeTemp = Vector2.Lerp(rectTransform.sizeDelta, bigScale,  Time.deltaTime * lerpSpeed);
+			else
+				sizeTemp = Vector2.Lerp(rectTransform.sizeDelta, bigScaleBookPage,  Time.deltaTime * lerpSpeed);
 			rectTransform.sizeDelta = sizeTemp;
 
 			if ((Time.time - beginningTime) > timeToGetSmall)

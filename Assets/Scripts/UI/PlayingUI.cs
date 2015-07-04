@@ -215,6 +215,19 @@ public class PlayingUI : MonoBehaviour {
 		return null;
 	}
 
+	public GameObject getButtonObject(UIPosition pos)
+	{
+		for (int i = 0; i < spritesGroup.Length; i++) {
+			if (spritesGroup[i].position != null && spritesGroup[i].position == pos)
+			{
+				if (spritesGroup[i].imageButtonObject != null)
+					return spritesGroup[i].imageButtonObject;
+				break;
+			}
+		}
+		return null;
+	}
+
 	//metodo da chiamare per aggiornare le sprites a schermo
 	//potrebbe essere chiamata automaticamente ad ogni aggiornamento, ma preferisco lasciare la scelta al programmatore
 	public void updateSpritesOnScreen(UIPosition pos)
