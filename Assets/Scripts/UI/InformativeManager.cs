@@ -77,14 +77,14 @@ public class InformativeManager : MonoBehaviour {
 			
 		}
 
+		setLevelNumberAndUnlockerOfThisLevel ();
+
 	}
 
 
 	void Start () {
 
-		initializeReferences ();
-
-		setUnlockerOfThisLevel ();
+		initializeUIReferences ();
 
 	}
 
@@ -92,7 +92,7 @@ public class InformativeManager : MonoBehaviour {
 
 	#region STARTMETHODS
 
-	void setUnlockerOfThisLevel() {
+	void setLevelNumberAndUnlockerOfThisLevel() {
 		
 		//scorrere le sezioni
 		
@@ -218,7 +218,7 @@ public class InformativeManager : MonoBehaviour {
 
 	#region GETGRAPHICREF
 
-	void initializeReferences() {
+	void initializeUIReferences() {
 
 		if (initialized)
 			return;
@@ -728,7 +728,7 @@ public class InformativeManager : MonoBehaviour {
 
 	public void c_initializeInformative(){
 		
-		initializeReferences ();
+		initializeUIReferences ();
 		
 	}
 
@@ -836,6 +836,8 @@ public class InformativeManager : MonoBehaviour {
 			levelNumber = actualLevelNumber;
 
 		}
+
+		Debug.Log ("levelN è " + levelNumber);
 
 		foreach (InformativeSection sect in sections) {
 
