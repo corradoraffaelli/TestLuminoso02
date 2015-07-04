@@ -27,8 +27,7 @@ public class InformativeManager : MonoBehaviour {
 
 	[SerializeField]
 	public InformativeSection []sections;
-
-	[SerializeField]
+	
 	int activeSection;
 
 	public int actualLevelNumber = -1;
@@ -65,38 +64,27 @@ public class InformativeManager : MonoBehaviour {
 
 	#endregion VARIABLES
 
+	void Awake() {
+
+		if (loadDefaultConf) {
+			
+			InfoSectionContainer.loadInformativeManagerConf(ref sections);
+			
+		}
+		else {
+			
+			InfoSectionContainer.tryLoadInformativeManagerConf (ref sections, InfoSectionContainer.defaultFileName + "-0-");
+			
+		}
+
+	}
 
 
 	void Start () {
 
 		initializeReferences ();
 
-		InfoSectionContainer.tryLoadInformativeManagerConf (ref sections);
-
 		setUnlockerOfThisLevel ();
-
-		if (loadDefaultConf) {
-			//loadInformativeManagerConf ();
-			//saveInformativeManagerConf ();
-		}
-		else {
-
-
-		}
-
-		/*
-		InfoSectionContainer infocon = new InfoSectionContainer ();
-
-		TextAsset pi = Resources.Load("InformativeFileConf") as TextAsset;
-
-		//infocon = InfoSectionContainer.Load("/Users/dariorandazzo/Unity Projects/Magic 02/Assets/TextAssets/provainfo.xml");
-		infocon = InfoSectionContainer.LoadFromText (pi.text);
-
-		infocon.setConfiguration (ref sections);
-		*/
-		//infocon.sections = sections;
-
-		//infocon.Save ("/Users/dariorandazzo/Unity Projects/Magic 02/Assets/TextAssets/provainfo.xml");
 
 	}
 
@@ -944,8 +932,8 @@ public class InformativeManager : MonoBehaviour {
 public class InfoSectionContainer
 {
 
-	static string defaultPath = "Config/InformativeConf/";
-	static string defaultFileName = "InfoFileConf";
+	public static string defaultPath = "Config/InformativeConf/";
+	public static string defaultFileName = "InfoFileConf";
 
 	[XmlArray("Sections"),XmlArrayItem("Section")]
 	public InformativeSection[] sections;
@@ -1073,14 +1061,14 @@ public class InfoSectionContainer
 
 	}
 
-	public static void tryLoadInformativeManagerConf(ref InformativeSection []_sections) {
+	public static void tryLoadInformativeManagerConf(ref InformativeSection []_sections, string fileNameToLoad) {
 		
-		
-		if (Directory.Exists ("Config/informativeConf/")) {
+
+		if (Directory.Exists ("Config/InformativeConf/")) {
 			
 			try {
 				
-				string []files = Directory.GetFiles("Config/informativeConf/");
+				string []files = Directory.GetFiles("Config/InformativeConf/");
 				
 				foreach(string filePath in files) {
 					
@@ -1094,7 +1082,7 @@ public class InfoSectionContainer
 					//TODO: gestire meglio scelta file da caricare
 					//magari try catch dentro foreach così che passa al prossimo
 
-					if(fileName.Contains("InformativeFileConf") && fileExt==".xml") {
+					if(fileName.Contains(fileNameToLoad) && fileExt==".xml") {
 						
 						InfoSectionContainer.loadInformativeManagerConf (ref _sections, filePath);
 						//Debug.Log("CARICAMENTO RIUSCITO");
@@ -1138,7 +1126,7 @@ public class InfoSectionContainer
 		InfoSectionContainer infocon = new InfoSectionContainer ();
 		
 		if (_path == null) {
-			TextAsset pi = Resources.Load("InformativeFileConf") as TextAsset;
+			TextAsset pi = Resources.Load("DefaultInfoFileConf") as TextAsset;
 			
 			infocon = InfoSectionContainer.LoadFromText (pi.text);
 			

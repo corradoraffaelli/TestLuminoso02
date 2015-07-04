@@ -237,6 +237,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b7659367c5f02443819dd8af435c962, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  timeToHideLateral: 4
+  timeToPulse: 4
+  rightContents: []
+  rightSprites: []
+  leftSprites: []
+  actualContentSection:
+    title: 
+    levelN: 0
+    contentType: 0
+    contents: []
+    activeContent: 0
+    locked: 0
+  actualFactSection:
+    title: 
+    levelN: 0
+    contentType: 0
+    contents: []
+    activeContent: 0
+    locked: 0
+  actualFragmentSection:
+    title: 
+    levelN: 0
+    contentType: 0
+    contents: []
+    activeContent: 0
+    locked: 0
 --- !u!114 &11461560
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -375,6 +401,15 @@ MonoBehaviour:
       infoText: {fileID: 4900000, guid: 9db8a5ddeb40a46539c70c65087f682c, type: 3}
       unlockerObject: {fileID: 0}
       locked: 1
+    - name: fragm 05
+      mainImages:
+      - {fileID: 21300000, guid: 574aa1ab0debe4719a620a3b903e0a54, type: 3}
+      mainImageIndex: 0
+      iconUnlock: {fileID: 21300000, guid: 33b684caadd9f47a681cf2253385aee5, type: 3}
+      iconLock: {fileID: 21300000, guid: 6785775ee29df45ce918a6ed19d5bc96, type: 3}
+      infoText: {fileID: 4900000, guid: 9db8a5ddeb40a46539c70c65087f682c, type: 3}
+      unlockerObject: {fileID: 0}
+      locked: 1
     activeContent: 0
     locked: 0
   - title: Oggetti 02
@@ -447,9 +482,143 @@ MonoBehaviour:
       infoText: {fileID: 4900000, guid: 9db8a5ddeb40a46539c70c65087f682c, type: 3}
       unlockerObject: {fileID: 0}
       locked: 1
+    - name: fragm 05
+      mainImages:
+      - {fileID: 21300000, guid: 574aa1ab0debe4719a620a3b903e0a54, type: 3}
+      mainImageIndex: 0
+      iconUnlock: {fileID: 21300000, guid: 33b684caadd9f47a681cf2253385aee5, type: 3}
+      iconLock: {fileID: 21300000, guid: 6785775ee29df45ce918a6ed19d5bc96, type: 3}
+      infoText: {fileID: 4900000, guid: 9db8a5ddeb40a46539c70c65087f682c, type: 3}
+      unlockerObject: {fileID: 0}
+      locked: 1
+    - name: fragm 06
+      mainImages:
+      - {fileID: 21300000, guid: 574aa1ab0debe4719a620a3b903e0a54, type: 3}
+      mainImageIndex: 0
+      iconUnlock: {fileID: 21300000, guid: 33b684caadd9f47a681cf2253385aee5, type: 3}
+      iconLock: {fileID: 21300000, guid: 6785775ee29df45ce918a6ed19d5bc96, type: 3}
+      infoText: {fileID: 4900000, guid: 9db8a5ddeb40a46539c70c65087f682c, type: 3}
+      unlockerObject: {fileID: 0}
+      locked: 1
     activeContent: 0
     locked: 0
-  activeSection: 0
+  - title: Oggetti 03
+    levelN: 3
+    contentType: 1
+    contents:
+    - name: oggetto 3.1
+      mainImages:
+      - {fileID: 21300000, guid: 574aa1ab0debe4719a620a3b903e0a54, type: 3}
+      mainImageIndex: 0
+      iconUnlock: {fileID: 21300000, guid: d9a7b2b13ea58304e82347648bdf949e, type: 3}
+      iconLock: {fileID: 21300000, guid: 96801657a6a26894a9684a20bedac64e, type: 3}
+      infoText: {fileID: 4900000, guid: 9db8a5ddeb40a46539c70c65087f682c, type: 3}
+      unlockerObject: {fileID: 0}
+      locked: 1
+    - name: oggetto 3.2
+      mainImages:
+      - {fileID: 21300000, guid: 574aa1ab0debe4719a620a3b903e0a54, type: 3}
+      mainImageIndex: 0
+      iconUnlock: {fileID: 21300000, guid: d9a7b2b13ea58304e82347648bdf949e, type: 3}
+      iconLock: {fileID: 21300000, guid: 96801657a6a26894a9684a20bedac64e, type: 3}
+      infoText: {fileID: 4900000, guid: 9db8a5ddeb40a46539c70c65087f682c, type: 3}
+      unlockerObject: {fileID: 0}
+      locked: 1
+    - name: oggetto 3.3
+      mainImages:
+      - {fileID: 21300000, guid: 574aa1ab0debe4719a620a3b903e0a54, type: 3}
+      mainImageIndex: 0
+      iconUnlock: {fileID: 21300000, guid: d9a7b2b13ea58304e82347648bdf949e, type: 3}
+      iconLock: {fileID: 21300000, guid: 96801657a6a26894a9684a20bedac64e, type: 3}
+      infoText: {fileID: 4900000, guid: 9db8a5ddeb40a46539c70c65087f682c, type: 3}
+      unlockerObject: {fileID: 0}
+      locked: 1
+    activeContent: 0
+    locked: 0
+  - title: Fun Facts 03
+    levelN: 3
+    contentType: 2
+    contents:
+    - name: ahahaha 03.1
+      mainImages:
+      - {fileID: 21300000, guid: 574aa1ab0debe4719a620a3b903e0a54, type: 3}
+      mainImageIndex: 0
+      iconUnlock: {fileID: 0}
+      iconLock: {fileID: 0}
+      infoText: {fileID: 4900000, guid: 9db8a5ddeb40a46539c70c65087f682c, type: 3}
+      unlockerObject: {fileID: 0}
+      locked: 1
+    - name: ahahaha 03.2
+      mainImages:
+      - {fileID: 21300000, guid: 574aa1ab0debe4719a620a3b903e0a54, type: 3}
+      mainImageIndex: 0
+      iconUnlock: {fileID: 0}
+      iconLock: {fileID: 0}
+      infoText: {fileID: 4900000, guid: 9db8a5ddeb40a46539c70c65087f682c, type: 3}
+      unlockerObject: {fileID: 0}
+      locked: 1
+    activeContent: 0
+    locked: 0
+  - title: Frammenti 03
+    levelN: 3
+    contentType: 0
+    contents:
+    - name: fragm 01
+      mainImages:
+      - {fileID: 21300000, guid: 574aa1ab0debe4719a620a3b903e0a54, type: 3}
+      mainImageIndex: 0
+      iconUnlock: {fileID: 21300000, guid: 33b684caadd9f47a681cf2253385aee5, type: 3}
+      iconLock: {fileID: 21300000, guid: 6785775ee29df45ce918a6ed19d5bc96, type: 3}
+      infoText: {fileID: 4900000, guid: 9db8a5ddeb40a46539c70c65087f682c, type: 3}
+      unlockerObject: {fileID: 0}
+      locked: 1
+    - name: fragm 02
+      mainImages:
+      - {fileID: 21300000, guid: 574aa1ab0debe4719a620a3b903e0a54, type: 3}
+      mainImageIndex: 0
+      iconUnlock: {fileID: 21300000, guid: 33b684caadd9f47a681cf2253385aee5, type: 3}
+      iconLock: {fileID: 21300000, guid: 6785775ee29df45ce918a6ed19d5bc96, type: 3}
+      infoText: {fileID: 4900000, guid: 9db8a5ddeb40a46539c70c65087f682c, type: 3}
+      unlockerObject: {fileID: 0}
+      locked: 1
+    - name: fragm 03
+      mainImages:
+      - {fileID: 21300000, guid: 574aa1ab0debe4719a620a3b903e0a54, type: 3}
+      mainImageIndex: 0
+      iconUnlock: {fileID: 21300000, guid: 33b684caadd9f47a681cf2253385aee5, type: 3}
+      iconLock: {fileID: 21300000, guid: 6785775ee29df45ce918a6ed19d5bc96, type: 3}
+      infoText: {fileID: 4900000, guid: 9db8a5ddeb40a46539c70c65087f682c, type: 3}
+      unlockerObject: {fileID: 0}
+      locked: 1
+    - name: fragm 04
+      mainImages:
+      - {fileID: 21300000, guid: 574aa1ab0debe4719a620a3b903e0a54, type: 3}
+      mainImageIndex: 0
+      iconUnlock: {fileID: 21300000, guid: 33b684caadd9f47a681cf2253385aee5, type: 3}
+      iconLock: {fileID: 21300000, guid: 6785775ee29df45ce918a6ed19d5bc96, type: 3}
+      infoText: {fileID: 4900000, guid: 9db8a5ddeb40a46539c70c65087f682c, type: 3}
+      unlockerObject: {fileID: 0}
+      locked: 1
+    - name: fragm 05
+      mainImages:
+      - {fileID: 21300000, guid: 574aa1ab0debe4719a620a3b903e0a54, type: 3}
+      mainImageIndex: 0
+      iconUnlock: {fileID: 21300000, guid: 33b684caadd9f47a681cf2253385aee5, type: 3}
+      iconLock: {fileID: 21300000, guid: 6785775ee29df45ce918a6ed19d5bc96, type: 3}
+      infoText: {fileID: 4900000, guid: 9db8a5ddeb40a46539c70c65087f682c, type: 3}
+      unlockerObject: {fileID: 0}
+      locked: 1
+    - name: fragm 06
+      mainImages:
+      - {fileID: 21300000, guid: 574aa1ab0debe4719a620a3b903e0a54, type: 3}
+      mainImageIndex: 0
+      iconUnlock: {fileID: 21300000, guid: 33b684caadd9f47a681cf2253385aee5, type: 3}
+      iconLock: {fileID: 21300000, guid: 6785775ee29df45ce918a6ed19d5bc96, type: 3}
+      infoText: {fileID: 4900000, guid: 9db8a5ddeb40a46539c70c65087f682c, type: 3}
+      unlockerObject: {fileID: 0}
+      locked: 1
+    activeContent: 0
+    locked: 0
   actualLevelNumber: -1
 --- !u!114 &11486512
 MonoBehaviour:
@@ -483,7 +652,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 0}
       propertyPath: sections.Array.size
-      value: 6
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: sections.Array.data[1].contents.Array.size
@@ -495,7 +664,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: sections.Array.data[2].contents.Array.size
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: sections.Array.data[3].contents.Array.size
@@ -504,6 +673,22 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: sections.Array.data[4].contents.Array.size
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: sections.Array.data[6].contents.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: sections.Array.data[7].contents.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: sections.Array.data[5].contents.Array.size
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: sections.Array.data[8].contents.Array.size
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: sections.Array.data[0].fragments.Array.size
@@ -563,6 +748,30 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: sections.Array.data[4].contents.Array.data[3].mainImages.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: sections.Array.data[6].contents.Array.data[1].mainImages.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: sections.Array.data[6].contents.Array.data[2].mainImages.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: sections.Array.data[6].contents.Array.data[3].mainImages.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: sections.Array.data[7].contents.Array.data[1].mainImages.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: sections.Array.data[7].contents.Array.data[2].mainImages.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: sections.Array.data[7].contents.Array.data[3].mainImages.Array.size
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 0}
@@ -1159,6 +1368,246 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: sections.Array.data[5].levelN
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: sections.Array.data[6].title
+      value: Oggetti 03
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: sections.Array.data[6].levelN
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: sections.Array.data[6].contentType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: sections.Array.data[6].contents.Array.data[1].name
+      value: oggetto 3.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: sections.Array.data[6].contents.Array.data[1].mainImages.Array.data[0]
+      value: 
+      objectReference: {fileID: 21300000, guid: 574aa1ab0debe4719a620a3b903e0a54,
+        type: 3}
+    - target: {fileID: 0}
+      propertyPath: sections.Array.data[6].contents.Array.data[1].iconUnlock
+      value: 
+      objectReference: {fileID: 21300000, guid: 33b684caadd9f47a681cf2253385aee5,
+        type: 3}
+    - target: {fileID: 0}
+      propertyPath: sections.Array.data[6].contents.Array.data[1].iconLock
+      value: 
+      objectReference: {fileID: 21300000, guid: 6785775ee29df45ce918a6ed19d5bc96,
+        type: 3}
+    - target: {fileID: 0}
+      propertyPath: sections.Array.data[6].contents.Array.data[1].infoText
+      value: 
+      objectReference: {fileID: 4900000, guid: 9db8a5ddeb40a46539c70c65087f682c, type: 3}
+    - target: {fileID: 0}
+      propertyPath: sections.Array.data[6].contents.Array.data[1].locked
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: sections.Array.data[6].contents.Array.data[2].name
+      value: oggetto 3.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: sections.Array.data[6].contents.Array.data[2].mainImages.Array.data[0]
+      value: 
+      objectReference: {fileID: 21300000, guid: 574aa1ab0debe4719a620a3b903e0a54,
+        type: 3}
+    - target: {fileID: 0}
+      propertyPath: sections.Array.data[6].contents.Array.data[2].iconUnlock
+      value: 
+      objectReference: {fileID: 21300000, guid: 33b684caadd9f47a681cf2253385aee5,
+        type: 3}
+    - target: {fileID: 0}
+      propertyPath: sections.Array.data[6].contents.Array.data[2].iconLock
+      value: 
+      objectReference: {fileID: 21300000, guid: 6785775ee29df45ce918a6ed19d5bc96,
+        type: 3}
+    - target: {fileID: 0}
+      propertyPath: sections.Array.data[6].contents.Array.data[2].infoText
+      value: 
+      objectReference: {fileID: 4900000, guid: 9db8a5ddeb40a46539c70c65087f682c, type: 3}
+    - target: {fileID: 0}
+      propertyPath: sections.Array.data[6].contents.Array.data[2].locked
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: sections.Array.data[6].contents.Array.data[3].name
+      value: fragm 04
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: sections.Array.data[6].contents.Array.data[3].mainImages.Array.data[0]
+      value: 
+      objectReference: {fileID: 21300000, guid: 574aa1ab0debe4719a620a3b903e0a54,
+        type: 3}
+    - target: {fileID: 0}
+      propertyPath: sections.Array.data[6].contents.Array.data[3].iconUnlock
+      value: 
+      objectReference: {fileID: 21300000, guid: 33b684caadd9f47a681cf2253385aee5,
+        type: 3}
+    - target: {fileID: 0}
+      propertyPath: sections.Array.data[6].contents.Array.data[3].iconLock
+      value: 
+      objectReference: {fileID: 21300000, guid: 6785775ee29df45ce918a6ed19d5bc96,
+        type: 3}
+    - target: {fileID: 0}
+      propertyPath: sections.Array.data[6].contents.Array.data[3].infoText
+      value: 
+      objectReference: {fileID: 4900000, guid: 9db8a5ddeb40a46539c70c65087f682c, type: 3}
+    - target: {fileID: 0}
+      propertyPath: sections.Array.data[6].contents.Array.data[3].locked
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: sections.Array.data[6].contents.Array.data[0].name
+      value: oggetto 3.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: sections.Array.data[6].contents.Array.data[0].iconLock
+      value: 
+      objectReference: {fileID: 21300000, guid: 96801657a6a26894a9684a20bedac64e,
+        type: 3}
+    - target: {fileID: 0}
+      propertyPath: sections.Array.data[6].contents.Array.data[0].iconUnlock
+      value: 
+      objectReference: {fileID: 21300000, guid: d9a7b2b13ea58304e82347648bdf949e,
+        type: 3}
+    - target: {fileID: 0}
+      propertyPath: sections.Array.data[7].title
+      value: Fun Facts 03
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: sections.Array.data[7].levelN
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: sections.Array.data[7].contentType
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: sections.Array.data[7].contents.Array.data[1].name
+      value: ahahaha 03.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: sections.Array.data[7].contents.Array.data[1].mainImages.Array.data[0]
+      value: 
+      objectReference: {fileID: 21300000, guid: 574aa1ab0debe4719a620a3b903e0a54,
+        type: 3}
+    - target: {fileID: 0}
+      propertyPath: sections.Array.data[7].contents.Array.data[1].iconUnlock
+      value: 
+      objectReference: {fileID: 21300000, guid: 33b684caadd9f47a681cf2253385aee5,
+        type: 3}
+    - target: {fileID: 0}
+      propertyPath: sections.Array.data[7].contents.Array.data[1].iconLock
+      value: 
+      objectReference: {fileID: 21300000, guid: 6785775ee29df45ce918a6ed19d5bc96,
+        type: 3}
+    - target: {fileID: 0}
+      propertyPath: sections.Array.data[7].contents.Array.data[1].infoText
+      value: 
+      objectReference: {fileID: 4900000, guid: 9db8a5ddeb40a46539c70c65087f682c, type: 3}
+    - target: {fileID: 0}
+      propertyPath: sections.Array.data[7].contents.Array.data[1].locked
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: sections.Array.data[7].contents.Array.data[2].name
+      value: fragm 03
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: sections.Array.data[7].contents.Array.data[2].mainImages.Array.data[0]
+      value: 
+      objectReference: {fileID: 21300000, guid: 574aa1ab0debe4719a620a3b903e0a54,
+        type: 3}
+    - target: {fileID: 0}
+      propertyPath: sections.Array.data[7].contents.Array.data[2].iconUnlock
+      value: 
+      objectReference: {fileID: 21300000, guid: 33b684caadd9f47a681cf2253385aee5,
+        type: 3}
+    - target: {fileID: 0}
+      propertyPath: sections.Array.data[7].contents.Array.data[2].iconLock
+      value: 
+      objectReference: {fileID: 21300000, guid: 6785775ee29df45ce918a6ed19d5bc96,
+        type: 3}
+    - target: {fileID: 0}
+      propertyPath: sections.Array.data[7].contents.Array.data[2].infoText
+      value: 
+      objectReference: {fileID: 4900000, guid: 9db8a5ddeb40a46539c70c65087f682c, type: 3}
+    - target: {fileID: 0}
+      propertyPath: sections.Array.data[7].contents.Array.data[2].locked
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: sections.Array.data[7].contents.Array.data[3].name
+      value: fragm 04
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: sections.Array.data[7].contents.Array.data[3].mainImages.Array.data[0]
+      value: 
+      objectReference: {fileID: 21300000, guid: 574aa1ab0debe4719a620a3b903e0a54,
+        type: 3}
+    - target: {fileID: 0}
+      propertyPath: sections.Array.data[7].contents.Array.data[3].iconUnlock
+      value: 
+      objectReference: {fileID: 21300000, guid: 33b684caadd9f47a681cf2253385aee5,
+        type: 3}
+    - target: {fileID: 0}
+      propertyPath: sections.Array.data[7].contents.Array.data[3].iconLock
+      value: 
+      objectReference: {fileID: 21300000, guid: 6785775ee29df45ce918a6ed19d5bc96,
+        type: 3}
+    - target: {fileID: 0}
+      propertyPath: sections.Array.data[7].contents.Array.data[3].infoText
+      value: 
+      objectReference: {fileID: 4900000, guid: 9db8a5ddeb40a46539c70c65087f682c, type: 3}
+    - target: {fileID: 0}
+      propertyPath: sections.Array.data[7].contents.Array.data[3].locked
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: sections.Array.data[7].contents.Array.data[0].name
+      value: ahahaha 03.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: sections.Array.data[7].contents.Array.data[0].iconUnlock
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: sections.Array.data[7].contents.Array.data[0].iconLock
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: sections.Array.data[8].title
+      value: Frammenti 03
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: sections.Array.data[8].levelN
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: sections.Array.data[2].contents.Array.data[4].name
+      value: fragm 05
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: sections.Array.data[5].contents.Array.data[4].name
+      value: fragm 05
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: sections.Array.data[5].contents.Array.data[5].name
+      value: fragm 06
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: sections.Array.data[8].contents.Array.data[4].name
+      value: fragm 05
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: sections.Array.data[8].contents.Array.data[5].name
+      value: fragm 06
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
