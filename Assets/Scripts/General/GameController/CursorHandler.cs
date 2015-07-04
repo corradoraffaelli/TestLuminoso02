@@ -122,6 +122,8 @@ public class CursorHandler : MonoBehaviour {
 			setCursorPosition ();
 		//Debug.Log (getCursorWorldPosition());
 		verifyCursorMoving ();
+
+		changeUseController();
 	}
 
 	void setCursorPosition()
@@ -223,6 +225,13 @@ public class CursorHandler : MonoBehaviour {
 
 	float findY(float m, float a, float x){
 		return m * x + a;
+	}
+
+	void changeUseController()
+	{
+		if (Input.GetKey(KeyCode.LeftShift) && Input.GetKeyDown(KeyCode.C))
+		//if (Input.GetKeyDown(KeyCode.C))
+			useController = !useController;
 	}
 
 	void verifyCursorMoving()
