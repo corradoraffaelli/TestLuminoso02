@@ -42,17 +42,25 @@ public class UnlockableContentUI : MonoBehaviour {
 
 	bool wasPulsingBookNull = false;
 
+	bool wasUseController;
+
 	void Start () {
 		setSections();
-		
+
 		setUpperRightVariables();
 		setUpperRightStandardBook();
 		setUpperRightButton();
+
+		//prima le seguenti due funzioni erano nell'handleDelayInit, leggi la descrizione per la motivazione
+		updateContentSprites();
+		updateFragmentSprites();
+
+		wasUseController = GeneralFinder.cursorHandler.useController;
 	}
 
 	void Update () {
 		//non dovrebbe esistere, dopo qualche update aggiorna le sprites iniziali
-		handleDelayInit();
+		//handleDelayInit();
 
 		//nasconde le barre laterali dopo tot secondi, nel caso siano visibili
 		hideLateralManager();
@@ -62,25 +70,19 @@ public class UnlockableContentUI : MonoBehaviour {
 			setUpperRightStandardBook();
 			wasPulsingBookNull = true;
 		}
+
+		if (wasUseController != GeneralFinder.cursorHandler.useController)
+		{
+			wasUseController = GeneralFinder.cursorHandler.useController;
+			setUpperRightButton();
+		}
 	}
 
 	void setSections()
 	{
-		///*
-		actualContentSection = GeneralFinder.informativeManager.getActualCollectiblesSection(GeneralFinder.informativeManager.actualLevelNumber);
-		actualFactSection = GeneralFinder.informativeManager.getActualFunFactsSection(GeneralFinder.informativeManager.actualLevelNumber);
-		actualFragmentSection = GeneralFinder.informativeManager.getActualFragmentSection(GeneralFinder.informativeManager.actualLevelNumber);
-		//*/
-		/*
 		actualContentSection = GeneralFinder.informativeManager.getActualCollectiblesSection();
 		actualFactSection = GeneralFinder.informativeManager.getActualFunFactsSection();
 		actualFragmentSection = GeneralFinder.informativeManager.getActualFragmentSection();
-		*/
-		/*
-		actualContentSection = GeneralFinder.informativeManager.getActualCollectiblesSection(1);
-		actualFactSection = GeneralFinder.informativeManager.getActualFunFactsSection(1);
-		actualFragmentSection = GeneralFinder.informativeManager.getActualFragmentSection(1);
-		*/
 	}
 
 	//questo metodo non dovrebbe esistere, ma non capisco perché, l'update delle sprites allo start non funziona (classi Dario??)
@@ -106,111 +108,129 @@ public class UnlockableContentUI : MonoBehaviour {
 
 	public void unlockFragment(string id)
 	{
-		Debug.Log ("ho sbloccato il frammento "+id);
-
-		//se è un frammento devo
-		//1. aggiornare l'array di sprites a sinistra
-		//2. mostrare le sprites a sinistra aggiornate
-		//3. eseguire l'animazione dell'oggetto raccolto
-
-		//1.
-		updateFragmentSprites();
-		
-		//2.
-		GeneralFinder.playingUILateral.showIcons(PlayingUILateral.UIPosition.Left, true);
-		showLeft = true;
-		showLeftTime = Time.time;
-
-		//3.
-		PickingObjectGraphic pick = gameObject.AddComponent<PickingObjectGraphic>();
-		pick.setVariables(findContent(actualFragmentSection, id).iconUnlock, PlayingUILateral.UIPosition.Left, findContentIndex(actualFragmentSection, id));
-		pick.setTimeToGetSmall(timeToGetSmall);
-
+		if (actualFragmentSection != null)
+		{
+			Debug.Log ("ho sbloccato il frammento "+id);
+			
+			//se è un frammento devo
+			//1. aggiornare l'array di sprites a sinistra
+			//2. mostrare le sprites a sinistra aggiornate
+			//3. eseguire l'animazione dell'oggetto raccolto
+			
+			//1.
+			updateFragmentSprites();
+			
+			//2.
+			GeneralFinder.playingUILateral.showIcons(PlayingUILateral.UIPosition.Left, true);
+			showLeft = true;
+			showLeftTime = Time.time;
+			
+			//3.
+			PickingObjectGraphic pick = gameObject.AddComponent<PickingObjectGraphic>();
+			pick.setVariables(findContent(actualFragmentSection, id).iconUnlock, PlayingUILateral.UIPosition.Left, findContentIndex(actualFragmentSection, id));
+			pick.setTimeToGetSmall(timeToGetSmall);
+		}
 	}
 
 	public void unlockContent(string name)
 	{
-		Debug.Log ("ho sbloccato l'oggetto "+name);
-
-		//se è un collezionabile devo
-		//1. aggiornare l'array di sprites a destra
-		//2. mostrare le sprites a destra aggiornate
-		//3. eseguire l'animazione dell'oggetto raccolto
-		//4. mostrare l'icona del libro lampeggiante per tot secondi
-
-
-		//1.
-		updateContentSprites();
-
-		//2.
-		GeneralFinder.playingUILateral.showIcons(PlayingUILateral.UIPosition.Right, true);
-		showRight = true;
-		showRightTime = Time.time;
-
-		//3.
-		PickingObjectGraphic pick = gameObject.AddComponent<PickingObjectGraphic>();
-		pick.setVariables(findContent(actualContentSection, name).iconUnlock, PlayingUILateral.UIPosition.Right, findContentIndex(actualContentSection, name));
-		pick.setTimeToGetSmall(timeToGetSmall);
-
-		setUpperRightExclamationBook();
-		setPulsingBook();
-
+		if (actualContentSection != null)
+		{
+			Debug.Log ("ho sbloccato l'oggetto "+name);
+			
+			//se è un collezionabile devo
+			//1. aggiornare l'array di sprites a destra
+			//2. mostrare le sprites a destra aggiornate
+			//3. eseguire l'animazione dell'oggetto raccolto
+			//4. mostrare l'icona del libro lampeggiante per tot secondi
+			
+			
+			//1.
+			updateContentSprites();
+			
+			//2.
+			GeneralFinder.playingUILateral.showIcons(PlayingUILateral.UIPosition.Right, true);
+			showRight = true;
+			showRightTime = Time.time;
+			
+			//3.
+			PickingObjectGraphic pick = gameObject.AddComponent<PickingObjectGraphic>();
+			pick.setVariables(findContent(actualContentSection, name).iconUnlock, PlayingUILateral.UIPosition.Right, findContentIndex(actualContentSection, name));
+			pick.setTimeToGetSmall(timeToGetSmall);
+			
+			setUpperRightExclamationBook();
+			setPulsingBook();
+		}
 	}
 
 	public void unlockFact(string name)
 	{
-		Debug.Log ("ho sbloccato il fun fact "+name);
-
-		//3.
-		PickingObjectGraphic pick = gameObject.AddComponent<PickingObjectGraphic>();
-		pick.setVariables(spritesBook.pageSprite, PlayingUI.UIPosition.UpperRight,0);
-		pick.setBookPage(true);
-		//pick.setTimeToGetSmall(timeToGetSmall);
-
-		setUpperRightExclamationBook();
-		setPulsingBook();
+		if (actualFactSection != null)
+		{
+			Debug.Log ("ho sbloccato il fun fact "+name);
+			
+			//se è un fun fact devo
+			//1. eseguire l'animazione della pagina raccolta
+			//2. mostrare l'icona del libro lampeggiante per tot secondi
+			
+			//1.
+			PickingObjectGraphic pick = gameObject.AddComponent<PickingObjectGraphic>();
+			pick.setVariables(spritesBook.pageSprite, PlayingUI.UIPosition.UpperRight,0);
+			pick.setBookPage(true);
+			
+			//2.
+			setUpperRightExclamationBook();
+			setPulsingBook();
+		}
 	}
 
 	void updateContentSprites()
 	{
-		rightSprites = new Sprite[actualContentSection.contents.Length];
-		int actualIndex = 0;
-		for (int j = 0; j < actualContentSection.contents.Length; j++)
+		if (actualContentSection != null)
 		{
-			if (actualContentSection.contents[j] != null && actualContentSection.contents[j].unlockerObject != null
-			    && actualContentSection.contents[j].iconLock != null && actualContentSection.contents[j].iconUnlock != null)
+			rightSprites = new Sprite[actualContentSection.contents.Length];
+			int actualIndex = 0;
+			for (int j = 0; j < actualContentSection.contents.Length; j++)
 			{
-				if (actualContentSection.contents[j].locked)
-					rightSprites[actualIndex] = actualContentSection.contents[j].iconLock;
-				else
-					rightSprites[actualIndex] = actualContentSection.contents[j].iconUnlock;
-				
-				actualIndex++;
+				if (actualContentSection.contents[j] != null && actualContentSection.contents[j].unlockerObject != null
+				    && actualContentSection.contents[j].iconLock != null && actualContentSection.contents[j].iconUnlock != null)
+				{
+					if (actualContentSection.contents[j].locked)
+						rightSprites[actualIndex] = actualContentSection.contents[j].iconLock;
+					else
+						rightSprites[actualIndex] = actualContentSection.contents[j].iconUnlock;
+					
+					actualIndex++;
+				}
 			}
+			GeneralFinder.playingUILateral.setSprites(rightSprites, PlayingUILateral.UIPosition.Right);
+			GeneralFinder.playingUILateral.updateSpritesOnScreen(PlayingUILateral.UIPosition.Right);
 		}
-		GeneralFinder.playingUILateral.setSprites(rightSprites, PlayingUILateral.UIPosition.Right);
-		GeneralFinder.playingUILateral.updateSpritesOnScreen(PlayingUILateral.UIPosition.Right);
+
 	}
 
 	void updateFragmentSprites()
 	{
-		leftSprites = new Sprite[actualFragmentSection.contents.Length];
-		int actualIndex = 0;
-		for (int j = 0; j < actualFragmentSection.contents.Length; j++)
+		if (actualFragmentSection != null)
 		{
-			if (actualFragmentSection.contents[j] != null && actualFragmentSection.contents[j].unlockerObject != null
-			    && actualFragmentSection.contents[j].iconLock != null && actualFragmentSection.contents[j].iconUnlock != null)
+			leftSprites = new Sprite[actualFragmentSection.contents.Length];
+			int actualIndex = 0;
+			for (int j = 0; j < actualFragmentSection.contents.Length; j++)
 			{
-				if (actualFragmentSection.contents[j].locked)
-					leftSprites[actualIndex] = actualFragmentSection.contents[j].iconLock;
-				else
-					leftSprites[actualIndex] = actualFragmentSection.contents[j].iconUnlock;
-				
-				actualIndex++;
+				if (actualFragmentSection.contents[j] != null && actualFragmentSection.contents[j].unlockerObject != null
+				    && actualFragmentSection.contents[j].iconLock != null && actualFragmentSection.contents[j].iconUnlock != null)
+				{
+					if (actualFragmentSection.contents[j].locked)
+						leftSprites[actualIndex] = actualFragmentSection.contents[j].iconLock;
+					else
+						leftSprites[actualIndex] = actualFragmentSection.contents[j].iconUnlock;
+					
+					actualIndex++;
+				}
 			}
+			GeneralFinder.playingUILateral.setSprites(leftSprites, PlayingUILateral.UIPosition.Left);
+			GeneralFinder.playingUILateral.updateSpritesOnScreen(PlayingUILateral.UIPosition.Left);
 		}
-		GeneralFinder.playingUILateral.setSprites(leftSprites, PlayingUILateral.UIPosition.Left);
-		GeneralFinder.playingUILateral.updateSpritesOnScreen(PlayingUILateral.UIPosition.Left);
 	}
 
 	//nascone le barre laterali dopo un tot di tempo
@@ -312,7 +332,6 @@ public class UnlockableContentUI : MonoBehaviour {
 			GeneralFinder.playingUI.setButtonSprite (PlayingUI.UIPosition.UpperRight, buttonSprite);
 			GeneralFinder.playingUI.updateSpritesOnScreen (PlayingUI.UIPosition.UpperRight);
 		}
-
 	}
 
 	void OnDestroy()

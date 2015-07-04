@@ -80,6 +80,23 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &146668
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 472068}
+  - 114: {fileID: 11489380}
+  - 114: {fileID: 11433718}
+  m_Layer: 0
+  m_Name: Glass_Wind
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &163252
 GameObject:
   m_ObjectHideFlags: 1
@@ -270,7 +287,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 484852}
-  m_RootOrder: 8
+  m_RootOrder: 9
 --- !u!4 &452288
 Transform:
   m_ObjectHideFlags: 1
@@ -307,6 +324,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 484852}
   m_RootOrder: 7
+--- !u!4 &472068
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 146668}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 484852}
+  m_RootOrder: 8
 --- !u!4 &484852
 Transform:
   m_ObjectHideFlags: 1
@@ -325,6 +354,7 @@ Transform:
   - {fileID: 423244}
   - {fileID: 458346}
   - {fileID: 462230}
+  - {fileID: 472068}
   - {fileID: 439426}
   m_Father: {fileID: 421450}
   m_RootOrder: 0
@@ -364,7 +394,7 @@ MonoBehaviour:
   - {fileID: 11436440}
   - {fileID: 11496608}
   - {fileID: 11496732}
-  - {fileID: 11453390}
+  - {fileID: 11489380}
 --- !u!114 &11402316
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -478,12 +508,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9b7ea00c1ca2ae42b9de289575f133d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  keyboardSprite: {fileID: 21300000, guid: ea9fc52237651884b964eb4ce40cf4b4, type: 3}
+  keyboardSprite: {fileID: 21300000, guid: f7eb2f9fd25f67842afc97b26b9cade6, type: 3}
   controllerSprite: {fileID: 21300000, guid: 77653abadaee547439a0deda03e86c60, type: 3}
   modify: {fileID: 21300000, guid: d5acb54c1f584af4cb28a2db1c1f1c80, type: 3}
-  modKeyboardSprite: {fileID: 21300000, guid: 71291cf657685be4f9f641a0bd0de66a, type: 3}
+  modKeyboardSprite: {fileID: 21300000, guid: 43edd0c4a96d50b498be279e58ff65dc, type: 3}
   modControllerSprite: {fileID: 21300000, guid: 8e9b94ab582b71c4db3312e298ccade1,
     type: 3}
+--- !u!114 &11433718
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 146668}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed5b04961226c864094b4f9aec046051, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  glassStates:
+  - glassSprite: {fileID: 21300000, guid: dc7b42f1bec59884ab17481c3f2895ce, type: 3}
+    angle: 0
+  - glassSprite: {fileID: 21300000, guid: aedb01c1fa39c4e4884b3d5d8bebf4bd, type: 3}
+    angle: -90
+  - glassSprite: {fileID: 21300000, guid: 3b674ce21c028af4590ecd315646140c, type: 3}
+    angle: 180
+  - glassSprite: {fileID: 21300000, guid: 10e496c83e2d39842aa14b130a73e3d2, type: 3}
+    angle: 90
+  actualStateIndex: 0
 --- !u!114 &11436440
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -601,8 +652,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d528b953161387942976b4620f5a3fa6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  usable: 1
-  canBeEnabled: 1
+  usable: 0
+  canBeEnabled: 0
   actual: 0
   rotateWithLantern: 1
   canBeModified: 0
@@ -770,6 +821,36 @@ MonoBehaviour:
   subGlassList: []
   projectionObject: {fileID: 0}
   prefabObject: {fileID: 160210, guid: 76cc0afb07544d441bd5cde8699e39a7, type: 2}
+  endingLevelGlass: 0
+  toOverlap: {fileID: 0}
+  overlapPercentage: 10
+  endedProjected: 0
+--- !u!114 &11489380
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 146668}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d528b953161387942976b4620f5a3fa6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  usable: 0
+  canBeEnabled: 0
+  actual: 0
+  rotateWithLantern: 1
+  canBeModified: 0
+  spriteObject: {fileID: 21300000, guid: b92711bf450e44542af15b052ed56432, type: 3}
+  goodProjection: {fileID: 21300000, guid: ccb7d92fcf2cd4647a6da08ac75139bb, type: 3}
+  badProjection: {fileID: 21300000, guid: ccb7d92fcf2cd4647a6da08ac75139bb, type: 3}
+  blurredProjection: {fileID: 21300000, guid: 0cd3b672380e36a428c33281524b6fe3, type: 3}
+  emptySprite: {fileID: 21300000, guid: 6d6dbd4837225ea4a896418830624d88, type: 3}
+  glassSprite: {fileID: 21300000, guid: 651a8a7da659f494fb6f9b9934bda8d7, type: 3}
+  glassType: Wind
+  subGlassList: []
+  projectionObject: {fileID: 0}
+  prefabObject: {fileID: 160210, guid: ceba245a9f19bea419ccbb4e90fc1c4f, type: 2}
   endingLevelGlass: 0
   toOverlap: {fileID: 0}
   overlapPercentage: 10
