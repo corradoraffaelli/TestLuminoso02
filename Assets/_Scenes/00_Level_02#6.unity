@@ -31295,6 +31295,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   reloadThisLevel: 1
   sceneName: 
+  levelToUnlock: 2
 --- !u!4 &1321993369 stripped
 Transform:
   m_PrefabParentObject: {fileID: 418044, guid: c93f735cbe2e89e4a8de3ff100a5124d, type: 2}
@@ -46919,6 +46920,10 @@ Prefab:
       propertyPath: intermittance
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 11413990, guid: b9e7a413c0f27b4408a53abc7ad12dd6, type: 2}
+      propertyPath: disableObject
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b9e7a413c0f27b4408a53abc7ad12dd6, type: 2}
   m_IsPrefabParent: 0
@@ -49726,6 +49731,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   reloadThisLevel: 1
   sceneName: 
+  levelToUnlock: 2
 --- !u!1001 &2097683960
 Prefab:
   m_ObjectHideFlags: 0
