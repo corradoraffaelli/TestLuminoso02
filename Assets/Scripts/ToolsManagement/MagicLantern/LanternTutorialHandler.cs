@@ -12,13 +12,13 @@ public class LanternTutorialHandler : MonoBehaviour {
 	GameObject player;
 	MagicLantern magicLantern;
 
-	[Range (0.0f, 60.0f)]
+	[Range (0.0f, 180.0f)]
 	public float timeToTrigger = 0.0f;
 	float totalTime = 0.0f;
-	[Range (0.0f, 60.0f)]
+	[Range (0.0f, 180.0f)]
 	public float balloonTimeToDisable = 6.0f;
 	float balloonLastAppearTime;
-	[Range (0.0f, 60.0f)]
+	[Range (0.0f, 180.0f)]
 	public float balloonReappearTime = 10.0f;
 	float balloonLastDisappearTime = 0.0f;
 
