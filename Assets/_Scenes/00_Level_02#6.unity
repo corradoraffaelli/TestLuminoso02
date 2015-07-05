@@ -5013,7 +5013,7 @@ Transform:
   - {fileID: 856741769}
   - {fileID: 820918289}
   m_Father: {fileID: 574356051}
-  m_RootOrder: 2
+  m_RootOrder: 3
 --- !u!4 &245989869 stripped
 Transform:
   m_PrefabParentObject: {fileID: 440624, guid: 31ee4228d98f04eb09b7be7aae9cdec6, type: 2}
@@ -12385,6 +12385,7 @@ Transform:
   m_LocalPosition: {x: 44.576889, y: 2.19124413, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 721215419}
   - {fileID: 788422813}
   - {fileID: 967358578}
   - {fileID: 245077325}
@@ -17028,6 +17029,76 @@ SpriteRenderer:
   m_SortingOrder: -5
   m_Sprite: {fileID: 21300000, guid: cf0b565374cfb274eb2f8da55d7d0897, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
+--- !u!1001 &721215418
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 574356051}
+    m_Modifications:
+    - target: {fileID: 457202, guid: 4ba0533d6bcd39a49910406de36bd12e, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: -5.64704132
+      objectReference: {fileID: 0}
+    - target: {fileID: 457202, guid: 4ba0533d6bcd39a49910406de36bd12e, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 1.75717735
+      objectReference: {fileID: 0}
+    - target: {fileID: 457202, guid: 4ba0533d6bcd39a49910406de36bd12e, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 457202, guid: 4ba0533d6bcd39a49910406de36bd12e, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 457202, guid: 4ba0533d6bcd39a49910406de36bd12e, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 457202, guid: 4ba0533d6bcd39a49910406de36bd12e, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 457202, guid: 4ba0533d6bcd39a49910406de36bd12e, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 457202, guid: 4ba0533d6bcd39a49910406de36bd12e, type: 2}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6116842, guid: 4ba0533d6bcd39a49910406de36bd12e, type: 2}
+      propertyPath: m_Offset.y
+      value: -.462506622
+      objectReference: {fileID: 0}
+    - target: {fileID: 6116842, guid: 4ba0533d6bcd39a49910406de36bd12e, type: 2}
+      propertyPath: m_Size.x
+      value: 4.59644699
+      objectReference: {fileID: 0}
+    - target: {fileID: 6116842, guid: 4ba0533d6bcd39a49910406de36bd12e, type: 2}
+      propertyPath: m_Size.y
+      value: 1.61448669
+      objectReference: {fileID: 0}
+    - target: {fileID: 6116842, guid: 4ba0533d6bcd39a49910406de36bd12e, type: 2}
+      propertyPath: m_Offset.x
+      value: -.348556519
+      objectReference: {fileID: 0}
+    - target: {fileID: 11474506, guid: 4ba0533d6bcd39a49910406de36bd12e, type: 2}
+      propertyPath: balloonString
+      value: Se solo potessi evitareNEWLINEdi toccar terra...
+      objectReference: {fileID: 0}
+    - target: {fileID: 11474506, guid: 4ba0533d6bcd39a49910406de36bd12e, type: 2}
+      propertyPath: timeToTrigger
+      value: 60
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 4ba0533d6bcd39a49910406de36bd12e, type: 2}
+  m_IsPrefabParent: 0
+--- !u!4 &721215419 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 457202, guid: 4ba0533d6bcd39a49910406de36bd12e, type: 2}
+  m_PrefabInternal: {fileID: 721215418}
 --- !u!1001 &721728388
 Prefab:
   m_ObjectHideFlags: 0
@@ -22208,7 +22279,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 404282, guid: 6a1aaf56fe57b4e6f9b3240741e6ff5f, type: 2}
       propertyPath: m_RootOrder
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6a1aaf56fe57b4e6f9b3240741e6ff5f, type: 2}
@@ -22333,7 +22404,7 @@ Transform:
   m_LocalScale: {x: .680457294, y: 2.79999995, z: 1}
   m_Children: []
   m_Father: {fileID: 574356051}
-  m_RootOrder: 1
+  m_RootOrder: 2
 --- !u!251 &967358579
 PlatformEffector2D:
   m_ObjectHideFlags: 0
@@ -33173,7 +33244,7 @@ Transform:
   m_LocalScale: {x: .816548765, y: 2.79999995, z: 1}
   m_Children: []
   m_Father: {fileID: 574356051}
-  m_RootOrder: 3
+  m_RootOrder: 4
 --- !u!251 &1414351471
 PlatformEffector2D:
   m_ObjectHideFlags: 0
@@ -33354,7 +33425,7 @@ Transform:
   m_LocalScale: {x: .22114861, y: 3.33112359, z: 1}
   m_Children: []
   m_Father: {fileID: 574356051}
-  m_RootOrder: 4
+  m_RootOrder: 5
 --- !u!251 &1425283687
 PlatformEffector2D:
   m_ObjectHideFlags: 0
@@ -37353,6 +37424,10 @@ Prefab:
     - target: {fileID: 11474506, guid: 4ba0533d6bcd39a49910406de36bd12e, type: 2}
       propertyPath: balloonString
       value: Forse potrei sfruttare il nemicoNEWLINEper premere il bottone
+      objectReference: {fileID: 0}
+    - target: {fileID: 11474506, guid: 4ba0533d6bcd39a49910406de36bd12e, type: 2}
+      propertyPath: timeToTrigger
+      value: 60
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4ba0533d6bcd39a49910406de36bd12e, type: 2}
