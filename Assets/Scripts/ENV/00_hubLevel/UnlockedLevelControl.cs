@@ -7,11 +7,15 @@ using System.Collections.Generic;
 
 public class UnlockedLevelControl : MonoBehaviour {
 
+	public bool loadUnlocked = false;
+	public float unlockDelay = 3.0f;
+	public float disappearSpeed = 1.0f;
+	public bool beginUnlockDoorsDelayed = false;
+
 	[System.Serializable]
 	public class UnlockedLevelInfo
 	{
 		public int levelNumber;
-		public bool wasUnlocked = false;
 		public bool isUnlocked = false;
 	}
 
@@ -21,13 +25,17 @@ public class UnlockedLevelControl : MonoBehaviour {
 		public int levelNumber;
 		public UnlockedLevelInfo unlockedLevelInfo;
 		public GameObject externalDoor;
-		public GameObject inputDoor;
+		public GameObject interagibleObject;
+		[HideInInspector]
+		public InteragibileObject interagibleScript; 
+		public SpriteRenderer externalRenderer;
+		public GameObject particleObject;
 		public bool needToUnlock;
 	}
 
 	[SerializeField]
-	UnlockedLevelElements[] unlockedLevelElements;
-	UnlockedLevelInfo[] unlockedLevelInfo;
+	public UnlockedLevelElements[] unlockedLevelElements;
+	public UnlockedLevelInfo[] unlockedLevelInfo;
 	//InformativeSection contentSection;
 	public string savedDoorFile = "savedDoor";
 	public string savedFileExtention = ".dat";
@@ -35,108 +43,234 @@ public class UnlockedLevelControl : MonoBehaviour {
 	public int indexToLoad = 0;
 
 	void Start () {
-		//carico i dati salvati
 
-		//setto i livelli che ho sbloccato nel frattempo come sbloccati
+		fillInteragibleScript();
+		setSpriteRenderers();
+
+		/*
+		 * LOGICA:
+		 * carico i dati salvati delle precedenti porte sbloccate nella struttura unlockedLevelInfo
+		 * riempio i dati presenti in unlockedLevelElements con quelli dell'informativeManager
+		 * controllo che non ci siano differenze tra le due strutture, il che significa che ho sbloccato una nuova porta
+		 * comunque sia, devo sbloccare le porte che risultavano sbloccate anche prima, nel salvataggio
+		 * agisco di conseguenza, una volta che ho visto che una porta deve essere sbloccata
+		 * nell'OnDestroy salvo i dati della struttura unlockedLevelInfo
+		 */
+
+		//carico i dati salvati
+		loadInfo();
+
 		setUnlocked();
 
-		//controllo se c'è qualche differenza tra quelli salvati e quelli attuali, così da avviare le necessarie animazioni
+		//per test posso azzerare i dati
+		if (loadUnlocked)
+			loadZeroes();
 
-		//setto quelli salvati come gli attuali
-		setWasUnlocked();
+		//setto i livelli che ho sbloccato nel frattempo come sbloccati, nella struttura unlockedLevelElements
+		//setUnlocked();
+
+		//setto le porte e le variabili che non sono cambiate dall'ultima apertura del livello
+		setBeginUnlocked();
+
+		//controllo se c'è qualche differenza tra quelli salvati e quelli attuali, così da avviare le necessarie animazioni
+		findDifferencies();
+
+		//chiamo la funzione che si occupa di sbloccare le porte, dopo un delay iniziale
+		Invoke("beginUnlockDoorsDelay", unlockDelay); 
 	}
 
 	void Update () {
-	
+		if (beginUnlockDoorsDelayed)
+			unlockDoors();
 	}
 
 	void setUnlocked()
 	{
 		for (int i = 0; i < unlockedLevelElements.Length; i++)
 		{
-			if (unlockedLevelElements[i] != null)
+			if (unlockedLevelElements[i] != null && GeneralFinder.informativeManager.getActualCollectiblesSection(unlockedLevelElements[i].levelNumber) != null)
 			{
-				InformativeSection contentSection = GeneralFinder.informativeManager.getActualCollectiblesSection(i+1);
+				unlockedLevelElements[i].unlockedLevelInfo.levelNumber = unlockedLevelElements[i].levelNumber;
+				InformativeSection contentSection = GeneralFinder.informativeManager.getActualCollectiblesSection(unlockedLevelElements[i].levelNumber);
 				if (contentSection != null && !contentSection.locked)
 					unlockedLevelElements[i].unlockedLevelInfo.isUnlocked = true;
 			}
 		}
 	}
 
-	void setWasUnlocked()
+	void findDifferencies()
 	{
-		for (int i = 0; i < unlockedLevelElements.Length; i++)
+		if (unlockedLevelInfo != null)
 		{
-			if (unlockedLevelElements[i] != null)
+			for (int i = 0; i < unlockedLevelInfo.Length; i++)
 			{
-				InformativeSection contentSection = GeneralFinder.informativeManager.getActualCollectiblesSection(i+1);
-				if (contentSection != null && !contentSection.locked)
-					unlockedLevelElements[i].unlockedLevelInfo.wasUnlocked = true;
+				if (unlockedLevelInfo[i] != null && !unlockedLevelInfo[i].isUnlocked)
+				{
+					UnlockedLevelElements unlockEl = findElemWithLevelNumber(unlockedLevelInfo[i].levelNumber);
+					if (unlockEl != null && unlockEl.unlockedLevelInfo != null && unlockEl.unlockedLevelInfo.isUnlocked)
+					{
+						unlockEl.needToUnlock = true;
+						Debug.Log ("trovata porta del livello " + unlockedLevelElements[i].levelNumber + "sbloccata"); 
+					}
+				}
 			}
 		}
 	}
 
+	void unlockDoors()
+	{
+		if (unlockedLevelElements != null && unlockedLevelElements.Length != 0)
+		{
+			for (int i = 0; i < unlockedLevelElements.Length; i++)
+			{
+				if (unlockedLevelElements[i] != null && unlockedLevelElements[i].needToUnlock && unlockedLevelElements[i].externalDoor != null)
+				{
+					//unlockedLevelElements[i].needToUnlock = false;
+					//unlockedLevelElements[i].externalDoor.SetActive(false);
+						unlockedLevelElements[i].interagibleObject.SetActive(true);
+					if (unlockedLevelElements[i].externalRenderer != null)
+					{
+						Color actColor = unlockedLevelElements[i].externalRenderer.color;
+						unlockedLevelElements[i].externalRenderer.color = new Color(actColor.r, actColor.g, actColor.b, Mathf.MoveTowards(actColor.a, 0.0f, Time.deltaTime * disappearSpeed));
+
+						if (actColor.a == 0.0f)
+						{
+							unlockedLevelElements[i].needToUnlock = false;
+							unlockedLevelElements[i].externalDoor.SetActive(false);
+						}
+							
+					}
+				}
+			}
+		}
+	}
+
+	void setBeginUnlocked()
+	{
+		if (unlockedLevelInfo != null && unlockedLevelElements != null)
+		{
+			for (int i = 0; i< unlockedLevelInfo.Length; i++)
+			{
+				if (unlockedLevelInfo[i] != null)
+				{
+					UnlockedLevelElements unlockedEl = findElemWithLevelNumber(unlockedLevelInfo[i].levelNumber);
+					if (unlockedEl != null)
+					{
+						if (unlockedLevelInfo[i].isUnlocked)
+						{
+							unlockedEl.interagibleObject.SetActive(true);
+							unlockedEl.externalDoor.SetActive(false);
+						}
+						else
+						{
+							unlockedEl.interagibleObject.SetActive(false);
+							unlockedEl.externalDoor.SetActive(true);
+						}
+					}
+				}
+			}
+		}
+	}
+
+	UnlockedLevelElements findElemWithLevelNumber(int inputNumber)
+	{
+		if (unlockedLevelElements != null)
+		{
+			for (int i = 0; i < unlockedLevelElements.Length; i++)
+			{
+				if (unlockedLevelElements[i] != null && unlockedLevelElements[i].levelNumber == inputNumber)
+					return unlockedLevelElements[i];
+			}
+		}
+		return null;
+	}
+
 	void OnDestroy()
 	{
-
+		saveInfo();
 	}
-
+	
 	void saveInfo()
-	{
-
-	}
-
-	void loadInfo()
-	{
-
-	}
-
-	/*
-	void save()
 	{
 		unlockedLevelInfo = new UnlockedLevelInfo[unlockedLevelElements.Length];
 		for (int i = 0; i < unlockedLevelInfo.Length; i++)
 		{
 			if (unlockedLevelElements[i] != null && unlockedLevelElements[i].unlockedLevelInfo != null)
 				unlockedLevelInfo[i] = unlockedLevelElements[i].unlockedLevelInfo;
+			else
+				unlockedLevelInfo[i] = new UnlockedLevelInfo();
 		}
 
 		BinaryFormatter bf = new BinaryFormatter ();
 		
 		FileStream file = File.Create (Application.persistentDataPath + "/" +savedDoorFile + savedInputFileIndex+ savedFileExtention);
-		bf.Serialize (file, changedButtonsList);
+		bf.Serialize (file, unlockedLevelInfo);
 		file.Close ();
 	}
-	
-	void load()
+
+
+	void loadInfo()
 	{
-		if (File.Exists (Application.persistentDataPath + "/"+ Application.loadedLevelName + savedButtonFile + indexToLoad + savedFileExtention)) {
+		if (File.Exists (Application.persistentDataPath + "/" +savedDoorFile + savedInputFileIndex+ savedFileExtention)) {
 			BinaryFormatter bf = new BinaryFormatter();
-			FileStream file = File.Open (Application.persistentDataPath + "/"+ Application.loadedLevelName + savedButtonFile + indexToLoad + savedFileExtention, FileMode.Open);
+			FileStream file = File.Open (Application.persistentDataPath + "/" +savedDoorFile + savedInputFileIndex+ savedFileExtention, FileMode.Open);
 			
-			changedButtonsList = (List<ChangedButtons>)bf.Deserialize(file);
+			unlockedLevelInfo = (UnlockedLevelInfo[])bf.Deserialize(file);
 		}
-		
-		if (File.Exists (Application.persistentDataPath + "/"+ Application.loadedLevelName + savedAxisFile + indexToLoad + savedFileExtention)) {
-			BinaryFormatter bf = new BinaryFormatter();
-			FileStream file02 = File.Open (Application.persistentDataPath + "/"+ Application.loadedLevelName + savedAxisFile + indexToLoad + savedFileExtention, FileMode.Open);
-			
-			changedAxisList = (List<ChangedAxis>)bf.Deserialize(file02);
-		}
-		
-		if (Input.mousePresent && File.Exists (Application.persistentDataPath + "/"+ Application.loadedLevelName + savedMouseFile + indexToLoad + savedFileExtention)) {
-			BinaryFormatter bf = new BinaryFormatter();
-			FileStream file03 = File.Open (Application.persistentDataPath + "/"+ Application.loadedLevelName + savedMouseFile + indexToLoad + savedFileExtention, FileMode.Open);
-			
-			changedMouseList = (List<ChangedMouse>)bf.Deserialize(file03);
-		}
-		
-		if (File.Exists (Application.persistentDataPath + "/"+ Application.loadedLevelName + savedObjectsFile + savedInputFileIndex+ savedFileExtention)) {
-			BinaryFormatter bf = new BinaryFormatter();
-			FileStream file04 = File.Open (Application.persistentDataPath + "/"+ Application.loadedLevelName + savedObjectsFile + savedInputFileIndex+ savedFileExtention, FileMode.Open);
-			
-			changedObjectsList = (List<ChangedObjects>)bf.Deserialize(file04);
+		else
+		{
+			loadUnlocked = true;
 		}
 	}
-	*/
+
+	void loadZeroes()
+	{
+		if (unlockedLevelInfo != null && unlockedLevelInfo.Length != 0)
+		{
+			for (int i = 0; i < unlockedLevelInfo.Length; i++)
+			{
+				if (unlockedLevelInfo[i] != null)
+					unlockedLevelInfo[i].isUnlocked = false;
+			}
+		}else{
+			unlockedLevelInfo = new UnlockedLevelInfo[unlockedLevelElements.Length];
+			for (int i = 0; i < unlockedLevelInfo.Length; i++)
+			{
+				if (unlockedLevelElements[i] != null && unlockedLevelElements[i].unlockedLevelInfo != null)
+				{
+					unlockedLevelInfo[i] = new UnlockedLevelInfo();
+					unlockedLevelInfo[i].levelNumber = unlockedLevelElements[i].unlockedLevelInfo.levelNumber;
+					unlockedLevelInfo[i].isUnlocked = false;
+				}
+				else
+					unlockedLevelInfo[i] = new UnlockedLevelInfo();
+			}
+		}
+	}
+
+	void setSpriteRenderers()
+	{
+		for (int i = 0; i < unlockedLevelElements.Length; i++)
+		{
+			if (unlockedLevelElements[i] != null && unlockedLevelElements[i].externalDoor != null)
+			{
+				unlockedLevelElements[i].externalRenderer = unlockedLevelElements[i].externalDoor.GetComponent<SpriteRenderer>();
+			}
+		}
+	}
+
+	void beginUnlockDoorsDelay()
+	{
+		beginUnlockDoorsDelayed = true;
+	}
+
+	void fillInteragibleScript()
+	{
+		for (int i = 0; i < unlockedLevelElements.Length; i++)
+		{
+			if (unlockedLevelElements[i] != null && unlockedLevelElements[i].interagibleObject != null)
+				unlockedLevelElements[i].interagibleScript = unlockedLevelElements[i].interagibleObject.GetComponent<InteragibileObject>();
+		}
+	}
+
 }
