@@ -341,6 +341,8 @@ public class HChargeChaseFSM : HChase1FSM {
 
 		statusSpriteRend.sprite = alarmedSprite;
 
+		i_alert (true);
+
 		_StartCoroutine (chargeCor);
 
 	}
@@ -381,6 +383,8 @@ public class HChargeChaseFSM : HChase1FSM {
 		
 		charged = false;
 
+		i_alert (false);
+
 		statusSpriteRend.sprite = null;
 
 		//return ob;
@@ -419,7 +423,9 @@ public class HCrashChaseFSM : HChase1FSM {
 		#if _DEBUG
 		Debug.Log ("init da " + stateName);
 		#endif
-		
+		Debug.Log ("init da " + stateName);
+		i_charged (true);
+
 	}
 
 	protected void updateCrashChase() {
@@ -440,7 +446,7 @@ public class HCrashChaseFSM : HChase1FSM {
 		#endif
 
 		//return ob;
-
+		i_charged (false);
 		
 	}
 

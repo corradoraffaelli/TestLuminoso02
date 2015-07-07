@@ -204,6 +204,18 @@ public abstract class HEnemyStateFSM : HGenericStateFSM {
 		}
 		
 	}
+
+	protected void i_alert(bool _alert) {
+
+		playerScript.c_alert (_alert);
+
+	}
+
+	protected void i_charged(bool _charged) {
+		
+		playerScript.c_charged (_charged);
+		
+	}
 	
 	protected void i_stunned(bool isStun) {
 		
