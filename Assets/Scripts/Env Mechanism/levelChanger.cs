@@ -1,21 +1,22 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.IO;
+using System.Collections.Generic;
 
 public class levelChanger : MonoBehaviour {
 
+	public bool inputDoor = false;
 	public bool reloadThisLevel = true;
 	public string sceneName;
+	public int actualLevelNumber = 1;
 	public int levelToUnlock = 2;
 
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+	[HideInInspector]
+	public string savedLevelFile = "savedComingLevel";
+	[HideInInspector]
+	public string savedFileExtention = ".dat";
 
 	void unlockLevel()
 	{
@@ -38,8 +39,20 @@ public class levelChanger : MonoBehaviour {
 
 	public void InteractingMethod()
 	{
-		unlockLevel();
-
+		if (!inputDoor)
+		{
+			unlockLevel();
+			saveInfo();
+		}
 		changeScene ();
+	}
+
+	void saveInfo()
+	{
+		BinaryFormatter bf = new BinaryFormatter ();
+		
+		FileStream file = File.Create (Application.persistentDataPath + "/" +savedLevelFile + savedFileExtention);
+		bf.Serialize (file, actualLevelNumber);
+		file.Close ();
 	}
 }
