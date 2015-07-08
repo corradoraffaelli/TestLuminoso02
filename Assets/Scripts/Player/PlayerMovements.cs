@@ -181,6 +181,10 @@ public class PlayerMovements : MonoBehaviour {
 
 	bool running;
 
+	bool alert;
+
+	bool charged;
+
 	public bool isRunning(){
 		return running;
 	}
@@ -550,8 +554,17 @@ public class PlayerMovements : MonoBehaviour {
 	{
 		if(!anim.GetBool("Stunned") && stunned)
 			anim.SetTrigger("StartStunned");
-		
+
+		if(!anim.GetBool("Alerted") && alert) {
+
+			anim.SetTrigger("StartAlert");
+
+		}
+
+		anim.SetBool("Charged", charged);
+		anim.SetBool ("Alerted", alert);
 		anim.SetBool ("Stunned", stunned);
+
 		if (onGround && ((onLadder && RigBody.velocity.y <= 0.0f) || (!onLadder)))
 			anim.SetBool ("onGround", true);
 		else
@@ -1331,6 +1344,18 @@ public class PlayerMovements : MonoBehaviour {
 
 		}
 		
+	}
+
+	public void c_alert(bool _alert) {
+
+		alert = _alert;
+
+	}
+
+	public void c_charged(bool _charged) {
+
+		charged = _charged;
+
 	}
 
 	public void c_instantKill(){
