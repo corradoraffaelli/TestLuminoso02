@@ -294,4 +294,46 @@ public class UtilFinder {
 		}
 	}
 	
+	static public T[] _GetComponentsOfChildrenWithTag <T>(GameObject _gameObject, string _tag) {
+		
+		GameObject [] ob = UtilFinder._FindChildrenByTag (_tag, _gameObject);
+		
+		ArrayList tempT = new ArrayList ();
+		
+		if (ob.Length > 0) {
+			
+			foreach(GameObject obb in ob) {
+				
+				T comp = obb.GetComponent<T>();
+				
+				if (comp.ToString () != "null") {
+					
+					tempT.Add(comp);
+					
+				}
+				
+			}
+			
+			if(tempT.Count>0) {
+				T []comps = (T[])tempT.ToArray(typeof(T));
+				
+				return comps;
+				
+			}
+			else {
+				Debug.Log ("_WARNING_ - NOT FOUND components '" + typeof(T) + "' into children with tag '" + _tag + "' inside the gameobejct '" + _gameObject.name + "'");
+				//T comp = null;
+				return default(T[]);
+				
+			}
+		}
+		else {
+			Debug.Log ("_WARNING_ - NOT FOUND gameobject child with tag '" + _tag + "' inside the gameobejct '" + _gameObject.name + "', during getting its component '" + typeof(T) + "'");
+			//T comp = null;
+			return default(T[]);
+			
+		}
+		
+	}
+	
 }
