@@ -137,13 +137,14 @@ public class InformativeManager : MonoBehaviour {
 							if(!conte.locked) {
 								
 								conte.unlockerObject.SetActive(false);
+								Debug.Log("ohi");
 								
 							}
 							else {
-								
-								conte.unlockerObject.SendMessage("c_setSectionInt", sectionIndex);
-								conte.unlockerObject.SendMessage("c_setContentInt", contentIndex);
-								
+								if(conte.unlockerObject.activeSelf) {
+									conte.unlockerObject.SendMessage("c_setSectionInt", sectionIndex);
+									conte.unlockerObject.SendMessage("c_setContentInt", contentIndex);
+								}
 							}
 							
 							
@@ -163,10 +164,11 @@ public class InformativeManager : MonoBehaviour {
 								
 							}
 							else {
-								
-								funfact.unlockerObject.SendMessage("c_setSectionInt", sectionIndex);
-								funfact.unlockerObject.SendMessage("c_setContentInt", contentIndex);
-								
+
+								if(funfact.unlockerObject.activeSelf) {
+									funfact.unlockerObject.SendMessage("c_setSectionInt", sectionIndex);
+									funfact.unlockerObject.SendMessage("c_setContentInt", contentIndex);
+								}
 							}
 							
 							
@@ -187,10 +189,12 @@ public class InformativeManager : MonoBehaviour {
 								
 							}
 							else {
-								
-								fragme.unlockerObject.SendMessage("c_setSectionInt", sectionIndex);
-								fragme.unlockerObject.SendMessage("c_setFragmentInt", contentIndex);
-								
+								/*
+								if(fragme.unlockerObject.activeSelf) {
+									fragme.unlockerObject.SendMessage("c_setSectionInt", sectionIndex);
+									fragme.unlockerObject.SendMessage("c_setFragmentInt", contentIndex);
+								}
+								*/
 							}
 							
 							
@@ -886,7 +890,7 @@ public class InformativeManager : MonoBehaviour {
 		int levelNumber;
 		
 		if (levelN >= 0) {
-			
+
 			levelNumber = levelN;
 			
 		} else {
@@ -907,6 +911,36 @@ public class InformativeManager : MonoBehaviour {
 		
 		return null;
 		
+	}
+
+	public void c_getIndexes(GameObject unlocker, ref int sec, ref int cont, infoContentType contType) {
+
+		int sectionN = 0;
+		int contentN = 0;
+
+
+		foreach (InformativeSection section in sections) {
+
+			if(section.levelN == actualLevelNumber && section.contentType == contType) {
+
+				foreach(InformativeContent content in section.contents) {
+
+					if(content.unlockerObject==unlocker) {
+
+						sec = sectionN;
+						cont = contentN;
+						return;
+					}
+
+					contentN++;
+				}
+
+			}
+
+			contentN = 0;
+			sectionN++;
+		}
+
 	}
 
 	#endregion CALLBACKS

@@ -15,9 +15,22 @@ public class UnlockFragment : MonoBehaviour {
 	bool fragmentUnlocked = false;
 	
 	// Use this for initialization
+
+	void getIndexes() {
+
+		GeneralFinder.informativeManager.c_getIndexes (this.gameObject, ref sectionIndexToUnlock, ref fragmentIndexToUnlock, infoContentType.Fragments);
+
+	}
+
 	void Start () {
 		
 		initializeComponents ();
+
+		if (sectionIndexToUnlock == -1 || fragmentIndexToUnlock == -1) {
+			
+			getIndexes();
+			
+		}
 
 	}
 	
