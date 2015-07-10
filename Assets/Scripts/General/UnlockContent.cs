@@ -23,6 +23,31 @@ public class UnlockContent : MonoBehaviour {
 
 		checkNeedButtonPress ();
 
+		if (sectionIndexToUnlock == -1 || contentIndexToUnlock == -1) {
+			
+			getIndexes();
+			
+		}
+
+	}
+
+	void getIndexes() {
+
+		infoContentType tipo;
+
+		if (needButtonPress) {
+
+			tipo = infoContentType.Collectibles;
+
+		} 
+		else {
+
+			tipo = infoContentType.FunFacts;
+
+		}
+
+		GeneralFinder.informativeManager.c_getIndexes (this.gameObject, ref sectionIndexToUnlock, ref contentIndexToUnlock, tipo);
+
 	}
 
 	void checkNeedButtonPress() {
