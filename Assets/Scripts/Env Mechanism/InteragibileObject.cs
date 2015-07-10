@@ -64,6 +64,12 @@ public class InteragibileObject : MonoBehaviour {
 							Debug.Log ("inviato messaggio di interazione ad oggetto "+objectsWithMethods[i].name);
 						}
 					}
+
+					//gestione leva
+					Lever leverScript = GetComponent<Lever>();
+					if (leverScript != null)
+						leverScript.InteractingMethod();
+
 					indication.SetActive(false);
 				}
 
