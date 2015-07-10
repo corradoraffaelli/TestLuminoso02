@@ -31293,9 +31293,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0f9effd81896d3419c4990dbeedff81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inputDoor: 0
   reloadThisLevel: 1
   sceneName: 
+  actualLevelNumber: 1
   levelToUnlock: 2
+  savedLevelFile: savedComingLevel
+  savedFileExtention: .dat
 --- !u!4 &1321993369 stripped
 Transform:
   m_PrefabParentObject: {fileID: 418044, guid: c93f735cbe2e89e4a8de3ff100a5124d, type: 2}
@@ -31590,7 +31594,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 493348, guid: bb2b298b86b5c4a2facf9da0fb4808e5, type: 2}
       propertyPath: m_LocalScale.x
-      value: -1
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 11402882, guid: bb2b298b86b5c4a2facf9da0fb4808e5, type: 2}
       propertyPath: patrolType
@@ -49729,9 +49733,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0f9effd81896d3419c4990dbeedff81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inputDoor: 0
   reloadThisLevel: 1
   sceneName: 
+  actualLevelNumber: 1
   levelToUnlock: 2
+  savedLevelFile: savedComingLevel
+  savedFileExtention: .dat
 --- !u!1001 &2097683960
 Prefab:
   m_ObjectHideFlags: 0
