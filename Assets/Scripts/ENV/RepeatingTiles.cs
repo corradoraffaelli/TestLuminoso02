@@ -65,6 +65,7 @@ public class RepeatingTiles : MonoBehaviour {
 	{
 		//istanzio un nuovo oggetto nella posizione specificata
 		GameObject tempGO = Instantiate(gameObject, position, gameObject.transform.rotation) as GameObject;
+		tempGO.transform.parent = transform.parent;
 		tiles[i] = tempGO;
 		//tempGO.transform.SetParent(transform);
 		//tempGO.transform.parent = transform;
