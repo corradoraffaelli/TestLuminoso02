@@ -28,6 +28,7 @@ GameObject:
   - 61: {fileID: 6129572}
   - 114: {fileID: 11441408}
   - 114: {fileID: 11401178}
+  - 114: {fileID: 11436432}
   m_Layer: 0
   m_Name: Leva
   m_TagString: Untagged
@@ -55,7 +56,7 @@ Transform:
   m_GameObject: {fileID: 196794}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -3.52999997, y: .49000001, z: 0}
-  m_LocalScale: {x: 4, y: 4, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 433752}
   m_Father: {fileID: 0}
@@ -92,6 +93,22 @@ MonoBehaviour:
     volume: 1
     pitch: 1
     audioSource: {fileID: 0}
+--- !u!114 &11436432
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 196794}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6ea6646f4c9f45428be218b17017330, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  leftSprite: {fileID: 21300000, guid: cbab359f7271bab4cad4844e6cb7738d, type: 3}
+  rightSprite: {fileID: 21300000, guid: 11259634d3d64b24d9c0dc7a73eb7cde, type: 3}
+  returnOneInteraction: 0
+  returnMultipleInteraction: 1
+  timeToReturn: .5
 --- !u!114 &11441408
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -109,6 +126,7 @@ MonoBehaviour:
   oneTimeInteraction: 1
   activeDisabledObject: 1
   indicationScale: 2
+  playerColliding: 0
 --- !u!212 &21211844
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -133,7 +151,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1187376445
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 1166300514e0ed449aab1f9babfd7f97, type: 3}
+  m_Sprite: {fileID: 21300000, guid: cbab359f7271bab4cad4844e6cb7738d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!212 &21257404
 SpriteRenderer:
@@ -167,7 +185,30 @@ Prefab:
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: leftSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: cbab359f7271bab4cad4844e6cb7738d,
+        type: 3}
+    - target: {fileID: 0}
+      propertyPath: rightSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 11259634d3d64b24d9c0dc7a73eb7cde,
+        type: 3}
+    - target: {fileID: 0}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: cbab359f7271bab4cad4844e6cb7738d,
+        type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 196794}

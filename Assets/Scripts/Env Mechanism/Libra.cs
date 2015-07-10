@@ -70,7 +70,7 @@ public class Libra : MonoBehaviour {
 
 
 			float wheelDestRot = wheelStandardRotation.z + diffBetween * deltaRotation;
-			Debug.Log (wheelDestRot);
+			//Debug.Log (wheelDestRot);
 			Vector3 wheelDestAngles = new Vector3(wheelStandardRotation.x, wheelStandardRotation.y, wheelDestRot);
 			if (libraObjects.wheel != null)
 				libraObjects.wheel.transform.localEulerAngles = Vector3.MoveTowards(libraObjects.wheel.transform.localEulerAngles, wheelDestAngles, Time.deltaTime * speed * deltaRotation / deltaPosition);
