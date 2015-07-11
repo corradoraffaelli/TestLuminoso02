@@ -162,6 +162,7 @@ public class CheckPointManager : MonoBehaviour {
 			if(ch != _checkpointScript) {
 				if(ch.Activated) {
 					ch.gameObject.GetComponent<streetLampAnimation>().c_deactivateLight();
+					ch.gameObject.GetComponent<CheckPointUpdate>().c_setInactiveLight();
 					Debug.Log("chiamo deactivate su " + ch.gameObject.name);
 				}
 

@@ -146,4 +146,10 @@ public class CheckPointUpdate : MonoBehaviour {
 		
 	}
 
+	public void c_setInactiveLight() {
+
+		activated = false;
+
+	}
+
 }

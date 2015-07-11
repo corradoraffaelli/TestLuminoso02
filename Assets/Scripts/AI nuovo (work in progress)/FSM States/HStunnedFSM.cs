@@ -130,6 +130,7 @@ public class HStunnedFSM : HEnemyStateFSM {
 			handleKillo ();
 			
 			setDeadLayer ();
+			_instantKill = false;
 
 		}
 		else {
@@ -204,12 +205,19 @@ public class HStunnedFSM : HEnemyStateFSM {
 		if (_instantKill && !killDuringStunn) {
 			Debug.Log("inin stunn");
 			killDuringStunn = true;
-			_StopCoroutine (stunnedCor);
-			i_stunned (true);
-			
-			handleKillo ();
-			
-			setDeadLayer ();
+
+			//TODO: questa parte è da rivedere?
+			//caso in cui mi muoio e finisco su punte
+			if(stunnedCor!=null) {
+				_StopCoroutine (stunnedCor);
+
+				i_stunned (true);
+				
+				handleKillo ();
+				
+				setDeadLayer ();
+
+			}
 
 		}
 

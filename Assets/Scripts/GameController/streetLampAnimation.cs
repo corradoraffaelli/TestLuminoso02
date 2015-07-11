@@ -124,7 +124,7 @@ public class streetLampAnimation : MonoBehaviour {
 
 		lampLight.enabled = false;
 		lampConeLight.enabled = false;
-
+		lampIsOn = false;
 	}
 
 }
