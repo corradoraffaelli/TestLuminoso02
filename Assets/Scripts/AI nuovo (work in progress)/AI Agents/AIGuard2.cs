@@ -90,7 +90,7 @@ public class AIGuard2 : AIAgent1 {
 		hc.setDefaultCollision ();
 		
 		hcc1.setDefaultTransitions (hcc2);
-		hcc2.setDefaultTransitions (hs);
+		hcc2.setDefaultTransitions (hs, hP);
 
 		//stun
 

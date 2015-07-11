@@ -29,15 +29,7 @@ public class HChaseFSM : HEnemyStateFSM {
 			if(chasePar!=null) chasePar.RangeOfView = value;}
 		
 	}
-	
-	float AdditionalROV {
-		get{ 
-			if(chasePar!=null) return chasePar.AdditionalROVBeforeLost;
-			else return 0.0f;}
-		set{ 
-			if(chasePar!=null) chasePar.AdditionalROVBeforeLost = value;}
-		
-	}
+
 	
 	//CONSTRUCTOR----------------------------------------------------------------------------------------------------------------------------------
 	//-----------------------------------------------------------------------------------------------------------------------------------------------
@@ -115,12 +107,7 @@ public class HChaseFSM : HEnemyStateFSM {
 		
 	}
 	
-	void setAdditionalROVHalfOfROV(){
-		
-		if(RangeOfView != 0.0f)
-			AdditionalROV = RangeOfView / 2.0f;
-		
-	}
+
 	
 	#endregion INITIALIZECHASEPARAMETERS
 
@@ -209,7 +196,7 @@ public class HChaseFSM : HEnemyStateFSM {
 		
 		
 		//target -> too distant
-		if (Vector3.Distance (chaseTarget.transform.position, transform.position) > RangeOfView + AdditionalROV) {
+		if (Vector3.Distance (chaseTarget.transform.position, transform.position) > RangeOfView + 2.0f) {
 
 			#if _TRANSITION_DEBUG
 				Debug.Log ("CHASE 2 PATROL - target too far");

@@ -185,8 +185,9 @@ public class ChaseParameters {
 
 	public float RangeOfView;
 
-	public float AdditionalROVBeforeLost = 2.0f;
-	
+	public float timeToLoseTarget = 1.0f;
+	public float timeToCharge = 1.0f;
+		
 	//[Range(0.1f,5.0f)]
 	//public float fTargetFar = 2.0f;
 

@@ -8,7 +8,7 @@ public class HChase1FSM : HEnemyStateFSM {
 	HChargeChaseFSM hChargeChase;
 	HCrashChaseFSM hCrashChase;
 
-	bool lostTarget = false;
+	protected bool lostTarget = false;
 
 	protected SpriteRenderer statusSpriteRend;
 
@@ -38,13 +38,23 @@ public class HChase1FSM : HEnemyStateFSM {
 			if(chasePar!=null) chasePar.RangeOfView = value;}
 		
 	}
-	
-	protected float AdditionalROV {
+
+
+	protected float timeToLoseTarget {
 		get{ 
-			if(chasePar!=null) return chasePar.AdditionalROVBeforeLost;
+			if(chasePar!=null) return chasePar.timeToLoseTarget;
 			else return 0.0f;}
 		set{ 
-			if(chasePar!=null) chasePar.AdditionalROVBeforeLost = value;}
+			if(chasePar!=null) chasePar.timeToLoseTarget = value;}
+		
+	}
+	
+	protected float timeToCharge {
+		get{ 
+			if(chasePar!=null) return chasePar.timeToCharge;
+			else return 0.0f;}
+		set{ 
+			if(chasePar!=null) chasePar.timeToCharge = value;}
 		
 	}
 
@@ -140,12 +150,7 @@ public class HChase1FSM : HEnemyStateFSM {
 		
 	}
 	
-	void setAdditionalROVHalfOfROV(){
-		
-		if(RangeOfView != 0.0f)
-			AdditionalROV = RangeOfView / 2.0f;
-		
-	}
+
 	
 	#endregion INITIALIZECHASEPARAMETERS
 
@@ -174,7 +179,7 @@ public class HChase1FSM : HEnemyStateFSM {
 	public void setDefaultTransitions(HStunnedFSM hstun, HPatrolFSM hpatrol) {
 
 		addTransition (C2ScheckStun, hstun);
-		addTransition (C2PlostTarget, hpatrol);
+		addTransition (C2PlostTargetNull, hpatrol);
 		addTransition (Any2KScheckInstantKill, hstun);
 
 	}
@@ -182,7 +187,7 @@ public class HChase1FSM : HEnemyStateFSM {
 	public void setDefaultTransitions(HStunnedFSM hstun, HPatrol1FSM hpatrol) {
 		
 		addTransition (C2ScheckStun, hstun);
-		addTransition (C2PlostTarget, hpatrol);
+		addTransition (C2PlostTargetNull, hpatrol);
 		
 	}
 
@@ -232,7 +237,7 @@ public class HChase1FSM : HEnemyStateFSM {
 		
 	}
 
-	bool C2PlostTarget(){
+	bool C2PlostTargetNull(){
 
 
 		bool lost = false;
@@ -249,7 +254,8 @@ public class HChase1FSM : HEnemyStateFSM {
 		
 		
 		//target -> different height
-		if (Mathf.Abs (chaseTarget.transform.position.y - transform.position.y) > 2.0f) {
+		/*
+		if (Mathf.Abs (chaseTarget.transform.position.y - transform.position.y) > 2.5f) {
 
 			#if _DEBUG
 				Debug.Log ("CHASE 2 PATROL - target different height");
@@ -258,10 +264,11 @@ public class HChase1FSM : HEnemyStateFSM {
 			lost = true;
 			
 		}
-		
+		*/
 		
 		//target -> too distant
-		if (Vector3.Distance (chaseTarget.transform.position, transform.position) > RangeOfView + AdditionalROV) {
+		/*
+		if (Vector2.Distance (chaseTarget.transform.position, transform.position) > RangeOfView + AdditionalROV) {
 			
 			#if _DEBUG
 				Debug.Log ("CHASE 2 PATROL - target too far");
@@ -270,6 +277,7 @@ public class HChase1FSM : HEnemyStateFSM {
 			lost = true;
 			
 		}
+		*/
 
 		if (lost) {
 
@@ -337,7 +345,7 @@ public class HChargeChaseFSM : HChase1FSM {
 
 		charged = false;
 
-		chargeCor = countDownCharge (1.0f);
+		chargeCor = countDownCharge (timeToCharge);
 
 		statusSpriteRend.sprite = alarmedSprite;
 
@@ -371,6 +379,8 @@ public class HChargeChaseFSM : HChase1FSM {
 		}
 	}
 
+
+
 	protected void finalizeChargeChase() {
 
 		//object ob = null;
@@ -387,14 +397,17 @@ public class HChargeChaseFSM : HChase1FSM {
 
 		statusSpriteRend.sprite = null;
 
+
 		//return ob;
 	}
 
 }
 
 public class HCrashChaseFSM : HChase1FSM {
-	
-	IEnumerator chargeCor;
+
+	bool losingInFront = false;
+	bool lostInFront = false;
+	IEnumerator lostCor;
 	bool wallCollision = false;
 	public HCrashChaseFSM(GameObject _gameo, int _hLevel, HEnemyStateFSM _fatherState, AIAgent1 _scriptAIAgent) 
 	: base ("CrashChase", _gameo, _hLevel, _scriptAIAgent) {
@@ -412,9 +425,11 @@ public class HCrashChaseFSM : HChase1FSM {
 		
 	}
 
-	public void setDefaultTransitions(HStunnedFSM hstunn) {
+	public void setDefaultTransitions(HStunnedFSM hstunn, HPatrol1FSM hpatrol) {
 		
 		addTransition (CC2ScheckWallStun, hstunn);
+
+		addTransition (CC2PcheckNotInFrontTarget, hpatrol);
 		
 	}
 
@@ -423,7 +438,7 @@ public class HCrashChaseFSM : HChase1FSM {
 		#if _DEBUG
 		Debug.Log ("init da " + stateName);
 		#endif
-		Debug.Log ("init da " + stateName);
+		//Debug.Log ("init da " + stateName);
 		i_charged (true);
 
 	}
@@ -432,6 +447,16 @@ public class HCrashChaseFSM : HChase1FSM {
 
 		//Debug.Log ("udpate CRASSSHHHH");
 		i_move (chaseSpeed);
+
+		if (isTargetNotInFrontAnymore () && !losingInFront) {
+			
+			lostCor = countDownLostInFront (timeToLoseTarget);
+			
+			_StartCoroutine(lostCor);
+			
+			losingInFront = true;
+
+		}
 		//moveTowardTarget (chaseTarget, chaseSpeed);
 
 
@@ -446,8 +471,30 @@ public class HCrashChaseFSM : HChase1FSM {
 		#endif
 
 		//return ob;
+		if (lostInFront) {
+			
+			BasicMessageFSM pame = new BasicMessageFSM("Suspicious");
+
+			addFinalizeMessage(pame);
+
+		}
+
+		lostInFront = false;
+
+		losingInFront = false;
+
+		_StopCoroutine (lostCor);
+
 		i_charged (false);
 		
+	}
+
+	IEnumerator countDownLostInFront(float _seconds) {
+
+		yield return new WaitForSeconds(_seconds);
+
+		lostInFront = true;
+
 	}
 
 	bool CC2ScheckWallStun() {
@@ -464,7 +511,57 @@ public class HCrashChaseFSM : HChase1FSM {
 		
 	}
 
+	private bool isTargetNotInFrontAnymore(){
+		
+		RaycastHit2D hit;
+		float obstacleDist = -1.0f;
+		GameObject foundTarget;
+		
+		//controllo se ho degli OSTACOLI in mezzo...
+		hit = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y + 1.0f) , i_facingRight()? Vector2.right : -Vector2.right, RangeOfView, obstacleLayers);
+		if (hit.collider != null) {
+			obstacleDist = Vector2.Distance( hit.point, transform.position);
+			#if _DEBUG
+			Debug.Log ("PA -> CH - Raycast trova ostacolo : " + hit.transform.gameObject.name);
+			#endif
+			
+		}
+		
+		Debug.DrawLine (new Vector2(transform.position.x, transform.position.y + 1.0f), i_facingRight () ? new Vector2 (transform.position.x + RangeOfView, transform.position.y + 1.0f) : new Vector2 (transform.position.x - RangeOfView, transform.position.y + 1.0f), Color.red);
+		hit = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y + 1.0f) , i_facingRight()? Vector2.right : -Vector2.right, RangeOfView, targetLayers);
+		if (hit.collider != null) {
+			
+			foundTarget = hit.transform.gameObject;
+			
+			#if _DEBUG
+			Debug.Log ("PA -> CH - Raycast trova target : " + foundTarget.name);
+			#endif
+			
+			if(obstacleDist == -1.0f) {
+				
+				return false;
+			}
+			else {
+				
+				float targetDist = Vector2.Distance( hit.point, transform.position);
+				if(targetDist < obstacleDist) {
+					
+					return false;
+				}
+			}
+		}
+		
+		foundTarget = null;
 
+		return true;
+		
+	}
+
+	private bool CC2PcheckNotInFrontTarget(){
+
+		return lostInFront;
+
+	}
 
 	protected void checkCrashWallCollision(Collision2D co) {
 

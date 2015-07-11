@@ -815,13 +815,13 @@ public class InformativeManager : MonoBehaviour {
 	
 
 	public void c_saveData() {
-		Debug.Log ("ciaone");
+		Debug.Log ("save data");
 		InfoSectionContainer.saveInformativeManagerConf (sections, true);
 		
 	}
 
 	public void c_saveData1() {
-		Debug.Log ("ciaone");
+		Debug.Log ("save data 1");
 		InfoSectionContainer.saveInformativeManagerConf (sections, false);
 
 	}
