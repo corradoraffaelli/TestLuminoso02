@@ -3,8 +3,8 @@ using System.Collections;
 
 public class LeavesParticlesController : MonoBehaviour {
 
-	public GameObject referenceWind;
-	AreaEffector2D effector;
+	public GameObject[] referenceWind;
+	AreaEffector2D[] effector;
 
 	public GameObject leavesParticles;
 	public GameObject grassParticles;
@@ -16,6 +16,8 @@ public class LeavesParticlesController : MonoBehaviour {
 	public float maxLeavesSize = 0.45f;
 	public float minGrassSize = 0.15f;
 	public float maxGrassSize = 0.35f;
+	public float minEnergy = 30.0f;
+	public float maxEnergy = 30.0f;
 
 	ParticleRenderer[] leavesRenderers;
 	ParticleEmitter[] leavesEmitters;
@@ -41,8 +43,14 @@ public class LeavesParticlesController : MonoBehaviour {
 
 		setSizes();
 
-		if (referenceWind != null)
-			effector = referenceWind.GetComponent<AreaEffector2D>();
+		effector = new AreaEffector2D[referenceWind.Length];
+		for (int i = 0; i < referenceWind.Length; i++)
+		{
+			if (referenceWind[i] != null)
+				effector[i] = referenceWind[i].GetComponent<AreaEffector2D>();
+		}
+
+		setEnergy();
 	}
 
 	void Update () {
@@ -221,13 +229,43 @@ public class LeavesParticlesController : MonoBehaviour {
 		}
 	}
 
+	void setEnergy()
+	{
+		if (leavesEmitters != null)
+		{
+			for (int i = 0; i < leavesEmitters.Length; i++)
+			{
+				if (leavesEmitters[i] != null)
+				{
+					leavesEmitters[i].minEnergy = minEnergy;
+					leavesEmitters[i].maxEnergy = maxEnergy;
+				}
+			}
+		}
+		if (grassEmitters != null)
+		{
+			for (int i = 0; i < grassEmitters.Length; i++)
+			{
+				if (grassEmitters[i] != null)
+				{
+					grassEmitters[i].minEnergy = minEnergy;
+					grassEmitters[i].maxEnergy = maxEnergy;
+				}
+			}
+		}
+	}
+
 	bool isWindActive()
 	{
-		if (referenceWind != null && effector != null)
+		for (int i = 0; i < referenceWind.Length; i++)
 		{
-			if (referenceWind.activeInHierarchy == true && effector.enabled == true)
-				return true;
+			if (referenceWind[i] != null && effector[i] != null)
+			{
+				if (referenceWind[i].activeInHierarchy == true && effector[i].enabled == true)
+					return true;
+			}
 		}
+
 		return false;
 	}
 }
