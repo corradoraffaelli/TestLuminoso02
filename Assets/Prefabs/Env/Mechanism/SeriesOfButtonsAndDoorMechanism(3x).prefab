@@ -197,7 +197,7 @@ Transform:
   m_GameObject: {fileID: 126694}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 3.04399991, y: .437000006, z: 0}
-  m_LocalScale: {x: .600000024, y: .600000024, z: 1}
+  m_LocalScale: {x: .300000012, y: .200000003, z: 1}
   m_Children:
   - {fileID: 401858}
   m_Father: {fileID: 490298}
@@ -209,7 +209,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 116066}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.32999992, y: 6.01999998, z: 0}
+  m_LocalPosition: {x: 3.50633097, y: 5.43805742, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 1}
   m_Children:
   - {fileID: 465856}
@@ -242,9 +242,9 @@ BoxCollider2D:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_UsedByEffector: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: .800000012}
   serializedVersion: 2
-  m_Size: {x: 1.40999997, y: 2.48000002}
+  m_Size: {x: 2.13000011, y: 8.52000046}
 --- !u!61 &6127446
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -255,9 +255,9 @@ BoxCollider2D:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_UsedByEffector: 0
-  m_Offset: {x: 0, y: .0582990646}
+  m_Offset: {x: -.0900000036, y: -2.68000007}
   serializedVersion: 2
-  m_Size: {x: 1.10000038, y: .333401322}
+  m_Size: {x: 2, y: .529999971}
 --- !u!114 &11404588
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -286,6 +286,8 @@ MonoBehaviour:
   firstChainPieceObj: {fileID: 0}
   triggerTagList: []
   NeedInteractionButton: 0
+  buttonUp: {fileID: 0}
+  buttonDown: {fileID: 0}
 --- !u!114 &11406860
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -337,22 +339,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buttons:
-  - notPushedImg: {fileID: 21300000, guid: 874e76ee335a9344f84bcee0f00103a9, type: 3}
-    pushedImg: {fileID: 21300000, guid: 6e68f820e4612a34e93e26871ac87873, type: 3}
+  - notPushedImg: {fileID: 21300000, guid: 56d6688fa70194d38bb10ab526607bf7, type: 3}
+    pushedImg: {fileID: 21300000, guid: 64bf85481139f41c4916f158de48b467, type: 3}
     position: {fileID: 450846}
     sequenceNumber: 0
     buttObj: {fileID: 0}
     sr: {fileID: 0}
     tsb: {fileID: 0}
-  - notPushedImg: {fileID: 21300000, guid: 3ed77c91d7f24ff45ae78f768d9dc48a, type: 3}
-    pushedImg: {fileID: 21300000, guid: 8f776658b8910b34dac0989192a6edaa, type: 3}
+  - notPushedImg: {fileID: 21300000, guid: 03a1a1020ce614361b4797fd4abbdf59, type: 3}
+    pushedImg: {fileID: 21300000, guid: 4e68ca542526843968ef2e401cf786a2, type: 3}
     position: {fileID: 419816}
     sequenceNumber: 1
     buttObj: {fileID: 0}
     sr: {fileID: 0}
     tsb: {fileID: 0}
-  - notPushedImg: {fileID: 21300000, guid: 2678f60b98eacc9418ccb6b93422437f, type: 3}
-    pushedImg: {fileID: 21300000, guid: 0770b95d30189ee4497a79f2492d2798, type: 3}
+  - notPushedImg: {fileID: 21300000, guid: 2e80885acaa144783b66c270fe35e772, type: 3}
+    pushedImg: {fileID: 21300000, guid: 6d4a6584329b243ca9441ee6440e2ceb, type: 3}
     position: {fileID: 442300}
     sequenceNumber: 2
     buttObj: {fileID: 0}
@@ -409,7 +411,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 381198999
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 55a32b8f669f22d438c8f6ee380986ea, type: 3}
+  m_Sprite: {fileID: 21300000, guid: aaf8de18698b9624188611f03c7b6424, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1001 &100100000
 Prefab:

@@ -199,7 +199,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 148012}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 18.3899994, y: -.50999999, z: 0}
+  m_LocalPosition: {x: 3.37298584, y: 5.47083282, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 1}
   m_Children:
   - {fileID: 468046}
@@ -231,7 +231,7 @@ Transform:
   m_GameObject: {fileID: 110664}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 3.04399991, y: .437000006, z: 0}
-  m_LocalScale: {x: .600000024, y: .600000024, z: 1}
+  m_LocalScale: {x: .300000012, y: .200000003, z: 1}
   m_Children:
   - {fileID: 491552}
   m_Father: {fileID: 442462}
@@ -270,9 +270,9 @@ BoxCollider2D:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_UsedByEffector: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: .800000012}
   serializedVersion: 2
-  m_Size: {x: 1.40999997, y: 2.48000002}
+  m_Size: {x: 2.13000011, y: 8.52000046}
 --- !u!61 &6154898
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -283,9 +283,9 @@ BoxCollider2D:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_UsedByEffector: 0
-  m_Offset: {x: 0, y: .0582990646}
+  m_Offset: {x: -.0900000036, y: -2.68000007}
   serializedVersion: 2
-  m_Size: {x: 1.10000038, y: .333401322}
+  m_Size: {x: 2, y: .529999971}
 --- !u!114 &11436838
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -339,6 +339,8 @@ MonoBehaviour:
   firstChainPieceObj: {fileID: 0}
   triggerTagList: []
   NeedInteractionButton: 0
+  buttonUp: {fileID: 0}
+  buttonDown: {fileID: 0}
 --- !u!114 &11470314
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -365,29 +367,29 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buttons:
-  - notPushedImg: {fileID: 21300000, guid: 874e76ee335a9344f84bcee0f00103a9, type: 3}
-    pushedImg: {fileID: 21300000, guid: 6e68f820e4612a34e93e26871ac87873, type: 3}
+  - notPushedImg: {fileID: 21300000, guid: 56d6688fa70194d38bb10ab526607bf7, type: 3}
+    pushedImg: {fileID: 21300000, guid: 64bf85481139f41c4916f158de48b467, type: 3}
     position: {fileID: 447630}
     sequenceNumber: 0
     buttObj: {fileID: 0}
     sr: {fileID: 0}
     tsb: {fileID: 0}
-  - notPushedImg: {fileID: 21300000, guid: 3ed77c91d7f24ff45ae78f768d9dc48a, type: 3}
-    pushedImg: {fileID: 21300000, guid: 8f776658b8910b34dac0989192a6edaa, type: 3}
+  - notPushedImg: {fileID: 21300000, guid: 03a1a1020ce614361b4797fd4abbdf59, type: 3}
+    pushedImg: {fileID: 21300000, guid: 4e68ca542526843968ef2e401cf786a2, type: 3}
     position: {fileID: 423040}
     sequenceNumber: 1
     buttObj: {fileID: 0}
     sr: {fileID: 0}
     tsb: {fileID: 0}
-  - notPushedImg: {fileID: 21300000, guid: 2678f60b98eacc9418ccb6b93422437f, type: 3}
-    pushedImg: {fileID: 21300000, guid: 0770b95d30189ee4497a79f2492d2798, type: 3}
+  - notPushedImg: {fileID: 21300000, guid: 2e80885acaa144783b66c270fe35e772, type: 3}
+    pushedImg: {fileID: 21300000, guid: 6d4a6584329b243ca9441ee6440e2ceb, type: 3}
     position: {fileID: 489174}
     sequenceNumber: 2
     buttObj: {fileID: 0}
     sr: {fileID: 0}
     tsb: {fileID: 0}
-  - notPushedImg: {fileID: 21300000, guid: 7720bb4f1004a8348b79a087a4e9144a, type: 3}
-    pushedImg: {fileID: 21300000, guid: e758988c5c9d00149928b43a2ea4408e, type: 3}
+  - notPushedImg: {fileID: 21300000, guid: 30ea87593043f451c9bf78201a95761c, type: 3}
+    pushedImg: {fileID: 21300000, guid: 586573e6c5b684e249a2de883b81fd26, type: 3}
     position: {fileID: 440164}
     sequenceNumber: 3
     buttObj: {fileID: 0}
@@ -418,7 +420,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 381198999
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 55a32b8f669f22d438c8f6ee380986ea, type: 3}
+  m_Sprite: {fileID: 21300000, guid: aaf8de18698b9624188611f03c7b6424, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!212 &21252652
 SpriteRenderer:

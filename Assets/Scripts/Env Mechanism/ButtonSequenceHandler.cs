@@ -60,10 +60,12 @@ public class ButtonSequenceHandler : MonoBehaviour {
 			butt.sr = butt.buttObj.AddComponent<SpriteRenderer> ();
 			butt.sr.sprite = butt.notPushedImg;
 
+			butt.buttObj.transform.localScale = new Vector3(0.1f, 0.1f,0.1f);
+
 			BoxCollider2D box = butt.buttObj.AddComponent<BoxCollider2D> ();
 
-			box.size = new Vector2(box.size.x, box.size.y / 2);
-			box.offset = new Vector2(0.0f, -0.18f);
+			box.size = new Vector2((box.size.x / 1.5f), (box.size.y / 2));
+			box.offset = new Vector2(0.0f, -1.1f);
 			box.isTrigger = true;
 
 			butt.tsb = butt.buttObj.AddComponent<TriggerSequenceButton>();
