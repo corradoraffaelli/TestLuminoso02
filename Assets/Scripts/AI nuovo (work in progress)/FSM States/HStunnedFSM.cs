@@ -5,12 +5,13 @@ public class HStunnedFSM : HEnemyStateFSM {
 
 	float startStunnedTime = 0.0f;
 
-	bool killingState = false;
+	//bool killingState = false;
+	bool killDuringStunn = false;
+	bool stunnedFinish = false;
 
 	int stateAfterStunnedID = -1;
 
 	IEnumerator stunnedCor;
-	bool stunnedFinish = false;
 
 	StunnedParameters stunnedPar;
 
@@ -25,9 +26,9 @@ public class HStunnedFSM : HEnemyStateFSM {
 	public HStunnedFSM(int _stateId, GameObject _gameo, int _hLevel, HEnemyStateFSM _fatherState, AIAgent1 _scriptAIAgent, bool _killingState=true) 
 	: base("Stunned", _stateId, _gameo, _hLevel, true, _fatherState, _scriptAIAgent) {
 
-		killingState = _killingState;
+		//killingState = _killingState;
 
-		if (!killingState) {
+		if (!_killingState) {
 			myInitialize += normalStunnedInitialize;
 		} 
 		else {
@@ -200,6 +201,18 @@ public class HStunnedFSM : HEnemyStateFSM {
 	
 	protected void stunnedUpdate(){
 
+		if (_instantKill && !killDuringStunn) {
+			Debug.Log("inin stunn");
+			killDuringStunn = true;
+			_StopCoroutine (stunnedCor);
+			i_stunned (true);
+			
+			handleKillo ();
+			
+			setDeadLayer ();
+
+		}
+
 	}
 	
 	protected void stunnedFinalize(){
@@ -209,6 +222,8 @@ public class HStunnedFSM : HEnemyStateFSM {
 		#endif
 
 		//finishStunned = false;
+
+		killDuringStunn = false;
 
 		stunnedFinish = false;
 

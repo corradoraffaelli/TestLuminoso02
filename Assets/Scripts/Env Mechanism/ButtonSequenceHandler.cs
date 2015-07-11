@@ -60,7 +60,7 @@ public class ButtonSequenceHandler : MonoBehaviour {
 			butt.sr = butt.buttObj.AddComponent<SpriteRenderer> ();
 			butt.sr.sprite = butt.notPushedImg;
 
-			butt.buttObj.transform.localScale = new Vector3(0.1f, 0.1f,0.1f);
+			butt.buttObj.transform.localScale = new Vector3(0.2f, 0.2f,0.2f);
 
 			BoxCollider2D box = butt.buttObj.AddComponent<BoxCollider2D> ();
 
