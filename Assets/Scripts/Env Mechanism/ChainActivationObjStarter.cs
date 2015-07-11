@@ -8,13 +8,20 @@ public class ChainActivationObjStarter : MonoBehaviour {
 	public string []triggerTagList;
 	public bool NeedInteractionButton = false;
 	int realTriggerTagListLength;
-	
+
+	public Sprite buttonUp;
+	public Sprite buttonDown;
+
+	SpriteRenderer sr;
+
 	private GameObject whoIsActivatingMe;
 	bool processInCourse = false;
 	
 	// Use this for initialization
 	void Start () {
-		
+
+		sr = GetComponent<SpriteRenderer> ();
+
 		checkTagList ();
 		if(checkObjectToActivate ())
 			getFirstChainPieceScript ();
@@ -92,6 +99,7 @@ public class ChainActivationObjStarter : MonoBehaviour {
 					whoIsActivatingMe = c.gameObject;
 					processInCourse = true;
 					//firstChainPieceObj.SendMessage("buttonPushed", true);
+					sr.sprite = buttonDown;
 					firstChainPieceScript.c_buttonPushed(true);
 				}
 				else {
@@ -123,6 +131,7 @@ public class ChainActivationObjStarter : MonoBehaviour {
 				if(firstChainPieceScript!=null) {
 					//firstChainPieceObj.SendMessage("buttonPushed", false);
 					firstChainPieceScript.c_buttonPushed(false);
+					sr.sprite = buttonUp;
 					whoIsActivatingMe = null;
 					processInCourse = false;
 				}
@@ -167,6 +176,7 @@ public class ChainActivationObjStarter : MonoBehaviour {
 				if(firstChainPieceScript!=null) {
 					//firstChainPieceObj.SendMessage("buttonPushed", true);
 					firstChainPieceScript.c_buttonPushed(true);
+					sr.sprite = buttonDown;
 				}
 				else {
 					Debug.Log ("ATTENZIONE - L'OGGETTO DA ATTIVARE NON E' STATO ASSEGNATO");

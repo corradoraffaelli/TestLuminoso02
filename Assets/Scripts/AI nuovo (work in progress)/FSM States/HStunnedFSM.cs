@@ -123,7 +123,7 @@ public class HStunnedFSM : HEnemyStateFSM {
 		#endif
 
 		if (_instantKill) {
-
+			Debug.Log("inin stunn");
 			i_stunned (true);
 			
 			handleKillo ();

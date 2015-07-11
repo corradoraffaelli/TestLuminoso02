@@ -1055,23 +1055,23 @@ public class InfoSectionContainer
 
 	public void Save(string path)
 	{
-		Debug.Log ("ciaone1");
+		//Debug.Log ("ciaone1");
 		try {
 			string dirName = Path.GetDirectoryName (path);
 			string fileName = Path.GetFileName (path);
 
-			Debug.Log ("path" + dirName + " e file " + fileName);
+			//Debug.Log ("path" + dirName + " e file " + fileName);
 
 			if (!Directory.Exists (dirName)) {
-				Debug.Log ("ciaone2");
+				//Debug.Log ("ciaone2");
 				Directory.CreateDirectory(dirName);
 				
 			}
-			Debug.Log ("ciaone3");
+			//Debug.Log ("ciaone3");
 			var serializer = new XmlSerializer(typeof(InfoSectionContainer));
 			using(var stream = new FileStream(path, FileMode.Create))
 			{
-				Debug.Log ("ciaone4");
+				//Debug.Log ("ciaone4");
 				serializer.Serialize(stream, this);
 			}
 

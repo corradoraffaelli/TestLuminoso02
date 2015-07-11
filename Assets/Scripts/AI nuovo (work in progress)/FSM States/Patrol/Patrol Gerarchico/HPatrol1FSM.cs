@@ -567,7 +567,7 @@ public class HAreaPatrolFSM : HPatrol1FSM {
 		}
 		
 		//TODO: gestire meglio l'arrivo?
-		if (Vector3.Distance (transform.position, patrolTarget.transform.position) < 0.3f) {
+		if (Vector2.Distance (transform.position, patrolTarget.transform.position) < 0.3f) {
 			
 			if(patrolTarget != patrolPar.patrolPoints[0])
 				patrolTarget = patrolPar.patrolPoints[0];
@@ -627,7 +627,7 @@ public class HStandPatrolFSM : HPatrol1FSM {
 		}
 
 		if(patrolPar.patrolPoints.Length > 0) {
-			if (Vector3.Distance (transform.position, patrolPar.patrolPoints[0].transform.position) < 0.5f) {
+			if (Vector2.Distance (transform.position, patrolPar.patrolPoints[0].transform.position) < 0.5f) {
 				
 				if((!i_facingRight() && patrolPar.DefaultVerseRight == true) ||
 				   (i_facingRight() && patrolPar.DefaultVerseRight == false) )
