@@ -71,9 +71,9 @@ BoxCollider2D:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_UsedByEffector: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: -.577997625}
   serializedVersion: 2
-  m_Size: {x: 1.40999997, y: 2.48000002}
+  m_Size: {x: 1.40999997, y: 3.63599324}
 --- !u!114 &11441876
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -103,8 +103,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0f9effd81896d3419c4990dbeedff81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inputDoor: 0
   reloadThisLevel: 1
   sceneName: 
+  actualLevelNumber: 1
+  levelToUnlock: 2
+  savedLevelFile: savedComingLevel
+  savedFileExtention: .dat
 --- !u!114 &11491172
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -148,7 +153,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1187376445
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: d4ba196c765673941a01fe096b0c7917, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 8d7da637cc9e84b2aadeb116d5135574, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!212 &21289612
 SpriteRenderer:
