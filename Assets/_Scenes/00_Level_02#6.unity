@@ -1645,6 +1645,8 @@ MonoBehaviour:
   - Player
   - Enemy
   NeedInteractionButton: 0
+  buttonUp: {fileID: 0}
+  buttonDown: {fileID: 0}
 --- !u!61 &97953335
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -5314,6 +5316,10 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4f8ce935f1493450fb52beeda608187f, type: 2}
   m_IsPrefabParent: 0
+--- !u!4 &260434338 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 451044, guid: 4929ce461d7024f07a33371256545ff5, type: 2}
+  m_PrefabInternal: {fileID: 1915576514}
 --- !u!1001 &260960155
 Prefab:
   m_ObjectHideFlags: 0
@@ -9456,7 +9462,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 471538, guid: 7066d78276bdb4a498ea3cf039fe11b0, type: 2}
       propertyPath: m_RootOrder
-      value: 10
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 471538, guid: 7066d78276bdb4a498ea3cf039fe11b0, type: 2}
       propertyPath: m_LocalScale.x
@@ -14956,7 +14962,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 440624, guid: 31ee4228d98f04eb09b7be7aae9cdec6, type: 2}
       propertyPath: m_RootOrder
-      value: 8
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 440624, guid: 31ee4228d98f04eb09b7be7aae9cdec6, type: 2}
       propertyPath: m_LocalScale.x
@@ -15067,7 +15073,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 453848, guid: 4f8ce935f1493450fb52beeda608187f, type: 2}
       propertyPath: m_RootOrder
-      value: 7
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 453848, guid: 4f8ce935f1493450fb52beeda608187f, type: 2}
       propertyPath: m_LocalScale.x
@@ -16423,7 +16429,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 453848, guid: 4f8ce935f1493450fb52beeda608187f, type: 2}
       propertyPath: m_RootOrder
-      value: 5
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 453848, guid: 4f8ce935f1493450fb52beeda608187f, type: 2}
       propertyPath: m_LocalScale.x
@@ -17430,7 +17436,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 157518, guid: 340389dc4a4be43999e660bcd54a5881, type: 2}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 11467616, guid: 340389dc4a4be43999e660bcd54a5881, type: 2}
       propertyPath: maxNumEnemyCount
@@ -25180,11 +25186,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 494942, guid: 340389dc4a4be43999e660bcd54a5881, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 18.1000004
+      value: -.829999983
       objectReference: {fileID: 0}
     - target: {fileID: 494942, guid: 340389dc4a4be43999e660bcd54a5881, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 14.6999998
+      value: 5.21999979
       objectReference: {fileID: 0}
     - target: {fileID: 494942, guid: 340389dc4a4be43999e660bcd54a5881, type: 2}
       propertyPath: m_LocalPosition.z
@@ -25212,7 +25218,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 157518, guid: 340389dc4a4be43999e660bcd54a5881, type: 2}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 11467616, guid: 340389dc4a4be43999e660bcd54a5881, type: 2}
       propertyPath: maxNumEnemyCount
@@ -29710,7 +29716,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 453848, guid: 4f8ce935f1493450fb52beeda608187f, type: 2}
       propertyPath: m_RootOrder
-      value: 6
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 162654, guid: 4f8ce935f1493450fb52beeda608187f, type: 2}
       propertyPath: m_Name
@@ -30216,6 +30222,7 @@ Transform:
   - {fileID: 317969680}
   - {fileID: 442484054}
   - {fileID: 2072323493}
+  - {fileID: 260434338}
   - {fileID: 705176256}
   - {fileID: 1251378671}
   - {fileID: 652804809}
@@ -36960,6 +36967,8 @@ MonoBehaviour:
   - Player
   - Enemy
   NeedInteractionButton: 0
+  buttonUp: {fileID: 0}
+  buttonDown: {fileID: 0}
 --- !u!61 &1585807424
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -41957,7 +41966,8 @@ MonoBehaviour:
     chaseSpeed: 7
     chaseTarget: {fileID: 0}
     RangeOfView: 0
-    AdditionalROVBeforeLost: 2
+    timeToLoseTarget: 1
+    timeToCharge: 1
   fleeParameters:
     fleeSpeed: 6
     fleeTarget: {fileID: 0}
@@ -43650,7 +43660,7 @@ Transform:
   m_LocalScale: {x: .699999988, y: .699999988, z: 1}
   m_Children: []
   m_Father: {fileID: 1266399245}
-  m_RootOrder: 9
+  m_RootOrder: 10
 --- !u!1 &1862664913
 GameObject:
   m_ObjectHideFlags: 0
@@ -44744,6 +44754,80 @@ SpriteRenderer:
 Transform:
   m_PrefabParentObject: {fileID: 402626, guid: 366ae96d3754a4617946e6345b200d7c, type: 2}
   m_PrefabInternal: {fileID: 2058736708}
+--- !u!1001 &1915576514
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 1266399245}
+    m_Modifications:
+    - target: {fileID: 11483914, guid: 4929ce461d7024f07a33371256545ff5, type: 2}
+      propertyPath: triggerTagList.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 451044, guid: 4929ce461d7024f07a33371256545ff5, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 8.91065407
+      objectReference: {fileID: 0}
+    - target: {fileID: 451044, guid: 4929ce461d7024f07a33371256545ff5, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: -4.34944534
+      objectReference: {fileID: 0}
+    - target: {fileID: 451044, guid: 4929ce461d7024f07a33371256545ff5, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 451044, guid: 4929ce461d7024f07a33371256545ff5, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 451044, guid: 4929ce461d7024f07a33371256545ff5, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 451044, guid: 4929ce461d7024f07a33371256545ff5, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 451044, guid: 4929ce461d7024f07a33371256545ff5, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 451044, guid: 4929ce461d7024f07a33371256545ff5, type: 2}
+      propertyPath: m_RootOrder
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 407468, guid: 4929ce461d7024f07a33371256545ff5, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: -1.33000004
+      objectReference: {fileID: 0}
+    - target: {fileID: 407468, guid: 4929ce461d7024f07a33371256545ff5, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: -8.50699997
+      objectReference: {fileID: 0}
+    - target: {fileID: 420278, guid: 4929ce461d7024f07a33371256545ff5, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 3.86999989
+      objectReference: {fileID: 0}
+    - target: {fileID: 11408388, guid: 4929ce461d7024f07a33371256545ff5, type: 2}
+      propertyPath: tForwardLenght
+      value: 1.29999995
+      objectReference: {fileID: 0}
+    - target: {fileID: 11408388, guid: 4929ce461d7024f07a33371256545ff5, type: 2}
+      propertyPath: tBackwardLenght
+      value: .699999988
+      objectReference: {fileID: 0}
+    - target: {fileID: 11483914, guid: 4929ce461d7024f07a33371256545ff5, type: 2}
+      propertyPath: triggerTagList.Array.data[2]
+      value: GeneralPhysicObject
+      objectReference: {fileID: 0}
+    - target: {fileID: 11408388, guid: 4929ce461d7024f07a33371256545ff5, type: 2}
+      propertyPath: buttonType
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 4929ce461d7024f07a33371256545ff5, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1001 &1916874577
 Prefab:
   m_ObjectHideFlags: 0
@@ -45527,6 +45611,8 @@ MonoBehaviour:
   - Player
   - Enemy
   NeedInteractionButton: 0
+  buttonUp: {fileID: 0}
+  buttonDown: {fileID: 0}
 --- !u!61 &1944733178
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -46890,7 +46976,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 424106, guid: b9e7a413c0f27b4408a53abc7ad12dd6, type: 2}
       propertyPath: m_RootOrder
-      value: 11
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 410350, guid: b9e7a413c0f27b4408a53abc7ad12dd6, type: 2}
       propertyPath: m_LocalPosition.x
@@ -47679,7 +47765,8 @@ MonoBehaviour:
     chaseSpeed: 7
     chaseTarget: {fileID: 0}
     RangeOfView: 0
-    AdditionalROVBeforeLost: 2
+    timeToLoseTarget: 1
+    timeToCharge: 1
   fleeParameters:
     fleeSpeed: 6
     fleeTarget: {fileID: 0}
@@ -49104,7 +49191,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2072323493
 Transform:
   m_ObjectHideFlags: 0
