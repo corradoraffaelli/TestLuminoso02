@@ -3,13 +3,21 @@ using System.Collections;
 
 public class TreeWindController : MonoBehaviour {
 
-	public GameObject referenceWind;
+	GameObject referenceWind;
 	AreaEffector2D effector;
+	bool savedGO = false;
+	//public bool colliding = false;
 
+	bool wasWindRight = true;
 	bool windRight = true;
 
 	bool windActive = false;
 	bool wasWindActive = false;
+
+	public bool IsWindActive
+	{
+		get{return windActive;}
+	}
 
 	Animator animator;
 
@@ -21,22 +29,17 @@ public class TreeWindController : MonoBehaviour {
 	public float minForceLeaf = 10.0f;
 	public float maxForceLeaf = 50.0f;
 
-	// Use this for initialization
+	bool needToFlip = false;
+	//bool flipped = false;
+	
 	void Start () {
 		animator = GetComponent<Animator>();
-		if (referenceWind != null)
-			effector = referenceWind.GetComponent<AreaEffector2D>();
+		//if (referenceWind != null)
+		//	effector = referenceWind.GetComponent<AreaEffector2D>();
 	}
-	
-	// Update is called once per frame
+
 	void Update () {
 		windActive = isWindActive();
-		if (windActive != wasWindActive)
-		{
-			animator.SetBool("activating", windActive);
-			wasWindActive = windActive;
-		}
-		createLeaves();
 
 		if (effector != null && effector.enabled)
 		{
@@ -45,6 +48,17 @@ public class TreeWindController : MonoBehaviour {
 			else
 				windRight = false;
 		}
+
+		handleFlippingNeed();
+
+		if (windActive != wasWindActive)
+		{
+			handleFlipping();
+
+			animator.SetBool("activating", windActive);
+			wasWindActive = windActive;
+		}
+		createLeaves();
 	}
 
 	void createLeaves()
@@ -65,6 +79,9 @@ public class TreeWindController : MonoBehaviour {
 			Debug.Log (leaf.GetComponent<ConstantForce2D>().force);
 			*/
 
+			if (!windRight)
+				randomForce = -randomForce;
+
 			Rigidbody2D rigidbodyLeaf = leaf.GetComponent<Rigidbody2D>();
 			if (rigidbodyLeaf != null)
 			{
@@ -82,7 +99,13 @@ public class TreeWindController : MonoBehaviour {
 		{
 			if (referenceWind.activeInHierarchy == true && effector.enabled == true)
 				return true;
+			else
+			{
+				referenceWind = null;
+				effector = null;
+			}
 		}
+		savedGO = false;
 		return false;
 	}
 
@@ -93,5 +116,49 @@ public class TreeWindController : MonoBehaviour {
 			return randomPositions[randomIndex];
 		else
 			return chooseRandomPosition();
+	}
+
+	void OnTriggerStay2D(Collider2D other)
+	{
+		if (!savedGO) 
+		{
+			AreaEffector2D areaEffector = other.gameObject.GetComponent<AreaEffector2D>();
+			if (areaEffector != null)
+			{
+				referenceWind = other.gameObject;
+				savedGO = true;
+				effector = areaEffector;
+			}
+		}
+	}
+	
+	void OnTriggerExit2D(Collider2D other)
+	{
+		if (savedGO) 
+		{
+			if (other.gameObject == referenceWind)
+			{
+				referenceWind = null;
+				effector = null;
+			}
+		}
+	}
+
+	void handleFlippingNeed()
+	{
+		if (windRight != wasWindRight)
+		{
+			needToFlip = true;
+		}
+		wasWindRight = windRight;
+	}
+
+	void handleFlipping()
+	{
+		if (windActive && needToFlip)
+		{
+			transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
+			needToFlip = false;
+		}
 	}
 }
