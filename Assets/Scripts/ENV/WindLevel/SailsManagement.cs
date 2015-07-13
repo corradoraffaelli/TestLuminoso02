@@ -6,12 +6,10 @@ public class SailsManagement : MonoBehaviour {
 	public bool active = false;
 	GameObject activator;
 
-	// Use this for initialization
 	void Start () {
 	
 	}
-	
-	// Update is called once per frame
+
 	void Update () {
 		if ((activator == null) || (activator != null && activator.activeInHierarchy == false))
 			active = false;

@@ -11,6 +11,7 @@ public class BoatBehaviour : MonoBehaviour {
 	public GameObject door;
 
 	SailsManagement sailsManagement;
+	LanternOnBoat lanternOnBoat;
 
 	bool playerOnBoard = false;
 	bool sailsMoving = false;
@@ -27,13 +28,19 @@ public class BoatBehaviour : MonoBehaviour {
 
 	float oldXPosition = 0.0f;
 
+	bool oldLanternParentControl = false;
+
 	// Use this for initialization
 	void Start () {
-		lantern = GameObject.FindGameObjectWithTag("Lantern");
-		player = GameObject.FindGameObjectWithTag("Player");
+		//lantern = GameObject.FindGameObjectWithTag("Lantern");
+		//player = GameObject.FindGameObjectWithTag("Player");
+		lantern = GeneralFinder.magicLantern;
+		player = GeneralFinder.player;
 		if (sails != null)
 			sailsManagement = sails.GetComponent<SailsManagement>();
 		animator = GetComponent<Animator>();
+
+		lanternOnBoat = GetComponentInChildren<LanternOnBoat>();
 
 		oldXPosition = transform.position.x;
 	}
@@ -52,11 +59,16 @@ public class BoatBehaviour : MonoBehaviour {
 		if (playerOnBoard)
 		{
 			lantern = GameObject.FindGameObjectWithTag("Lantern");
-			if (lantern!= null && lantern.activeInHierarchy && lantern.transform.parent == null)
+
+			bool actualLanternParentControl = lantern!= null && lantern.activeInHierarchy && lantern.transform.parent == null && lanternOnBoat.IsLanternOnBoat;
+
+			//if (lantern!= null && lantern.activeInHierarchy && lantern.transform.parent == null && lanternOnBoat.IsLanternOnBoat)
+			if (actualLanternParentControl && !oldLanternParentControl)
 			{
 				lantern.transform.parent = transform;
 				Debug.Log ("dentro");
 			}
+			oldLanternParentControl = actualLanternParentControl;
 				
 		}
 
@@ -88,6 +100,7 @@ public class BoatBehaviour : MonoBehaviour {
 		//player.transform.parent = transform;
 
 		//riprendo in mano la lanterna per evitare che venga lasciata a terra, nonostante sia figlia della barca
+		/*
 		GameObject magicLanternLogicOBJ = GameObject.FindGameObjectWithTag("MagicLanternLogic");
 		//MagicLantern magicLanternLogic;
 		if (magicLanternLogicOBJ != null){
@@ -95,6 +108,7 @@ public class BoatBehaviour : MonoBehaviour {
 			if (magicLanternLogic != null)
 				magicLanternLogic.actualState = MagicLantern.lanternState.NotUsed;
 		}
+		*/
 	}
 
 	void setBoatAnimations()

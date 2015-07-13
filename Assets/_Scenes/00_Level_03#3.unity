@@ -15431,7 +15431,7 @@ GameObject:
   - 212: {fileID: 458833889}
   m_Layer: 0
   m_Name: frontBoat
-  m_TagString: MovingPlatform
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -15717,6 +15717,61 @@ Prefab:
 Transform:
   m_PrefabParentObject: {fileID: 474256, guid: 6a77e87c706114521bcfedb32d172208, type: 2}
   m_PrefabInternal: {fileID: 1473572013}
+--- !u!1 &474667519
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 474667520}
+  - 61: {fileID: 474667522}
+  - 114: {fileID: 474667521}
+  m_Layer: 0
+  m_Name: LanternOnBoatController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &474667520
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 474667519}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1571773151}
+  m_RootOrder: 7
+--- !u!114 &474667521
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 474667519}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a5447d9d047fec4b838fcacf6bb2c78, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  actualState: 0
+  oldState: 0
+--- !u!61 &474667522
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 474667519}
+  m_Enabled: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Size: {x: 5.15999985, y: 5.71999979}
 --- !u!4 &476222686 stripped
 Transform:
   m_PrefabParentObject: {fileID: 477606, guid: 8a4470984d81a7d469766d32e0b0122f, type: 2}
@@ -20469,7 +20524,7 @@ GameObject:
   - 61: {fileID: 569019751}
   m_Layer: 0
   m_Name: LateralLimits
-  m_TagString: MovingPlatform
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -23825,7 +23880,7 @@ GameObject:
   - 114: {fileID: 644395793}
   m_Layer: 0
   m_Name: Sails
-  m_TagString: MovingPlatform
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -33888,7 +33943,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &960612938
 Transform:
   m_ObjectHideFlags: 0
@@ -34885,11 +34940,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 494942, guid: 340389dc4a4be43999e660bcd54a5881, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 93.4899979
+      value: 490.700012
       objectReference: {fileID: 0}
     - target: {fileID: 494942, guid: 340389dc4a4be43999e660bcd54a5881, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -127.760002
+      value: -121.5
       objectReference: {fileID: 0}
     - target: {fileID: 494942, guid: 340389dc4a4be43999e660bcd54a5881, type: 2}
       propertyPath: m_LocalPosition.z
@@ -48331,6 +48386,11 @@ MonoBehaviour:
   objectToSpawn: {fileID: 100422, guid: e659d71dc64f7a9479e1ffdcdc9ed19d, type: 2}
   destroyAfterTime: 1
   timeToDestroy: 21
+  timeAfterFlash: 3
+  flashSpeed: 2
+  flashBlack: 1
+  flashAlpha: 0
+  minColorAlpha: .5
   spawnOnStart: 1
 --- !u!4 &1404651434 stripped
 Transform:
@@ -51695,7 +51755,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 134006, guid: 329cd0a7380c5d8409bef96676554dfe, type: 2}
       propertyPath: m_TagString
-      value: MovingPlatform
+      value: Untagged
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 329cd0a7380c5d8409bef96676554dfe, type: 2}
@@ -53406,11 +53466,10 @@ GameObject:
   - 212: {fileID: 1571773150}
   - 95: {fileID: 1571773149}
   - 114: {fileID: 1571773152}
-  - 50: {fileID: 1571773153}
   - 61: {fileID: 1571773154}
   m_Layer: 8
   m_Name: Boat
-  m_TagString: MovingPlatform
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -53475,6 +53534,8 @@ Transform:
   - {fileID: 1989185554}
   - {fileID: 376548764}
   - {fileID: 644395791}
+  - {fileID: 474667520}
+  - {fileID: 1695724325}
   m_Father: {fileID: 335667401}
   m_RootOrder: 3
 --- !u!114 &1571773152
@@ -53496,29 +53557,13 @@ MonoBehaviour:
   door: {fileID: 0}
   boatMaxSpeed: 1
   lerpSpeed: 1
---- !u!50 &1571773153
-Rigidbody2D:
-  serializedVersion: 2
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1571773148}
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: .0500000007
-  m_GravityScale: 1
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
 --- !u!61 &1571773154
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1571773148}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_UsedByEffector: 0
@@ -53900,6 +53945,11 @@ MonoBehaviour:
   objectToSpawn: {fileID: 100422, guid: e659d71dc64f7a9479e1ffdcdc9ed19d, type: 2}
   destroyAfterTime: 1
   timeToDestroy: 23
+  timeAfterFlash: 3
+  flashSpeed: 2
+  flashBlack: 1
+  flashAlpha: 0
+  minColorAlpha: .5
   spawnOnStart: 1
 --- !u!1 &1585054801 stripped
 GameObject:
@@ -56885,6 +56935,33 @@ Prefab:
 Transform:
   m_PrefabParentObject: {fileID: 404282, guid: 6a1aaf56fe57b4e6f9b3240741e6ff5f, type: 2}
   m_PrefabInternal: {fileID: 962280868}
+--- !u!1 &1695724324
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 1695724325}
+  m_Layer: 8
+  m_Name: BoatGround
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &1695724325
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1695724324}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1571773151}
+  m_RootOrder: 8
 --- !u!1001 &1697374542
 Prefab:
   m_ObjectHideFlags: 0
@@ -67045,7 +67122,7 @@ GameObject:
   - 61: {fileID: 1989185555}
   m_Layer: 0
   m_Name: RightExitCollider
-  m_TagString: MovingPlatform
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

@@ -87,6 +87,7 @@ public class PlayerMovements : MonoBehaviour {
 	bool facingRight = true;
 	bool Jumping = false;
 	public bool onGround = false;
+	bool wasGround = false;
 	public bool onLadder = false;
 	bool collidingLadder = false;
 
@@ -226,6 +227,8 @@ public class PlayerMovements : MonoBehaviour {
 	AudioHandler audioHandler;
 
 	GameObject windPrefab;
+
+	bool cameraOscura = false;
 
 	void Start () {
 		//HERE...
@@ -421,8 +424,10 @@ public class PlayerMovements : MonoBehaviour {
 				//gestione della collisione con la scala
 				CollidingLadderManagement ();
 
-				//gestione delle piattaforme che si muovono. importante che non sia nell'if dell'onground, fa un controllo all'interno
-				movingPlatformManagement();
+				if (wasGround != onGround)
+					//gestione delle piattaforme che si muovono. importante che non sia nell'if dell'onground, fa un controllo all'interno
+					movingPlatformManagement();
+
 				//gestione collisioni con oggetti "softGround" (quelli in corrispondenza o meno di scale)
 				//softGroundCollManagement ();
 				//softGroundCollManagement_02();
@@ -720,7 +725,12 @@ public class PlayerMovements : MonoBehaviour {
 		if (Jumping == true) {
 			if (audioHandler != null)
 				audioHandler.playClipByName("Salto");
-			RigBody.AddForce (new Vector2 (0.0f, (transform.localScale.y) * 150.0f * jumpFactor));
+
+			if (!cameraOscura)
+				RigBody.AddForce (new Vector2 (0.0f, 150.0f * jumpFactor));
+			else
+				RigBody.AddForce (new Vector2 (0.0f, (transform.localScale.y) * 150.0f * jumpFactor));
+			
 			Jumping = false;
 		}
 	}
@@ -1087,6 +1097,8 @@ public class PlayerMovements : MonoBehaviour {
 		} else {
 			setPlayerParentTo(null);
 		}
+		wasGround = onGround;
+		Debug.Log ("movingPlatformManagement");
 	}
 
 	void setPlayerParentTo(GameObject parentGO)
