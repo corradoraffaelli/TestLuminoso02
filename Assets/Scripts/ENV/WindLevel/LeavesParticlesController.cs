@@ -3,6 +3,8 @@ using System.Collections;
 
 public class LeavesParticlesController : MonoBehaviour {
 
+	public bool defaultVerseRight = true;
+
 	public GameObject[] referenceWind;
 	AreaEffector2D[] effector;
 
@@ -36,10 +38,12 @@ public class LeavesParticlesController : MonoBehaviour {
 		fillEmittersRenderers();
 
 		setLeavesEmission(maxLeavesEmission);
-		setParticlesLeavesAlpha(maxLeavesAlpha);
+		//setParticlesLeavesAlpha(maxLeavesAlpha);
+		setParticlesLeavesAlpha(0.0f);
 
 		setGrassEmission(maxGrassEmission);
-		setParticlesGrassAlpha(maxLeavesAlpha);
+		//setParticlesGrassAlpha(maxLeavesAlpha);
+		setParticlesGrassAlpha(0.0f);
 
 		setSizes();
 
@@ -51,6 +55,7 @@ public class LeavesParticlesController : MonoBehaviour {
 		}
 
 		setEnergy();
+		setVerse();
 	}
 
 	void Update () {
@@ -67,8 +72,8 @@ public class LeavesParticlesController : MonoBehaviour {
 				needToShow = false;
 				needToHide = true;
 			}
-			wasWindActive = windActive;
 		}
+		wasWindActive = windActive;
 
 		updateAlphas();
 	}
@@ -164,7 +169,40 @@ public class LeavesParticlesController : MonoBehaviour {
 			}
 		}
 	}
-	
+
+	void setVerse()
+	{
+		if (!defaultVerseRight)
+		{
+			if (leavesEmitters != null)
+			{
+				for (int i = 0; i < leavesEmitters.Length; i++)
+				{
+					if (leavesEmitters[i] != null)
+					{
+						Vector3 actualWorldSpeed = leavesEmitters[i].worldVelocity;
+						leavesEmitters[i].worldVelocity = new Vector3(-actualWorldSpeed.x, actualWorldSpeed.y, actualWorldSpeed.z);
+						Vector3 actualRndSpeed = leavesEmitters[i].rndVelocity;
+						leavesEmitters[i].rndVelocity = new Vector3(actualRndSpeed.x, -actualRndSpeed.y, actualRndSpeed.z);
+					}
+				}
+			}
+			if (grassEmitters != null)
+			{
+				for (int i = 0; i < grassEmitters.Length; i++)
+				{
+					if (grassEmitters[i] != null)
+					{
+						Vector3 actualWorldSpeed = grassEmitters[i].worldVelocity;
+						grassEmitters[i].worldVelocity = new Vector3(-actualWorldSpeed.x, actualWorldSpeed.y, actualWorldSpeed.z);
+						Vector3 actualRndSpeed = grassEmitters[i].rndVelocity;
+						grassEmitters[i].rndVelocity = new Vector3(actualRndSpeed.x, -actualRndSpeed.y, actualRndSpeed.z);
+					}
+				}
+			}
+		}
+	}
+
 	float getActualGrassAlpha()
 	{
 		if (grassRenderers != null)
