@@ -4646,7 +4646,8 @@ MonoBehaviour:
   balloonReappearTime: 10
   gameObjectsToEnable:
   - {fileID: 1750852739}
-  gameObjectsToEnableController: []
+  gameObjectsToEnableController:
+  - {fileID: 1750852739}
   balloonString: 
   balloonStringController: 
   balloonPrefab: {fileID: 113256, guid: 6b5d1840791797d4e89b69c64f6d470a, type: 2}
@@ -17204,6 +17205,10 @@ Prefab:
     - target: {fileID: 11474506, guid: 4ba0533d6bcd39a49910406de36bd12e, type: 2}
       propertyPath: timeToTrigger
       value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 11474506, guid: 4ba0533d6bcd39a49910406de36bd12e, type: 2}
+      propertyPath: balloonStringController
+      value: Se solo potessi evitareNEWLINEdi toccar terra...
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4ba0533d6bcd39a49910406de36bd12e, type: 2}
@@ -33818,6 +33823,10 @@ Prefab:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 11474506, guid: 4ba0533d6bcd39a49910406de36bd12e, type: 2}
+      propertyPath: balloonStringController
+      value: Forse potrei sfruttare il nemicoNEWLINEper premere il bottone
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4ba0533d6bcd39a49910406de36bd12e, type: 2}
   m_IsPrefabParent: 0
@@ -37407,6 +37416,10 @@ Prefab:
       propertyPath: timeToTrigger
       value: 60
       objectReference: {fileID: 0}
+    - target: {fileID: 11474506, guid: 4ba0533d6bcd39a49910406de36bd12e, type: 2}
+      propertyPath: balloonStringController
+      value: Forse potrei sfruttare il nemicoNEWLINEper premere il pulsante...
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4ba0533d6bcd39a49910406de36bd12e, type: 2}
   m_IsPrefabParent: 0
@@ -40104,7 +40117,8 @@ MonoBehaviour:
   balloonReappearTime: 10
   gameObjectsToEnable:
   - {fileID: 1702124678}
-  gameObjectsToEnableController: []
+  gameObjectsToEnableController:
+  - {fileID: 1702124678}
   balloonString: 
   balloonStringController: 
   balloonPrefab: {fileID: 113256, guid: 6b5d1840791797d4e89b69c64f6d470a, type: 2}
@@ -43451,6 +43465,10 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11474506, guid: 4ba0533d6bcd39a49910406de36bd12e, type: 2}
       propertyPath: balloonString
+      value: Forse potrei attirare il nemicoNEWLINEper farlo scendere...
+      objectReference: {fileID: 0}
+    - target: {fileID: 11474506, guid: 4ba0533d6bcd39a49910406de36bd12e, type: 2}
+      propertyPath: balloonStringController
       value: Forse potrei attirare il nemicoNEWLINEper farlo scendere...
       objectReference: {fileID: 0}
     m_RemovedComponents: []
