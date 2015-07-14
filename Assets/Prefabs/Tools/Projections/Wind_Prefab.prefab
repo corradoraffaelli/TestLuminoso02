@@ -14,6 +14,7 @@ GameObject:
   - 114: {fileID: 11486956}
   - 61: {fileID: 6112350}
   - 95: {fileID: 9513718}
+  - 61: {fileID: 6110696}
   m_Layer: 0
   m_Name: Wind_Prefab
   m_TagString: WindPrefab
@@ -45,7 +46,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 160210}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 28.6700001, y: 3.68000007, z: 0}
+  m_LocalPosition: {x: 32.2405891, y: 1.57930589, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 444358}
@@ -76,6 +77,19 @@ BoxCollider2D:
   m_Offset: {x: 2.0999999, y: 0}
   serializedVersion: 2
   m_Size: {x: 4.28999996, y: 1.01999998}
+--- !u!61 &6110696
+BoxCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 160210}
+  m_Enabled: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 1
+  m_Offset: {x: -.150000006, y: -.119999997}
+  serializedVersion: 2
+  m_Size: {x: 1.03999996, y: .280000001}
 --- !u!61 &6112350
 BoxCollider2D:
   m_ObjectHideFlags: 1
