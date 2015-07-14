@@ -1399,6 +1399,9 @@ public class PlayerMovements : MonoBehaviour {
 
 	private IEnumerator handlePlayerKill() {
 
+		//MOD CORRADO!!!!!!!!!!
+		leaveLadder();
+
 		onGround = false;
 		running = false;
 
