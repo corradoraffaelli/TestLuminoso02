@@ -13,9 +13,8 @@ GameObject:
   - 249: {fileID: 24913026}
   - 114: {fileID: 11486956}
   - 61: {fileID: 6112350}
-  - 95: {fileID: 9513718}
   m_Layer: 0
-  m_Name: Wind_Prefab
+  m_Name: Wind_Prefab bkp
   m_TagString: WindPrefab
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -44,8 +43,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 160210}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 28.6700001, y: 3.68000007, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: .707106829, w: .707106709}
+  m_LocalPosition: {x: 262.157776, y: -91.7578812, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 444358}
@@ -57,8 +56,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 180124}
-  m_LocalRotation: {x: 0, y: .707106829, z: 0, w: .707106709}
-  m_LocalPosition: {x: 0, y: -.119999997, z: -3.08999991}
+  m_LocalRotation: {x: 0, y: 0, z: -.707106829, w: .707106709}
+  m_LocalPosition: {x: 0, y: 0, z: -3.08999991}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 432572}
@@ -89,23 +88,6 @@ BoxCollider2D:
   m_Offset: {x: 2.9000001, y: 0}
   serializedVersion: 2
   m_Size: {x: 2.68000007, y: 1.86000001}
---- !u!95 &9513718
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 160210}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: d3af59a877c23ed4db728486f327ce7e, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
 --- !u!114 &11486956
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -295,7 +277,7 @@ ParticleSystem:
         rgba: 4294109415
       minMaxState: 0
     startSize:
-      scalar: .200000003
+      scalar: .5
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -366,9 +348,9 @@ ParticleSystem:
   ShapeModule:
     serializedVersion: 2
     enabled: 1
-    type: 4
-    radius: .170000002
-    angle: 13.3199997
+    type: 12
+    radius: .469999999
+    angle: 25
     length: 5
     boxX: 1
     boxY: 1
@@ -460,7 +442,7 @@ ParticleSystem:
   RotationModule:
     enabled: 0
     curve:
-      scalar: .785398126
+      scalar: .785398185
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -528,8 +510,8 @@ ParticleSystem:
         ctime5: 0
         ctime6: 0
         ctime7: 0
-        atime0: 30840
-        atime1: 48959
+        atime0: 29876
+        atime1: 65535
         atime2: 0
         atime3: 0
         atime4: 0
@@ -836,7 +818,7 @@ ParticleSystem:
     randomizePerFrame: 0
   ExternalForcesModule:
     enabled: 0
-    multiplier: 2.6500001
+    multiplier: 1
   ClampVelocityModule:
     enabled: 0
     x:
@@ -1013,7 +995,7 @@ ParticleSystem:
   RotationBySpeedModule:
     enabled: 0
     curve:
-      scalar: .785398126
+      scalar: .785398185
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -1195,10 +1177,10 @@ ParticleSystemRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 90432273
   m_SortingOrder: 10
-  m_RenderMode: 1
+  m_RenderMode: 3
   m_MaxParticleSize: .5
   m_CameraVelocityScale: 0
-  m_VelocityScale: .0399999991
+  m_VelocityScale: 0
   m_LengthScale: 2
   m_SortingFudge: 0
   m_NormalDirection: 1
@@ -1231,7 +1213,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1706207911
   m_SortingOrder: 4
-  m_Sprite: {fileID: 21300000, guid: 77554edacfc2c054a81462963467accd, type: 3}
+  m_Sprite: {fileID: 21300000, guid: b92711bf450e44542af15b052ed56432, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!249 &24913026
 AreaEffector2D:

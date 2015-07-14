@@ -18,6 +18,9 @@ public class WindBehaviour : MonoBehaviour {
 
 	public float adaptingSpeed = 100f;
 
+	GameObject cerchio;
+	ParticleSystem partSystem;
+
 	// Use this for initialization
 	void Start () {
 		magicLanternLogicObject = GameObject.FindGameObjectWithTag ("MagicLanternLogic");
@@ -28,6 +31,9 @@ public class WindBehaviour : MonoBehaviour {
 		player = GameObject.FindGameObjectWithTag ("Player");
 		if (player != null)
 			playerMovements = player.GetComponent<PlayerMovements> ();
+
+		getCircleAndParticles();
+		setPartSystemLife();
 	}
 
 	void Update()
@@ -169,5 +175,26 @@ public class WindBehaviour : MonoBehaviour {
 
 		Vector2 newVector = Vector2.Lerp(inputVector, objDirection, adaptingSpeed*Time.deltaTime*100);
 		return (newVector);
+	}
+
+	void getCircleAndParticles()
+	{
+		if (transform.parent != null && transform.parent.transform.gameObject!= null)
+		{
+			if (transform.parent.transform.gameObject.name == "raggio_cerchio")
+				cerchio = transform.parent.transform.gameObject;
+		}
+		ParticleSystem tempPartSystem = GetComponentInChildren<ParticleSystem>();
+		if (tempPartSystem != null)
+			partSystem = tempPartSystem;
+	}
+
+	void setPartSystemLife()
+	{
+		if (cerchio != null && partSystem != null)
+		{
+			float scale = cerchio.transform.localScale.x;
+			partSystem.startLifetime = Mathf.Abs (scale/10.0f);
+		}
 	}
 }
