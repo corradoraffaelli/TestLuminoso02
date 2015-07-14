@@ -99,7 +99,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: .819999993, y: .790000021}
 --- !u!114 &11448932
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -156,7 +156,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1108011375
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 6785775ee29df45ce918a6ed19d5bc96, type: 3}
+  m_Sprite: {fileID: 21300000, guid: e3fd1caba5879ff4aa3db0f54efe1146, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1001 &100100000
 Prefab:
@@ -173,6 +173,14 @@ Prefab:
       propertyPath: flarePrefab
       value: 
       objectReference: {fileID: 167542, guid: c766ddf7a5eec934c9c9e2df602f0bc6, type: 2}
+    - target: {fileID: 0}
+      propertyPath: m_Size.x
+      value: .819999993
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_Size.y
+      value: .790000021
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 160394}
