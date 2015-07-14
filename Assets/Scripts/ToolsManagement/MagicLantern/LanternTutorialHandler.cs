@@ -48,12 +48,15 @@ public class LanternTutorialHandler : MonoBehaviour {
 	public MagicLantern.lanternState[] lanternStates;
 
 	public float changingAlphaSpeed = 1.0f;
+
+	bool wasUseController = false;
 	
 	void Start () {
 		player = GameObject.FindGameObjectWithTag("Player");
 		magicLantern = UtilFinder._GetComponentOfGameObjectWithTag<MagicLantern>("MagicLanternLogic");
 
 		fillSpriteRenderers();
+		setRenderersZeroAlpha();
 
 		wasActive = active;
 	}
@@ -92,19 +95,29 @@ public class LanternTutorialHandler : MonoBehaviour {
 
 
 		wasActive = active;
+
+		bool useController = GeneralFinder.cursorHandler.useController;
+		if (wasUseController != useController)
+			fillSpriteRenderers();
+		wasUseController = useController;
 	}
 
 	void fillSpriteRenderers()
 	{
-		spriteRenderers = new SpriteRenderer[gameObjectsToEnable.Length];
+		if (!GeneralFinder.cursorHandler.useController)
+			spriteRenderers = new SpriteRenderer[gameObjectsToEnable.Length];
+		else
+			spriteRenderers = new SpriteRenderer[gameObjectsToEnableController.Length];
+
 		for (int i = 0; i< spriteRenderers.Length; i++)
 		{
-			if (gameObjectsToEnable[i] != null)
+			if (gameObjectsToEnable[i] != null && !GeneralFinder.cursorHandler.useController)
 			{
-				if (!GeneralFinder.cursorHandler.useController)
 					spriteRenderers[i] = gameObjectsToEnable[i].GetComponent<SpriteRenderer>();
-				else
-					spriteRenderers[i] = gameObjectsToEnableController[i].GetComponent<SpriteRenderer>();
+			}
+			else if (gameObjectsToEnableController[i] != null && GeneralFinder.cursorHandler.useController)
+			{
+				spriteRenderers[i] = gameObjectsToEnableController[i].GetComponent<SpriteRenderer>();
 			}
 				
 			if (spriteRenderers[i] != null)
@@ -112,6 +125,41 @@ public class LanternTutorialHandler : MonoBehaviour {
 				Color tempColor = spriteRenderers[i].color;
 				tempColor = new Color(tempColor.r, tempColor.g, tempColor.b, 0.0f);
 				spriteRenderers[i].color = tempColor;
+			}
+		}
+	}
+
+	void setRenderersZeroAlpha()
+	{
+		if (gameObjectsToEnable != null)
+		{
+			for (int i = 0; i < gameObjectsToEnable.Length; i++)
+			{
+				if (gameObjectsToEnable[i] != null)
+				{
+					SpriteRenderer tempSpriteRenderer = gameObjectsToEnable[i].GetComponent<SpriteRenderer>();
+					if (tempSpriteRenderer != null)
+					{
+						Color tempColor = tempSpriteRenderer.color;
+						tempSpriteRenderer.color = new Color(tempColor.r, tempColor.g, tempColor.b, 0.0f);
+					}
+				}
+			}
+		}
+		
+		if (gameObjectsToEnableController != null)
+		{
+			for (int i = 0; i < gameObjectsToEnableController.Length; i++)
+			{
+				if (gameObjectsToEnableController[i] != null)
+				{
+					SpriteRenderer tempSpriteRenderer = gameObjectsToEnableController[i].GetComponent<SpriteRenderer>();
+					if (tempSpriteRenderer != null)
+					{
+						Color tempColor = tempSpriteRenderer.color;
+						tempSpriteRenderer.color = new Color(tempColor.r, tempColor.g, tempColor.b, 0.0f);
+					}
+				}
 			}
 		}
 	}
