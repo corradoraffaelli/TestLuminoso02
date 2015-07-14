@@ -19,6 +19,9 @@ public class HubLanternControl : MonoBehaviour {
 		[HideInInspector]
 		public SimplyVerifyIfPlayerInTrigger triggerScript;
 		public GameObject starsInfo;
+		public GameObject smokesFather;
+		[HideInInspector]
+		public GameObject[] smokes;
 		public bool interacted;
 		public bool canBeInteracted;
 		public int starsNumber;
@@ -53,6 +56,8 @@ public class HubLanternControl : MonoBehaviour {
 		HubFragmentCounter fragCounter = GetComponent<HubFragmentCounter>();
 		if (fragCounter != null)
 			starsCollected = fragCounter.fragmentTotalNumber;
+
+		getSmokeChildren();
 	}
 
 	void Update () {
@@ -85,6 +90,39 @@ public class HubLanternControl : MonoBehaviour {
 	{
 		setLanternInteracted();
 		activateNextProjection();
+		activateSmoke();
+	}
+
+	void getSmokeChildren()
+	{
+		for (int i = 0; i < mammuthElements.Length; i++)
+		{
+			if (mammuthElements[i] != null && mammuthElements[i].smokesFather != null)
+			{
+				int childNum = mammuthElements[i].smokesFather.transform.childCount;
+				mammuthElements[i].smokes = new GameObject[childNum];
+				for (int j = 0; j < childNum; j++)
+				{
+					mammuthElements[i].smokes[j] = mammuthElements[i].smokesFather.transform.GetChild(j).gameObject;
+				}
+				//mammuthElements[i].smokes = mammuthElements[i].smokesFather.transform.childCount
+			}
+			
+		}
+	}
+
+	void activateSmoke()
+	{
+		for (int i = 0; i < mammuthElements.Length; i++)
+		{
+			if (mammuthElements[i] != null && mammuthElements[i].interagibleObject != null)
+			{
+				InteragibileObject intOBJScript = mammuthElements[i].interagibleObject.GetComponent<InteragibileObject>();
+				if (intOBJScript != null && intOBJScript.playerColliding)
+					//mammuthElements[i].interacted = true;
+					mammuthElements[i].smokesFather.SetActive(true);
+			}
+		}
 	}
 
 	//dice qual è la prossima proiezione che deve essere attivata
