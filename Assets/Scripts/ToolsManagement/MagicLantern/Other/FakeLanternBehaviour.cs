@@ -246,6 +246,7 @@ public class FakeLanternBehaviour : MonoBehaviour {
 				if (glassesManager != null){
 					glassesToEnable[i].canBeEnabled = true;
 					glassesManager.enableGlassByName(glassesToEnable[i].glassType, true);
+					UIHandler(glassesToEnable[i].glassSprite);
 				}
 
 
@@ -259,6 +260,7 @@ public class FakeLanternBehaviour : MonoBehaviour {
 				if (glassesManager != null){
 					glassesManager.enableGlassByName(glassesToDisable[i].glassType, false);
 					glassesToDisable[i].canBeEnabled = false;
+
 				}
 			}
 		}
@@ -309,6 +311,14 @@ public class FakeLanternBehaviour : MonoBehaviour {
 				}
 			}
 		}
+	}
+
+	void UIHandler(Sprite inputSprite)
+	{
+		Debug.Log ("called");
+		PickingObjectGraphic pick = gameObject.AddComponent<PickingObjectGraphic>();
+		pick.setVariables(inputSprite, PlayingUI.UIPosition.BottomRight, 0);
+		pick.setTimeToGetSmall(1.5f);
 	}
 
 }
