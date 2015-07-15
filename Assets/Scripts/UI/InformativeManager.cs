@@ -672,6 +672,30 @@ public class InformativeManager : MonoBehaviour {
 
 	}
 
+	/*
+
+	int nextIndex = 0;
+		int tempActiveSection = activeSection;
+
+		for (int i=0; i<sections.Length; i++) {
+
+			if (forward) {
+				tempActiveSection = (tempActiveSection + 1) % sections.Length;
+			} else {
+				tempActiveSection = (tempActiveSection - 1) % sections.Length;
+				if(tempActiveSection<0)
+					tempActiveSection = sections.Length-1;
+			}
+
+			//Debug.Log ("temp active sect " + tempActiveSection);
+
+			if(!sections[tempActiveSection].locked && sections[tempActiveSection].contentType != infoContentType.Fragments)
+				break;
+
+		}
+
+	*/
+
 	public void c_changeMultimedia(bool forward) {
 
 		int nextIndex = 0;
@@ -700,8 +724,15 @@ public class InformativeManager : MonoBehaviour {
 			activeImage = (activeImage+1)%lenImages;
 		} 
 		else {
+
+
 			activeImage = (activeImage-1)%lenImages;
+
+			if(activeImage<0)
+				activeImage = lenImages-1;
+
 		}
+
 
 		sections [activeSection].contents [activeContent].mainImageIndex = activeImage;
 
