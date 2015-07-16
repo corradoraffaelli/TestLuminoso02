@@ -98,8 +98,8 @@ public class FakeLanternBehaviour : MonoBehaviour {
 			if (actualState != previousState){
 				turnOnLantern(true);
 				audioHandler.playClipByName("Clic");
+				audioHandler.playClipByName("ApparizioneProiezione");
 			}
-			
 		}
 
 		previousState = actualState;
