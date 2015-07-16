@@ -59,6 +59,11 @@ public class FakeLanternBehaviour : MonoBehaviour {
 
 	float xSize = 0.0f;
 
+	bool firstClic = true;
+	float lastTimeClic = 0.0f;
+	public float maxClicTime = 0.6f;
+	public float minClicTime = 0.05f;
+
 	// Use this for initialization
 	void Start () {
 		takeObjectsFromScene ();
@@ -103,6 +108,7 @@ public class FakeLanternBehaviour : MonoBehaviour {
 			setLanternPosition ();
 
 		flashingHandler();
+		setClicks();
 	}
 
 	void setStates()
@@ -134,6 +140,31 @@ public class FakeLanternBehaviour : MonoBehaviour {
 	public void canLanternBeEnabled(bool canOrNot)
 	{
 		canBeReenabled = canOrNot;
+	}
+
+	void setClicks()
+	{
+		if (actualState == fakeLanternState.On) {
+			
+			if (intermittance && Mathf.Abs(Time.time - startOffTime) < turningOffTime)
+			{
+				float diff = turningOffTime - Mathf.Abs(Time.time - startOffTime);
+
+				float value = minClicTime + ((maxClicTime - minClicTime) * diff) / turningOffTime;
+				//Debug.Log (value);
+
+				if ((Time.time - lastTimeClic) > value)
+				{
+					if (firstClic)
+						audioHandler.playForcedClipByName("FirstTimerClic");
+					else
+						audioHandler.playForcedClipByName("SecondTimerClic");
+
+					firstClic = !firstClic;
+					lastTimeClic = Time.time;
+				}
+			}
+		}
 	}
 
 	void setLanternPosition()
