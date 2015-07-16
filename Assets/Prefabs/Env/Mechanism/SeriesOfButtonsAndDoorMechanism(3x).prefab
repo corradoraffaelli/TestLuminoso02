@@ -339,8 +339,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buttons:
-  - notPushedImg: {fileID: 21300000, guid: 56d6688fa70194d38bb10ab526607bf7, type: 3}
-    pushedImg: {fileID: 21300000, guid: 64bf85481139f41c4916f158de48b467, type: 3}
+  - notPushedImg: {fileID: 21300000, guid: 84c54e94a3c554248ace4684a490afb6, type: 3}
+    pushedImg: {fileID: 21300000, guid: 3fe988132331044e5a0b69e5f95e3289, type: 3}
     position: {fileID: 450846}
     sequenceNumber: 0
     buttObj: {fileID: 0}
@@ -353,8 +353,8 @@ MonoBehaviour:
     buttObj: {fileID: 0}
     sr: {fileID: 0}
     tsb: {fileID: 0}
-  - notPushedImg: {fileID: 21300000, guid: 2e80885acaa144783b66c270fe35e772, type: 3}
-    pushedImg: {fileID: 21300000, guid: 6d4a6584329b243ca9441ee6440e2ceb, type: 3}
+  - notPushedImg: {fileID: 21300000, guid: 56d6688fa70194d38bb10ab526607bf7, type: 3}
+    pushedImg: {fileID: 21300000, guid: 64bf85481139f41c4916f158de48b467, type: 3}
     position: {fileID: 442300}
     sequenceNumber: 2
     buttObj: {fileID: 0}
@@ -432,6 +432,26 @@ Prefab:
       propertyPath: m_SortingOrder
       value: -1
       objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: buttons.Array.data[2].notPushedImg
+      value: 
+      objectReference: {fileID: 21300000, guid: 56d6688fa70194d38bb10ab526607bf7,
+        type: 3}
+    - target: {fileID: 0}
+      propertyPath: buttons.Array.data[0].notPushedImg
+      value: 
+      objectReference: {fileID: 21300000, guid: 84c54e94a3c554248ace4684a490afb6,
+        type: 3}
+    - target: {fileID: 0}
+      propertyPath: buttons.Array.data[0].pushedImg
+      value: 
+      objectReference: {fileID: 21300000, guid: 3fe988132331044e5a0b69e5f95e3289,
+        type: 3}
+    - target: {fileID: 0}
+      propertyPath: buttons.Array.data[2].pushedImg
+      value: 
+      objectReference: {fileID: 21300000, guid: 64bf85481139f41c4916f158de48b467,
+        type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 116066}
