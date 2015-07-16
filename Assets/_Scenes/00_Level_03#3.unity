@@ -8367,6 +8367,7 @@ Transform:
   - {fileID: 444958139}
   - {fileID: 276023624}
   - {fileID: 891222799}
+  - {fileID: 1122169537}
   m_Father: {fileID: 1061924453}
   m_RootOrder: 30
 --- !u!4 &254724830 stripped
@@ -35592,11 +35593,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 494942, guid: 340389dc4a4be43999e660bcd54a5881, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 317.600006
+      value: 417.100006
       objectReference: {fileID: 0}
     - target: {fileID: 494942, guid: 340389dc4a4be43999e660bcd54a5881, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -105.5
+      value: -79.0999985
       objectReference: {fileID: 0}
     - target: {fileID: 494942, guid: 340389dc4a4be43999e660bcd54a5881, type: 2}
       propertyPath: m_LocalPosition.z
@@ -35628,7 +35629,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 157518, guid: 340389dc4a4be43999e660bcd54a5881, type: 2}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 21256368, guid: 340389dc4a4be43999e660bcd54a5881, type: 2}
       propertyPath: m_Enabled
@@ -37090,7 +37091,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 157518, guid: 340389dc4a4be43999e660bcd54a5881, type: 2}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 21256368, guid: 340389dc4a4be43999e660bcd54a5881, type: 2}
       propertyPath: m_Enabled
@@ -41782,6 +41783,62 @@ SpriteRenderer:
 Transform:
   m_PrefabParentObject: {fileID: 490690, guid: 7d98d45cec8764511b3251eefc464ec3, type: 2}
   m_PrefabInternal: {fileID: 284633672}
+--- !u!1 &1122169536
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 1122169537}
+  - 61: {fileID: 1122169539}
+  - 114: {fileID: 1122169538}
+  m_Layer: 0
+  m_Name: SeaSoundsActivation
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1122169537
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1122169536}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 44.9000015, y: 1.29999995, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 254286946}
+  m_RootOrder: 35
+--- !u!114 &1122169538
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1122169536}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d51b32dadecff34db1e97292048860e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioHandler: {fileID: 1926634160}
+  seaSound: Mare
+  seagullsSound: Gabbiani
+--- !u!61 &1122169539
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1122169536}
+  m_Enabled: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Size: {x: 20.3500004, y: 17.8600006}
 --- !u!4 &1122303379 stripped
 Transform:
   m_PrefabParentObject: {fileID: 453848, guid: 4f8ce935f1493450fb52beeda608187f, type: 2}
@@ -68994,6 +69051,7 @@ GameObject:
   - 95: {fileID: 1926634158}
   - 114: {fileID: 1926634157}
   - 61: {fileID: 1926634156}
+  - 114: {fileID: 1926634160}
   m_Layer: 8
   m_Name: Boat (1)
   m_TagString: Untagged
@@ -69097,6 +69155,37 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 064176432f72fb04ba13f6e2d4a0461c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
+--- !u!114 &1926634160
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1926634154}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db8ec66bee508ec4a8754d0738e984cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  updateAudioClips: 0
+  clips:
+  - clipName: Mare
+    clip: {fileID: 8300000, guid: 23c6d61a791e3a742b8630d442535932, type: 3}
+    loop: 1
+    volume: 1
+    pitch: 1
+    distanceDependency: 1
+    maxVolumeDistance: 8
+    zeroVolumeDistance: 15
+    audioSource: {fileID: 0}
+  - clipName: Gabbiani
+    clip: {fileID: 8300000, guid: a9c28a3c1d2db2f48bc46ac8d4936756, type: 3}
+    loop: 1
+    volume: 1
+    pitch: 1
+    distanceDependency: 1
+    maxVolumeDistance: 8
+    zeroVolumeDistance: 15
+    audioSource: {fileID: 0}
 --- !u!4 &1927658587 stripped
 Transform:
   m_PrefabParentObject: {fileID: 495876, guid: 43c488598cedc428f81fd45013e1e96e, type: 2}
