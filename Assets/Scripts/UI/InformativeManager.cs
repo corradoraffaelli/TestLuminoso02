@@ -29,8 +29,15 @@ public class InformativeManager : MonoBehaviour {
 	public InformativeSection []sections;
 	
 	int activeSection;
+	public int ActiveSection {
+		get{ return activeSection;}
+
+	}
 
 	public int actualLevelNumber = -1;
+
+	[HideInInspector]
+	public float timeCanShowNewContent = 5.0f;
 
 	#endregion PUBLICVARIABLES
 
@@ -55,7 +62,7 @@ public class InformativeManager : MonoBehaviour {
 
 	Button exitButton;
 
-	bool canShowTemporarely = false;
+	bool unlockedNewContent = false;
 
 	bool initialized = false;
 	
@@ -137,8 +144,7 @@ public class InformativeManager : MonoBehaviour {
 							if(!conte.locked) {
 								
 								conte.unlockerObject.SetActive(false);
-								Debug.Log("ohi");
-								
+
 							}
 							else {
 								if(conte.unlockerObject.activeSelf) {
@@ -512,14 +518,19 @@ public class InformativeManager : MonoBehaviour {
 
 	void Update() {
 		
-		if (canShowTemporarely && Input.GetKey (KeyCode.I)) {
+		if (Input.GetKey (KeyCode.I)) {
 
 			GeneralFinder.menuManager.c_enableMenu(true, canvasInformative);
 
 			GeneralFinder.playingUI.cleanPositionButtonObject (PlayingUI.UIPosition.UpperRight);
 			GeneralFinder.playingUI.cleanPositionGameObjects (PlayingUI.UIPosition.UpperRight);
-			
-			canShowTemporarely = false;
+
+			if(unlockedNewContent) {
+
+				GeneralFinder.testInformativeManager.c_setShowWhenUnlocked(activeSection, sections[activeSection].activeContent);
+				unlockedNewContent = false;
+
+			}
 		}
 		
 	}
@@ -770,7 +781,7 @@ public class InformativeManager : MonoBehaviour {
 	//UNLOCK CONTENT
 	public void c_canShowNewContent(int sect, int cont) {
 		
-		canShowTemporarely = true;
+		unlockedNewContent = true;
 		
 		if (sect >= sections.Length) {
 			Debug.Log("ATTENZIONE - section oltre la size durante lo sblocco del contenuto");
@@ -808,7 +819,7 @@ public class InformativeManager : MonoBehaviour {
 
 		}
 
-		//StartCoroutine ("countDownShowNewContent");
+		StartCoroutine ("countDownShowNewContent");
 
 	}
 
@@ -974,18 +985,23 @@ public class InformativeManager : MonoBehaviour {
 
 	}
 
+	public void c_enableInformativeCanvas() {
+
+
+	}
+
 	#endregion CALLBACKS
 
 	#region COROUTINES
 
 	IEnumerator countDownShowNewContent() {
 		
-		yield return new WaitForSeconds (5.0f);
+		yield return new WaitForSeconds (timeCanShowNewContent);
 		
 		//GeneralFinder.playingUI.cleanPositionButtonObject(PlayingUI.UIPosition.UpperRight);
 		//GeneralFinder.playingUI.cleanPositionGameObjects(PlayingUI.UIPosition.UpperRight);
 		
-		canShowTemporarely = false;
+		unlockedNewContent = false;
 		
 	}
 
@@ -1091,7 +1107,7 @@ public class InfoSectionContainer
 			string dirName = Path.GetDirectoryName (path);
 			string fileName = Path.GetFileName (path);
 
-			//Debug.Log ("path" + dirName + " e file " + fileName);
+			Debug.Log ("path" + dirName + " e file " + fileName);
 
 			if (!Directory.Exists (dirName)) {
 				//Debug.Log ("ciaone2");
@@ -1152,7 +1168,7 @@ public class InfoSectionContainer
 					if(fileName.Contains(fileNameToLoad) && fileExt==".xml") {
 						
 						InfoSectionContainer.loadInformativeManagerConf (ref _sections, filePath);
-						//Debug.Log("CARICAMENTO RIUSCITO");
+						Debug.Log("CARICAMENTO RIUSCITO da " + filePath);
 						return;
 					}
 					
@@ -1193,6 +1209,7 @@ public class InfoSectionContainer
 		InfoSectionContainer infocon = new InfoSectionContainer ();
 		
 		if (_path == null) {
+			Debug.Log("ciao0");
 			TextAsset pi = Resources.Load("DefaultInfoFileConf") as TextAsset;
 			
 			infocon = InfoSectionContainer.LoadFromText (pi.text);
@@ -1201,6 +1218,7 @@ public class InfoSectionContainer
 			
 		}
 		else {
+
 			infocon = InfoSectionContainer.Load(_path);
 			
 			infocon.setConfiguration (ref _sections);
@@ -1230,7 +1248,9 @@ public class InfoSectionContainer
 
 								if(contentToSet.name == loadedContent.name) {
 
-									contentToSet.locked = loadedContent.locked;
+									InformativeContent tempCont = contentToSet;
+
+									setConfigurationContent(ref tempCont, loadedContent);
 
 									break;
 								}
@@ -1259,7 +1279,46 @@ public class InfoSectionContainer
 
 	}
 
+	void setConfigurationContent(ref InformativeContent contentToSet, InformativeContent contentLoad) {
 
+		int len = 0;
+
+		if (contentToSet.mainImages != null) {
+			len = contentToSet.mainImages.Length;
+		
+
+			if (contentToSet.numberViewsImages == null) {
+
+				contentToSet.timerViewsImages = new float[len];
+				contentToSet.numberViewsImages = new int[len];
+
+			}
+
+			if (contentToSet.numberViewsImages.Length == 0) {
+				
+				contentToSet.timerViewsImages = new float[len];
+				contentToSet.numberViewsImages = new int[len];
+				
+			}
+
+			for (int i=0; i<len; i++) {
+
+				contentToSet.timerViewsImages[i] = contentLoad.timerViewsImages[i];
+				contentToSet.numberViewsImages[i] = contentLoad.numberViewsImages[i];
+
+			}
+
+		}
+
+		contentToSet.timerViewsContent = contentLoad.timerViewsContent;
+
+		contentToSet.numberViewsContent = contentLoad.numberViewsContent;
+
+		contentToSet.shownWhenUnlocked = contentLoad.shownWhenUnlocked;
+
+		contentToSet.locked = contentLoad.locked;
+
+	}
 	
 	public static InfoSectionContainer Load(string path)
 	{
@@ -1340,6 +1399,12 @@ public class InformativeContent {
 	[SerializeField]
 	public Sprite []mainImages;
 
+	[SerializeField]
+	public float []timerViewsImages;
+
+	[SerializeField]
+	public int []numberViewsImages;
+
 	[HideInInspector]
 	public int mainImageIndex = 0;
 
@@ -1358,6 +1423,15 @@ public class InformativeContent {
 	[XmlIgnoreAttribute]
 	[SerializeField]
 	public GameObject unlockerObject;
+
+	[SerializeField]
+	public float timerViewsContent;
+
+	[SerializeField]
+	public int numberViewsContent;
+
+	[SerializeField]
+	public bool shownWhenUnlocked;
 
 	[SerializeField]
 	public bool locked = false;

@@ -14,7 +14,7 @@ public class MenuManager : MonoBehaviour {
 	GameObject canvasActive;
 
 	Button []menuButtons;
-
+	
 	bool statusMenu = false;
 
 	// Use this for initialization
@@ -194,6 +194,33 @@ public class MenuManager : MonoBehaviour {
 		
 	}
 
+	public bool getStatusMenu() {
+
+		return statusMenu;
+
+	}
+
+	public GameObject getCanvasActive() {
+
+		return canvasActive;
+
+	}
+
+	public GameObject getCanvasInformative() {
+		
+		return canvasInformative;
+		
+	}
+
+	public bool isInformativeCanvasActive() {
+
+		if (canvasActive == canvasInformative)
+			return true;
+		else
+			return false;
+
+	}
+
 	#endregion CALLBACKS
 
 	// Update is called once per frame
@@ -254,6 +281,8 @@ public class MenuManager : MonoBehaviour {
 			if(canvasActive==canvasInformative) {
 
 				GeneralFinder.informativeManager.fillNavigation ();
+				GeneralFinder.informativeManager.fillMultimedia();
+				GeneralFinder.informativeManager.fillDetail();
 
 			}
 
