@@ -166,11 +166,8 @@ public class AudioHandler : MonoBehaviour {
 						volume = 0.0f;
 					if (volume > maxVolume)
 						volume = maxVolume;
-					//volume = Mathf.Abs(volume);
-					Debug.Log (gameObject.name);
-					Debug.Log (volume);
-					clips[i].audioSource.volume = volume;
 
+					clips[i].audioSource.volume = volume;
 				}
 			}
 		} 
