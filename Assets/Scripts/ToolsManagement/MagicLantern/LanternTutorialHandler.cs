@@ -111,11 +111,11 @@ public class LanternTutorialHandler : MonoBehaviour {
 
 		for (int i = 0; i< spriteRenderers.Length; i++)
 		{
-			if (gameObjectsToEnable[i] != null && !GeneralFinder.cursorHandler.useController)
+			if (i < gameObjectsToEnable.Length && gameObjectsToEnable[i] != null && !GeneralFinder.cursorHandler.useController)
 			{
 					spriteRenderers[i] = gameObjectsToEnable[i].GetComponent<SpriteRenderer>();
 			}
-			else if (gameObjectsToEnableController[i] != null && GeneralFinder.cursorHandler.useController)
+			else if (i < gameObjectsToEnableController.Length && gameObjectsToEnableController[i] != null && GeneralFinder.cursorHandler.useController)
 			{
 				spriteRenderers[i] = gameObjectsToEnableController[i].GetComponent<SpriteRenderer>();
 			}

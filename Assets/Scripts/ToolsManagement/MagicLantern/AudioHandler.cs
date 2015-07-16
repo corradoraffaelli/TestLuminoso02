@@ -12,6 +12,13 @@ public class AudioHandler : MonoBehaviour {
 		public float volume = 1.0f;
 		[Range(-3.0f, 3.0f)]
 		public float pitch = 1.0f;
+
+		public bool distanceDependency = false;
+		[Range(0.0f, 30.0f)]
+		public float maxVolumeDistance = 5.0f;
+		[Range(0.0f, 50.0f)]
+		public float zeroVolumeDistance = 10.0f;
+
 		//[HideInInspector]
 		public AudioSource audioSource;
 	}
@@ -63,6 +70,18 @@ public class AudioHandler : MonoBehaviour {
 		}
 	}
 
+	public void playForcedClipByName(string clipNameInput)
+	{
+		if (clips.Length != 0) {
+			for (int i = 0; i< clips.Length; i++) {
+				if (clips[i] != null && clips[i].clipName == clipNameInput && clips[i].audioSource!=null){
+					clips[i].audioSource.Play();
+					break;
+				}
+			}
+		}
+	}
+
 	public void stopClipByIndex(int clipIndex)
 	{
 		if (clips [clipIndex] != null && clips[clipIndex].audioSource!=null) {
@@ -106,6 +125,7 @@ public class AudioHandler : MonoBehaviour {
 			updateAudioSources();
 			updateAudioClips = false;
 		}
+		setVolumeByDistance();
 	}
 
 	void cleanNotPlaying()
@@ -126,5 +146,33 @@ public class AudioHandler : MonoBehaviour {
 			}
 		}
 		*/
+	}
+
+	void setVolumeByDistance()
+	{
+		float playerDistance = Vector3.Distance(transform.position, GeneralFinder.player.transform.position);
+
+		for (int i = 0; i< clips.Length; i++) {
+			if (clips [i] != null && clips[i].audioSource!=null) {
+				if (clips[i].distanceDependency)
+				{
+					float maxVolume = clips[i].volume;
+
+					float b = maxVolume/(clips[i].maxVolumeDistance - clips[i].zeroVolumeDistance);
+					float a = -b * clips[i].zeroVolumeDistance;
+
+					float volume = a + b * playerDistance;
+					if (volume < 0.0f)
+						volume = 0.0f;
+					if (volume > maxVolume)
+						volume = maxVolume;
+					//volume = Mathf.Abs(volume);
+					Debug.Log (gameObject.name);
+					Debug.Log (volume);
+					clips[i].audioSource.volume = volume;
+
+				}
+			}
+		} 
 	}
 }
