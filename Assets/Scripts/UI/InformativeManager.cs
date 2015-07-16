@@ -1209,7 +1209,7 @@ public class InfoSectionContainer
 		InfoSectionContainer infocon = new InfoSectionContainer ();
 		
 		if (_path == null) {
-			Debug.Log("ciao0");
+
 			TextAsset pi = Resources.Load("DefaultInfoFileConf") as TextAsset;
 			
 			infocon = InfoSectionContainer.LoadFromText (pi.text);

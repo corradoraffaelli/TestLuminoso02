@@ -8,6 +8,8 @@ public class TestInformativeManager : MonoBehaviour {
 	int activeContent = -1;
 	int activeImage = -1;
 
+	public float sogliaConteggio = 2.0f;
+
 	DateTime startContentTime;
 	DateTime startImageTime;
 
@@ -118,10 +120,14 @@ public class TestInformativeManager : MonoBehaviour {
 		TimeSpan timeSp = DateTime.Now - startContentTime;
 		
 		float t = (float) timeSp.TotalSeconds;
+
+		if (t > sogliaConteggio) {
+
+			GeneralFinder.informativeManager.sections [_activeSection].contents [_activeContent].timerViewsContent += t;
 		
-		GeneralFinder.informativeManager.sections [_activeSection].contents [_activeContent].timerViewsContent += t;
+			GeneralFinder.informativeManager.sections [_activeSection].contents [_activeContent].numberViewsContent++;
 		
-		GeneralFinder.informativeManager.sections [_activeSection].contents [_activeContent].numberViewsContent++;
+		}
 
 	}
 
@@ -129,28 +135,30 @@ public class TestInformativeManager : MonoBehaviour {
 
 		TimeSpan timeSp = DateTime.Now - startImageTime;
 		float t2 = (float) timeSp.TotalSeconds;
-		
-		if (GeneralFinder.informativeManager.sections [_activeSection].contents [_activeContent].timerViewsImages == null) {
-			
-			int len = GeneralFinder.informativeManager.sections [_activeSection].contents [_activeContent].mainImages.Length;
-			
-			GeneralFinder.informativeManager.sections [_activeSection].contents [_activeContent].timerViewsImages = new float[len];
-			GeneralFinder.informativeManager.sections [_activeSection].contents [_activeContent].numberViewsImages = new int[len];
-			
-		}
-		
-		if (GeneralFinder.informativeManager.sections [_activeSection].contents [_activeContent].timerViewsImages.Length == 0) {
-			
-			int len = GeneralFinder.informativeManager.sections [_activeSection].contents [_activeContent].mainImages.Length;
-			
-			GeneralFinder.informativeManager.sections [_activeSection].contents [_activeContent].timerViewsImages = new float[len];
-			GeneralFinder.informativeManager.sections [_activeSection].contents [_activeContent].numberViewsImages = new int[len];
-			
-		}
-		
-		GeneralFinder.informativeManager.sections [_activeSection].contents [_activeContent].timerViewsImages [_activeImage] += t2;
-		GeneralFinder.informativeManager.sections [_activeSection].contents [_activeContent].numberViewsImages [_activeImage]++;
 
+		if (t2 > sogliaConteggio) {
+
+			if (GeneralFinder.informativeManager.sections [_activeSection].contents [_activeContent].timerViewsImages == null) {
+			
+				int len = GeneralFinder.informativeManager.sections [_activeSection].contents [_activeContent].mainImages.Length;
+			
+				GeneralFinder.informativeManager.sections [_activeSection].contents [_activeContent].timerViewsImages = new float[len];
+				GeneralFinder.informativeManager.sections [_activeSection].contents [_activeContent].numberViewsImages = new int[len];
+			
+			}
+		
+			if (GeneralFinder.informativeManager.sections [_activeSection].contents [_activeContent].timerViewsImages.Length == 0) {
+			
+				int len = GeneralFinder.informativeManager.sections [_activeSection].contents [_activeContent].mainImages.Length;
+			
+				GeneralFinder.informativeManager.sections [_activeSection].contents [_activeContent].timerViewsImages = new float[len];
+				GeneralFinder.informativeManager.sections [_activeSection].contents [_activeContent].numberViewsImages = new int[len];
+			
+			}
+		
+			GeneralFinder.informativeManager.sections [_activeSection].contents [_activeContent].timerViewsImages [_activeImage] += t2;
+			GeneralFinder.informativeManager.sections [_activeSection].contents [_activeContent].numberViewsImages [_activeImage]++;
+		}
 	}
 
 	void startRecord() {
