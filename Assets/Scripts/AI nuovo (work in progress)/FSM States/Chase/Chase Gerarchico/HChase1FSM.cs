@@ -357,7 +357,12 @@ public class HChargeChaseFSM : HChase1FSM {
 
 	IEnumerator countDownCharge(float _seconds) {
 
-		yield return new WaitForSeconds(_seconds);
+		yield return new WaitForSeconds((_seconds * 2.0f )/3.0f);
+
+		weakPointCollider.offset = new Vector2 (0.7f, weakPointCollider.offset.y);
+
+		yield return new WaitForSeconds((_seconds * 1.0f )/3.0f);
+
 		charged = true;
 
 	}
