@@ -62,6 +62,9 @@ public class AIParameters : MonoBehaviour {
 	public GameObject myWeakPoint;
 
 	[HideInInspector]
+	public BoxCollider2D myWeakPointCollider;
+
+	[HideInInspector]
 	public bool instantKill = false;
 
 	void Start(){
@@ -109,6 +112,9 @@ public class AIParameters : MonoBehaviour {
 			if(child.tag == "Weakness") {
 				
 				myWeakPoint = child.gameObject;
+
+				myWeakPointCollider = myWeakPoint.GetComponent<BoxCollider2D>();
+
 				founded = true;
 				break;
 				

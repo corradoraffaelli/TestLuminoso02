@@ -13,7 +13,7 @@ public class HChase1FSM : HEnemyStateFSM {
 	protected SpriteRenderer statusSpriteRend;
 
 	protected ChaseParameters chasePar;
-	
+
 	protected GameObject chaseTarget {
 		get{ 
 			if(chasePar!=null) return chasePar.chaseTarget;
@@ -441,6 +441,8 @@ public class HCrashChaseFSM : HChase1FSM {
 		//Debug.Log ("init da " + stateName);
 		i_charged (true);
 
+		weakPointCollider.offset = new Vector2 (0.7f, weakPointCollider.offset.y);
+
 	}
 
 	protected void updateCrashChase() {
@@ -486,7 +488,9 @@ public class HCrashChaseFSM : HChase1FSM {
 		_StopCoroutine (lostCor);
 
 		i_charged (false);
-		
+
+		weakPointCollider.offset = new Vector2 (0.0f, weakPointCollider.offset.y);
+
 	}
 
 	IEnumerator countDownLostInFront(float _seconds) {

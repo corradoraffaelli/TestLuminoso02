@@ -15,6 +15,36 @@ public abstract class HEnemyStateFSM : HGenericStateFSM {
 
 	#region QUICKOWNREF
 
+	protected BoxCollider2D weakPointCollider {
+
+		get {
+			if(par !=null) {
+
+				if(par.myWeakPointCollider!=null)
+					return par.myWeakPointCollider;
+
+			}
+
+			return null;
+		}
+
+	}
+
+	protected GameObject weakPoint {
+		
+		get {
+			if(par!=null) {
+				if(par.myWeakPoint!=null)
+					return par.myWeakPoint;
+				
+			}
+			
+			return null;
+		}
+		
+		
+	}
+
 	protected bool _instantKill {
 		get{ return par.instantKill;}
 		set{ par.instantKill = value;}
@@ -534,8 +564,6 @@ public abstract class HEnemyStateFSM : HGenericStateFSM {
 		return _instantKill;
 
 	}
-
-
 
 	
 	#endregion USEFULMETHODS
