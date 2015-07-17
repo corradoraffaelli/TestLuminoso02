@@ -8,6 +8,8 @@ public class PlayerMovements : MonoBehaviour {
 
 	bool respawningFromDeath;
 
+	public float timeToRespawn = 1.0f;
+
 	//parametri di stato, per ora alcuni sono visibili nell'inspector, per debug
 	[System.Serializable]
 	public class StateParameters {
@@ -1442,13 +1444,13 @@ public class PlayerMovements : MonoBehaviour {
 			PlayingUIGameOver puigo = canv.GetComponent<PlayingUIGameOver>();
 
 			if(puigo!=null) {
-				puigo.c_GameOver(10.0f, 5.0f);
+				puigo.c_GameOver(timeToRespawn);
 				Debug.Log ("yeah0.1");
-				yield return new WaitForSeconds(10.0f);
+				yield return new WaitForSeconds(timeToRespawn);
 			}
 			else {
 				Debug.Log ("yeah0.2");
-				yield return new WaitForSeconds(1.0f);
+				yield return new WaitForSeconds(timeToRespawn);
 			}
 		} 
 		else {
@@ -1456,7 +1458,7 @@ public class PlayerMovements : MonoBehaviour {
 			if (mainCamera != null)
 				mainCamera.SendMessage ("GameOver");
 
-			yield return new WaitForSeconds(1.0f);
+			yield return new WaitForSeconds(timeToRespawn);
 
 		}
 

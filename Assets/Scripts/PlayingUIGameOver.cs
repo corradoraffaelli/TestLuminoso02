@@ -28,17 +28,17 @@ public class PlayingUIGameOver : MonoBehaviour {
 	
 	}
 
-	public void c_GameOver(float timeRespawn, float timeScale) {
+	public void c_GameOver(float timeRespawn) {
 
 		if (canvasGameOver != null){
 
 			canvasGameOver.transform.SetAsLastSibling();
 
-			StartCoroutine (handleGameOver (timeRespawn, timeScale));
+			StartCoroutine (handleGameOver (timeRespawn));
 		}
 	}
 
-	private IEnumerator handleGameOver(float timeRespawn, float timeScale) {
+	private IEnumerator handleGameOver(float timeRespawn) {
 		
 		Image sr = canvasGameOver.GetComponent<Image> ();
 		sr.enabled = true;
@@ -49,11 +49,11 @@ public class PlayingUIGameOver : MonoBehaviour {
 			
 		}
 
-		controller.GetComponent<PlayStatusTracker> ().timeScale = timeScale;
+		//controller.GetComponent<PlayStatusTracker> ().timeScale = timeScale;
 
 		yield return new WaitForSeconds(timeRespawn);
 
-		controller.GetComponent<PlayStatusTracker> ().timeScale = 1.0f;
+		//controller.GetComponent<PlayStatusTracker> ().timeScale = 1.0f;
 		
 		for (int i = 20; i>=0; i--) {
 			sr.color = new Color(sr.color.r, sr.color.g, sr.color.b, ((float)i)/15);

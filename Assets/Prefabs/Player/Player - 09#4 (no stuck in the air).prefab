@@ -365,6 +365,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   jumpSLIDEMAN: 0
   matFrictionZero: {fileID: 6200000, guid: 538a6da39639b45fdb6863e5a842bbc7, type: 2}
+  timeToRespawn: 1
   stateParameters:
     onLadder: 0
     underWater: 0
@@ -429,42 +430,63 @@ MonoBehaviour:
     loop: 0
     volume: 1
     pitch: 1
+    distanceDependency: 0
+    maxVolumeDistance: 5
+    zeroVolumeDistance: 10
     audioSource: {fileID: 0}
   - clipName: TonfoSbattere
     clip: {fileID: 8300000, guid: 8c5631a6f4418b54eb4e00cbb880bf98, type: 3}
     loop: 0
     volume: 1
     pitch: 1
+    distanceDependency: 0
+    maxVolumeDistance: 5
+    zeroVolumeDistance: 10
     audioSource: {fileID: 0}
   - clipName: TonfoCaduta
     clip: {fileID: 8300000, guid: 8c5631a6f4418b54eb4e00cbb880bf98, type: 3}
     loop: 0
     volume: 1
     pitch: 1
+    distanceDependency: 0
+    maxVolumeDistance: 5
+    zeroVolumeDistance: 10
     audioSource: {fileID: 0}
   - clipName: RimbalzoNemico
     clip: {fileID: 8300000, guid: 864452f5775220e43a191d6fc8f04433, type: 3}
     loop: 0
     volume: 1
     pitch: 1
+    distanceDependency: 0
+    maxVolumeDistance: 5
+    zeroVolumeDistance: 10
     audioSource: {fileID: 0}
   - clipName: RimbalzoCascoNemico
     clip: {fileID: 8300000, guid: 10895996fd90b434a86aabd711831bab, type: 3}
     loop: 0
     volume: 1
     pitch: 1
+    distanceDependency: 0
+    maxVolumeDistance: 5
+    zeroVolumeDistance: 10
     audioSource: {fileID: 0}
   - clipName: Passi
     clip: {fileID: 8300000, guid: 4b9a34bb69c7b6f469895280c6f7a627, type: 3}
     loop: 1
     volume: .40200001
     pitch: .400000006
+    distanceDependency: 0
+    maxVolumeDistance: 5
+    zeroVolumeDistance: 10
     audioSource: {fileID: 0}
   - clipName: Morte
     clip: {fileID: 8300000, guid: e620c7afa149b47418ae3b79d8c3bbeb, type: 3}
     loop: 0
     volume: 1
     pitch: 1
+    distanceDependency: 0
+    maxVolumeDistance: 5
+    zeroVolumeDistance: 10
     audioSource: {fileID: 0}
 --- !u!198 &19846750
 ParticleSystem:
@@ -1725,6 +1747,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: hardGroundLayers.m_Bits
       value: 393472
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: timeToRespawn
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
