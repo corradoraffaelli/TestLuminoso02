@@ -29,7 +29,7 @@ public class killWhatever : MonoBehaviour {
 			}
 
 			else {
-				Debug.Log ("uccido e io sono" + gameObject.name);
+				//Debug.Log ("uccido e io sono" + gameObject.name);
 				c.gameObject.SendMessage("c_instantKill");
 				
 				if(oneKill)

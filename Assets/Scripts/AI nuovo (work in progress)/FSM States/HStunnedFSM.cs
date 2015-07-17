@@ -203,7 +203,7 @@ public class HStunnedFSM : HEnemyStateFSM {
 	protected void stunnedUpdate(){
 
 		if (_instantKill && !killDuringStunn) {
-			Debug.Log("inin stunn");
+			//Debug.Log("inin stunn");
 			killDuringStunn = true;
 
 			//TODO: questa parte è da rivedere?

@@ -560,14 +560,19 @@ public class PlayerMovements : MonoBehaviour {
 		if(!anim.GetBool("Stunned") && stunned)
 			anim.SetTrigger("StartStunned");
 
-		if(!anim.GetBool("Alerted") && alert) {
+		if (AIControl) {
 
-			anim.SetTrigger("StartAlert");
+			if(!anim.GetBool("Alerted") && alert) {
+
+				anim.SetTrigger("StartAlert");
+
+			}
+
+			anim.SetBool ("Charged", charged);
+			anim.SetBool ("Alerted", alert);
 
 		}
 
-		anim.SetBool("Charged", charged);
-		anim.SetBool ("Alerted", alert);
 		anim.SetBool ("Stunned", stunned);
 
 		if (onGround && ((onLadder && RigBody.velocity.y <= 0.0f) || (!onLadder)))
@@ -575,18 +580,25 @@ public class PlayerMovements : MonoBehaviour {
 		else
 			anim.SetBool ("onGround", false);
 		anim.SetBool ("Running", running);
-		if (running) {
-			if (((RigBody.velocity.x > 0.0f) && !facingRight) || ((RigBody.velocity.x < 0.0f) && facingRight))
-				anim.SetBool ("Backwards", true);
-			else
-				anim.SetBool ("Backwards", false);
-		}
 
-		anim.SetBool ("OnLadder", onLadder);
-		if (onLadder && RigBody.velocity.y != 0.0f)
-			anim.SetBool ("Climbing", true);
-		else
-			anim.SetBool ("Climbing", false);
+		if (!AIControl) {
+
+			if (running) {
+				if (((RigBody.velocity.x > 0.0f) && !facingRight) || ((RigBody.velocity.x < 0.0f) && facingRight))
+					anim.SetBool ("Backwards", true);
+				else
+					anim.SetBool ("Backwards", false);
+			}
+
+
+
+			anim.SetBool ("OnLadder", onLadder);
+			if (onLadder && RigBody.velocity.y != 0.0f)
+				anim.SetBool ("Climbing", true);
+			else
+				anim.SetBool ("Climbing", false);
+
+		}
 
 	}
 
@@ -1098,7 +1110,7 @@ public class PlayerMovements : MonoBehaviour {
 			setPlayerParentTo(null);
 		}
 		wasGround = onGround;
-		Debug.Log ("movingPlatformManagement");
+		//Debug.Log ("movingPlatformManagement");
 	}
 
 	void setPlayerParentTo(GameObject parentGO)
