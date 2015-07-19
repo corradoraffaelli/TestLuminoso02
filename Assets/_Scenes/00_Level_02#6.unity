@@ -44743,8 +44743,10 @@ GameObject:
   - 212: {fileID: 1862115348}
   - 61: {fileID: 1862115347}
   - 50: {fileID: 1862115346}
+  - 114: {fileID: 1862115350}
+  - 114: {fileID: 1862115351}
   m_Layer: 8
-  m_Name: cassa
+  m_Name: Peso
   m_TagString: GeneralPhysicObject
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -44817,6 +44819,42 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1266399245}
   m_RootOrder: 10
+--- !u!114 &1862115350
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1862115345}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9579ce30fec70144bb40fe865d4288e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundName: Tonfo
+  minSpeedSound: 10
+  minInterval: 2
+--- !u!114 &1862115351
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1862115345}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db8ec66bee508ec4a8754d0738e984cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  updateAudioClips: 0
+  clips:
+  - clipName: Tonfo
+    clip: {fileID: 8300000, guid: 440030d483552134a9b207c0e8c82b77, type: 3}
+    loop: 0
+    volume: 1
+    pitch: 1
+    distanceDependency: 1
+    maxVolumeDistance: 10
+    zeroVolumeDistance: 12
+    audioSource: {fileID: 0}
 --- !u!1 &1862664913
 GameObject:
   m_ObjectHideFlags: 0
