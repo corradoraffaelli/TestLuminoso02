@@ -612,6 +612,7 @@ public class InformativeManager : MonoBehaviour {
 			
 			if(sections [sectionN].contents [contentN].mainImages[imageN] != null) {
 				multimedia.sprite = sections [sectionN].contents [contentN].mainImages [imageN];
+				multimedia.color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
 			}
 			
 		}
