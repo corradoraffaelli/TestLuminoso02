@@ -1239,34 +1239,12 @@ public class InfoSectionContainer
 			foreach(InformativeSection loadedSection in sections) {
 
 				if(loadedSection.title==sectionToSet.title && loadedSection.levelN == sectionToSet.levelN) {
+					
+					//setto le informazioni della section
 
-					try {
+					InformativeSection tempSectToSet = sectionToSet;
 
-						foreach(InformativeContent contentToSet in sectionToSet.contents) {
-
-							foreach(InformativeContent loadedContent in loadedSection.contents) {
-
-								if(contentToSet.name == loadedContent.name) {
-
-									InformativeContent tempCont = contentToSet;
-
-									setConfigurationContent(ref tempCont, loadedContent);
-
-									break;
-								}
-
-							}
-
-						}
-
-					}
-					catch(System.Exception e) {
-						
-						
-					}
-
-
-					sectionToSet.locked = loadedSection.locked;
+					setConfigurationSection(ref tempSectToSet, loadedSection);
 
 					break;
 
@@ -1276,6 +1254,43 @@ public class InfoSectionContainer
 
 		}
 
+
+	}
+
+	void setConfigurationSection(ref InformativeSection sectionToSet, InformativeSection sectionLoad) {
+
+		//setto le informazioni della section
+
+		sectionToSet.ended = sectionLoad.ended;
+
+		sectionToSet.locked = sectionLoad.locked;
+
+		//setto le informazioni per ogni content
+
+		try {
+
+			foreach(InformativeContent contentToSet in sectionToSet.contents) {
+				
+				foreach(InformativeContent loadedContent in sectionLoad.contents) {
+					
+					if(contentToSet.name == loadedContent.name) {
+						
+						InformativeContent tempCont = contentToSet;
+						
+						setConfigurationContent(ref tempCont, loadedContent);
+						
+						break;
+					}
+					
+				}
+				
+			}
+
+		}
+		catch(System.Exception e) {
+			
+			
+		}
 
 	}
 
@@ -1317,6 +1332,7 @@ public class InfoSectionContainer
 		contentToSet.shownWhenUnlocked = contentLoad.shownWhenUnlocked;
 
 		contentToSet.locked = contentLoad.locked;
+
 
 	}
 	
@@ -1383,8 +1399,17 @@ public class InformativeSection {
 	[HideInInspector]
 	public int activeContent;
 
+	//serve per la gestione del menù
+	//per aprire o meno le sezioni
+	//viene settato a true la prima volta che un suo collezionabile viene sbloccato
 	[SerializeField]
 	public bool locked = false;
+
+	//serve per capire se si è finito un livello
+	//viene gestito a fine e inizio livello da UnlockedLevelControl
+	[SerializeField]
+	public bool ended = false;
+
 
 }
 
