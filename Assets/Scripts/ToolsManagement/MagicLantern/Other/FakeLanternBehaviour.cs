@@ -3,6 +3,10 @@ using System.Collections;
 
 public class FakeLanternBehaviour : MonoBehaviour {
 
+	public bool unlockContent = false;
+	int sectionIndex;
+	int contentIndex;
+
 	public bool disableObject = false;
 	public bool intermittance = false;
 	public bool disabledByEnemy = true;
@@ -80,6 +84,7 @@ public class FakeLanternBehaviour : MonoBehaviour {
 		}
 
 		setLanternPosition ();
+		setContentVariables();
 	}
 	
 	// Update is called once per frame
@@ -241,6 +246,48 @@ public class FakeLanternBehaviour : MonoBehaviour {
 			rendererCircle = raggio_cerchio.GetComponent<SpriteRenderer>();
 	}
 
+	//se la fakeLantern deve sbloccare qualche contenuto, prendo gli indici necessari per farlo
+	void setContentVariables()
+	{
+		if (unlockContent)
+		{
+			if (GeneralFinder.informativeManager != null)
+			{
+				for (int i = 0; i < GeneralFinder.informativeManager.sections.Length; i++)
+				{
+					if (GeneralFinder.informativeManager.sections[i] != null)
+					{
+						for (int j = 0; j < GeneralFinder.informativeManager.sections[i].contents.Length; j++)
+						{
+							if (GeneralFinder.informativeManager.sections[i].contents[j] != null)
+							{
+								if (GeneralFinder.informativeManager.sections[i].contents[j].unlockerObject == gameObject)
+								{
+									sectionIndex = i;
+									contentIndex = j;
+									Debug.Log (i);
+									Debug.Log (j);
+									return;
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+	void unlockContentMethod()
+	{
+		if (unlockContent)
+		{
+			if (GeneralFinder.informativeManager != null)
+			{
+				GeneralFinder.informativeManager.c_canShowNewContent(sectionIndex, contentIndex);
+			}
+		}
+	}
+
 	void turnOnLantern(bool turnOn)
 	{
 		raggio.SetActive (turnOn);
@@ -301,6 +348,8 @@ public class FakeLanternBehaviour : MonoBehaviour {
 				child.gameObject.SetActive(false);
 			}
 		}
+
+		unlockContentMethod();
 	}
 
 	void setRayAlpha(float inputAlpha)
