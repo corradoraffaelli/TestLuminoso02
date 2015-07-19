@@ -23,7 +23,7 @@ public class TestInformativeManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-		if (!GeneralFinder.playStatusTracker.inPlayMode && GeneralFinder.menuManager.getStatusMenu()) {
+		if (!PlayStatusTracker.inPlay && GeneralFinder.menuManager.getStatusMenu()) {
 
 			if(GeneralFinder.menuManager.isInformativeCanvasActive()) {
 
