@@ -164,7 +164,7 @@ public class MenuManager : MonoBehaviour {
 
 		Application.LoadLevel (Application.loadedLevel);
 		PlayStatusTracker.inPlay = true;
-		GeneralFinder.playStatusTracker.inPlayMode = true;
+		//GeneralFinder.playStatusTracker.inPlay = true;
 	}
 
 	public void c_enableMenu(bool enable, GameObject canvasToShow=null) {
@@ -174,7 +174,7 @@ public class MenuManager : MonoBehaviour {
 			
 			//Time.timeScale = 0.0f;
 			PlayStatusTracker.inPlay = false;
-			GeneralFinder.playStatusTracker.inPlayMode = false;
+			//GeneralFinder.playStatusTracker.inPlay = false;
 			//Debug.Log("setto in playmode");
 
 			if(canvasToShow==null)
@@ -187,7 +187,7 @@ public class MenuManager : MonoBehaviour {
 			
 			//Time.timeScale = 1.0f;
 			PlayStatusTracker.inPlay = true;
-			GeneralFinder.playStatusTracker.inPlayMode = true;
+			//GeneralFinder.playStatusTracker.inPlayMode = true;
 			c_switchMenuSection(canvasIntro, null);
 			
 		}

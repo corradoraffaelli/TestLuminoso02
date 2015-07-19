@@ -148,8 +148,8 @@ public class InformativeManager : MonoBehaviour {
 							}
 							else {
 								if(conte.unlockerObject.activeSelf) {
-									conte.unlockerObject.SendMessage("c_setSectionInt", sectionIndex);
-									conte.unlockerObject.SendMessage("c_setContentInt", contentIndex);
+									//conte.unlockerObject.SendMessage("c_setSectionInt", sectionIndex);
+									//conte.unlockerObject.SendMessage("c_setContentInt", contentIndex);
 								}
 							}
 							
