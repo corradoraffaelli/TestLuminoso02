@@ -206,6 +206,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   jumpSLIDEMAN: 0
   matFrictionZero: {fileID: 0}
+  timeToRespawn: 1
   stateParameters:
     onLadder: 0
     underWater: 0
@@ -409,11 +410,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_Color.g
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_Color.b
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_Controller

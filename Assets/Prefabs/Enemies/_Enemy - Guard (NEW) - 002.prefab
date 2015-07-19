@@ -354,6 +354,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   jumpSLIDEMAN: 0
   matFrictionZero: {fileID: 0}
+  timeToRespawn: 1
   stateParameters:
     onLadder: 0
     underWater: 0
@@ -505,13 +506,17 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_Color.b
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 06343f245fe7548bca6a62c611d615e4,
         type: 3}
+    - target: {fileID: 0}
+      propertyPath: m_Color.g
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 188112}
