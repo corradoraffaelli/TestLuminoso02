@@ -336,11 +336,12 @@ public class UnlockableContentUI : MonoBehaviour {
 
 	void OnDestroy()
 	{
+		/*
 		if (saveOnDestroy)
 		{
 			GeneralFinder.informativeManager.c_saveData();
 			Debug.Log ("salvo");
 		}
-			
+		*/	
 	}
 }

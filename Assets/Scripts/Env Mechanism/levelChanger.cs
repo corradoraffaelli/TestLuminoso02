@@ -44,6 +44,8 @@ public class levelChanger : MonoBehaviour {
 			unlockLevel();
 			saveInfo();
 		}
+		GeneralFinder.informativeManager.c_saveData();
+		Debug.Log ("salvo");
 		changeScene ();
 	}
 
