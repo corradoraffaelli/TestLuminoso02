@@ -324,7 +324,8 @@ public class FakeLanternBehaviour : MonoBehaviour {
 				if (glassesManager != null){
 					glassesToEnable[i].canBeEnabled = true;
 					glassesManager.enableGlassByName(glassesToEnable[i].glassType, true);
-					UIHandler(glassesToEnable[i].glassSprite);
+					if (!unlockContent)
+						UIHandler(glassesToEnable[i].glassSprite);
 				}
 
 
