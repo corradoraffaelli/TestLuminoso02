@@ -76,6 +76,9 @@ public class UnlockableContentUI : MonoBehaviour {
 			wasUseController = GeneralFinder.cursorHandler.useController;
 			setUpperRightButton();
 		}
+
+		if (Input.GetKeyUp(KeyCode.F))
+			stopPulsing();
 	}
 
 	void setSections()
@@ -343,5 +346,18 @@ public class UnlockableContentUI : MonoBehaviour {
 			Debug.Log ("salvo");
 		}
 		*/	
+	}
+
+	public void stopPulsing()
+	{
+		setUpperRightStandardBook();
+		PulsingUIElement[] pulsingEl = GetComponents<PulsingUIElement>();
+		for (int i = 0; i < pulsingEl.Length; i++)
+		{
+			if (pulsingEl[i] != null)
+			{
+				pulsingEl[i].stopPulsing();
+			}
+		}
 	}
 }
