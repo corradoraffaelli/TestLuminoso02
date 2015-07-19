@@ -358,7 +358,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 160874}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 7.72324085, y: 17.1799641, z: 0}
+  m_LocalPosition: {x: 19.1920738, y: 18.6814728, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 426872}
@@ -641,6 +641,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe9ceeb657298084b8235d0ba4342cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  unlockContent: 0
   disableObject: 0
   intermittance: 1
   disabledByEnemy: 1
@@ -655,8 +656,8 @@ MonoBehaviour:
   - {fileID: 0}
   glassesToDisable: []
   enableLantern: 1
-  maxClicTime: .600000024
-  minClicTime: .0500000007
+  maxClicTime: .300000012
+  minClicTime: .0299999993
 --- !u!114 &11414752
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -678,6 +679,33 @@ MonoBehaviour:
     distanceDependency: 0
     maxVolumeDistance: 5
     zeroVolumeDistance: 10
+    audioSource: {fileID: 0}
+  - clipName: FirstTimerClic
+    clip: {fileID: 8300000, guid: 8105185d07e969e409e58ed90c888b04, type: 3}
+    loop: 0
+    volume: 1
+    pitch: 1
+    distanceDependency: 1
+    maxVolumeDistance: 7
+    zeroVolumeDistance: 11
+    audioSource: {fileID: 0}
+  - clipName: SecondTimerClick
+    clip: {fileID: 8300000, guid: c106ce80c50b49a4fbe2b8b257abe6f5, type: 3}
+    loop: 0
+    volume: 1
+    pitch: 1
+    distanceDependency: 1
+    maxVolumeDistance: 7
+    zeroVolumeDistance: 11
+    audioSource: {fileID: 0}
+  - clipName: Clic
+    clip: {fileID: 8300000, guid: e3fdaf36bc452de4c8f4b1b4cf5488f0, type: 3}
+    loop: 0
+    volume: 1
+    pitch: 1
+    distanceDependency: 1
+    maxVolumeDistance: 7
+    zeroVolumeDistance: 11
     audioSource: {fileID: 0}
 --- !u!114 &11424078
 MonoBehaviour:

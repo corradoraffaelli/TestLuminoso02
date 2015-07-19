@@ -65,7 +65,9 @@ public class FakeLanternBehaviour : MonoBehaviour {
 
 	bool firstClic = true;
 	float lastTimeClic = 0.0f;
+	[Range(0.1f, 2.0f)]
 	public float maxClicTime = 0.6f;
+	[Range(0.01f, 0.5f)]
 	public float minClicTime = 0.05f;
 
 	// Use this for initialization
