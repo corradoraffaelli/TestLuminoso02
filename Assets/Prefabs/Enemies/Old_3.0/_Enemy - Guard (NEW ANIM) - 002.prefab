@@ -263,6 +263,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   jumpSLIDEMAN: 0
   matFrictionZero: {fileID: 0}
+  timeToRespawn: 1
   stateParameters:
     onLadder: 0
     underWater: 0
@@ -370,7 +371,8 @@ MonoBehaviour:
     chaseSpeed: 5.5999999
     chaseTarget: {fileID: 0}
     RangeOfView: 0
-    AdditionalROVBeforeLost: 2
+    timeToLoseTarget: 1
+    timeToCharge: 1
   fleeParameters:
     fleeSpeed: 6
     fleeTarget: {fileID: 0}
@@ -383,6 +385,7 @@ MonoBehaviour:
   _boxCollider: {fileID: 0}
   _circleCollider: {fileID: 0}
   myWeakPoint: {fileID: 0}
+  myWeakPointCollider: {fileID: 0}
   instantKill: 0
 --- !u!114 &11426198
 MonoBehaviour:

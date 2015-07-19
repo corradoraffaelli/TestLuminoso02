@@ -522,8 +522,8 @@ public class InformativeManager : MonoBehaviour {
 
 			GeneralFinder.menuManager.c_enableMenu(true, canvasInformative);
 
-			GeneralFinder.playingUI.cleanPositionButtonObject (PlayingUI.UIPosition.UpperRight);
-			GeneralFinder.playingUI.cleanPositionGameObjects (PlayingUI.UIPosition.UpperRight);
+			//GeneralFinder.playingUI.cleanPositionButtonObject (PlayingUI.UIPosition.UpperRight);
+			//GeneralFinder.playingUI.cleanPositionGameObjects (PlayingUI.UIPosition.UpperRight);
 
 			if(unlockedNewContent) {
 
