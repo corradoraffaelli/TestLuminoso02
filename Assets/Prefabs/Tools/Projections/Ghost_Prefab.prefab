@@ -26,6 +26,7 @@ GameObject:
   - 212: {fileID: 21288214}
   - 61: {fileID: 6178018}
   - 50: {fileID: 5000888}
+  - 95: {fileID: 9527692}
   m_Layer: 15
   m_Name: Ghost_Prefab
   m_TagString: Untagged
@@ -60,6 +61,7 @@ Transform:
   m_RootOrder: 0
 --- !u!50 &5000888
 Rigidbody2D:
+  serializedVersion: 2
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
@@ -68,11 +70,11 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: .0500000007
   m_GravityScale: 1
-  m_FixedAngle: 0
   m_IsKinematic: 1
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!61 &6178018
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -86,6 +88,23 @@ BoxCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Size: {x: 2.55999994, y: 2.76999998}
+--- !u!95 &9527692
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 174594}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 0cf4d0c5c86a6cd4480ee5cc476cfac3, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!212 &21288214
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -110,7 +129,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1706207911
   m_SortingOrder: 4
-  m_Sprite: {fileID: 21300000, guid: f75e460e1846a97499f695c24e2ad848, type: 3}
+  m_Sprite: {fileID: 21300000, guid: a64b9c9d620a05743a8ede19be4b80c5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1001 &100100000
 Prefab:
@@ -118,7 +137,16 @@ Prefab:
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: a64b9c9d620a05743a8ede19be4b80c5,
+        type: 3}
+    - target: {fileID: 0}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 0cf4d0c5c86a6cd4480ee5cc476cfac3, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 174594}

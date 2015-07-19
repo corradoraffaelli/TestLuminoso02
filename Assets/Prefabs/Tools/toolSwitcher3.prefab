@@ -97,23 +97,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!1 &163252
-GameObject:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 439426}
-  - 114: {fileID: 11453390}
-  - 114: {fileID: 11416626}
-  m_Layer: 0
-  m_Name: Glass_Wind
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
 --- !u!1 &174074
 GameObject:
   m_ObjectHideFlags: 1
@@ -222,7 +205,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 187622}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -245.550247, y: 112.578445, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 484852}
@@ -276,18 +259,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 484852}
   m_RootOrder: 2
---- !u!4 &439426
-Transform:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 163252}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 484852}
-  m_RootOrder: 9
 --- !u!4 &452288
 Transform:
   m_ObjectHideFlags: 1
@@ -355,7 +326,6 @@ Transform:
   - {fileID: 458346}
   - {fileID: 462230}
   - {fileID: 472068}
-  - {fileID: 439426}
   m_Father: {fileID: 421450}
   m_RootOrder: 0
 --- !u!50 &5051600
@@ -476,27 +446,6 @@ MonoBehaviour:
   clouds: {fileID: 0}
   walls: []
   standardFakeProjectionRotation: 0
---- !u!114 &11416626
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 163252}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ed5b04961226c864094b4f9aec046051, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  glassStates:
-  - glassSprite: {fileID: 21300000, guid: dc7b42f1bec59884ab17481c3f2895ce, type: 3}
-    angle: 0
-  - glassSprite: {fileID: 21300000, guid: aedb01c1fa39c4e4884b3d5d8bebf4bd, type: 3}
-    angle: -90
-  - glassSprite: {fileID: 21300000, guid: 3b674ce21c028af4590ecd315646140c, type: 3}
-    angle: 180
-  - glassSprite: {fileID: 21300000, guid: 10e496c83e2d39842aa14b130a73e3d2, type: 3}
-    angle: 90
-  actualStateIndex: 0
 --- !u!114 &11433308
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -551,12 +500,12 @@ MonoBehaviour:
   actual: 0
   rotateWithLantern: 0
   canBeModified: 0
-  spriteObject: {fileID: 21300000, guid: 2adceb14741f53e469be66196f683797, type: 3}
+  spriteObject: {fileID: 21300000, guid: ac651e81a6fd088458e187ef74dfd5ef, type: 3}
   goodProjection: {fileID: 21300000, guid: ccb7d92fcf2cd4647a6da08ac75139bb, type: 3}
   badProjection: {fileID: 21300000, guid: ccb7d92fcf2cd4647a6da08ac75139bb, type: 3}
   blurredProjection: {fileID: 21300000, guid: 0cd3b672380e36a428c33281524b6fe3, type: 3}
   emptySprite: {fileID: 21300000, guid: 6d6dbd4837225ea4a896418830624d88, type: 3}
-  glassSprite: {fileID: 21300000, guid: dfb8d4e701170374f8707a6dc43b8a34, type: 3}
+  glassSprite: {fileID: 21300000, guid: 0b6bcc28426ebb34b865066ee2cca1fd, type: 3}
   glassType: Platform
   subGlassList: []
   projectionObject: {fileID: 0}
@@ -641,36 +590,6 @@ MonoBehaviour:
   toOverlap: {fileID: 0}
   overlapPercentage: 10
   endedProjected: 0
---- !u!114 &11453390
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 163252}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d528b953161387942976b4620f5a3fa6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  usable: 0
-  canBeEnabled: 0
-  actual: 0
-  rotateWithLantern: 1
-  canBeModified: 0
-  spriteObject: {fileID: 21300000, guid: b92711bf450e44542af15b052ed56432, type: 3}
-  goodProjection: {fileID: 21300000, guid: ccb7d92fcf2cd4647a6da08ac75139bb, type: 3}
-  badProjection: {fileID: 21300000, guid: ccb7d92fcf2cd4647a6da08ac75139bb, type: 3}
-  blurredProjection: {fileID: 21300000, guid: 0cd3b672380e36a428c33281524b6fe3, type: 3}
-  emptySprite: {fileID: 21300000, guid: 6d6dbd4837225ea4a896418830624d88, type: 3}
-  glassSprite: {fileID: 21300000, guid: 651a8a7da659f494fb6f9b9934bda8d7, type: 3}
-  glassType: Wind
-  subGlassList: []
-  projectionObject: {fileID: 0}
-  prefabObject: {fileID: 160210, guid: ceba245a9f19bea419ccbb4e90fc1c4f, type: 2}
-  endingLevelGlass: 0
-  toOverlap: {fileID: 0}
-  overlapPercentage: 10
-  endedProjected: 0
 --- !u!114 &11470136
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -689,36 +608,54 @@ MonoBehaviour:
     loop: 0
     volume: .400000006
     pitch: 1
+    distanceDependency: 0
+    maxVolumeDistance: 5
+    zeroVolumeDistance: 10
     audioSource: {fileID: 0}
   - clipName: Accensione
     clip: {fileID: 8300000, guid: e3fdaf36bc452de4c8f4b1b4cf5488f0, type: 3}
     loop: 0
     volume: 1
     pitch: 1
+    distanceDependency: 0
+    maxVolumeDistance: 5
+    zeroVolumeDistance: 10
     audioSource: {fileID: 0}
   - clipName: FallingLantern
     clip: {fileID: 8300000, guid: a571c7a173d246643a8d294ac0ca16d0, type: 3}
     loop: 0
     volume: 1
     pitch: 1
+    distanceDependency: 0
+    maxVolumeDistance: 5
+    zeroVolumeDistance: 10
     audioSource: {fileID: 0}
   - clipName: Spegnimento
     clip: {fileID: 8300000, guid: e3fdaf36bc452de4c8f4b1b4cf5488f0, type: 3}
     loop: 0
     volume: 1
     pitch: 1
+    distanceDependency: 0
+    maxVolumeDistance: 5
+    zeroVolumeDistance: 10
     audioSource: {fileID: 0}
   - clipName: ApparizioneProiezione
     clip: {fileID: 8300000, guid: 9b69d04073803854bb3999265738795b, type: 3}
     loop: 0
     volume: 1
     pitch: 1
+    distanceDependency: 0
+    maxVolumeDistance: 5
+    zeroVolumeDistance: 10
     audioSource: {fileID: 0}
   - clipName: Mira
     clip: {fileID: 8300000, guid: 23c6d61a791e3a742b8630d442535932, type: 3}
     loop: 1
     volume: .449999988
     pitch: 1
+    distanceDependency: 0
+    maxVolumeDistance: 5
+    zeroVolumeDistance: 10
     audioSource: {fileID: 0}
 --- !u!114 &11476484
 MonoBehaviour:
@@ -836,17 +773,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d528b953161387942976b4620f5a3fa6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  usable: 0
-  canBeEnabled: 0
+  usable: 1
+  canBeEnabled: 1
   actual: 0
   rotateWithLantern: 1
   canBeModified: 0
-  spriteObject: {fileID: 21300000, guid: b92711bf450e44542af15b052ed56432, type: 3}
+  spriteObject: {fileID: 21300000, guid: 77554edacfc2c054a81462963467accd, type: 3}
   goodProjection: {fileID: 21300000, guid: ccb7d92fcf2cd4647a6da08ac75139bb, type: 3}
   badProjection: {fileID: 21300000, guid: ccb7d92fcf2cd4647a6da08ac75139bb, type: 3}
   blurredProjection: {fileID: 21300000, guid: 0cd3b672380e36a428c33281524b6fe3, type: 3}
   emptySprite: {fileID: 21300000, guid: 6d6dbd4837225ea4a896418830624d88, type: 3}
-  glassSprite: {fileID: 21300000, guid: 651a8a7da659f494fb6f9b9934bda8d7, type: 3}
+  glassSprite: {fileID: 21300000, guid: 742b968ae72f03c46a94373e182068a1, type: 3}
   glassType: Wind
   subGlassList: []
   projectionObject: {fileID: 0}
@@ -866,17 +803,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d528b953161387942976b4620f5a3fa6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  usable: 0
-  canBeEnabled: 0
+  usable: 1
+  canBeEnabled: 1
   actual: 0
   rotateWithLantern: 0
   canBeModified: 0
-  spriteObject: {fileID: 21300000, guid: cdb3bd5efd992d74eb44df6ea6ca67c1, type: 3}
+  spriteObject: {fileID: 21300000, guid: 736b06cec8a9cd741b3b0f3f0a70b549, type: 3}
   goodProjection: {fileID: 21300000, guid: 162107af128bf9a4a815a0ff47130f7b, type: 3}
   badProjection: {fileID: 21300000, guid: 162107af128bf9a4a815a0ff47130f7b, type: 3}
   blurredProjection: {fileID: 21300000, guid: 20129ed1b13df234c92be07778a14a9d, type: 3}
   emptySprite: {fileID: 21300000, guid: 39c99c64947336841bcc0ff945c05a40, type: 3}
-  glassSprite: {fileID: 21300000, guid: 1a1218408cf702f4099a3aca2e1a9a0c, type: 3}
+  glassSprite: {fileID: 21300000, guid: 88af8837d35a2094691c1f24cf475d08, type: 3}
   glassType: Cake
   subGlassList:
   - {fileID: 0}
@@ -898,17 +835,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d528b953161387942976b4620f5a3fa6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  usable: 0
-  canBeEnabled: 0
+  usable: 1
+  canBeEnabled: 1
   actual: 0
   rotateWithLantern: 0
   canBeModified: 0
-  spriteObject: {fileID: 21300000, guid: f75e460e1846a97499f695c24e2ad848, type: 3}
+  spriteObject: {fileID: 21300000, guid: a64b9c9d620a05743a8ede19be4b80c5, type: 3}
   goodProjection: {fileID: 21300000, guid: d529531f29c89954f864702bd5583a2b, type: 3}
   badProjection: {fileID: 21300000, guid: d529531f29c89954f864702bd5583a2b, type: 3}
   blurredProjection: {fileID: 21300000, guid: 58547162551e30f4f80bdf3d8d40872e, type: 3}
   emptySprite: {fileID: 21300000, guid: 13b738f786009794691859e757c7ef4a, type: 3}
-  glassSprite: {fileID: 21300000, guid: 3f43325aaa4a60e428fac7320b28f05c, type: 3}
+  glassSprite: {fileID: 21300000, guid: 47433cd5b4b552c4890674a89dd3234f, type: 3}
   glassType: Ghost
   subGlassList:
   - {fileID: 0}

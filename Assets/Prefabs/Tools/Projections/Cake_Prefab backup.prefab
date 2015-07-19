@@ -26,9 +26,8 @@ GameObject:
   - 212: {fileID: 21256008}
   - 61: {fileID: 6169594}
   - 50: {fileID: 5092266}
-  - 95: {fileID: 9569450}
   m_Layer: 14
-  m_Name: Cake_Prefab
+  m_Name: Cake_Prefab backup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -88,23 +87,6 @@ BoxCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Size: {x: 2.55999994, y: 2.82999992}
---- !u!95 &9569450
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 142134}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 6929eb8c57e354149901dea6c8c54c6a, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
 --- !u!212 &21256008
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -129,7 +111,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1706207911
   m_SortingOrder: 4
-  m_Sprite: {fileID: 21300000, guid: 736b06cec8a9cd741b3b0f3f0a70b549, type: 3}
+  m_Sprite: {fileID: 21300000, guid: cdb3bd5efd992d74eb44df6ea6ca67c1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1001 &100100000
 Prefab:
@@ -137,16 +119,7 @@ Prefab:
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 0}
-      propertyPath: m_Controller
-      value: 
-      objectReference: {fileID: 9100000, guid: 6929eb8c57e354149901dea6c8c54c6a, type: 2}
-    - target: {fileID: 0}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: 736b06cec8a9cd741b3b0f3f0a70b549,
-        type: 3}
+    m_Modifications: []
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 142134}
