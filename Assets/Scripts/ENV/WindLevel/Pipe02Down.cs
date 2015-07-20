@@ -22,12 +22,18 @@ public class Pipe02Down : MonoBehaviour {
 
 	bool suEGiu = false;
 
+	AudioHandler audioHandler;
+	public string soundName;
+	bool firstPassed = false;
+
 	void Start () {
 		linearMovement = GetComponent<SimpleLinearMovement>();
 		if (firstPipe != null)
 			linearMovementPipe01 = firstPipe.GetComponent<SimpleLinearMovement>();
 		if (leva != null)
 			interagibileMethod = leva.GetComponent<InteragibileObject>();
+
+		audioHandler = GetComponent<AudioHandler>();
 	}
 	
 
@@ -37,12 +43,16 @@ public class Pipe02Down : MonoBehaviour {
 
 		if (suEGiu)
 			setLinearVariables();
+
+		handleSound();
 	}
 
 	public void InteractingMethod02()
 	{
 		if (canBeActivated)
 		{
+			firstPassed = true;
+
 			if (interagibileMethod != null)
 			{
 				interagibileMethod.oneTimeInteraction = true;
@@ -86,5 +96,14 @@ public class Pipe02Down : MonoBehaviour {
 			suEGiu = false;
 		}
 			
+	}
+
+	void handleSound()
+	{
+		if (!firstPassed && linearMovement != null && audioHandler != null)
+		{
+			if (linearMovement.DestReached)
+				audioHandler.playForcedClipByName(soundName);
+		}
 	}
 }

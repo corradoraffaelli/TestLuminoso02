@@ -3,7 +3,7 @@ using System.Collections;
 
 public class AreaSoundVerifier : MonoBehaviour {
 
-	public bool collidingPlayer = false;
+	bool collidingPlayer = false;
 	bool wasCollidingPlayer = false;
 
 	public GameObject soundObject;
