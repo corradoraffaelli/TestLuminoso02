@@ -120,17 +120,17 @@ MonoBehaviour:
   updateAudioClips: 0
   clips:
   - clipName: ArmonicaFrankiln
-    clip: {fileID: 8300000, guid: a571c7a173d246643a8d294ac0ca16d0, type: 3}
+    clip: {fileID: 8300000, guid: 96daccea7ed6b4a4f968906d97f07df7, type: 3}
     loop: 1
     playOnAwake: 1
-    volume: 1
+    volume: .200000003
     pitch: 1
     distanceDependency: 1
     maxVolumeDistance: 8
     zeroVolumeDistance: 13
     audioSource: {fileID: 0}
   - clipName: RisataDiabolica
-    clip: {fileID: 8300000, guid: 04684a323931f0b4f8f48fe46e0697c1, type: 3}
+    clip: {fileID: 8300000, guid: 6f312a9293a2840879ead937d60e0758, type: 3}
     loop: 1
     playOnAwake: 1
     volume: 1
@@ -140,10 +140,10 @@ MonoBehaviour:
     zeroVolumeDistance: 13
     audioSource: {fileID: 0}
   - clipName: RumoreOssa
-    clip: {fileID: 8300000, guid: e620c7afa149b47418ae3b79d8c3bbeb, type: 3}
+    clip: {fileID: 8300000, guid: f75d58b4b968a4258a2af98c91b4a4c5, type: 3}
     loop: 1
     playOnAwake: 1
-    volume: 1
+    volume: .5
     pitch: 1
     distanceDependency: 1
     maxVolumeDistance: 8
@@ -199,6 +199,26 @@ Prefab:
       propertyPath: clips.Array.data[0].clipName
       value: ArmonicaFrankiln
       objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: clips.Array.data[1].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 6f312a9293a2840879ead937d60e0758, type: 3}
+    - target: {fileID: 0}
+      propertyPath: clips.Array.data[2].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: f75d58b4b968a4258a2af98c91b4a4c5, type: 3}
+    - target: {fileID: 0}
+      propertyPath: clips.Array.data[2].volume
+      value: .5
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: clips.Array.data[0].volume
+      value: .200000003
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: clips.Array.data[0].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 96daccea7ed6b4a4f968906d97f07df7, type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 174594}

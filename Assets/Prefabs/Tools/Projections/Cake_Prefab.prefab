@@ -120,7 +120,7 @@ MonoBehaviour:
   updateAudioClips: 0
   clips:
   - clipName: Musichetta
-    clip: {fileID: 8300000, guid: edf511157daee2b4bace9a8ce552c1cc, type: 3}
+    clip: {fileID: 8300000, guid: aa9f46a1e914b4c15ad621206613e998, type: 3}
     loop: 1
     playOnAwake: 1
     volume: 1
@@ -171,6 +171,10 @@ Prefab:
       value: 
       objectReference: {fileID: 21300000, guid: 736b06cec8a9cd741b3b0f3f0a70b549,
         type: 3}
+    - target: {fileID: 0}
+      propertyPath: clips.Array.data[0].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: aa9f46a1e914b4c15ad621206613e998, type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 142134}
