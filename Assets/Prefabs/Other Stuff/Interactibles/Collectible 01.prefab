@@ -27,6 +27,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 423608}
   - 212: {fileID: 21257098}
+  - 114: {fileID: 11419684}
   m_Layer: 0
   m_Name: SpriteObj
   m_TagString: Untagged
@@ -43,6 +44,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 485258}
   - 212: {fileID: 21205812}
+  - 114: {fileID: 11410608}
   m_Layer: 0
   m_Name: Upper_E
   m_TagString: Untagged
@@ -50,6 +52,21 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 0
+--- !u!1 &198334
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 462056}
+  m_Layer: 0
+  m_Name: FlarePosition
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!4 &408796
 Transform:
   m_ObjectHideFlags: 1
@@ -57,11 +74,12 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 122590}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6.65571404, y: 16.0158405, z: 0}
+  m_LocalPosition: {x: 17.133131, y: 18.1243267, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 485258}
   - {fileID: 423608}
+  - {fileID: 462056}
   m_Father: {fileID: 0}
   m_RootOrder: 0
 --- !u!4 &423608
@@ -76,6 +94,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 408796}
   m_RootOrder: 1
+--- !u!4 &462056
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 198334}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: .159999996, y: .360000014, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 408796}
+  m_RootOrder: 2
 --- !u!4 &485258
 Transform:
   m_ObjectHideFlags: 1
@@ -101,6 +131,35 @@ BoxCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
+--- !u!114 &11410608
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 162470}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45a31f033c1b14246a82dcdb18edd088, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  keyboardSprite: {fileID: 21300000, guid: 86e471b5641264d2d8a732ab6659ad15, type: 3}
+  controllerSprite: {fileID: 21300000, guid: a5617b423aed19c48abae3b83b30b9ca, type: 3}
+--- !u!114 &11419684
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 144586}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 010188326c8f49f4d839161fb754a65a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  flarePrefab: {fileID: 167542, guid: c766ddf7a5eec934c9c9e2df602f0bc6, type: 2}
+  flarePosition: {fileID: 462056}
+  distanceLimitPlayer: 8
+  onlyIfPlayerNear: 1
+  setFlareAsChildren: 1
 --- !u!114 &11433650
 MonoBehaviour:
   m_ObjectHideFlags: 1

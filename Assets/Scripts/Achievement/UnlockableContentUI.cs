@@ -77,8 +77,10 @@ public class UnlockableContentUI : MonoBehaviour {
 			setUpperRightButton();
 		}
 
+		/*
 		if (Input.GetKeyUp(KeyCode.F))
 			stopPulsing();
+		*/
 	}
 
 	void setSections()

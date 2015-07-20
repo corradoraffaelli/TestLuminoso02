@@ -860,6 +860,10 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 3f431927435b5a742adf25087efc46ef, type: 2}
   m_IsPrefabParent: 0
+--- !u!4 &77414508 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 462056, guid: 450123a8207f44968b0b1f7d8abf61b8, type: 2}
+  m_PrefabInternal: {fileID: 1812726515}
 --- !u!4 &80268379 stripped
 Transform:
   m_PrefabParentObject: {fileID: 473536, guid: 1a577d0648c1ded4f91c8e36600ddc06, type: 2}
@@ -2698,11 +2702,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 420106, guid: cbadc4629ccaa8a4eb3fb71ab1d5a5c1, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -40.6800003
+      value: -35.1899986
       objectReference: {fileID: 0}
     - target: {fileID: 420106, guid: cbadc4629ccaa8a4eb3fb71ab1d5a5c1, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 1.09000003
+      value: .980000019
       objectReference: {fileID: 0}
     - target: {fileID: 420106, guid: cbadc4629ccaa8a4eb3fb71ab1d5a5c1, type: 2}
       propertyPath: m_LocalPosition.z
@@ -2727,10 +2731,6 @@ Prefab:
     - target: {fileID: 420106, guid: cbadc4629ccaa8a4eb3fb71ab1d5a5c1, type: 2}
       propertyPath: m_RootOrder
       value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 138036, guid: cbadc4629ccaa8a4eb3fb71ab1d5a5c1, type: 2}
-      propertyPath: m_Layer
-      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: cbadc4629ccaa8a4eb3fb71ab1d5a5c1, type: 2}
@@ -3457,6 +3457,26 @@ GameObject:
 Transform:
   m_PrefabParentObject: {fileID: 494908, guid: cc1cce5e1acbe154590d990be5ca1c87, type: 2}
   m_PrefabInternal: {fileID: 32617990}
+--- !u!1 &425512864 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 144586, guid: 450123a8207f44968b0b1f7d8abf61b8, type: 2}
+  m_PrefabInternal: {fileID: 1812726515}
+--- !u!114 &425512867
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 425512864}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 010188326c8f49f4d839161fb754a65a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  flarePrefab: {fileID: 167542, guid: c766ddf7a5eec934c9c9e2df602f0bc6, type: 2}
+  flarePosition: {fileID: 77414508}
+  distanceLimitPlayer: 6
+  onlyIfPlayerNear: 1
+  setFlareAsChildren: 1
 --- !u!1 &446665223
 GameObject:
   m_ObjectHideFlags: 0
@@ -10851,7 +10871,7 @@ Transform:
   - {fileID: 306990209}
   - {fileID: 1587625136}
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 10
 --- !u!4 &1388892745 stripped
 Transform:
   m_PrefabParentObject: {fileID: 479132, guid: 70fe8156ee965475c82c68946cbf330f, type: 2}
@@ -12324,7 +12344,7 @@ Transform:
   - {fileID: 1812726517}
   - {fileID: 105338599}
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 9
 --- !u!4 &1551461581 stripped
 Transform:
   m_PrefabParentObject: {fileID: 445136, guid: 3f431927435b5a742adf25087efc46ef, type: 2}
@@ -14599,7 +14619,8 @@ Prefab:
       propertyPath: m_Name
       value: Collectible 01 (1)
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 0}
   m_ParentPrefab: {fileID: 100100000, guid: 450123a8207f44968b0b1f7d8abf61b8, type: 2}
   m_IsPrefabParent: 0
 --- !u!1 &1812726516 stripped

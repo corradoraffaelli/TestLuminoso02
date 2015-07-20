@@ -9,6 +9,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 433752}
   - 212: {fileID: 21257404}
+  - 114: {fileID: 11450240}
   m_Layer: 0
   m_Name: Upper_E
   m_TagString: Untagged
@@ -55,7 +56,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 196794}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.52999997, y: .49000001, z: 0}
+  m_LocalPosition: {x: 17.1062145, y: 18.4599991, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 433752}
@@ -92,6 +93,9 @@ MonoBehaviour:
     loop: 0
     volume: 1
     pitch: 1
+    distanceDependency: 0
+    maxVolumeDistance: 5
+    zeroVolumeDistance: 10
     audioSource: {fileID: 0}
 --- !u!114 &11436432
 MonoBehaviour:
@@ -127,6 +131,19 @@ MonoBehaviour:
   activeDisabledObject: 1
   indicationScale: 2
   playerColliding: 0
+--- !u!114 &11450240
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 170938}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45a31f033c1b14246a82dcdb18edd088, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  keyboardSprite: {fileID: 21300000, guid: 86e471b5641264d2d8a732ab6659ad15, type: 3}
+  controllerSprite: {fileID: 21300000, guid: a5617b423aed19c48abae3b83b30b9ca, type: 3}
 --- !u!212 &21211844
 SpriteRenderer:
   m_ObjectHideFlags: 1
