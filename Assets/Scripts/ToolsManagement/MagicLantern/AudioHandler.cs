@@ -8,6 +8,7 @@ public class AudioHandler : MonoBehaviour {
 		public string clipName;
 		public AudioClip clip;
 		public bool loop;
+		public bool playOnAwake = false;
 		[Range(0.0f,1.0f)]
 		public float volume = 1.0f;
 		[Range(-3.0f, 3.0f)]
@@ -102,6 +103,8 @@ public class AudioHandler : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		updateAudioSources ();
+
+		startIfNecessary();
 		/*
 		if (audioSource == null)
 			audioSource = GetComponent<AudioSource> ();
@@ -169,6 +172,17 @@ public class AudioHandler : MonoBehaviour {
 
 					clips[i].audioSource.volume = volume;
 				}
+			}
+		} 
+	}
+
+	void startIfNecessary()
+	{
+		for (int i = 0; i< clips.Length; i++) {
+			if (clips [i] != null && clips[i].audioSource!=null && clips[i].playOnAwake) 
+			{
+				clips[i].audioSource.playOnAwake = true;
+				clips[i].audioSource.Play();
 			}
 		} 
 	}

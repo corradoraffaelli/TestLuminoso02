@@ -78,6 +78,7 @@ GameObject:
   - 114: {fileID: 11467616}
   - 95: {fileID: 9575718}
   - 114: {fileID: 11482596}
+  - 114: {fileID: 11436516}
   m_Layer: 12
   m_Name: Player - 09#4 (no stuck in the air)
   m_TagString: Player
@@ -352,6 +353,21 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &11436516
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 157518}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9579ce30fec70144bb40fe865d4288e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundName: TonfoCaduta
+  isPlayer: 1
+  minSpeedSound: 14
+  minInterval: 2
 --- !u!114 &11467616
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -428,6 +444,7 @@ MonoBehaviour:
   - clipName: Salto
     clip: {fileID: 8300000, guid: 552dcbd1a64b9904287c1aabfabe5b75, type: 3}
     loop: 0
+    playOnAwake: 0
     volume: 1
     pitch: 1
     distanceDependency: 0
@@ -437,6 +454,7 @@ MonoBehaviour:
   - clipName: TonfoSbattere
     clip: {fileID: 8300000, guid: 8c5631a6f4418b54eb4e00cbb880bf98, type: 3}
     loop: 0
+    playOnAwake: 0
     volume: 1
     pitch: 1
     distanceDependency: 0
@@ -446,6 +464,7 @@ MonoBehaviour:
   - clipName: TonfoCaduta
     clip: {fileID: 8300000, guid: 8c5631a6f4418b54eb4e00cbb880bf98, type: 3}
     loop: 0
+    playOnAwake: 0
     volume: 1
     pitch: 1
     distanceDependency: 0
@@ -455,6 +474,7 @@ MonoBehaviour:
   - clipName: RimbalzoNemico
     clip: {fileID: 8300000, guid: 864452f5775220e43a191d6fc8f04433, type: 3}
     loop: 0
+    playOnAwake: 0
     volume: 1
     pitch: 1
     distanceDependency: 0
@@ -464,6 +484,7 @@ MonoBehaviour:
   - clipName: RimbalzoCascoNemico
     clip: {fileID: 8300000, guid: 10895996fd90b434a86aabd711831bab, type: 3}
     loop: 0
+    playOnAwake: 0
     volume: 1
     pitch: 1
     distanceDependency: 0
@@ -473,6 +494,7 @@ MonoBehaviour:
   - clipName: Passi
     clip: {fileID: 8300000, guid: 4b9a34bb69c7b6f469895280c6f7a627, type: 3}
     loop: 1
+    playOnAwake: 0
     volume: .40200001
     pitch: .400000006
     distanceDependency: 0
@@ -482,6 +504,7 @@ MonoBehaviour:
   - clipName: Morte
     clip: {fileID: 8300000, guid: e620c7afa149b47418ae3b79d8c3bbeb, type: 3}
     loop: 0
+    playOnAwake: 0
     volume: 1
     pitch: 1
     distanceDependency: 0
@@ -1751,6 +1774,18 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: timeToRespawn
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: soundName
+      value: TonfoCaduta
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: isPlayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: minSpeedSound
+      value: 14
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
