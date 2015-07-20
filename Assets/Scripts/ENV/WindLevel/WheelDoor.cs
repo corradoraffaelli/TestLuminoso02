@@ -17,10 +17,16 @@ public class WheelDoor : MonoBehaviour {
 	public float maxRotationSpeed = 3.0f;
 	public float lerpSpeed = 1.0f;
 	float actualSpeed = 0.0f;
+	public float stopSoundSpeed = 0.6f;
+	bool soundActive = false;
+	bool wasSoundActive = false;
+
+	AudioHandler audioHandler;
+	public string[] soundNames;
 	
 	// Use this for initialization
 	void Start () {
-		
+		audioHandler = GetComponent<AudioHandler>();
 	}
 	
 	// Update is called once per frame
@@ -30,6 +36,8 @@ public class WheelDoor : MonoBehaviour {
 
 		rotateWheel();
 		doorBehave();
+
+		soundHandler();
 	}
 	
 	void OnTriggerStay2D(Collider2D other)
@@ -97,6 +105,37 @@ public class WheelDoor : MonoBehaviour {
 			}
 
 			oldActive = active;
+		}
+
+	}
+
+	void soundHandler()
+	{
+		if (audioHandler != null)
+		{
+			soundActive = (actualSpeed > Mathf.Abs(stopSoundSpeed));
+			if (soundActive != wasSoundActive)
+			{
+				if (soundActive)
+				{
+					for (int i = 0; i < soundNames.Length; i++)
+					{
+						if (soundNames[i] != null)
+							audioHandler.playClipByName(soundNames[i]);
+					}
+				}
+				else
+				{
+					for (int i = 0; i < soundNames.Length; i++)
+					{
+						if (soundNames[i] != null)
+							audioHandler.stopClipByName(soundNames[i]);
+					}
+				}
+					
+			}
+
+			wasSoundActive = soundActive;
 		}
 
 	}

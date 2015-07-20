@@ -23,6 +23,10 @@ public class SimpleLinearMovement : MonoBehaviour {
 	float stopTime = 0.0f;
 
 	bool destReached = false;
+	public bool DestReached
+	{
+		get{return destReached;}
+	}
 	bool origReached = true;
 
 	bool needToReachDest = true;
