@@ -462,7 +462,7 @@ MonoBehaviour:
     zeroVolumeDistance: 10
     audioSource: {fileID: 0}
   - clipName: TonfoCaduta
-    clip: {fileID: 8300000, guid: 8c5631a6f4418b54eb4e00cbb880bf98, type: 3}
+    clip: {fileID: 8300000, guid: ce070e848d44f4f8da5fdf3918e6c560, type: 3}
     loop: 0
     playOnAwake: 0
     volume: 1
@@ -1787,6 +1787,10 @@ Prefab:
       propertyPath: minSpeedSound
       value: 14
       objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: clips.Array.data[2].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: ce070e848d44f4f8da5fdf3918e6c560, type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 157518}
