@@ -25,6 +25,8 @@ public class GeneralFinder : MonoBehaviour {
 	public static PlayStatusTracker playStatusTracker;
 
 	public static TestInformativeManager testInformativeManager;
+	public static GameObject testingController;
+	public static HintAnalyzer hintAnalyzer;
 
 	// Use this for initialization
 	void Awake () {
@@ -63,6 +65,9 @@ public class GeneralFinder : MonoBehaviour {
 		playStatusTracker =  UtilFinder._GetComponentOfGameObjectWithTag<PlayStatusTracker> ("Controller");
 
 		testInformativeManager = UtilFinder._GetComponentOfGameObjectWithTag<TestInformativeManager> ("TestController");
+		testingController = GameObject.FindGameObjectWithTag("TestController");
+		if (testingController != null)
+			hintAnalyzer = testingController.GetComponent<HintAnalyzer>();
 	}
 	
 	// Update is called once per frame
