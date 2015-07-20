@@ -359,7 +359,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 160874}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 16.5201473, y: 18.9176006, z: 0}
+  m_LocalPosition: {x: 15.3362799, y: 19.0942192, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 426872}
@@ -675,6 +675,7 @@ MonoBehaviour:
   - clipName: Leva
     clip: {fileID: 8300000, guid: edb0dd0dba6be6d4bb23906a37f1d4e9, type: 3}
     loop: 0
+    playOnAwake: 0
     volume: 1
     pitch: 1
     distanceDependency: 0
@@ -684,6 +685,7 @@ MonoBehaviour:
   - clipName: FirstTimerClic
     clip: {fileID: 8300000, guid: 8105185d07e969e409e58ed90c888b04, type: 3}
     loop: 0
+    playOnAwake: 0
     volume: 1
     pitch: 1
     distanceDependency: 1
@@ -693,6 +695,7 @@ MonoBehaviour:
   - clipName: SecondTimerClick
     clip: {fileID: 8300000, guid: c106ce80c50b49a4fbe2b8b257abe6f5, type: 3}
     loop: 0
+    playOnAwake: 0
     volume: 1
     pitch: 1
     distanceDependency: 1
@@ -702,6 +705,17 @@ MonoBehaviour:
   - clipName: Clic
     clip: {fileID: 8300000, guid: e3fdaf36bc452de4c8f4b1b4cf5488f0, type: 3}
     loop: 0
+    playOnAwake: 0
+    volume: 1
+    pitch: 1
+    distanceDependency: 1
+    maxVolumeDistance: 7
+    zeroVolumeDistance: 11
+    audioSource: {fileID: 0}
+  - clipName: ApparizioneProiezione
+    clip: {fileID: 8300000, guid: 9b69d04073803854bb3999265738795b, type: 3}
+    loop: 0
+    playOnAwake: 0
     volume: 1
     pitch: 1
     distanceDependency: 1
