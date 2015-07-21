@@ -82,13 +82,13 @@ public class WheelDoor : MonoBehaviour {
 			{
 				Vector3 angles = wheel.transform.localEulerAngles;
 				actualSpeed = Mathf.Lerp(actualSpeed, maxRotationSpeed, Time.deltaTime*lerpSpeed);
-				wheel.transform.localEulerAngles = new Vector3 (angles.x, angles.y, angles.z + actualSpeed);
+				wheel.transform.localEulerAngles = new Vector3 (angles.x, angles.y, angles.z + actualSpeed*Time.deltaTime);
 				//float newAngle = Mathf.Lerp(angles.z, 
 				//wheel.transform.localEulerAngles =
 			}else{
 				Vector3 angles = wheel.transform.localEulerAngles;
 				actualSpeed = Mathf.Lerp(actualSpeed, 0.0f, Time.deltaTime*lerpSpeed);
-				wheel.transform.localEulerAngles = new Vector3 (angles.x, angles.y, angles.z + actualSpeed);
+				wheel.transform.localEulerAngles = new Vector3 (angles.x, angles.y, angles.z + actualSpeed*Time.deltaTime);
 			}
 		}
 	}

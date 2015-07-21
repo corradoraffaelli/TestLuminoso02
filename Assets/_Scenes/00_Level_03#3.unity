@@ -32057,11 +32057,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11489380, guid: e5b8a6fc8d1506a4eb0de02965cd896c, type: 2}
       propertyPath: canBeEnabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 11489380, guid: e5b8a6fc8d1506a4eb0de02965cd896c, type: 2}
       propertyPath: usable
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 11496732, guid: e5b8a6fc8d1506a4eb0de02965cd896c, type: 2}
       propertyPath: usable
@@ -32089,7 +32089,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11442146, guid: e5b8a6fc8d1506a4eb0de02965cd896c, type: 2}
       propertyPath: activable
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11442146, guid: e5b8a6fc8d1506a4eb0de02965cd896c, type: 2}
+      propertyPath: active
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e5b8a6fc8d1506a4eb0de02965cd896c, type: 2}
@@ -35750,11 +35754,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 494942, guid: 340389dc4a4be43999e660bcd54a5881, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 243.830002
+      value: 484.899994
       objectReference: {fileID: 0}
     - target: {fileID: 494942, guid: 340389dc4a4be43999e660bcd54a5881, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -123.290001
+      value: -118.900002
       objectReference: {fileID: 0}
     - target: {fileID: 494942, guid: 340389dc4a4be43999e660bcd54a5881, type: 2}
       propertyPath: m_LocalPosition.z
@@ -69365,7 +69369,7 @@ MonoBehaviour:
   sails: {fileID: 903651150}
   destination: {fileID: 1915653866}
   door: {fileID: 0}
-  boatMaxSpeed: 1
+  boatMaxSpeed: 70
   lerpSpeed: 1
 --- !u!95 &1926634158
 Animator:
