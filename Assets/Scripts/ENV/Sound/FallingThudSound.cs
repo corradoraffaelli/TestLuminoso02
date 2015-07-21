@@ -10,6 +10,8 @@ public class FallingThudSound : MonoBehaviour {
 
 	public string soundName = "Tonfo";
 
+	public bool isPlayer = false;
+
 	float[] lastYSpeeds = new float[4];
 
 	[Range(0.0f, 20.0f)]
@@ -27,6 +29,8 @@ public class FallingThudSound : MonoBehaviour {
 		{
 			lastYSpeeds[i] = 0.0f;
 		}
+
+
 	}
 
 	void Update () {
@@ -39,7 +43,13 @@ public class FallingThudSound : MonoBehaviour {
 		if (actualSpeed > -minInterval && actualSpeed < minInterval && lastYSpeed < -minSpeedSound)
 		{
 			Debug.Log ("asdads");
-			audioHandler.playClipByName("Tonfo");
+			if (isPlayer)
+			{
+				if(GeneralFinder.playerMovements.onGround)
+					audioHandler.playClipByName("Tonfo");
+			}
+			else
+				audioHandler.playClipByName("Tonfo");
 		}
 
 		lastYSpeed = actualSpeed;

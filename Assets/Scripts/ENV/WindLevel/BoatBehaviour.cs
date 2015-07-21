@@ -135,10 +135,10 @@ public class BoatBehaviour : MonoBehaviour {
 		if (sailsMoving && playerOnBoard && !destinationReached)
 		{
 			actualBoatSpeed = Mathf.Lerp(actualBoatSpeed, boatMaxSpeed /30.0f, lerpSpeed*Time.deltaTime);
-			transform.position = new Vector3(transform.position.x + actualBoatSpeed, transform.position.y, transform.position.z);
+			transform.position = new Vector3(transform.position.x + actualBoatSpeed*Time.deltaTime, transform.position.y, transform.position.z);
 		}else{
 			actualBoatSpeed = Mathf.Lerp(actualBoatSpeed, 0.0f, lerpSpeed*Time.deltaTime);
-			transform.position = new Vector3(transform.position.x + actualBoatSpeed, transform.position.y, transform.position.z);
+			transform.position = new Vector3(transform.position.x + actualBoatSpeed*Time.deltaTime, transform.position.y, transform.position.z);
 		}
 	}
 

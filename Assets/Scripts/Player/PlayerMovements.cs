@@ -426,7 +426,7 @@ public class PlayerMovements : MonoBehaviour {
 				//gestione della collisione con la scala
 				CollidingLadderManagement ();
 
-				if (wasGround != onGround)
+				//if (wasGround != onGround)
 					//gestione delle piattaforme che si muovono. importante che non sia nell'if dell'onground, fa un controllo all'interno
 					movingPlatformManagement();
 

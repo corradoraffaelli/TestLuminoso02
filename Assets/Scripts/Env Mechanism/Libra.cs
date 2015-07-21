@@ -26,6 +26,9 @@ public class Libra : MonoBehaviour {
 	public float deltaPosition = 0.5f;
 	public float deltaRotation = 10.0f;
 	public float speed = 0.4f;
+	public string soundName = "CigolioBilancia";
+
+	AudioHandler audioHandler;
 
 	void Start () {
 		if (libraObjects.leftCounter != null)
@@ -34,6 +37,8 @@ public class Libra : MonoBehaviour {
 			rightCounterScript = libraObjects.rightCounter.GetComponent<LibraCounter>();
 
 		takeStandardPositions();
+
+		audioHandler = GetComponent<AudioHandler>();
 	}
 
 	void Update () {
@@ -74,7 +79,25 @@ public class Libra : MonoBehaviour {
 			Vector3 wheelDestAngles = new Vector3(wheelStandardRotation.x, wheelStandardRotation.y, wheelDestRot);
 			if (libraObjects.wheel != null)
 				libraObjects.wheel.transform.localEulerAngles = Vector3.MoveTowards(libraObjects.wheel.transform.localEulerAngles, wheelDestAngles, Time.deltaTime * speed * deltaRotation / deltaPosition);
+
+
+			//SOUND
+			if (leftDestPosition != libraObjects.leftArm.transform.position)
+				activeSound();
+			else
+				activeSound(false);
 		}
 
+	}
+
+	void activeSound(bool active = true)
+	{
+		if (audioHandler != null)
+		{
+			if (active)
+				audioHandler.playClipByName(soundName);
+			else
+				audioHandler.stopClipByName(soundName);
+		}
 	}
 }

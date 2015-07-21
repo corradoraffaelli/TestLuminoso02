@@ -74,6 +74,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 463072}
   - 212: {fileID: 21205048}
+  - 114: {fileID: 11489868}
   m_Layer: 0
   m_Name: Upper_E
   m_TagString: Untagged
@@ -358,7 +359,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 160874}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 19.1920738, y: 18.6814728, z: 0}
+  m_LocalPosition: {x: 15.3362799, y: 19.0942192, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 426872}
@@ -674,6 +675,7 @@ MonoBehaviour:
   - clipName: Leva
     clip: {fileID: 8300000, guid: edb0dd0dba6be6d4bb23906a37f1d4e9, type: 3}
     loop: 0
+    playOnAwake: 0
     volume: 1
     pitch: 1
     distanceDependency: 0
@@ -683,6 +685,7 @@ MonoBehaviour:
   - clipName: FirstTimerClic
     clip: {fileID: 8300000, guid: 8105185d07e969e409e58ed90c888b04, type: 3}
     loop: 0
+    playOnAwake: 0
     volume: 1
     pitch: 1
     distanceDependency: 1
@@ -692,6 +695,7 @@ MonoBehaviour:
   - clipName: SecondTimerClick
     clip: {fileID: 8300000, guid: c106ce80c50b49a4fbe2b8b257abe6f5, type: 3}
     loop: 0
+    playOnAwake: 0
     volume: 1
     pitch: 1
     distanceDependency: 1
@@ -701,6 +705,17 @@ MonoBehaviour:
   - clipName: Clic
     clip: {fileID: 8300000, guid: e3fdaf36bc452de4c8f4b1b4cf5488f0, type: 3}
     loop: 0
+    playOnAwake: 0
+    volume: 1
+    pitch: 1
+    distanceDependency: 1
+    maxVolumeDistance: 7
+    zeroVolumeDistance: 11
+    audioSource: {fileID: 0}
+  - clipName: ApparizioneProiezione
+    clip: {fileID: 8300000, guid: 9b69d04073803854bb3999265738795b, type: 3}
+    loop: 0
+    playOnAwake: 0
     volume: 1
     pitch: 1
     distanceDependency: 1
@@ -735,6 +750,19 @@ MonoBehaviour:
   maxEmission: 8
   minEmission: .5
   changingSpeed: 10
+--- !u!114 &11489868
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 126110}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45a31f033c1b14246a82dcdb18edd088, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  keyboardSprite: {fileID: 21300000, guid: 86e471b5641264d2d8a732ab6659ad15, type: 3}
+  controllerSprite: {fileID: 21300000, guid: a5617b423aed19c48abae3b83b30b9ca, type: 3}
 --- !u!114 &11495230
 MonoBehaviour:
   m_ObjectHideFlags: 1

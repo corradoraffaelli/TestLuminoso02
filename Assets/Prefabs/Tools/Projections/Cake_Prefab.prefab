@@ -27,6 +27,7 @@ GameObject:
   - 61: {fileID: 6169594}
   - 50: {fileID: 5092266}
   - 95: {fileID: 9569450}
+  - 114: {fileID: 11498292}
   m_Layer: 14
   m_Name: Cake_Prefab
   m_TagString: Untagged
@@ -41,7 +42,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 142134}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.54999995, y: 1.33000004, z: 0}
+  m_LocalPosition: {x: 16.8676281, y: 19.4271202, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 464148}
@@ -105,6 +106,29 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &11498292
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 142134}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db8ec66bee508ec4a8754d0738e984cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  updateAudioClips: 0
+  clips:
+  - clipName: Musichetta
+    clip: {fileID: 8300000, guid: e927a21354b784a699ce521ec3d6fddc, type: 3}
+    loop: 1
+    playOnAwake: 1
+    volume: 1
+    pitch: 1
+    distanceDependency: 1
+    maxVolumeDistance: 8
+    zeroVolumeDistance: 13
+    audioSource: {fileID: 0}
 --- !u!212 &21256008
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -147,6 +171,10 @@ Prefab:
       value: 
       objectReference: {fileID: 21300000, guid: 736b06cec8a9cd741b3b0f3f0a70b549,
         type: 3}
+    - target: {fileID: 0}
+      propertyPath: clips.Array.data[0].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: e927a21354b784a699ce521ec3d6fddc, type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 142134}

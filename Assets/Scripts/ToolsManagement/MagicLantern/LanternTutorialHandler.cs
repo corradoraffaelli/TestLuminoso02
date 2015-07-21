@@ -31,6 +31,7 @@ public class LanternTutorialHandler : MonoBehaviour {
 	public GameObject balloonPrefab;
 	public bool balloonOnTheRight = true;
 	bool addedBalloon = false;
+	bool wasAddedBalloon = false;
 	bool removedBalloon = true;
 	bool removeBalloon = false;
 	GameObject balloon;
@@ -59,6 +60,8 @@ public class LanternTutorialHandler : MonoBehaviour {
 		setRenderersZeroAlpha();
 
 		wasActive = active;
+
+		sendExistence();
 	}
 	
 	void Update () {
@@ -79,6 +82,11 @@ public class LanternTutorialHandler : MonoBehaviour {
 			{
 				enableDisableTutOnDisable();
 			}
+
+			//invio al testingController una informazione ogni volta che attivo un hint
+			if (addedBalloon && !wasAddedBalloon)
+				updateTestNumber();
+			wasAddedBalloon = addedBalloon;
 
 			wasEnabling = enabling;
 		}
@@ -308,5 +316,21 @@ public class LanternTutorialHandler : MonoBehaviour {
 	public void enableMe(bool enable = true)
 	{
 		active = enable;
+	}
+
+	void sendExistence()
+	{
+		if (type == ComicBalloonManager.Type.hint && GeneralFinder.hintAnalyzer != null)
+		{
+			GeneralFinder.hintAnalyzer.addElement(balloonString);
+		}
+	}
+
+	void updateTestNumber()
+	{
+		if (type == ComicBalloonManager.Type.hint && GeneralFinder.hintAnalyzer != null)
+		{
+			GeneralFinder.hintAnalyzer.activateElement(balloonString);
+		}
 	}
 }

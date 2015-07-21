@@ -15,6 +15,7 @@ GameObject:
   - 61: {fileID: 6112350}
   - 95: {fileID: 9513718}
   - 61: {fileID: 6110696}
+  - 114: {fileID: 11425368}
   m_Layer: 0
   m_Name: Wind_Prefab
   m_TagString: WindPrefab
@@ -46,7 +47,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 160210}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 32.2405891, y: 1.57930589, z: 0}
+  m_LocalPosition: {x: 15.3362799, y: 19.8266029, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 444358}
@@ -120,6 +121,29 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &11425368
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 160210}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db8ec66bee508ec4a8754d0738e984cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  updateAudioClips: 0
+  clips:
+  - clipName: Vento
+    clip: {fileID: 8300000, guid: df144e0116f464b6296425e2bb0d8642, type: 3}
+    loop: 1
+    playOnAwake: 1
+    volume: .5
+    pitch: 1
+    distanceDependency: 1
+    maxVolumeDistance: 8
+    zeroVolumeDistance: 15
+    audioSource: {fileID: 0}
 --- !u!114 &11486956
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1272,7 +1296,15 @@ Prefab:
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: clips.Array.data[0].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: df144e0116f464b6296425e2bb0d8642, type: 3}
+    - target: {fileID: 0}
+      propertyPath: clips.Array.data[0].volume
+      value: .5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 160210}

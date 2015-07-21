@@ -8,6 +8,7 @@ public class AudioHandler : MonoBehaviour {
 		public string clipName;
 		public AudioClip clip;
 		public bool loop;
+		public bool playOnAwake = false;
 		[Range(0.0f,1.0f)]
 		public float volume = 1.0f;
 		[Range(-3.0f, 3.0f)]
@@ -18,6 +19,13 @@ public class AudioHandler : MonoBehaviour {
 		public float maxVolumeDistance = 5.0f;
 		[Range(0.0f, 50.0f)]
 		public float zeroVolumeDistance = 10.0f;
+
+		//[HideInInspector]
+		public float volumeMultiplier = 1.0f;
+		public void setVolumeMultiplier(float inputMultiplier)
+		{
+			volumeMultiplier = inputMultiplier;
+		}
 
 		//[HideInInspector]
 		public AudioSource audioSource;
@@ -49,6 +57,18 @@ public class AudioHandler : MonoBehaviour {
 				clips[i].audioSource.pitch = clips[i].pitch;
 			}
 		}
+	}
+
+	public AudioClipGeneral getAudioClipByName(string clipNameInput)
+	{
+		if (clips.Length != 0) {
+			for (int i = 0; i< clips.Length; i++) {
+				if (clips[i] != null && clips[i].clipName == clipNameInput){
+					return clips[i];
+				}
+			}
+		}
+		return null;
 	}
 
 	public void playClipByIndex(int clipIndex)
@@ -99,9 +119,15 @@ public class AudioHandler : MonoBehaviour {
 		}
 	}
 
-	// Use this for initialization
+	void Awake()
+	{
+		setStandardMultipliers();
+	}
+
 	void Start () {
 		updateAudioSources ();
+
+		startIfNecessary();
 		/*
 		if (audioSource == null)
 			audioSource = GetComponent<AudioSource> ();
@@ -126,6 +152,7 @@ public class AudioHandler : MonoBehaviour {
 			updateAudioClips = false;
 		}
 		setVolumeByDistance();
+		setVolumeByMultiplier();
 	}
 
 	void cleanNotPlaying()
@@ -169,6 +196,46 @@ public class AudioHandler : MonoBehaviour {
 
 					clips[i].audioSource.volume = volume;
 				}
+			}
+		} 
+	}
+
+	void setVolumeByMultiplier()
+	{
+		for (int i = 0; i< clips.Length; i++) {
+			if (clips [i] != null && clips[i].audioSource!=null) {
+
+				float maxVolume = clips[i].audioSource.volume;
+				
+				float volume = maxVolume * clips[i].volumeMultiplier;
+				if (volume < 0.0f)
+					volume = 0.0f;
+				if (volume > 1.0f)
+					volume = 1.0f;
+				
+				clips[i].audioSource.volume = volume;
+
+			}
+		} 
+	}
+
+	void startIfNecessary()
+	{
+		for (int i = 0; i< clips.Length; i++) {
+			if (clips [i] != null && clips[i].audioSource!=null && clips[i].playOnAwake) 
+			{
+				clips[i].audioSource.playOnAwake = true;
+				clips[i].audioSource.Play();
+			}
+		} 
+	}
+
+	void setStandardMultipliers()
+	{
+		for (int i = 0; i< clips.Length; i++) {
+			if (clips [i] != null) 
+			{
+				clips[i].volumeMultiplier = 1.0f;
 			}
 		} 
 	}

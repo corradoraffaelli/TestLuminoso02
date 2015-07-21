@@ -84,4 +84,10 @@ public class PulsingUIElement : MonoBehaviour {
 	{
 		return beginningTime;
 	}
+
+	public void stopPulsing()
+	{
+		rectTransform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
+		Destroy(this);
+	}
 }

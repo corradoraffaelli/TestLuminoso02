@@ -34,6 +34,8 @@ GameObject:
   - 114: {fileID: 11461560}
   - 114: {fileID: 11403444}
   - 114: {fileID: 11444634}
+  - 114: {fileID: 11441064}
+  - 114: {fileID: 11455102}
   m_Layer: 0
   m_Name: GameController - 01
   m_TagString: Controller
@@ -226,6 +228,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   triggerStartStopTime: 0
   timeScale: 1
+--- !u!114 &11441064
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 165342}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8273635949734824d916342115b9a350, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  levels:
+  - 00_Level_00
+  - 00_Level_01#6
+  - 00_Level_02#6
+  - 00_Level_03#3
 --- !u!114 &11444634
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -246,14 +264,54 @@ MonoBehaviour:
   saveOnDestroy: 1
   timeToHideLateral: 4
   timeToPulse: 4
-  timeToGetSmall: 1.5
-  actualContentSection:
-    title: 
-    levelN: 0
-    contentType: 0
-    contents: []
-    activeContent: 0
-    locked: 0
+  timeToGetSmall: 1.20000005
+  pageTimeToGetSmall: 4
+--- !u!114 &11455102
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 165342}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db8ec66bee508ec4a8754d0738e984cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  updateAudioClips: 0
+  clips:
+  - clipName: UnlockStar
+    clip: {fileID: 8300000, guid: 440030d483552134a9b207c0e8c82b77, type: 3}
+    loop: 0
+    playOnAwake: 0
+    volume: 1
+    pitch: 1
+    distanceDependency: 0
+    maxVolumeDistance: 0
+    zeroVolumeDistance: 0
+    volumeMultiplier: 1
+    audioSource: {fileID: 0}
+  - clipName: UnlockContent
+    clip: {fileID: 8300000, guid: 6ac03d5df6ea7c44a8baeef4f3a7d8b7, type: 3}
+    loop: 0
+    playOnAwake: 0
+    volume: 1
+    pitch: 1
+    distanceDependency: 0
+    maxVolumeDistance: 0
+    zeroVolumeDistance: 0
+    volumeMultiplier: 1
+    audioSource: {fileID: 0}
+  - clipName: UnlockFact
+    clip: {fileID: 8300000, guid: 9cf5afc24b2849345ab5a5e6672e4660, type: 3}
+    loop: 0
+    playOnAwake: 0
+    volume: 1
+    pitch: 1
+    distanceDependency: 0
+    maxVolumeDistance: 0
+    zeroVolumeDistance: 0
+    volumeMultiplier: 1
+    audioSource: {fileID: 0}
 --- !u!114 &11461560
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -358,6 +416,7 @@ MonoBehaviour:
       locked: 1
     activeContent: 0
     locked: 0
+    ended: 0
   - title: Fun Facts 01
     levelN: 1
     contentType: 2
@@ -379,6 +438,7 @@ MonoBehaviour:
       locked: 1
     activeContent: 0
     locked: 0
+    ended: 0
   - title: Frammenti 01
     levelN: 1
     contentType: 0
@@ -469,6 +529,7 @@ MonoBehaviour:
       locked: 1
     activeContent: 0
     locked: 0
+    ended: 0
   - title: Oggetti 02
     levelN: 2
     contentType: 1
@@ -508,6 +569,7 @@ MonoBehaviour:
       locked: 1
     activeContent: 0
     locked: 0
+    ended: 0
   - title: Fun Facts 02
     levelN: 2
     contentType: 2
@@ -562,6 +624,7 @@ MonoBehaviour:
       locked: 1
     activeContent: 0
     locked: 0
+    ended: 0
   - title: Frammenti 02
     levelN: 2
     contentType: 0
@@ -652,6 +715,7 @@ MonoBehaviour:
       locked: 1
     activeContent: 0
     locked: 0
+    ended: 0
   - title: Oggetti 03
     levelN: 3
     contentType: 1
@@ -706,6 +770,7 @@ MonoBehaviour:
       locked: 1
     activeContent: 0
     locked: 0
+    ended: 0
   - title: Fun Facts 03
     levelN: 3
     contentType: 2
@@ -759,6 +824,7 @@ MonoBehaviour:
       locked: 1
     activeContent: 0
     locked: 0
+    ended: 0
   - title: Frammenti 03
     levelN: 3
     contentType: 0
@@ -849,6 +915,7 @@ MonoBehaviour:
       locked: 1
     activeContent: 0
     locked: 0
+    ended: 0
   actualLevelNumber: -1
   timeCanShowNewContent: 5
 --- !u!114 &11486512
@@ -2454,6 +2521,10 @@ Prefab:
       value: 
       objectReference: {fileID: 21300000, guid: b09db7fb4000340b8befe0be0329d5ee,
         type: 3}
+    - target: {fileID: 0}
+      propertyPath: timeToGetSmall
+      value: 1.20000005
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 165342}

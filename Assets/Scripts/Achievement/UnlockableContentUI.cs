@@ -21,6 +21,7 @@ public class UnlockableContentUI : MonoBehaviour {
 	public float timeToPulse = 4.0f;
 
 	public float timeToGetSmall = 1.5f;
+	public float pageTimeToGetSmall = 4.0f;
 
 	int changeSpriteTime = 0;
 	int maxChangeSpriteTime = 2;
@@ -29,7 +30,7 @@ public class UnlockableContentUI : MonoBehaviour {
 	Sprite[] rightSprites;
 	Sprite[] leftSprites;
 
-	public InformativeSection actualContentSection;
+	InformativeSection actualContentSection;
 	InformativeSection actualFactSection;
 	InformativeSection actualFragmentSection;
 
@@ -44,16 +45,30 @@ public class UnlockableContentUI : MonoBehaviour {
 
 	bool wasUseController;
 
+	bool activeBook = false;
+
+	AudioHandler audioHandler;
+
 	void Start () {
 		setSections();
 
-		setUpperRightVariables();
-		setUpperRightStandardBook();
-		setUpperRightButton();
+		if (countUnlockedElement() == 0)
+			activeBook = false;
+		else
+			activeBook = true;
+
+		if (activeBook)
+		{
+			setUpperRightVariables();
+			setUpperRightStandardBook();
+			setUpperRightButton();
+		}
 
 		//prima le seguenti due funzioni erano nell'handleDelayInit, leggi la descrizione per la motivazione
 		updateContentSprites();
 		updateFragmentSprites();
+
+		audioHandler = GetComponent<AudioHandler>();
 
 		wasUseController = GeneralFinder.cursorHandler.useController;
 	}
@@ -65,7 +80,7 @@ public class UnlockableContentUI : MonoBehaviour {
 		//nasconde le barre laterali dopo tot secondi, nel caso siano visibili
 		hideLateralManager();
 
-		if (!wasPulsingBookNull && pulsingBook == null)
+		if (activeBook && !wasPulsingBookNull && pulsingBook == null)
 		{
 			setUpperRightStandardBook();
 			wasPulsingBookNull = true;
@@ -76,6 +91,11 @@ public class UnlockableContentUI : MonoBehaviour {
 			wasUseController = GeneralFinder.cursorHandler.useController;
 			setUpperRightButton();
 		}
+
+		/*
+		if (Input.GetKeyUp(KeyCode.F))
+			stopPulsing();
+		*/
 	}
 
 	void setSections()
@@ -116,6 +136,7 @@ public class UnlockableContentUI : MonoBehaviour {
 			//1. aggiornare l'array di sprites a sinistra
 			//2. mostrare le sprites a sinistra aggiornate
 			//3. eseguire l'animazione dell'oggetto raccolto
+			//4. eseguire il suono
 			
 			//1.
 			updateFragmentSprites();
@@ -129,6 +150,10 @@ public class UnlockableContentUI : MonoBehaviour {
 			PickingObjectGraphic pick = gameObject.AddComponent<PickingObjectGraphic>();
 			pick.setVariables(findContent(actualFragmentSection, id).iconUnlock, PlayingUILateral.UIPosition.Left, findContentIndex(actualFragmentSection, id));
 			pick.setTimeToGetSmall(timeToGetSmall);
+
+			//4.
+			if (audioHandler != null)
+				audioHandler.playClipByName("UnlockStar");
 		}
 	}
 
@@ -139,12 +164,22 @@ public class UnlockableContentUI : MonoBehaviour {
 			Debug.Log ("ho sbloccato l'oggetto "+name);
 			
 			//se è un collezionabile devo
+			//0. mostrare la sprite del libro, se non presente
 			//1. aggiornare l'array di sprites a destra
 			//2. mostrare le sprites a destra aggiornate
 			//3. eseguire l'animazione dell'oggetto raccolto
 			//4. mostrare l'icona del libro lampeggiante per tot secondi
-			
-			
+			//4. eseguire il suono
+
+			//0.
+			if (!activeBook)
+			{
+				activeBook = true;
+				setUpperRightVariables();
+				setUpperRightStandardBook();
+				setUpperRightButton();
+			}
+
 			//1.
 			updateContentSprites();
 			
@@ -160,6 +195,10 @@ public class UnlockableContentUI : MonoBehaviour {
 			
 			setUpperRightExclamationBook();
 			setPulsingBook();
+
+			//4.
+			if (audioHandler != null)
+				audioHandler.playClipByName("UnlockContent");
 		}
 	}
 
@@ -170,17 +209,33 @@ public class UnlockableContentUI : MonoBehaviour {
 			Debug.Log ("ho sbloccato il fun fact "+name);
 			
 			//se è un fun fact devo
+			//0. mostrare la sprite del libro, se non presente
 			//1. eseguire l'animazione della pagina raccolta
 			//2. mostrare l'icona del libro lampeggiante per tot secondi
-			
+			//3. eseguire il suono
+
+			//0.
+			if (!activeBook)
+			{
+				activeBook = true;
+				setUpperRightVariables();
+				setUpperRightStandardBook();
+				setUpperRightButton();
+			}
+
 			//1.
 			PickingObjectGraphic pick = gameObject.AddComponent<PickingObjectGraphic>();
 			pick.setVariables(spritesBook.pageSprite, PlayingUI.UIPosition.UpperRight,0);
 			pick.setBookPage(true);
+			pick.setTimeToGetSmall(pageTimeToGetSmall);
 			
 			//2.
 			setUpperRightExclamationBook();
 			setPulsingBook();
+
+			//3.
+			if (audioHandler != null)
+				audioHandler.playClipByName("UnlockFact");
 		}
 	}
 
@@ -343,5 +398,43 @@ public class UnlockableContentUI : MonoBehaviour {
 			Debug.Log ("salvo");
 		}
 		*/	
+	}
+
+	public void stopPulsing()
+	{
+		setUpperRightStandardBook();
+		PulsingUIElement[] pulsingEl = GetComponents<PulsingUIElement>();
+		for (int i = 0; i < pulsingEl.Length; i++)
+		{
+			if (pulsingEl[i] != null)
+			{
+				pulsingEl[i].stopPulsing();
+			}
+		}
+	}
+
+	int countUnlockedElement()
+	{
+		int unlockedNum = 0;
+
+		if (actualFactSection != null)
+		{
+			for (int i = 0; i < actualFactSection.contents.Length; i++)
+			{
+				if (actualFactSection.contents[i] != null && !actualFactSection.contents[i].locked)
+					unlockedNum++;
+			}
+		}
+
+		if (actualContentSection != null)
+		{
+			for (int i = 0; i < actualContentSection.contents.Length; i++)
+			{
+				if (actualContentSection.contents[i] != null && !actualContentSection.contents[i].locked)
+					unlockedNum++;
+			}
+		}
+
+		return unlockedNum;
 	}
 }
