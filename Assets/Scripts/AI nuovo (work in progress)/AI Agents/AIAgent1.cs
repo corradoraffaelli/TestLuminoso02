@@ -38,7 +38,7 @@ public abstract class AIAgent1 : MonoBehaviour {
 
 	bool debugPlay = false;
 
-
+	protected bool AIVisible = false;
 	//AI Parameters
 
 	#region QUICKOWNREF
@@ -124,8 +124,28 @@ public abstract class AIAgent1 : MonoBehaviour {
 
 	protected abstract void initializeHStates ();
 
+
+	protected void OnBecameVisible() {
+
+		AIVisible = true;
+		//Debug.Log (gameObject.name + "AHHHHHHHHHHHHHHHHHHHHHHHHHHHHH" + AIVisible.ToString());
+	}
+
+	protected void OnBecameInvisible() {
+		
+		AIVisible = false;
+		//Debug.Log (gameObject.name + "OHHHHHHHHHHHHHHHHHHHHHHHHHHHHH" + AIVisible.ToString());
+		
+	}
+
 	protected virtual void Update () {
 
+		/*
+		if (!AIVisible) {
+			_rigidbody.velocity = new Vector2(0.0f, 0.0f);
+			return;
+		}
+		*/
 		//Debug.Log ("stato attivo : " + activeState.StateName);
 
 		if (!PlayStatusTracker.inPlay)

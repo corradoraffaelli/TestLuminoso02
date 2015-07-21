@@ -884,7 +884,7 @@ public class InformativeManager : MonoBehaviour {
 
 		}
 
-		Debug.Log ("levelN è " + levelNumber);
+		//Debug.Log ("levelN è " + levelNumber);
 
 		foreach (InformativeSection sect in sections) {
 
@@ -1020,12 +1020,12 @@ public class InfoSectionContainer
 	public static string defaultFileName = "InfoFileConf";
 
 	[XmlArray("Sections"),XmlArrayItem("Section")]
-	public InformativeSection[] sections;
+	public InformativeSection[] sectionsLoaded;
 
 	public static void saveInformativeManagerConf(InformativeSection []_sections, bool defaultName) {
 		
 		InfoSectionContainer infoCon = new InfoSectionContainer ();
-		infoCon.sections = _sections;
+		infoCon.sectionsLoaded = _sections;
 
 		if (defaultName) {
 			infoCon.Save (defaultPath + defaultFileName + "-0-.xml");
@@ -1094,7 +1094,7 @@ public class InfoSectionContainer
 			throw e;
 			
 		}
-		catch(System.Exception e) {
+		catch(Exception e) {
 			
 			throw e;
 			
@@ -1137,7 +1137,7 @@ public class InfoSectionContainer
 			throw e;
 			
 		}
-		catch(System.Exception e) {
+		catch(Exception e) {
 			Debug.Log ("ciaoneex2");
 			throw e;
 			
@@ -1186,7 +1186,7 @@ public class InfoSectionContainer
 				return;
 				
 			}
-			catch(System.Exception e) {
+			catch(Exception e) {
 
 				Debug.Log(e.ToString());
 
@@ -1235,9 +1235,30 @@ public class InfoSectionContainer
 
 	public void setConfiguration(ref InformativeSection[] sectionsToSet) {
 
+
+		for (int secToSetInd=0; secToSetInd<sectionsToSet.Length; secToSetInd++) {
+
+			for(int secToLoadInd=0; secToLoadInd<sectionsLoaded.Length; secToLoadInd++) {
+
+
+				if(sectionsToSet[secToSetInd].title == sectionsLoaded[secToLoadInd].title && 
+				   sectionsToSet[secToSetInd].levelN == sectionsLoaded[secToLoadInd].levelN) {
+
+					setConfigurationSection(ref sectionsToSet[secToSetInd], sectionsLoaded[secToLoadInd]);
+
+					break;
+
+				}
+
+			}
+
+
+		}
+
+		/*
 		foreach (InformativeSection sectionToSet in sectionsToSet) {
 
-			foreach(InformativeSection loadedSection in sections) {
+			foreach(InformativeSection loadedSection in sectionsLoaded) {
 
 				if(loadedSection.title==sectionToSet.title && loadedSection.levelN == sectionToSet.levelN) {
 					
@@ -1254,7 +1275,7 @@ public class InfoSectionContainer
 			}
 
 		}
-
+		*/
 
 	}
 
@@ -1270,26 +1291,72 @@ public class InfoSectionContainer
 
 		try {
 
+			//Debug.Log("-LEN set " + sectionToSet.contents.Length + " LEN load " + sectionLoad.contents.Length);
+
+			for(int contToSetInd =0; contToSetInd< sectionToSet.contents.Length; contToSetInd++) {
+
+				//Debug.Log("-configuro content " + sectionToSet.contents[contToSetInd].name);
+
+				for(int contToLoadInd=0; contToLoadInd< sectionLoad.contents.Length; contToLoadInd++) {
+
+					//Debug.Log("--contenuto  : " + sectionLoad.contents[contToLoadInd].name);
+
+					//Debug.Log("--indSet " + contToSetInd + " indLoad " + contToLoadInd);
+
+					if(sectionToSet.contents[contToSetInd].name== sectionLoad.contents[contToLoadInd].name) {
+
+						//Debug.Log("---carico da content " + sectionLoad.contents[contToLoadInd].name);
+
+						setConfigurationContent(ref sectionToSet.contents[contToSetInd], sectionLoad.contents[contToLoadInd]);
+						
+						break;
+
+					}
+					else {
+
+						//Debug.Log("---NON carico da content " + sectionLoad.contents[contToLoadInd].name);
+
+					}
+
+				}
+
+			}
+
+
+
+
+			/*
 			foreach(InformativeContent contentToSet in sectionToSet.contents) {
-				
+
+				Debug.Log("-configuro content " + contentToSet.name);
+
 				foreach(InformativeContent loadedContent in sectionLoad.contents) {
-					
+
+					Debug.Log("--contenuto : " + loadedContent.name);
+
 					if(contentToSet.name == loadedContent.name) {
 						
 						InformativeContent tempCont = contentToSet;
-						
+						Debug.Log("---carico da content " + loadedContent.name);
 						setConfigurationContent(ref tempCont, loadedContent);
 						
 						break;
+					}
+					else {
+
+						Debug.Log("---NON carico da content " + loadedContent.name);
+
 					}
 					
 				}
 				
 			}
-
+			*/
 		}
-		catch(System.Exception e) {
-			
+		catch(Exception e) {
+
+			Debug.Log("AHI+++++++++++++++++++++++++++++++++++++++");
+			Debug.Log(e.ToString());
 			
 		}
 
@@ -1300,18 +1367,13 @@ public class InfoSectionContainer
 		int len = 0;
 
 		if (contentToSet.mainImages != null) {
+
 			len = contentToSet.mainImages.Length;
-		
 
-			if (contentToSet.numberViewsImages == null) {
-
-				contentToSet.timerViewsImages = new float[len];
-				contentToSet.numberViewsImages = new int[len];
-
-			}
+			//Debug.Log("LEN = " + len);
 
 			if (contentToSet.numberViewsImages.Length == 0) {
-				
+				//Debug.Log("len zero");
 				contentToSet.timerViewsImages = new float[len];
 				contentToSet.numberViewsImages = new int[len];
 				
@@ -1319,9 +1381,14 @@ public class InfoSectionContainer
 
 			for (int i=0; i<len; i++) {
 
-				contentToSet.timerViewsImages[i] = contentLoad.timerViewsImages[i];
-				contentToSet.numberViewsImages[i] = contentLoad.numberViewsImages[i];
+				if(contentLoad.timerViewsImages!= null && contentLoad.numberViewsImages!=null) {
 
+					if(contentLoad.timerViewsImages.Length != 0) {
+						contentToSet.timerViewsImages[i] = contentLoad.timerViewsImages[i];
+					}
+					if(contentLoad.numberViewsImages.Length != 0)
+						contentToSet.numberViewsImages[i] = contentLoad.numberViewsImages[i];
+				}
 			}
 
 		}
@@ -1351,7 +1418,7 @@ public class InfoSectionContainer
 			throw e;
 			
 		}
-		catch(System.Exception e) {
+		catch(Exception e) {
 			
 			throw e;
 			
@@ -1370,7 +1437,7 @@ public class InfoSectionContainer
 			throw e;
 
 		}
-		catch(System.Exception e) {
+		catch(Exception e) {
 			
 			throw e;
 			
