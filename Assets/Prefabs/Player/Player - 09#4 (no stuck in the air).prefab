@@ -359,7 +359,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 157518}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9579ce30fec70144bb40fe865d4288e8, type: 3}
   m_Name: 
@@ -450,6 +450,7 @@ MonoBehaviour:
     distanceDependency: 0
     maxVolumeDistance: 5
     zeroVolumeDistance: 10
+    volumeMultiplier: 1
     audioSource: {fileID: 0}
   - clipName: TonfoSbattere
     clip: {fileID: 8300000, guid: 8c5631a6f4418b54eb4e00cbb880bf98, type: 3}
@@ -460,6 +461,7 @@ MonoBehaviour:
     distanceDependency: 0
     maxVolumeDistance: 5
     zeroVolumeDistance: 10
+    volumeMultiplier: 1
     audioSource: {fileID: 0}
   - clipName: TonfoCaduta
     clip: {fileID: 8300000, guid: ce070e848d44f4f8da5fdf3918e6c560, type: 3}
@@ -470,6 +472,7 @@ MonoBehaviour:
     distanceDependency: 0
     maxVolumeDistance: 5
     zeroVolumeDistance: 10
+    volumeMultiplier: 1
     audioSource: {fileID: 0}
   - clipName: RimbalzoNemico
     clip: {fileID: 8300000, guid: 864452f5775220e43a191d6fc8f04433, type: 3}
@@ -480,6 +483,7 @@ MonoBehaviour:
     distanceDependency: 0
     maxVolumeDistance: 5
     zeroVolumeDistance: 10
+    volumeMultiplier: 1
     audioSource: {fileID: 0}
   - clipName: RimbalzoCascoNemico
     clip: {fileID: 8300000, guid: 10895996fd90b434a86aabd711831bab, type: 3}
@@ -490,6 +494,7 @@ MonoBehaviour:
     distanceDependency: 0
     maxVolumeDistance: 5
     zeroVolumeDistance: 10
+    volumeMultiplier: 1
     audioSource: {fileID: 0}
   - clipName: Passi
     clip: {fileID: 8300000, guid: 4b9a34bb69c7b6f469895280c6f7a627, type: 3}
@@ -500,6 +505,7 @@ MonoBehaviour:
     distanceDependency: 0
     maxVolumeDistance: 5
     zeroVolumeDistance: 10
+    volumeMultiplier: 1
     audioSource: {fileID: 0}
   - clipName: Morte
     clip: {fileID: 8300000, guid: e620c7afa149b47418ae3b79d8c3bbeb, type: 3}
@@ -510,6 +516,7 @@ MonoBehaviour:
     distanceDependency: 0
     maxVolumeDistance: 5
     zeroVolumeDistance: 10
+    volumeMultiplier: 1
     audioSource: {fileID: 0}
 --- !u!198 &19846750
 ParticleSystem:
@@ -1791,6 +1798,10 @@ Prefab:
       propertyPath: clips.Array.data[2].clip
       value: 
       objectReference: {fileID: 8300000, guid: ce070e848d44f4f8da5fdf3918e6c560, type: 3}
+    - target: {fileID: 0}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 157518}
