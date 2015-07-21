@@ -47,6 +47,8 @@ public class UnlockableContentUI : MonoBehaviour {
 
 	bool activeBook = false;
 
+	AudioHandler audioHandler;
+
 	void Start () {
 		setSections();
 
@@ -65,6 +67,8 @@ public class UnlockableContentUI : MonoBehaviour {
 		//prima le seguenti due funzioni erano nell'handleDelayInit, leggi la descrizione per la motivazione
 		updateContentSprites();
 		updateFragmentSprites();
+
+		audioHandler = GetComponent<AudioHandler>();
 
 		wasUseController = GeneralFinder.cursorHandler.useController;
 	}
@@ -132,6 +136,7 @@ public class UnlockableContentUI : MonoBehaviour {
 			//1. aggiornare l'array di sprites a sinistra
 			//2. mostrare le sprites a sinistra aggiornate
 			//3. eseguire l'animazione dell'oggetto raccolto
+			//4. eseguire il suono
 			
 			//1.
 			updateFragmentSprites();
@@ -145,6 +150,10 @@ public class UnlockableContentUI : MonoBehaviour {
 			PickingObjectGraphic pick = gameObject.AddComponent<PickingObjectGraphic>();
 			pick.setVariables(findContent(actualFragmentSection, id).iconUnlock, PlayingUILateral.UIPosition.Left, findContentIndex(actualFragmentSection, id));
 			pick.setTimeToGetSmall(timeToGetSmall);
+
+			//4.
+			if (audioHandler != null)
+				audioHandler.playClipByName("UnlockStar");
 		}
 	}
 
@@ -160,7 +169,7 @@ public class UnlockableContentUI : MonoBehaviour {
 			//2. mostrare le sprites a destra aggiornate
 			//3. eseguire l'animazione dell'oggetto raccolto
 			//4. mostrare l'icona del libro lampeggiante per tot secondi
-			
+			//4. eseguire il suono
 
 			//0.
 			if (!activeBook)
@@ -186,6 +195,10 @@ public class UnlockableContentUI : MonoBehaviour {
 			
 			setUpperRightExclamationBook();
 			setPulsingBook();
+
+			//4.
+			if (audioHandler != null)
+				audioHandler.playClipByName("UnlockContent");
 		}
 	}
 
@@ -199,6 +212,7 @@ public class UnlockableContentUI : MonoBehaviour {
 			//0. mostrare la sprite del libro, se non presente
 			//1. eseguire l'animazione della pagina raccolta
 			//2. mostrare l'icona del libro lampeggiante per tot secondi
+			//3. eseguire il suono
 
 			//0.
 			if (!activeBook)
@@ -218,6 +232,10 @@ public class UnlockableContentUI : MonoBehaviour {
 			//2.
 			setUpperRightExclamationBook();
 			setPulsingBook();
+
+			//3.
+			if (audioHandler != null)
+				audioHandler.playClipByName("UnlockFact");
 		}
 	}
 
