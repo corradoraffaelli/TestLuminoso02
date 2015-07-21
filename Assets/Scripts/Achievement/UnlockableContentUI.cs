@@ -21,6 +21,7 @@ public class UnlockableContentUI : MonoBehaviour {
 	public float timeToPulse = 4.0f;
 
 	public float timeToGetSmall = 1.5f;
+	public float pageTimeToGetSmall = 4.0f;
 
 	int changeSpriteTime = 0;
 	int maxChangeSpriteTime = 2;
@@ -212,6 +213,7 @@ public class UnlockableContentUI : MonoBehaviour {
 			PickingObjectGraphic pick = gameObject.AddComponent<PickingObjectGraphic>();
 			pick.setVariables(spritesBook.pageSprite, PlayingUI.UIPosition.UpperRight,0);
 			pick.setBookPage(true);
+			pick.setTimeToGetSmall(pageTimeToGetSmall);
 			
 			//2.
 			setUpperRightExclamationBook();

@@ -29,7 +29,7 @@ public class PickingObjectGraphic : MonoBehaviour {
 
 	public bool bookPage = false;
 	float bookPageYPos = 250.0f;
-	Vector2 bigScaleBookPage = new Vector2(100.0f, 100.0f);
+	Vector2 bigScaleBookPage = new Vector2(200.0f, 200.0f);
 
 	float timeToGetSmall = 3.0f;
 
