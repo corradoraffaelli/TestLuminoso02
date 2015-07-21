@@ -29,7 +29,7 @@ public class UnlockableContentUI : MonoBehaviour {
 	Sprite[] rightSprites;
 	Sprite[] leftSprites;
 
-	public InformativeSection actualContentSection;
+	InformativeSection actualContentSection;
 	InformativeSection actualFactSection;
 	InformativeSection actualFragmentSection;
 
@@ -44,12 +44,22 @@ public class UnlockableContentUI : MonoBehaviour {
 
 	bool wasUseController;
 
+	bool activeBook = false;
+
 	void Start () {
 		setSections();
 
-		setUpperRightVariables();
-		setUpperRightStandardBook();
-		setUpperRightButton();
+		if (countUnlockedElement() == 0)
+			activeBook = false;
+		else
+			activeBook = true;
+
+		if (activeBook)
+		{
+			setUpperRightVariables();
+			setUpperRightStandardBook();
+			setUpperRightButton();
+		}
 
 		//prima le seguenti due funzioni erano nell'handleDelayInit, leggi la descrizione per la motivazione
 		updateContentSprites();
@@ -65,7 +75,7 @@ public class UnlockableContentUI : MonoBehaviour {
 		//nasconde le barre laterali dopo tot secondi, nel caso siano visibili
 		hideLateralManager();
 
-		if (!wasPulsingBookNull && pulsingBook == null)
+		if (activeBook && !wasPulsingBookNull && pulsingBook == null)
 		{
 			setUpperRightStandardBook();
 			wasPulsingBookNull = true;
@@ -144,12 +154,22 @@ public class UnlockableContentUI : MonoBehaviour {
 			Debug.Log ("ho sbloccato l'oggetto "+name);
 			
 			//se è un collezionabile devo
+			//0. mostrare la sprite del libro, se non presente
 			//1. aggiornare l'array di sprites a destra
 			//2. mostrare le sprites a destra aggiornate
 			//3. eseguire l'animazione dell'oggetto raccolto
 			//4. mostrare l'icona del libro lampeggiante per tot secondi
 			
-			
+
+			//0.
+			if (!activeBook)
+			{
+				activeBook = true;
+				setUpperRightVariables();
+				setUpperRightStandardBook();
+				setUpperRightButton();
+			}
+
 			//1.
 			updateContentSprites();
 			
@@ -175,9 +195,19 @@ public class UnlockableContentUI : MonoBehaviour {
 			Debug.Log ("ho sbloccato il fun fact "+name);
 			
 			//se è un fun fact devo
+			//0. mostrare la sprite del libro, se non presente
 			//1. eseguire l'animazione della pagina raccolta
 			//2. mostrare l'icona del libro lampeggiante per tot secondi
-			
+
+			//0.
+			if (!activeBook)
+			{
+				activeBook = true;
+				setUpperRightVariables();
+				setUpperRightStandardBook();
+				setUpperRightButton();
+			}
+
 			//1.
 			PickingObjectGraphic pick = gameObject.AddComponent<PickingObjectGraphic>();
 			pick.setVariables(spritesBook.pageSprite, PlayingUI.UIPosition.UpperRight,0);
@@ -361,5 +391,30 @@ public class UnlockableContentUI : MonoBehaviour {
 				pulsingEl[i].stopPulsing();
 			}
 		}
+	}
+
+	int countUnlockedElement()
+	{
+		int unlockedNum = 0;
+
+		if (actualFactSection != null)
+		{
+			for (int i = 0; i < actualFactSection.contents.Length; i++)
+			{
+				if (actualFactSection.contents[i] != null && !actualFactSection.contents[i].locked)
+					unlockedNum++;
+			}
+		}
+
+		if (actualContentSection != null)
+		{
+			for (int i = 0; i < actualContentSection.contents.Length; i++)
+			{
+				if (actualContentSection.contents[i] != null && !actualContentSection.contents[i].locked)
+					unlockedNum++;
+			}
+		}
+
+		return unlockedNum;
 	}
 }
