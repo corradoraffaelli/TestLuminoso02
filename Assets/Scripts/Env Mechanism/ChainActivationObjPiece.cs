@@ -80,9 +80,11 @@ public class ChainActivationObjPiece : MonoBehaviour {
 	public bool sequenceButtonCase = false;
 	public float stepMax = 0;
 
+	public bool invertSound = false;
 	AudioHandler audioHandler;
 	bool soundUpStarted = false;
 	bool soundDownStarted = false;
+	Vector3 oldPosition;
 	
 	// Use this for initialization
 	void Start () {
@@ -276,7 +278,51 @@ public class ChainActivationObjPiece : MonoBehaviour {
 			//fare qualcosa per tornare alla posizione di origine?
 			
 		}
+
+		handleAudio();
 		
+	}
+
+	//AGGIUNTA CORRADO
+	//GESTIONE SUONI
+	private void handleAudio()
+	{
+		if (audioHandler != null)
+		{
+			Vector3 actualPosition = transform.position;
+
+			if (actualPosition != oldPosition)
+			{
+				if ((actualPosition.y > oldPosition.y && !invertSound) || (actualPosition.y < oldPosition.y && invertSound))
+				{
+					if (!soundUpStarted)
+					{
+						audioHandler.playClipByName("DoorUp");
+						audioHandler.stopClipByName("DoorDown");
+						soundUpStarted = true;
+					}
+				}
+
+				if ((actualPosition.y < oldPosition.y && !invertSound) || (actualPosition.y > oldPosition.y && invertSound))
+				{
+					if (!soundDownStarted)
+					{
+						audioHandler.playClipByName("DoorDown");
+						audioHandler.stopClipByName("DoorUp");
+						soundDownStarted = true;
+					}
+				}
+			}
+			else
+			{
+				audioHandler.stopClipByName("DoorUp");
+				audioHandler.stopClipByName("DoorDown");
+				soundUpStarted = false;
+				soundDownStarted = false;
+			}
+
+			oldPosition = actualPosition;
+		}
 	}
 
 	private bool checkArriveCondition(Vector3 target, bool isForward) {
@@ -292,23 +338,11 @@ public class ChainActivationObjPiece : MonoBehaviour {
 
 				if(isForward)
 				{
-					transform.position = new Vector3(targetPos.position.x, targetPos.position.y, transform.position.z);
-					if (audioHandler != null)
-					{
-						audioHandler.stopClipByName("DoorUp");
-						soundUpStarted = false;
-					}
-						
+					transform.position = new Vector3(targetPos.position.x, targetPos.position.y, transform.position.z);	
 				}
 				else
 				{
 					transform.position = new Vector3(defaultPos.x, defaultPos.y, transform.position.z);
-					if (audioHandler != null)
-					{
-						audioHandler.stopClipByName("DoorDown");
-						soundDownStarted = false;
-					}
-						
 				}
 
 				if(DEBUG_transition)
@@ -382,27 +416,6 @@ public class ChainActivationObjPiece : MonoBehaviour {
 			break;
 
 		}
-
-		//AGGIUNTA CORRADO
-		//GESTIONE SUONI
-		if (audioHandler != null)
-		{
-			if (isForward && !soundUpStarted)
-			{
-				audioHandler.playClipByName("DoorUp");
-				audioHandler.stopClipByName("DoorDown");
-				soundUpStarted = true;
-			}
-				
-			if (!isForward && !soundDownStarted)
-			{
-				audioHandler.playClipByName("DoorDown");
-				audioHandler.stopClipByName("DoorUp");
-				soundDownStarted = true;
-			}
-		}
-			
-
 
 		return false;
 
