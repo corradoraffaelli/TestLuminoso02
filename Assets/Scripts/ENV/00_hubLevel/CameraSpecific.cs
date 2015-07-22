@@ -8,6 +8,7 @@ public class CameraSpecific : MonoBehaviour {
 	void Start () {
 		float aspectRatio = Camera.main.aspect;
 		float size = lateralView / aspectRatio;
+		//Debug.Log ("sizeCamera" + size);
 		Camera.main.orthographicSize = size;
 	}
 }
