@@ -1988,45 +1988,6 @@ ParticleRenderer:
 Transform:
   m_PrefabParentObject: {fileID: 465624, guid: ea58102e5f959b44f8934bcadc05a4d2, type: 2}
   m_PrefabInternal: {fileID: 647106807}
---- !u!1 &267064087 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 193454, guid: 4929ce461d7024f07a33371256545ff5, type: 2}
-  m_PrefabInternal: {fileID: 1666067086}
---- !u!114 &267064088
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 267064087}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: db8ec66bee508ec4a8754d0738e984cc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  updateAudioClips: 0
-  clips:
-  - clipName: DoorUp
-    clip: {fileID: 8300000, guid: 96daccea7ed6b4a4f968906d97f07df7, type: 3}
-    loop: 1
-    playOnAwake: 0
-    volume: 1
-    pitch: 1
-    distanceDependency: 1
-    maxVolumeDistance: 8
-    zeroVolumeDistance: 11
-    volumeMultiplier: 1
-    audioSource: {fileID: 0}
-  - clipName: DoorDown
-    clip: {fileID: 8300000, guid: 37e22e8fb5e59064686f0d7fb644b792, type: 3}
-    loop: 1
-    playOnAwake: 0
-    volume: 1
-    pitch: 1
-    distanceDependency: 1
-    maxVolumeDistance: 8
-    zeroVolumeDistance: 11
-    volumeMultiplier: 1
-    audioSource: {fileID: 0}
 --- !u!1 &273906161 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 146606, guid: 1a577d0648c1ded4f91c8e36600ddc06, type: 2}
@@ -13595,7 +13556,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 451044, guid: 4929ce461d7024f07a33371256545ff5, type: 2}
       propertyPath: m_RootOrder
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11408388, guid: 4929ce461d7024f07a33371256545ff5, type: 2}
+      propertyPath: buttonType
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4929ce461d7024f07a33371256545ff5, type: 2}
@@ -15695,45 +15660,6 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 6af22ad39387eb34bbf12093c3b99270, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
---- !u!1 &1980463068 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 120040, guid: 4929ce461d7024f07a33371256545ff5, type: 2}
-  m_PrefabInternal: {fileID: 1666067086}
---- !u!114 &1980463070
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1980463068}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: db8ec66bee508ec4a8754d0738e984cc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  updateAudioClips: 0
-  clips:
-  - clipName: ButtonUp
-    clip: {fileID: 8300000, guid: 440030d483552134a9b207c0e8c82b77, type: 3}
-    loop: 0
-    playOnAwake: 0
-    volume: 1
-    pitch: 1
-    distanceDependency: 0
-    maxVolumeDistance: 0
-    zeroVolumeDistance: 0
-    volumeMultiplier: 1
-    audioSource: {fileID: 0}
-  - clipName: ButtonDown
-    clip: {fileID: 8300000, guid: e3fdaf36bc452de4c8f4b1b4cf5488f0, type: 3}
-    loop: 0
-    playOnAwake: 0
-    volume: 1
-    pitch: 1
-    distanceDependency: 0
-    maxVolumeDistance: 0
-    zeroVolumeDistance: 0
-    volumeMultiplier: 1
-    audioSource: {fileID: 0}
 --- !u!1 &1983647616
 GameObject:
   m_ObjectHideFlags: 0

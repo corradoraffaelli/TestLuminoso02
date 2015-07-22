@@ -11,6 +11,7 @@ GameObject:
   - 212: {fileID: 21221722}
   - 61: {fileID: 6126062}
   - 114: {fileID: 11483914}
+  - 114: {fileID: 11472588}
   m_Layer: 0
   m_Name: Button
   m_TagString: Untagged
@@ -126,6 +127,7 @@ GameObject:
   - 212: {fileID: 21203764}
   - 61: {fileID: 6130726}
   - 114: {fileID: 11408388}
+  - 114: {fileID: 11412772}
   m_Layer: 8
   m_Name: ChainPiece 01
   m_TagString: Untagged
@@ -189,7 +191,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 132298}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 21.4500008, y: 5.46000004, z: 0}
+  m_LocalPosition: {x: 17.4295292, y: 23.0527153, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 407468}
@@ -326,6 +328,41 @@ MonoBehaviour:
   tBackwardLenght: 1
   sequenceButtonCase: 0
   stepMax: 0
+--- !u!114 &11412772
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 193454}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db8ec66bee508ec4a8754d0738e984cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  updateAudioClips: 0
+  clips:
+  - clipName: DoorUp
+    clip: {fileID: 8300000, guid: 96daccea7ed6b4a4f968906d97f07df7, type: 3}
+    loop: 1
+    playOnAwake: 0
+    volume: 1
+    pitch: 1
+    distanceDependency: 1
+    maxVolumeDistance: 8
+    zeroVolumeDistance: 11
+    volumeMultiplier: 1
+    audioSource: {fileID: 0}
+  - clipName: DoorDown
+    clip: {fileID: 8300000, guid: 37e22e8fb5e59064686f0d7fb644b792, type: 3}
+    loop: 1
+    playOnAwake: 0
+    volume: 1
+    pitch: 1
+    distanceDependency: 1
+    maxVolumeDistance: 8
+    zeroVolumeDistance: 11
+    volumeMultiplier: 1
+    audioSource: {fileID: 0}
 --- !u!114 &11415178
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -354,6 +391,41 @@ MonoBehaviour:
   oneKill: 0
   turnOn: 1
   crusher: 0
+--- !u!114 &11472588
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 120040}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db8ec66bee508ec4a8754d0738e984cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  updateAudioClips: 0
+  clips:
+  - clipName: ButtonUp
+    clip: {fileID: 8300000, guid: 440030d483552134a9b207c0e8c82b77, type: 3}
+    loop: 0
+    playOnAwake: 0
+    volume: 1
+    pitch: 1
+    distanceDependency: 0
+    maxVolumeDistance: 0
+    zeroVolumeDistance: 0
+    volumeMultiplier: 1
+    audioSource: {fileID: 0}
+  - clipName: ButtonDown
+    clip: {fileID: 8300000, guid: e3fdaf36bc452de4c8f4b1b4cf5488f0, type: 3}
+    loop: 0
+    playOnAwake: 0
+    volume: 1
+    pitch: 1
+    distanceDependency: 0
+    maxVolumeDistance: 0
+    zeroVolumeDistance: 0
+    volumeMultiplier: 1
+    audioSource: {fileID: 0}
 --- !u!114 &11472604
 MonoBehaviour:
   m_ObjectHideFlags: 1
