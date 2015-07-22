@@ -18,6 +18,8 @@ public class ButtonSequenceHandler : MonoBehaviour {
 
 	int actualIndex = 0;
 
+	public AudioHandler audioHandler;
+
 
 	// Use this for initialization
 	void Start () {
