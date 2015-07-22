@@ -16,11 +16,15 @@ public class ChainActivationObjStarter : MonoBehaviour {
 
 	private GameObject whoIsActivatingMe;
 	bool processInCourse = false;
-	
+
+	AudioHandler audioHandler;
+
 	// Use this for initialization
 	void Start () {
 
 		sr = GetComponent<SpriteRenderer> ();
+
+		audioHandler = GetComponent<AudioHandler>();
 
 		checkTagList ();
 		if(checkObjectToActivate ())
@@ -101,6 +105,7 @@ public class ChainActivationObjStarter : MonoBehaviour {
 					//firstChainPieceObj.SendMessage("buttonPushed", true);
 					sr.sprite = buttonDown;
 					firstChainPieceScript.c_buttonPushed(true);
+					audioHandler.playClipByName("ButtonDown");
 				}
 				else {
 					Debug.Log ("ATTENZIONE - L'OGGETTO DA ATTIVARE NON E' STATO ASSEGNATO");
@@ -132,6 +137,7 @@ public class ChainActivationObjStarter : MonoBehaviour {
 					//firstChainPieceObj.SendMessage("buttonPushed", false);
 					firstChainPieceScript.c_buttonPushed(false);
 					sr.sprite = buttonUp;
+					audioHandler.playClipByName("ButtonUp");
 					whoIsActivatingMe = null;
 					processInCourse = false;
 				}

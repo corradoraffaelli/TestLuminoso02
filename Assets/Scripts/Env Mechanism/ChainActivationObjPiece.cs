@@ -79,10 +79,16 @@ public class ChainActivationObjPiece : MonoBehaviour {
 
 	public bool sequenceButtonCase = false;
 	public float stepMax = 0;
+
+	AudioHandler audioHandler;
+	bool soundUpStarted = false;
+	bool soundDownStarted = false;
 	
 	// Use this for initialization
 	void Start () {
-		
+
+		audioHandler = GetComponent<AudioHandler>();
+
 		myTrasform = transform;
 
 		getDefaultAngle ();
@@ -285,9 +291,25 @@ public class ChainActivationObjPiece : MonoBehaviour {
 			if(dist.magnitude < 0.4f ) {
 
 				if(isForward)
+				{
 					transform.position = new Vector3(targetPos.position.x, targetPos.position.y, transform.position.z);
+					if (audioHandler != null)
+					{
+						audioHandler.stopClipByName("DoorUp");
+						soundUpStarted = false;
+					}
+						
+				}
 				else
+				{
 					transform.position = new Vector3(defaultPos.x, defaultPos.y, transform.position.z);
+					if (audioHandler != null)
+					{
+						audioHandler.stopClipByName("DoorDown");
+						soundDownStarted = false;
+					}
+						
+				}
 
 				if(DEBUG_transition)
 					Debug.Log ("arrived translation");
@@ -360,6 +382,27 @@ public class ChainActivationObjPiece : MonoBehaviour {
 			break;
 
 		}
+
+		//AGGIUNTA CORRADO
+		//GESTIONE SUONI
+		if (audioHandler != null)
+		{
+			if (isForward && !soundUpStarted)
+			{
+				audioHandler.playClipByName("DoorUp");
+				audioHandler.stopClipByName("DoorDown");
+				soundUpStarted = true;
+			}
+				
+			if (!isForward && !soundDownStarted)
+			{
+				audioHandler.playClipByName("DoorDown");
+				audioHandler.stopClipByName("DoorUp");
+				soundDownStarted = true;
+			}
+		}
+			
+
 
 		return false;
 
