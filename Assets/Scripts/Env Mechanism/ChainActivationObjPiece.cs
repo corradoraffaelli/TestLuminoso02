@@ -339,10 +339,22 @@ public class ChainActivationObjPiece : MonoBehaviour {
 				if(isForward)
 				{
 					transform.position = new Vector3(targetPos.position.x, targetPos.position.y, transform.position.z);	
+
+					if (audioHandler != null)
+					{
+						if (invertSound)
+							audioHandler.playClipByName("Botto");
+					}
 				}
 				else
 				{
 					transform.position = new Vector3(defaultPos.x, defaultPos.y, transform.position.z);
+
+					if (audioHandler != null)
+					{
+						if (!invertSound)
+							audioHandler.playForcedClipByName("Botto");
+					}
 				}
 
 				if(DEBUG_transition)
