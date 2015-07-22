@@ -79,10 +79,18 @@ public class ChainActivationObjPiece : MonoBehaviour {
 
 	public bool sequenceButtonCase = false;
 	public float stepMax = 0;
+
+	public bool invertSound = false;
+	AudioHandler audioHandler;
+	bool soundUpStarted = false;
+	bool soundDownStarted = false;
+	Vector3 oldPosition;
 	
 	// Use this for initialization
 	void Start () {
-		
+
+		audioHandler = GetComponent<AudioHandler>();
+
 		myTrasform = transform;
 
 		getDefaultAngle ();
@@ -270,7 +278,51 @@ public class ChainActivationObjPiece : MonoBehaviour {
 			//fare qualcosa per tornare alla posizione di origine?
 			
 		}
+
+		handleAudio();
 		
+	}
+
+	//AGGIUNTA CORRADO
+	//GESTIONE SUONI
+	private void handleAudio()
+	{
+		if (audioHandler != null)
+		{
+			Vector3 actualPosition = transform.position;
+
+			if (actualPosition != oldPosition)
+			{
+				if ((actualPosition.y > oldPosition.y && !invertSound) || (actualPosition.y < oldPosition.y && invertSound))
+				{
+					if (!soundUpStarted)
+					{
+						audioHandler.playClipByName("DoorUp");
+						audioHandler.stopClipByName("DoorDown");
+						soundUpStarted = true;
+					}
+				}
+
+				if ((actualPosition.y < oldPosition.y && !invertSound) || (actualPosition.y > oldPosition.y && invertSound))
+				{
+					if (!soundDownStarted)
+					{
+						audioHandler.playClipByName("DoorDown");
+						audioHandler.stopClipByName("DoorUp");
+						soundDownStarted = true;
+					}
+				}
+			}
+			else
+			{
+				audioHandler.stopClipByName("DoorUp");
+				audioHandler.stopClipByName("DoorDown");
+				soundUpStarted = false;
+				soundDownStarted = false;
+			}
+
+			oldPosition = actualPosition;
+		}
 	}
 
 	private bool checkArriveCondition(Vector3 target, bool isForward) {
@@ -285,9 +337,25 @@ public class ChainActivationObjPiece : MonoBehaviour {
 			if(dist.magnitude < 0.4f ) {
 
 				if(isForward)
-					transform.position = new Vector3(targetPos.position.x, targetPos.position.y, transform.position.z);
+				{
+					transform.position = new Vector3(targetPos.position.x, targetPos.position.y, transform.position.z);	
+
+					if (audioHandler != null)
+					{
+						if (invertSound)
+							audioHandler.playClipByName("Botto");
+					}
+				}
 				else
+				{
 					transform.position = new Vector3(defaultPos.x, defaultPos.y, transform.position.z);
+
+					if (audioHandler != null)
+					{
+						if (!invertSound)
+							audioHandler.playForcedClipByName("Botto");
+					}
+				}
 
 				if(DEBUG_transition)
 					Debug.Log ("arrived translation");

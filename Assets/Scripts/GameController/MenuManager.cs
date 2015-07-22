@@ -17,6 +17,10 @@ public class MenuManager : MonoBehaviour {
 	
 	bool statusMenu = false;
 
+	public bool StatusMenu {
+		get{ return statusMenu; }
+	}
+
 	// Use this for initialization
 	void Start () {
 
@@ -231,12 +235,14 @@ public class MenuManager : MonoBehaviour {
 		//2) opp se è attivo sia il menu che intro
 		//3) non lo catturo se è attivo il menu e qualcosa diverso da intro
 
-		if ( Input.GetKeyUp (KeyCode.Escape)  ) {
+		if ( Input.GetKeyUp (KeyCode.Escape) && !GeneralFinder.informativeManager.invokeWithoutMenu ) {
 
 
 			if(!GeneralFinder.canvasMenu.activeSelf || canvasActive == canvasIntro) {
 				//caso in cui siamo in game o dentro la scheda intro del menu
 				//quindi o stiamo entrando in pausa adesso, o ne stiamo uscendo
+
+				//Debug.Log("apro/chiudo menu");
 				c_enableMenu(!statusMenu);
 
 				GeneralFinder.playingUILateral.showIconsImmediately(PlayingUILateral.UIPosition.Right , statusMenu);
@@ -245,6 +251,7 @@ public class MenuManager : MonoBehaviour {
 			}
 			else {
 				//caso di navigazione dentro al menu, quindi di ritorno alla scheda intro
+				//Debug.Log("switcho sezione menu");
 				c_switchMenuSection(canvasActive, canvasIntro);
 
 			}

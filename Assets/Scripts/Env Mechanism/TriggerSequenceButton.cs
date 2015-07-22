@@ -17,9 +17,13 @@ public class TriggerSequenceButton : MonoBehaviour {
 	public GameObject handler;
 	GameObject actualPusher;
 
+	AudioHandler audioHandler;
+
 	// Use this for initialization
 	void Start () {
 		sr = GetComponent<SpriteRenderer> ();
+
+		audioHandler = transform.parent.gameObject.GetComponentInChildren<AudioHandler>();
 	}
 	
 	// Update is called once per frame
@@ -36,6 +40,8 @@ public class TriggerSequenceButton : MonoBehaviour {
 				pushed = true;
 				actualPusher = c.gameObject;
 				handler.SendMessage("c_sequenceButtonPressed", sequenceNumber);
+
+
 				//Debug.Log ("fine trigg da " + c.name);
 			}
 		}
@@ -45,7 +51,11 @@ public class TriggerSequenceButton : MonoBehaviour {
 	public void OnTriggerExit2D(Collider2D c) {
 
 		if(actualPusher == c.gameObject)
+		{
 			actualPusher = null;
+
+		}
+			
 
 	}
 
@@ -59,7 +69,8 @@ public class TriggerSequenceButton : MonoBehaviour {
 
 		sr.sprite = pushedImg;
 
-
+		if (audioHandler != null)
+			audioHandler.playClipByName("ButtonDown");
 	}
 
 	public IEnumerator animateReturnDefaultPos() {
@@ -71,6 +82,9 @@ public class TriggerSequenceButton : MonoBehaviour {
 		//suono clack
 
 		sr.sprite = notPushedImg;
+
+		if (audioHandler != null)
+			audioHandler.playClipByName("ButtonUp");
 
 		pushed = false;
 		untouchable = false;
