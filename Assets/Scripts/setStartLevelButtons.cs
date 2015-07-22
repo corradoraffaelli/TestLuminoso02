@@ -81,7 +81,7 @@ public class setStartLevelButtons : MonoBehaviour {
 			
 			Directory.CreateDirectory (dirName);
 			
-			return;
+			return false;
 		} else {
 			
 			string [] files = Directory.GetFiles (defPath);

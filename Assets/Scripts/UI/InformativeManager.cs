@@ -34,6 +34,9 @@ public class InformativeManager : MonoBehaviour {
 
 	}
 
+	[HideInInspector]
+	public bool invokeWithoutMenu = false;
+
 	public int actualLevelNumber = -1;
 
 	[HideInInspector]
@@ -518,8 +521,46 @@ public class InformativeManager : MonoBehaviour {
 
 	void Update() {
 		
-		if (Input.GetKey (KeyCode.I)) {
+		if (Input.GetKeyDown (KeyCode.I) || Input.GetKeyDown(KeyCode.Escape)) {
 
+			if( (!canvasInformative.activeSelf || !canvasInformative.transform.parent.gameObject.activeSelf  ) 
+			   && Input.GetKeyDown (KeyCode.I) && !invokeWithoutMenu && !GeneralFinder.menuManager.StatusMenu) {
+				//Debug.Log("ciao0");
+				invokeWithoutMenu = true;
+				PlayStatusTracker.inPlay = false;
+
+				canvasInformative.transform.parent.gameObject.SetActive(true);
+				canvasInformative.SetActive(true);
+
+				fillNavigation ();
+				fillMultimedia();
+				fillDetail();
+
+				if(unlockedNewContent) {
+					
+					GeneralFinder.testInformativeManager.c_setShowWhenUnlocked(activeSection, sections[activeSection].activeContent);
+					unlockedNewContent = false;
+					
+				}
+
+
+			}
+			else {
+				//Debug.Log("ciao1");
+				if(!GeneralFinder.menuManager.StatusMenu && invokeWithoutMenu) {
+					//Debug.Log("ciao2");
+
+					PlayStatusTracker.inPlay = true;
+					
+					canvasInformative.SetActive(false);
+					canvasInformative.transform.parent.gameObject.SetActive(false);
+
+					StartCoroutine(countDownMenu());
+				}
+			
+			}
+
+			/*
 			GeneralFinder.menuManager.c_enableMenu(true, canvasInformative);
 
 			//GeneralFinder.playingUI.cleanPositionButtonObject (PlayingUI.UIPosition.UpperRight);
@@ -531,8 +572,17 @@ public class InformativeManager : MonoBehaviour {
 				unlockedNewContent = false;
 
 			}
+			*/
 		}
 		
+	}
+
+	IEnumerator countDownMenu() {
+
+		yield return new WaitForSeconds (0.2f);
+
+		invokeWithoutMenu = false;
+
 	}
 
 	#endregion PRIVATEMETHODS
