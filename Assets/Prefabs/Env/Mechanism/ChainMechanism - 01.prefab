@@ -315,7 +315,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DEBUG_transition: 0
-  buttonType: 0
+  buttonType: 1
   movementType: 0
   endActionType: 0
   chainPieceType: 1
@@ -410,9 +410,9 @@ MonoBehaviour:
     playOnAwake: 0
     volume: 1
     pitch: 1
-    distanceDependency: 0
-    maxVolumeDistance: 0
-    zeroVolumeDistance: 0
+    distanceDependency: 1
+    maxVolumeDistance: 8
+    zeroVolumeDistance: 11
     volumeMultiplier: 1
     audioSource: {fileID: 0}
   - clipName: ButtonDown
@@ -421,9 +421,9 @@ MonoBehaviour:
     playOnAwake: 0
     volume: 1
     pitch: 1
-    distanceDependency: 0
-    maxVolumeDistance: 0
-    zeroVolumeDistance: 0
+    distanceDependency: 1
+    maxVolumeDistance: 8
+    zeroVolumeDistance: 11
     volumeMultiplier: 1
     audioSource: {fileID: 0}
 --- !u!114 &11472604
