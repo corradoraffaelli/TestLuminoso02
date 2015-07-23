@@ -57,6 +57,7 @@ GameObject:
   - 212: {fileID: 21241426}
   - 61: {fileID: 6172280}
   - 114: {fileID: 11437512}
+  - 114: {fileID: 11479406}
   m_Layer: 8
   m_Name: ChainPiece
   m_TagString: Untagged
@@ -466,7 +467,7 @@ MonoBehaviour:
   active: 0
   maxRotationSpeed: 800
   lerpSpeed: 1.5
-  stopSoundSpeed: .600000024
+  stopSoundSpeed: 200
   soundNames:
   - CigolioVentola
   - RumoreRotazione
@@ -495,6 +496,7 @@ MonoBehaviour:
   tBackwardLenght: 4
   sequenceButtonCase: 0
   stepMax: 0
+  invertSound: 0
 --- !u!114 &11459362
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -509,7 +511,7 @@ MonoBehaviour:
   updateAudioClips: 0
   clips:
   - clipName: CigolioVentola
-    clip: {fileID: 8300000, guid: 128eed4b1ce061048bd22c663aeb9ab8, type: 3}
+    clip: {fileID: 0}
     loop: 1
     playOnAwake: 0
     volume: .5
@@ -520,14 +522,60 @@ MonoBehaviour:
     volumeMultiplier: 1
     audioSource: {fileID: 0}
   - clipName: RumoreRotazione
-    clip: {fileID: 8300000, guid: 37e22e8fb5e59064686f0d7fb644b792, type: 3}
+    clip: {fileID: 8300000, guid: 997c7ca1f15c04e38a8147751defa5f7, type: 3}
     loop: 1
     playOnAwake: 0
-    volume: .5
+    volume: .300000012
+    pitch: 1
+    distanceDependency: 1
+    maxVolumeDistance: 4
+    zeroVolumeDistance: 17
+    volumeMultiplier: 1
+    audioSource: {fileID: 0}
+--- !u!114 &11479406
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 138430}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db8ec66bee508ec4a8754d0738e984cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  updateAudioClips: 0
+  clips:
+  - clipName: DoorUp
+    clip: {fileID: 8300000, guid: c1fb1bb3f770d4901926bc037b0f25b6, type: 3}
+    loop: 1
+    playOnAwake: 0
+    volume: 1
     pitch: 1
     distanceDependency: 1
     maxVolumeDistance: 8
-    zeroVolumeDistance: 13
+    zeroVolumeDistance: 20
+    volumeMultiplier: 1
+    audioSource: {fileID: 0}
+  - clipName: DoorDown
+    clip: {fileID: 8300000, guid: 7a85e93f66a744532863a03ba12d1f27, type: 3}
+    loop: 1
+    playOnAwake: 0
+    volume: 1
+    pitch: 1
+    distanceDependency: 1
+    maxVolumeDistance: 8
+    zeroVolumeDistance: 20
+    volumeMultiplier: 1
+    audioSource: {fileID: 0}
+  - clipName: Botto
+    clip: {fileID: 8300000, guid: 64fd65ff048d341e68f72daf1ba1139c, type: 3}
+    loop: 0
+    playOnAwake: 0
+    volume: 1
+    pitch: 1
+    distanceDependency: 1
+    maxVolumeDistance: 8
+    zeroVolumeDistance: 20
     volumeMultiplier: 1
     audioSource: {fileID: 0}
 --- !u!212 &21218140
