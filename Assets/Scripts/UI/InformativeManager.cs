@@ -521,11 +521,14 @@ public class InformativeManager : MonoBehaviour {
 
 	void Update() {
 		
-		if (Input.GetKeyDown (KeyCode.I) || Input.GetKeyDown(KeyCode.Escape)) {
+		if (Input.GetButtonDown ("Informative-menu") || Input.GetButtonDown("Escape-menu")) {
 
 			if( (!canvasInformative.activeSelf || !canvasInformative.transform.parent.gameObject.activeSelf  ) 
 			   && Input.GetKeyDown (KeyCode.I) && !invokeWithoutMenu && !GeneralFinder.menuManager.StatusMenu) {
 				//Debug.Log("ciao0");
+
+				GeneralFinder.unlockableContentUI.stopPulsing();
+
 				invokeWithoutMenu = true;
 				PlayStatusTracker.inPlay = false;
 
@@ -574,8 +577,135 @@ public class InformativeManager : MonoBehaviour {
 			}
 			*/
 		}
+
+		if (!canvasInformative.activeSelf) 
+			return;
+
+
+		controllerNavigation ();
+
 		
 	}
+
+	#region CONTROLLERNAV
+
+	void controllerNavigation() {
+
+		if(Input.GetButtonDown("BackTrigger") ) {
+			
+			float fl = Input.GetAxisRaw("BackTrigger");
+			
+			controllerChangeSection(fl);
+			
+		}
+		
+		if(Input.GetButtonDown("FrontTrigger") ) {
+			
+			float fl = Input.GetAxisRaw("FrontTrigger");
+			
+			controllerChangeImage(fl);
+			
+		}
+		
+		if (Input.GetButtonDown ("Vertical-menu-nav")) {
+			
+			float fl = Input.GetAxisRaw("Vertical-menu-nav");
+			
+			controllerChangeContent(fl);
+			
+		}
+		
+		if (Input.GetButtonDown ("Horizontal-menu-nav")) {
+			
+			//float fl = Input.GetAxisRaw("Horizontal-menu-nav");
+			
+			
+		}
+		
+		if (Input.GetButtonDown ("Vertical-Informative-menu-nav")) {
+			
+			float fl = Input.GetAxisRaw("Vertical-Informative-menu-nav");
+			
+			controllerScrollBarInfo(fl);
+			
+		}
+
+	}
+
+	void controllerScrollBarInfo(float fl) {
+
+		RectTransform rt = detail.gameObject.GetComponent<RectTransform> ();
+
+		if (fl > 0) {
+
+			rt.offsetMax = new Vector2 (rt.offsetMax.x, rt.offsetMax.y - 30.0f);
+			rt.offsetMin = new Vector2 (rt.offsetMax.x, rt.offsetMax.y + 30.0f);
+
+
+		} else {
+
+			rt.offsetMax = new Vector2 (rt.offsetMax.x, rt.offsetMax.y + 30.0f);
+			rt.offsetMin = new Vector2 (rt.offsetMax.x, rt.offsetMax.y - 30.0f);
+
+		}
+
+	}
+
+	void controllerChangeSection(float fl) {
+
+		if(fl>0)
+			c_changeSection(true);
+		else
+			c_changeSection(false);
+
+		c_changeContent (0);
+
+	}
+
+	void controllerChangeImage(float fl) {
+
+		if (fl > 0)
+			c_changeMultimedia (true);
+		else
+			c_changeMultimedia (false);
+
+	}
+
+	void controllerChangeContent(float fl) {
+
+		int tempAct = 0;
+
+		tempAct = sections [activeSection].activeContent;
+
+		//Debug.Log ("active content>" + tempAct);
+
+		while(true) {
+			if(fl>0)
+				tempAct--;
+			else
+				tempAct++;
+			
+			if(tempAct >= sections[activeSection].contents.Length) {
+				//Debug.Log ("oo" + tempAct);
+				tempAct = 0;
+			}
+			else {
+				if(tempAct<0) {
+					//Debug.Log ("aa" + tempAct);
+					tempAct = sections[activeSection].contents.Length-1;
+				}
+			}
+
+			//Debug.Log ("active content" + tempAct);
+
+			if(!sections[activeSection].contents[tempAct].locked)
+				break;
+		}
+
+		c_changeContent(tempAct);
+
+	}
+
 
 	IEnumerator countDownMenu() {
 
@@ -584,6 +714,8 @@ public class InformativeManager : MonoBehaviour {
 		invokeWithoutMenu = false;
 
 	}
+
+	#endregion CONTROLLERNAV
 
 	#endregion PRIVATEMETHODS
 

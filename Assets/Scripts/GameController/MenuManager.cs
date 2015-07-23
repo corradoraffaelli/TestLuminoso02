@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class MenuManager : MonoBehaviour {
 
@@ -14,6 +15,7 @@ public class MenuManager : MonoBehaviour {
 	GameObject canvasActive;
 
 	Button []menuButtons;
+	int activeMenuButtonIndex;
 	
 	bool statusMenu = false;
 
@@ -97,54 +99,66 @@ public class MenuManager : MonoBehaviour {
 
 	void initializeMenuButtons() {
 
+		int indexButt = 0;
+
 		foreach(Button butt in menuButtons) {
 			//Debug.Log ("ecco cosa ho trovato " + butt.gameObject.name);
+
+			int tempInd = indexButt;
+
 			if(butt.gameObject.name=="Return") {
 
-				butt.onClick.AddListener(() => { returnToPlay(); });
-				
+				butt.onClick.AddListener(() => { returnToPlay(false); });
+
+				indexButt++;
 			}
 
 			if(butt.gameObject.name=="RestartLevel") {
 				
 				butt.onClick.AddListener(() => { reloadThisLevel(); });
-				
+				indexButt++;
 			}
 			
 			if(butt.gameObject.name=="Items") {
 
 				butt.onClick.AddListener(() => { openInformativeSection(); });
-
+				indexButt++;
 			}
 			
 			if(butt.gameObject.name=="Options") {
 
 				butt.onClick.AddListener(() => { openOptionsSection(); });
-
+				indexButt++;
 			}
 
 			if(butt.gameObject.name=="Save Progress") {
 				
 				butt.onClick.AddListener(() => { GeneralFinder.informativeManager.c_saveData(); });
-				
+				indexButt++;
 			}
 			
 			if(butt.gameObject.name=="Exit") {
 
 				butt.onClick.AddListener(() => { exitFromLevel(); });
-
+				indexButt++;
 			}
+
+
 			
 		}
 
 	}
 
+
+
 	#region CALLBACKS
 
-	public void returnToPlay() {
+	public void returnToPlay(bool exitMenu) {
 
-		c_enableMenu(false);
+		c_enableMenu(exitMenu);
 
+		GeneralFinder.playingUILateral.showIconsImmediately(PlayingUILateral.UIPosition.Right , exitMenu);
+		GeneralFinder.playingUILateral.showIconsImmediately(PlayingUILateral.UIPosition.Left , exitMenu);
 
 	}
 
@@ -235,7 +249,7 @@ public class MenuManager : MonoBehaviour {
 		//2) opp se è attivo sia il menu che intro
 		//3) non lo catturo se è attivo il menu e qualcosa diverso da intro
 
-		if ( Input.GetKeyUp (KeyCode.Escape) && !GeneralFinder.informativeManager.invokeWithoutMenu ) {
+		if ( Input.GetButtonUp ("Escape-menu") && !GeneralFinder.informativeManager.invokeWithoutMenu ) {
 
 
 			if(!GeneralFinder.canvasMenu.activeSelf || canvasActive == canvasIntro) {
@@ -243,10 +257,8 @@ public class MenuManager : MonoBehaviour {
 				//quindi o stiamo entrando in pausa adesso, o ne stiamo uscendo
 
 				//Debug.Log("apro/chiudo menu");
-				c_enableMenu(!statusMenu);
 
-				GeneralFinder.playingUILateral.showIconsImmediately(PlayingUILateral.UIPosition.Right , statusMenu);
-				GeneralFinder.playingUILateral.showIconsImmediately(PlayingUILateral.UIPosition.Left , statusMenu);
+				returnToPlay(!statusMenu);
 
 			}
 			else {
@@ -258,9 +270,72 @@ public class MenuManager : MonoBehaviour {
 
 		}
 
+		if (!statusMenu)
+			return;
+
+		if (Input.GetButtonDown ("Vertical-menu-nav")) {
+
+			float fl = Input.GetAxisRaw("Vertical-menu-nav");
+
+			//Debug.Log("ciao" + fl);
+
+			menuButtons[activeMenuButtonIndex].gameObject.GetComponent<Image>().color = menuButtons[activeMenuButtonIndex].colors.normalColor;
+
+			if(fl>0) {
+
+				activeMenuButtonIndex--;
+
+				if(activeMenuButtonIndex<0) {
+					activeMenuButtonIndex= menuButtons.Length-1;
+				}
+			}
+			else {
+
+				activeMenuButtonIndex++;
+
+				if(activeMenuButtonIndex>menuButtons.Length-1) {
+					activeMenuButtonIndex=0;
+				}
+			}
+
+			menuButtons[activeMenuButtonIndex].gameObject.GetComponent<Image>().color = menuButtons[activeMenuButtonIndex].colors.highlightedColor;
+
+		}
+
+		if (Input.GetButton ("Enter-menu-nav")) {
+
+			PointerEventData pointer = new PointerEventData(EventSystem.current);
+
+			ExecuteEvents.Execute<IPointerClickHandler>(menuButtons[activeMenuButtonIndex].gameObject, new PointerEventData(EventSystem.current), ExecuteEvents.pointerClickHandler);
+
+		}
+
 	}
 
+	public void c_overMouseOnMenuButton(string name) {
+		
+		foreach (Button butt in menuButtons) {
+			
+			if(butt.gameObject.name!=name) {
+				
+				butt.gameObject.GetComponent<Image>().color = butt.colors.normalColor;
+				
+			}
+			
+		}
+		
+	}
 
+	public void c_deselectOtherButtons(int selectIndex) {
+
+		for(int i=0; i< menuButtons.Length; i++) {
+
+			if(i!=selectIndex)
+				menuButtons[i].gameObject.GetComponent<Image>().color = menuButtons[i].colors.highlightedColor;
+
+		}
+
+	}
 	
 
 	public void c_switchMenuSection(GameObject toDeactivate, GameObject toActivate ) {
@@ -286,6 +361,8 @@ public class MenuManager : MonoBehaviour {
 			canvasActive = toActivate;
 
 			if(canvasActive==canvasInformative) {
+
+				GeneralFinder.unlockableContentUI.stopPulsing();
 
 				GeneralFinder.informativeManager.fillNavigation ();
 				GeneralFinder.informativeManager.fillMultimedia();
