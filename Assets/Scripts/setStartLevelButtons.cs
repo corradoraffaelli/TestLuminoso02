@@ -12,6 +12,8 @@ public class setStartLevelButtons : MonoBehaviour {
 
 	public string []sceneNamesToPlay;
 
+	public ResidualFilesVerifier fileVerifier;
+
 	// Use this for initialization
 	void Start () {
 		initializeStartMenuButtons ();
@@ -23,10 +25,10 @@ public class setStartLevelButtons : MonoBehaviour {
 
 		setStartGameButton ();
 
-		if (isPresentData ()) {
+		if (isPresentData () || fileVerifier.verifyExistence()) {
 
 			setContinueButton ();
-		
+			
 		}
 
 		setExitButton ();
@@ -75,7 +77,7 @@ public class setStartLevelButtons : MonoBehaviour {
 	bool isPresentData() {
 
 		//TODO : mettere or isPresentHubData
-		if (isPresentInfo ())
+		if (isPresentInfo () )
 			return true;
 		else
 			return false;
@@ -127,7 +129,7 @@ public class setStartLevelButtons : MonoBehaviour {
 		Button button = tempButt.GetComponent<Button>();
 		Text textButton = tempButt.GetComponentInChildren<Text>();
 		
-		button.onClick.AddListener(() => startLevel("00_Intro_00"));
+		button.onClick.AddListener(() => startLevel("00_Intro_00", true));
 		
 		textButton.text = "Inizia";
 
@@ -178,7 +180,7 @@ public class setStartLevelButtons : MonoBehaviour {
 	public void startLevel(string nameScene, bool cleanData=false) {
 
 		if (cleanData) {
-
+			Debug.Log("ciaone cleandata");
 			cleanHubData();
 
 			cleanInformativeData();
@@ -191,6 +193,7 @@ public class setStartLevelButtons : MonoBehaviour {
 
 	void cleanHubData() {
 
+		fileVerifier.deleteFiles ();
 
 	}
 
