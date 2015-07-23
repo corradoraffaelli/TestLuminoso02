@@ -350,7 +350,7 @@ MonoBehaviour:
     pitch: 1
     distanceDependency: 1
     maxVolumeDistance: 8
-    zeroVolumeDistance: 11
+    zeroVolumeDistance: 20
     volumeMultiplier: 1
     audioSource: {fileID: 0}
   - clipName: DoorDown
@@ -361,7 +361,7 @@ MonoBehaviour:
     pitch: 1
     distanceDependency: 1
     maxVolumeDistance: 8
-    zeroVolumeDistance: 11
+    zeroVolumeDistance: 20
     volumeMultiplier: 1
     audioSource: {fileID: 0}
   - clipName: Botto
@@ -372,7 +372,7 @@ MonoBehaviour:
     pitch: 1
     distanceDependency: 1
     maxVolumeDistance: 8
-    zeroVolumeDistance: 11
+    zeroVolumeDistance: 20
     volumeMultiplier: 1
     audioSource: {fileID: 0}
 --- !u!114 &11415178
@@ -424,7 +424,7 @@ MonoBehaviour:
     pitch: 1
     distanceDependency: 1
     maxVolumeDistance: 8
-    zeroVolumeDistance: 11
+    zeroVolumeDistance: 20
     volumeMultiplier: 1
     audioSource: {fileID: 0}
   - clipName: ButtonDown
@@ -435,7 +435,7 @@ MonoBehaviour:
     pitch: 1
     distanceDependency: 1
     maxVolumeDistance: 8
-    zeroVolumeDistance: 11
+    zeroVolumeDistance: 20
     volumeMultiplier: 1
     audioSource: {fileID: 0}
 --- !u!114 &11472604
@@ -588,6 +588,18 @@ Prefab:
       propertyPath: clips.Array.data[2].clip
       value: 
       objectReference: {fileID: 8300000, guid: 64fd65ff048d341e68f72daf1ba1139c, type: 3}
+    - target: {fileID: 0}
+      propertyPath: clips.Array.data[0].zeroVolumeDistance
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: clips.Array.data[1].zeroVolumeDistance
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: clips.Array.data[2].zeroVolumeDistance
+      value: 20
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 132298}

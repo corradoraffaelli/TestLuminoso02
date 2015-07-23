@@ -464,6 +464,38 @@ Prefab:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 11414752, guid: b9e7a413c0f27b4408a53abc7ad12dd6, type: 2}
+      propertyPath: clips.Array.data[1].volume
+      value: .400000006
+      objectReference: {fileID: 0}
+    - target: {fileID: 11414752, guid: b9e7a413c0f27b4408a53abc7ad12dd6, type: 2}
+      propertyPath: clips.Array.data[2].volume
+      value: .400000006
+      objectReference: {fileID: 0}
+    - target: {fileID: 11414752, guid: b9e7a413c0f27b4408a53abc7ad12dd6, type: 2}
+      propertyPath: clips.Array.data[3].volume
+      value: .699999988
+      objectReference: {fileID: 0}
+    - target: {fileID: 11414752, guid: b9e7a413c0f27b4408a53abc7ad12dd6, type: 2}
+      propertyPath: clips.Array.data[4].volume
+      value: .5
+      objectReference: {fileID: 0}
+    - target: {fileID: 11414752, guid: b9e7a413c0f27b4408a53abc7ad12dd6, type: 2}
+      propertyPath: clips.Array.data[1].maxVolumeDistance
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 11414752, guid: b9e7a413c0f27b4408a53abc7ad12dd6, type: 2}
+      propertyPath: clips.Array.data[2].maxVolumeDistance
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 11414752, guid: b9e7a413c0f27b4408a53abc7ad12dd6, type: 2}
+      propertyPath: clips.Array.data[3].maxVolumeDistance
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 11414752, guid: b9e7a413c0f27b4408a53abc7ad12dd6, type: 2}
+      propertyPath: clips.Array.data[4].maxVolumeDistance
+      value: 4
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b9e7a413c0f27b4408a53abc7ad12dd6, type: 2}
   m_IsPrefabParent: 0
@@ -970,6 +1002,38 @@ Prefab:
     - target: {fileID: 198300, guid: b9e7a413c0f27b4408a53abc7ad12dd6, type: 2}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11414752, guid: b9e7a413c0f27b4408a53abc7ad12dd6, type: 2}
+      propertyPath: clips.Array.data[1].volume
+      value: .400000006
+      objectReference: {fileID: 0}
+    - target: {fileID: 11414752, guid: b9e7a413c0f27b4408a53abc7ad12dd6, type: 2}
+      propertyPath: clips.Array.data[2].volume
+      value: .400000006
+      objectReference: {fileID: 0}
+    - target: {fileID: 11414752, guid: b9e7a413c0f27b4408a53abc7ad12dd6, type: 2}
+      propertyPath: clips.Array.data[3].volume
+      value: .699999988
+      objectReference: {fileID: 0}
+    - target: {fileID: 11414752, guid: b9e7a413c0f27b4408a53abc7ad12dd6, type: 2}
+      propertyPath: clips.Array.data[4].volume
+      value: .5
+      objectReference: {fileID: 0}
+    - target: {fileID: 11414752, guid: b9e7a413c0f27b4408a53abc7ad12dd6, type: 2}
+      propertyPath: clips.Array.data[1].maxVolumeDistance
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 11414752, guid: b9e7a413c0f27b4408a53abc7ad12dd6, type: 2}
+      propertyPath: clips.Array.data[2].maxVolumeDistance
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 11414752, guid: b9e7a413c0f27b4408a53abc7ad12dd6, type: 2}
+      propertyPath: clips.Array.data[3].maxVolumeDistance
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 11414752, guid: b9e7a413c0f27b4408a53abc7ad12dd6, type: 2}
+      propertyPath: clips.Array.data[4].maxVolumeDistance
+      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b9e7a413c0f27b4408a53abc7ad12dd6, type: 2}
@@ -2494,6 +2558,7 @@ MonoBehaviour:
   tBackwardLenght: 9.19999981
   sequenceButtonCase: 0
   stepMax: 0
+  invertSound: 0
 --- !u!61 &129778622
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -5877,6 +5942,30 @@ Prefab:
     - target: {fileID: 6130726, guid: 4929ce461d7024f07a33371256545ff5, type: 2}
       propertyPath: m_Size.y
       value: 26.1192341
+      objectReference: {fileID: 0}
+    - target: {fileID: 11412772, guid: 4929ce461d7024f07a33371256545ff5, type: 2}
+      propertyPath: clips.Array.data[0].zeroVolumeDistance
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 11412772, guid: 4929ce461d7024f07a33371256545ff5, type: 2}
+      propertyPath: clips.Array.data[0].audioSource
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 11412772, guid: 4929ce461d7024f07a33371256545ff5, type: 2}
+      propertyPath: clips.Array.data[1].zeroVolumeDistance
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 11412772, guid: 4929ce461d7024f07a33371256545ff5, type: 2}
+      propertyPath: clips.Array.data[1].audioSource
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 11412772, guid: 4929ce461d7024f07a33371256545ff5, type: 2}
+      propertyPath: clips.Array.data[2].zeroVolumeDistance
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 11412772, guid: 4929ce461d7024f07a33371256545ff5, type: 2}
+      propertyPath: clips.Array.data[2].audioSource
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4929ce461d7024f07a33371256545ff5, type: 2}
@@ -10776,6 +10865,7 @@ MonoBehaviour:
   tBackwardLenght: .699999988
   sequenceButtonCase: 0
   stepMax: 0
+  invertSound: 0
 --- !u!61 &470100933
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -12066,6 +12156,10 @@ Prefab:
     - target: {fileID: 402626, guid: 366ae96d3754a4617946e6345b200d7c, type: 2}
       propertyPath: m_LocalScale.y
       value: 5.71999979
+      objectReference: {fileID: 0}
+    - target: {fileID: 25127200, guid: 366ae96d3754a4617946e6345b200d7c, type: 2}
+      propertyPath: m_UseSideBounce
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 366ae96d3754a4617946e6345b200d7c, type: 2}
@@ -16653,6 +16747,7 @@ MonoBehaviour:
   tBackwardLenght: .699999988
   sequenceButtonCase: 0
   stepMax: 0
+  invertSound: 0
 --- !u!61 &685562110
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -18027,6 +18122,10 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11467616, guid: 340389dc4a4be43999e660bcd54a5881, type: 2}
       propertyPath: timeToRespawn
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5884392, guid: 340389dc4a4be43999e660bcd54a5881, type: 2}
+      propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -26470,11 +26569,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 494942, guid: 340389dc4a4be43999e660bcd54a5881, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 2.79999995
+      value: 3.29999995
       objectReference: {fileID: 0}
     - target: {fileID: 494942, guid: 340389dc4a4be43999e660bcd54a5881, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 6.0999999
+      value: 6.30000019
       objectReference: {fileID: 0}
     - target: {fileID: 494942, guid: 340389dc4a4be43999e660bcd54a5881, type: 2}
       propertyPath: m_LocalPosition.z
@@ -26498,7 +26597,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 494942, guid: 340389dc4a4be43999e660bcd54a5881, type: 2}
       propertyPath: m_RootOrder
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 157518, guid: 340389dc4a4be43999e660bcd54a5881, type: 2}
       propertyPath: m_IsActive
@@ -28697,6 +28796,7 @@ MonoBehaviour:
   tBackwardLenght: 9.19999981
   sequenceButtonCase: 0
   stepMax: 0
+  invertSound: 0
 --- !u!61 &1167771540
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -29966,11 +30066,13 @@ MonoBehaviour:
   - clipName: ClickActivating
     clip: {fileID: 8300000, guid: 8f96bb45e75fe4b83834c5e9a6482103, type: 3}
     loop: 0
+    playOnAwake: 0
     volume: .5
     pitch: 3
     distanceDependency: 0
     maxVolumeDistance: 5
     zeroVolumeDistance: 10
+    volumeMultiplier: 1
     audioSource: {fileID: 0}
 --- !u!61 &1209050547
 BoxCollider2D:
@@ -32206,6 +32308,38 @@ Prefab:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 11414752, guid: b9e7a413c0f27b4408a53abc7ad12dd6, type: 2}
+      propertyPath: clips.Array.data[1].volume
+      value: .400000006
+      objectReference: {fileID: 0}
+    - target: {fileID: 11414752, guid: b9e7a413c0f27b4408a53abc7ad12dd6, type: 2}
+      propertyPath: clips.Array.data[2].volume
+      value: .400000006
+      objectReference: {fileID: 0}
+    - target: {fileID: 11414752, guid: b9e7a413c0f27b4408a53abc7ad12dd6, type: 2}
+      propertyPath: clips.Array.data[3].volume
+      value: .699999988
+      objectReference: {fileID: 0}
+    - target: {fileID: 11414752, guid: b9e7a413c0f27b4408a53abc7ad12dd6, type: 2}
+      propertyPath: clips.Array.data[4].volume
+      value: .5
+      objectReference: {fileID: 0}
+    - target: {fileID: 11414752, guid: b9e7a413c0f27b4408a53abc7ad12dd6, type: 2}
+      propertyPath: clips.Array.data[1].maxVolumeDistance
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 11414752, guid: b9e7a413c0f27b4408a53abc7ad12dd6, type: 2}
+      propertyPath: clips.Array.data[2].maxVolumeDistance
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 11414752, guid: b9e7a413c0f27b4408a53abc7ad12dd6, type: 2}
+      propertyPath: clips.Array.data[3].maxVolumeDistance
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 11414752, guid: b9e7a413c0f27b4408a53abc7ad12dd6, type: 2}
+      propertyPath: clips.Array.data[4].maxVolumeDistance
+      value: 4
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b9e7a413c0f27b4408a53abc7ad12dd6, type: 2}
   m_IsPrefabParent: 0
@@ -33282,11 +33416,13 @@ MonoBehaviour:
   - clipName: ClickActivating
     clip: {fileID: 8300000, guid: 8f96bb45e75fe4b83834c5e9a6482103, type: 3}
     loop: 0
+    playOnAwake: 0
     volume: .5
     pitch: 3
     distanceDependency: 0
     maxVolumeDistance: 5
     zeroVolumeDistance: 10
+    volumeMultiplier: 1
     audioSource: {fileID: 0}
 --- !u!61 &1366051324
 BoxCollider2D:
@@ -35559,6 +35695,7 @@ MonoBehaviour:
   tBackwardLenght: .699999988
   sequenceButtonCase: 0
   stepMax: 0
+  invertSound: 0
 --- !u!61 &1484096278
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -36422,6 +36559,7 @@ MonoBehaviour:
   tBackwardLenght: 9.19999981
   sequenceButtonCase: 0
   stepMax: 0
+  invertSound: 0
 --- !u!61 &1535400950
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -37087,11 +37225,13 @@ MonoBehaviour:
   - clipName: Leva
     clip: {fileID: 8300000, guid: edb0dd0dba6be6d4bb23906a37f1d4e9, type: 3}
     loop: 0
+    playOnAwake: 0
     volume: 1
     pitch: 1
     distanceDependency: 0
     maxVolumeDistance: 5
     zeroVolumeDistance: 10
+    volumeMultiplier: 1
     audioSource: {fileID: 0}
 --- !u!4 &1551420851 stripped
 Transform:
@@ -37320,6 +37460,46 @@ Prefab:
     - target: {fileID: 198300, guid: b9e7a413c0f27b4408a53abc7ad12dd6, type: 2}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11414752, guid: b9e7a413c0f27b4408a53abc7ad12dd6, type: 2}
+      propertyPath: clips.Array.data[1].volume
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11414752, guid: b9e7a413c0f27b4408a53abc7ad12dd6, type: 2}
+      propertyPath: clips.Array.data[1].maxVolumeDistance
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 11414752, guid: b9e7a413c0f27b4408a53abc7ad12dd6, type: 2}
+      propertyPath: clips.Array.data[1].zeroVolumeDistance
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 11414752, guid: b9e7a413c0f27b4408a53abc7ad12dd6, type: 2}
+      propertyPath: clips.Array.data[2].volume
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11414752, guid: b9e7a413c0f27b4408a53abc7ad12dd6, type: 2}
+      propertyPath: clips.Array.data[2].maxVolumeDistance
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 11414752, guid: b9e7a413c0f27b4408a53abc7ad12dd6, type: 2}
+      propertyPath: clips.Array.data[2].zeroVolumeDistance
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 11414752, guid: b9e7a413c0f27b4408a53abc7ad12dd6, type: 2}
+      propertyPath: clips.Array.data[3].maxVolumeDistance
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 11414752, guid: b9e7a413c0f27b4408a53abc7ad12dd6, type: 2}
+      propertyPath: clips.Array.data[3].zeroVolumeDistance
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 11414752, guid: b9e7a413c0f27b4408a53abc7ad12dd6, type: 2}
+      propertyPath: clips.Array.data[4].maxVolumeDistance
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 11414752, guid: b9e7a413c0f27b4408a53abc7ad12dd6, type: 2}
+      propertyPath: clips.Array.data[4].zeroVolumeDistance
+      value: 20
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b9e7a413c0f27b4408a53abc7ad12dd6, type: 2}
@@ -41524,6 +41704,7 @@ MonoBehaviour:
   tBackwardLenght: .699999988
   sequenceButtonCase: 0
   stepMax: 0
+  invertSound: 0
 --- !u!61 &1731355150
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -42351,11 +42532,13 @@ MonoBehaviour:
   - clipName: ClickActivating
     clip: {fileID: 8300000, guid: 8f96bb45e75fe4b83834c5e9a6482103, type: 3}
     loop: 0
+    playOnAwake: 0
     volume: .5
     pitch: 3
     distanceDependency: 0
     maxVolumeDistance: 5
     zeroVolumeDistance: 10
+    volumeMultiplier: 1
     audioSource: {fileID: 0}
 --- !u!61 &1754719015
 BoxCollider2D:
@@ -46559,6 +46742,7 @@ MonoBehaviour:
   tBackwardLenght: 9.19999981
   sequenceButtonCase: 0
   stepMax: 0
+  invertSound: 0
 --- !u!61 &1938013262
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -47031,11 +47215,13 @@ MonoBehaviour:
   - clipName: ClickActivating
     clip: {fileID: 8300000, guid: 8f96bb45e75fe4b83834c5e9a6482103, type: 3}
     loop: 0
+    playOnAwake: 0
     volume: .5
     pitch: 3
     distanceDependency: 0
     maxVolumeDistance: 5
     zeroVolumeDistance: 10
+    volumeMultiplier: 1
     audioSource: {fileID: 0}
 --- !u!61 &1946451597
 BoxCollider2D:
@@ -51155,6 +51341,18 @@ Prefab:
     - target: {fileID: 401612, guid: 4929ce461d7024f07a33371256545ff5, type: 2}
       propertyPath: m_RootOrder
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11412772, guid: 4929ce461d7024f07a33371256545ff5, type: 2}
+      propertyPath: clips.Array.data[0].zeroVolumeDistance
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 11412772, guid: 4929ce461d7024f07a33371256545ff5, type: 2}
+      propertyPath: clips.Array.data[1].zeroVolumeDistance
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 11412772, guid: 4929ce461d7024f07a33371256545ff5, type: 2}
+      propertyPath: clips.Array.data[2].zeroVolumeDistance
+      value: 20
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4929ce461d7024f07a33371256545ff5, type: 2}
