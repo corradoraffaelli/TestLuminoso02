@@ -376,6 +376,10 @@ Prefab:
       propertyPath: m_Colors.m_PressedColor.b
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 11436674, guid: cc506415e31b741b99add4cfc446f27e, type: 2}
+      propertyPath: fileVerifier
+      value: 
+      objectReference: {fileID: 1729201992}
     m_RemovedComponents:
     - {fileID: 11459246, guid: cc506415e31b741b99add4cfc446f27e, type: 2}
     - {fileID: 11474100, guid: cc506415e31b741b99add4cfc446f27e, type: 2}
@@ -455,3 +459,50 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 1
+--- !u!1 &1729201991
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 1729201993}
+  - 114: {fileID: 1729201992}
+  m_Layer: 0
+  m_Name: FilesVerifier
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1729201992
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1729201991}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba9da1fd127de7a499a7b1507bb6ea2d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  savedLadderFile: savedLadder
+  savedLadderExtention: .dat
+  savedLanternFile: savedMammut
+  savedLanternExtention: .dat
+  savedLevelFile: savedComingLevel
+  savedLevelExtention: .dat
+  savedDoorFile: savedDoor
+  savedDoorExtention: .dat
+--- !u!4 &1729201993
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1729201991}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 211.48996, y: 184.35585, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 3

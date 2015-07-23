@@ -2920,7 +2920,7 @@ MonoBehaviour:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 911429694}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7b7659367c5f02443819dd8af435c962, type: 3}
   m_Name: 
@@ -3531,6 +3531,7 @@ MonoBehaviour:
     activeContent: 0
     locked: 0
     ended: 0
+  invokeWithoutMenu: 0
   actualLevelNumber: -1
   timeCanShowNewContent: 5
 --- !u!114 &911429702
@@ -5745,6 +5746,22 @@ Prefab:
     - target: {fileID: 198698, guid: 132db652a260843a89353034c4473d96, type: 2}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 197096, guid: 132db652a260843a89353034c4473d96, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 401480, guid: 132db652a260843a89353034c4473d96, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: .0599999987
+      objectReference: {fileID: 0}
+    - target: {fileID: 464522, guid: 132db652a260843a89353034c4473d96, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 3.67000008
+      objectReference: {fileID: 0}
+    - target: {fileID: 455190, guid: 132db652a260843a89353034c4473d96, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: -3.6500001
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 132db652a260843a89353034c4473d96, type: 2}
