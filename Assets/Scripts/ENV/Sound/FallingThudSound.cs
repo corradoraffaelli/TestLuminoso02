@@ -67,7 +67,7 @@ public class FallingThudSound : MonoBehaviour {
 
 		if (actualSpeed > -minInterval && actualSpeed < minInterval && lastYSpeeds[0] < -minSpeedSound)
 		{
-			Debug.Log ("asdads");
+			//Debug.Log ("asdads");
 			audioHandler.playClipByName(soundName);
 		}
 
