@@ -343,7 +343,7 @@ MonoBehaviour:
   updateAudioClips: 0
   clips:
   - clipName: DoorUp
-    clip: {fileID: 8300000, guid: 96daccea7ed6b4a4f968906d97f07df7, type: 3}
+    clip: {fileID: 8300000, guid: c1fb1bb3f770d4901926bc037b0f25b6, type: 3}
     loop: 1
     playOnAwake: 0
     volume: 1
@@ -354,7 +354,7 @@ MonoBehaviour:
     volumeMultiplier: 1
     audioSource: {fileID: 0}
   - clipName: DoorDown
-    clip: {fileID: 8300000, guid: 37e22e8fb5e59064686f0d7fb644b792, type: 3}
+    clip: {fileID: 8300000, guid: 7a85e93f66a744532863a03ba12d1f27, type: 3}
     loop: 1
     playOnAwake: 0
     volume: 1
@@ -365,7 +365,7 @@ MonoBehaviour:
     volumeMultiplier: 1
     audioSource: {fileID: 0}
   - clipName: Botto
-    clip: {fileID: 8300000, guid: 34f851144e1a24783973a7eb3bd8ca1a, type: 3}
+    clip: {fileID: 8300000, guid: 64fd65ff048d341e68f72daf1ba1139c, type: 3}
     loop: 0
     playOnAwake: 0
     volume: 1
@@ -417,7 +417,7 @@ MonoBehaviour:
   updateAudioClips: 0
   clips:
   - clipName: ButtonUp
-    clip: {fileID: 8300000, guid: 440030d483552134a9b207c0e8c82b77, type: 3}
+    clip: {fileID: 8300000, guid: 7c3bb283628a04b2c9e3367ec6d72edd, type: 3}
     loop: 0
     playOnAwake: 0
     volume: 1
@@ -428,7 +428,7 @@ MonoBehaviour:
     volumeMultiplier: 1
     audioSource: {fileID: 0}
   - clipName: ButtonDown
-    clip: {fileID: 8300000, guid: e3fdaf36bc452de4c8f4b1b4cf5488f0, type: 3}
+    clip: {fileID: 8300000, guid: b388d3eaa08684215a80995ea50b3590, type: 3}
     loop: 0
     playOnAwake: 0
     volume: 1
@@ -576,6 +576,18 @@ Prefab:
       propertyPath: triggerTagList.Array.data[2]
       value: GeneralPhysicObject
       objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: clips.Array.data[0].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: c1fb1bb3f770d4901926bc037b0f25b6, type: 3}
+    - target: {fileID: 0}
+      propertyPath: clips.Array.data[1].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 7a85e93f66a744532863a03ba12d1f27, type: 3}
+    - target: {fileID: 0}
+      propertyPath: clips.Array.data[2].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 64fd65ff048d341e68f72daf1ba1139c, type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 132298}
