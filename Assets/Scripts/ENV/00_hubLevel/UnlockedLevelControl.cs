@@ -60,6 +60,7 @@ public class UnlockedLevelControl : MonoBehaviour {
 		//carico i dati salvati
 		loadInfo();
 
+		//setto i livelli che ho sbloccato nel frattempo come sbloccati, nella struttura unlockedLevelElements
 		setUnlocked();
 
 		//per test posso azzerare i dati

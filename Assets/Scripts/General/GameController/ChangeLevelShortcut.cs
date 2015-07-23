@@ -74,6 +74,12 @@ public class ChangeLevelShortcut : MonoBehaviour {
 		{
 			GeneralFinder.player.SendMessage("c_instantKill");
 		}
+
+		//shortcut salvataggio
+		if (Input.GetKey(KeyCode.LeftShift) && Input.GetKeyDown(KeyCode.S))
+		{
+			GeneralFinder.informativeManager.c_saveData();
+		}
 	}
 
 	void save()
