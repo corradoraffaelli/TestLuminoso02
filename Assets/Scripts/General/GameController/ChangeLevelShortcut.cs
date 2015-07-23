@@ -66,8 +66,13 @@ public class ChangeLevelShortcut : MonoBehaviour {
 			{
 				save();
 				Application.LoadLevel(levels[9]);
-			}
-				
+			}	
+		}
+
+		//shortcut uccisione player
+		if (Input.GetKey(KeyCode.LeftShift) && Input.GetKeyDown(KeyCode.M))
+		{
+			GeneralFinder.player.SendMessage("c_instantKill");
 		}
 	}
 
