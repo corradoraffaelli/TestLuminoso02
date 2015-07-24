@@ -26,6 +26,7 @@ public class UnlockedLevelControl : MonoBehaviour {
 		public UnlockedLevelInfo unlockedLevelInfo;
 		public GameObject externalDoor;
 		public GameObject interagibleObject;
+		public GameObject particleEffect;
 		[HideInInspector]
 		public InteragibileObject interagibleScript; 
 		public SpriteRenderer externalRenderer;
@@ -42,7 +43,12 @@ public class UnlockedLevelControl : MonoBehaviour {
 	int savedInputFileIndex = 0;
 	public int indexToLoad = 0;
 
+	bool soundPlayed = false;
+	AudioHandler audioHandler;
+	public string unlockDoorSound = "UnlockDoor";
+
 	void Start () {
+		audioHandler = GetComponent<AudioHandler>();
 
 		fillInteragibleScript();
 		setSpriteRenderers();
@@ -60,12 +66,15 @@ public class UnlockedLevelControl : MonoBehaviour {
 		//carico i dati salvati
 		loadInfo();
 
-		//setto i livelli che ho sbloccato nel frattempo come sbloccati, nella struttura unlockedLevelElements
+		//setto i livelli che ho sbloccato nel frattempo come sbloccati, nella struttura unlockedLevelElements (sfrutto l'informative manager)
 		setUnlocked();
 
 		//per test posso azzerare i dati
 		if (loadUnlocked)
 			loadZeroes();
+
+		//ULTIMA AGGIUNTA
+		setFirstAlwaysUnlocked();
 
 		//setto i livelli che ho sbloccato nel frattempo come sbloccati, nella struttura unlockedLevelElements
 		//setUnlocked();
@@ -112,6 +121,8 @@ public class UnlockedLevelControl : MonoBehaviour {
 					{
 						unlockEl.needToUnlock = true;
 						Debug.Log ("trovata porta del livello " + unlockedLevelElements[i].levelNumber + "sbloccata"); 
+
+
 					}
 				}
 			}
@@ -129,6 +140,18 @@ public class UnlockedLevelControl : MonoBehaviour {
 					//unlockedLevelElements[i].needToUnlock = false;
 					//unlockedLevelElements[i].externalDoor.SetActive(false);
 						unlockedLevelElements[i].interagibleObject.SetActive(true);
+
+					//audioHandler
+					if (audioHandler != null && !soundPlayed)
+					{
+						audioHandler.playClipByName(unlockDoorSound);
+						soundPlayed = true;
+					}
+
+					//particles
+					if (unlockedLevelElements[i].particleEffect != null)
+						unlockedLevelElements[i].particleEffect.SetActive(true);
+
 					if (unlockedLevelElements[i].externalRenderer != null)
 					{
 						Color actColor = unlockedLevelElements[i].externalRenderer.color;
@@ -271,6 +294,31 @@ public class UnlockedLevelControl : MonoBehaviour {
 		{
 			if (unlockedLevelElements[i] != null && unlockedLevelElements[i].interagibleObject != null)
 				unlockedLevelElements[i].interagibleScript = unlockedLevelElements[i].interagibleObject.GetComponent<InteragibileObject>();
+		}
+	}
+
+	void setFirstAlwaysUnlocked()
+	{
+		for (int i = 0; i < unlockedLevelElements.Length; i++)
+		{
+			if (unlockedLevelElements[i] != null && unlockedLevelElements[i].levelNumber == 1)
+			{
+				unlockedLevelElements[i].unlockedLevelInfo.isUnlocked = true;
+				break;
+			}
+		}
+
+		if (unlockedLevelInfo != null && unlockedLevelInfo.Length != 0)
+		{
+			for (int i = 0; i < unlockedLevelInfo.Length; i++)
+			{
+				if (unlockedLevelInfo[i] != null && unlockedLevelInfo[i].levelNumber == 1)
+				{
+					unlockedLevelInfo[i].isUnlocked = true;
+					break;
+				}
+					
+			}
 		}
 	}
 

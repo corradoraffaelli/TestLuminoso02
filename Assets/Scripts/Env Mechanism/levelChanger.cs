@@ -43,10 +43,15 @@ public class levelChanger : MonoBehaviour {
 		{
 			unlockLevel();
 			saveInfo();
+
+			GeneralFinder.informativeManager.c_saveData();
+			Debug.Log ("salvo");
+			changeScene ();
 		}
-		GeneralFinder.informativeManager.c_saveData();
-		Debug.Log ("salvo");
-		changeScene ();
+		else
+		{
+			StartCoroutine(Example());
+		}
 	}
 
 	void saveInfo()
@@ -56,5 +61,10 @@ public class levelChanger : MonoBehaviour {
 		FileStream file = File.Create (Application.persistentDataPath + "/" +savedLevelFile + savedFileExtention);
 		bf.Serialize (file, actualLevelNumber);
 		file.Close ();
+	}
+
+	IEnumerator Example() {
+		yield return new WaitForSeconds(1);
+		changeScene ();
 	}
 }

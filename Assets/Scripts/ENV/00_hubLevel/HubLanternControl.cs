@@ -58,6 +58,7 @@ public class HubLanternControl : MonoBehaviour {
 			starsCollected = fragCounter.fragmentTotalNumber;
 
 		getSmokeChildren();
+		setStartingSmoke();
 	}
 
 	void Update () {
@@ -272,6 +273,21 @@ public class HubLanternControl : MonoBehaviour {
 					bigProjectionsRenderers[i].color = new Color (tempColor.r, tempColor.g, tempColor.b, 1.0f);
 				}
 					
+			}
+		}
+	}
+
+	void setStartingSmoke()
+	{
+		if (mammuthElements!= null)
+		{
+			for (int i = 0; i < mammuthElements.Length; i++)
+			{
+				if (mammuthElements[i] != null && mammuthElements[i].interacted && mammuthElements[i].smokesFather != null)
+				{
+					mammuthElements[i].smokesFather.SetActive(true);
+				}
+				
 			}
 		}
 	}
