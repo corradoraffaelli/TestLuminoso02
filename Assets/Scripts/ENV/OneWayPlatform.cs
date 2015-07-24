@@ -38,6 +38,8 @@ public class OneWayPlatform : MonoBehaviour {
 
 	public float refreshEnemyTime = 2.0f;
 
+	public bool playerInsideX = false;
+
 	// Use this for initialization
 	void Start () {
 		player = GameObject.FindGameObjectWithTag ("Player");
@@ -51,6 +53,11 @@ public class OneWayPlatform : MonoBehaviour {
 
 		//ogni due secondi aggiorna gli array dei nemici e dei loro colliders
 		InvokeRepeating("findEnemiesCollidersAndInit", 1, refreshEnemyTime);
+	}
+
+	void Update()
+	{
+		playerInsideX = isPlayerInsideXCollider();
 	}
 
 	void FixedUpdate()
@@ -70,7 +77,7 @@ public class OneWayPlatform : MonoBehaviour {
 			playerOver = isPlayerOver (getPlayerBottomCollider (playerColliders).bounds, spriteRenderer.bounds);
 		}
 		
-		if (playerOver) {
+		if (playerOver && playerInsideX) {
 			changeIgnoreCollider (playerColliders, false);
 			playerWasOver = true;
 			if (debugVariables)
@@ -262,5 +269,21 @@ public class OneWayPlatform : MonoBehaviour {
 			}
 		}
 
+	}
+
+	bool isPlayerInsideXCollider()
+	{
+		for (int i = 0; i < playerColliders.Length; i++)
+		{
+			if (playerColliders[i] != null)
+			{
+				if ((playerColliders[i].bounds.min.x > platformCollider.bounds.min.x &&
+				     playerColliders[i].bounds.min.x < platformCollider.bounds.max.x) ||
+				    (playerColliders[i].bounds.max.x > platformCollider.bounds.min.x &&
+				 	playerColliders[i].bounds.max.x < platformCollider.bounds.max.x))
+					return true;
+			}
+		}
+		return false;
 	}
 }
