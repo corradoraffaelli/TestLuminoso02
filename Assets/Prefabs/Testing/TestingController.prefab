@@ -11,6 +11,7 @@ GameObject:
   - 114: {fileID: 11440580}
   - 114: {fileID: 11482624}
   - 114: {fileID: 11473922}
+  - 114: {fileID: 11477704}
   m_Layer: 0
   m_Name: TestingController
   m_TagString: TestController
@@ -56,6 +57,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a66089ce403bb54a806758378c406fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &11477704
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 113630}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 99e7e51bd0eb95a4bb00f7e98af5825e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 1
+  spikesInfos:
+    name: 
+    enteredTimes: 0
 --- !u!114 &11482624
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -74,7 +90,11 @@ Prefab:
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: type
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 113630}
