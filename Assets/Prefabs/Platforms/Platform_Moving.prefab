@@ -76,25 +76,25 @@ MonoBehaviour:
   updateAudioClips: 0
   clips:
   - clipName: Direction01
-    clip: {fileID: 8300000, guid: add3fa5b301be664b8b85d0285bb8103, type: 3}
+    clip: {fileID: 8300000, guid: d3493c36e4f414a90b6cde2a0e4a72bb, type: 3}
     loop: 1
     playOnAwake: 0
-    volume: .400000006
+    volume: .300000012
     pitch: 1
     distanceDependency: 1
-    maxVolumeDistance: 8
-    zeroVolumeDistance: 11
+    maxVolumeDistance: 2
+    zeroVolumeDistance: 10
     volumeMultiplier: 1
     audioSource: {fileID: 0}
   - clipName: Direction02
-    clip: {fileID: 8300000, guid: 9176c303d4735f54e91043f2f1cdeb5e, type: 3}
+    clip: {fileID: 8300000, guid: d3493c36e4f414a90b6cde2a0e4a72bb, type: 3}
     loop: 1
     playOnAwake: 0
-    volume: .400000006
+    volume: .300000012
     pitch: 1
     distanceDependency: 1
-    maxVolumeDistance: 8
-    zeroVolumeDistance: 11
+    maxVolumeDistance: 2
+    zeroVolumeDistance: 10
     volumeMultiplier: 1
     audioSource: {fileID: 0}
 --- !u!114 &11460380
@@ -177,11 +177,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: clips.Array.data[0].volume
-      value: .400000006
+      value: .300000012
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: clips.Array.data[1].volume
-      value: .400000006
+      value: .300000012
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: clips.Array.data[0].pitch
@@ -201,19 +201,19 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: clips.Array.data[0].maxVolumeDistance
-      value: 8
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: clips.Array.data[0].zeroVolumeDistance
-      value: 11
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: clips.Array.data[1].maxVolumeDistance
-      value: 8
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: clips.Array.data[1].zeroVolumeDistance
-      value: 11
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: clips.Array.data[0].volumeMultiplier
@@ -234,11 +234,11 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: clips.Array.data[1].clip
       value: 
-      objectReference: {fileID: 8300000, guid: 9176c303d4735f54e91043f2f1cdeb5e, type: 3}
+      objectReference: {fileID: 8300000, guid: d3493c36e4f414a90b6cde2a0e4a72bb, type: 3}
     - target: {fileID: 0}
       propertyPath: clips.Array.data[0].clip
       value: 
-      objectReference: {fileID: 8300000, guid: add3fa5b301be664b8b85d0285bb8103, type: 3}
+      objectReference: {fileID: 8300000, guid: d3493c36e4f414a90b6cde2a0e4a72bb, type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 137388}
