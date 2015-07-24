@@ -8,6 +8,13 @@ public class movingPlatform : MonoBehaviour
 	public float speed;
 	public bool Switch = false;
 
+	public bool emitSound = true;
+	bool musicSwitchActivated = false;
+	bool musicNoSwitchActivated = false;
+	AudioHandler audioHandler;
+	public string soundNormal = "Direction01";
+	public string soundInverse = "Direction02";
+
 
 	//Nell'editor clonare la piattaforma 2 volte e chiamare le due copie destinationSpot e originSpot.
 	//Posizionarle nella scena e disattivare la loro sprite.
@@ -34,5 +41,28 @@ public class movingPlatform : MonoBehaviour
 			transform.position = Vector2.MoveTowards(transform.position, destinationSpot.position, speed);
 		}
 
+	}
+
+	void Start()
+	{
+		audioHandler = GetComponent<AudioHandler>();
+	}
+
+	void Update()
+	{
+		if (emitSound)
+		{
+			if (!Switch && !musicNoSwitchActivated && audioHandler != null)
+			{
+				audioHandler.playClipByName(soundNormal);
+				audioHandler.stopClipByName(soundInverse);
+			}
+			
+			if (Switch && !musicSwitchActivated && audioHandler != null)
+			{
+				audioHandler.playClipByName(soundInverse);
+				audioHandler.stopClipByName(soundNormal);
+			}
+		}
 	}
 }
