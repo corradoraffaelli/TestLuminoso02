@@ -13,6 +13,7 @@ GameObject:
   - 251: {fileID: 25173218}
   - 114: {fileID: 11460380}
   - 50: {fileID: 5088150}
+  - 114: {fileID: 11440210}
   m_Layer: 8
   m_Name: Platform_Moving
   m_TagString: MovingPlatform
@@ -34,6 +35,7 @@ Transform:
   m_RootOrder: 0
 --- !u!50 &5088150
 Rigidbody2D:
+  serializedVersion: 2
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
@@ -42,11 +44,11 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: .0500000007
   m_GravityScale: 1
-  m_FixedAngle: 0
   m_IsKinematic: 1
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!61 &6159140
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -60,6 +62,41 @@ BoxCollider2D:
   m_Offset: {x: 0, y: .230000004}
   serializedVersion: 2
   m_Size: {x: 4.05000019, y: .460000008}
+--- !u!114 &11440210
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 137388}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db8ec66bee508ec4a8754d0738e984cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  updateAudioClips: 0
+  clips:
+  - clipName: Direction01
+    clip: {fileID: 8300000, guid: add3fa5b301be664b8b85d0285bb8103, type: 3}
+    loop: 1
+    playOnAwake: 0
+    volume: .400000006
+    pitch: 1
+    distanceDependency: 1
+    maxVolumeDistance: 8
+    zeroVolumeDistance: 11
+    volumeMultiplier: 1
+    audioSource: {fileID: 0}
+  - clipName: Direction02
+    clip: {fileID: 8300000, guid: 9176c303d4735f54e91043f2f1cdeb5e, type: 3}
+    loop: 1
+    playOnAwake: 0
+    volume: .400000006
+    pitch: 1
+    distanceDependency: 1
+    maxVolumeDistance: 8
+    zeroVolumeDistance: 11
+    volumeMultiplier: 1
+    audioSource: {fileID: 0}
 --- !u!114 &11460380
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -75,6 +112,9 @@ MonoBehaviour:
   originSpot: {fileID: 0}
   speed: 0
   Switch: 0
+  emitSound: 1
+  soundNormal: Direction01
+  soundInverse: Direction02
 --- !u!212 &21229166
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -108,6 +148,7 @@ PlatformEffector2D:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 137388}
   m_Enabled: 1
+  m_UseColliderMask: 1
   m_ColliderMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -121,7 +162,83 @@ Prefab:
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: clips.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: clips.Array.data[0].loop
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: clips.Array.data[1].loop
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: clips.Array.data[0].volume
+      value: .400000006
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: clips.Array.data[1].volume
+      value: .400000006
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: clips.Array.data[0].pitch
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: clips.Array.data[1].pitch
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: clips.Array.data[1].distanceDependency
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: clips.Array.data[0].distanceDependency
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: clips.Array.data[0].maxVolumeDistance
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: clips.Array.data[0].zeroVolumeDistance
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: clips.Array.data[1].maxVolumeDistance
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: clips.Array.data[1].zeroVolumeDistance
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: clips.Array.data[0].volumeMultiplier
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: clips.Array.data[1].volumeMultiplier
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: clips.Array.data[0].clipName
+      value: Direction01
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: clips.Array.data[1].clipName
+      value: Direction02
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: clips.Array.data[1].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 9176c303d4735f54e91043f2f1cdeb5e, type: 3}
+    - target: {fileID: 0}
+      propertyPath: clips.Array.data[0].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: add3fa5b301be664b8b85d0285bb8103, type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 137388}
