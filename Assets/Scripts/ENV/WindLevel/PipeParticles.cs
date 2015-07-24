@@ -15,7 +15,9 @@ public class PipeParticles : MonoBehaviour {
 
 	public GameObject particleExit;
 	public GameObject particleMiddle;
+	AudioHandler audioHandlerMiddle;
 	public GameObject particleRight;
+	AudioHandler audioHandlerRight;
 	ParticleSystem partSystExit;
 	ParticleSystem partSystMiddle;
 	ParticleSystem partSystRight;
@@ -26,6 +28,12 @@ public class PipeParticles : MonoBehaviour {
 	public GameObject mechanism;
 
 	public float particleMiddleChangingSpeed = 1.0f;
+
+	public string soundNames = "Vento";
+	public float changingSoundSpeed = 3.0f;
+	float actualMultiplier = 0.0f;
+	bool activatingSound = false;
+	bool soundActive = false;
 
 	void Start () {
 		if (pipe01 != null)
@@ -44,12 +52,19 @@ public class PipeParticles : MonoBehaviour {
 
 		if (wind != null)
 			externalWind = wind.GetComponent<ExternalWind>();
+
+		if (particleMiddle != null)
+			audioHandlerMiddle = particleMiddle.GetComponent<AudioHandler>();
+
+		if (particleRight != null)
+			audioHandlerRight = particleRight.GetComponent<AudioHandler>();
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		updateState();
 		updateParticlesState();
+		handleSounds();
 	}
 
 	void updateState()
@@ -88,6 +103,42 @@ public class PipeParticles : MonoBehaviour {
 			{
 				float newMidRate = Mathf.MoveTowards(partSystMiddle.emissionRate, 100.0f, particleMiddleChangingSpeed*Time.deltaTime*20);
 				partSystRight.emissionRate = newMidRate;
+			}
+
+			if (turnedOn)
+			{
+				activatingSound = true;
+			}
+			else
+			{
+				activatingSound = false;
+			}
+		}
+	}
+
+	void handleSounds()
+	{
+		if (actualState == State.Pipe01Down)
+		{
+			if (!soundActive && audioHandlerRight != null && audioHandlerMiddle != null)
+			{
+				if (!audioHandlerRight.getAudioClipByName(soundNames).audioSource.isPlaying)
+					audioHandlerRight.playClipByName(soundNames);
+				if (!audioHandlerMiddle.getAudioClipByName(soundNames).audioSource.isPlaying)
+					audioHandlerMiddle.playClipByName(soundNames);
+
+				soundActive = true;
+			}
+
+			if (activatingSound)
+				actualMultiplier = Mathf.MoveTowards(actualMultiplier, 1.0f, Time.deltaTime * changingSoundSpeed);
+			else
+				actualMultiplier = Mathf.MoveTowards(actualMultiplier, 0.0f, Time.deltaTime * changingSoundSpeed);
+
+			if (audioHandlerRight != null && audioHandlerMiddle != null)
+			{
+				audioHandlerRight.getAudioClipByName(soundNames).setVolumeMultiplier(actualMultiplier);
+				audioHandlerMiddle.getAudioClipByName(soundNames).setVolumeMultiplier(actualMultiplier);
 			}
 		}
 	}

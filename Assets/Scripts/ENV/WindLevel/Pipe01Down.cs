@@ -7,13 +7,22 @@ public class Pipe01Down : MonoBehaviour {
 	public GameObject[] extWindToActive;
 	public GameObject[] extWindToDeactive;
 
+	AudioHandler audioHandler;
+
+	bool activated = false;
+	public string pipeDownSound = "TuboGiu";
+	bool soundPlayed = false;
+
 	void Start()
 	{
+		audioHandler = GetComponent<AudioHandler>();
 		linearMovement = GetComponent<SimpleLinearMovement>();
 	}
 
 	public void InteractingMethod()
 	{
+		activated = true;
+
 		if (linearMovement != null)
 		{
 			linearMovement.active = true;
@@ -30,5 +39,15 @@ public class Pipe01Down : MonoBehaviour {
 			if(extWindToDeactive[i] != null)
 				extWindToDeactive[i].SetActive(false);
 		}
+	}
+
+	void Update()
+	{
+		if (activated && !soundPlayed && linearMovement != null && linearMovement.DestReached && audioHandler != null)
+		{
+			audioHandler.playClipByName(pipeDownSound);
+			soundPlayed = true;
+		}
+			
 	}
 }

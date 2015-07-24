@@ -26,6 +26,9 @@ public class Pipe02Down : MonoBehaviour {
 	public string soundName;
 	bool firstPassed = false;
 
+	public string soundPipeDown = "TuboGiu";
+	bool soundPlayed = false;
+
 	void Start () {
 		linearMovement = GetComponent<SimpleLinearMovement>();
 		if (firstPipe != null)
@@ -104,6 +107,16 @@ public class Pipe02Down : MonoBehaviour {
 		{
 			if (linearMovement.DestReached)
 				audioHandler.playForcedClipByName(soundName);
+		}
+
+		if (firstPassed && !soundPlayed && linearMovement != null && audioHandler != null)
+		{
+			if (linearMovement.DestReached)
+			{
+				soundPlayed = true;
+				audioHandler.playForcedClipByName(soundPipeDown);
+			}
+				
 		}
 	}
 }
