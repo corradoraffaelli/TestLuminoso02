@@ -186,7 +186,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 307bba77b96dc6d4cb0bcdad6672cc44, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeBeforePulse: 10
+  timeBeforePulse: 5
   pulsingSpeed: 6
   pulsingTimes: 6
 --- !u!114 &11411108
@@ -916,6 +916,7 @@ MonoBehaviour:
     activeContent: 0
     locked: 0
     ended: 0
+  invokeWithoutMenu: 0
   actualLevelNumber: -1
   timeCanShowNewContent: 5
 --- !u!114 &11486512
@@ -2540,6 +2541,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: levels.Array.data[1]
       value: 00_Level_01#7
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: timeBeforePulse
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

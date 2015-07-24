@@ -1550,7 +1550,7 @@ MonoBehaviour:
     pitch: 1
     distanceDependency: 1
     maxVolumeDistance: 10
-    zeroVolumeDistance: 15
+    zeroVolumeDistance: 25
     volumeMultiplier: 1
     audioSource: {fileID: 0}
 --- !u!114 &11435536
@@ -2607,6 +2607,10 @@ Prefab:
       propertyPath: clips.Array.data[0].clip
       value: 
       objectReference: {fileID: 8300000, guid: 0bde045ace2934c63b738ade2a8b249a, type: 3}
+    - target: {fileID: 0}
+      propertyPath: clips.Array.data[0].zeroVolumeDistance
+      value: 25
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 137308}
