@@ -208,8 +208,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f2275eae10999e4cba357eba3661c89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sortingLayerName: Proiezioni
-  sortingLayerInt: 0
+  sortingLayerName: Lanterna
+  sortingLayerInt: 10
 --- !u!114 &11489382
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1297,8 +1297,8 @@ ParticleSystemRenderer:
   m_AutoUVMaxDistance: .5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 1706207911
-  m_SortingOrder: 0
+  m_SortingLayerID: -45259249
+  m_SortingOrder: 10
   m_RenderMode: 0
   m_MaxParticleSize: .5
   m_CameraVelocityScale: 0
@@ -1317,7 +1317,23 @@ Prefab:
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: sortingLayerName
+      value: Lanterna
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: sortingLayerInt
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_SortingLayerID
+      value: -45259249
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_SortingOrder
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 155412}

@@ -10,6 +10,8 @@ public class FakeLanternBehaviour : MonoBehaviour {
 	public bool disableObject = false;
 	public bool intermittance = false;
 	public bool disabledByEnemy = true;
+	public bool emitParticles = false;
+	public GameObject particlesToEnable;
 
 	public enum fakeLanternState
 	{
@@ -353,6 +355,10 @@ public class FakeLanternBehaviour : MonoBehaviour {
 		}
 
 		unlockContentMethod();
+
+		if (emitParticles && particlesToEnable != null)
+			particlesToEnable.SetActive(true);
+
 	}
 
 	void setRayAlpha(float inputAlpha)
