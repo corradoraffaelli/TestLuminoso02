@@ -504,15 +504,15 @@ Prefab:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 2004916186}
     m_Modifications:
     - target: {fileID: 470380, guid: 41222efbab8c64dbdbd240c73e040bd8, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 49.5400009
+      value: 8.71170425
       objectReference: {fileID: 0}
     - target: {fileID: 470380, guid: 41222efbab8c64dbdbd240c73e040bd8, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 17.9500008
+      value: 1.03190804
       objectReference: {fileID: 0}
     - target: {fileID: 470380, guid: 41222efbab8c64dbdbd240c73e040bd8, type: 2}
       propertyPath: m_LocalPosition.z
@@ -536,7 +536,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 470380, guid: 41222efbab8c64dbdbd240c73e040bd8, type: 2}
       propertyPath: m_RootOrder
-      value: 9
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 171968, guid: 41222efbab8c64dbdbd240c73e040bd8, type: 2}
       propertyPath: m_Name
@@ -556,6 +556,10 @@ Prefab:
 --- !u!1 &22363620 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 171968, guid: 41222efbab8c64dbdbd240c73e040bd8, type: 2}
+  m_PrefabInternal: {fileID: 22363619}
+--- !u!4 &22363623 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 470380, guid: 41222efbab8c64dbdbd240c73e040bd8, type: 2}
   m_PrefabInternal: {fileID: 22363619}
 --- !u!1001 &26595957
 Prefab:
@@ -1295,15 +1299,15 @@ Prefab:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 720259174}
     m_Modifications:
     - target: {fileID: 470380, guid: 41222efbab8c64dbdbd240c73e040bd8, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 95.1399994
+      value: .016834259
       objectReference: {fileID: 0}
     - target: {fileID: 470380, guid: 41222efbab8c64dbdbd240c73e040bd8, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 23.8999996
+      value: -4.12399101
       objectReference: {fileID: 0}
     - target: {fileID: 470380, guid: 41222efbab8c64dbdbd240c73e040bd8, type: 2}
       propertyPath: m_LocalPosition.z
@@ -1327,7 +1331,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 470380, guid: 41222efbab8c64dbdbd240c73e040bd8, type: 2}
       propertyPath: m_RootOrder
-      value: 10
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 171968, guid: 41222efbab8c64dbdbd240c73e040bd8, type: 2}
       propertyPath: m_Name
@@ -1347,6 +1351,10 @@ Prefab:
 --- !u!1 &76402111 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 171968, guid: 41222efbab8c64dbdbd240c73e040bd8, type: 2}
+  m_PrefabInternal: {fileID: 76402110}
+--- !u!4 &76402114 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 470380, guid: 41222efbab8c64dbdbd240c73e040bd8, type: 2}
   m_PrefabInternal: {fileID: 76402110}
 --- !u!1 &78798666
 GameObject:
@@ -4871,9 +4879,8 @@ MonoBehaviour:
   balloonReappearTime: 0
   gameObjectsToEnable: []
   gameObjectsToEnableController: []
-  balloonString: Mentre miriNEWLINEpuoi muoverti con i tasti A e D
-  balloonStringController: Mentre miriNEWLINEpuoi muoverti con la levetta analogica
-    sinsitra
+  balloonString: Mentre miri puoi muovertiNEWLINEcon i Tasti A e D
+  balloonStringController: Mentre miri puoi muovertiNEWLINEcon la Levetta Sinistra
   balloonPrefab: {fileID: 113256, guid: 6b5d1840791797d4e89b69c64f6d470a, type: 2}
   balloonOnTheRight: 0
   tutToEnable: []
@@ -4945,8 +4952,8 @@ MonoBehaviour:
   balloonReappearTime: 0
   gameObjectsToEnable: []
   gameObjectsToEnableController: []
-  balloonString: Puoi riprendere in mano la lanternaNEWLINEcon il tasto destro
-  balloonStringController: Puoi riprendere in mano la lanternaNEWLINEcon il tasto
+  balloonString: Puoi riprendere in mano la lanternaNEWLINEcon il Tasto Destro
+  balloonStringController: Puoi riprendere in mano la lanternaNEWLINEcon il Tasto
     RB
   balloonPrefab: {fileID: 113256, guid: 6b5d1840791797d4e89b69c64f6d470a, type: 2}
   balloonOnTheRight: 0
@@ -17610,6 +17617,7 @@ Transform:
   - {fileID: 617159246}
   - {fileID: 1592851590}
   - {fileID: 281471264}
+  - {fileID: 76402114}
   m_Father: {fileID: 1644878041}
   m_RootOrder: 1
 --- !u!1 &720482194
@@ -21917,6 +21925,7 @@ Transform:
   - {fileID: 174097106}
   - {fileID: 1223811887}
   - {fileID: 246094923}
+  - {fileID: 1897050196}
   m_Father: {fileID: 1953433900}
   m_RootOrder: 8
 --- !u!1 &896924873
@@ -22139,15 +22148,15 @@ Prefab:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 1824607359}
     m_Modifications:
     - target: {fileID: 408796, guid: 450123a8207f44968b0b1f7d8abf61b8, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 76.25
+      value: 18.3167152
       objectReference: {fileID: 0}
     - target: {fileID: 408796, guid: 450123a8207f44968b0b1f7d8abf61b8, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 23.1900005
+      value: -.333990097
       objectReference: {fileID: 0}
     - target: {fileID: 408796, guid: 450123a8207f44968b0b1f7d8abf61b8, type: 2}
       propertyPath: m_LocalPosition.z
@@ -22171,7 +22180,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 408796, guid: 450123a8207f44968b0b1f7d8abf61b8, type: 2}
       propertyPath: m_RootOrder
-      value: 11
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 122590, guid: 450123a8207f44968b0b1f7d8abf61b8, type: 2}
       propertyPath: m_Name
@@ -22212,6 +22221,10 @@ Prefab:
 --- !u!1 &901828565 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 122590, guid: 450123a8207f44968b0b1f7d8abf61b8, type: 2}
+  m_PrefabInternal: {fileID: 901828564}
+--- !u!4 &901828566 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 408796, guid: 450123a8207f44968b0b1f7d8abf61b8, type: 2}
   m_PrefabInternal: {fileID: 901828564}
 --- !u!1001 &903227326
 Prefab:
@@ -25422,6 +25435,18 @@ Prefab:
       propertyPath: m_Size.x
       value: 3.94801164
       objectReference: {fileID: 0}
+    - target: {fileID: 11412772, guid: 4929ce461d7024f07a33371256545ff5, type: 2}
+      propertyPath: clips.Array.data[0].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 3f1b0b1bc73324d9a85872316b635e9a, type: 3}
+    - target: {fileID: 11412772, guid: 4929ce461d7024f07a33371256545ff5, type: 2}
+      propertyPath: clips.Array.data[1].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: a058bd2bbfb154fa896b6c76788c7b21, type: 3}
+    - target: {fileID: 11412772, guid: 4929ce461d7024f07a33371256545ff5, type: 2}
+      propertyPath: clips.Array.data[2].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 2c20167495d5f42e5a81c3b9dac6a232, type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4929ce461d7024f07a33371256545ff5, type: 2}
   m_IsPrefabParent: 0
@@ -26573,11 +26598,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 494942, guid: 340389dc4a4be43999e660bcd54a5881, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 3.29999995
+      value: 4.5999999
       objectReference: {fileID: 0}
     - target: {fileID: 494942, guid: 340389dc4a4be43999e660bcd54a5881, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 6.30000019
+      value: 6.0999999
       objectReference: {fileID: 0}
     - target: {fileID: 494942, guid: 340389dc4a4be43999e660bcd54a5881, type: 2}
       propertyPath: m_LocalPosition.z
@@ -41507,10 +41532,10 @@ MonoBehaviour:
   - {fileID: 489850080}
   gameObjectsToEnableController:
   - {fileID: 750522045}
-  balloonString: Usa il mouse per muovere la proiezioneNEWLINEe rilascia il tasto
+  balloonString: Usa il Mouse per muovere la proiezioneNEWLINEe rilascia il Tasto
     per proiettare
-  balloonStringController: Usa la levetta destra per muovere la proiezioneNEWLINEe
-    rilascia il tasto per proiettare
+  balloonStringController: Usa la Levetta Destra per muovere la proiezioneNEWLINEe
+    rilascia il Tasto RB per proiettare
   balloonPrefab: {fileID: 113256, guid: 6b5d1840791797d4e89b69c64f6d470a, type: 2}
   balloonOnTheRight: 0
   tutToEnable: []
@@ -41544,8 +41569,8 @@ MonoBehaviour:
   gameObjectsToEnableController:
   - {fileID: 1702124678}
   - {fileID: 1031018129}
-  balloonString: Tieni premuto il tasto destroNEWLINEper usare la lanterna magica.
-  balloonStringController: Tieni premuto il tasto RBNEWLINEper usare la lanterna magica.
+  balloonString: Tieni premuto il Tasto DestroNEWLINEper usare la Lanterna Magica
+  balloonStringController: Tieni premuto il Tasto RBNEWLINEper usare la Lanterna Magica
   balloonPrefab: {fileID: 113256, guid: 6b5d1840791797d4e89b69c64f6d470a, type: 2}
   balloonOnTheRight: 0
   tutToEnable: []
@@ -41575,10 +41600,10 @@ MonoBehaviour:
   - {fileID: 223421802}
   gameObjectsToEnableController:
   - {fileID: 1031018129}
-  balloonString: Se non hai piazzato nel modo correttoNEWLINEpuoi tenere di nuovo
-    premutoNEWLINEil tasto destro
-  balloonStringController: Se non hai piazzato nel modo correttoNEWLINEpuoi tenere
-    di nuovo premutoNEWLINEil tasto RB
+  balloonString: "Se la proiezione non \xE8 al posto giustoNEWLINEpuoi spostarlaNEWLINEtenendo
+    premuto il Tasto Destro"
+  balloonStringController: "Se la proiezione non \xE8 al posto giustoNEWLINEpuoi spostarlaNEWLINEtenendo
+    premuto il Tasto RB"
   balloonPrefab: {fileID: 113256, guid: 6b5d1840791797d4e89b69c64f6d470a, type: 2}
   balloonOnTheRight: 0
   tutToEnable: []
@@ -44200,6 +44225,7 @@ Transform:
   - {fileID: 1946481194}
   - {fileID: 1195905995}
   - {fileID: 1896557001}
+  - {fileID: 901828566}
   m_Father: {fileID: 1953433900}
   m_RootOrder: 19
 --- !u!4 &1824995963 stripped
@@ -46129,15 +46155,15 @@ Prefab:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 878995234}
     m_Modifications:
     - target: {fileID: 470380, guid: 41222efbab8c64dbdbd240c73e040bd8, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 37.4000015
+      value: -6.09931183
       objectReference: {fileID: 0}
     - target: {fileID: 470380, guid: 41222efbab8c64dbdbd240c73e040bd8, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 10.1000004
+      value: -8.9623661
       objectReference: {fileID: 0}
     - target: {fileID: 470380, guid: 41222efbab8c64dbdbd240c73e040bd8, type: 2}
       propertyPath: m_LocalPosition.z
@@ -46161,7 +46187,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 470380, guid: 41222efbab8c64dbdbd240c73e040bd8, type: 2}
       propertyPath: m_RootOrder
-      value: 8
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 171968, guid: 41222efbab8c64dbdbd240c73e040bd8, type: 2}
       propertyPath: m_Name
@@ -46181,6 +46207,10 @@ Prefab:
 --- !u!1 &1897050193 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 171968, guid: 41222efbab8c64dbdbd240c73e040bd8, type: 2}
+  m_PrefabInternal: {fileID: 1897050192}
+--- !u!4 &1897050196 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 470380, guid: 41222efbab8c64dbdbd240c73e040bd8, type: 2}
   m_PrefabInternal: {fileID: 1897050192}
 --- !u!4 &1898364590 stripped
 Transform:
@@ -48819,6 +48849,7 @@ Transform:
   - {fileID: 1650271240}
   - {fileID: 1274408252}
   - {fileID: 1719475355}
+  - {fileID: 22363623}
   m_Father: {fileID: 1953433900}
   m_RootOrder: 17
 --- !u!1 &2006140833
