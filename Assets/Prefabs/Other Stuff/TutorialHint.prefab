@@ -54,9 +54,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   active: 1
-  timeToTrigger: 20
+  type: 0
+  timeToTrigger: 60
   balloonTimeToDisable: 10
-  balloonReappearTime: 10
+  balloonReappearTime: 20
   gameObjectsToEnable:
   - {fileID: 0}
   gameObjectsToEnableController: []
@@ -79,11 +80,15 @@ Prefab:
     m_Modifications:
     - target: {fileID: 0}
       propertyPath: timeToTrigger
-      value: 20
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: balloonString
       value: Forse dovrei sfruttare il nemicoNEWLINEper premere il bottone
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: balloonReappearTime
+      value: 20
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
