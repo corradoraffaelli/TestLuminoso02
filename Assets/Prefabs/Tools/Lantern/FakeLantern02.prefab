@@ -877,7 +877,7 @@ MonoBehaviour:
     volume: 1
     pitch: 1
     distanceDependency: 0
-    maxVolumeDistance: 5
+    maxVolumeDistance: 3
     zeroVolumeDistance: 10
     volumeMultiplier: 1
     audioSource: {fileID: 0}
@@ -885,22 +885,22 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: 51a0016fcedcf491b9275137df4cf007, type: 3}
     loop: 0
     playOnAwake: 0
-    volume: .699999988
+    volume: .5
     pitch: 1
     distanceDependency: 1
-    maxVolumeDistance: 7
-    zeroVolumeDistance: 11
+    maxVolumeDistance: 3
+    zeroVolumeDistance: 10
     volumeMultiplier: 1
     audioSource: {fileID: 0}
   - clipName: SecondTimerClick
     clip: {fileID: 8300000, guid: 4c5df1543cf544ede9c83c5457044083, type: 3}
     loop: 0
     playOnAwake: 0
-    volume: .699999988
+    volume: .5
     pitch: 1
     distanceDependency: 1
-    maxVolumeDistance: 7
-    zeroVolumeDistance: 11
+    maxVolumeDistance: 3
+    zeroVolumeDistance: 10
     volumeMultiplier: 1
     audioSource: {fileID: 0}
   - clipName: Clic
@@ -910,7 +910,7 @@ MonoBehaviour:
     volume: 1
     pitch: 1
     distanceDependency: 1
-    maxVolumeDistance: 7
+    maxVolumeDistance: 3
     zeroVolumeDistance: 11
     volumeMultiplier: 1
     audioSource: {fileID: 0}
@@ -918,10 +918,10 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: 9b69d04073803854bb3999265738795b, type: 3}
     loop: 0
     playOnAwake: 0
-    volume: 1
+    volume: .699999988
     pitch: 1
     distanceDependency: 1
-    maxVolumeDistance: 7
+    maxVolumeDistance: 3
     zeroVolumeDistance: 11
     volumeMultiplier: 1
     audioSource: {fileID: 0}
@@ -5623,11 +5623,43 @@ Prefab:
       objectReference: {fileID: 8300000, guid: 4c5df1543cf544ede9c83c5457044083, type: 3}
     - target: {fileID: 0}
       propertyPath: clips.Array.data[1].volume
-      value: .699999988
+      value: .5
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: clips.Array.data[2].volume
+      value: .5
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: clips.Array.data[4].volume
       value: .699999988
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: clips.Array.data[0].maxVolumeDistance
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: clips.Array.data[1].maxVolumeDistance
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: clips.Array.data[1].zeroVolumeDistance
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: clips.Array.data[2].maxVolumeDistance
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: clips.Array.data[2].zeroVolumeDistance
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: clips.Array.data[3].maxVolumeDistance
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: clips.Array.data[4].maxVolumeDistance
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
