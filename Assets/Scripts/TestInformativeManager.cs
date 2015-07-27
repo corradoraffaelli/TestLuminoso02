@@ -23,9 +23,11 @@ public class TestInformativeManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-		if (!PlayStatusTracker.inPlay && GeneralFinder.menuManager.getStatusMenu()) {
+		if (!PlayStatusTracker.inPlay && (GeneralFinder.menuManager.getStatusMenu() || GeneralFinder.informativeManager.invokeWithoutMenu )) {
 
-			if(GeneralFinder.menuManager.isInformativeCanvasActive()) {
+			Debug.Log("test inform");
+
+			if(GeneralFinder.menuManager.isInformativeCanvasActive() || GeneralFinder.informativeManager.invokeWithoutMenu) {
 
 				int newActSect = GeneralFinder.informativeManager.ActiveSection;
 				int newActCont = GeneralFinder.informativeManager.sections[newActSect].activeContent;
