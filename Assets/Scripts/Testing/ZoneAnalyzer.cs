@@ -28,7 +28,7 @@ public class ZoneAnalyzer : MonoBehaviour {
 	[SerializeField]
 	public ZoneInfos zoneInfos;
 
-	bool playerColliding;
+	public bool playerColliding;
 
 	ZoneAnalyzerContainer zoneContainer;
 
@@ -131,9 +131,22 @@ public class ZoneAnalyzer : MonoBehaviour {
 	//---METODI USATI DALL'ANALYZER--
 	//-------------------------------
 
+	/*
 	void OnTriggerEnter2D(Collider2D other)
 	{
 		if (type == Type.analyzer)
+		{
+			if (other.gameObject.tag == "Player")
+			{
+				playerColliding = true;
+			}
+		}
+	}
+	*/
+
+	void OnTriggerStay2D(Collider2D other)
+	{
+		if (type == Type.analyzer && !playerColliding)
 		{
 			if (other.gameObject.tag == "Player")
 			{

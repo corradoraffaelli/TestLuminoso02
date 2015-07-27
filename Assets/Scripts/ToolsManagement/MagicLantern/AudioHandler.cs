@@ -36,6 +36,8 @@ public class AudioHandler : MonoBehaviour {
 	[SerializeField]
 	AudioClipGeneral[] clips;
 
+	Transform cameraTransform;
+
 	//public AudioSource audioSource;
 
 	void updateAudioSources()
@@ -125,6 +127,8 @@ public class AudioHandler : MonoBehaviour {
 	}
 
 	void Start () {
+		cameraTransform = Camera.main.gameObject.transform;
+
 		updateAudioSources ();
 
 		startIfNecessary();
@@ -177,7 +181,10 @@ public class AudioHandler : MonoBehaviour {
 
 	void setVolumeByDistance()
 	{
-		float playerDistance = Vector3.Distance(transform.position, GeneralFinder.player.transform.position);
+		Vector3 cameraPosInScene = new Vector3(cameraTransform.position.x, cameraTransform.position.y, 0.0f);
+
+		//float playerDistance = Vector3.Distance(transform.position, GeneralFinder.player.transform.position);
+		float playerDistance = Vector3.Distance(transform.position, cameraPosInScene);
 
 		for (int i = 0; i< clips.Length; i++) {
 			if (clips [i] != null && clips[i].audioSource!=null) {
