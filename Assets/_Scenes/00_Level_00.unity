@@ -111,7 +111,7 @@ Transform:
   m_GameObject: {fileID: 1497833}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: .910000026, y: .0700000003, z: 0}
-  m_LocalScale: {x: 1.5, y: 1.5, z: 1}
+  m_LocalScale: {x: 3, y: 3, z: 1}
   m_Children: []
   m_Father: {fileID: 1054832790}
   m_RootOrder: 0
@@ -139,7 +139,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 408067105
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: 61a67b66c8a3044a0833ec528d7f2c8e, type: 3}
+  m_Sprite: {fileID: 21300000, guid: e3fd1caba5879ff4aa3db0f54efe1146, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1001 &22334828
 Prefab:
@@ -370,7 +370,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 453056, guid: 10735c5c3eb3e4f44a76cc8a5336c72f, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -3.5999999
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 453056, guid: 10735c5c3eb3e4f44a76cc8a5336c72f, type: 2}
       propertyPath: m_LocalPosition.y
@@ -1652,6 +1652,12 @@ Transform:
 GameObject:
   m_PrefabParentObject: {fileID: 134742, guid: c728c6d2a5356d441bbe19739b0f0f19, type: 2}
   m_PrefabInternal: {fileID: 317963879}
+--- !u!114 &307691102 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 11402222, guid: c728c6d2a5356d441bbe19739b0f0f19,
+    type: 2}
+  m_PrefabInternal: {fileID: 317963879}
+  m_Script: {fileID: 11500000, guid: 9df5b370266dd11459852118199f0f9e, type: 3}
 --- !u!114 &307691104
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1671,11 +1677,12 @@ MonoBehaviour:
     playOnAwake: 0
     volume: 1
     pitch: 1
-    distanceDependency: 0
-    maxVolumeDistance: 0
-    zeroVolumeDistance: 0
+    distanceDependency: 1
+    maxVolumeDistance: 5
+    zeroVolumeDistance: 6
     volumeMultiplier: 1
     audioSource: {fileID: 0}
+  debugDistance: 0
 --- !u!1001 &312544200
 Prefab:
   m_ObjectHideFlags: 0
@@ -1824,6 +1831,14 @@ Prefab:
     - target: {fileID: 474384, guid: c728c6d2a5356d441bbe19739b0f0f19, type: 2}
       propertyPath: m_LocalPosition.y
       value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11402222, guid: c728c6d2a5356d441bbe19739b0f0f19, type: 2}
+      propertyPath: debugVar
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11423922, guid: c728c6d2a5356d441bbe19739b0f0f19, type: 2}
+      propertyPath: clips.Array.data[0].clipName
+      value: Leva
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c728c6d2a5356d441bbe19739b0f0f19, type: 2}
@@ -1980,7 +1995,7 @@ Transform:
   m_GameObject: {fileID: 363015940}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: .910000026, y: .0700000003, z: 0}
-  m_LocalScale: {x: 1.5, y: 1.5, z: 1}
+  m_LocalScale: {x: 3, y: 3, z: 1}
   m_Children: []
   m_Father: {fileID: 55321131}
   m_RootOrder: 0
@@ -2008,7 +2023,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 408067105
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: 61a67b66c8a3044a0833ec528d7f2c8e, type: 3}
+  m_Sprite: {fileID: 21300000, guid: e3fd1caba5879ff4aa3db0f54efe1146, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1001 &364120879
 Prefab:
@@ -2417,7 +2432,7 @@ Transform:
   m_GameObject: {fileID: 432050066}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: .910000026, y: .0700000003, z: 0}
-  m_LocalScale: {x: 1.5, y: 1.5, z: 1}
+  m_LocalScale: {x: 3, y: 3, z: 1}
   m_Children: []
   m_Father: {fileID: 728947592}
   m_RootOrder: 0
@@ -2445,7 +2460,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 408067105
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: 61a67b66c8a3044a0833ec528d7f2c8e, type: 3}
+  m_Sprite: {fileID: 21300000, guid: e3fd1caba5879ff4aa3db0f54efe1146, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &454246062
 GameObject:
@@ -3555,7 +3570,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inputDoor: 1
   reloadThisLevel: 0
-  sceneName: 00_Level_03#3
+  sceneName: 00_Level_03#4
   actualLevelNumber: 1
   levelToUnlock: 2
   savedLevelFile: savedComingLevel
@@ -3920,7 +3935,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 402626, guid: 366ae96d3754a4617946e6345b200d7c, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -13.9988365
+      value: -13.7600002
       objectReference: {fileID: 0}
     - target: {fileID: 402626, guid: 366ae96d3754a4617946e6345b200d7c, type: 2}
       propertyPath: m_LocalPosition.y
@@ -4621,7 +4636,7 @@ GameObject:
   - 114: {fileID: 1026806634}
   m_Layer: 0
   m_Name: HubController
-  m_TagString: Untagged
+  m_TagString: HubController
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4775,7 +4790,8 @@ MonoBehaviour:
   sortingLayerSceneUI: SceneUI
   mammuthElements:
   - name: BottomLeft
-    interagibleObject: {fileID: 307691100}
+    interagibleObject: {fileID: 307691102}
+    interagibleObjectOBJ: {fileID: 0}
     triggerLimits: {fileID: 1628933813}
     triggerScript: {fileID: 0}
     starsInfo: {fileID: 901670930}
@@ -4785,7 +4801,8 @@ MonoBehaviour:
     canBeInteracted: 0
     starsNumber: 5
   - name: BottomRight
-    interagibleObject: {fileID: 1998013205}
+    interagibleObject: {fileID: 1998013207}
+    interagibleObjectOBJ: {fileID: 0}
     triggerLimits: {fileID: 1714446971}
     triggerScript: {fileID: 0}
     starsInfo: {fileID: 55321130}
@@ -4795,7 +4812,8 @@ MonoBehaviour:
     canBeInteracted: 0
     starsNumber: 10
   - name: UpperLeft
-    interagibleObject: {fileID: 1674064793}
+    interagibleObject: {fileID: 1674064795}
+    interagibleObjectOBJ: {fileID: 0}
     triggerLimits: {fileID: 1998328552}
     triggerScript: {fileID: 0}
     starsInfo: {fileID: 728947591}
@@ -4805,7 +4823,8 @@ MonoBehaviour:
     canBeInteracted: 0
     starsNumber: 14
   - name: UppperRight
-    interagibleObject: {fileID: 1781056729}
+    interagibleObject: {fileID: 1781056731}
+    interagibleObjectOBJ: {fileID: 0}
     triggerLimits: {fileID: 1358823006}
     triggerScript: {fileID: 0}
     starsInfo: {fileID: 1054832789}
@@ -4844,7 +4863,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6bfee942ace68dd438ec5e82511a5605, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  starSprite: {fileID: 21300000, guid: 61a67b66c8a3044a0833ec528d7f2c8e, type: 3}
+  starSprite: {fileID: 21300000, guid: e3fd1caba5879ff4aa3db0f54efe1146, type: 3}
   XDistance: -72
   textSize: 60
   textColor: {r: .925490201, g: .925490201, b: .925490201, a: 1}
@@ -4887,6 +4906,18 @@ MonoBehaviour:
     zeroVolumeDistance: 0
     volumeMultiplier: 1
     audioSource: {fileID: 0}
+  - clipName: Accensione
+    clip: {fileID: 8300000, guid: e3fdaf36bc452de4c8f4b1b4cf5488f0, type: 3}
+    loop: 0
+    playOnAwake: 0
+    volume: 1
+    pitch: 1
+    distanceDependency: 0
+    maxVolumeDistance: 0
+    zeroVolumeDistance: 0
+    volumeMultiplier: 1
+    audioSource: {fileID: 0}
+  debugDistance: 0
 --- !u!1 &1027077889
 GameObject:
   m_ObjectHideFlags: 0
@@ -5004,7 +5035,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 402626, guid: 366ae96d3754a4617946e6345b200d7c, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 14.3000002
+      value: 13.5600004
       objectReference: {fileID: 0}
     - target: {fileID: 402626, guid: 366ae96d3754a4617946e6345b200d7c, type: 2}
       propertyPath: m_LocalPosition.y
@@ -7021,7 +7052,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inputDoor: 1
   reloadThisLevel: 0
-  sceneName: 00_Level_02#6
+  sceneName: 00_Level_02#7
   actualLevelNumber: 1
   levelToUnlock: 2
   savedLevelFile: savedComingLevel
@@ -7525,6 +7556,12 @@ SpriteRenderer:
 GameObject:
   m_PrefabParentObject: {fileID: 134742, guid: c728c6d2a5356d441bbe19739b0f0f19, type: 2}
   m_PrefabInternal: {fileID: 201319623}
+--- !u!114 &1674064795 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 11402222, guid: c728c6d2a5356d441bbe19739b0f0f19,
+    type: 2}
+  m_PrefabInternal: {fileID: 201319623}
+  m_Script: {fileID: 11500000, guid: 9df5b370266dd11459852118199f0f9e, type: 3}
 --- !u!114 &1674064797
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7549,6 +7586,7 @@ MonoBehaviour:
     zeroVolumeDistance: 0
     volumeMultiplier: 1
     audioSource: {fileID: 0}
+  debugDistance: 0
 --- !u!1 &1714446971
 GameObject:
   m_ObjectHideFlags: 0
@@ -7833,6 +7871,12 @@ Prefab:
 GameObject:
   m_PrefabParentObject: {fileID: 134742, guid: c728c6d2a5356d441bbe19739b0f0f19, type: 2}
   m_PrefabInternal: {fileID: 306420831}
+--- !u!114 &1781056731 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 11402222, guid: c728c6d2a5356d441bbe19739b0f0f19,
+    type: 2}
+  m_PrefabInternal: {fileID: 306420831}
+  m_Script: {fileID: 11500000, guid: 9df5b370266dd11459852118199f0f9e, type: 3}
 --- !u!114 &1781056733
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7857,6 +7901,7 @@ MonoBehaviour:
     zeroVolumeDistance: 0
     volumeMultiplier: 1
     audioSource: {fileID: 0}
+  debugDistance: 0
 --- !u!1001 &1785471800
 Prefab:
   m_ObjectHideFlags: 0
@@ -7866,7 +7911,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 453056, guid: 10735c5c3eb3e4f44a76cc8a5336c72f, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -4.31000042
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 453056, guid: 10735c5c3eb3e4f44a76cc8a5336c72f, type: 2}
       propertyPath: m_LocalPosition.y
@@ -8771,6 +8816,12 @@ SpriteRenderer:
 GameObject:
   m_PrefabParentObject: {fileID: 134742, guid: c728c6d2a5356d441bbe19739b0f0f19, type: 2}
   m_PrefabInternal: {fileID: 696381958}
+--- !u!114 &1998013207 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 11402222, guid: c728c6d2a5356d441bbe19739b0f0f19,
+    type: 2}
+  m_PrefabInternal: {fileID: 696381958}
+  m_Script: {fileID: 11500000, guid: 9df5b370266dd11459852118199f0f9e, type: 3}
 --- !u!114 &1998013209
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8795,6 +8846,7 @@ MonoBehaviour:
     zeroVolumeDistance: 0
     volumeMultiplier: 1
     audioSource: {fileID: 0}
+  debugDistance: 0
 --- !u!1 &1998328552
 GameObject:
   m_ObjectHideFlags: 0
@@ -8872,7 +8924,7 @@ Transform:
   m_GameObject: {fileID: 2010047803}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: .910000026, y: .0700000003, z: 0}
-  m_LocalScale: {x: 1.5, y: 1.5, z: 1}
+  m_LocalScale: {x: 3, y: 3, z: 1}
   m_Children: []
   m_Father: {fileID: 901670931}
   m_RootOrder: 0
@@ -8900,7 +8952,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 408067105
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: 61a67b66c8a3044a0833ec528d7f2c8e, type: 3}
+  m_Sprite: {fileID: 21300000, guid: e3fd1caba5879ff4aa3db0f54efe1146, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1001 &2029957328
 Prefab:

@@ -41,16 +41,19 @@ public class levelChanger : MonoBehaviour {
 	{
 		if (!inputDoor)
 		{
+			/*
 			unlockLevel();
 			saveInfo();
 
 			GeneralFinder.informativeManager.c_saveData();
 			Debug.Log ("salvo");
 			changeScene ();
+			*/
+			StartCoroutine(ExitDoorBehave());
 		}
 		else
 		{
-			StartCoroutine(Example());
+			StartCoroutine(InputDoorBehave());
 		}
 	}
 
@@ -63,8 +66,51 @@ public class levelChanger : MonoBehaviour {
 		file.Close ();
 	}
 
-	IEnumerator Example() {
-		yield return new WaitForSeconds(1);
+	IEnumerator InputDoorBehave() {
+		GeneralFinder.playerMovements.enabled = false;
+		saveHubInfos();
+		yield return new WaitForSeconds(1.5f);
 		changeScene ();
+	}
+
+	IEnumerator ExitDoorBehave() {
+		unlockLevel();
+		saveInfo();
+
+		saveTesting();
+		
+		GeneralFinder.informativeManager.c_saveData();
+		Debug.Log ("salvo");
+
+		GeneralFinder.playerMovements.enabled = false;
+		yield return new WaitForSeconds(2.0f);
+
+		changeScene ();
+	}
+
+	//funzione per salvare dati di testing
+	void saveTesting()
+	{
+		GeneralFinder.testingController.GetComponent<ZoneAnalyzer>().saveInfos();
+		GeneralFinder.testingController.GetComponent<SpikeAnalyzer>().saveInfos();
+		GeneralFinder.testingController.GetComponent<HintAnalyzer>().saveInfos();
+	}
+
+	void saveHubInfos()
+	{
+		if (GeneralFinder.unlockedLevelControl != null)
+		{
+			GeneralFinder.unlockedLevelControl.saveInfo();
+		}
+
+		if (GeneralFinder.hubLadderControl != null)
+		{
+			GeneralFinder.hubLadderControl.saveInfo();
+		}
+
+		if (GeneralFinder.hubLanternControl != null)
+		{
+			GeneralFinder.hubLanternControl.saveInfo();
+		}
 	}
 }

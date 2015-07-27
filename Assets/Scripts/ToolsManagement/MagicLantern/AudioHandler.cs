@@ -190,7 +190,7 @@ public class AudioHandler : MonoBehaviour {
 
 		if (debugDistance)
 		{
-			Debug.Log ("def " + playerDistance);
+			Debug.Log ("def " + playerDistance + this.gameObject.name);
 			Debug.Log ("camPlayer " + Vector3.Distance(GeneralFinder.player.transform.position, cameraPosInScene));
 		}
 			

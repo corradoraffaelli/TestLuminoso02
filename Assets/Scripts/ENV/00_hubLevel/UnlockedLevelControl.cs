@@ -209,12 +209,14 @@ public class UnlockedLevelControl : MonoBehaviour {
 		return null;
 	}
 
+	/*
 	void OnDestroy()
 	{
 		saveInfo();
 	}
+	*/
 	
-	void saveInfo()
+	public void saveInfo()
 	{
 		unlockedLevelInfo = new UnlockedLevelInfo[unlockedLevelElements.Length];
 		for (int i = 0; i < unlockedLevelInfo.Length; i++)

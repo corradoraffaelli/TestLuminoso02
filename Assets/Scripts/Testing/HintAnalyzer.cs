@@ -34,37 +34,12 @@ public class HintAnalyzer : MonoBehaviour {
 		hintElements.Find(x => x.stringa.Equals(inputString)).activationNumber++;
 	}
 
+	/*
 	void OnDestroy()
 	{
-		//creo l'opportuna directory se non esiste già
-		if (!Directory.Exists(directory)) 
-		{
-			Directory.CreateDirectory(Path.Combine(Application.persistentDataPath, directory));
-		}
-		
-		//cerca l'elemento con indice maggiore
-		int actualIndex = 0;
-		string finalPath01 = Path.Combine(Application.persistentDataPath,  directory + "/" + Application.loadedLevelName + "_" + pathFileName + "_");
-		string finalPath02;
-		
-		while (true)
-		{
-			finalPath02 = finalPath01 + actualIndex.ToString() + ".xml";
-			if (File.Exists (finalPath02)) 
-			{
-				actualIndex++;
-			}
-			else
-			{
-				break;
-			}
-		}
-		
-		//salva tutti gli elementi su file
-		hintContainer = new HintAnalyzerContainer();
-		hintContainer.hintElements = hintElements.ToArray();
-		hintContainer.Save(finalPath02);
+		saveInfos();
 	}
+	*/
 
 	[XmlRoot("HintAnalyzerCollection")]
 	public class HintAnalyzerContainer
@@ -96,5 +71,37 @@ public class HintAnalyzer : MonoBehaviour {
 			var serializer = new XmlSerializer(typeof(HintAnalyzerContainer));
 			return serializer.Deserialize(new StringReader(text)) as HintAnalyzerContainer;
 		}
+	}
+
+	public void saveInfos()
+	{
+		//creo l'opportuna directory se non esiste già
+		if (!Directory.Exists(directory)) 
+		{
+			Directory.CreateDirectory(Path.Combine(Application.persistentDataPath, directory));
+		}
+		
+		//cerca l'elemento con indice maggiore
+		int actualIndex = 0;
+		string finalPath01 = Path.Combine(Application.persistentDataPath,  directory + "/" + Application.loadedLevelName + "_" + pathFileName + "_");
+		string finalPath02;
+		
+		while (true)
+		{
+			finalPath02 = finalPath01 + actualIndex.ToString() + ".xml";
+			if (File.Exists (finalPath02)) 
+			{
+				actualIndex++;
+			}
+			else
+			{
+				break;
+			}
+		}
+		
+		//salva tutti gli elementi su file
+		hintContainer = new HintAnalyzerContainer();
+		hintContainer.hintElements = hintElements.ToArray();
+		hintContainer.Save(finalPath02);
 	}
 }

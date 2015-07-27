@@ -41,59 +41,12 @@ public class ZoneAnalyzer : MonoBehaviour {
 	//---METODI USATI DAL COLLECTOR--
 	//-------------------------------
 
+	/*
 	void OnDestroy()
 	{
-		if (type == Type.collector)
-		{
-			//prende tutti i component zoneAnalyzer presenti nella scena
-			GameObject[] objs = GameObject.FindGameObjectsWithTag("ZoneAnalyzer");
-			ZoneAnalyzer[] analyzers = new ZoneAnalyzer[objs.Length];
-			ZoneInfos[] infos = new ZoneInfos[analyzers.Length];
-
-			for (int i = 0; i < objs.Length; i++)
-			{
-				if (objs[i] != null)
-				{
-					analyzers[i] = objs[i].GetComponent<ZoneAnalyzer>();
-
-					//prende tutti gli elementi ZoneInfos
-					if (analyzers[i] != null && analyzers[i].type == Type.analyzer)
-					{
-						infos[i] = analyzers[i].zoneInfos;
-					}
-				}
-			}
-
-			//creo l'opportuna directory se non esiste già
-			if (!Directory.Exists(directory)) 
-			{
-				Directory.CreateDirectory(Path.Combine(Application.persistentDataPath, directory));
-			}
-
-			//cerca l'elemento con indice maggiore
-			int actualIndex = 0;
-			string finalPath01 = Path.Combine(Application.persistentDataPath,  directory + "/" + Application.loadedLevelName + "_" + pathFileName + "_");
-			string finalPath02;
-
-			while (true)
-			{
-				finalPath02 = finalPath01 + actualIndex.ToString() + ".xml";
-				if (File.Exists (finalPath02)) 
-				{
-					actualIndex++;
-				}
-				else
-				{
-					break;
-				}
-			}
-
-			//salva tutti gli elementi su file
-			zoneContainer = new ZoneAnalyzerContainer();
-			zoneContainer.zoneInfos = infos;
-			zoneContainer.Save(finalPath02);
-		}
+		saveInfos();
 	}
+	*/
 
 	[XmlRoot("ZoneAnalyzerCollection")]
 	public class ZoneAnalyzerContainer
@@ -172,6 +125,63 @@ public class ZoneAnalyzer : MonoBehaviour {
 		{
 			if (playerColliding)
 				zoneInfos.timeSpent = zoneInfos.timeSpent + Time.deltaTime;
+		}
+	}
+
+	public void saveInfos()
+	{
+		if (type == Type.collector)
+		{
+			Debug.Log ("analyzer");
+			
+			//prende tutti i component zoneAnalyzer presenti nella scena
+			GameObject[] objs = GameObject.FindGameObjectsWithTag("ZoneAnalyzer");
+			
+			ZoneAnalyzer[] analyzers = new ZoneAnalyzer[objs.Length];
+			ZoneInfos[] infos = new ZoneInfos[analyzers.Length];
+			
+			for (int i = 0; i < objs.Length; i++)
+			{
+				if (objs[i] != null)
+				{
+					analyzers[i] = objs[i].GetComponent<ZoneAnalyzer>();
+					
+					//prende tutti gli elementi ZoneInfos
+					if (analyzers[i] != null && analyzers[i].type == Type.analyzer)
+					{
+						infos[i] = analyzers[i].zoneInfos;
+					}
+				}
+			}
+			
+			//creo l'opportuna directory se non esiste già
+			if (!Directory.Exists(directory)) 
+			{
+				Directory.CreateDirectory(Path.Combine(Application.persistentDataPath, directory));
+			}
+			
+			//cerca l'elemento con indice maggiore
+			int actualIndex = 0;
+			string finalPath01 = Path.Combine(Application.persistentDataPath,  directory + "/" + Application.loadedLevelName + "_" + pathFileName + "_");
+			string finalPath02;
+			
+			while (true)
+			{
+				finalPath02 = finalPath01 + actualIndex.ToString() + ".xml";
+				if (File.Exists (finalPath02)) 
+				{
+					actualIndex++;
+				}
+				else
+				{
+					break;
+				}
+			}
+			
+			//salva tutti gli elementi su file
+			zoneContainer = new ZoneAnalyzerContainer();
+			zoneContainer.zoneInfos = infos;
+			zoneContainer.Save(finalPath02);
 		}
 	}
 }
