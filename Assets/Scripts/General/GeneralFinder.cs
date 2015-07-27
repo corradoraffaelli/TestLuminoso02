@@ -28,6 +28,11 @@ public class GeneralFinder : MonoBehaviour {
 	public static GameObject testingController;
 	public static HintAnalyzer hintAnalyzer;
 
+	public static GameObject hubController;
+	public static UnlockedLevelControl unlockedLevelControl;
+	public static HubLadderControl hubLadderControl;
+	public static HubLanternControl hubLanternControl;
+
 	// Use this for initialization
 	void Awake () {
 
@@ -68,6 +73,14 @@ public class GeneralFinder : MonoBehaviour {
 		testingController = GameObject.FindGameObjectWithTag("TestController");
 		if (testingController != null)
 			hintAnalyzer = testingController.GetComponent<HintAnalyzer>();
+
+		hubController = GameObject.FindGameObjectWithTag("HubController");
+		if (hubController != null)
+		{
+			unlockedLevelControl = hubController.GetComponent<UnlockedLevelControl>();
+			hubLadderControl = hubController.GetComponent<HubLadderControl>();
+			hubLanternControl = hubController.GetComponent<HubLanternControl>();
+		}
 	}
 	
 	// Update is called once per frame

@@ -15,9 +15,9 @@ public class PipeParticles : MonoBehaviour {
 
 	public GameObject particleExit;
 	public GameObject particleMiddle;
-	AudioHandler audioHandlerMiddle;
+	public AudioHandler audioHandlerMiddle;
 	public GameObject particleRight;
-	AudioHandler audioHandlerRight;
+	public AudioHandler audioHandlerRight;
 	ParticleSystem partSystExit;
 	ParticleSystem partSystMiddle;
 	ParticleSystem partSystRight;
@@ -53,11 +53,13 @@ public class PipeParticles : MonoBehaviour {
 		if (wind != null)
 			externalWind = wind.GetComponent<ExternalWind>();
 
+		/*
 		if (particleMiddle != null)
 			audioHandlerMiddle = particleMiddle.GetComponent<AudioHandler>();
 
 		if (particleRight != null)
 			audioHandlerRight = particleRight.GetComponent<AudioHandler>();
+			*/
 	}
 	
 	// Update is called once per frame

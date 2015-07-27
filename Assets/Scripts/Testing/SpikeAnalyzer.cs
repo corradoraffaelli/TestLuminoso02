@@ -42,60 +42,13 @@ public class SpikeAnalyzer : MonoBehaviour {
 	//-------------------------------
 	//---METODI USATI DAL COLLECTOR--
 	//-------------------------------
-	
+
+	/*
 	void OnDestroy()
 	{
-		if (type == Type.collector)
-		{
-			//prende tutti i component zoneAnalyzer presenti nella scena
-			GameObject[] objs = GameObject.FindGameObjectsWithTag("SpikesAnalyzer");
-			SpikeAnalyzer[] analyzers = new SpikeAnalyzer[objs.Length];
-			SpikesInfos[] infos = new SpikesInfos[analyzers.Length];
-			
-			for (int i = 0; i < objs.Length; i++)
-			{
-				if (objs[i] != null)
-				{
-					analyzers[i] = objs[i].GetComponent<SpikeAnalyzer>();
-					
-					//prende tutti gli elementi ZoneInfos
-					if (analyzers[i] != null && analyzers[i].type == Type.analyzer)
-					{
-						infos[i] = analyzers[i].spikesInfos;
-					}
-				}
-			}
-			
-			//creo l'opportuna directory se non esiste già
-			if (!Directory.Exists(directory)) 
-			{
-				Directory.CreateDirectory(Path.Combine(Application.persistentDataPath, directory));
-			}
-			
-			//cerca l'elemento con indice maggiore
-			int actualIndex = 0;
-			string finalPath01 = Path.Combine(Application.persistentDataPath,  directory + "/" + Application.loadedLevelName + "_" + pathFileName + "_");
-			string finalPath02;
-			
-			while (true)
-			{
-				finalPath02 = finalPath01 + actualIndex.ToString() + ".xml";
-				if (File.Exists (finalPath02)) 
-				{
-					actualIndex++;
-				}
-				else
-				{
-					break;
-				}
-			}
-			
-			//salva tutti gli elementi su file
-			spikesContainer = new SpikesAnalyzerContainer();
-			spikesContainer.spikesInfos = infos;
-			spikesContainer.Save(finalPath02);
-		}
+		saveInfos();
 	}
+	*/
 	
 	[XmlRoot("SpikesAnalyzerCollection")]
 	public class SpikesAnalyzerContainer
@@ -142,6 +95,69 @@ public class SpikeAnalyzer : MonoBehaviour {
 				spikesInfos.enteredTimes++;
 				//playerColliding = true;
 			}
+		}
+	}
+
+	public void saveInfos()
+	{
+		if (type == Type.collector)
+		{
+			//prende tutti i component zoneAnalyzer presenti nella scena
+			GameObject[] objs = GameObject.FindGameObjectsWithTag("SpikesAnalyzer");
+			
+			for (int i = 0; i < objs.Length; i++)
+			{
+				if (objs[i] != null)
+				{
+					Debug.Log (objs[i].name);
+				}
+			}
+			
+			SpikeAnalyzer[] analyzers = new SpikeAnalyzer[objs.Length];
+			SpikesInfos[] infos = new SpikesInfos[analyzers.Length];
+			
+			for (int i = 0; i < objs.Length; i++)
+			{
+				if (objs[i] != null)
+				{
+					analyzers[i] = objs[i].GetComponent<SpikeAnalyzer>();
+					
+					//prende tutti gli elementi ZoneInfos
+					if (analyzers[i] != null && analyzers[i].type == Type.analyzer)
+					{
+						infos[i] = analyzers[i].spikesInfos;
+					}
+				}
+			}
+			
+			//creo l'opportuna directory se non esiste già
+			if (!Directory.Exists(directory)) 
+			{
+				Directory.CreateDirectory(Path.Combine(Application.persistentDataPath, directory));
+			}
+			
+			//cerca l'elemento con indice maggiore
+			int actualIndex = 0;
+			string finalPath01 = Path.Combine(Application.persistentDataPath,  directory + "/" + Application.loadedLevelName + "_" + pathFileName + "_");
+			string finalPath02;
+			
+			while (true)
+			{
+				finalPath02 = finalPath01 + actualIndex.ToString() + ".xml";
+				if (File.Exists (finalPath02)) 
+				{
+					actualIndex++;
+				}
+				else
+				{
+					break;
+				}
+			}
+			
+			//salva tutti gli elementi su file
+			spikesContainer = new SpikesAnalyzerContainer();
+			spikesContainer.spikesInfos = infos;
+			spikesContainer.Save(finalPath02);
 		}
 	}
 

@@ -17,6 +17,7 @@ public class InteragibileObject : MonoBehaviour {
 
 	InputKeeper inputKeeper;
 
+	public bool debugVar = false;
 
 	void Start () {
 		player = GameObject.FindGameObjectWithTag ("Player");
@@ -28,6 +29,9 @@ public class InteragibileObject : MonoBehaviour {
 
 	void Update () {
 		playerCollidingManagement ();
+
+		if (debugVar && audioHandler.getAudioClipByName("Leva").audioSource.isPlaying)
+			Debug.Log ("sto suonando");
 	}
 
 	void playerCollidingManagement()

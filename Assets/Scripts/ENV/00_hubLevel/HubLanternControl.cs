@@ -14,7 +14,9 @@ public class HubLanternControl : MonoBehaviour {
 	public class MammuthElement
 	{
 		public string name;
-		public GameObject interagibleObject;
+		public InteragibileObject interagibleObject;
+		[HideInInspector]
+		public GameObject interagibleObjectOBJ;
 		public GameObject triggerLimits;
 		[HideInInspector]
 		public SimplyVerifyIfPlayerInTrigger triggerScript;
@@ -44,6 +46,8 @@ public class HubLanternControl : MonoBehaviour {
 	public string savedLanternFile = "savedMammut";
 	public string savedFileExtention = ".dat";
 
+	AudioHandler audioHandler;
+
 	void Start () {
 		fillTriggerScripts();
 		fillNumbersOfIndications();
@@ -59,6 +63,8 @@ public class HubLanternControl : MonoBehaviour {
 
 		getSmokeChildren();
 		setStartingSmoke();
+		audioHandler = GetComponent<AudioHandler>();
+		takeInteragibleOBJ();
 	}
 
 	void Update () {
@@ -75,12 +81,16 @@ public class HubLanternControl : MonoBehaviour {
 			if (mammuthElements[i] != null && mammuthElements[i].starsNumber <= starsCollected && !mammuthElements[i].interacted)
 			{
 				mammuthElements[i].canBeInteracted = true;
-				mammuthElements[i].interagibleObject.SetActive(true);
+				//mammuthElements[i].interagibleObject.enabled = true;
+				//mammuthElements[i].interagibleObject.SetActive(true);
+				mammuthElements[i].interagibleObjectOBJ.SetActive(true);
 			}
 			else
 			{
 				mammuthElements[i].canBeInteracted = false;
-				mammuthElements[i].interagibleObject.SetActive(false);
+				//mammuthElements[i].interagibleObject.enabled = false;
+				//mammuthElements[i].interagibleObject.SetActive(false);
+				mammuthElements[i].interagibleObjectOBJ.SetActive(false);
 			}
 				
 		}
@@ -92,6 +102,10 @@ public class HubLanternControl : MonoBehaviour {
 		setLanternInteracted();
 		activateNextProjection();
 		activateSmoke();
+
+		//NUOVO
+		if (audioHandler != null)
+			audioHandler.playClipByName("Accensione");
 	}
 
 	void getSmokeChildren()
@@ -118,8 +132,13 @@ public class HubLanternControl : MonoBehaviour {
 		{
 			if (mammuthElements[i] != null && mammuthElements[i].interagibleObject != null)
 			{
+				/*
 				InteragibileObject intOBJScript = mammuthElements[i].interagibleObject.GetComponent<InteragibileObject>();
 				if (intOBJScript != null && intOBJScript.playerColliding)
+					//mammuthElements[i].interacted = true;
+					mammuthElements[i].smokesFather.SetActive(true);
+					*/
+				if (mammuthElements[i].interagibleObject != null && mammuthElements[i].interagibleObject.playerColliding)
 					//mammuthElements[i].interacted = true;
 					mammuthElements[i].smokesFather.SetActive(true);
 			}
@@ -193,19 +212,25 @@ public class HubLanternControl : MonoBehaviour {
 		{
 			if (mammuthElements[i] != null && mammuthElements[i].interagibleObject != null)
 			{
+				/*
 				InteragibileObject intOBJScript = mammuthElements[i].interagibleObject.GetComponent<InteragibileObject>();
 				if (intOBJScript != null && intOBJScript.playerColliding)
+					mammuthElements[i].interacted = true;
+					*/
+				if (mammuthElements[i].interagibleObject != null && mammuthElements[i].interagibleObject.playerColliding)
 					mammuthElements[i].interacted = true;
 			}
 		}
 	}
 
+	/*
 	void OnDestroy()
 	{
 		saveInfo();
 	}
+	*/
 
-	void saveInfo()
+	public void saveInfo()
 	{
 
 		bool[] lanternInteracted = new bool[mammuthElements.Length];
@@ -331,6 +356,17 @@ public class HubLanternControl : MonoBehaviour {
 				//if (mammuthElements[i].triggerScript.PlayerColliding)
 				bool canBeEnabled = mammuthElements[i].triggerScript.PlayerColliding && !mammuthElements[i].interacted;
 				mammuthElements[i].starsInfo.SetActive(canBeEnabled);
+			}
+		}
+	}
+
+	void takeInteragibleOBJ()
+	{
+		for (int i = 0; i < mammuthElements.Length; i++)
+		{
+			if (mammuthElements[i] != null && mammuthElements[i].interagibleObject != null)
+			{
+				mammuthElements[i].interagibleObjectOBJ = mammuthElements[i].interagibleObject.gameObject;
 			}
 		}
 	}

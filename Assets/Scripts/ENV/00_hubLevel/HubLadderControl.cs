@@ -51,10 +51,12 @@ public class HubLadderControl : MonoBehaviour {
 		appearLadder();
 	}
 
+	/*
 	void OnDestroy()
 	{
 		saveInfo();
 	}
+	*/
 
 	public void IntaractingMethodMammut()
 	{
@@ -110,7 +112,7 @@ public class HubLadderControl : MonoBehaviour {
 		}
 	}
 
-	void saveInfo()
+	public void saveInfo()
 	{
 
 		ladderUnlocked = new bool[ladderElement.Length];
