@@ -398,7 +398,7 @@ public class InformativeManager : MonoBehaviour {
 					if(nephew.name=="High") {
 
 						exitButton = nephew.GetComponentInChildren<Button>();
-						exitButton.onClick.AddListener(() => { GeneralFinder.menuManager.c_switchMenuSection (canvasInformative, canvasIntro); });
+						exitButton.onClick.AddListener(() => { handleIntroAndExitInformativeMenu(); });
 					}
 
 				}
@@ -519,49 +519,65 @@ public class InformativeManager : MonoBehaviour {
 
 	}
 
+	void handleIntroAndExitInformativeMenu() {
+
+		if( (!canvasInformative.activeSelf || !canvasInformative.transform.parent.gameObject.activeSelf  ) 
+		   && Input.GetKeyDown (KeyCode.I) && !invokeWithoutMenu && !GeneralFinder.menuManager.StatusMenu) {
+			//Debug.Log("ciao0");
+			
+			GeneralFinder.unlockableContentUI.stopPulsing();
+			
+			invokeWithoutMenu = true;
+			PlayStatusTracker.inPlay = false;
+			
+			canvasInformative.transform.parent.gameObject.SetActive(true);
+			canvasInformative.SetActive(true);
+			
+			fillNavigation ();
+			fillMultimedia();
+			fillDetail();
+			
+			if(unlockedNewContent) {
+				
+				GeneralFinder.testInformativeManager.c_setShowWhenUnlocked(activeSection, sections[activeSection].activeContent);
+				unlockedNewContent = false;
+				
+			}
+			
+			
+		}
+		else {
+			//Debug.Log("ciao1");
+			if(!GeneralFinder.menuManager.StatusMenu && invokeWithoutMenu) {
+				//Debug.Log("ciao2");
+				
+				PlayStatusTracker.inPlay = true;
+				
+				canvasInformative.SetActive(false);
+				canvasInformative.transform.parent.gameObject.SetActive(false);
+				
+				StartCoroutine(countDownMenu());
+			}
+			else {
+				//caso SOLO per X di informative schedules, premuto per tornare al menu
+				if(GeneralFinder.menuManager.StatusMenu && !invokeWithoutMenu) {
+					//Debug.Log("ciao3");
+
+					GeneralFinder.menuManager.c_switchMenuSection (canvasInformative, canvasIntro);
+
+				}
+
+			}
+			
+		}
+
+	}
+
 	void Update() {
 		
 		if (Input.GetButtonDown ("Informative-menu") || Input.GetButtonDown("Escape-menu")) {
 
-			if( (!canvasInformative.activeSelf || !canvasInformative.transform.parent.gameObject.activeSelf  ) 
-			   && Input.GetKeyDown (KeyCode.I) && !invokeWithoutMenu && !GeneralFinder.menuManager.StatusMenu) {
-				//Debug.Log("ciao0");
-
-				GeneralFinder.unlockableContentUI.stopPulsing();
-
-				invokeWithoutMenu = true;
-				PlayStatusTracker.inPlay = false;
-
-				canvasInformative.transform.parent.gameObject.SetActive(true);
-				canvasInformative.SetActive(true);
-
-				fillNavigation ();
-				fillMultimedia();
-				fillDetail();
-
-				if(unlockedNewContent) {
-					
-					GeneralFinder.testInformativeManager.c_setShowWhenUnlocked(activeSection, sections[activeSection].activeContent);
-					unlockedNewContent = false;
-					
-				}
-
-
-			}
-			else {
-				//Debug.Log("ciao1");
-				if(!GeneralFinder.menuManager.StatusMenu && invokeWithoutMenu) {
-					//Debug.Log("ciao2");
-
-					PlayStatusTracker.inPlay = true;
-					
-					canvasInformative.SetActive(false);
-					canvasInformative.transform.parent.gameObject.SetActive(false);
-
-					StartCoroutine(countDownMenu());
-				}
-			
-			}
+			handleIntroAndExitInformativeMenu();
 
 			/*
 			GeneralFinder.menuManager.c_enableMenu(true, canvasInformative);
