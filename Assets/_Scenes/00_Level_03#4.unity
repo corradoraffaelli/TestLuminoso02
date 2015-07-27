@@ -7738,6 +7738,8 @@ Transform:
   - {fileID: 1193951436}
   - {fileID: 784375696}
   - {fileID: 1261353839}
+  - {fileID: 1398528849}
+  - {fileID: 1463005189}
   m_Father: {fileID: 1952822025}
   m_RootOrder: 27
 --- !u!114 &342841668
@@ -7997,6 +7999,7 @@ MonoBehaviour:
     zeroVolumeDistance: 0
     volumeMultiplier: 1
     audioSource: {fileID: 0}
+  debugDistance: 0
 --- !u!1 &343617615
 GameObject:
   m_ObjectHideFlags: 0
@@ -9490,7 +9493,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 401555646}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 29.4980545, y: -10.313797, z: -8}
+  m_LocalPosition: {x: 29.4980545, y: -10.313797, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1952822025}
@@ -11587,8 +11590,8 @@ Transform:
   - {fileID: 1852486891}
   - {fileID: 990082626}
   - {fileID: 1768974299}
-  - {fileID: 1730568552}
   - {fileID: 1839791419}
+  - {fileID: 1730568552}
   - {fileID: 683905634}
   - {fileID: 635256913}
   - {fileID: 882245484}
@@ -11981,7 +11984,6 @@ GameObject:
   - 4: {fileID: 509411448}
   - 198: {fileID: 509411450}
   - 199: {fileID: 509411449}
-  - 114: {fileID: 509411451}
   m_Layer: 0
   m_Name: PartRight
   m_TagString: Untagged
@@ -13090,30 +13092,6 @@ ParticleSystem:
     subEmitterCollision1: {fileID: 0}
     subEmitterDeath: {fileID: 0}
     subEmitterDeath1: {fileID: 0}
---- !u!114 &509411451
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 509411447}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: db8ec66bee508ec4a8754d0738e984cc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  updateAudioClips: 0
-  clips:
-  - clipName: Vento
-    clip: {fileID: 8300000, guid: df144e0116f464b6296425e2bb0d8642, type: 3}
-    loop: 1
-    playOnAwake: 0
-    volume: .699999988
-    pitch: 1
-    distanceDependency: 1
-    maxVolumeDistance: 4
-    zeroVolumeDistance: 6
-    volumeMultiplier: 1
-    audioSource: {fileID: 0}
 --- !u!1001 &509738232
 Prefab:
   m_ObjectHideFlags: 0
@@ -19684,6 +19662,7 @@ Transform:
   - {fileID: 1665486380}
   - {fileID: 826160307}
   - {fileID: 286393886}
+  - {fileID: 1611605619}
   m_Father: {fileID: 1952822025}
   m_RootOrder: 26
 --- !u!114 &775867580
@@ -19798,6 +19777,7 @@ MonoBehaviour:
     zeroVolumeDistance: 0
     volumeMultiplier: 1
     audioSource: {fileID: 0}
+  debugDistance: 0
 --- !u!1001 &775962229
 Prefab:
   m_ObjectHideFlags: 0
@@ -19895,7 +19875,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 776099979}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 29.4980545, y: -9.79379654, z: -8}
+  m_LocalPosition: {x: 29.4980545, y: -9.79379654, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1952822025}
@@ -24347,11 +24327,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 494942, guid: 340389dc4a4be43999e660bcd54a5881, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 244.210007
+      value: 194.020004
       objectReference: {fileID: 0}
     - target: {fileID: 494942, guid: 340389dc4a4be43999e660bcd54a5881, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -123.550003
+      value: -131.710007
       objectReference: {fileID: 0}
     - target: {fileID: 494942, guid: 340389dc4a4be43999e660bcd54a5881, type: 2}
       propertyPath: m_LocalPosition.z
@@ -24375,7 +24355,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 494942, guid: 340389dc4a4be43999e660bcd54a5881, type: 2}
       propertyPath: m_RootOrder
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 157518, guid: 340389dc4a4be43999e660bcd54a5881, type: 2}
       propertyPath: m_Name
@@ -28092,7 +28072,9 @@ MonoBehaviour:
   pipe02: {fileID: 342841666}
   particleExit: {fileID: 569781248}
   particleMiddle: {fileID: 1914930343}
+  audioHandlerMiddle: {fileID: 1611605620}
   particleRight: {fileID: 509411447}
+  audioHandlerRight: {fileID: 1398528850}
   wind: {fileID: 2143496733}
   mechanism: {fileID: 0}
   particleMiddleChangingSpeed: 1
@@ -34875,6 +34857,59 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e7b3dfc0077f282469a7e710b5ff45f5, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &1398528848
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 1398528849}
+  - 114: {fileID: 1398528850}
+  m_Layer: 0
+  m_Name: AudioRight
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1398528849
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1398528848}
+  m_LocalRotation: {x: 0, y: 0, z: .70710659, w: -.707106948}
+  m_LocalPosition: {x: 10.29, y: 3.42000198, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 342841667}
+  m_RootOrder: 5
+--- !u!114 &1398528850
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1398528848}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db8ec66bee508ec4a8754d0738e984cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  updateAudioClips: 0
+  clips:
+  - clipName: Vento
+    clip: {fileID: 8300000, guid: df144e0116f464b6296425e2bb0d8642, type: 3}
+    loop: 1
+    playOnAwake: 0
+    volume: .699999988
+    pitch: 1
+    distanceDependency: 1
+    maxVolumeDistance: 1
+    zeroVolumeDistance: 1.79999995
+    volumeMultiplier: 1
+    audioSource: {fileID: 0}
+  debugDistance: 0
 --- !u!1001 &1400886960
 Prefab:
   m_ObjectHideFlags: 0
@@ -36340,6 +36375,10 @@ Transform:
 Transform:
   m_PrefabParentObject: {fileID: 457202, guid: 4ba0533d6bcd39a49910406de36bd12e, type: 2}
   m_PrefabInternal: {fileID: 578568179}
+--- !u!4 &1463005189 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 414874, guid: c5f5ff41e58484a44a8efd213aaac312, type: 2}
+  m_PrefabInternal: {fileID: 1861626443}
 --- !u!1 &1468386770
 GameObject:
   m_ObjectHideFlags: 0
@@ -38066,6 +38105,10 @@ Prefab:
       propertyPath: clips.Array.data[0].playOnAwake
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 116938, guid: 70716a4ee8ec0b44f876f75fe9eda518, type: 2}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 70716a4ee8ec0b44f876f75fe9eda518, type: 2}
   m_IsPrefabParent: 0
@@ -39038,6 +39081,59 @@ SpriteRenderer:
 Transform:
   m_PrefabParentObject: {fileID: 460876, guid: 10071f74be532424f827eb82b0ef843d, type: 2}
   m_PrefabInternal: {fileID: 1258917710}
+--- !u!1 &1611605618
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 1611605619}
+  - 114: {fileID: 1611605620}
+  m_Layer: 0
+  m_Name: AudioMiddle
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1611605619
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1611605618}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.38999176, y: 4.0999999, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 775867579}
+  m_RootOrder: 6
+--- !u!114 &1611605620
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1611605618}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db8ec66bee508ec4a8754d0738e984cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  updateAudioClips: 0
+  clips:
+  - clipName: Vento
+    clip: {fileID: 8300000, guid: df144e0116f464b6296425e2bb0d8642, type: 3}
+    loop: 1
+    playOnAwake: 0
+    volume: .699999988
+    pitch: 1
+    distanceDependency: 1
+    maxVolumeDistance: 1.5
+    zeroVolumeDistance: 2.5
+    volumeMultiplier: 1
+    audioSource: {fileID: 0}
+  debugDistance: 1
 --- !u!1001 &1616543071
 Prefab:
   m_ObjectHideFlags: 0
@@ -43661,7 +43757,7 @@ Transform:
   m_LocalScale: {x: .5, y: .5, z: 1}
   m_Children: []
   m_Father: {fileID: 491188897}
-  m_RootOrder: 29
+  m_RootOrder: 28
 --- !u!212 &1839791420
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -43843,7 +43939,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1843304172}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 29.4980545, y: -7.2437973, z: -8}
+  m_LocalPosition: {x: 29.4980545, y: -7.2437973, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1952822025}
@@ -44280,6 +44376,64 @@ SpriteRenderer:
   m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: 931d9f2d5cb21e24b8c51c97fe4b214f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
+--- !u!1001 &1861626443
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 342841667}
+    m_Modifications:
+    - target: {fileID: 414874, guid: c5f5ff41e58484a44a8efd213aaac312, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 8.94638824
+      objectReference: {fileID: 0}
+    - target: {fileID: 414874, guid: c5f5ff41e58484a44a8efd213aaac312, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 3.51999998
+      objectReference: {fileID: 0}
+    - target: {fileID: 414874, guid: c5f5ff41e58484a44a8efd213aaac312, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 414874, guid: c5f5ff41e58484a44a8efd213aaac312, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 414874, guid: c5f5ff41e58484a44a8efd213aaac312, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 414874, guid: c5f5ff41e58484a44a8efd213aaac312, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 414874, guid: c5f5ff41e58484a44a8efd213aaac312, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 414874, guid: c5f5ff41e58484a44a8efd213aaac312, type: 2}
+      propertyPath: m_RootOrder
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6109792, guid: c5f5ff41e58484a44a8efd213aaac312, type: 2}
+      propertyPath: m_Size.x
+      value: 6.84000015
+      objectReference: {fileID: 0}
+    - target: {fileID: 6109792, guid: c5f5ff41e58484a44a8efd213aaac312, type: 2}
+      propertyPath: m_Size.y
+      value: .200000003
+      objectReference: {fileID: 0}
+    - target: {fileID: 6109792, guid: c5f5ff41e58484a44a8efd213aaac312, type: 2}
+      propertyPath: m_Offset.x
+      value: 1.58000004
+      objectReference: {fileID: 0}
+    - target: {fileID: 11486102, guid: c5f5ff41e58484a44a8efd213aaac312, type: 2}
+      propertyPath: soundObject
+      value: 
+      objectReference: {fileID: 1398528848}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: c5f5ff41e58484a44a8efd213aaac312, type: 2}
+  m_IsPrefabParent: 0
 --- !u!4 &1862600916 stripped
 Transform:
   m_PrefabParentObject: {fileID: 453848, guid: 4f8ce935f1493450fb52beeda608187f, type: 2}
@@ -45212,7 +45366,6 @@ GameObject:
   - 4: {fileID: 1914930344}
   - 198: {fileID: 1914930346}
   - 199: {fileID: 1914930345}
-  - 114: {fileID: 1914930347}
   m_Layer: 0
   m_Name: PartMiddle
   m_TagString: Untagged
@@ -46321,30 +46474,6 @@ ParticleSystem:
     subEmitterCollision1: {fileID: 0}
     subEmitterDeath: {fileID: 0}
     subEmitterDeath1: {fileID: 0}
---- !u!114 &1914930347
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1914930343}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: db8ec66bee508ec4a8754d0738e984cc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  updateAudioClips: 0
-  clips:
-  - clipName: Vento
-    clip: {fileID: 8300000, guid: df144e0116f464b6296425e2bb0d8642, type: 3}
-    loop: 1
-    playOnAwake: 0
-    volume: .699999988
-    pitch: 1
-    distanceDependency: 1
-    maxVolumeDistance: 3
-    zeroVolumeDistance: 6
-    volumeMultiplier: 1
-    audioSource: {fileID: 0}
 --- !u!1 &1915653866
 GameObject:
   m_ObjectHideFlags: 0
@@ -47087,6 +47216,7 @@ MonoBehaviour:
     zeroVolumeDistance: 20
     volumeMultiplier: 1
     audioSource: {fileID: 0}
+  debugDistance: 0
 --- !u!1 &1929691681
 GameObject:
   m_ObjectHideFlags: 0

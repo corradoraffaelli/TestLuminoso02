@@ -38,6 +38,8 @@ public class AudioHandler : MonoBehaviour {
 
 	Transform cameraTransform;
 
+	public bool debugDistance = false;
+
 	//public AudioSource audioSource;
 
 	void updateAudioSources()
@@ -185,6 +187,13 @@ public class AudioHandler : MonoBehaviour {
 
 		//float playerDistance = Vector3.Distance(transform.position, GeneralFinder.player.transform.position);
 		float playerDistance = Vector3.Distance(transform.position, cameraPosInScene);
+
+		if (debugDistance)
+		{
+			Debug.Log ("def " + playerDistance);
+			Debug.Log ("camPlayer " + Vector3.Distance(GeneralFinder.player.transform.position, cameraPosInScene));
+		}
+			
 
 		for (int i = 0; i< clips.Length; i++) {
 			if (clips [i] != null && clips[i].audioSource!=null) {
