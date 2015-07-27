@@ -63,6 +63,7 @@ GameObject:
   - 95: {fileID: 9522644}
   - 114: {fileID: 11402882}
   - 114: {fileID: 11414652}
+  - 114: {fileID: 11437846}
   m_Layer: 13
   m_Name: _Enemy - Guard (NEW) - 002
   m_TagString: Enemy
@@ -325,6 +326,54 @@ MonoBehaviour:
   myWeakPoint: {fileID: 0}
   myWeakPointCollider: {fileID: 0}
   instantKill: 0
+  audioHandler: {fileID: 0}
+--- !u!114 &11437846
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 188112}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db8ec66bee508ec4a8754d0738e984cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  updateAudioClips: 0
+  clips:
+  - clipName: Tonfo
+    clip: {fileID: 8300000, guid: 379b314c0fdcd40f1890524a67e13d6f, type: 3}
+    loop: 0
+    playOnAwake: 0
+    volume: 1
+    pitch: 1
+    distanceDependency: 1
+    maxVolumeDistance: 4
+    zeroVolumeDistance: 15
+    volumeMultiplier: 1
+    audioSource: {fileID: 0}
+  - clipName: Morte
+    clip: {fileID: 8300000, guid: a495a0d9b4a7b4d6a9b390935332ed40, type: 3}
+    loop: 0
+    playOnAwake: 0
+    volume: 1
+    pitch: 1
+    distanceDependency: 1
+    maxVolumeDistance: 4
+    zeroVolumeDistance: 15
+    volumeMultiplier: 1
+    audioSource: {fileID: 0}
+  - clipName: Morso
+    clip: {fileID: 8300000, guid: 8507e05f99b4a474aafead6673d4836b, type: 3}
+    loop: 0
+    playOnAwake: 0
+    volume: 1
+    pitch: .5
+    distanceDependency: 1
+    maxVolumeDistance: 4
+    zeroVolumeDistance: 15
+    volumeMultiplier: 1
+    audioSource: {fileID: 0}
+  debugDistance: 0
 --- !u!114 &11447310
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -461,6 +510,10 @@ Prefab:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 0}
+      propertyPath: clips.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
       propertyPath: GroundLayers.m_Bits
       value: 262912
       objectReference: {fileID: 0}
@@ -516,6 +569,50 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: m_Color.g
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: clips.Array.data[2].clipName
+      value: Morso
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: clips.Array.data[3].clipName
+      value: Morso
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: clips.Array.data[3].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 8507e05f99b4a474aafead6673d4836b, type: 3}
+    - target: {fileID: 0}
+      propertyPath: clips.Array.data[3].volume
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: clips.Array.data[3].pitch
+      value: .5
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: clips.Array.data[3].distanceDependency
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: clips.Array.data[3].maxVolumeDistance
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: clips.Array.data[3].zeroVolumeDistance
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: clips.Array.data[3].volumeMultiplier
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: clips.Array.data[2].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 8507e05f99b4a474aafead6673d4836b, type: 3}
+    - target: {fileID: 0}
+      propertyPath: clips.Array.data[2].pitch
+      value: .5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

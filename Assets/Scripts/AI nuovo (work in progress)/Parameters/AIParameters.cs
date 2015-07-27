@@ -67,6 +67,9 @@ public class AIParameters : MonoBehaviour {
 	[HideInInspector]
 	public bool instantKill = false;
 
+	[HideInInspector]
+	public AudioHandler audioHandler;
+
 	void Start(){
 
 		pm = GetComponent<PlayerMovements> ();
@@ -89,6 +92,8 @@ public class AIParameters : MonoBehaviour {
 
 		if(_circleCollider == null)
 			Debug.Log ("ATTENZIONE - circlecollider non trovato da AIParameters");
+
+		audioHandler = GetComponent<AudioHandler> ();
 
 		getMyWeakPoint ();
 

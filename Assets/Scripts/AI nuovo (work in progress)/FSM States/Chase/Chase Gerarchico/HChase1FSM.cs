@@ -455,6 +455,8 @@ public class HCrashChaseFSM : HChase1FSM {
 		//Debug.Log ("udpate CRASSSHHHH");
 		i_move (chaseSpeed);
 
+		audioHandler.playClipByName ("Morso");
+
 		if (isTargetNotInFrontAnymore () && !losingInFront) {
 			
 			lostCor = countDownLostInFront (timeToLoseTarget);

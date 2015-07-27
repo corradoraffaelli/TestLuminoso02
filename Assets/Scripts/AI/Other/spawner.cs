@@ -16,6 +16,8 @@ public class spawner : MonoBehaviour {
 	private GameObject myMold;
 	private string moldName;
 
+	AudioHandler audioHandler;
+
 	public int numberOfAliveEnemies = 1;
 
 	int number = 0;
@@ -23,6 +25,8 @@ public class spawner : MonoBehaviour {
 	void Start () {
 
 		mySR = GetComponent<SpriteRenderer> ();
+
+		audioHandler = GetComponent<AudioHandler> ();
 
 		setSpawnerReference ();
 
@@ -105,6 +109,9 @@ public class spawner : MonoBehaviour {
 				GameObject newGO = Instantiate (myMold);
 				newGO.SetActive (true);
 				newGO.name = moldName + number++;
+
+				if(audioHandler!=null)
+					audioHandler.playClipByName("Spawn");
 
 			}
 

@@ -15,6 +15,24 @@ public abstract class HEnemyStateFSM : HGenericStateFSM {
 
 	#region QUICKOWNREF
 
+	protected AudioHandler audioHandler {
+
+		get{
+			if (par != null) {
+
+				if (par.audioHandler != null) {
+
+					return par.audioHandler;
+
+				}
+
+			}
+
+			return null;
+		}
+
+	}
+
 	protected BoxCollider2D weakPointCollider {
 
 		get {
@@ -277,6 +295,14 @@ public abstract class HEnemyStateFSM : HGenericStateFSM {
 				i_flip();
 				
 			}
+			else {
+				if(audioHandler!=null) {
+					if(needPlayFallSound(c)) {
+						Debug.Log(gameObject.name + "collision con " + c.gameObject.name); 
+						audioHandler.playClipByName("Tonfo");
+					}
+				}
+			}
 		}
 
 	}
@@ -367,6 +393,34 @@ public abstract class HEnemyStateFSM : HGenericStateFSM {
 		}
 		
 		return underMyFeet;
+		
+	}
+
+	protected bool needPlayFallSound(Collision2D c) {
+		
+		GameObject collisionObj = c.gameObject;
+		
+		BoxCollider2D bc = collisionObj.GetComponent<BoxCollider2D> ();
+		
+		ContactPoint2D []contactPoints =  c.contacts;
+
+		//TODO : scorrere tutti i punti?
+		foreach (ContactPoint2D cp in contactPoints) {
+
+			float radius = _circleCollider.radius;
+			
+			if( Mathf.Abs( _circleCollider.bounds.center.x - cp.point.x ) < radius * 0.2f ) {
+				//Debug.Log("ciao0");
+				return true;
+
+			}
+			else {
+				//Debug.Log("ciao1");
+			}
+			
+		}
+		
+		return false;
 		
 	}
 	

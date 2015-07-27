@@ -147,6 +147,9 @@ public class HStunnedFSM : HEnemyStateFSM {
 			_StartCoroutine (stunnedCor);
 		}
 
+		if(audioHandler!=null)
+			audioHandler.playClipByName ("Morte");
+
 	}
 
 	IEnumerator stunnedCountDown() {
@@ -168,6 +171,9 @@ public class HStunnedFSM : HEnemyStateFSM {
 		handleKillo ();
 
 		setDeadLayer ();
+
+		if(audioHandler!=null)
+			audioHandler.playClipByName ("Morte");
 	}
 
 	protected void handleKillo() {

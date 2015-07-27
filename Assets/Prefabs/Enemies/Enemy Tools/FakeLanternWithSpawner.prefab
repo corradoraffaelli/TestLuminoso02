@@ -75,6 +75,7 @@ GameObject:
   - 4: {fileID: 468304}
   - 114: {fileID: 11472118}
   - 212: {fileID: 21238602}
+  - 114: {fileID: 11440550}
   m_Layer: 0
   m_Name: SpawnerObject - 02
   m_TagString: Untagged
@@ -291,7 +292,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 151628}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.35212493, y: 2.05617428, z: 0}
+  m_LocalPosition: {x: 262.799835, y: 55.4536362, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 410036}
@@ -506,6 +507,8 @@ MonoBehaviour:
   disableObject: 0
   intermittance: 0
   disabledByEnemy: 0
+  emitParticles: 0
+  particlesToEnable: {fileID: 0}
   actualState: 1
   continuousFollow: 0
   turningOnTime: 8
@@ -519,6 +522,31 @@ MonoBehaviour:
   enableLantern: 1
   maxClicTime: .600000024
   minClicTime: .0500000007
+--- !u!114 &11440550
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 118220}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db8ec66bee508ec4a8754d0738e984cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  updateAudioClips: 0
+  clips:
+  - clipName: Spawn
+    clip: {fileID: 8300000, guid: 396009d28fc0441abba0042fd7904859, type: 3}
+    loop: 0
+    playOnAwake: 0
+    volume: 1
+    pitch: 1
+    distanceDependency: 1
+    maxVolumeDistance: 4
+    zeroVolumeDistance: 15
+    volumeMultiplier: 1
+    audioSource: {fileID: 0}
+  debugDistance: 0
 --- !u!114 &11464382
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -559,6 +587,7 @@ MonoBehaviour:
     zeroVolumeDistance: 10
     volumeMultiplier: 1
     audioSource: {fileID: 0}
+  debugDistance: 0
 --- !u!114 &11472118
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -594,6 +623,7 @@ MonoBehaviour:
   activeDisabledObject: 1
   indicationScale: 2
   playerColliding: 0
+  debugVar: 0
 --- !u!198 &19844616
 ParticleSystem:
   m_ObjectHideFlags: 1
