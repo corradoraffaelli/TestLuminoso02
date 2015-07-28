@@ -32,6 +32,7 @@ public class AIDumb1 : AIAgent1 {
 
 	}
 
+	/*
 	public void c_instantKill(){
 		
 		//TODO:
@@ -39,5 +40,5 @@ public class AIDumb1 : AIAgent1 {
 		aiParam.instantKill = true;
 
 	}
-
+	*/
 }

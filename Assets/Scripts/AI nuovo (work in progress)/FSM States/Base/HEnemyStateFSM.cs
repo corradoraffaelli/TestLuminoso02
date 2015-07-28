@@ -296,12 +296,14 @@ public abstract class HEnemyStateFSM : HGenericStateFSM {
 				
 			}
 			else {
+				/*
 				if(audioHandler!=null) {
 					if(needPlayFallSound(c)) {
-						Debug.Log(gameObject.name + "collision con " + c.gameObject.name); 
+						//Debug.Log(gameObject.name + "collision con " + c.gameObject.name); 
 						audioHandler.playClipByName("Tonfo");
 					}
 				}
+				*/
 			}
 		}
 
@@ -588,7 +590,7 @@ public abstract class HEnemyStateFSM : HGenericStateFSM {
 	
 	protected IEnumerator checkFlipNeed() {
 
-		Debug.Log ("NEED");
+		//Debug.Log ("NEED");
 
 		Vector3 _prevPosition = transform.position;
 		
