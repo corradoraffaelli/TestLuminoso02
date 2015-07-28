@@ -14,11 +14,13 @@ public class CumulativeAppearTrigger : MonoBehaviour {
 	public GameObject sceneChanger;
 
 	public GameObject[] toAppear;
+	public GameObject[] toDisappear;
 
 	void Start () {
 		if (sceneChanger != null)
 		{
 			sceneChanger.GetComponent<sceneChanger>().toAppear = toAppear;
+			sceneChanger.GetComponent<sceneChanger>().toDisappear = toDisappear;
 		}
 
 		setZeroAlphas();
