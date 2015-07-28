@@ -396,7 +396,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db8ec66bee508ec4a8754d0738e984cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  debug_AUDIO: 0
   updateAudioClips: 0
+  updateAudioClipsAfterDelay: 0
   clips:
   - clipName: DoorUp
     clip: {fileID: 8300000, guid: 9f7d1a55c870f4405b6096e61d2310b6, type: 3}
@@ -424,7 +426,7 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: 7c3bb283628a04b2c9e3367ec6d72edd, type: 3}
     loop: 0
     playOnAwake: 0
-    volume: 1
+    volume: .699999988
     pitch: 1
     distanceDependency: 1
     maxVolumeDistance: 4
@@ -435,13 +437,14 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: b388d3eaa08684215a80995ea50b3590, type: 3}
     loop: 0
     playOnAwake: 0
-    volume: 1
+    volume: .699999988
     pitch: 1
     distanceDependency: 1
     maxVolumeDistance: 4
     zeroVolumeDistance: 13
     volumeMultiplier: 1
     audioSource: {fileID: 0}
+  debugDistance: 0
 --- !u!114 &11495124
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -594,6 +597,14 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: clips.Array.data[3].maxVolumeDistance
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: clips.Array.data[2].volume
+      value: .699999988
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: clips.Array.data[3].volume
+      value: .699999988
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

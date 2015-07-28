@@ -314,7 +314,7 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: 7c3bb283628a04b2c9e3367ec6d72edd, type: 3}
     loop: 0
     playOnAwake: 0
-    volume: 1
+    volume: .699999988
     pitch: 1
     distanceDependency: 1
     maxVolumeDistance: 4
@@ -325,7 +325,7 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: b388d3eaa08684215a80995ea50b3590, type: 3}
     loop: 0
     playOnAwake: 0
-    volume: 1
+    volume: .699999988
     pitch: 1
     distanceDependency: 1
     maxVolumeDistance: 4
@@ -562,6 +562,14 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: clips.Array.data[3].maxVolumeDistance
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: clips.Array.data[2].volume
+      value: .699999988
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: clips.Array.data[3].volume
+      value: .699999988
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
