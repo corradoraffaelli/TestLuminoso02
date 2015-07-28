@@ -338,7 +338,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db8ec66bee508ec4a8754d0738e984cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  updateAudioClips: 1
+  debug_AUDIO: 0
+  updateAudioClips: 0
+  updateAudioClipsAfterDelay: 0
   clips:
   - clipName: Stun
     clip: {fileID: 8300000, guid: 379b314c0fdcd40f1890524a67e13d6f, type: 3}
@@ -616,11 +618,15 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: updateAudioClips
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: clips.Array.data[0].clipName
       value: Stun
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: updateAudioClipsAfterDelay
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
