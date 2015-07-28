@@ -34,7 +34,10 @@ public class WheelDoor : MonoBehaviour {
 
 	bool actualDirectionLeft = true;
 
-	// Update is called once per frame
+	void Start () {
+		audioHandler = GetComponent<AudioHandler>();
+	}
+
 	void Update () {
 		
 		if ((areaEffector == null && windGO != null) || (windGO != null && needToReset))
@@ -159,6 +162,7 @@ public class WheelDoor : MonoBehaviour {
 		if (audioHandler != null)
 		{
 			soundActive = (actualSpeed > Mathf.Abs(stopSoundSpeed));
+
 			if (soundActive != wasSoundActive)
 			{
 				if (soundActive)
@@ -166,7 +170,10 @@ public class WheelDoor : MonoBehaviour {
 					for (int i = 0; i < soundNames.Length; i++)
 					{
 						if (soundNames[i] != null)
+						{
 							audioHandler.playClipByName(soundNames[i]);
+						}
+							
 					}
 				}
 				else
