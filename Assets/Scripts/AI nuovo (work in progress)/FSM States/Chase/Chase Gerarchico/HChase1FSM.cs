@@ -303,6 +303,9 @@ public class HChase1FSM : HEnemyStateFSM {
 
 		}
 
+		weakPointCollider.offset = new Vector2 (0.0f, weakPointCollider.offset.y);
+		weakPointCollider.size = new Vector2 (0.75f, weakPointCollider.size.y);
+
 		//return ob;
 
 	}
@@ -359,7 +362,9 @@ public class HChargeChaseFSM : HChase1FSM {
 
 		yield return new WaitForSeconds((_seconds * 2.0f )/3.0f);
 
-		weakPointCollider.offset = new Vector2 (0.7f, weakPointCollider.offset.y);
+		//weakPointCollider.offset = new Vector2 (0.7f, weakPointCollider.offset.y);
+		weakPointCollider.offset = new Vector2 (0.52f, weakPointCollider.offset.y);
+		weakPointCollider.size = new Vector2 (1.1f, weakPointCollider.size.y);
 
 		yield return new WaitForSeconds((_seconds * 1.0f )/3.0f);
 
@@ -446,7 +451,9 @@ public class HCrashChaseFSM : HChase1FSM {
 		//Debug.Log ("init da " + stateName);
 		i_charged (true);
 
-		weakPointCollider.offset = new Vector2 (0.7f, weakPointCollider.offset.y);
+		//weakPointCollider.offset = new Vector2 (0.7f, weakPointCollider.offset.y);
+		weakPointCollider.offset = new Vector2 (0.52f, weakPointCollider.offset.y);
+		weakPointCollider.size = new Vector2 (1.1f, weakPointCollider.size.y);
 
 	}
 
@@ -495,8 +502,6 @@ public class HCrashChaseFSM : HChase1FSM {
 		_StopCoroutine (lostCor);
 
 		i_charged (false);
-
-		weakPointCollider.offset = new Vector2 (0.0f, weakPointCollider.offset.y);
 
 	}
 

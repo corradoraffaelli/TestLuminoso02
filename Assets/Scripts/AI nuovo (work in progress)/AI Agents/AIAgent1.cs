@@ -105,8 +105,7 @@ public abstract class AIAgent1 : MonoBehaviour {
 	
 	// Use this for initialization
 	protected virtual void Start () {
-		
-		
+
 		par = GetComponent<AIParameters> ();
 		
 		if(par == null)
@@ -119,9 +118,9 @@ public abstract class AIAgent1 : MonoBehaviour {
 		*/
 		
 		activeState.MyHInitialize ();
-		
-	}
 
+	}
+	
 	protected abstract void initializeHStates ();
 
 

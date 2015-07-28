@@ -13,7 +13,7 @@ public class spawner : MonoBehaviour {
 	[Range(0.1f,10.0f)]
 	public float tBeetingSpawn = 2.0f;
 	private SpriteRenderer mySR;
-	private GameObject myMold;
+	public GameObject myMold;
 	private string moldName;
 
 	AudioHandler audioHandler;

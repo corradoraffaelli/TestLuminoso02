@@ -25,7 +25,7 @@ public class TestInformativeManager : MonoBehaviour {
 
 		if (!PlayStatusTracker.inPlay && (GeneralFinder.menuManager.getStatusMenu() || GeneralFinder.informativeManager.invokeWithoutMenu )) {
 
-			Debug.Log("test inform");
+			//Debug.Log("test inform");
 
 			if(GeneralFinder.menuManager.isInformativeCanvasActive() || GeneralFinder.informativeManager.invokeWithoutMenu) {
 
