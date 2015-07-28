@@ -73,6 +73,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db8ec66bee508ec4a8754d0738e984cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  debug_AUDIO: 0
   updateAudioClips: 0
   updateAudioClipsAfterDelay: 0
   clips:
@@ -91,7 +92,7 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: d3493c36e4f414a90b6cde2a0e4a72bb, type: 3}
     loop: 1
     playOnAwake: 0
-    volume: .300000012
+    volume: .200000003
     pitch: 1
     distanceDependency: 1
     maxVolumeDistance: 2
@@ -183,7 +184,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: clips.Array.data[1].volume
-      value: .300000012
+      value: .200000003
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: clips.Array.data[0].pitch
