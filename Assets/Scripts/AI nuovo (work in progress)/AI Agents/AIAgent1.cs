@@ -555,7 +555,7 @@ public abstract class AIAgent1 : MonoBehaviour {
 		//TODO:
 		//makeStateTransition(eMS, enemyMachineState.Stunned);
 		par.instantKill = true;
-		Debug.Log ("killato");
+		//Debug.Log ("killato");
 	}
 
 	

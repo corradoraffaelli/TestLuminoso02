@@ -355,19 +355,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db8ec66bee508ec4a8754d0738e984cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  updateAudioClips: 0
+  updateAudioClips: 1
   clips:
-  - clipName: Tonfo
-    clip: {fileID: 8300000, guid: 379b314c0fdcd40f1890524a67e13d6f, type: 3}
-    loop: 0
-    playOnAwake: 0
-    volume: 1
-    pitch: 1
-    distanceDependency: 1
-    maxVolumeDistance: 4
-    zeroVolumeDistance: 15
-    volumeMultiplier: 1
-    audioSource: {fileID: 0}
   - clipName: Morte
     clip: {fileID: 8300000, guid: a495a0d9b4a7b4d6a9b390935332ed40, type: 3}
     loop: 0
@@ -415,7 +404,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 0}
       propertyPath: clips.Array.size
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: gravityMultiplier
@@ -490,6 +479,22 @@ Prefab:
       propertyPath: clips.Array.data[1].clip
       value: 
       objectReference: {fileID: 8300000, guid: a495a0d9b4a7b4d6a9b390935332ed40, type: 3}
+    - target: {fileID: 0}
+      propertyPath: updateAudioClips
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: clips.Array.data[0].clipName
+      value: Morte
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: clips.Array.data[0].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: a495a0d9b4a7b4d6a9b390935332ed40, type: 3}
+    - target: {fileID: 0}
+      propertyPath: clips.Array.data[1].clipName
+      value: Morte
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 142468}

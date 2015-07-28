@@ -124,13 +124,21 @@ public class HStunnedFSM : HEnemyStateFSM {
 		#endif
 
 		if (_instantKill) {
-			Debug.Log("inin stunn");
+			Debug.Log(gameObject.name + "init stunn");
 			i_stunned (true);
 			
 			handleKillo ();
 			
 			setDeadLayer ();
 			_instantKill = false;
+
+			if (audioHandler != null) {
+				Debug.Log ("SUONO MORTE");
+				audioHandler.playClipByName ("Morte");
+			}
+			else
+				Debug.Log ("audio handler NULL");
+
 
 		}
 		else {
@@ -144,11 +152,16 @@ public class HStunnedFSM : HEnemyStateFSM {
 
 			stunnedCor = stunnedCountDown ();
 
+			if (audioHandler != null) {
+				Debug.Log ("SUONO MORTE");
+				audioHandler.playClipByName ("Stun");
+			}
+			else
+				Debug.Log ("audio handler NULL");
+
 			_StartCoroutine (stunnedCor);
 		}
 
-		if(audioHandler!=null)
-			audioHandler.playClipByName ("Morte");
 
 	}
 
@@ -172,8 +185,11 @@ public class HStunnedFSM : HEnemyStateFSM {
 
 		setDeadLayer ();
 
-		if(audioHandler!=null)
+		if (audioHandler != null)
 			audioHandler.playClipByName ("Morte");
+		else
+			Debug.Log ("audio handler NULL");
+
 	}
 
 	protected void handleKillo() {
