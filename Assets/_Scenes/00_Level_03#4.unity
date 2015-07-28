@@ -7984,6 +7984,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   updateAudioClips: 0
+  updateAudioClipsAfterDelay: 0
   clips:
   - clipName: Tubo
     clip: {fileID: 8300000, guid: 59a05ec88123749b3b27795e68391c2f, type: 3}
@@ -19777,6 +19778,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   updateAudioClips: 0
+  updateAudioClipsAfterDelay: 0
   clips:
   - clipName: TuboGiu
     clip: {fileID: 8300000, guid: da052aaea9f924355ae6d25189b495b3, type: 3}
@@ -24347,11 +24349,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 494942, guid: 340389dc4a4be43999e660bcd54a5881, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 194.020004
+      value: 224
       objectReference: {fileID: 0}
     - target: {fileID: 494942, guid: 340389dc4a4be43999e660bcd54a5881, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -131.710007
+      value: -127.099998
       objectReference: {fileID: 0}
     - target: {fileID: 494942, guid: 340389dc4a4be43999e660bcd54a5881, type: 2}
       propertyPath: m_LocalPosition.z
@@ -24383,7 +24385,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 157518, guid: 340389dc4a4be43999e660bcd54a5881, type: 2}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 21256368, guid: 340389dc4a4be43999e660bcd54a5881, type: 2}
       propertyPath: m_Enabled
@@ -25534,7 +25536,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 157518, guid: 340389dc4a4be43999e660bcd54a5881, type: 2}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 21256368, guid: 340389dc4a4be43999e660bcd54a5881, type: 2}
       propertyPath: m_Enabled
@@ -34921,6 +34923,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   updateAudioClips: 0
+  updateAudioClipsAfterDelay: 0
   clips:
   - clipName: Vento
     clip: {fileID: 8300000, guid: df144e0116f464b6296425e2bb0d8642, type: 3}
@@ -34929,8 +34932,8 @@ MonoBehaviour:
     volume: .699999988
     pitch: 1
     distanceDependency: 1
-    maxVolumeDistance: 1
-    zeroVolumeDistance: 1.79999995
+    maxVolumeDistance: 4
+    zeroVolumeDistance: 7
     volumeMultiplier: 1
     audioSource: {fileID: 0}
   debugDistance: 0
@@ -39149,6 +39152,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   updateAudioClips: 0
+  updateAudioClipsAfterDelay: 0
   clips:
   - clipName: Vento
     clip: {fileID: 8300000, guid: df144e0116f464b6296425e2bb0d8642, type: 3}
@@ -39157,8 +39161,8 @@ MonoBehaviour:
     volume: .699999988
     pitch: 1
     distanceDependency: 1
-    maxVolumeDistance: 1.5
-    zeroVolumeDistance: 2.5
+    maxVolumeDistance: 2
+    zeroVolumeDistance: 5
     volumeMultiplier: 1
     audioSource: {fileID: 0}
   debugDistance: 0
@@ -47237,6 +47241,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   updateAudioClips: 0
+  updateAudioClipsAfterDelay: 0
   clips:
   - clipName: Mare
     clip: {fileID: 8300000, guid: 8b2879948d7fb44fea47c7a7a66a11d5, type: 3}
