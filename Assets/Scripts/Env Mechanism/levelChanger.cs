@@ -82,6 +82,9 @@ public class levelChanger : MonoBehaviour {
 		GeneralFinder.informativeManager.c_saveData();
 		Debug.Log ("salvo");
 
+		if (GeneralFinder.inputKeeper.loadSaveState == InputKeeper.LoadSaveState.Save)
+			saveInput();
+		
 		GeneralFinder.playerMovements.enabled = false;
 		yield return new WaitForSeconds(2.0f);
 
@@ -112,5 +115,10 @@ public class levelChanger : MonoBehaviour {
 		{
 			GeneralFinder.hubLanternControl.saveInfo();
 		}
+	}
+
+	void saveInput()
+	{
+		GeneralFinder.inputKeeper.save();
 	}
 }

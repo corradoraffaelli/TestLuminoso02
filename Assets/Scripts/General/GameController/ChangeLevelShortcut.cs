@@ -140,6 +140,8 @@ public class ChangeLevelShortcut : MonoBehaviour {
 		{
 			saveHubInfos();
 		}
+
+		saveInput();
 	}
 
 	IEnumerator changeScene(string levelName)
@@ -148,5 +150,11 @@ public class ChangeLevelShortcut : MonoBehaviour {
 		yield return new WaitForSeconds(2.0f);
 
 		Application.LoadLevel(levelName);
+	}
+
+	void saveInput()
+	{
+		if (GeneralFinder.inputKeeper.loadSaveState == InputKeeper.LoadSaveState.Save)
+			GeneralFinder.inputKeeper.save();
 	}
 }

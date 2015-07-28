@@ -200,10 +200,12 @@ public class InputKeeper : MonoBehaviour {
 			load ();
 	}
 
+	/*
 	void OnDestroy() {
 		if (loadSaveState == LoadSaveState.Save)
 			save ();
 	}
+	*/
 
 	void Start(){
 		updateFileIndex();
@@ -476,7 +478,7 @@ public class InputKeeper : MonoBehaviour {
 			return;
 	}
 
-	void save()
+	public void save()
 	{
 		BinaryFormatter bf = new BinaryFormatter ();
 

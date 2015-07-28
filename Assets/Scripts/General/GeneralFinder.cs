@@ -33,6 +33,8 @@ public class GeneralFinder : MonoBehaviour {
 	public static HubLadderControl hubLadderControl;
 	public static HubLanternControl hubLanternControl;
 
+	public static InputKeeper inputKeeper;
+
 	// Use this for initialization
 	void Awake () {
 
@@ -81,6 +83,9 @@ public class GeneralFinder : MonoBehaviour {
 			hubLadderControl = hubController.GetComponent<HubLadderControl>();
 			hubLanternControl = hubController.GetComponent<HubLanternControl>();
 		}
+
+		if (controller != null)
+			inputKeeper = controller.GetComponent<InputKeeper>();
 	}
 	
 	// Update is called once per frame
