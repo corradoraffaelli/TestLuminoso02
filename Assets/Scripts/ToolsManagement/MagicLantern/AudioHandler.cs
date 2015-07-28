@@ -32,6 +32,8 @@ public class AudioHandler : MonoBehaviour {
 	}
 
 	public bool updateAudioClips = false;
+	public bool updateAudioClipsAfterDelay = false;
+	int actualDelayNumber = 0;
 
 	[SerializeField]
 	AudioClipGeneral[] clips;
@@ -153,6 +155,22 @@ public class AudioHandler : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		cleanNotPlaying ();
+
+		if (updateAudioClipsAfterDelay)
+		{
+			if (actualDelayNumber == 5)
+			{
+				updateAudioClipsAfterDelay = false;
+				updateAudioClips = true;
+			}
+			else
+			{
+				actualDelayNumber++;
+			}
+		}
+
+
+
 		if (updateAudioClips) {
 			updateAudioSources();
 			updateAudioClips = false;
