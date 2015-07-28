@@ -5,6 +5,7 @@ public class AudioHandler : MonoBehaviour {
 
 	[System.Serializable]
 	public class AudioClipGeneral{
+
 		public string clipName;
 		public AudioClip clip;
 		public bool loop;
@@ -31,6 +32,8 @@ public class AudioHandler : MonoBehaviour {
 		public AudioSource audioSource;
 	}
 
+	public bool debug_AUDIO = false;
+
 	public bool updateAudioClips = false;
 	public bool updateAudioClipsAfterDelay = false;
 	int actualDelayNumber = 0;
@@ -46,16 +49,41 @@ public class AudioHandler : MonoBehaviour {
 
 	void updateAudioSources()
 	{
+
+		if(debug_AUDIO)
+			Debug.Log(gameObject.name + "updateAudioSources");
+
 		AudioSource[] sources = GetComponents<AudioSource> ();
-		for (int i = 0; i<sources.Length; i++)
+		for (int i = 0; i<sources.Length; i++) {
+			if(debug_AUDIO)
+				Debug.Log(gameObject.name + "01 " + i);
 			Destroy (sources [i]);
+		}
+
+		for (int i = 0; i< clips.Length; i++) {
+
+			if (clips[i] != null)
+			{
+				clips[i].audioSource = null;
+
+			}
+
+		}
 
 		for (int i = 0; i< clips.Length; i++)
 		{
+			if(debug_AUDIO)
+				Debug.Log(gameObject.name + "02.1 " + i);
 			if (clips[i] != null)
 			{
-				if (clips[i].audioSource == null)
+
+				if(debug_AUDIO)
+					Debug.Log(gameObject.name + "02.2 " + i);
+				if (clips[i].audioSource == null) {
+					if(debug_AUDIO)
+						Debug.Log(gameObject.name + "02.3 creo audio source " + i);
 					clips[i].audioSource = gameObject.AddComponent<AudioSource>();
+				}
 				clips[i].audioSource.playOnAwake = false;
 				clips[i].audioSource.clip = clips[i].clip;
 				clips[i].audioSource.volume = clips[i].volume;
