@@ -122,7 +122,8 @@ public class sceneChanger : MonoBehaviour {
 			setRespawnPosition();
 
 		//this.gameObject.SetActive(false);
-		audioHandler.playClipByName ("Stella");
+		if (audioHandler != null)
+			audioHandler.playClipByName ("Stella");
 		hideGameObject();
 		needChange = true;
 	}
