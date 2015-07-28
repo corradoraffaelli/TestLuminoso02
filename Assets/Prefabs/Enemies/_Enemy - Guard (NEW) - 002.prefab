@@ -338,7 +338,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db8ec66bee508ec4a8754d0738e984cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  debug_AUDIO: 0
   updateAudioClips: 1
+  updateAudioClipsAfterDelay: 0
   clips:
   - clipName: Stun
     clip: {fileID: 8300000, guid: 379b314c0fdcd40f1890524a67e13d6f, type: 3}
@@ -363,14 +365,14 @@ MonoBehaviour:
     volumeMultiplier: 1
     audioSource: {fileID: 0}
   - clipName: Morso
-    clip: {fileID: 8300000, guid: 8507e05f99b4a474aafead6673d4836b, type: 3}
+    clip: {fileID: 8300000, guid: 09bc0a44e1a55433baa1986bbbe64b8a, type: 3}
     loop: 0
     playOnAwake: 0
-    volume: 1
-    pitch: .5
+    volume: .800000012
+    pitch: 1
     distanceDependency: 1
     maxVolumeDistance: 4
-    zeroVolumeDistance: 15
+    zeroVolumeDistance: 10
     volumeMultiplier: 1
     audioSource: {fileID: 0}
   debugDistance: 0
@@ -609,10 +611,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: clips.Array.data[2].clip
       value: 
-      objectReference: {fileID: 8300000, guid: 8507e05f99b4a474aafead6673d4836b, type: 3}
+      objectReference: {fileID: 8300000, guid: 09bc0a44e1a55433baa1986bbbe64b8a, type: 3}
     - target: {fileID: 0}
       propertyPath: clips.Array.data[2].pitch
-      value: .5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: updateAudioClips
@@ -621,6 +623,18 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: clips.Array.data[0].clipName
       value: Stun
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: clips.Array.data[2].maxVolumeDistance
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: clips.Array.data[2].zeroVolumeDistance
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: clips.Array.data[2].volume
+      value: .800000012
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
