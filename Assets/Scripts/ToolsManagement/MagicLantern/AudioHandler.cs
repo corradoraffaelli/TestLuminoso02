@@ -199,6 +199,17 @@ public class AudioHandler : MonoBehaviour {
 		*/
 	}
 
+	void OnEnable()
+	{
+		if (gameObject.tag == "Enemy")
+			updateAudioClipsAfterDelay = true;
+
+		/*
+		if (updateAudioClipsOnEnable)
+			updateAudioSources();
+		*/
+	}
+
 	void setVolumeByDistance()
 	{
 		Vector3 cameraPosInScene = new Vector3(cameraTransform.position.x, cameraTransform.position.y, 0.0f);
