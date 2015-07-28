@@ -206,6 +206,8 @@ public class InputKeeper : MonoBehaviour {
 	}
 
 	void Start(){
+		updateFileIndex();
+
 		if (debugPath)
 			Debug.Log (Application.persistentDataPath);
 	}
@@ -461,6 +463,17 @@ public class InputKeeper : MonoBehaviour {
 		mousePosition.inputY = Camera.main.ScreenToWorldPoint(Input.mousePosition).y;
 		mousePosition.inputZ = Camera.main.ScreenToWorldPoint(Input.mousePosition).z;
 		*/
+	}
+
+	void updateFileIndex()
+	{
+		if (File.Exists(Application.persistentDataPath + "/" + Application.loadedLevelName +savedButtonFile + savedInputFileIndex+ savedFileExtention))
+		{
+			savedInputFileIndex++;
+			updateFileIndex();
+		}
+		else
+			return;
 	}
 
 	void save()
