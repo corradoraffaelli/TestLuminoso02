@@ -4,7 +4,7 @@ using System.Collections;
 public class TimeSyncronizerInteragible : MonoBehaviour {
 
 	[SerializeField]
-	[Range(5.0f, 200.0f)]
+	[Range(1.0f, 200.0f)]
 	float timeBeforePulse = 10.0f;
 	[SerializeField]
 	[Range(0.05f, 30.0f)]
