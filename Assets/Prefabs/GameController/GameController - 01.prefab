@@ -36,6 +36,7 @@ GameObject:
   - 114: {fileID: 11444634}
   - 114: {fileID: 11441064}
   - 114: {fileID: 11455102}
+  - 114: {fileID: 11401066}
   m_Layer: 0
   m_Name: GameController - 01
   m_TagString: Controller
@@ -68,6 +69,17 @@ Transform:
   - {fileID: 436028}
   m_Father: {fileID: 0}
   m_RootOrder: 0
+--- !u!114 &11401066
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 165342}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 33df71aa7df59b947be4b51eab1e03ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &11402110
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -277,7 +289,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db8ec66bee508ec4a8754d0738e984cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  debug_AUDIO: 0
   updateAudioClips: 0
+  updateAudioClipsAfterDelay: 0
   clips:
   - clipName: UnlockStar
     clip: {fileID: 8300000, guid: 440030d483552134a9b207c0e8c82b77, type: 3}
