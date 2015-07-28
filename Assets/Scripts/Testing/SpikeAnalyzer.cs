@@ -8,6 +8,9 @@ public class SpikeAnalyzer : MonoBehaviour {
 	
 	string directory = "SpikesAnalyzer";
 	string pathFileName = "spikesAnalyzerInfos";
+
+	float lastTime = 0.0f;
+	float timeToTrigger = 1.0f;
 	
 	public enum Type
 	{
@@ -90,9 +93,10 @@ public class SpikeAnalyzer : MonoBehaviour {
 	{
 		if (type == Type.analyzer)
 		{
-			if (other.gameObject.tag == "Player")
+			if (other.gameObject.tag == "Player" && ((Time.time - lastTime) > timeToTrigger))
 			{
 				spikesInfos.enteredTimes++;
+				lastTime = Time.time;
 				//playerColliding = true;
 			}
 		}
