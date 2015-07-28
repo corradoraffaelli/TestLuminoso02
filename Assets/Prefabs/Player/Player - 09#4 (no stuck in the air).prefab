@@ -440,6 +440,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   updateAudioClips: 0
+  updateAudioClipsAfterDelay: 0
   clips:
   - clipName: Salto
     clip: {fileID: 8300000, guid: 552dcbd1a64b9904287c1aabfabe5b75, type: 3}
@@ -500,7 +501,7 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: 4b9a34bb69c7b6f469895280c6f7a627, type: 3}
     loop: 1
     playOnAwake: 0
-    volume: .40200001
+    volume: .230000004
     pitch: .400000006
     distanceDependency: 0
     maxVolumeDistance: 5
@@ -518,6 +519,7 @@ MonoBehaviour:
     zeroVolumeDistance: 10
     volumeMultiplier: 1
     audioSource: {fileID: 0}
+  debugDistance: 0
 --- !u!198 &19846750
 ParticleSystem:
   m_ObjectHideFlags: 1
@@ -1801,6 +1803,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: m_Enabled
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: clips.Array.data[5].volume
+      value: .230000004
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
