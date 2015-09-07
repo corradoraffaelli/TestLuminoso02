@@ -286,8 +286,8 @@ public abstract class HEnemyStateFSM : HGenericStateFSM {
 		
 		if (c.gameObject.tag != "Player") {
 			
-			if(!isUnderMyFeet(c)) {
-				
+			//if(!isUnderMyFeet(c) && !isOneWayPlatform(c)) {
+			if(!isUnderMyFeet(c) && !isCrossable(c)) {
 				#if _DEBUG
 				Debug.Log("Collisione! mi flippo!");
 				#endif
@@ -307,6 +307,33 @@ public abstract class HEnemyStateFSM : HGenericStateFSM {
 			}
 		}
 
+	}
+
+	bool isCrossable(Collision2D c) {
+
+		if (c.gameObject.tag == "Crossable") {
+
+			return true;
+
+		}
+
+		return false;
+	}
+
+	bool isOneWayPlatform(Collision2D c) {
+
+		PlatformEffector2D pe = c.gameObject.GetComponent<PlatformEffector2D> ();
+
+		if (pe != null) {
+
+			return true;
+
+		}
+		else {
+
+			return false;
+
+		}
 	}
 
 	/*
@@ -380,13 +407,14 @@ public abstract class HEnemyStateFSM : HGenericStateFSM {
 
 			if( Mathf.Abs( _circleCollider.bounds.center.x - cp.point.x ) > radius * 0.8f && 
 			    (_circleCollider.bounds.center.y - cp.point.y) < radius * 0.5f ) {
+				//Debug.Log(gameObject.name + " NO SOTTO I MIEI PIEDI! " + c.gameObject.name);
 
 				underMyFeet = false;
 				break;
 
 			}
 			else {
-
+				//Debug.Log(gameObject.name + " SOTTO I MIEI PIEDI!" + c.gameObject.name);
 				underMyFeet = true;
 				break;
 
@@ -397,6 +425,8 @@ public abstract class HEnemyStateFSM : HGenericStateFSM {
 		return underMyFeet;
 		
 	}
+
+
 
 	protected bool needPlayFallSound(Collision2D c) {
 		
@@ -485,12 +515,37 @@ public abstract class HEnemyStateFSM : HGenericStateFSM {
 			
 			//GameObject.FindGameObjectWithTag ("Controller").GetComponent<PlayStatusTracker> ().inPlayMode = false;
 
-			co.gameObject.transform.SendMessage ("c_instantKill");
-			Vector2 dist = co.gameObject.transform.position - transform.position;
-			
-			Rigidbody2D r = co.gameObject.GetComponent<Rigidbody2D>();
-			r.velocity = new Vector2(0.0f, 0.0f);
-			r.AddForce(300.0f*dist.normalized);
+			if(Mathf.Abs(co.transform.localScale.x)<=Mathf.Abs(transform.localScale.x)) {
+				//Debug.Log("AHI ++++++++++++++++++++++" + co.gameObject.name + " " + co.transform.localScale.x + " - " + gameObject.name + " " + transform.localScale.x);
+				co.gameObject.transform.SendMessage ("c_instantKill");
+				Vector2 dist = co.gameObject.transform.position - transform.position;
+				
+				Rigidbody2D r = co.gameObject.GetComponent<Rigidbody2D>();
+				r.velocity = new Vector2(0.0f, 0.0f);
+				r.AddForce(300.0f*dist.normalized);
+			}
+			else {
+
+				_instantKill = true;
+
+			}
+
+			/*
+			if(par.canKillPlayer) {
+				co.gameObject.transform.SendMessage ("c_instantKill");
+				Vector2 dist = co.gameObject.transform.position - transform.position;
+				
+				Rigidbody2D r = co.gameObject.GetComponent<Rigidbody2D>();
+				r.velocity = new Vector2(0.0f, 0.0f);
+				r.AddForce(300.0f*dist.normalized);
+			}
+			else {
+
+				_instantKill = true;
+
+			}
+			*/
+
 			//c_playerStunned(true);
 			//return true;
 		}
@@ -601,7 +656,7 @@ public abstract class HEnemyStateFSM : HGenericStateFSM {
 			Vector3 dist = transform.position - _prevPosition;
 
 			//TODO: valore da verificare se ottimale
-			if(dist.magnitude < 0.05f) {
+			if(dist.magnitude < 0.05f /** transform.localScale.x*/) {
 				#if _MOVEMENT_DEBUG
 				Debug.Log ("FLIPPED");
 				#endif

@@ -19,6 +19,18 @@ public class PlayStatusTracker : MonoBehaviour {
 
 
 	}
+
+	public static void stopTime() {
+
+		PlayStatusTracker.inPlay = false;
+
+	}
+
+	public static void startTime() {
+		
+		PlayStatusTracker.inPlay = true;
+		
+	}
 	
 	// Update is called once per frame
 	void Update () {

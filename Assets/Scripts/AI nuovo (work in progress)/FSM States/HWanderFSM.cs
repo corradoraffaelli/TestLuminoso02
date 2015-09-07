@@ -4,6 +4,7 @@ using System.Collections;
 public class HWanderFSM : HEnemyStateFSM {
 
 	IEnumerator flipNeedCor;
+	bool flipControl=false;
 	Vector3 prevPosition;
 	public int stateStunnedID = -1;
 
@@ -17,10 +18,12 @@ public class HWanderFSM : HEnemyStateFSM {
 		
 	}
 
-	public HWanderFSM(int _stateId, GameObject _gameo, int _hLevel, HEnemyStateFSM _fatherState, AIAgent1 _scriptAIAgent) 
+	public HWanderFSM(int _stateId, GameObject _gameo, int _hLevel, HEnemyStateFSM _fatherState, AIAgent1 _scriptAIAgent, bool _flipControl=false) 
 	: base("Wander", _stateId, _gameo, _hLevel, true, _fatherState, _scriptAIAgent) {
 
 		myInitialize += wanderInitialize;
+
+		flipControl = _flipControl;
 
 		myUpdate += wanderUpdate;
 
@@ -28,7 +31,10 @@ public class HWanderFSM : HEnemyStateFSM {
 		myHandleCollisionEnter += checkKillPlayerCollision;
 
 		initializeWanderParameters ();
+
+		//wanderInitialize ();
 	}
+
 
 	protected void initializeWanderParameters(){
 		
@@ -54,10 +60,11 @@ public class HWanderFSM : HEnemyStateFSM {
 
 	protected void wanderInitialize () {
 
-		//flipNeedCor = checkFlipNeed ();
+		if (flipControl) {
+			flipNeedCor = checkFlipNeed ();
 
-		//_StartCoroutine (flipNeedCor);
-
+			_StartCoroutine (flipNeedCor);
+		}
 	}
 	
 	private bool W2ScheckStunned(){

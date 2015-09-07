@@ -8,12 +8,14 @@ public class AIDumb1 : AIAgent1 {
 	//initializeConditions ();
 
 	AIParameters aiParam;
-	
+
+	public bool flipControl = false;
+
 	protected override void initializeHStates() {
 
 		aiParam = GetComponent<AIParameters> ();
 
-		HWanderFSM hw = new HWanderFSM (0, this.gameObject, 0, null, this);
+		HWanderFSM hw = new HWanderFSM (0, this.gameObject, 0, null, this, flipControl);
 
 		HStunnedFSM hs = new HStunnedFSM (1, this.gameObject, 0, null, this);
 

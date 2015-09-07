@@ -31,6 +31,8 @@ public class AIParameters : MonoBehaviour {
 
 	[SerializeField]
 	public FleeParameters fleeParameters;
+
+	public bool canKillPlayer = true;
 	
 	//NASCOSTI------------------
 
@@ -138,6 +140,11 @@ public class AIParameters : MonoBehaviour {
 
 	}
 
+	public void c_setCanKillPlayer(bool can) {
+
+		canKillPlayer = can;
+
+	}
 
 
 }
