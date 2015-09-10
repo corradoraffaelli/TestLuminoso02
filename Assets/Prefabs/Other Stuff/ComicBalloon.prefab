@@ -113,6 +113,11 @@ MonoBehaviour:
     cornerSprite: {fileID: 21300000, guid: be1d58416a9387f4ba7171fe8b1b96a6, type: 3}
     borderSprite: {fileID: 21300000, guid: 199072e8b0066324b92effe5da208709, type: 3}
     centerSprite: {fileID: 21300000, guid: b5086f2d9b272ff439e7848dff55386c, type: 3}
+  dialogueSrites:
+    dialogueSprite: {fileID: 21300000, guid: 81647298a2133e4438c014f7b5d4d0f3, type: 3}
+    keyboardContinue: {fileID: 21300000, guid: c1abb527179edbc42919ff63d9f4f352, type: 3}
+    controllerContinue: {fileID: 21300000, guid: 83f175e7afa7053478e099a7ec98b3c0,
+      type: 3}
   standardAppear: 1
   appearSpeed: .150000006
   appearing: 1
@@ -159,6 +164,21 @@ Prefab:
       propertyPath: m_FontSize
       value: 40
       objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: dialogueSrites.dialogueSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 81647298a2133e4438c014f7b5d4d0f3,
+        type: 3}
+    - target: {fileID: 0}
+      propertyPath: dialogueSrites.controllerContinue
+      value: 
+      objectReference: {fileID: 21300000, guid: 83f175e7afa7053478e099a7ec98b3c0,
+        type: 3}
+    - target: {fileID: 0}
+      propertyPath: dialogueSrites.keyboardContinue
+      value: 
+      objectReference: {fileID: 21300000, guid: c1abb527179edbc42919ff63d9f4f352,
+        type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 113256}

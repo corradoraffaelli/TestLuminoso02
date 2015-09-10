@@ -5,7 +5,8 @@ public class ComicBalloonManager : MonoBehaviour {
 
 	public enum Type{
 		hint,
-		tutorial
+		tutorial,
+		dialogue
 	}
 
 	Type type = Type.hint;
@@ -20,6 +21,8 @@ public class ComicBalloonManager : MonoBehaviour {
 
 	public string sortingLayerName = "SceneUI";
 	public int sortingLayerInt = 10;
+
+	GameObject objectToFollow;
 
 	[System.Serializable]
 	public class BalloonSprites{
@@ -58,12 +61,24 @@ public class ComicBalloonManager : MonoBehaviour {
 	[SerializeField]
 	TutorialSprites tutorialSprites;
 
+	[System.Serializable]
+	public class DialogueSprites{
+		public Sprite dialogueSprite;
+		public Sprite keyboardContinue;
+		public Sprite controllerContinue;
+	}
+
+	[SerializeField]
+	DialogueSprites dialogueSrites;
+
 	GameObject player;
 	BoxCollider2D boxCollider;
 	TextMesh textMesh;
 
 	GameObject[] spriteOBJGroup;
 	SpriteRenderer[] renderersGroup;
+
+	SpriteRenderer dialogueRenderer;
 
 	GameObject bigCircleOBJ;
 	SpriteRenderer bigCircleRenderer;
@@ -82,9 +97,12 @@ public class ComicBalloonManager : MonoBehaviour {
 
 	void Start () {
 
+		if (objectToFollow == null)
+			objectToFollow = GeneralFinder.player;
+
 		textMesh = GetComponent<TextMesh>();
 		GetComponent<MeshRenderer>().sortingLayerName = sortingLayerName;
-		GetComponent<MeshRenderer>().sortingOrder = sortingLayerInt + 1;
+		GetComponent<MeshRenderer>().sortingOrder = sortingLayerInt + 2;
 
 		if (inputText != null && inputText != "")
 		{
@@ -122,13 +140,13 @@ public class ComicBalloonManager : MonoBehaviour {
 	//allo start, setta la giusta posizione del fumetto
 	void setInitialPosition()
 	{
-		transform.position = new Vector3(player.transform.position.x, player.transform.position.y + positionY, player.transform.position.z -1.0f);
+		transform.position = new Vector3(objectToFollow.transform.position.x, objectToFollow.transform.position.y + positionY, objectToFollow.transform.position.z -1.0f);
 	}
 
 	//chiamato nell'update, permette al fumetto di seguire il player, con un lerp
 	void setPosition()
 	{
-		Vector3 objPosition = new Vector3(player.transform.position.x, player.transform.position.y + positionY, player.transform.position.z -1.0f);
+		Vector3 objPosition = new Vector3(objectToFollow.transform.position.x, objectToFollow.transform.position.y + positionY, objectToFollow.transform.position.z -1.0f);
 		transform.position = Vector3.Lerp(transform.position, objPosition, Time.deltaTime * lerpSpeed);
 	}
 
@@ -137,6 +155,12 @@ public class ComicBalloonManager : MonoBehaviour {
 	{
 		if (verifyIfNull())
 		{
+			//cambiamento momentaneo, dovuto al fatto che almeno per la prima parte,
+			//il balloon del dialogo è uguale a quello dlel'hint
+			bool wasDialogue = (type == Type.dialogue);
+			if (wasDialogue)
+				type = Type.hint;
+
 			//creo un oggetto e lo piazzo al centro, mi serve per calcolare le coordinate necessarie.
 			GameObject centralPiece = new GameObject();
 			centralPiece.transform.localScale = new Vector3(piecesScale, piecesScale, 1.0f);
@@ -276,6 +300,47 @@ public class ComicBalloonManager : MonoBehaviour {
 					}
 				}
 			}
+
+			if (wasDialogue)
+				type = Type.dialogue;
+
+			if (type == Type.dialogue)
+			{
+				//pezzo del fumetto che punta verso chi sta parlando
+				GameObject dialoguePiece = new GameObject();
+				dialoguePiece.transform.parent = transform;
+				dialoguePiece.name = "DialoguePiece";
+
+				dialoguePiece.transform.localScale = new Vector3(piecesScale, piecesScale, 1.0f);
+
+				SpriteRenderer dialogueRenderer = dialoguePiece.AddComponent<SpriteRenderer>();
+				dialogueRenderer.sprite = dialogueSrites.dialogueSprite;
+
+				dialogueRenderer.sortingLayerName = sortingLayerName;
+				dialogueRenderer.sortingOrder = sortingLayerInt + 1;
+
+				Vector3 tempPosition = new Vector3(objectToFollow.transform.position.x + 0.4f, startingPosition.y, startingPosition.z);
+				dialoguePiece.transform.position = tempPosition;
+
+				//indicazione per proseguire
+				GameObject continuePiece = new GameObject();
+				continuePiece.transform.parent = transform;
+				continuePiece.name = "ContinuePiece";
+				
+				continuePiece.transform.localScale = new Vector3(piecesScale, piecesScale, 1.0f);
+				
+				SpriteRenderer continueRenderer = continuePiece.AddComponent<SpriteRenderer>();
+				if (!GeneralFinder.cursorHandler.useController)
+					continueRenderer.sprite = dialogueSrites.keyboardContinue;
+				else
+					continueRenderer.sprite = dialogueSrites.controllerContinue;
+				
+				continueRenderer.sortingLayerName = sortingLayerName;
+				continueRenderer.sortingOrder = sortingLayerInt + 2;
+				
+				Vector3 tempPosition02 = new Vector3(objectToFollow.transform.position.x, startingPosition.y - 0.6f, startingPosition.z);
+				continuePiece.transform.position = tempPosition02;
+			}
 		}
 	}
 
@@ -304,17 +369,17 @@ public class ComicBalloonManager : MonoBehaviour {
 			
 			if (circlesOnRight)
 			{
-				bigCircleOBJ.transform.position = new Vector3(player.transform.position.x + circlesVariables.bigCircleXPosition, 
-				                                              player.transform.position.y + circlesVariables.bigCircleYPosition, player.transform.position.z);
-				smallCircleOBJ.transform.position = new Vector3(player.transform.position.x + circlesVariables.smallCircleXPosition, 
-				                                                player.transform.position.y + circlesVariables.smallCircleYPosition, player.transform.position.z);
+				bigCircleOBJ.transform.position = new Vector3(objectToFollow.transform.position.x + circlesVariables.bigCircleXPosition, 
+				                                              objectToFollow.transform.position.y + circlesVariables.bigCircleYPosition, objectToFollow.transform.position.z);
+				smallCircleOBJ.transform.position = new Vector3(objectToFollow.transform.position.x + circlesVariables.smallCircleXPosition, 
+				                                                objectToFollow.transform.position.y + circlesVariables.smallCircleYPosition, objectToFollow.transform.position.z);
 			}
 			else
 			{
-				bigCircleOBJ.transform.position = new Vector3(player.transform.position.x - circlesVariables.bigCircleXPosition, 
-				                                              player.transform.position.y + circlesVariables.bigCircleYPosition, player.transform.position.z);
-				smallCircleOBJ.transform.position = new Vector3(player.transform.position.x - circlesVariables.smallCircleXPosition, 
-				                                                player.transform.position.y + circlesVariables.smallCircleYPosition, player.transform.position.z);
+				bigCircleOBJ.transform.position = new Vector3(objectToFollow.transform.position.x - circlesVariables.bigCircleXPosition, 
+				                                              objectToFollow.transform.position.y + circlesVariables.bigCircleYPosition, objectToFollow.transform.position.z);
+				smallCircleOBJ.transform.position = new Vector3(objectToFollow.transform.position.x - circlesVariables.smallCircleXPosition, 
+				                                                objectToFollow.transform.position.y + circlesVariables.smallCircleYPosition, objectToFollow.transform.position.z);
 			}
 		}
 
@@ -348,6 +413,11 @@ public class ComicBalloonManager : MonoBehaviour {
 						renderersGroup[i].color = new Color(renderersGroup[i].color.r, renderersGroup[i].color.g, renderersGroup[i].color.b, newAlpha);
 					}
 				}
+			}
+
+			if (type == Type.dialogue && dialogueRenderer != null)
+			{
+				dialogueRenderer.color = new Color(dialogueRenderer.color.r, dialogueRenderer.color.g, dialogueRenderer.color.b, newAlpha);
 			}
 		}
 	}
@@ -402,6 +472,16 @@ public class ComicBalloonManager : MonoBehaviour {
 					lastAppear = Time.time;
 				}
 			}
+			else if (type == Type.dialogue)
+			{
+				if ((Time.time - lastAppear) > appearSpeed)
+				{
+					setBalloonAlpha(1.0f);
+					appearing = false;
+					
+					lastAppear = Time.time;
+				}
+			}
 		}
 	}
 
@@ -443,6 +523,19 @@ public class ComicBalloonManager : MonoBehaviour {
 					disappearing = false;
 					Destroy(gameObject);
 
+					lastDisappear = Time.time;
+				}
+			}
+			else if (type == Type.dialogue)
+			{
+				appearing = false;
+				if ((Time.time - lastDisappear) > appearSpeed)
+				{
+					setBalloonAlpha(0.0f);
+					
+					disappearing = false;
+					Destroy(gameObject);
+					
 					lastDisappear = Time.time;
 				}
 			}
@@ -502,5 +595,10 @@ public class ComicBalloonManager : MonoBehaviour {
 	public void setType (ComicBalloonManager.Type inputType)
 	{
 		type = inputType;
+	}
+
+	public void setObjectToFollow(GameObject inputObject)
+	{
+		objectToFollow = inputObject;
 	}
 }

@@ -35,6 +35,9 @@ public class GeneralFinder : MonoBehaviour {
 
 	public static InputKeeper inputKeeper;
 
+	public static CameraMovements cameraMovements;
+	public static GameObject camera;
+
 	// Use this for initialization
 	void Awake () {
 
@@ -86,6 +89,11 @@ public class GeneralFinder : MonoBehaviour {
 
 		if (controller != null)
 			inputKeeper = controller.GetComponent<InputKeeper>();
+
+		camera = Camera.main.gameObject;
+		if (camera != null) {
+			cameraMovements = camera.GetComponent<CameraMovements>();
+		}
 	}
 	
 	// Update is called once per frame
