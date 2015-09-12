@@ -5,6 +5,9 @@ public class ChangeLevelShortcut : MonoBehaviour {
 
 	public string[] levels;
 
+	bool disableMovements = false;
+	bool disableMovementsOLD = false;
+
 	void Update () {
 		if (levels != null && levels.Length != 0)
 		{
@@ -67,6 +70,16 @@ public class ChangeLevelShortcut : MonoBehaviour {
 				automaticSave();
 				StartCoroutine(changeScene(levels[9]));
 			}	
+
+			if (Input.GetKey(KeyCode.LeftShift) && Input.GetKey(KeyCode.X))
+			{
+				disableMovements = true;
+			}	
+			else
+			{
+				disableMovements = false;
+			}
+			playermovementsHandler();
 		}
 
 		//shortcut uccisione player
@@ -156,5 +169,35 @@ public class ChangeLevelShortcut : MonoBehaviour {
 	{
 		if (GeneralFinder.inputKeeper.loadSaveState == InputKeeper.LoadSaveState.Save)
 			GeneralFinder.inputKeeper.save();
+	}
+
+	void playermovementsHandler()
+	{
+		if (disableMovements != disableMovementsOLD) {
+			//disabilita/abilita i movimenti standard
+			GeneralFinder.playerMovements.enabled = !disableMovements;
+
+			//disabilita/abilita i collider del player
+			Collider2D[] colliders = GeneralFinder.player.GetComponents<Collider2D>();
+			for (int i = 0; i < colliders.Length; i++)
+			{
+				colliders[i].enabled = !disableMovements;
+			}
+
+			//disabilita/abilita il rigidbody del player
+			Rigidbody2D rigidbody = GeneralFinder.player.GetComponent<Rigidbody2D>();
+			rigidbody.isKinematic = disableMovements;
+		}
+
+		if (disableMovements) {
+			float xInput = Input.GetAxis("Horizontal");
+			float yInput = Input.GetAxis("Vertical");
+
+			Vector3 actPos = GeneralFinder.player.transform.position;
+			Vector3 newPos = new Vector3(actPos.x + Time.deltaTime*10.0f*xInput, actPos.y + Time.deltaTime*10.0f*yInput, actPos.z);
+			GeneralFinder.player.transform.position = newPos;
+		}
+
+		disableMovementsOLD = disableMovements;
 	}
 }
