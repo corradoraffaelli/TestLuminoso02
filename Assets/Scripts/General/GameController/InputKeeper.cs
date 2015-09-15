@@ -438,6 +438,28 @@ public class InputKeeper : MonoBehaviour {
 					inputButtons[i].buttonUp = true;
 				else
 					inputButtons[i].buttonUp = false;
+
+				//MODIFICA PER PERMETTERE CHE LA LANTERNA VENGA USATA ANCHE COL TASTO SINISTRO
+				/*
+				if (inputButtons[i].name == "Mira")
+				{
+					if (Input.GetKey(KeyCode.Mouse0))
+						inputButtons[i].buttonStay = true;
+					if (Input.GetKeyUp(KeyCode.Mouse0))
+						inputButtons[i].buttonUp = true;
+					if (Input.GetKeyDown(KeyCode.Mouse0))
+						inputButtons[i].buttonDown = true;
+				}
+				*/
+				if (inputButtons[i].name == "PickLantern")
+				{
+					inputButtons[i].buttonStay = false;
+					inputButtons[i].buttonUp = false;
+					inputButtons[i].buttonDown = false;
+
+				}
+
+
 			}
 		}
 	}
@@ -537,12 +559,26 @@ public class InputKeeper : MonoBehaviour {
 		for (int i = 0; i< inputButtons.Length; i++) {
 			if (inputButtons[i] != null && inputButtons[i].name == buttonName && inputButtons[i].name!="")
 			{
+				//CONTIENE UNA MODIFICA PER PERMETTERE L'UTILIZZO DEL TASTO SINISTRO DEL MOUSE, COME IL DESTRO
+				//LA VERSIONE COMMENTATA E' QUELLA VECCHIA
+				/*
 				if (Input.GetButton(inputButtons[i].name) != inputButtons[i].buttonStay)
 					return true;
 
 				if (Input.GetButtonUp(inputButtons[i].name) != inputButtons[i].buttonUp)
 					return true;
 
+				if (Input.GetButtonDown(inputButtons[i].name) != inputButtons[i].buttonDown)
+					return true;
+				break;
+				*/
+
+				if (Input.GetButton(inputButtons[i].name) != inputButtons[i].buttonStay)
+					return true;
+				
+				if (Input.GetButtonUp(inputButtons[i].name) != inputButtons[i].buttonUp)
+					return true;
+				
 				if (Input.GetButtonDown(inputButtons[i].name) != inputButtons[i].buttonDown)
 					return true;
 				break;
