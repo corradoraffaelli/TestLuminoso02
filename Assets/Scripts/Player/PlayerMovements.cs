@@ -238,8 +238,13 @@ public class PlayerMovements : MonoBehaviour {
 
 	public PlayerFeatures hugePlayerFeatures;
 
+	public PlayerFeatures activePlayerFeatures;
+
 	void Start () {
 		//HERE...
+
+
+
 		if (AIControl) {
 			/*
 			ai_par = GetComponent<AIParameters>();
@@ -276,6 +281,7 @@ public class PlayerMovements : MonoBehaviour {
 		standardGravity = RigBody.gravityScale;
 
 
+		initNormalPlayerFeatures ();
 
 		/*
 		foreach (Transform child in transform) {
@@ -290,6 +296,18 @@ public class PlayerMovements : MonoBehaviour {
 		if (warning)
 			Debug.Log ("attenzione, manca un oggetto stunning sotto il player");
 		*/
+	}
+
+	void initNormalPlayerFeatures() {
+
+		activePlayerFeatures = normalePlayerFeatures;
+		
+		normalePlayerFeatures.jumpFactor = jumpFactor;
+		
+		normalePlayerFeatures.speedFactor = speedFactor;
+		
+		normalePlayerFeatures.scaleFactor = Mathf.Abs(transform.localScale.x);
+
 	}
 
 	private void getMagicLanternLogic()
@@ -1492,16 +1510,75 @@ public class PlayerMovements : MonoBehaviour {
 
 	}
 
+	public void c_setPlayerMovementsFeatures(bool greater ) {
+
+		if (greater) {
+
+			if(activePlayerFeatures== normalePlayerFeatures) {
+
+				changePlayerMovementsFeatures(hugePlayerFeatures);
+
+			}
+			else if(activePlayerFeatures== miniPlayerFeatures) {
+
+				changePlayerMovementsFeatures(normalePlayerFeatures);
+
+			}
+
+		} else {
+
+			if(activePlayerFeatures== normalePlayerFeatures) {
+
+				changePlayerMovementsFeatures(miniPlayerFeatures);
+
+			}
+			else if(activePlayerFeatures== hugePlayerFeatures) {
+
+				changePlayerMovementsFeatures(normalePlayerFeatures);
+				
+			}
+
+
+		}
+
+	}
+
+	void changePlayerMovementsFeatures(PlayerFeatures features) {
+
+		float playerVerse = 1.0f;
+
+		if (gameObject.transform.localScale.x < 0.0f) {
+
+			playerVerse = -1.0f;
+
+		}
+
+		if(features.scaleFactor!=0.0f)
+			gameObject.transform.localScale = new Vector3 (features.scaleFactor * playerVerse, features.scaleFactor, features.scaleFactor);
+
+		if(features.jumpFactor!=0.0f)
+			jumpFactor = features.jumpFactor;
+
+		if(features.speedFactor!=0.0f)
+			speedFactor = features.speedFactor;
+
+
+		activePlayerFeatures = features;
+
+	}
+
 }
 
 [System.Serializable]
 public class PlayerFeatures {
 
+	public float scaleFactor;
 	public float jumpFactor;
 	public float speedFactor;
 
-	public PlayerFeatures(float _jumpFactor, float _speedFactor) {
+	public PlayerFeatures(float _scaleFactor, float _jumpFactor, float _speedFactor) {
 
+		scaleFactor = _scaleFactor;
 		jumpFactor = _jumpFactor;
 		speedFactor = _speedFactor;
 

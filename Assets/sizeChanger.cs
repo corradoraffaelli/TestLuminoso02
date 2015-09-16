@@ -43,8 +43,38 @@ public class sizeChanger : MonoBehaviour {
 		if (c.tag == "Enemy" || c.tag == "Player") {
 			if (givePush) {
 			
-				c.attachedRigidbody.AddForce (Vector2.up * forceToApply);
-			
+				//c.attachedRigidbody.AddForce (Vector2.up * forceToApply);
+				//c.attachedRigidbody.AddForce (
+				//Vector3 dir = transform.TransformDirection(transform.localPosition);
+
+				Transform par = transform.parent;
+
+				//float zRot = par.localRotation.eulerAngles.z;
+				//Vector3 basicDirection = Vector3.up;
+
+				Vector3 vector = Quaternion.Euler(0, 0, par.localEulerAngles.z) * Vector3.up;
+				/*
+				float angle = par.eulerAngles.z * Mathf.Deg2Rad;
+				float sin = Mathf.Sin( angle );
+				float cos = Mathf.Cos( angle );
+				
+				Vector3 forward = new Vector3(
+					direction.x * cos - direction.y * sin,
+					direction.x * sin + direction.y * cos,
+					0f );
+
+				//Vector3 finalVerse = transform.TransformDirection(forward);
+
+				forward = forward.normalized;
+				*/
+
+				vector = vector.normalized;
+
+				c.attachedRigidbody.AddForce (vector * forceToApply);
+
+
+				Debug.Log(vector.x + " " + vector.y +  " " + vector.z);
+
 			}
 		}
 	}
@@ -52,6 +82,7 @@ public class sizeChanger : MonoBehaviour {
 	public void OnTriggerExit2D(Collider2D c) {
 
 		float factor = 1.0f;
+		bool greater = false;
 
 		if (prevGameObject != null) {
 
@@ -67,20 +98,24 @@ public class sizeChanger : MonoBehaviour {
 			case(sizeChangement.Smaller):
 
 				factor = 0.5f;
-
+				greater = false;
 				break;
 
 
 			case(sizeChangement.Bigger):
 				
 				factor = 2.0f;
-				
+				greater = true;
 				break;
 			}
 
-			c.transform.localScale = new Vector3(c.transform.localScale.x*factor, c.transform.localScale.y*factor, c.transform.localScale.z*factor);
+			c.gameObject.SendMessage("c_setPlayerMovementsFeatures", greater);
 
-			setEnemyFeatures (c, factor);
+			if(c.tag == "Enemy") {
+
+				setEnemyKillFeature (c, factor);
+
+			}
 
 
 			StartCoroutine (checkingCollider (c));
@@ -90,7 +125,7 @@ public class sizeChanger : MonoBehaviour {
 
 	}
 
-	void setEnemyFeatures(Collider2D c, float factor) {
+	void setEnemyKillFeature(Collider2D c, float factor) {
 
 		if(c.transform.localScale.x<1.0f) {
 			
