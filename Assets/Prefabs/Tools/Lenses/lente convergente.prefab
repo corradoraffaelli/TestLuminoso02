@@ -1,5 +1,20 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &107342
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 491388}
+  m_Layer: 8
+  m_Name: ExitPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 1638116407661442457, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &128028
 GameObject:
   m_ObjectHideFlags: 0
@@ -33,6 +48,21 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &172658
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 403490}
+  m_Layer: 8
+  m_Name: EntrancePoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 5228209130450103505, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &175928
 GameObject:
   m_ObjectHideFlags: 0
@@ -50,6 +80,18 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!4 &403490
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 172658}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -.370000005, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 418484}
+  m_RootOrder: 2
 --- !u!4 &418484
 Transform:
   m_ObjectHideFlags: 1
@@ -57,11 +99,13 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 128028}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 229.399994, y: 71.7419968, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 8.72000027, y: 1.48000002, z: 0}
+  m_LocalScale: {x: 1.78999996, y: 2, z: 1}
   m_Children:
   - {fileID: 475574}
   - {fileID: 495570}
+  - {fileID: 403490}
+  - {fileID: 491388}
   m_Father: {fileID: 0}
   m_RootOrder: 0
 --- !u!4 &475574
@@ -76,6 +120,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 418484}
   m_RootOrder: 0
+--- !u!4 &491388
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 107342}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: .319999993, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 418484}
+  m_RootOrder: 3
 --- !u!4 &495570
 Transform:
   m_ObjectHideFlags: 1
@@ -128,7 +184,9 @@ MonoBehaviour:
   changement: 0
   prevGameObject: {fileID: 0}
   givePush: 0
-  forceToApply: 50
+  forceToApply: 30
+  EntrancePoint: {fileID: 172658}
+  ExitPoint: {fileID: 107342}
 --- !u!212 &21276950
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -201,6 +259,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: m_TagString
       value: Crossable
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: givePush
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

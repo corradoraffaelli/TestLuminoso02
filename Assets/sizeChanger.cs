@@ -16,22 +16,19 @@ public class sizeChanger : MonoBehaviour {
 
 	public float forceToApply = 50.0f;
 
-	bool inTime = false;
+	public GameObject EntrancePoint;
+	public GameObject ExitPoint;
+
+	bool tooEarly = false;
 	float lastTime = 0.0f;
 	float timeDiff = 0.5f;
 
-	void controlInTime()
-	{
-		if (inTime) {
-			if ((Time.time - lastTime) > timeDiff)
-				inTime = false;
-		}
-	}
+
 
 
 	// Use this for initialization
 	void Start () {
-	
+		
 	}
 	
 	// Update is called once per frame
@@ -92,12 +89,12 @@ public class sizeChanger : MonoBehaviour {
 		}
 	}
 
-	void OnTriggerexit2D()
+
+	void controlInTime()
 	{
-		if (!inTime) {
-			inTime = true;
-			lastTime = Time.time;
-			//ALTRA RObA CHE DEVE FARE
+		if (tooEarly) {
+			if ((Time.time - lastTime) > timeDiff)
+				tooEarly = false;
 		}
 	}
 
@@ -106,33 +103,37 @@ public class sizeChanger : MonoBehaviour {
 		float factor = 1.0f;
 		bool greater = false;
 
-		if (!inTime) {
-			inTime = true;
-			lastTime = Time.time;
-			//ALTRA RObA CHE DEVE FARE
-		}
-		else {
-			return;
-		}
-		/*
-		if (prevGameObject != null) {
 
-			if (prevGameObject == c.gameObject) {
-				Debug.Log("ECCOOOOOOOOOOOOOOOOOOOOOOO");
+		if (ExitPoint != null && EntrancePoint != null) {
+
+			Vector2 collV = new Vector2(c.gameObject.transform.position.x, c.gameObject.transform.position.y);
+
+			Vector2 entranceV = new Vector2(EntrancePoint.transform.position.x,EntrancePoint.transform.position.y);
+
+			Vector2 exitV = new Vector2(ExitPoint.transform.position.x,ExitPoint.transform.position.y);
+
+			if( Mathf.Abs( Vector2.Distance(collV, exitV) ) > Mathf.Abs( Vector2.Distance(collV, entranceV) ) ) {
+
 				return;
+
 			}
 			else {
-				Debug.Log("ECCAAAAAAAAAAAAAAAAAAAAAAA");
+
+				//Debug.Log("ahi1 - collV e exitV" + Mathf.Abs( Vector2.Distance(collV, exitV) ) + " ---  collV e entranceV " + Mathf.Abs( Vector2.Distance(collV, entranceV) ) );
 
 			}
-		
+
 		}
 		else {
 
-			Debug.Log("ECCUUUUUUUUUUUUUUU");
-
 		}
-		*/
+
+		if (tooEarly) {
+			return;
+		}
+
+		tooEarly = true;
+		lastTime = Time.time;
 
 		if (c.tag == "Enemy" || c.tag == "Player") {
 

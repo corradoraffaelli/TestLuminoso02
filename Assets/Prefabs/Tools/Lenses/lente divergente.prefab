@@ -8,12 +8,42 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 436284}
-  - 61: {fileID: 6149512}
-  - 251: {fileID: 25106230}
+  - 61: {fileID: 6161992}
+  - 251: {fileID: 25140434}
   m_Layer: 8
   m_Name: lente divergente
   m_TagString: Crossable
   m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &127952
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 462638}
+  m_Layer: 8
+  m_Name: EntrancePoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 5228209130450103505, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &174404
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 478038}
+  m_Layer: 8
+  m_Name: ExitPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 1638116407661442457, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -25,8 +55,8 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 424370}
-  - 61: {fileID: 6146680}
   - 114: {fileID: 11408244}
+  - 61: {fileID: 6184186}
   m_Layer: 8
   m_Name: sizeChanger
   m_TagString: Untagged
@@ -68,14 +98,28 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 115774}
-  m_LocalRotation: {x: 0, y: 0, z: .70710659, w: -.707106948}
-  m_LocalPosition: {x: 1.95941162, y: 2.75999832, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: 0, y: 0, z: -.707106829, w: .707106709}
+  m_LocalPosition: {x: -117.220955, y: 13.8678532, z: 0}
+  m_LocalScale: {x: .699999988, y: .699999988, z: 1}
   m_Children:
   - {fileID: 424370}
   - {fileID: 463976}
+  - {fileID: 478038}
+  - {fileID: 462638}
   m_Father: {fileID: 0}
   m_RootOrder: 0
+--- !u!4 &462638
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 127952}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -1, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 436284}
+  m_RootOrder: 3
 --- !u!4 &463976
 Transform:
   m_ObjectHideFlags: 1
@@ -88,20 +132,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 436284}
   m_RootOrder: 1
---- !u!61 &6146680
-BoxCollider2D:
+--- !u!4 &478038
+Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 191304}
-  m_Enabled: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Size: {x: 1.36000001, y: .100000001}
---- !u!61 &6149512
+  m_GameObject: {fileID: 174404}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 436284}
+  m_RootOrder: 2
+--- !u!61 &6161992
 BoxCollider2D:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -113,7 +156,20 @@ BoxCollider2D:
   m_UsedByEffector: 1
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Size: {x: 1.38999999, y: .400000006}
+  m_Size: {x: 1.38999999, y: .610000014}
+--- !u!61 &6184186
+BoxCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 191304}
+  m_Enabled: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Size: {x: 1.15999997, y: .100000001}
 --- !u!114 &11408244
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -128,7 +184,9 @@ MonoBehaviour:
   changement: 1
   prevGameObject: {fileID: 0}
   givePush: 0
-  forceToApply: 50
+  forceToApply: 1000
+  EntrancePoint: {fileID: 127952}
+  ExitPoint: {fileID: 174404}
 --- !u!212 &21278128
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -155,7 +213,7 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: b48c09debc1ed4f70a4ad9b46c8ae970, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
---- !u!251 &25106230
+--- !u!251 &25140434
 PlatformEffector2D:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
