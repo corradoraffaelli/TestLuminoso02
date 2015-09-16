@@ -84,6 +84,12 @@ public class InteragibileObject : MonoBehaviour {
 
 	}
 
+	public void c_setPlayerColliding(bool value) {
+
+		playerColliding = value;
+
+	}
+
 	void OnTriggerStay2D(Collider2D other)
 	{
 		if (other.gameObject.tag.ToString() == "Player")
