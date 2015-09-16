@@ -67,7 +67,29 @@ public class ControllerVerifyButtons : MonoBehaviour {
 				
 		}
 
+		if (Input.GetAxis("Horizontal") > 0.7f)
+		{
+			//if (i != 5)
+			Debug.Log ("AxisHorizontal pos");
+		}
 
+		if (Input.GetAxis("Horizontal") < -0.7f)
+		{
+			//if (i != 5)
+			Debug.Log ("AxisHorizontal neg");
+		}
+
+		if (Input.GetAxis("Vertical") > 0.7f)
+		{
+			//if (i != 5)
+			Debug.Log ("AxisVertical pos");
+		}
+		
+		if (Input.GetAxis("Vertical") < -0.7f)
+		{
+			//if (i != 5)
+			Debug.Log ("AxisVertical neg");
+		}
 
 	}
 }
