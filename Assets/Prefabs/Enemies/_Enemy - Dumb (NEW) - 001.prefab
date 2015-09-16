@@ -254,6 +254,18 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   respawnPoint: {fileID: 0}
+  miniPlayerFeatures:
+    scaleFactor: .5
+    jumpFactor: 1
+    speedFactor: 1
+  normalePlayerFeatures:
+    scaleFactor: 1
+    jumpFactor: 1
+    speedFactor: 1
+  hugePlayerFeatures:
+    scaleFactor: 2
+    jumpFactor: 1
+    speedFactor: 1
 --- !u!114 &11424252
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -305,6 +317,7 @@ MonoBehaviour:
   fleeParameters:
     fleeSpeed: 6
     fleeTarget: {fileID: 0}
+  canKillPlayer: 1
   stunnedReceived: 0
   _target: {fileID: 0}
   _fleeTarget: {fileID: 0}
@@ -328,6 +341,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7cf49bee90ace4acb863c993f1f95ce5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  flipControl: 0
 --- !u!114 &11438072
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -355,7 +369,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db8ec66bee508ec4a8754d0738e984cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  debug_AUDIO: 0
   updateAudioClips: 1
+  updateAudioClipsAfterDelay: 0
   clips:
   - clipName: Morte
     clip: {fileID: 8300000, guid: a495a0d9b4a7b4d6a9b390935332ed40, type: 3}
@@ -494,6 +510,42 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: clips.Array.data[1].clipName
       value: Morte
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: miniPlayerFeatures.scaleFactor
+      value: .5
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: miniPlayerFeatures.jumpFactor
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: miniPlayerFeatures.speedFactor
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: normalePlayerFeatures.scaleFactor
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: normalePlayerFeatures.jumpFactor
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: normalePlayerFeatures.speedFactor
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: hugePlayerFeatures.scaleFactor
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: hugePlayerFeatures.jumpFactor
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: hugePlayerFeatures.speedFactor
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

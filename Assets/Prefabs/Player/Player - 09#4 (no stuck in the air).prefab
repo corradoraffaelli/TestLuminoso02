@@ -428,6 +428,18 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 2048
   respawnPoint: {fileID: 0}
+  miniPlayerFeatures:
+    scaleFactor: .5
+    jumpFactor: 3
+    speedFactor: 4
+  normalePlayerFeatures:
+    scaleFactor: 0
+    jumpFactor: 0
+    speedFactor: 0
+  hugePlayerFeatures:
+    scaleFactor: 2
+    jumpFactor: 4
+    speedFactor: 5
 --- !u!114 &11482596
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -439,6 +451,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db8ec66bee508ec4a8754d0738e984cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  debug_AUDIO: 0
   updateAudioClips: 0
   updateAudioClipsAfterDelay: 0
   clips:
@@ -1807,6 +1820,30 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: clips.Array.data[5].volume
       value: .230000004
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: hugePlayerFeatures.scaleFactor
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: hugePlayerFeatures.jumpFactor
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: hugePlayerFeatures.speedFactor
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: miniPlayerFeatures.scaleFactor
+      value: .5
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: miniPlayerFeatures.jumpFactor
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: miniPlayerFeatures.speedFactor
+      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

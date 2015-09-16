@@ -16,6 +16,19 @@ public class sizeChanger : MonoBehaviour {
 
 	public float forceToApply = 50.0f;
 
+	bool inTime = false;
+	float lastTime = 0.0f;
+	float timeDiff = 0.5f;
+
+	void controlInTime()
+	{
+		if (inTime) {
+			if ((Time.time - lastTime) > timeDiff)
+				inTime = false;
+		}
+	}
+
+
 	// Use this for initialization
 	void Start () {
 	
@@ -23,15 +36,15 @@ public class sizeChanger : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	
+		controlInTime ();
 	}
 
 	IEnumerator checkingCollider(Collider2D c) {
 
-		prevGameObject = c.gameObject;
-		GameObject prevGameObjectTemp = prevGameObject;
+		//prevGameObject = c.gameObject;
+		GameObject prevGameObjectTemp = c.gameObject;
 
-		yield return new WaitForSeconds (2.0f);
+		yield return new WaitForSeconds (5.0f);
 
 		if(prevGameObjectTemp==prevGameObject)
 			prevGameObject = null;
@@ -79,17 +92,47 @@ public class sizeChanger : MonoBehaviour {
 		}
 	}
 
+	void OnTriggerexit2D()
+	{
+		if (!inTime) {
+			inTime = true;
+			lastTime = Time.time;
+			//ALTRA RObA CHE DEVE FARE
+		}
+	}
+
 	public void OnTriggerExit2D(Collider2D c) {
 
 		float factor = 1.0f;
 		bool greater = false;
 
+		if (!inTime) {
+			inTime = true;
+			lastTime = Time.time;
+			//ALTRA RObA CHE DEVE FARE
+		}
+		else {
+			return;
+		}
+		/*
 		if (prevGameObject != null) {
 
-			if (prevGameObject == c.gameObject)
+			if (prevGameObject == c.gameObject) {
+				Debug.Log("ECCOOOOOOOOOOOOOOOOOOOOOOO");
 				return;
+			}
+			else {
+				Debug.Log("ECCAAAAAAAAAAAAAAAAAAAAAAA");
+
+			}
+		
+		}
+		else {
+
+			Debug.Log("ECCUUUUUUUUUUUUUUU");
 
 		}
+		*/
 
 		if (c.tag == "Enemy" || c.tag == "Player") {
 
@@ -117,7 +160,8 @@ public class sizeChanger : MonoBehaviour {
 
 			}
 
-
+			Debug.Log("cambio " + c.gameObject.name);
+			prevGameObject = c.gameObject;
 			StartCoroutine (checkingCollider (c));
 
 		}

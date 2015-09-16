@@ -238,7 +238,7 @@ public class PlayerMovements : MonoBehaviour {
 
 	public PlayerFeatures hugePlayerFeatures;
 
-	public PlayerFeatures activePlayerFeatures;
+	PlayerFeatures activePlayerFeatures;
 
 	void Start () {
 		//HERE...
