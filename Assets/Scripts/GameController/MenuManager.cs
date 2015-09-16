@@ -365,8 +365,10 @@ public class MenuManager : MonoBehaviour {
 				GeneralFinder.unlockableContentUI.stopPulsing();
 
 				GeneralFinder.informativeManager.fillNavigation ();
-				GeneralFinder.informativeManager.fillMultimedia();
-				GeneralFinder.informativeManager.fillDetail();
+
+				GeneralFinder.informativeManager.fillMultimediaAndDetails();
+				//GeneralFinder.informativeManager.fillMultimedia();
+				//GeneralFinder.informativeManager.fillDetail();
 
 			}
 

@@ -6,12 +6,15 @@ public class TestInformativeManager : MonoBehaviour {
 
 	int activeSection = -1;
 	int activeContent = -1;
-	int activeImage = -1;
+	int activeSubContent = -1;
+	//int activeImage = -1;
 
 	public float sogliaConteggio = 2.0f;
 
 	DateTime startContentTime;
-	DateTime startImageTime;
+	//DateTime startImageTime;
+	DateTime startSubContentTime;
+
 
 	//TODO: eventuali controlli su inattività utente
 
@@ -31,23 +34,25 @@ public class TestInformativeManager : MonoBehaviour {
 
 				int newActSect = GeneralFinder.informativeManager.ActiveSection;
 				int newActCont = GeneralFinder.informativeManager.sections[newActSect].activeContent;
-				int newActImg = GeneralFinder.informativeManager.sections[GeneralFinder.informativeManager.ActiveSection].contents[newActCont].mainImageIndex;
+				int newActSubCont = GeneralFinder.informativeManager.sections[GeneralFinder.informativeManager.ActiveSection].contents[newActCont].activeSubContentIndex;
 
 
 				if(activeSection!= newActSect || activeContent!= newActCont) {
 
-					changeContentTimer(newActSect, newActCont, newActImg);
+					changeContentTimer(newActSect, newActCont, newActSubCont);
 
 				}
 				else {
 
 					if(activeSection== newActSect && 
 					   activeContent== newActCont &&
-					   activeImage != newActImg ) {
+					   activeSubContent != newActSubCont ) {
 
 						//TODO:
 						//controllo su immagini
-						changeImageTimer(newActImg);
+						//changeImageTimer(newActImg);
+
+						changeSubContentTimer(newActSubCont);
 					}
 
 
@@ -59,7 +64,7 @@ public class TestInformativeManager : MonoBehaviour {
 			else {
 
 				if(activeSection != -1) {
-					stopRecord(activeSection, activeContent, activeImage);
+					stopRecord(activeSection, activeContent, activeSubContent);
 					resetIndexes();
 				}
 
@@ -71,7 +76,7 @@ public class TestInformativeManager : MonoBehaviour {
 			//TODO : nulla qui, no?
 			//metto ulteriore controllo, ma non dovrebbe servire
 			if(activeSection != -1) {
-				stopRecord(activeSection, activeContent, activeImage);
+				stopRecord(activeSection, activeContent, activeSubContent);
 				resetIndexes();
 			}
 
@@ -79,21 +84,22 @@ public class TestInformativeManager : MonoBehaviour {
 
 	}
 
-	void changeImageTimer(int _newActiveImage) {
-
-		stopRecordImage (activeSection, activeContent, activeImage);
-
-		startRecordImage ();
-
-		changeIndexes (activeSection, activeContent, _newActiveImage);
-
+	void changeSubContentTimer(int _newActiveSubContent) {
+		
+		stopRecordSubContent (activeSection, activeContent, activeSubContent);
+		
+		startRecordSubContent ();
+		
+		changeIndexes (activeSection, activeContent, _newActiveSubContent);
+		
 	}
 
-	void changeContentTimer(int _newActiveSection, int _newActiveContent, int _newActiveImage) {
+
+	void changeContentTimer(int _newActiveSection, int _newActiveContent, int _newActiveSubContent) {
 
 		if (activeSection != -1 && activeContent != -1) {
 
-			stopRecord(activeSection, activeContent, activeImage);
+			stopRecord(activeSection, activeContent, activeSubContent);
 
 			startRecord();
 
@@ -105,15 +111,15 @@ public class TestInformativeManager : MonoBehaviour {
 
 		}
 
-		changeIndexes (_newActiveSection, _newActiveContent, _newActiveImage);
+		changeIndexes (_newActiveSection, _newActiveContent, _newActiveSubContent);
 
 	}
 
-	void stopRecord(int _activeSection, int _activeContent, int _activeImage) {
+	void stopRecord(int _activeSection, int _activeContent, int _activeSubContent) {
 
-		stopRecordContent (_activeSection, _activeContent, _activeImage);
+		stopRecordContent (_activeSection, _activeContent, _activeSubContent);
 
-		stopRecordImage (_activeSection, _activeContent, _activeImage);
+		stopRecordSubContent (_activeSection, _activeContent, _activeSubContent);
 
 	}
 
@@ -125,49 +131,28 @@ public class TestInformativeManager : MonoBehaviour {
 
 		if (t > sogliaConteggio) {
 
-			GeneralFinder.informativeManager.sections [_activeSection].contents [_activeContent].timerViewsContent += t;
-		
-			GeneralFinder.informativeManager.sections [_activeSection].contents [_activeContent].numberViewsContent++;
+			GeneralFinder.informativeManager.sections[_activeSection].contents[_activeContent].contentViewingTimer += t;
+			GeneralFinder.informativeManager.sections[_activeSection].contents[_activeContent].contentViewsCounter ++;
 		
 		}
 
 	}
 
-	void stopRecordImage(int _activeSection, int _activeContent, int _activeImage) {
-
-		TimeSpan timeSp = DateTime.Now - startImageTime;
+	void stopRecordSubContent(int _activeSection, int _activeContent, int _activeSubContent) {
+		
+		TimeSpan timeSp = DateTime.Now - startSubContentTime;
 		float t2 = (float) timeSp.TotalSeconds;
 
-		if (t2 > sogliaConteggio) {
+		GeneralFinder.informativeManager.sections [_activeSection].contents [_activeContent].subContents [_activeSubContent].subContentViewingTimer += t2;
+		GeneralFinder.informativeManager.sections [_activeSection].contents [_activeContent].subContents [_activeSubContent].subContentViewsCounter ++;
 
-			if (GeneralFinder.informativeManager.sections [_activeSection].contents [_activeContent].timerViewsImages == null) {
-			
-				int len = GeneralFinder.informativeManager.sections [_activeSection].contents [_activeContent].mainImages.Length;
-			
-				GeneralFinder.informativeManager.sections [_activeSection].contents [_activeContent].timerViewsImages = new float[len];
-				GeneralFinder.informativeManager.sections [_activeSection].contents [_activeContent].numberViewsImages = new int[len];
-			
-			}
-		
-			if (GeneralFinder.informativeManager.sections [_activeSection].contents [_activeContent].timerViewsImages.Length == 0) {
-			
-				int len = GeneralFinder.informativeManager.sections [_activeSection].contents [_activeContent].mainImages.Length;
-			
-				GeneralFinder.informativeManager.sections [_activeSection].contents [_activeContent].timerViewsImages = new float[len];
-				GeneralFinder.informativeManager.sections [_activeSection].contents [_activeContent].numberViewsImages = new int[len];
-			
-			}
-		
-			GeneralFinder.informativeManager.sections [_activeSection].contents [_activeContent].timerViewsImages [_activeImage] += t2;
-			GeneralFinder.informativeManager.sections [_activeSection].contents [_activeContent].numberViewsImages [_activeImage]++;
-		}
 	}
 
 	void startRecord() {
 
 		startRecordContent ();
 
-		startRecordImage ();
+		startRecordSubContent ();
 
 	}
 
@@ -177,25 +162,25 @@ public class TestInformativeManager : MonoBehaviour {
 
 	}
 
-	void startRecordImage() {
-
-		startImageTime = DateTime.Now;
-
+	void startRecordSubContent() {
+		
+		startSubContentTime = DateTime.Now;
+		
 	}
 
-	void changeIndexes(int _newActiveSection, int _newActiveContent, int _newActiveImage) {
-
+	void changeIndexes(int _newActiveSection, int _newActiveContent, int _newActiveSubContent) {
+		
 		activeSection = _newActiveSection;
 		activeContent = _newActiveContent;
-		activeImage = _newActiveImage;
+		activeSubContent = _newActiveSubContent;
 	}
 
 	void resetIndexes() {
-
+		
 		activeSection = -1;
 		activeContent = -1;
-		activeImage = -1;
-
+		activeSubContent = -1;
+		
 	}
 
 	public void c_setShowWhenUnlocked(int sect, int cont) {

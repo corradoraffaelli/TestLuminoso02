@@ -13,6 +13,13 @@ public enum infoContentType {
 	FunFacts,
 }
 
+public enum DataManagement {
+	LoadDefault,
+	Load,
+	UseActual,
+	Save,
+}
+
 public class InformativeManager : MonoBehaviour {
 
 	#region VARIABLES
@@ -24,6 +31,8 @@ public class InformativeManager : MonoBehaviour {
 	GameObject canvasIntro;
 
 	public bool loadDefaultConf;
+
+	public DataManagement dataManage;
 
 	[SerializeField]
 	public InformativeSection []sections;
@@ -76,6 +85,19 @@ public class InformativeManager : MonoBehaviour {
 
 	void Awake() {
 
+		switch (dataManage) {
+
+		case DataManagement.Load:
+			InfoSectionContainer.tryLoadInformativeManagerConf (ref sections, InfoSectionContainer.defaultFileName + "-0-");
+			break;
+
+		case DataManagement.UseActual:
+			break;
+
+
+		}
+
+		/*
 		if (loadDefaultConf) {
 			
 			InfoSectionContainer.loadInformativeManagerConf(ref sections);
@@ -86,6 +108,7 @@ public class InformativeManager : MonoBehaviour {
 			InfoSectionContainer.tryLoadInformativeManagerConf (ref sections, InfoSectionContainer.defaultFileName + "-0-");
 			
 		}
+		*/
 
 		setLevelNumberAndUnlockerOfThisLevel ();
 
@@ -259,9 +282,10 @@ public class InformativeManager : MonoBehaviour {
 					
 					getDetailComponents ();
 
-					fillDetail (activeSection, 0);
-					
-					fillMultimedia (activeSection, 0);
+					fillMultimediaAndDetails(activeSection, 0);
+
+					//fillDetail (activeSection, 0);
+					//fillMultimedia (activeSection, 0);
 					
 					fillNavigation (activeSection);
 
@@ -372,14 +396,14 @@ public class InformativeManager : MonoBehaviour {
 							if(newbie.name=="Left") {
 
 								multimediaButtons[0] = newbie.GetComponent<Button>();
-								multimediaButtons[0].onClick.AddListener(() => { c_changeMultimedia(false); });
+								multimediaButtons[0].onClick.AddListener(() => { c_changeSubContent(false); });
 
 							}
 							
 							if(newbie.name=="Right") {
 
 								multimediaButtons[1] = newbie.GetComponent<Button>();
-								multimediaButtons[1].onClick.AddListener(() => { c_changeMultimedia(true); });
+								multimediaButtons[1].onClick.AddListener(() => { c_changeSubContent(true); });
 
 							}
 
@@ -534,8 +558,11 @@ public class InformativeManager : MonoBehaviour {
 			canvasInformative.SetActive(true);
 			
 			fillNavigation ();
-			fillMultimedia();
-			fillDetail();
+
+			fillMultimediaAndDetails();
+
+			//fillMultimedia();
+			//fillDetail();
 			
 			if(unlockedNewContent) {
 				
@@ -680,11 +707,14 @@ public class InformativeManager : MonoBehaviour {
 
 	void controllerChangeImage(float fl) {
 
-		if (fl > 0)
-			c_changeMultimedia (true);
-		else
-			c_changeMultimedia (false);
-
+		if (fl > 0) {
+			c_changeSubContent(true);
+			//c_changeMultimedia (true);
+		}
+		else {
+			c_changeSubContent(false);
+			//c_changeMultimedia (false);
+		}
 	}
 
 	void controllerChangeContent(float fl) {
@@ -784,7 +814,46 @@ public class InformativeManager : MonoBehaviour {
 		}
 		
 	}
-	
+
+	public void fillMultimediaAndDetails(int sectionN = -3, int contentN = -1, int subContentN=0) {
+
+		if (sectionN == -3) {
+			
+			sectionN = activeSection;
+			
+		}
+		
+		if (contentN == -1) {
+			
+			contentN = sections[sectionN].activeContent;
+			
+		}
+		
+		//Debug.Log("section " + sectionN + " e content " + contentN);
+		
+		if (sections [sectionN].contents [contentN] == null){
+			Debug.Log ("ATTENZIONE - contenuto nullo");
+			return;
+		}
+
+		if (!sections [sectionN].contents [contentN].locked && sections [sectionN].contents [contentN].subContents != null) {
+			
+			if(sections [sectionN].contents [contentN].subContents[subContentN] != null) {
+
+				sections [sectionN].contents [contentN].activeSubContentIndex = subContentN;
+
+				multimedia.sprite = sections [sectionN].contents [contentN].subContents [subContentN].image;
+				multimedia.color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
+
+				detail.text = sections [sectionN].contents [contentN].subContents [subContentN].infoText.text;
+
+			}
+			
+		}
+
+	}
+
+	/*
 	public void fillMultimedia(int sectionN = -3, int contentN = -1, int imageN=0) {
 
 		if (sectionN == -3) {
@@ -815,7 +884,9 @@ public class InformativeManager : MonoBehaviour {
 			
 		}
 	}
-	
+	*/
+
+	/*
 	public void fillDetail(int sectionN = -2, int contentN = -1) {
 
 		if (sectionN == -2) {
@@ -848,6 +919,7 @@ public class InformativeManager : MonoBehaviour {
 			}
 		}
 	}
+	*/
 
 	public void c_changeSection(bool forward) {
 
@@ -876,9 +948,11 @@ public class InformativeManager : MonoBehaviour {
 
 		fillNavigation (activeSection);
 
-		fillMultimedia (activeSection, sections [activeSection].activeContent);
+		fillMultimediaAndDetails (activeSection, sections [activeSection].activeContent);
 
-		fillDetail (activeSection, sections [activeSection].activeContent);
+		//old IMPLEMENTS
+		//fillMultimedia (activeSection, sections [activeSection].activeContent);
+		//fillDetail (activeSection, sections [activeSection].activeContent);
 
 	}
 
@@ -906,6 +980,49 @@ public class InformativeManager : MonoBehaviour {
 
 	*/
 
+	public void c_changeSubContent(bool forward) {
+
+		int nextIndex = 0;
+		
+		int activeContent = sections [activeSection].activeContent;
+		int activeSubContent = sections [activeSection].contents [activeContent].activeSubContentIndex;
+
+		int lenSubContents = sections [activeSection].contents [activeContent].subContents.Length;
+		
+		//Debug.Log ("len subcontents" + lenImages);
+		
+		for (int i=0; i< lenSubContents; i++) {
+			
+			SubContent sc = sections[activeSection].contents[activeContent].subContents[i];
+			
+			if(sc==null) {
+				Debug.Log ("ATTENZIONE - alcune sprite delle immagini multimedia non sono state assegnate, section : " + activeSection + " content : " + activeContent);
+				activeSubContent = i;
+				break;
+			}
+			
+		}
+
+		if (forward) {
+			activeSubContent = (activeSubContent+1)%lenSubContents;
+		} 
+		else {
+			
+			
+			activeSubContent = (activeSubContent-1)%lenSubContents;
+			
+			if(activeSubContent<0)
+				activeSubContent = lenSubContents-1;
+			
+		}
+
+		sections [activeSection].contents [activeContent].activeSubContentIndex = activeSubContent;
+		
+		fillMultimediaAndDetails (activeSection, sections [activeSection].activeContent, activeSubContent);
+
+	}
+
+	/*
 	public void c_changeMultimedia(bool forward) {
 
 		int nextIndex = 0;
@@ -949,11 +1066,21 @@ public class InformativeManager : MonoBehaviour {
 		fillMultimedia (activeSection, sections [activeSection].activeContent, activeImage);
 
 	}
+	*/
 
-	public void c_changeContent(int contentN) {
+	/*
+	public void c_changeContentold(int contentN) {
 		//Debug.Log ("cambio a " + contentN);
 		fillMultimedia(activeSection, contentN);
 		fillDetail (activeSection, contentN);
+		sections [activeSection].activeContent = contentN;
+	}
+	*/
+
+	public void c_changeContent(int contentN) {
+		//Debug.Log ("cambio a " + contentN);
+		fillMultimediaAndDetails (activeSection, contentN);
+
 		sections [activeSection].activeContent = contentN;
 	}
 
@@ -1686,6 +1813,37 @@ public class InformativeContent {
 	[SerializeField]
 	public string name;
 
+	[SerializeField]
+	public float contentViewingTimer;
+	
+	[SerializeField]
+	public int contentViewsCounter;
+
+	public int activeSubContentIndex = 0;
+
+	[SerializeField]
+	public SubContent []subContents;
+
+	[XmlIgnoreAttribute]
+	[SerializeField]
+	public Sprite iconUnlock;
+	
+	[XmlIgnoreAttribute]
+	[SerializeField]
+	public Sprite iconLock;
+
+	[XmlIgnoreAttribute]
+	[SerializeField]
+	public GameObject unlockerObject;
+
+	[SerializeField]
+	public bool shownWhenUnlocked;
+	
+	[SerializeField]
+	public bool locked = false;
+
+	//STARTtodelete----
+
 	[XmlIgnoreAttribute]
 	[SerializeField]
 	public Sprite []mainImages;
@@ -1701,30 +1859,39 @@ public class InformativeContent {
 
 	[XmlIgnoreAttribute]
 	[SerializeField]
-	public Sprite iconUnlock;
-
-	[XmlIgnoreAttribute]
-	[SerializeField]
-	public Sprite iconLock;
-
-	[XmlIgnoreAttribute]
-	[SerializeField]
 	public TextAsset infoText;
-
-	[XmlIgnoreAttribute]
-	[SerializeField]
-	public GameObject unlockerObject;
-
+	
 	[SerializeField]
 	public float timerViewsContent;
 
 	[SerializeField]
 	public int numberViewsContent;
 
-	[SerializeField]
-	public bool shownWhenUnlocked;
+	//ENDtodelete----
+
+
+
+}
+
+
+[System.Serializable]
+public class SubContent {
 
 	[SerializeField]
-	public bool locked = false;
+	public string name;
+
+	[XmlIgnoreAttribute]
+	[SerializeField]
+	public Sprite image;
+
+	[XmlIgnoreAttribute]
+	[SerializeField]
+	public TextAsset infoText;
+
+	[SerializeField]
+	public float subContentViewingTimer;
+
+	[SerializeField]
+	public int subContentViewsCounter;
 
 }
