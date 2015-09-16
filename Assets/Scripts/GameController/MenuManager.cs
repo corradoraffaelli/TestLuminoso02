@@ -19,6 +19,8 @@ public class MenuManager : MonoBehaviour {
 	
 	bool statusMenu = false;
 
+	bool oneControllerDirectionUse = false;
+
 	public bool StatusMenu {
 		get{ return statusMenu; }
 	}
@@ -273,32 +275,42 @@ public class MenuManager : MonoBehaviour {
 		if (!statusMenu)
 			return;
 
-		if (Input.GetButtonDown ("Vertical-menu-nav")) {
+		if (Input.GetAxis ("Vertical") != 0.0f) {
 
-			float fl = Input.GetAxisRaw("Vertical-menu-nav");
 
-			//Debug.Log("ciao" + fl);
+			if(!oneControllerDirectionUse) {
 
-			menuButtons[activeMenuButtonIndex].gameObject.GetComponent<Image>().color = menuButtons[activeMenuButtonIndex].colors.normalColor;
+				oneControllerDirectionUse = true;
 
-			if(fl>0) {
+				float fl = Input.GetAxisRaw("Vertical");
 
-				activeMenuButtonIndex--;
+				//Debug.Log("ciao" + fl);
 
-				if(activeMenuButtonIndex<0) {
-					activeMenuButtonIndex= menuButtons.Length-1;
+				menuButtons[activeMenuButtonIndex].gameObject.GetComponent<Image>().color = menuButtons[activeMenuButtonIndex].colors.normalColor;
+
+				if(fl>0) {
+
+					activeMenuButtonIndex--;
+
+					if(activeMenuButtonIndex<0) {
+						activeMenuButtonIndex= menuButtons.Length-1;
+					}
 				}
-			}
-			else {
+				else {
 
-				activeMenuButtonIndex++;
+					activeMenuButtonIndex++;
 
-				if(activeMenuButtonIndex>menuButtons.Length-1) {
-					activeMenuButtonIndex=0;
+					if(activeMenuButtonIndex>menuButtons.Length-1) {
+						activeMenuButtonIndex=0;
+					}
 				}
-			}
 
-			menuButtons[activeMenuButtonIndex].gameObject.GetComponent<Image>().color = menuButtons[activeMenuButtonIndex].colors.highlightedColor;
+				menuButtons[activeMenuButtonIndex].gameObject.GetComponent<Image>().color = menuButtons[activeMenuButtonIndex].colors.highlightedColor;
+			}
+		}
+		else {
+
+			oneControllerDirectionUse = false;
 
 		}
 

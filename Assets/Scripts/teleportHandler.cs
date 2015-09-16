@@ -21,6 +21,8 @@ public class teleportHandler : MonoBehaviour {
 
 	public bool defaultVerseRightWhenArrived = true;
 
+	public bool disableWhenFinished = false;
+
 	public enum SizeChange {
 		BigToSmall,
 		SmallToBig,
@@ -237,6 +239,8 @@ public class teleportHandler : MonoBehaviour {
 
 		enableObj ();
 
+		disableObj ();
+
 		//INIZIO FINE NERO
 
 		//schiarisco lo schermo
@@ -293,11 +297,11 @@ public class teleportHandler : MonoBehaviour {
 
 
 
-		disableObj ();
-
 		enablePlayer (true);
 
 
+		if(disableWhenFinished)
+			this.gameObject.SetActive(false);
 
 	}
 
