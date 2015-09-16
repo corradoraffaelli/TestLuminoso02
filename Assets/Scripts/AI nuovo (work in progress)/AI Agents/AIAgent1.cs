@@ -549,7 +549,7 @@ public abstract class AIAgent1 : MonoBehaviour {
 		
 	}
 
-	public void c_instantKill(){
+	public void c_instantKill(string tagSource){
 		
 		//TODO:
 		//makeStateTransition(eMS, enemyMachineState.Stunned);

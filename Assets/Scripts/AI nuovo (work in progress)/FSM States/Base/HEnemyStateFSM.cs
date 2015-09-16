@@ -517,7 +517,7 @@ public abstract class HEnemyStateFSM : HGenericStateFSM {
 
 			if(Mathf.Abs(co.transform.localScale.x)<=Mathf.Abs(transform.localScale.x)) {
 				//Debug.Log("AHI ++++++++++++++++++++++" + co.gameObject.name + " " + co.transform.localScale.x + " - " + gameObject.name + " " + transform.localScale.x);
-				co.gameObject.transform.SendMessage ("c_instantKill");
+				co.gameObject.transform.SendMessage ("c_instantKill", gameObject.tag);
 				Vector2 dist = co.gameObject.transform.position - transform.position;
 				
 				Rigidbody2D r = co.gameObject.GetComponent<Rigidbody2D>();

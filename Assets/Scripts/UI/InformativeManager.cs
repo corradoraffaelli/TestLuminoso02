@@ -602,7 +602,7 @@ public class InformativeManager : MonoBehaviour {
 
 	void Update() {
 		
-		if (Input.GetButtonDown ("Informative-menu") || Input.GetButtonDown("Escape-menu")) {
+		if (Input.GetButtonDown ("Informative-menu") || Input.GetButtonUp("Escape-menu")) {
 
 			handleIntroAndExitInformativeMenu();
 

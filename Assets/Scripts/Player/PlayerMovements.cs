@@ -232,6 +232,12 @@ public class PlayerMovements : MonoBehaviour {
 
 	bool cameraOscura = false;
 
+	public PlayerFeatures miniPlayerFeatures;
+
+	public PlayerFeatures normalePlayerFeatures;
+
+	public PlayerFeatures hugePlayerFeatures;
+
 	void Start () {
 		//HERE...
 		if (AIControl) {
@@ -1384,7 +1390,7 @@ public class PlayerMovements : MonoBehaviour {
 
 	}
 
-	public void c_instantKill(){
+	public void c_instantKill(string tagSource){
 
 		if (!AIControl) {
 			StartCoroutine (handlePlayerKill ());
@@ -1483,6 +1489,21 @@ public class PlayerMovements : MonoBehaviour {
 	public void c_setUnderWater(bool uw) {
 
 		underWater = uw;
+
+	}
+
+}
+
+[System.Serializable]
+public class PlayerFeatures {
+
+	public float jumpFactor;
+	public float speedFactor;
+
+	public PlayerFeatures(float _jumpFactor, float _speedFactor) {
+
+		jumpFactor = _jumpFactor;
+		speedFactor = _speedFactor;
 
 	}
 

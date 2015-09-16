@@ -85,7 +85,7 @@ public class ChangeLevelShortcut : MonoBehaviour {
 		//shortcut uccisione player
 		if (Input.GetKey(KeyCode.LeftShift) && Input.GetKeyDown(KeyCode.M))
 		{
-			GeneralFinder.player.SendMessage("c_instantKill");
+			GeneralFinder.player.SendMessage("c_instantKill", gameObject.tag);
 		}
 
 		//shortcut salvataggio
