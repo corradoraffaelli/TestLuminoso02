@@ -315,6 +315,7 @@ MonoBehaviour:
   fleeParameters:
     fleeSpeed: 6
     fleeTarget: {fileID: 0}
+  canKillPlayer: 1
   stunnedReceived: 0
   _target: {fileID: 0}
   _fleeTarget: {fileID: 0}
@@ -452,6 +453,18 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   respawnPoint: {fileID: 0}
+  miniPlayerFeatures:
+    scaleFactor: .5
+    jumpFactor: 1
+    speedFactor: 1
+  normalePlayerFeatures:
+    scaleFactor: 1
+    jumpFactor: 1
+    speedFactor: 1
+  hugePlayerFeatures:
+    scaleFactor: 2
+    jumpFactor: 1
+    speedFactor: 1
 --- !u!212 &21283680
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -635,6 +648,42 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: clips.Array.data[2].volume
       value: .800000012
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: miniPlayerFeatures.scaleFactor
+      value: .5
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: miniPlayerFeatures.jumpFactor
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: miniPlayerFeatures.speedFactor
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: normalePlayerFeatures.scaleFactor
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: normalePlayerFeatures.jumpFactor
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: normalePlayerFeatures.speedFactor
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: hugePlayerFeatures.scaleFactor
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: hugePlayerFeatures.jumpFactor
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: hugePlayerFeatures.speedFactor
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
