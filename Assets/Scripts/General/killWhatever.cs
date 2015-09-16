@@ -30,7 +30,7 @@ public class killWhatever : MonoBehaviour {
 
 			else {
 				//Debug.Log ("uccido e io sono" + gameObject.name);
-				c.gameObject.SendMessage("c_instantKill");
+				c.gameObject.SendMessage("c_instantKill", gameObject.tag);
 				
 				if(oneKill)
 					turnOn = false;
