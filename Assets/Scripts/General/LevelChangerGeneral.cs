@@ -16,6 +16,7 @@ public class LevelChangerGeneral : MonoBehaviour {
 	public GameObject loadArea;
 	public GameObject loadCircle;
 	public GameObject shadow;
+	public GameObject pressButton;
 
 	public Sprite[] images;
 	public int randomNum = 0;
@@ -29,6 +30,10 @@ public class LevelChangerGeneral : MonoBehaviour {
 	public float circleSpeed = 5.0f;
 
 	public GameObject[] canvasToDisable;
+
+	bool loadEnded = false;
+	bool loadEndedOLD = false;
+	AsyncOperation async;
 
 	void Start () {
 
@@ -57,6 +62,8 @@ public class LevelChangerGeneral : MonoBehaviour {
 			loadArea.SetActive(false);
 		}
 
+		if (pressButton != null)
+			pressButton.SetActive (false);
 		//if(background!=null)
 		//	background.SetActive(false);
 
@@ -98,6 +105,21 @@ public class LevelChangerGeneral : MonoBehaviour {
 			loadCircle.transform.localEulerAngles = newRot;
 			//loadCircle.SetActive(true);
 		}
+
+		if (loadEnded) {
+			if (GeneralFinder.inputKeeper.isButtonUp("Interaction"))
+				async.allowSceneActivation = true;
+		}
+
+		if (loadEnded != loadEndedOLD) {
+			if (loadEnded)
+			{
+				if (pressButton != null)
+					pressButton.SetActive (true);
+			}
+		}
+
+		loadEndedOLD = loadEnded;
 	}
 
 	IEnumerator DisplayLoadingScreen(int level)
@@ -165,7 +187,8 @@ public class LevelChangerGeneral : MonoBehaviour {
 			}
 		}
 
-		AsyncOperation async = Application.LoadLevelAsync(level);
+		//AsyncOperation async = Application.LoadLevelAsync(level);
+		async = Application.LoadLevelAsync(level);
 		async.allowSceneActivation = false;
 
 		while (loadProgressFloat<0.85f)
@@ -190,16 +213,16 @@ public class LevelChangerGeneral : MonoBehaviour {
 			textUI.text = loadProgress.ToString();
 		
 		//barTransform.localScale = new Vector3(loadProgressFloat, 1.0f, 1.0f);
-
-		async.allowSceneActivation = true;
+		
+		loadEnded = true;
 
 		while (!async.isDone)
+		//while (async.progress != 1.0f)
 		{
 			yield return null;
 		}
 
 		//attendi utente che preme continua
-
 
 	}
 	
