@@ -1669,7 +1669,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db8ec66bee508ec4a8754d0738e984cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  debug_AUDIO: 0
   updateAudioClips: 0
+  updateAudioClipsAfterDelay: 0
   clips:
   - clipName: Leva
     clip: {fileID: 8300000, guid: e3fdaf36bc452de4c8f4b1b4cf5488f0, type: 3}
@@ -2062,7 +2064,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22416708, guid: 7eb88863bbd3e41de953c184d5413412, type: 2}
       propertyPath: m_RootOrder
-      value: 9
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 22416708, guid: 7eb88863bbd3e41de953c184d5413412, type: 2}
       propertyPath: m_AnchoredPosition.x
@@ -2685,7 +2687,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 413816, guid: 614a32f6c77c9ce4d829a14f91c31301, type: 2}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 11456166, guid: 614a32f6c77c9ce4d829a14f91c31301, type: 2}
       propertyPath: sceneName
@@ -4893,7 +4895,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db8ec66bee508ec4a8754d0738e984cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  debug_AUDIO: 0
   updateAudioClips: 0
+  updateAudioClipsAfterDelay: 0
   clips:
   - clipName: UnlockDoor
     clip: {fileID: 8300000, guid: 6cf7146c264c7a14694cee603ec2432d, type: 3}
@@ -5075,6 +5079,100 @@ Prefab:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 366ae96d3754a4617946e6345b200d7c, type: 2}
+  m_IsPrefabParent: 0
+--- !u!1001 &1040592738
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 22455728, guid: b98ac32831e038245b7ec43a39e1a174, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22455728, guid: b98ac32831e038245b7ec43a39e1a174, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22455728, guid: b98ac32831e038245b7ec43a39e1a174, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22455728, guid: b98ac32831e038245b7ec43a39e1a174, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22455728, guid: b98ac32831e038245b7ec43a39e1a174, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22455728, guid: b98ac32831e038245b7ec43a39e1a174, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22455728, guid: b98ac32831e038245b7ec43a39e1a174, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 22455728, guid: b98ac32831e038245b7ec43a39e1a174, type: 2}
+      propertyPath: m_RootOrder
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 22455728, guid: b98ac32831e038245b7ec43a39e1a174, type: 2}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22455728, guid: b98ac32831e038245b7ec43a39e1a174, type: 2}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22455728, guid: b98ac32831e038245b7ec43a39e1a174, type: 2}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22455728, guid: b98ac32831e038245b7ec43a39e1a174, type: 2}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22455728, guid: b98ac32831e038245b7ec43a39e1a174, type: 2}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22455728, guid: b98ac32831e038245b7ec43a39e1a174, type: 2}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22455728, guid: b98ac32831e038245b7ec43a39e1a174, type: 2}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22455728, guid: b98ac32831e038245b7ec43a39e1a174, type: 2}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22455728, guid: b98ac32831e038245b7ec43a39e1a174, type: 2}
+      propertyPath: m_Pivot.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22455728, guid: b98ac32831e038245b7ec43a39e1a174, type: 2}
+      propertyPath: m_Pivot.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 194624, guid: b98ac32831e038245b7ec43a39e1a174, type: 2}
+      propertyPath: m_TagString
+      value: CanvasLoadLevel
+      objectReference: {fileID: 0}
+    - target: {fileID: 11420528, guid: b98ac32831e038245b7ec43a39e1a174, type: 2}
+      propertyPath: canvasToDisable.Array.data[0]
+      value: 
+      objectReference: {fileID: 1328116306}
+    - target: {fileID: 11420528, guid: b98ac32831e038245b7ec43a39e1a174, type: 2}
+      propertyPath: canvasToDisable.Array.data[1]
+      value: 
+      objectReference: {fileID: 1230966995}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: b98ac32831e038245b7ec43a39e1a174, type: 2}
   m_IsPrefabParent: 0
 --- !u!1 &1054832789
 GameObject:
@@ -5718,6 +5816,10 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 77653abadaee547439a0deda03e86c60, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
+--- !u!1 &1230966995 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 158688, guid: 7eb88863bbd3e41de953c184d5413412, type: 2}
+  m_PrefabInternal: {fileID: 364120879}
 --- !u!4 &1233804503 stripped
 Transform:
   m_PrefabParentObject: {fileID: 418256, guid: c728c6d2a5356d441bbe19739b0f0f19, type: 2}
@@ -5968,6 +6070,10 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: cf0b565374cfb274eb2f8da55d7d0897, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
+--- !u!1 &1328116306 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 113432, guid: 9aab11338b8c04094b5f2d48e84c34ff, type: 2}
+  m_PrefabInternal: {fileID: 2097533242}
 --- !u!1 &1331199878
 GameObject:
   m_ObjectHideFlags: 0
@@ -7573,7 +7679,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db8ec66bee508ec4a8754d0738e984cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  debug_AUDIO: 0
   updateAudioClips: 0
+  updateAudioClipsAfterDelay: 0
   clips:
   - clipName: Leva
     clip: {fileID: 8300000, guid: e3fdaf36bc452de4c8f4b1b4cf5488f0, type: 3}
@@ -7888,7 +7996,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db8ec66bee508ec4a8754d0738e984cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  debug_AUDIO: 0
   updateAudioClips: 0
+  updateAudioClipsAfterDelay: 0
   clips:
   - clipName: Leva
     clip: {fileID: 8300000, guid: e3fdaf36bc452de4c8f4b1b4cf5488f0, type: 3}
@@ -8833,7 +8943,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db8ec66bee508ec4a8754d0738e984cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  debug_AUDIO: 0
   updateAudioClips: 0
+  updateAudioClipsAfterDelay: 0
   clips:
   - clipName: Leva
     clip: {fileID: 8300000, guid: e3fdaf36bc452de4c8f4b1b4cf5488f0, type: 3}
@@ -9231,7 +9343,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22476150, guid: 9aab11338b8c04094b5f2d48e84c34ff, type: 2}
       propertyPath: m_RootOrder
-      value: 10
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 22476150, guid: 9aab11338b8c04094b5f2d48e84c34ff, type: 2}
       propertyPath: m_AnchoredPosition.x

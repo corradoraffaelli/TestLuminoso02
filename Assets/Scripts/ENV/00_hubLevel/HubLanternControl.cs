@@ -268,6 +268,8 @@ public class HubLanternControl : MonoBehaviour {
 						mammuthElements[i].interacted = lanternInteracted[i];
 				}
 			}
+
+			file.Close();
 		}else{
 			setDefault = true;
 		}

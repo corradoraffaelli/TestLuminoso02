@@ -141,6 +141,8 @@ public class HubLadderControl : MonoBehaviour {
 			FileStream file = File.Open (Application.persistentDataPath + "/" +savedLadderFile + savedFileExtention, FileMode.Open);
 			
 			ladderUnlocked = (bool[])bf.Deserialize(file);
+
+			file.Close();
 		}else{
 			loadDefaultValues = true;
 		}
