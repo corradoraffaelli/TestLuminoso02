@@ -5,7 +5,13 @@ public class ControllerVerifyButtons : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-	
+		string [] names = Input.GetJoystickNames ();
+		
+		foreach (string s in names) {
+			
+			Debug.Log("joypad 1: ->" + s + "<-");
+			
+		}
 	}
 	
 	// Update is called once per frame
