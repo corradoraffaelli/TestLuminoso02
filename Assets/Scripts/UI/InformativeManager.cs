@@ -71,6 +71,7 @@ public class InformativeManager : MonoBehaviour {
 
 	GameObject detailSection;
 	Text detail;
+	Text indexSubContent;
 
 	Button exitButton;
 
@@ -409,6 +410,12 @@ public class InformativeManager : MonoBehaviour {
 
 						}
 
+					}
+
+					if(nephew.name=="Index") {
+						
+						//multimedia = nephew.gameObject.GetComponentInChildren<Image> ();
+						indexSubContent = nephew.gameObject.GetComponentInChildren<Text>();
 					}
 				}
 				//multimediaButtons
@@ -850,6 +857,16 @@ public class InformativeManager : MonoBehaviour {
 			}
 			
 		}
+
+		//detail.text = sections [sectionN].contents [contentN].infoText.text;
+		detail.gameObject.GetComponent<RectTransform>().offsetMax = new Vector2(0.0f, 0.0f);
+		//TODO: adjust lenght of rect based on text lenght
+		detail.gameObject.GetComponent<RectTransform>().offsetMin = new Vector2(0.0f, -400.0f);
+
+		int num = subContentN + 1;
+
+		if(indexSubContent!=null)
+			indexSubContent.text = num + "/" + sections [sectionN].contents [contentN].subContents.Length;
 
 	}
 
