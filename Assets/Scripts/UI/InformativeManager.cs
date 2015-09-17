@@ -776,6 +776,38 @@ public class InformativeManager : MonoBehaviour {
 
 	#region CALLBACKS
 
+	public InformativeSection[] getUnlockedSections () {
+
+		int nUnlockSection = 0;
+
+		for(int i=0; i<sections.Length; i++) {
+
+			if(!sections[i].locked)
+				nUnlockSection++;
+
+		}
+
+		if (nUnlockSection == 0)
+			return null;
+
+		InformativeSection []nUnlockedSections = new InformativeSection[nUnlockSection];
+		int indexUsed = 0;
+
+		for(int i=0; i<sections.Length; i++) {
+			
+			if(!sections[i].locked) {
+
+				nUnlockedSections[indexUsed] = sections[i];
+				indexUsed++;
+
+			}
+			
+		}
+
+		return nUnlockedSections;
+		
+	}
+
 	
 	public void fillNavigation(int sectionN=-5) {
 		
@@ -1013,9 +1045,11 @@ public class InformativeManager : MonoBehaviour {
 			SubContent sc = sections[activeSection].contents[activeContent].subContents[i];
 			
 			if(sc==null) {
+
 				Debug.Log ("ATTENZIONE - alcune sprite delle immagini multimedia non sono state assegnate, section : " + activeSection + " content : " + activeContent);
 				activeSubContent = i;
 				break;
+
 			}
 			
 		}
