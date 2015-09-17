@@ -310,7 +310,8 @@ public class PlayerMovements : MonoBehaviour {
 
 			GameObject childAnalyzer = GameObject.FindGameObjectWithTag("ZoneAnalyzer");
 
-			zoneAnalyzerParent = childAnalyzer.transform.parent.gameObject;
+			if(childAnalyzer!=null)
+				zoneAnalyzerParent = childAnalyzer.transform.parent.gameObject;
 
 		}
 

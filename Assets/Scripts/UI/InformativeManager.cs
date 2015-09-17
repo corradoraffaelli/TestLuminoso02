@@ -808,6 +808,75 @@ public class InformativeManager : MonoBehaviour {
 		
 	}
 
+	public SubContent c_getRandomSubContent(){
+		
+		//InformativeManager infM = GeneralFinder.informativeManager;
+		
+		InformativeSection [] sections = GeneralFinder.informativeManager.getUnlockedSections ();
+		
+		if (sections != null) {
+			
+			int randomSectionIndex = UnityEngine.Random.Range (0, sections.Length);
+			
+			int randomContentIndex = 0;
+
+			int attempts = 0;
+
+			while (true) {
+				
+				randomContentIndex = UnityEngine.Random.Range (0, sections [randomSectionIndex].contents.Length);
+				
+				if (!sections [randomSectionIndex].contents [randomContentIndex].locked) {
+					
+					break;
+					
+				}
+
+				attempts++;
+
+				//forma di sicurezza...
+				if(attempts>5)
+					return null;
+				
+			}
+			
+			int randomSubContentIndex = UnityEngine.Random.Range (0, sections [randomSectionIndex].contents[randomContentIndex].subContents.Length);
+			
+			if(!sections [randomSectionIndex].contents[randomContentIndex].subContents[randomSubContentIndex].usableForLoading) {
+				
+				bool solved = false;
+				
+				for(int i=0; i<sections [randomSectionIndex].contents[randomContentIndex].subContents.Length; i++) {
+					
+					if(sections [randomSectionIndex].contents[randomContentIndex].subContents[i].usableForLoading) {
+						
+						randomSubContentIndex = i;
+						solved = true;
+						break;
+						
+					}
+					
+				}
+				
+				if(!solved) {
+					
+					return null;
+					
+				}
+				
+			}
+			
+			return sections [randomSectionIndex].contents[randomContentIndex].subContents[randomSubContentIndex];
+			
+			
+			
+		}
+		else {
+			return null;
+		}
+		
+	}
+
 	
 	public void fillNavigation(int sectionN=-5) {
 		
@@ -1930,6 +1999,9 @@ public class SubContent {
 
 	[SerializeField]
 	public string name;
+
+	[SerializeField]
+	public bool usableForLoading = false;
 
 	[XmlIgnoreAttribute]
 	[SerializeField]
