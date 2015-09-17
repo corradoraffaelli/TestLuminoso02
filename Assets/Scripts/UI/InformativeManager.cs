@@ -88,6 +88,10 @@ public class InformativeManager : MonoBehaviour {
 
 		switch (dataManage) {
 
+		case DataManagement.LoadDefault:
+			InfoSectionContainer.tryLoadInformativeManagerConf (ref sections, InfoSectionContainer.defaultFileName + "-0-");
+			break;
+
 		case DataManagement.Load:
 			InfoSectionContainer.tryLoadInformativeManagerConf (ref sections, InfoSectionContainer.defaultFileName + "-0-");
 			break;
@@ -787,8 +791,10 @@ public class InformativeManager : MonoBehaviour {
 
 		}
 
-		if (nUnlockSection == 0)
+		if (nUnlockSection == 0) {
+			Debug.Log("no unlocked section");
 			return null;
+		}
 
 		InformativeSection []nUnlockedSections = new InformativeSection[nUnlockSection];
 		int indexUsed = 0;
@@ -835,8 +841,10 @@ public class InformativeManager : MonoBehaviour {
 				attempts++;
 
 				//forma di sicurezza...
-				if(attempts>5)
+				if(attempts>5) {
+					Debug.Log ("più di 5 prove - non trovo content sbloccati");
 					return null;
+				}
 				
 			}
 			
@@ -859,7 +867,7 @@ public class InformativeManager : MonoBehaviour {
 				}
 				
 				if(!solved) {
-					
+					Debug.Log ("non trovo subContent usabili");
 					return null;
 					
 				}
@@ -872,6 +880,7 @@ public class InformativeManager : MonoBehaviour {
 			
 		}
 		else {
+			Debug.Log ("sections unlocked nulle");
 			return null;
 		}
 		

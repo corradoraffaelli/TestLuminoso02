@@ -13,7 +13,7 @@ public class LevelChangerGeneral : MonoBehaviour {
 	public GameObject bar;
 	public GameObject loadingText;
 	public GameObject textArea;
-	public GameObject loadArea;
+	//public GameObject loadArea;
 	public GameObject loadCircle;
 	public GameObject shadow;
 	public GameObject pressButton;
@@ -58,9 +58,10 @@ public class LevelChangerGeneral : MonoBehaviour {
 			loadingText.SetActive (false);
 		}
 
-		if(loadArea!=null) {
-			loadArea.SetActive(false);
-		}
+
+		//if(loadArea!=null) {
+		//	loadArea.SetActive(false);
+		//}
 
 		if (pressButton != null)
 			pressButton.SetActive (false);
@@ -125,9 +126,9 @@ public class LevelChangerGeneral : MonoBehaviour {
 	IEnumerator DisplayLoadingScreen(int level)
 	{
 
-		if(loadArea!=null) {
-			loadArea.SetActive(true);
-		}
+		//if(loadArea!=null) {
+		//	loadArea.SetActive(true);
+		//}
 
 		//if(background!=null) {
 		//	background.SetActive(true);
@@ -158,7 +159,7 @@ public class LevelChangerGeneral : MonoBehaviour {
 
 				Debug.Log ("immagini sub content");
 				if(textArea!=null) {
-					Text t = textArea.GetComponentInChildren<Text>();
+					Text t = textArea.GetComponent<Text>();
 					t.text = subC.infoText.text;
 				}
 			}
@@ -215,6 +216,12 @@ public class LevelChangerGeneral : MonoBehaviour {
 		//barTransform.localScale = new Vector3(loadProgressFloat, 1.0f, 1.0f);
 		
 		loadEnded = true;
+
+		loadCircle.SetActive (false);
+
+		textNumber.SetActive (false);
+
+		pressButton.SetActive (true);
 
 		while (!async.isDone)
 		//while (async.progress != 1.0f)
