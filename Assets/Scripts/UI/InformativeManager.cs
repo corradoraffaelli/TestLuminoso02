@@ -71,6 +71,7 @@ public class InformativeManager : MonoBehaviour {
 
 	GameObject detailSection;
 	Text detail;
+	Text indexSubContent;
 
 	Button exitButton;
 
@@ -409,6 +410,12 @@ public class InformativeManager : MonoBehaviour {
 
 						}
 
+					}
+
+					if(nephew.name=="Index") {
+						
+						//multimedia = nephew.gameObject.GetComponentInChildren<Image> ();
+						indexSubContent = nephew.gameObject.GetComponentInChildren<Text>();
 					}
 				}
 				//multimediaButtons
@@ -769,6 +776,38 @@ public class InformativeManager : MonoBehaviour {
 
 	#region CALLBACKS
 
+	public InformativeSection[] getUnlockedSections () {
+
+		int nUnlockSection = 0;
+
+		for(int i=0; i<sections.Length; i++) {
+
+			if(!sections[i].locked)
+				nUnlockSection++;
+
+		}
+
+		if (nUnlockSection == 0)
+			return null;
+
+		InformativeSection []nUnlockedSections = new InformativeSection[nUnlockSection];
+		int indexUsed = 0;
+
+		for(int i=0; i<sections.Length; i++) {
+			
+			if(!sections[i].locked) {
+
+				nUnlockedSections[indexUsed] = sections[i];
+				indexUsed++;
+
+			}
+			
+		}
+
+		return nUnlockedSections;
+		
+	}
+
 	
 	public void fillNavigation(int sectionN=-5) {
 		
@@ -850,6 +889,16 @@ public class InformativeManager : MonoBehaviour {
 			}
 			
 		}
+
+		//detail.text = sections [sectionN].contents [contentN].infoText.text;
+		detail.gameObject.GetComponent<RectTransform>().offsetMax = new Vector2(0.0f, 0.0f);
+		//TODO: adjust lenght of rect based on text lenght
+		detail.gameObject.GetComponent<RectTransform>().offsetMin = new Vector2(0.0f, -400.0f);
+
+		int num = subContentN + 1;
+
+		if(indexSubContent!=null)
+			indexSubContent.text = num + "/" + sections [sectionN].contents [contentN].subContents.Length;
 
 	}
 
@@ -996,9 +1045,11 @@ public class InformativeManager : MonoBehaviour {
 			SubContent sc = sections[activeSection].contents[activeContent].subContents[i];
 			
 			if(sc==null) {
+
 				Debug.Log ("ATTENZIONE - alcune sprite delle immagini multimedia non sono state assegnate, section : " + activeSection + " content : " + activeContent);
 				activeSubContent = i;
 				break;
+
 			}
 			
 		}

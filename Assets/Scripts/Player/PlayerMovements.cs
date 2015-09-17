@@ -240,9 +240,12 @@ public class PlayerMovements : MonoBehaviour {
 
 	PlayerFeatures activePlayerFeatures;
 
+	public GameObject zoneAnalyzerParent;
+
+	//public GameObject []zoneAnalyzers;
+
 	void Start () {
 		//HERE...
-
 
 
 		if (AIControl) {
@@ -283,6 +286,8 @@ public class PlayerMovements : MonoBehaviour {
 
 		initNormalPlayerFeatures ();
 
+		initZoneAnalyzer ();
+
 		/*
 		foreach (Transform child in transform) {
 
@@ -296,7 +301,22 @@ public class PlayerMovements : MonoBehaviour {
 		if (warning)
 			Debug.Log ("attenzione, manca un oggetto stunning sotto il player");
 		*/
+	
 	}
+
+	void initZoneAnalyzer() {
+
+		if (zoneAnalyzerParent == null) {
+
+			GameObject childAnalyzer = GameObject.FindGameObjectWithTag("ZoneAnalyzer");
+
+			zoneAnalyzerParent = childAnalyzer.transform.parent.gameObject;
+
+		}
+
+
+	}
+
 
 	void initNormalPlayerFeatures() {
 
@@ -1411,8 +1431,12 @@ public class PlayerMovements : MonoBehaviour {
 	public void c_instantKill(string tagSource){
 
 		if (!AIControl) {
+			//if(zoneAnalyzerParent!=null) {
+			//	zoneAnalyzerParent.BroadcastMessage("c_playerKilled", tagSource);
+			//}
 			StartCoroutine (handlePlayerKill ());
 			c_stunned (true);
+
 		} else {
 			//se ne occupa lo script dell'AI, riceve anche lui il messaggio
 

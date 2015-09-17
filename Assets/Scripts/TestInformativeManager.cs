@@ -143,9 +143,13 @@ public class TestInformativeManager : MonoBehaviour {
 		TimeSpan timeSp = DateTime.Now - startSubContentTime;
 		float t2 = (float) timeSp.TotalSeconds;
 
-		GeneralFinder.informativeManager.sections [_activeSection].contents [_activeContent].subContents [_activeSubContent].subContentViewingTimer += t2;
-		GeneralFinder.informativeManager.sections [_activeSection].contents [_activeContent].subContents [_activeSubContent].subContentViewsCounter ++;
+		if (GeneralFinder.informativeManager.sections [_activeSection].contents [_activeContent].unlockerObject) {
 
+			GeneralFinder.informativeManager.sections [_activeSection].contents [_activeContent].subContents [_activeSubContent].subContentViewingTimer += t2;
+			GeneralFinder.informativeManager.sections [_activeSection].contents [_activeContent].subContents [_activeSubContent].subContentViewsCounter ++;
+		
+		}
+	
 	}
 
 	void startRecord() {
