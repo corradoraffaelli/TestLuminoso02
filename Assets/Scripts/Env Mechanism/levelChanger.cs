@@ -18,6 +18,15 @@ public class levelChanger : MonoBehaviour {
 	[HideInInspector]
 	public string savedFileExtention = ".dat";
 
+	LevelChangerGeneral levelChangerGeneral;
+
+	void Start()
+	{
+		GameObject levelChanger = GameObject.FindGameObjectWithTag ("CanvasLoadLevel");
+		if (levelChanger != null)
+			levelChangerGeneral = levelChanger.GetComponent<LevelChangerGeneral> ();
+	}
+
 	void unlockLevel()
 	{
 		if (GeneralFinder.informativeManager.getActualCollectiblesSection(levelToUnlock) != null)
@@ -30,11 +39,20 @@ public class levelChanger : MonoBehaviour {
 
 	public void changeScene()
 	{
-		if (reloadThisLevel)
-			Application.LoadLevel (Application.loadedLevel);
-		else
-			if (sceneName != "")
-				Application.LoadLevel (sceneName);
+		if (levelChangerGeneral != null) {
+			//if (reloadThisLevel)
+			//	levelChangerGeneral.loadLevel ();
+
+			//else if (sceneName != "")
+				levelChangerGeneral.loadLevel (sceneName);
+		} 
+		else 
+		{
+			if (reloadThisLevel)
+				Application.LoadLevel (Application.loadedLevel);
+			else if (sceneName != "")
+					Application.LoadLevel (sceneName);
+		}
 	}
 
 	public void InteractingMethod()
@@ -69,7 +87,8 @@ public class levelChanger : MonoBehaviour {
 	IEnumerator InputDoorBehave() {
 		GeneralFinder.playerMovements.enabled = false;
 		saveHubInfos();
-		yield return new WaitForSeconds(1.5f);
+		//yield return new WaitForSeconds(1.5f);
+		yield return new WaitForSeconds(1.0f);
 		changeScene ();
 	}
 
@@ -86,7 +105,8 @@ public class levelChanger : MonoBehaviour {
 			saveInput();
 		
 		GeneralFinder.playerMovements.enabled = false;
-		yield return new WaitForSeconds(2.0f);
+		//yield return new WaitForSeconds(2.0f);
+		yield return new WaitForSeconds(1.0f);
 
 		changeScene ();
 	}

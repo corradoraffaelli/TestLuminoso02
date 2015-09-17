@@ -29,6 +29,8 @@ public class HubPlayerBeginPosition : MonoBehaviour {
 			FileStream file = File.Open (Application.persistentDataPath + "/" + savedLevelFile + savedFileExtention, FileMode.Open);
 			
 			comingLevel = (int)bf.Deserialize(file);
+
+			file.Close();
 		}
 	}
 

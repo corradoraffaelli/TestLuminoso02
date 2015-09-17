@@ -242,6 +242,8 @@ public class UnlockedLevelControl : MonoBehaviour {
 			FileStream file = File.Open (Application.persistentDataPath + "/" +savedDoorFile + savedInputFileIndex+ savedFileExtention, FileMode.Open);
 			
 			unlockedLevelInfo = (UnlockedLevelInfo[])bf.Deserialize(file);
+
+			file.Close();
 		}
 		else
 		{
