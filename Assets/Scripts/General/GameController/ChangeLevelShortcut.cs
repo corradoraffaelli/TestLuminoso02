@@ -8,6 +8,11 @@ public class ChangeLevelShortcut : MonoBehaviour {
 	bool disableMovements = false;
 	bool disableMovementsOLD = false;
 
+	void Start()
+	{
+
+	}
+
 	void Update () {
 		if (levels != null && levels.Length != 0)
 		{
@@ -160,9 +165,12 @@ public class ChangeLevelShortcut : MonoBehaviour {
 	IEnumerator changeScene(string levelName)
 	{
 		GeneralFinder.playerMovements.enabled = false;
-		yield return new WaitForSeconds(2.0f);
+		yield return new WaitForSeconds(1.0f);
 
-		Application.LoadLevel(levelName);
+		if (GeneralFinder.levelChangerGeneral != null)
+			GeneralFinder.levelChangerGeneral.loadLevel (levelName);
+		else
+			Application.LoadLevel(levelName);
 	}
 
 	void saveInput()

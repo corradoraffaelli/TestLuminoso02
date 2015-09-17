@@ -38,6 +38,8 @@ public class GeneralFinder : MonoBehaviour {
 	public static CameraMovements cameraMovements;
 	public static GameObject camera;
 
+	public static LevelChangerGeneral levelChangerGeneral;
+
 	// Use this for initialization
 	void Awake () {
 
@@ -94,6 +96,10 @@ public class GeneralFinder : MonoBehaviour {
 		if (camera != null) {
 			cameraMovements = camera.GetComponent<CameraMovements>();
 		}
+
+		GameObject levelChanger = GameObject.FindGameObjectWithTag ("CanvasLoadLevel");
+		if (levelChanger != null)
+			levelChangerGeneral = levelChanger.GetComponent<LevelChangerGeneral> ();
 	}
 	
 	// Update is called once per frame
