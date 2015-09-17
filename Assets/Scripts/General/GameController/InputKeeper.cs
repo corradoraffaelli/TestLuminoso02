@@ -7,12 +7,7 @@ using System.Collections.Generic;
 
 public class InputKeeper : MonoBehaviour {
 
-	/*
-	 * -----------TIPI DI CONTROLLER---------
-	 */
 
-	public enum ControllerType { Windows360, Mac360, MacPS3, MacPS4};
-	public ControllerType controllerType;
 
 	/*
 	 * --------------- BOTTONI ---------------
