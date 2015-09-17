@@ -9,7 +9,8 @@ public class levelChanger : MonoBehaviour {
 
 	public bool inputDoor = false;
 	public bool reloadThisLevel = true;
-	public string sceneName;
+	//public string sceneName;
+	public int sceneNumber;
 	public int actualLevelNumber = 1;
 	public int levelToUnlock = 2;
 
@@ -44,14 +45,14 @@ public class levelChanger : MonoBehaviour {
 			//	levelChangerGeneral.loadLevel ();
 
 			//else if (sceneName != "")
-				levelChangerGeneral.loadLevel (sceneName);
+				levelChangerGeneral.loadLevel (sceneNumber);
 		} 
 		else 
 		{
 			if (reloadThisLevel)
 				Application.LoadLevel (Application.loadedLevel);
-			else if (sceneName != "")
-					Application.LoadLevel (sceneName);
+			else
+				Application.LoadLevel (sceneNumber);
 		}
 	}
 

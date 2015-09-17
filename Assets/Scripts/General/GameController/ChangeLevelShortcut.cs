@@ -3,55 +3,57 @@ using System.Collections;
 
 public class ChangeLevelShortcut : MonoBehaviour {
 
-	public string[] levels;
+	//public string[] levels;
 
 	bool disableMovements = false;
 	bool disableMovementsOLD = false;
 
 	void Start()
 	{
-
+		Debug.Log (Application.loadedLevel);
+		Debug.Log (Application.levelCount);
 	}
 
 	void Update () {
-		if (levels != null && levels.Length != 0)
-		{
-			if (Input.GetKey(KeyCode.LeftShift) && Input.GetKeyDown(KeyCode.Alpha0) && levels[0] != null && levels[0] != "")
+		//if (levels != null && levels.Length != 0)
+		//{
+			if (Input.GetKey(KeyCode.LeftShift) && Input.GetKeyDown(KeyCode.Alpha0))
 			{
 				automaticSave();
-				StartCoroutine(changeScene(levels[0]));
+				StartCoroutine(changeScene(2));
 			}
 				
-			if (Input.GetKey(KeyCode.LeftShift) && Input.GetKeyDown(KeyCode.Alpha1) && levels[1] != null && levels[1] != "")
+			if (Input.GetKey(KeyCode.LeftShift) && Input.GetKeyDown(KeyCode.Alpha1))
 			{
 				automaticSave();
-				StartCoroutine(changeScene(levels[1]));
+				StartCoroutine(changeScene(3));
 			}
 				
-			if (Input.GetKey(KeyCode.LeftShift) && Input.GetKeyDown(KeyCode.Alpha2) && levels[2] != null && levels[2] != "")
+			if (Input.GetKey(KeyCode.LeftShift) && Input.GetKeyDown(KeyCode.Alpha2))
 			{
 				automaticSave();
-				StartCoroutine(changeScene(levels[2]));
+				StartCoroutine(changeScene(4));
 			}
 				
-			if (Input.GetKey(KeyCode.LeftShift) && Input.GetKeyDown(KeyCode.Alpha3) && levels[3] != null && levels[3] != "")
+			if (Input.GetKey(KeyCode.LeftShift) && Input.GetKeyDown(KeyCode.Alpha3))
 			{
 				automaticSave();
-				StartCoroutine(changeScene(levels[3]));
+				StartCoroutine(changeScene(5));
 			}
 				
-			if (Input.GetKey(KeyCode.LeftShift) && Input.GetKeyDown(KeyCode.Alpha4) && levels[4] != null && levels[4] != "")
+			if (Input.GetKey(KeyCode.LeftShift) && Input.GetKeyDown(KeyCode.Alpha4))
 			{
 				automaticSave();
-				StartCoroutine(changeScene(levels[4]));
+				StartCoroutine(changeScene(6));
 			}
 				
-			if (Input.GetKey(KeyCode.LeftShift) && Input.GetKeyDown(KeyCode.Alpha5) && levels[5] != null && levels[5] != "")
+			if (Input.GetKey(KeyCode.LeftShift) && Input.GetKeyDown(KeyCode.Alpha5))
 			{
 				automaticSave();
-				StartCoroutine(changeScene(levels[5]));
+				StartCoroutine(changeScene(7));
 			}
 				
+			/*
 			if (Input.GetKey(KeyCode.LeftShift) && Input.GetKeyDown(KeyCode.Alpha6) && levels[6] != null && levels[6] != "")
 			{
 				automaticSave();
@@ -75,6 +77,7 @@ public class ChangeLevelShortcut : MonoBehaviour {
 				automaticSave();
 				StartCoroutine(changeScene(levels[9]));
 			}	
+			*/
 
 			if (Input.GetKey(KeyCode.LeftShift) && Input.GetKey(KeyCode.X))
 			{
@@ -85,7 +88,7 @@ public class ChangeLevelShortcut : MonoBehaviour {
 				disableMovements = false;
 			}
 			playermovementsHandler();
-		}
+		//}
 
 		//shortcut uccisione player
 		if (Input.GetKey(KeyCode.LeftShift) && Input.GetKeyDown(KeyCode.M))
@@ -146,7 +149,7 @@ public class ChangeLevelShortcut : MonoBehaviour {
 	{
 		bool inHub = false;
 
-		if (levels != null && levels.Length != 0 && levels[0] == Application.loadedLevelName)
+		if (2 == Application.loadedLevel)
 			inHub = true;
 
 		if (!inHub)
@@ -162,15 +165,15 @@ public class ChangeLevelShortcut : MonoBehaviour {
 		saveInput();
 	}
 
-	IEnumerator changeScene(string levelName)
+	IEnumerator changeScene(int levelNumber)
 	{
 		GeneralFinder.playerMovements.enabled = false;
 		yield return new WaitForSeconds(1.0f);
 
 		if (GeneralFinder.levelChangerGeneral != null)
-			GeneralFinder.levelChangerGeneral.loadLevel (levelName);
+			GeneralFinder.levelChangerGeneral.loadLevel (levelNumber);
 		else
-			Application.LoadLevel(levelName);
+			Application.LoadLevel(levelNumber);
 	}
 
 	void saveInput()
