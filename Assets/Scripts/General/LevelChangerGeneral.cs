@@ -109,7 +109,11 @@ public class LevelChangerGeneral : MonoBehaviour {
 
 		if (loadEnded) {
 			if (GeneralFinder.inputKeeper.isButtonUp("Interaction"))
+			{
+				//Debug.Log ("premuto E");
 				async.allowSceneActivation = true;
+			}
+				
 		}
 
 		if (loadEnded != loadEndedOLD) {
@@ -191,7 +195,7 @@ public class LevelChangerGeneral : MonoBehaviour {
 		//AsyncOperation async = Application.LoadLevelAsync(level);
 		async = Application.LoadLevelAsync(level);
 		async.allowSceneActivation = false;
-
+		//Debug.Log ("cerco di avviare il livello " + level);
 		while (loadProgressFloat<0.85f)
 		{
 			loadProgressFloat = async.progress;

@@ -151,7 +151,7 @@ public class CursorHandler : MonoBehaviour {
 
 			if (inputKeeper.getAxis("CursorVertical") > 0.2f || inputKeeper.getAxis("CursorVertical") < -0.2f)
 			{
-				ySumPosition = yControllerMultiplier * Time.deltaTime * inputKeeper.getAxis("CursorVertical")* inputKeeper.getAxis("CursorVertical")* inputKeeper.getAxis("CursorVertical");
+				ySumPosition = -yControllerMultiplier * Time.deltaTime * inputKeeper.getAxis("CursorVertical")* inputKeeper.getAxis("CursorVertical")* inputKeeper.getAxis("CursorVertical");
 				//if (Input.GetAxis("CursorVertical") < 0.0f)
 				//	ySumPosition = -ySumPosition;
 			}

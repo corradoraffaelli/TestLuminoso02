@@ -425,24 +425,26 @@ public class InputKeeper : MonoBehaviour {
 		for (int i = 0; i< inputButtons.Length; i++) {
 			if (inputButtons[i] != null && inputButtons[i].name != null && inputButtons[i].name != "")
 			{
-				if (Input.GetButton(inputButtons[i].name))
-					inputButtons[i].buttonStay = true;
-				else
-					inputButtons[i].buttonStay = false;
-
-
-				if (Input.GetButtonDown(inputButtons[i].name))
-					inputButtons[i].buttonDown = true;
-				else
-					inputButtons[i].buttonDown = false;
-
-				if (Input.GetButtonUp(inputButtons[i].name))
-					inputButtons[i].buttonUp = true;
-				else
-					inputButtons[i].buttonUp = false;
-
-				//MODIFICA PER PERMETTERE CHE LA LANTERNA VENGA USATA ANCHE COL TASTO SINISTRO
-				/*
+				if (!GeneralFinder.cursorHandler.useController)
+				{
+					if (Input.GetButton(inputButtons[i].name))
+						inputButtons[i].buttonStay = true;
+					else
+						inputButtons[i].buttonStay = false;
+					
+					
+					if (Input.GetButtonDown(inputButtons[i].name))
+						inputButtons[i].buttonDown = true;
+					else
+						inputButtons[i].buttonDown = false;
+					
+					if (Input.GetButtonUp(inputButtons[i].name))
+						inputButtons[i].buttonUp = true;
+					else
+						inputButtons[i].buttonUp = false;
+					
+					//MODIFICA PER PERMETTERE CHE LA LANTERNA VENGA USATA ANCHE COL TASTO SINISTRO
+					/*
 				if (inputButtons[i].name == "Mira")
 				{
 					if (Input.GetKey(KeyCode.Mouse0))
@@ -453,13 +455,33 @@ public class InputKeeper : MonoBehaviour {
 						inputButtons[i].buttonDown = true;
 				}
 				*/
-				if (inputButtons[i].name == "PickLantern")
-				{
-					inputButtons[i].buttonStay = false;
-					inputButtons[i].buttonUp = false;
-					inputButtons[i].buttonDown = false;
-
+					if (inputButtons[i].name == "PickLantern")
+					{
+						inputButtons[i].buttonStay = false;
+						inputButtons[i].buttonUp = false;
+						inputButtons[i].buttonDown = false;
+						
+					}
 				}
+				else
+				{
+					if (GeneralFinder.buttonController.getButton(inputButtons[i].name))
+						inputButtons[i].buttonStay = true;
+					else
+						inputButtons[i].buttonStay = false;
+					
+					
+					if (GeneralFinder.buttonController.getButtonDown(inputButtons[i].name))
+						inputButtons[i].buttonDown = true;
+					else
+						inputButtons[i].buttonDown = false;
+					
+					if (GeneralFinder.buttonController.getButtonUp(inputButtons[i].name))
+						inputButtons[i].buttonUp = true;
+					else
+						inputButtons[i].buttonUp = false;
+				}
+
 
 
 			}
@@ -471,8 +493,17 @@ public class InputKeeper : MonoBehaviour {
 		for (int i = 0; i< inputAxis.Length; i++) {
 			if (inputAxis[i] != null && inputAxis[i].name != null && inputAxis[i].name != "")
 			{
-				inputAxis[i].getAxisNormal = Input.GetAxis(inputAxis[i].name);
-				inputAxis[i].getAxisRaw = Input.GetAxisRaw(inputAxis[i].name);
+				if (!GeneralFinder.cursorHandler.useController)
+				{
+					inputAxis[i].getAxisNormal = Input.GetAxis(inputAxis[i].name);
+					inputAxis[i].getAxisRaw = Input.GetAxisRaw(inputAxis[i].name);
+				}
+				else
+				{
+					inputAxis[i].getAxisNormal = GeneralFinder.buttonController.getAxis(inputAxis[i].name);
+					inputAxis[i].getAxisRaw = GeneralFinder.buttonController.getAxisRaw(inputAxis[i].name);
+				}
+
 			}
 		}
 	}
@@ -574,15 +605,29 @@ public class InputKeeper : MonoBehaviour {
 					return true;
 				break;
 				*/
+				if (!GeneralFinder.cursorHandler.useController)
+				{
+					if (Input.GetButton(inputButtons[i].name) != inputButtons[i].buttonStay)
+						return true;
+					
+					if (Input.GetButtonUp(inputButtons[i].name) != inputButtons[i].buttonUp)
+						return true;
+					
+					if (Input.GetButtonDown(inputButtons[i].name) != inputButtons[i].buttonDown)
+						return true;
 
-				if (Input.GetButton(inputButtons[i].name) != inputButtons[i].buttonStay)
-					return true;
-				
-				if (Input.GetButtonUp(inputButtons[i].name) != inputButtons[i].buttonUp)
-					return true;
-				
-				if (Input.GetButtonDown(inputButtons[i].name) != inputButtons[i].buttonDown)
-					return true;
+				}
+				else
+				{
+					if (GeneralFinder.buttonController.getButton(inputButtons[i].name) != inputButtons[i].buttonStay)
+						return true;
+					
+					if (GeneralFinder.buttonController.getButtonUp(inputButtons[i].name) != inputButtons[i].buttonUp)
+						return true;
+					
+					if (GeneralFinder.buttonController.getButtonDown(inputButtons[i].name) != inputButtons[i].buttonDown)
+						return true;
+				}
 				break;
 			}
 		}
@@ -594,8 +639,17 @@ public class InputKeeper : MonoBehaviour {
 		for (int i = 0; i< inputAxis.Length; i++) {
 			if (inputAxis[i] != null && inputAxis[i].name == axisName && inputAxis[i].name!="")
 			{
-				if (Input.GetAxis(inputAxis[i].name) != inputAxis[i].getAxisNormal)
-					return true;
+				if (!GeneralFinder.cursorHandler.useController)
+				{
+					if (Input.GetAxis(inputAxis[i].name) != inputAxis[i].getAxisNormal)
+						return true;
+				}
+				else
+				{
+					if (GeneralFinder.buttonController.getAxis(inputAxis[i].name) != inputAxis[i].getAxisNormal)
+						return true;
+				}
+
 
 				//non credo sia necessario fare il controllo sul getAxisRaw
 
