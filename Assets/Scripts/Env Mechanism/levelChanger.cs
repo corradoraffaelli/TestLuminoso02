@@ -21,11 +21,15 @@ public class levelChanger : MonoBehaviour {
 
 	LevelChangerGeneral levelChangerGeneral;
 
+	InteragibileObject interagibileObject;
+
 	void Start()
 	{
 		GameObject levelChanger = GameObject.FindGameObjectWithTag ("CanvasLoadLevel");
 		if (levelChanger != null)
 			levelChangerGeneral = levelChanger.GetComponent<LevelChangerGeneral> ();
+
+		interagibileObject = GetComponent<InteragibileObject> ();
 	}
 
 	void unlockLevel()
@@ -40,6 +44,9 @@ public class levelChanger : MonoBehaviour {
 
 	public void changeScene()
 	{
+		if (interagibileObject != null)
+			interagibileObject.enabled = false;
+
 		if (levelChangerGeneral != null) {
 			//if (reloadThisLevel)
 			//	levelChangerGeneral.loadLevel ();

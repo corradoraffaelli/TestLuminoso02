@@ -10,8 +10,8 @@ public class ChangeLevelShortcut : MonoBehaviour {
 
 	void Start()
 	{
-		Debug.Log (Application.loadedLevel);
-		Debug.Log (Application.levelCount);
+		//Debug.Log (Application.loadedLevel);
+		//Debug.Log (Application.levelCount);
 	}
 
 	void Update () {

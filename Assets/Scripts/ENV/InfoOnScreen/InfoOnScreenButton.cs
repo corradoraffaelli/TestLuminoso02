@@ -75,4 +75,6 @@ public class InfoOnScreenButton : MonoBehaviour {
 			informativeOnScreen.nextSprite();
 		}
 	}
+
+
 }
