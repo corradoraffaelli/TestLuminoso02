@@ -14,9 +14,13 @@ public class InfoOnScreenButton : MonoBehaviour {
 	GameObject father;
 	InformativeOnScreen informativeOnScreen;
 
+	AudioHandler audioHandler;
+
 	void Start () {
 		spriteRenderer = GetComponent<SpriteRenderer> ();
 		buttonUp = spriteRenderer.sprite;
+
+		audioHandler = GetComponent<AudioHandler> ();
 
 		father = transform.parent.gameObject;
 		if (father != null)
@@ -27,11 +31,15 @@ public class InfoOnScreenButton : MonoBehaviour {
 		if (playerColliding != playerCollidingOld) {
 			if (playerColliding)
 			{
+				if (audioHandler != null)
+					audioHandler.playClipByName("ButtonDown");
 				changeButtonGraphic(true);
 				showNextSprite();
 			}
 			else
 			{
+				if (audioHandler != null)
+					audioHandler.playClipByName("ButtonUp");
 				changeButtonGraphic(false);
 			}
 		}

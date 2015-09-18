@@ -357,7 +357,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inputDoor: 1
   reloadThisLevel: 1
-  sceneNumber: 0
+  sceneNumber: 5
   actualLevelNumber: 1
   levelToUnlock: 2
   savedLevelFile: savedComingLevel
@@ -3242,6 +3242,7 @@ Transform:
   - {fileID: 1477302458}
   - {fileID: 287770252}
   - {fileID: 1342371111}
+  - {fileID: 1456602751}
   m_Father: {fileID: 0}
   m_RootOrder: 4
 --- !u!1001 &674154819
@@ -5814,7 +5815,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inputDoor: 1
   reloadThisLevel: 1
-  sceneNumber: 0
+  sceneNumber: 4
   actualLevelNumber: 1
   levelToUnlock: 2
   savedLevelFile: savedComingLevel
@@ -6880,6 +6881,52 @@ GameObject:
 Transform:
   m_PrefabParentObject: {fileID: 471404, guid: df6e94520b67e33449efcb29faea029a, type: 2}
   m_PrefabInternal: {fileID: 1759393443}
+--- !u!1001 &1456602750
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 654637569}
+    m_Modifications:
+    - target: {fileID: 418800, guid: 19014203da4cab54987fbcd50e0d748b, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 46.0522614
+      objectReference: {fileID: 0}
+    - target: {fileID: 418800, guid: 19014203da4cab54987fbcd50e0d748b, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 5.58353424
+      objectReference: {fileID: 0}
+    - target: {fileID: 418800, guid: 19014203da4cab54987fbcd50e0d748b, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 418800, guid: 19014203da4cab54987fbcd50e0d748b, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 418800, guid: 19014203da4cab54987fbcd50e0d748b, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 418800, guid: 19014203da4cab54987fbcd50e0d748b, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 418800, guid: 19014203da4cab54987fbcd50e0d748b, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 418800, guid: 19014203da4cab54987fbcd50e0d748b, type: 2}
+      propertyPath: m_RootOrder
+      value: 8
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 19014203da4cab54987fbcd50e0d748b, type: 2}
+  m_IsPrefabParent: 0
+--- !u!4 &1456602751 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 418800, guid: 19014203da4cab54987fbcd50e0d748b, type: 2}
+  m_PrefabInternal: {fileID: 1456602750}
 --- !u!1 &1464669482
 GameObject:
   m_ObjectHideFlags: 0
@@ -8955,7 +9002,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inputDoor: 1
   reloadThisLevel: 1
-  sceneNumber: 0
+  sceneNumber: 3
   actualLevelNumber: 1
   levelToUnlock: 2
   savedLevelFile: savedComingLevel

@@ -7,6 +7,15 @@ public class InformativeOnScreen : MonoBehaviour {
 
 	public Sprite[] spritesToShow;
 	public GameObject spritesContainer;
+	public BoxCollider2D imageCollider;
+	public GameObject text;
+	public string titolo;
+
+	public string sortingNameText = "Cartelli";
+	public int sortingIntText = 1;
+	
+	TextMesh textMesh;
+	MeshRenderer textRenderer;
 
 	bool playerColliding = false;
 	bool playerCollidingOld = false;
@@ -37,6 +46,16 @@ public class InformativeOnScreen : MonoBehaviour {
 			centerCamera = this.gameObject;
 
 		spriteRenderer = spritesContainer.GetComponent<SpriteRenderer> ();
+
+		if (text != null) {
+			textMesh = text.GetComponent<TextMesh> ();
+			textRenderer = text.GetComponent<MeshRenderer>();
+
+			textRenderer.sortingLayerName = sortingNameText;
+			textRenderer.sortingOrder = sortingIntText;
+			textMesh.text = titolo;
+		}
+			
 	}
 
 	void Update () {
@@ -108,6 +127,23 @@ public class InformativeOnScreen : MonoBehaviour {
 		if (spritesToShow [actualSpriteIndex] != null) {
 			Sprite newSprite = spritesToShow[actualSpriteIndex];
 			spriteRenderer.sprite = newSprite;
+			changeImageSize();
+		}
+	}
+
+	void changeImageSize()
+	{
+		if (imageCollider != null && spriteRenderer != null && spritesContainer != null) {
+			//metto la scala ad 1
+			spritesContainer.transform.localScale = new Vector3(1.0f,1.0f,1.0f);
+
+			//calcolo la nuova scala
+			Bounds collBounds = imageCollider.bounds;
+			Bounds spriteBounds = spriteRenderer.bounds;
+			float newx = collBounds.size.x / spriteBounds.size.x;
+			float newy = collBounds.size.y / spriteBounds.size.y;
+
+			spritesContainer.transform.localScale = new Vector3(newx, newy, 1.0f);
 		}
 	}
 }
