@@ -42,6 +42,8 @@ public class GeneralFinder : MonoBehaviour {
 
 	public static ButtonController buttonController;
 
+	public static InputManager inputManager;
+
 	// Use this for initialization
 	void Awake () {
 
@@ -104,8 +106,10 @@ public class GeneralFinder : MonoBehaviour {
 			levelChangerGeneral = levelChanger.GetComponent<LevelChangerGeneral> ();
 
 		GameObject buttonControllerOBJ = GameObject.FindGameObjectWithTag ("ButtonControllerLink");
-		if (buttonControllerOBJ != null)
+		if (buttonControllerOBJ != null) {
 			buttonController = buttonControllerOBJ.GetComponent<ButtonController> ();
+			inputManager = buttonControllerOBJ.GetComponent<InputManager>();
+		}
 	}
 	
 	// Update is called once per frame

@@ -143,7 +143,7 @@ public class TestInformativeManager : MonoBehaviour {
 		TimeSpan timeSp = DateTime.Now - startSubContentTime;
 		float t2 = (float) timeSp.TotalSeconds;
 
-		if (GeneralFinder.informativeManager.sections [_activeSection].contents [_activeContent].unlockerObject) {
+		if (!GeneralFinder.informativeManager.sections [_activeSection].contents [_activeContent].locked) {
 
 			GeneralFinder.informativeManager.sections [_activeSection].contents [_activeContent].subContents [_activeSubContent].subContentViewingTimer += t2;
 			GeneralFinder.informativeManager.sections [_activeSection].contents [_activeContent].subContents [_activeSubContent].subContentViewsCounter ++;

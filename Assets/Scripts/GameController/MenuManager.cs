@@ -251,9 +251,9 @@ public class MenuManager : MonoBehaviour {
 		//2) opp se è attivo sia il menu che intro
 		//3) non lo catturo se è attivo il menu e qualcosa diverso da intro
 
-		if ( Input.GetButtonUp ("Escape-menu") && !GeneralFinder.informativeManager.invokeWithoutMenu ) {
-
-
+		//if ( Input.GetButtonUp ("Escape-menu") && !GeneralFinder.informativeManager.invokeWithoutMenu ) {
+		if(GeneralFinder.inputManager.getButtonUp("Start") && !GeneralFinder.informativeManager.invokeWithoutMenu ) {
+			Debug.Log("ahi");
 			if(!GeneralFinder.canvasMenu.activeSelf || canvasActive == canvasIntro) {
 				//caso in cui siamo in game o dentro la scheda intro del menu
 				//quindi o stiamo entrando in pausa adesso, o ne stiamo uscendo
@@ -275,14 +275,16 @@ public class MenuManager : MonoBehaviour {
 		if (!statusMenu)
 			return;
 
-		if (Input.GetAxis ("Vertical") != 0.0f) {
+		//Debug.Log("menu");
 
+		//if (Input.GetAxis ("Vertical") != 0.0f) {
+		if(GeneralFinder.inputManager.getAxis("Vertical") != 0.0f) {
 
 			if(!oneControllerDirectionUse) {
 
 				oneControllerDirectionUse = true;
 
-				float fl = Input.GetAxisRaw("Vertical");
+				float fl = GeneralFinder.inputManager.getAxisRaw("Vertical");
 
 				//Debug.Log("ciao" + fl);
 
@@ -314,7 +316,8 @@ public class MenuManager : MonoBehaviour {
 
 		}
 
-		if (Input.GetButton ("Enter-menu-nav")) {
+		//if (Input.GetButton ("Enter-menu-nav")) {
+		if(GeneralFinder.inputManager.getButtonUp("Interaction") || GeneralFinder.inputManager.getButtonUp("Jump")) {
 
 			PointerEventData pointer = new PointerEventData(EventSystem.current);
 

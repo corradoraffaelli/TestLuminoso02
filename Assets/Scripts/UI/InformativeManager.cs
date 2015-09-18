@@ -51,6 +51,16 @@ public class InformativeManager : MonoBehaviour {
 	[HideInInspector]
 	public float timeCanShowNewContent = 5.0f;
 
+	bool verticalDirectionUse = false;
+
+	bool horizontalDirectionUse = false;
+
+	bool cursorVerticalDirectionUse = false;
+	
+	bool cursorHorizontalDirectionUse = false;
+	
+
+
 	#endregion PUBLICVARIABLES
 
 	#region PRIVATEVARIABLES
@@ -556,8 +566,12 @@ public class InformativeManager : MonoBehaviour {
 
 	void handleIntroAndExitInformativeMenu() {
 
-		if( (!canvasInformative.activeSelf || !canvasInformative.transform.parent.gameObject.activeSelf  ) 
-		   && Input.GetKeyDown (KeyCode.I) && !invokeWithoutMenu && !GeneralFinder.menuManager.StatusMenu) {
+		//if( (!canvasInformative.activeSelf || !canvasInformative.transform.parent.gameObject.activeSelf  ) 
+		//  && Input.GetKeyDown (KeyCode.I) && !invokeWithoutMenu && !GeneralFinder.menuManager.StatusMenu) {
+			if( (!canvasInformative.activeSelf || !canvasInformative.transform.parent.gameObject.activeSelf  ) 
+		     && GeneralFinder.inputManager.getButtonDown("GlassModifier") && !invokeWithoutMenu && !GeneralFinder.menuManager.StatusMenu) {
+
+
 			//Debug.Log("ciao0");
 			
 			GeneralFinder.unlockableContentUI.stopPulsing();
@@ -613,7 +627,8 @@ public class InformativeManager : MonoBehaviour {
 
 	void Update() {
 		
-		if (Input.GetButtonDown ("Informative-menu") || Input.GetButtonUp("Escape-menu")) {
+		//if (Input.GetButtonDown ("Informative-menu") || Input.GetButtonUp("Escape-menu")) {
+		if(GeneralFinder.inputManager.getButtonUp("Start") || GeneralFinder.inputManager.getButtonUp("GlassModifier")) {
 
 			handleIntroAndExitInformativeMenu();
 
@@ -645,28 +660,94 @@ public class InformativeManager : MonoBehaviour {
 
 	void controllerNavigation() {
 
-		if(Input.GetButtonDown("BackTrigger") ) {
-			
-			float fl = Input.GetAxisRaw("BackTrigger");
-			
-			controllerChangeSection(fl);
-			
+
+		//if(Input.GetButtonDown("BackTrigger") ) {
+		if(	GeneralFinder.inputManager.getAxis("Horizontal") != 0.0f ) {
+			Debug.Log("horizontal");
+
+			if(Mathf.Abs( GeneralFinder.inputManager.getAxisRaw("Horizontal") ) > 0.9f) {
+				if(!horizontalDirectionUse) {
+
+					float fl = GeneralFinder.inputManager.getAxisRaw("Horizontal");
+					
+					controllerChangeSection(fl);
+
+					horizontalDirectionUse = true;
+				}
+			}
+		}
+		else {
+
+			horizontalDirectionUse = false;
+
 		}
 		
-		if(Input.GetButtonDown("FrontTrigger") ) {
+		//if(Input.GetButtonDown("FrontTrigger") ) {
+		if(GeneralFinder.inputManager.getButtonDown("Mira") ) {
 			
-			float fl = Input.GetAxisRaw("FrontTrigger");
+			//float fl = Input.GetAxisRaw("FrontTrigger");
 			
-			controllerChangeImage(fl);
+			controllerChangeSubContent(1.0f);
 			
 		}
-		
-		if (Input.GetButtonDown ("Vertical-menu-nav")) {
+		else if (GeneralFinder.inputManager.getButtonDown("PickLantern")) {
+
+			controllerChangeSubContent(-1.0f);
+
+		}
+
+		//TODO: problemi con cursor horizontal
+
+		if (GeneralFinder.inputManager.getAxis ("CursorHorizontal") != 0.0f) {
+
+			if( Mathf.Abs( GeneralFinder.inputManager.getAxisRaw("CursorHorizontal") ) > 0.9f )  {
+
+				//Debug.Log("cursore hor" + GeneralFinder.inputManager.getAxisRaw("CursorHorizontal"));
+				if(!cursorHorizontalDirectionUse) {
+					
+					float fl = GeneralFinder.inputManager.getAxisRaw("CursorHorizontal");
+					
+					controllerChangeSubContent(fl);
+					
+					cursorHorizontalDirectionUse = true;
+
+				}
+
+			}
+			else {
+				
+				cursorHorizontalDirectionUse = false;
+				
+			}
+
+		}
+		else {
 			
-			float fl = Input.GetAxisRaw("Vertical-menu-nav");
+			cursorHorizontalDirectionUse = false;
 			
-			controllerChangeContent(fl);
-			
+		}
+
+
+		//if (Input.GetButtonDown ("Vertical-menu-nav")) {
+		if(	GeneralFinder.inputManager.getAxis("Vertical") != 0.0f ) {
+
+			if(Mathf.Abs( GeneralFinder.inputManager.getAxisRaw("Vertical") ) > 0.9f) {
+
+				if(!verticalDirectionUse) {
+
+					float fl = GeneralFinder.inputManager.getAxisRaw("Vertical");
+					
+					controllerChangeContent(fl);
+
+					verticalDirectionUse = true;
+
+				}
+			}
+		}
+		else {
+
+			verticalDirectionUse = false;
+
 		}
 		
 		if (Input.GetButtonDown ("Horizontal-menu-nav")) {
@@ -675,7 +756,8 @@ public class InformativeManager : MonoBehaviour {
 			
 			
 		}
-		
+
+		//TODO: scroll bar da gestire?
 		if (Input.GetButtonDown ("Vertical-Informative-menu-nav")) {
 			
 			float fl = Input.GetAxisRaw("Vertical-Informative-menu-nav");
@@ -716,7 +798,7 @@ public class InformativeManager : MonoBehaviour {
 
 	}
 
-	void controllerChangeImage(float fl) {
+	void controllerChangeSubContent(float fl) {
 
 		if (fl > 0) {
 			c_changeSubContent(true);
@@ -731,8 +813,11 @@ public class InformativeManager : MonoBehaviour {
 	void controllerChangeContent(float fl) {
 
 		int tempAct = 0;
+		int prevAct = 0;
 
 		tempAct = sections [activeSection].activeContent;
+
+		prevAct = tempAct;
 
 		//Debug.Log ("active content>" + tempAct);
 
@@ -760,6 +845,11 @@ public class InformativeManager : MonoBehaviour {
 		}
 
 		c_changeContent(tempAct);
+
+		//TODO:
+		//OVER MANUALE DELL'ICONA
+		iconImages [tempAct].color = iconButtons [tempAct].colors.highlightedColor;
+		iconImages [prevAct].color = iconButtons [prevAct].colors.normalColor;
 
 	}
 
