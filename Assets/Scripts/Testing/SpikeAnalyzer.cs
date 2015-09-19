@@ -3,6 +3,7 @@ using System.Collections;
 using System.Xml;
 using System.Xml.Serialization;
 using System.IO;
+using System;
 
 public class SpikeAnalyzer : MonoBehaviour {
 	
@@ -119,6 +120,8 @@ public class SpikeAnalyzer : MonoBehaviour {
 			
 			SpikeAnalyzer[] analyzers = new SpikeAnalyzer[objs.Length];
 			SpikesInfos[] infos = new SpikesInfos[analyzers.Length];
+
+			string[] names = new string[objs.Length];
 			
 			for (int i = 0; i < objs.Length; i++)
 			{
@@ -130,10 +133,24 @@ public class SpikeAnalyzer : MonoBehaviour {
 					if (analyzers[i] != null && analyzers[i].type == Type.analyzer)
 					{
 						infos[i] = analyzers[i].spikesInfos;
+						names[i] = analyzers[i].spikesInfos.name;
 					}
 				}
 			}
-			
+
+			Array.Sort(names);
+
+			SpikesInfos[] orderedInfos = new SpikesInfos[infos.Length];
+
+			for (int i = 0; i < names.Length; i++)
+			{
+				for (int j = 0; j < infos.Length; j++)
+				{
+					if (names[i] == infos[j].name)
+						orderedInfos[i] = infos[j];
+				}
+			}
+
 			//creo l'opportuna directory se non esiste già
 			if (!Directory.Exists(directory)) 
 			{
@@ -160,7 +177,7 @@ public class SpikeAnalyzer : MonoBehaviour {
 			
 			//salva tutti gli elementi su file
 			spikesContainer = new SpikesAnalyzerContainer();
-			spikesContainer.spikesInfos = infos;
+			spikesContainer.spikesInfos = orderedInfos;
 			spikesContainer.Save(finalPath02);
 		}
 	}

@@ -26,6 +26,7 @@ public class LanternTutorialHandler : MonoBehaviour {
 	public GameObject[] gameObjectsToEnableController;
 	SpriteRenderer[] spriteRenderers;
 
+	public string hintName;
 	public string balloonString;
 	public string balloonStringController;
 	public GameObject balloonPrefab;
@@ -322,7 +323,7 @@ public class LanternTutorialHandler : MonoBehaviour {
 	{
 		if (type == ComicBalloonManager.Type.hint && GeneralFinder.hintAnalyzer != null)
 		{
-			GeneralFinder.hintAnalyzer.addElement(balloonString);
+			GeneralFinder.hintAnalyzer.addElement(hintName, balloonString);
 		}
 	}
 
@@ -330,7 +331,7 @@ public class LanternTutorialHandler : MonoBehaviour {
 	{
 		if (type == ComicBalloonManager.Type.hint && GeneralFinder.hintAnalyzer != null)
 		{
-			GeneralFinder.hintAnalyzer.activateElement(balloonString);
+			GeneralFinder.hintAnalyzer.activateElement(hintName);
 		}
 	}
 }
