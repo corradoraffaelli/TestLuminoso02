@@ -558,7 +558,7 @@ public class ChainActivationObjPiece : MonoBehaviour {
 
 						}
 						else {
-							Debug.Log ("ATTENZIONE - nextchaingpiece settano a NULL, assegnare il gameobject o settare questo chainpiece come LASTPIECE "); 
+							Debug.Log (gameObject.name + "ATTENZIONE - nextchainpiece settano a NULL, assegnare il gameobject o settare questo chainpiece come LASTPIECE "); 
 
 						}
 					}

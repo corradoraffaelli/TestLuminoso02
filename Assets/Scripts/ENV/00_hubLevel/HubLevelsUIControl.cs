@@ -66,7 +66,7 @@ public class HubLevelsUIControl : MonoBehaviour {
 					{
 						if (objectSection.contents[i] != null)
 						{
-							if (objectSection.contents[i].locked)
+							if (objectSection.contents[i].lockedContent)
 								rightSprites[i] = objectSection.contents[i].iconLock;
 							else
 								rightSprites[i] = objectSection.contents[i].iconUnlock;
@@ -81,7 +81,7 @@ public class HubLevelsUIControl : MonoBehaviour {
 					{
 						if (fragmentSection.contents[i] != null)
 						{
-							if (fragmentSection.contents[i].locked)
+							if (fragmentSection.contents[i].lockedContent)
 								leftSprites[i] = fragmentSection.contents[i].iconLock;
 							else
 								leftSprites[i] = fragmentSection.contents[i].iconUnlock;

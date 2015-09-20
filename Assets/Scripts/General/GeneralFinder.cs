@@ -76,8 +76,8 @@ public class GeneralFinder : MonoBehaviour {
 		canvasMenu = UtilFinder._FindGameObjectByTag ("CanvasMenu");
 
 		unlockableContentUI = UtilFinder._GetComponentOfGameObjectWithTag<UnlockableContentUI> ("Controller");
-		informativeManager = UtilFinder._GetComponentOfGameObjectWithTag<InformativeManager> ("Controller");
-		menuManager = UtilFinder._GetComponentOfGameObjectWithTag<MenuManager> ("Controller");
+		informativeManager = UtilFinder._GetComponentOfGameObjectWithTag<InformativeManager> ("MenuController");
+		menuManager = UtilFinder._GetComponentOfGameObjectWithTag<MenuManager> ("MenuController");
 		playStatusTracker =  UtilFinder._GetComponentOfGameObjectWithTag<PlayStatusTracker> ("Controller");
 
 		testInformativeManager = UtilFinder._GetComponentOfGameObjectWithTag<TestInformativeManager> ("TestController");

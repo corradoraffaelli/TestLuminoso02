@@ -20,7 +20,7 @@ public class HubFragmentCounter : MonoBehaviour {
 				{
 					if (sections[i].contents[j] != null)
 					{
-						if (!sections[i].contents[j].locked)
+						if (!sections[i].contents[j].lockedContent)
 							fragmentTotalNumber ++;
 					}
 				}

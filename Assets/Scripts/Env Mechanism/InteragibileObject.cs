@@ -36,6 +36,10 @@ public class InteragibileObject : MonoBehaviour {
 
 	void playerCollidingManagement()
 	{
+
+		if (!PlayStatusTracker.inPlay)
+			return;
+
 		if (((oneTimeInteraction && !interacted) || !oneTimeInteraction)) {
 			//mostra la E
 			indication.SetActive(playerColliding);
@@ -45,7 +49,7 @@ public class InteragibileObject : MonoBehaviour {
 
 			//scorre l'array di gameObject e chiama il metodo
 			if (((oneTimeInteraction && !interacted) || !oneTimeInteraction) && playerColliding) {
-				if (inputKeeper!= null && inputKeeper.isButtonUp("Interaction"))
+				if (inputKeeper!= null && inputKeeper.isButtonDown("Interaction"))
 				{
 					//Debug.Log ("inviato messaggio di interazione ad oggetto ");
 					if (audioHandler != null)

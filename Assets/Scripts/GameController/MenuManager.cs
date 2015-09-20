@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 
 public class MenuManager : MonoBehaviour {
 
-	InformativeManager informativeMan;
+	//InformativeManager informativeMan;
 
 	//public GameObject canvasMenu;
 
@@ -28,7 +28,7 @@ public class MenuManager : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 
-		informativeMan = UtilFinder._GetComponentOfGameObjectWithTag<InformativeManager> ("Controller");
+		//informativeMan = UtilFinder._GetComponentOfGameObjectWithTag<InformativeManager> ("Controller");
 
 		initializeReferencesOfMenu ();
 
@@ -36,7 +36,8 @@ public class MenuManager : MonoBehaviour {
 
 	void initializeReferencesOfMenu() {
 
-		informativeMan.c_initializeInformative ();
+		GeneralFinder.informativeManager.c_initializeInformative ();
+		//informativeMan.c_initializeInformative ();
 
 		initializeIntroOfMenu ();
 
@@ -246,14 +247,15 @@ public class MenuManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
+
 		//catturo l'evento se
 		//1) il menu è tutto spento
 		//2) opp se è attivo sia il menu che intro
 		//3) non lo catturo se è attivo il menu e qualcosa diverso da intro
 
-		//if ( Input.GetButtonUp ("Escape-menu") && !GeneralFinder.informativeManager.invokeWithoutMenu ) {
-		if(GeneralFinder.inputManager.getButtonUp("Start") && !GeneralFinder.informativeManager.invokeWithoutMenu ) {
-			Debug.Log("ahi");
+
+		if(GeneralFinder.inputManager.getButtonDown("Start") && !GeneralFinder.informativeManager.invokeWithoutMenu ) {
+			//Debug.Log("ahi");
 			if(!GeneralFinder.canvasMenu.activeSelf || canvasActive == canvasIntro) {
 				//caso in cui siamo in game o dentro la scheda intro del menu
 				//quindi o stiamo entrando in pausa adesso, o ne stiamo uscendo
@@ -272,26 +274,25 @@ public class MenuManager : MonoBehaviour {
 
 		}
 
+
+
 		if (!statusMenu)
 			return;
 
 		//Debug.Log("menu");
 
-		//if (Input.GetAxis ("Vertical") != 0.0f) {
-		if(GeneralFinder.inputManager.getAxis("Vertical") != 0.0f) {
-
+		if (GeneralFinder.inputManager.getAxisRaw("Vertical") != 0.0f) {
+			//Debug.Log("menu");
 			if(!oneControllerDirectionUse) {
 
 				oneControllerDirectionUse = true;
 
 				float fl = GeneralFinder.inputManager.getAxisRaw("Vertical");
 
-				//Debug.Log("ciao" + fl);
-
 				menuButtons[activeMenuButtonIndex].gameObject.GetComponent<Image>().color = menuButtons[activeMenuButtonIndex].colors.normalColor;
 
-				if(fl>0) {
-
+				if(fl > 0.0f) {
+					//Debug.Log("menu up");
 					activeMenuButtonIndex--;
 
 					if(activeMenuButtonIndex<0) {
@@ -299,7 +300,7 @@ public class MenuManager : MonoBehaviour {
 					}
 				}
 				else {
-
+					//Debug.Log("menu down");
 					activeMenuButtonIndex++;
 
 					if(activeMenuButtonIndex>menuButtons.Length-1) {
@@ -316,7 +317,7 @@ public class MenuManager : MonoBehaviour {
 
 		}
 
-		//if (Input.GetButton ("Enter-menu-nav")) {
+
 		if(GeneralFinder.inputManager.getButtonUp("Interaction") || GeneralFinder.inputManager.getButtonUp("Jump")) {
 
 			PointerEventData pointer = new PointerEventData(EventSystem.current);

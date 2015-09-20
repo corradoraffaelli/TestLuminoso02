@@ -143,11 +143,27 @@ public class TestInformativeManager : MonoBehaviour {
 		TimeSpan timeSp = DateTime.Now - startSubContentTime;
 		float t2 = (float) timeSp.TotalSeconds;
 
-		if (!GeneralFinder.informativeManager.sections [_activeSection].contents [_activeContent].locked) {
+		if (!GeneralFinder.informativeManager.sections [_activeSection].contents [_activeContent].lockedContent && 
+			GeneralFinder.informativeManager.sections [_activeSection].contents [_activeContent].subContents != null) {
 
-			GeneralFinder.informativeManager.sections [_activeSection].contents [_activeContent].subContents [_activeSubContent].subContentViewingTimer += t2;
-			GeneralFinder.informativeManager.sections [_activeSection].contents [_activeContent].subContents [_activeSubContent].subContentViewsCounter ++;
-		
+			if (GeneralFinder.informativeManager.sections [_activeSection].contents [_activeContent].subContents.Length - 1 >= _activeSubContent) {
+
+				GeneralFinder.informativeManager.sections [_activeSection].contents [_activeContent].subContents [_activeSubContent].subContentViewingTimer += t2;
+				GeneralFinder.informativeManager.sections [_activeSection].contents [_activeContent].subContents [_activeSubContent].subContentViewsCounter ++;
+			
+			} else {
+
+				Debug.Log ("ATTENZIONE - nessun subcontent trovato, anche se subcontents != null, len: " + GeneralFinder.informativeManager.sections [_activeSection].contents [_activeContent].subContents.Length);
+
+			}
+		} 
+		else {
+
+			if (GeneralFinder.informativeManager.sections [_activeSection].contents [_activeContent].subContents == null){
+
+				Debug.Log ("ATTENZIONE - nessun subcontent trovato, subcontents == null");
+			
+			}
 		}
 	
 	}

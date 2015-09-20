@@ -46,7 +46,7 @@ public class LoadingScreenHandle : MonoBehaviour {
 
 				randomContentIndex = Random.Range (0, sections [randomSectionIndex].contents.Length);
 
-				if (!sections [randomSectionIndex].contents [randomContentIndex].locked) {
+				if (!sections [randomSectionIndex].contents [randomContentIndex].lockedContent) {
 
 					break;
 

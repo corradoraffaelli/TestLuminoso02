@@ -14,10 +14,9 @@ public enum infoContentType {
 }
 
 public enum DataManagement {
-	LoadDefault,
-	Load,
-	UseActual,
-	Save,
+	Load, //prova a caricare, se non c'è l'xml va a useactual, 
+	UseActual,//non fa nulla e si attiene alle impostazioni da inspector
+	Save,//come useactual, in più salva il file
 }
 
 public class InformativeManager : MonoBehaviour {
@@ -65,7 +64,7 @@ public class InformativeManager : MonoBehaviour {
 
 	#region PRIVATEVARIABLES
 	
-	MenuManager menuMan;
+	//MenuManager menuMan;
 
 	GameObject multimediaSection;
 	Image multimedia;
@@ -97,10 +96,6 @@ public class InformativeManager : MonoBehaviour {
 	void Awake() {
 
 		switch (dataManage) {
-
-		case DataManagement.LoadDefault:
-			InfoSectionContainer.tryLoadInformativeManagerConf (ref sections, InfoSectionContainer.defaultFileName + "-0-");
-			break;
 
 		case DataManagement.Load:
 			InfoSectionContainer.tryLoadInformativeManagerConf (ref sections, InfoSectionContainer.defaultFileName + "-0-");
@@ -182,7 +177,7 @@ public class InformativeManager : MonoBehaviour {
 					foreach (InformativeContent conte in section.contents) {
 
 						if(conte.unlockerObject!=null) {
-							if(!conte.locked) {
+							if(!conte.lockedContent) {
 								
 								conte.unlockerObject.SetActive(false);
 
@@ -205,7 +200,7 @@ public class InformativeManager : MonoBehaviour {
 					foreach (InformativeContent funfact in section.contents) {
 						
 						if(funfact.unlockerObject!=null) {
-							if(!funfact.locked) {
+							if(!funfact.lockedContent) {
 								
 								funfact.unlockerObject.SetActive(false);
 								
@@ -230,7 +225,7 @@ public class InformativeManager : MonoBehaviour {
 					foreach (InformativeContent fragme in section.contents) {
 						
 						if(fragme.unlockerObject!=null) {
-							if(!fragme.locked) {
+							if(!fragme.lockedContent) {
 								
 								fragme.unlockerObject.SetActive(false);
 								
@@ -274,7 +269,7 @@ public class InformativeManager : MonoBehaviour {
 		if (initialized)
 			return;
 
-		menuMan = UtilFinder._GetComponentOfGameObjectWithTag<MenuManager> ("Controller");
+		//menuMan = UtilFinder._GetComponentOfGameObjectWithTag<MenuManager> ("Controller");
 
 
 		if (GeneralFinder.canvasMenu != null) {
@@ -662,8 +657,8 @@ public class InformativeManager : MonoBehaviour {
 
 
 		//if(Input.GetButtonDown("BackTrigger") ) {
-		if(	GeneralFinder.inputManager.getAxis("Horizontal") != 0.0f ) {
-			Debug.Log("horizontal");
+		if(	GeneralFinder.inputManager.getAxisRaw("Horizontal") != 0.0f ) {
+			//Debug.Log("horizontal");
 
 			if(Mathf.Abs( GeneralFinder.inputManager.getAxisRaw("Horizontal") ) > 0.9f) {
 				if(!horizontalDirectionUse) {
@@ -683,14 +678,14 @@ public class InformativeManager : MonoBehaviour {
 		}
 		
 		//if(Input.GetButtonDown("FrontTrigger") ) {
-		if(GeneralFinder.inputManager.getButtonDown("Mira") ) {
+		if(GeneralFinder.inputManager.getButtonDown("ChangeSubContentForward") ) {
 			
 			//float fl = Input.GetAxisRaw("FrontTrigger");
 			
 			controllerChangeSubContent(1.0f);
 			
 		}
-		else if (GeneralFinder.inputManager.getButtonDown("PickLantern")) {
+		else if (GeneralFinder.inputManager.getButtonDown("ChangeSubContentBackward")) {
 
 			controllerChangeSubContent(-1.0f);
 
@@ -698,7 +693,7 @@ public class InformativeManager : MonoBehaviour {
 
 		//TODO: problemi con cursor horizontal
 
-		if (GeneralFinder.inputManager.getAxis ("CursorHorizontal") != 0.0f) {
+		if (GeneralFinder.inputManager.getAxisRaw ("CursorHorizontal") != 0.0f) {
 
 			if( Mathf.Abs( GeneralFinder.inputManager.getAxisRaw("CursorHorizontal") ) > 0.9f )  {
 
@@ -729,7 +724,7 @@ public class InformativeManager : MonoBehaviour {
 
 
 		//if (Input.GetButtonDown ("Vertical-menu-nav")) {
-		if(	GeneralFinder.inputManager.getAxis("Vertical") != 0.0f ) {
+		if(	GeneralFinder.inputManager.getAxisRaw("Vertical") != 0.0f ) {
 
 			if(Mathf.Abs( GeneralFinder.inputManager.getAxisRaw("Vertical") ) > 0.9f) {
 
@@ -840,7 +835,7 @@ public class InformativeManager : MonoBehaviour {
 
 			//Debug.Log ("active content" + tempAct);
 
-			if(!sections[activeSection].contents[tempAct].locked)
+			if(!sections[activeSection].contents[tempAct].lockedContent)
 				break;
 		}
 
@@ -876,7 +871,7 @@ public class InformativeManager : MonoBehaviour {
 
 		for(int i=0; i<sections.Length; i++) {
 
-			if(!sections[i].locked)
+			if(!sections[i].lockedSection)
 				nUnlockSection++;
 
 		}
@@ -891,7 +886,7 @@ public class InformativeManager : MonoBehaviour {
 
 		for(int i=0; i<sections.Length; i++) {
 			
-			if(!sections[i].locked) {
+			if(!sections[i].lockedSection) {
 
 				nUnlockedSections[indexUsed] = sections[i];
 				indexUsed++;
@@ -922,7 +917,7 @@ public class InformativeManager : MonoBehaviour {
 				
 				randomContentIndex = UnityEngine.Random.Range (0, sections [randomSectionIndex].contents.Length);
 				
-				if (!sections [randomSectionIndex].contents [randomContentIndex].locked) {
+				if (!sections [randomSectionIndex].contents [randomContentIndex].lockedContent) {
 					
 					break;
 					
@@ -937,22 +932,52 @@ public class InformativeManager : MonoBehaviour {
 				}
 				
 			}
-			
-			int randomSubContentIndex = UnityEngine.Random.Range (0, sections [randomSectionIndex].contents[randomContentIndex].subContents.Length);
-			
+			int randomSubContentIndex = 0;
+			attempts = 0;
+
+			//prendo un subcontent a caso
+			while(true) {
+
+				randomSubContentIndex = UnityEngine.Random.Range (0, sections [randomSectionIndex].contents[randomContentIndex].subContents.Length);
+				attempts++;
+
+				if(sections [randomSectionIndex].contents[randomContentIndex].subContents.Length-1 >= randomSubContentIndex) {
+
+					break;
+
+				}
+
+				if(attempts>5) {
+					Debug.Log ("più di 5 prove - non trovo subcontent adatto");
+					return null;
+				}
+
+			}
+
+			//verifico che il subcontent sia utilizzabile per il loading, in caso contrario li scorro tutti e prendo il primo compatibile
 			if(!sections [randomSectionIndex].contents[randomContentIndex].subContents[randomSubContentIndex].usableForLoading) {
 				
 				bool solved = false;
 				
 				for(int i=0; i<sections [randomSectionIndex].contents[randomContentIndex].subContents.Length; i++) {
-					
-					if(sections [randomSectionIndex].contents[randomContentIndex].subContents[i].usableForLoading) {
+
+					if(sections [randomSectionIndex].contents[randomContentIndex].subContents.Length-1 >= i) {
 						
-						randomSubContentIndex = i;
-						solved = true;
-						break;
+						if(sections [randomSectionIndex].contents[randomContentIndex].subContents[i]!= null) {
+							
+							if(sections [randomSectionIndex].contents[randomContentIndex].subContents[i].usableForLoading) {
+								
+								randomSubContentIndex = i;
+								solved = true;
+								break;
+								
+							}
+							
+						}
 						
 					}
+
+
 					
 				}
 				
@@ -1000,7 +1025,7 @@ public class InformativeManager : MonoBehaviour {
 			
 			item.SetActive(true);
 			
-			if(!sections [sectionN].contents[index].locked) {
+			if(!sections [sectionN].contents[index].lockedContent) {
 				iconImages[index].sprite = sections [sectionN].contents[index].iconUnlock;
 				iconButtons[index].interactable = true;
 			}
@@ -1043,19 +1068,23 @@ public class InformativeManager : MonoBehaviour {
 			return;
 		}
 
-		if (!sections [sectionN].contents [contentN].locked && sections [sectionN].contents [contentN].subContents != null) {
-			
-			if(sections [sectionN].contents [contentN].subContents[subContentN] != null) {
+		if (!sections [sectionN].contents [contentN].lockedContent && sections [sectionN].contents [contentN].subContents != null) {
 
-				sections [sectionN].contents [contentN].activeSubContentIndex = subContentN;
+			if(sections [sectionN].contents [contentN].subContents.Length-1 >= subContentN) {
 
-				multimedia.sprite = sections [sectionN].contents [contentN].subContents [subContentN].image;
-				multimedia.color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
+				if(sections [sectionN].contents [contentN].subContents[subContentN] != null) {
 
-				detail.text = sections [sectionN].contents [contentN].subContents [subContentN].infoText.text;
+					sections [sectionN].contents [contentN].activeSubContentIndex = subContentN;
+
+					multimedia.sprite = sections [sectionN].contents [contentN].subContents [subContentN].image;
+					multimedia.color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
+
+					detail.text = sections [sectionN].contents [contentN].subContents [subContentN].infoText.text;
+
+				}
 
 			}
-			
+
 		}
 
 		//detail.text = sections [sectionN].contents [contentN].infoText.text;
@@ -1155,7 +1184,7 @@ public class InformativeManager : MonoBehaviour {
 
 			//Debug.Log ("temp active sect " + tempActiveSection);
 
-			if(!sections[tempActiveSection].locked && sections[tempActiveSection].contentType != infoContentType.Fragments)
+			if(!sections[tempActiveSection].lockedSection && sections[tempActiveSection].contentType != infoContentType.Fragments)
 				break;
 
 		}
@@ -1205,7 +1234,9 @@ public class InformativeManager : MonoBehaviour {
 		int activeSubContent = sections [activeSection].contents [activeContent].activeSubContentIndex;
 
 		int lenSubContents = sections [activeSection].contents [activeContent].subContents.Length;
-		
+
+		if (lenSubContents == 0)
+			return;
 		//Debug.Log ("len subcontents" + lenImages);
 		
 		for (int i=0; i< lenSubContents; i++) {
@@ -1226,8 +1257,7 @@ public class InformativeManager : MonoBehaviour {
 			activeSubContent = (activeSubContent+1)%lenSubContents;
 		} 
 		else {
-			
-			
+
 			activeSubContent = (activeSubContent-1)%lenSubContents;
 			
 			if(activeSubContent<0)
@@ -1309,11 +1339,12 @@ public class InformativeManager : MonoBehaviour {
 			GeneralFinder.canvasMenu.SetActive(true);
 		
 		if (act) {
-			menuMan.c_enableMenu(true);
-			menuMan.c_switchMenuSection (canvasIntro, canvasInformative);
+			GeneralFinder.menuManager.c_enableMenu(true);
+
+			GeneralFinder.menuManager.c_switchMenuSection (canvasIntro, canvasInformative);
 		} 
 		else {
-			menuMan.c_switchMenuSection (canvasInformative, canvasIntro);
+			GeneralFinder.menuManager.c_switchMenuSection (canvasInformative, canvasIntro);
 		}
 	}
 
@@ -1346,11 +1377,11 @@ public class InformativeManager : MonoBehaviour {
 			return;
 		}
 
-		sections [activeSection].locked = false;
+		sections [activeSection].lockedSection = false;
 		sections [activeSection].activeContent = cont;
 
 
-		sections [activeSection].contents[cont].locked = false;
+		sections [activeSection].contents[cont].lockedContent = false;
 
 		//TODO: cambiare?
 		if (sections [sect].contentType == infoContentType.Collectibles) {
@@ -1391,9 +1422,9 @@ public class InformativeManager : MonoBehaviour {
 
 
 
-		sections [sect].locked = false;
+		sections [sect].lockedSection = false;
 		
-		sections [sect].contents[fragm].locked = false;
+		sections [sect].contents[fragm].lockedContent = false;
 
 		//TODO : cambiare
 		GeneralFinder.unlockableContentUI.unlockFragment (sections [sect].contents [fragm].name);
@@ -1755,11 +1786,13 @@ public class InfoSectionContainer
 		
 		if (_path == null) {
 
-			TextAsset pi = Resources.Load("DefaultInfoFileConf") as TextAsset;
+			//ORA COME ORA, E' COME SE FOSSE UN USEDEFAULT
+
+			//TextAsset pi = Resources.Load("DefaultInfoFileConf") as TextAsset;
 			
-			infocon = InfoSectionContainer.LoadFromText (pi.text);
+			//infocon = InfoSectionContainer.LoadFromText (pi.text);
 			
-			infocon.setConfiguration (ref _sections);
+			//infocon.setConfiguration (ref _sections);
 			
 		}
 		else {
@@ -1829,7 +1862,7 @@ public class InfoSectionContainer
 
 		sectionToSet.ended = sectionLoad.ended;
 
-		sectionToSet.locked = sectionLoad.locked;
+		sectionToSet.lockedSection = sectionLoad.lockedSection;
 
 		//setto le informazioni per ogni content
 
@@ -1943,7 +1976,7 @@ public class InfoSectionContainer
 
 		contentToSet.shownWhenUnlocked = contentLoad.shownWhenUnlocked;
 
-		contentToSet.locked = contentLoad.locked;
+		contentToSet.lockedContent = contentLoad.lockedContent;
 
 
 	}
@@ -2015,7 +2048,7 @@ public class InformativeSection {
 	//per aprire o meno le sezioni
 	//viene settato a true la prima volta che un suo collezionabile viene sbloccato
 	[SerializeField]
-	public bool locked = false;
+	public bool lockedSection = false;
 
 	//serve per capire se si è finito un livello
 	//viene gestito a fine e inizio livello da UnlockedLevelControl
@@ -2032,12 +2065,15 @@ public class InformativeContent {
 	[SerializeField]
 	public string name;
 
+	[HideInInspector]
 	[SerializeField]
 	public float contentViewingTimer;
-	
+
+	[HideInInspector]
 	[SerializeField]
 	public int contentViewsCounter;
 
+	[HideInInspector]
 	public int activeSubContentIndex = 0;
 
 	[SerializeField]
@@ -2055,11 +2091,12 @@ public class InformativeContent {
 	[SerializeField]
 	public GameObject unlockerObject;
 
+	[HideInInspector]
 	[SerializeField]
 	public bool shownWhenUnlocked;
 	
 	[SerializeField]
-	public bool locked = false;
+	public bool lockedContent = false;
 
 	//STARTtodelete----
 

@@ -318,7 +318,7 @@ MonoBehaviour:
   buttonType: 0
   movementType: 0
   endActionType: 0
-  chainPieceType: 1
+  chainPieceType: 0
   nextActivationTime: 0
   transportType: 0
   targetPos: {fileID: 420278}
@@ -625,6 +625,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: clips.Array.data[1].volume
       value: .699999988
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: chainPieceType
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

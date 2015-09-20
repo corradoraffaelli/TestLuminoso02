@@ -250,7 +250,7 @@ public class UnlockableContentUI : MonoBehaviour {
 				if (actualContentSection.contents[j] != null && actualContentSection.contents[j].unlockerObject != null
 				    && actualContentSection.contents[j].iconLock != null && actualContentSection.contents[j].iconUnlock != null)
 				{
-					if (actualContentSection.contents[j].locked)
+					if (actualContentSection.contents[j].lockedContent)
 						rightSprites[actualIndex] = actualContentSection.contents[j].iconLock;
 					else
 						rightSprites[actualIndex] = actualContentSection.contents[j].iconUnlock;
@@ -275,7 +275,7 @@ public class UnlockableContentUI : MonoBehaviour {
 				if (actualFragmentSection.contents[j] != null && actualFragmentSection.contents[j].unlockerObject != null
 				    && actualFragmentSection.contents[j].iconLock != null && actualFragmentSection.contents[j].iconUnlock != null)
 				{
-					if (actualFragmentSection.contents[j].locked)
+					if (actualFragmentSection.contents[j].lockedContent)
 						leftSprites[actualIndex] = actualFragmentSection.contents[j].iconLock;
 					else
 						leftSprites[actualIndex] = actualFragmentSection.contents[j].iconUnlock;
@@ -421,7 +421,7 @@ public class UnlockableContentUI : MonoBehaviour {
 		{
 			for (int i = 0; i < actualFactSection.contents.Length; i++)
 			{
-				if (actualFactSection.contents[i] != null && !actualFactSection.contents[i].locked)
+				if (actualFactSection.contents[i] != null && !actualFactSection.contents[i].lockedContent)
 					unlockedNum++;
 			}
 		}
@@ -430,7 +430,7 @@ public class UnlockableContentUI : MonoBehaviour {
 		{
 			for (int i = 0; i < actualContentSection.contents.Length; i++)
 			{
-				if (actualContentSection.contents[i] != null && !actualContentSection.contents[i].locked)
+				if (actualContentSection.contents[i] != null && !actualContentSection.contents[i].lockedContent)
 					unlockedNum++;
 			}
 		}

@@ -35,11 +35,11 @@ public class levelChanger : MonoBehaviour {
 	void unlockLevel()
 	{
 		if (GeneralFinder.informativeManager.getActualCollectiblesSection(levelToUnlock) != null)
-			GeneralFinder.informativeManager.getActualCollectiblesSection(levelToUnlock).locked = false;
+			GeneralFinder.informativeManager.getActualCollectiblesSection(levelToUnlock).lockedSection = false;
 		if (GeneralFinder.informativeManager.getActualFragmentSection(levelToUnlock) != null)
-			GeneralFinder.informativeManager.getActualFragmentSection(levelToUnlock).locked = false;
+			GeneralFinder.informativeManager.getActualFragmentSection(levelToUnlock).lockedSection = false;
 		if (GeneralFinder.informativeManager.getActualFunFactsSection(levelToUnlock) != null)
-			GeneralFinder.informativeManager.getActualFunFactsSection(levelToUnlock).locked = false;
+			GeneralFinder.informativeManager.getActualFunFactsSection(levelToUnlock).lockedSection = false;
 	}
 
 	public void changeScene()

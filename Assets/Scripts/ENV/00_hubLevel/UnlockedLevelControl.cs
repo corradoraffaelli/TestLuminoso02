@@ -102,7 +102,7 @@ public class UnlockedLevelControl : MonoBehaviour {
 			{
 				unlockedLevelElements[i].unlockedLevelInfo.levelNumber = unlockedLevelElements[i].levelNumber;
 				InformativeSection contentSection = GeneralFinder.informativeManager.getActualCollectiblesSection(unlockedLevelElements[i].levelNumber);
-				if (contentSection != null && !contentSection.locked)
+				if (contentSection != null && !contentSection.lockedSection)
 					unlockedLevelElements[i].unlockedLevelInfo.isUnlocked = true;
 			}
 		}
