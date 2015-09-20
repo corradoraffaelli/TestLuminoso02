@@ -1432,9 +1432,10 @@ public class PlayerMovements : MonoBehaviour {
 	public void c_instantKill(string tagSource){
 
 		if (!AIControl) {
-			//if(zoneAnalyzerParent!=null) {
-			//	zoneAnalyzerParent.BroadcastMessage("c_playerKilled", tagSource);
-			//}
+			if(zoneAnalyzerParent!=null) {
+				zoneAnalyzerParent.BroadcastMessage("c_playerKilled", tagSource);
+			}
+
 			StartCoroutine (handlePlayerKill ());
 			c_stunned (true);
 

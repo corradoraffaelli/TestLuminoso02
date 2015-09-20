@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Xml;
 using System.Xml.Serialization;
 using System.IO;
+using System;
 
 public class HintAnalyzer : MonoBehaviour {
 
@@ -15,23 +16,24 @@ public class HintAnalyzer : MonoBehaviour {
 	[System.Serializable]
 	public class HintElement
 	{
+		public string name;
 		public string stringa;
 		public int activationNumber = 0;
 	}
 
 	List<HintElement> hintElements = new List<HintElement>();
 
-	public void addElement(string inputString)
+	public void addElement(string name, string inputString)
 	{
 		HintElement newHintElem = new HintElement();
 		newHintElem.stringa = inputString;
-
+		newHintElem.name = name;
 		hintElements.Add(newHintElem);
 	}
 	
-	public void activateElement(string inputString)
+	public void activateElement(string inputName)
 	{
-		hintElements.Find(x => x.stringa.Equals(inputString)).activationNumber++;
+		hintElements.Find(x => x.name.Equals(inputName)).activationNumber++;
 	}
 
 	/*
@@ -102,6 +104,29 @@ public class HintAnalyzer : MonoBehaviour {
 		//salva tutti gli elementi su file
 		hintContainer = new HintAnalyzerContainer();
 		hintContainer.hintElements = hintElements.ToArray();
+
+		//ORDINO L'Array per nome
+		string[] names = new string[hintContainer.hintElements.Length];
+
+		for (int i = 0; i < hintContainer.hintElements.Length; i++)
+		{
+			names[i] = hintContainer.hintElements[i].name;
+		}
+
+		Array.Sort (names);
+
+		HintElement[] orderedElements = new HintElement[hintContainer.hintElements.Length];
+
+		for (int i = 0; i < names.Length; i++)
+		{
+			for (int j = 0; j < hintContainer.hintElements.Length; j++)
+			{
+				if (names[i] == hintContainer.hintElements[j].name)
+					orderedElements[i] = hintContainer.hintElements[j];
+			}
+		}
+		hintContainer.hintElements = orderedElements;
+
 		hintContainer.Save(finalPath02);
 	}
 }

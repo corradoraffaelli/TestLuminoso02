@@ -3,6 +3,8 @@ using System.Collections;
 
 public class CursorHandler : MonoBehaviour {
 
+	public bool controllerAutomaticVar = true;
+
 	public bool useController = false;
 	public float xControllerMultiplier = 15.0f;
 	public float yControllerMultiplier = 15.0f;
@@ -229,9 +231,14 @@ public class CursorHandler : MonoBehaviour {
 
 	void changeUseController()
 	{
-		if (Input.GetKey(KeyCode.LeftShift) && Input.GetKeyDown(KeyCode.C))
-		//if (Input.GetKeyDown(KeyCode.C))
+		if (Input.GetKey (KeyCode.LeftShift) && Input.GetKeyDown (KeyCode.C)) {
+			//if (Input.GetKeyDown(KeyCode.C))
 			useController = !useController;
+			if (controllerAutomaticVar)
+			{
+				movingIfStanding = !useController;
+			}
+		}
 	}
 
 	void verifyCursorMoving()

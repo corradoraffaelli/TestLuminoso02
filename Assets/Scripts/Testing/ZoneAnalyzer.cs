@@ -3,6 +3,7 @@ using System.Collections;
 using System.Xml;
 using System.Xml.Serialization;
 using System.IO;
+using System;
 
 public class ZoneAnalyzer : MonoBehaviour {
 
@@ -23,6 +24,8 @@ public class ZoneAnalyzer : MonoBehaviour {
 		public string name;
 		[HideInInspector]
 		public float timeSpent = 0.0f;
+		public int enemyDeath = 0;
+		public int spikesDeath = 0;
 	}
 
 	[SerializeField]
@@ -37,6 +40,8 @@ public class ZoneAnalyzer : MonoBehaviour {
 	}
 
 
+	float lastKill = 0.0f;
+	float diffKill = 0.5f;
 	//-------------------------------
 	//---METODI USATI DAL COLLECTOR--
 	//-------------------------------
@@ -119,6 +124,29 @@ public class ZoneAnalyzer : MonoBehaviour {
 		}
 	}
 
+	public void c_playerKilled(string objectKiller)
+	{
+		Debug.Log ("ricevuto messaggio");
+		if (type == Type.analyzer && playerColliding) {
+			if ((Time.time - lastKill) > diffKill)
+			{
+				lastKill = Time.time;
+				switch (objectKiller)
+				{
+				case "Enemy":
+					zoneInfos.enemyDeath++;
+					break;
+				case "Spikes":
+					zoneInfos.spikesDeath++;
+					break;
+				default:
+					break;
+				}
+			}
+
+		}
+	}
+
 	void updateTime()
 	{
 		if (type == Type.analyzer)
@@ -139,6 +167,8 @@ public class ZoneAnalyzer : MonoBehaviour {
 			
 			ZoneAnalyzer[] analyzers = new ZoneAnalyzer[objs.Length];
 			ZoneInfos[] infos = new ZoneInfos[analyzers.Length];
+
+			string[] names = new string[objs.Length];
 			
 			for (int i = 0; i < objs.Length; i++)
 			{
@@ -150,10 +180,26 @@ public class ZoneAnalyzer : MonoBehaviour {
 					if (analyzers[i] != null && analyzers[i].type == Type.analyzer)
 					{
 						infos[i] = analyzers[i].zoneInfos;
+						names[i] = analyzers[i].zoneInfos.name;
 					}
 				}
 			}
-			
+
+			//ORDINO
+
+			Array.Sort(names);
+
+			ZoneInfos[] orderedInfos = new ZoneInfos[infos.Length];
+
+			for (int i = 0; i < names.Length; i++)
+			{
+				for (int j = 0; j < infos.Length; j++)
+				{
+					if (names[i] == infos[j].name)
+						orderedInfos[i] = infos[j];
+				}
+			}
+
 			//creo l'opportuna directory se non esiste già
 			if (!Directory.Exists(directory)) 
 			{
@@ -180,7 +226,7 @@ public class ZoneAnalyzer : MonoBehaviour {
 			
 			//salva tutti gli elementi su file
 			zoneContainer = new ZoneAnalyzerContainer();
-			zoneContainer.zoneInfos = infos;
+			zoneContainer.zoneInfos = orderedInfos;
 			zoneContainer.Save(finalPath02);
 		}
 	}
