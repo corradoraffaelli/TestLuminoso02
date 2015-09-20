@@ -13669,6 +13669,48 @@ SpriteRenderer:
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 2ae5654109cc79c4782fa2fc7373ec91, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
+--- !u!1001 &537345664
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 590893073}
+    m_Modifications:
+    - target: {fileID: 406316, guid: 95901a015c0054a31979001d1038a7df, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: -15.6623592
+      objectReference: {fileID: 0}
+    - target: {fileID: 406316, guid: 95901a015c0054a31979001d1038a7df, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 17.8109894
+      objectReference: {fileID: 0}
+    - target: {fileID: 406316, guid: 95901a015c0054a31979001d1038a7df, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 406316, guid: 95901a015c0054a31979001d1038a7df, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 406316, guid: 95901a015c0054a31979001d1038a7df, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 406316, guid: 95901a015c0054a31979001d1038a7df, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 406316, guid: 95901a015c0054a31979001d1038a7df, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 406316, guid: 95901a015c0054a31979001d1038a7df, type: 2}
+      propertyPath: m_RootOrder
+      value: 10
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 95901a015c0054a31979001d1038a7df, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1 &538459232
 GameObject:
   m_ObjectHideFlags: 0
@@ -16471,6 +16513,7 @@ Transform:
   - {fileID: 1631575365}
   - {fileID: 1490271021}
   - {fileID: 870253816}
+  - {fileID: 981867895}
   m_Father: {fileID: 0}
   m_RootOrder: 0
 --- !u!1001 &593192884
@@ -25503,6 +25546,10 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 6025d3f48a272654fa87ef3a16aa77bd, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
+--- !u!4 &981867895 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 406316, guid: 95901a015c0054a31979001d1038a7df, type: 2}
+  m_PrefabInternal: {fileID: 537345664}
 --- !u!1001 &982454509
 Prefab:
   m_ObjectHideFlags: 0

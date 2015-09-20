@@ -103,7 +103,9 @@ public class InformativeManager : MonoBehaviour {
 
 		case DataManagement.UseActual:
 			break;
-
+		case DataManagement.Save:
+			c_saveData();
+			break;
 
 		}
 
