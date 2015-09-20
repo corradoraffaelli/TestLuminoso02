@@ -24,7 +24,7 @@ public class killWhatever : MonoBehaviour {
 			if(crusher) {
 				objectToCrush = c.gameObject;
 				Debug.Log ("parte coroutine");
-				StartCoroutine(handleCrushKill());
+				StartCoroutine(handleCrushKill(c.gameObject));
 				//tStartCrush = Time.time;
 			}
 
@@ -40,17 +40,17 @@ public class killWhatever : MonoBehaviour {
 
 	}
 
-	private IEnumerator handleCrushKill() {
+	private IEnumerator handleCrushKill(GameObject objectToKill) {
 		//Debug.Log ("routine inizio");
-		yield return new WaitForSeconds (0.3f);
+		yield return new WaitForSeconds (0.1f);
 
 		if (turnOn && objectToCrush != null) {
-			Debug.Log ("routine agisco");
-			objectToCrush.gameObject.SendMessage ("c_crushKill");
-			turnOn = false;
+			Debug.Log (objectToKill + "routine agisco");
+			objectToKill.gameObject.SendMessage ("c_crushKill", gameObject.tag);
+			//turnOn = false;
 		}
 
-		Debug.Log ("routine fine");
+		Debug.Log (objectToKill + "routine fine");
 
 	}
 

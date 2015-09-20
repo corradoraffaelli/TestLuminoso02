@@ -50,9 +50,13 @@ public class InformativeManager : MonoBehaviour {
 	[HideInInspector]
 	public float timeCanShowNewContent = 5.0f;
 
-	bool verticalDirectionUse = false;
+	bool verticalDirectionDigUse = false;
 
-	bool horizontalDirectionUse = false;
+	bool verticalDirectionAnUse = false;
+
+	bool horizontalDirectionDigUse = false;
+
+	bool horizontalDirectionAnUse = false;
 
 	bool cursorVerticalDirectionUse = false;
 	
@@ -563,10 +567,19 @@ public class InformativeManager : MonoBehaviour {
 
 	void handleIntroAndExitInformativeMenu() {
 
+		//Debug.Log ("INVOCATO");
+
+		//Debug.Log ("canvasInformative.activeSelf" + canvasInformative.activeSelf);
+		//Debug.Log ("canvasInformative.transform.parent.gameObject.activeSelf" + canvasInformative.transform.parent.gameObject.activeSelf);
+		//Debug.Log ("invokedwitoutmenu" + invokeWithoutMenu);
+		//Debug.Log ("statusmenu" + GeneralFinder.menuManager.StatusMenu);
+
 		//if( (!canvasInformative.activeSelf || !canvasInformative.transform.parent.gameObject.activeSelf  ) 
 		//  && Input.GetKeyDown (KeyCode.I) && !invokeWithoutMenu && !GeneralFinder.menuManager.StatusMenu) {
 			if( (!canvasInformative.activeSelf || !canvasInformative.transform.parent.gameObject.activeSelf  ) 
-		     && GeneralFinder.inputManager.getButtonDown("GlassModifier") && !invokeWithoutMenu && !GeneralFinder.menuManager.StatusMenu) {
+		     	/*&& GeneralFinder.inputManager.getButtonDown("OpenInformative") */
+		   		&& !invokeWithoutMenu 
+		   		&& !GeneralFinder.menuManager.StatusMenu) {
 
 
 			//Debug.Log("ciao0");
@@ -624,24 +637,14 @@ public class InformativeManager : MonoBehaviour {
 
 	void Update() {
 		
-		//if (Input.GetButtonDown ("Informative-menu") || Input.GetButtonUp("Escape-menu")) {
-		if(GeneralFinder.inputManager.getButtonUp("Start") || GeneralFinder.inputManager.getButtonUp("GlassModifier")) {
+		if((GeneralFinder.inputManager.getButtonUp("Start") && invokeWithoutMenu) 
+		   || (GeneralFinder.inputManager.getButtonUp("GoBackMenu") && canvasInformative.activeSelf && invokeWithoutMenu)
+		   || GeneralFinder.inputManager.getButtonUp("OpenInformative")) {
 
+			//Debug.Log("premuto qualcosa per inf");
 			handleIntroAndExitInformativeMenu();
 
-			/*
-			GeneralFinder.menuManager.c_enableMenu(true, canvasInformative);
 
-			//GeneralFinder.playingUI.cleanPositionButtonObject (PlayingUI.UIPosition.UpperRight);
-			//GeneralFinder.playingUI.cleanPositionGameObjects (PlayingUI.UIPosition.UpperRight);
-
-			if(unlockedNewContent) {
-
-				GeneralFinder.testInformativeManager.c_setShowWhenUnlocked(activeSection, sections[activeSection].activeContent);
-				unlockedNewContent = false;
-
-			}
-			*/
 		}
 
 		if (!canvasInformative.activeSelf) 
@@ -663,20 +666,40 @@ public class InformativeManager : MonoBehaviour {
 			//Debug.Log("horizontal");
 
 			if(Mathf.Abs( GeneralFinder.inputManager.getAxisRaw("Horizontal") ) > 0.9f) {
-				if(!horizontalDirectionUse) {
+				if(!horizontalDirectionAnUse) {
 
 					float fl = GeneralFinder.inputManager.getAxisRaw("Horizontal");
 					
 					controllerChangeSection(fl);
 
-					horizontalDirectionUse = true;
+					horizontalDirectionAnUse = true;
 				}
 			}
 		}
 		else {
 
-			horizontalDirectionUse = false;
+			horizontalDirectionAnUse = false;
 
+		}
+
+		if(	GeneralFinder.inputManager.getAxisRaw("DigitalHorizontal") != 0.0f ) {
+			//Debug.Log("horizontal");
+			
+			if(Mathf.Abs( GeneralFinder.inputManager.getAxisRaw("DigitalHorizontal") ) > 0.9f) {
+				if(!horizontalDirectionDigUse) {
+					
+					float fl = GeneralFinder.inputManager.getAxisRaw("DigitalHorizontal");
+					
+					controllerChangeSection(fl);
+					
+					horizontalDirectionDigUse = true;
+				}
+			}
+		}
+		else {
+			
+			horizontalDirectionDigUse = false;
+			
 		}
 		
 		//if(Input.GetButtonDown("FrontTrigger") ) {
@@ -730,21 +753,44 @@ public class InformativeManager : MonoBehaviour {
 
 			if(Mathf.Abs( GeneralFinder.inputManager.getAxisRaw("Vertical") ) > 0.9f) {
 
-				if(!verticalDirectionUse) {
+				if(!verticalDirectionAnUse) {
 
 					float fl = GeneralFinder.inputManager.getAxisRaw("Vertical");
 					
 					controllerChangeContent(fl);
 
-					verticalDirectionUse = true;
+					verticalDirectionAnUse = true;
 
 				}
 			}
 		}
 		else {
 
-			verticalDirectionUse = false;
+			verticalDirectionAnUse = false;
 
+		}
+
+		if(	GeneralFinder.inputManager.getAxisRaw("DigitalVertical") != 0.0f ) {
+			
+			if(Mathf.Abs( GeneralFinder.inputManager.getAxisRaw("DigitalVertical") ) > 0.9f) {
+				
+				if(!verticalDirectionDigUse) {
+					
+					float fl = GeneralFinder.inputManager.getAxisRaw("DigitalVertical");
+
+					controllerChangeContent(-fl);
+
+
+					
+					verticalDirectionDigUse = true;
+					
+				}
+			}
+		}
+		else {
+			
+			verticalDirectionDigUse = false;
+			
 		}
 		
 		if (Input.GetButtonDown ("Horizontal-menu-nav")) {

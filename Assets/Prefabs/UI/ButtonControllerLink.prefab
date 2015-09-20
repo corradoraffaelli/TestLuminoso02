@@ -24,7 +24,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 176264}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 46.0522614, y: 5.58353424, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -106,6 +106,36 @@ MonoBehaviour:
     button360Mac: 17
     buttonPS3Mac: 13
     buttonPS4Mac: 2
+  - scriptInterface: ChangeSubContentForward
+    physicalButton: 8
+    button360Windows: 5
+    button360Mac: 14
+    buttonPS3Mac: 11
+    buttonPS4Mac: 5
+  - scriptInterface: ChangeSubContentBackward
+    physicalButton: 10
+    button360Windows: 4
+    button360Mac: 13
+    buttonPS3Mac: 10
+    buttonPS4Mac: 4
+  - scriptInterface: OpenInformative
+    physicalButton: 13
+    button360Windows: 6
+    button360Mac: 10
+    buttonPS3Mac: 0
+    buttonPS4Mac: 8
+  - scriptInterface: GoBackMenu
+    physicalButton: 2
+    button360Windows: 1
+    button360Mac: 17
+    buttonPS3Mac: 13
+    buttonPS4Mac: 2
+  - scriptInterface: GoMenu
+    physicalButton: 0
+    button360Windows: 0
+    button360Mac: 16
+    buttonPS3Mac: 14
+    buttonPS4Mac: 1
   axisElement:
   - scriptInterface: CursorVertical
     physicalButton: 17
@@ -131,6 +161,18 @@ MonoBehaviour:
     axis360Mac: 18
     axisPS3Mac: 18
     axisPS4Mac: 18
+  - scriptInterface: DigitalHorizontal
+    physicalButton: 6
+    axis360Windows: 18
+    axis360Mac: 18
+    axisPS3Mac: 18
+    axisPS4Mac: 4
+  - scriptInterface: DigitalVertical
+    physicalButton: 5
+    axis360Windows: 18
+    axis360Mac: 18
+    axisPS3Mac: 18
+    axisPS4Mac: 5
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
