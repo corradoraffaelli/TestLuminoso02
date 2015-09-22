@@ -8,8 +8,9 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 418800}
-  - 114: {fileID: 11490050}
-  - 114: {fileID: 11476066}
+  - 114: {fileID: 11433302}
+  - 114: {fileID: 11429470}
+  - 114: {fileID: 11496724}
   m_Layer: 0
   m_Name: ButtonControllerLink
   m_TagString: ButtonControllerLink
@@ -24,12 +25,528 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 176264}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 46.0522614, y: 5.58353424, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
---- !u!114 &11476066
+--- !u!114 &11429470
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 176264}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a647551bb2993ac4f94ac0a39343b945, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  keyboardElements:
+  - scriptInterface: A
+    genericInput:
+      button: 1
+      axis: 0
+      axisDirection: 0
+      axisValue: 0
+      axisValueOld: 0
+    buttonSprite: {fileID: 21300000, guid: 4b1be964c5f78d54fba9df255ad36bfe, type: 3}
+    buttonSpriteAlt: {fileID: 21300000, guid: 996a0461e87a22c449b809c34d259045, type: 3}
+  - scriptInterface: B
+    genericInput:
+      button: 2
+      axis: 0
+      axisDirection: 0
+      axisValue: 0
+      axisValueOld: 0
+    buttonSprite: {fileID: 21300000, guid: f945c9ceedabba142990742b36cf2463, type: 3}
+    buttonSpriteAlt: {fileID: 21300000, guid: ecc63580334359e4ba3781823017d053, type: 3}
+  - scriptInterface: C
+    genericInput:
+      button: 3
+      axis: 0
+      axisDirection: 0
+      axisValue: 0
+      axisValueOld: 0
+    buttonSprite: {fileID: 21300000, guid: f31302f15efb8c4418371ab61b10d585, type: 3}
+    buttonSpriteAlt: {fileID: 21300000, guid: 9b599e0e67bdbf34c9b055f7e5686275, type: 3}
+  - scriptInterface: D
+    genericInput:
+      button: 4
+      axis: 0
+      axisDirection: 0
+      axisValue: 0
+      axisValueOld: 0
+    buttonSprite: {fileID: 21300000, guid: 5805c91dc580ec740807a5664ea4b2d4, type: 3}
+    buttonSpriteAlt: {fileID: 21300000, guid: 052c414e09cd93840959f05205f5aad9, type: 3}
+  - scriptInterface: E
+    genericInput:
+      button: 5
+      axis: 0
+      axisDirection: 0
+      axisValue: 0
+      axisValueOld: 0
+    buttonSprite: {fileID: 21300000, guid: 707091fe1da54d045a301643c88dba40, type: 3}
+    buttonSpriteAlt: {fileID: 21300000, guid: b81aa035d41c35e40a671bca77c46088, type: 3}
+  - scriptInterface: F
+    genericInput:
+      button: 6
+      axis: 0
+      axisDirection: 0
+      axisValue: 0
+      axisValueOld: 0
+    buttonSprite: {fileID: 21300000, guid: 4f7207d8524d4414dadb7547b10f9cc7, type: 3}
+    buttonSpriteAlt: {fileID: 21300000, guid: 786eefc73780d2f418b0f2bb8acf4191, type: 3}
+  - scriptInterface: G
+    genericInput:
+      button: 7
+      axis: 0
+      axisDirection: 0
+      axisValue: 0
+      axisValueOld: 0
+    buttonSprite: {fileID: 21300000, guid: 0d7ed714ef5bea14e8de2670df502aca, type: 3}
+    buttonSpriteAlt: {fileID: 21300000, guid: 61290054d4eeff749963df5c9cfeb6c0, type: 3}
+  - scriptInterface: H
+    genericInput:
+      button: 8
+      axis: 0
+      axisDirection: 0
+      axisValue: 0
+      axisValueOld: 0
+    buttonSprite: {fileID: 21300000, guid: 4db893ab780bd04418ca511d5146d492, type: 3}
+    buttonSpriteAlt: {fileID: 21300000, guid: 60c2e96f2b8f40142a23189a1f793510, type: 3}
+  - scriptInterface: I
+    genericInput:
+      button: 9
+      axis: 0
+      axisDirection: 0
+      axisValue: 0
+      axisValueOld: 0
+    buttonSprite: {fileID: 21300000, guid: 85873f6656e1322449e4622f32d070c4, type: 3}
+    buttonSpriteAlt: {fileID: 21300000, guid: 06ba07ba1cc05da47bbd94ee3c70faf6, type: 3}
+  - scriptInterface: J
+    genericInput:
+      button: 10
+      axis: 0
+      axisDirection: 0
+      axisValue: 0
+      axisValueOld: 0
+    buttonSprite: {fileID: 21300000, guid: abefbd44592ac024bb57f5ef4dc0530a, type: 3}
+    buttonSpriteAlt: {fileID: 21300000, guid: 659e9d8df220afe4da0b2c53030b47ae, type: 3}
+  - scriptInterface: K
+    genericInput:
+      button: 11
+      axis: 0
+      axisDirection: 0
+      axisValue: 0
+      axisValueOld: 0
+    buttonSprite: {fileID: 21300000, guid: 5ea98ca811d0e6546be8996e47290fb2, type: 3}
+    buttonSpriteAlt: {fileID: 21300000, guid: 8d8f5f4312d46034ea030b8a156efbac, type: 3}
+  - scriptInterface: L
+    genericInput:
+      button: 12
+      axis: 0
+      axisDirection: 0
+      axisValue: 0
+      axisValueOld: 0
+    buttonSprite: {fileID: 21300000, guid: 5d50b5a174f6ad643bcf5c8199bb302b, type: 3}
+    buttonSpriteAlt: {fileID: 21300000, guid: 501cb24c1f052e843a2e520ba9796ece, type: 3}
+  - scriptInterface: M
+    genericInput:
+      button: 13
+      axis: 0
+      axisDirection: 0
+      axisValue: 0
+      axisValueOld: 0
+    buttonSprite: {fileID: 21300000, guid: f11ac1f673c642f48ac7a8593e864ecf, type: 3}
+    buttonSpriteAlt: {fileID: 21300000, guid: 9558fb9c2d2164647b828965a7268d9a, type: 3}
+  - scriptInterface: N
+    genericInput:
+      button: 14
+      axis: 0
+      axisDirection: 0
+      axisValue: 0
+      axisValueOld: 0
+    buttonSprite: {fileID: 21300000, guid: 4b1cde32e5ea0ef489e3651e72026c98, type: 3}
+    buttonSpriteAlt: {fileID: 21300000, guid: dc13a23b08fc6e94689684c769597218, type: 3}
+  - scriptInterface: O
+    genericInput:
+      button: 15
+      axis: 0
+      axisDirection: 0
+      axisValue: 0
+      axisValueOld: 0
+    buttonSprite: {fileID: 21300000, guid: 9f829cd77ceb8d848932536690f84cf7, type: 3}
+    buttonSpriteAlt: {fileID: 21300000, guid: 1b5210675ad331f44be1b6e561d21aac, type: 3}
+  - scriptInterface: P
+    genericInput:
+      button: 16
+      axis: 0
+      axisDirection: 0
+      axisValue: 0
+      axisValueOld: 0
+    buttonSprite: {fileID: 21300000, guid: dc60bc9542a2fed42bac05a386eca55b, type: 3}
+    buttonSpriteAlt: {fileID: 21300000, guid: d7b8a699cb5308e45ae330fc2ecd581b, type: 3}
+  - scriptInterface: Q
+    genericInput:
+      button: 17
+      axis: 0
+      axisDirection: 0
+      axisValue: 0
+      axisValueOld: 0
+    buttonSprite: {fileID: 21300000, guid: 4ca93789d0faa224886817f2f6dfc7e4, type: 3}
+    buttonSpriteAlt: {fileID: 21300000, guid: 8573d442909e09e44b80e03d74f6f8fb, type: 3}
+  - scriptInterface: R
+    genericInput:
+      button: 18
+      axis: 0
+      axisDirection: 0
+      axisValue: 0
+      axisValueOld: 0
+    buttonSprite: {fileID: 21300000, guid: 214b2eca70e4cc0418b12df43ffd9eb4, type: 3}
+    buttonSpriteAlt: {fileID: 21300000, guid: 89851a70479b2d94fbc366486dc86b20, type: 3}
+  - scriptInterface: S
+    genericInput:
+      button: 19
+      axis: 0
+      axisDirection: 0
+      axisValue: 0
+      axisValueOld: 0
+    buttonSprite: {fileID: 21300000, guid: 15b41634323fe80488068b159bb53c0d, type: 3}
+    buttonSpriteAlt: {fileID: 21300000, guid: 706f13ed5bfb25b4590ff7a8165857ad, type: 3}
+  - scriptInterface: T
+    genericInput:
+      button: 20
+      axis: 0
+      axisDirection: 0
+      axisValue: 0
+      axisValueOld: 0
+    buttonSprite: {fileID: 21300000, guid: feb7f01adcaf43a44880c9a25399c6da, type: 3}
+    buttonSpriteAlt: {fileID: 21300000, guid: f01a3c9da96c0e94591a85513eae4b12, type: 3}
+  - scriptInterface: U
+    genericInput:
+      button: 21
+      axis: 0
+      axisDirection: 0
+      axisValue: 0
+      axisValueOld: 0
+    buttonSprite: {fileID: 21300000, guid: f1b80b88489d8054eb30af135e1ae5f8, type: 3}
+    buttonSpriteAlt: {fileID: 21300000, guid: dca9a0ea93bbb4d4fa30307ef9acc39f, type: 3}
+  - scriptInterface: V
+    genericInput:
+      button: 22
+      axis: 0
+      axisDirection: 0
+      axisValue: 0
+      axisValueOld: 0
+    buttonSprite: {fileID: 21300000, guid: a7d5b2ff4bd437447a20360471a81dcd, type: 3}
+    buttonSpriteAlt: {fileID: 21300000, guid: 06d310bd62281434c900632a937ea42c, type: 3}
+  - scriptInterface: W
+    genericInput:
+      button: 23
+      axis: 0
+      axisDirection: 0
+      axisValue: 0
+      axisValueOld: 0
+    buttonSprite: {fileID: 21300000, guid: b31518f223ac2194fac03ba89e00eb8f, type: 3}
+    buttonSpriteAlt: {fileID: 21300000, guid: b6e6ea91fd2d5014f92fe6a3a317cfcf, type: 3}
+  - scriptInterface: X
+    genericInput:
+      button: 24
+      axis: 0
+      axisDirection: 0
+      axisValue: 0
+      axisValueOld: 0
+    buttonSprite: {fileID: 21300000, guid: 80e85832478b9764bb56461ee275cb28, type: 3}
+    buttonSpriteAlt: {fileID: 21300000, guid: 1946dea37fba0a845931e541df789b97, type: 3}
+  - scriptInterface: Y
+    genericInput:
+      button: 25
+      axis: 0
+      axisDirection: 0
+      axisValue: 0
+      axisValueOld: 0
+    buttonSprite: {fileID: 21300000, guid: 5a1b436d8aa9a354bb3f62ab6ef04eec, type: 3}
+    buttonSpriteAlt: {fileID: 21300000, guid: 3d5b398e6818fc94382454f2a8f79af0, type: 3}
+  - scriptInterface: Z
+    genericInput:
+      button: 26
+      axis: 0
+      axisDirection: 0
+      axisValue: 0
+      axisValueOld: 0
+    buttonSprite: {fileID: 21300000, guid: 9fe3181c1fb59be4286bed4076dfe773, type: 3}
+    buttonSpriteAlt: {fileID: 21300000, guid: 43914efa1b6b7324cb796a863655ff93, type: 3}
+  - scriptInterface: ESC
+    genericInput:
+      button: 27
+      axis: 0
+      axisDirection: 0
+      axisValue: 0
+      axisValueOld: 0
+    buttonSprite: {fileID: 21300000, guid: 11cc73046c831f241bd338f07a6592c3, type: 3}
+    buttonSpriteAlt: {fileID: 21300000, guid: 5fbc1540e4d21fb4e983737c66ea954f, type: 3}
+  - scriptInterface: RETURN
+    genericInput:
+      button: 28
+      axis: 0
+      axisDirection: 0
+      axisValue: 0
+      axisValueOld: 0
+    buttonSprite: {fileID: 21300000, guid: e4b8520b76ea75d4188de1b4c9e4d6e3, type: 3}
+    buttonSpriteAlt: {fileID: 21300000, guid: c3afd32404eac624096240e46fa68348, type: 3}
+  - scriptInterface: BACK
+    genericInput:
+      button: 29
+      axis: 0
+      axisDirection: 0
+      axisValue: 0
+      axisValueOld: 0
+    buttonSprite: {fileID: 21300000, guid: 26c2ca0120321a0458b004e6d0bb8491, type: 3}
+    buttonSpriteAlt: {fileID: 21300000, guid: b2f043feaa4d7404aa445ce9528b4182, type: 3}
+  - scriptInterface: SPACE
+    genericInput:
+      button: 30
+      axis: 0
+      axisDirection: 0
+      axisValue: 0
+      axisValueOld: 0
+    buttonSprite: {fileID: 21300000, guid: cbee087a66d908643aaa2df96eb65700, type: 3}
+    buttonSpriteAlt: {fileID: 21300000, guid: 73a78f652a3d58e419736e48b471c3cc, type: 3}
+  - scriptInterface: LeftCTRL
+    genericInput:
+      button: 31
+      axis: 0
+      axisDirection: 0
+      axisValue: 0
+      axisValueOld: 0
+    buttonSprite: {fileID: 21300000, guid: a11f1571e0e99b34c8f4eab48cab0131, type: 3}
+    buttonSpriteAlt: {fileID: 21300000, guid: c13cb3aa84d927d4bb99830cceecb2c7, type: 3}
+  - scriptInterface: LeftSHIFT
+    genericInput:
+      button: 32
+      axis: 0
+      axisDirection: 0
+      axisValue: 0
+      axisValueOld: 0
+    buttonSprite: {fileID: 21300000, guid: f67cee28333713147b46a6edcf3ad555, type: 3}
+    buttonSpriteAlt: {fileID: 21300000, guid: 2dbd17d7600260349a734413ad582320, type: 3}
+  - scriptInterface: TAB
+    genericInput:
+      button: 33
+      axis: 0
+      axisDirection: 0
+      axisValue: 0
+      axisValueOld: 0
+    buttonSprite: {fileID: 21300000, guid: cbb6301c84431d94fb71f053d7097cf9, type: 3}
+    buttonSpriteAlt: {fileID: 21300000, guid: 4b4e186bbac76b14487457c334cfdeb1, type: 3}
+  - scriptInterface: LeftALT
+    genericInput:
+      button: 34
+      axis: 0
+      axisDirection: 0
+      axisValue: 0
+      axisValueOld: 0
+    buttonSprite: {fileID: 21300000, guid: 410d5f6e6fcbe0a49b64598b2ed8e0a2, type: 3}
+    buttonSpriteAlt: {fileID: 21300000, guid: 2f8bdf7bdf9fb4f4ea2a2bb1ad30a39b, type: 3}
+  - scriptInterface: RightCTRL
+    genericInput:
+      button: 35
+      axis: 0
+      axisDirection: 0
+      axisValue: 0
+      axisValueOld: 0
+    buttonSprite: {fileID: 0}
+    buttonSpriteAlt: {fileID: 0}
+  - scriptInterface: RightALT
+    genericInput:
+      button: 36
+      axis: 0
+      axisDirection: 0
+      axisValue: 0
+      axisValueOld: 0
+    buttonSprite: {fileID: 0}
+    buttonSpriteAlt: {fileID: 0}
+  - scriptInterface: RightSHIFT
+    genericInput:
+      button: 37
+      axis: 0
+      axisDirection: 0
+      axisValue: 0
+      axisValueOld: 0
+    buttonSprite: {fileID: 0}
+    buttonSpriteAlt: {fileID: 0}
+  - scriptInterface: Num1
+    genericInput:
+      button: 38
+      axis: 0
+      axisDirection: 0
+      axisValue: 0
+      axisValueOld: 0
+    buttonSprite: {fileID: 21300000, guid: 57fbb0c7f319d5f4eb4e3a8512296cf3, type: 3}
+    buttonSpriteAlt: {fileID: 21300000, guid: 1cb9e0f7d26795f4780b5b9382da5bfa, type: 3}
+  - scriptInterface: Num2
+    genericInput:
+      button: 39
+      axis: 0
+      axisDirection: 0
+      axisValue: 0
+      axisValueOld: 0
+    buttonSprite: {fileID: 21300000, guid: 8f445c3f0e308d846ac6b553e4258280, type: 3}
+    buttonSpriteAlt: {fileID: 21300000, guid: 8877df783bea9fb45aaeadadcb8fd9b2, type: 3}
+  - scriptInterface: Num3
+    genericInput:
+      button: 40
+      axis: 0
+      axisDirection: 0
+      axisValue: 0
+      axisValueOld: 0
+    buttonSprite: {fileID: 21300000, guid: c9c1ec2a8c1a91f4bb34d2195f1d1ec7, type: 3}
+    buttonSpriteAlt: {fileID: 21300000, guid: a6dc6b28eaf8f3646887ab0f1083ad43, type: 3}
+  - scriptInterface: Num4
+    genericInput:
+      button: 41
+      axis: 0
+      axisDirection: 0
+      axisValue: 0
+      axisValueOld: 0
+    buttonSprite: {fileID: 21300000, guid: 68eeea760e15f4d4f8971e05ca361b0d, type: 3}
+    buttonSpriteAlt: {fileID: 21300000, guid: 85cf72d8d7497704793c78dc09fd0fec, type: 3}
+  - scriptInterface: Num5
+    genericInput:
+      button: 42
+      axis: 0
+      axisDirection: 0
+      axisValue: 0
+      axisValueOld: 0
+    buttonSprite: {fileID: 21300000, guid: 75ae6dd2bc339074186d8ae6993fd62d, type: 3}
+    buttonSpriteAlt: {fileID: 21300000, guid: 5d46f97c80603eb4da2b2185458c1ed5, type: 3}
+  - scriptInterface: Num6
+    genericInput:
+      button: 43
+      axis: 0
+      axisDirection: 0
+      axisValue: 0
+      axisValueOld: 0
+    buttonSprite: {fileID: 21300000, guid: 5547c4d057b329b4ab65bcd51de48db6, type: 3}
+    buttonSpriteAlt: {fileID: 21300000, guid: c5fc0fd948b910b41b6314baaa052c97, type: 3}
+  - scriptInterface: Num7
+    genericInput:
+      button: 44
+      axis: 0
+      axisDirection: 0
+      axisValue: 0
+      axisValueOld: 0
+    buttonSprite: {fileID: 21300000, guid: 2751afe8d415329469325d04919abbd0, type: 3}
+    buttonSpriteAlt: {fileID: 21300000, guid: ef83ca1adf6ef804e8d85aaf708fa077, type: 3}
+  - scriptInterface: Num8
+    genericInput:
+      button: 45
+      axis: 0
+      axisDirection: 0
+      axisValue: 0
+      axisValueOld: 0
+    buttonSprite: {fileID: 21300000, guid: d8f3e68180a3eb74c8d9bc33bdcff5d5, type: 3}
+    buttonSpriteAlt: {fileID: 21300000, guid: bd963737c75c7d840bb8350184f2865c, type: 3}
+  - scriptInterface: Num9
+    genericInput:
+      button: 46
+      axis: 0
+      axisDirection: 0
+      axisValue: 0
+      axisValueOld: 0
+    buttonSprite: {fileID: 21300000, guid: c264d16708550fe48a8774bc7fd8d5ae, type: 3}
+    buttonSpriteAlt: {fileID: 21300000, guid: 33495f1d6bb5fcc49aad1f672bc7046e, type: 3}
+  - scriptInterface: Num0
+    genericInput:
+      button: 47
+      axis: 0
+      axisDirection: 0
+      axisValue: 0
+      axisValueOld: 0
+    buttonSprite: {fileID: 21300000, guid: 2866c4e0831837f438139e0c00715d80, type: 3}
+    buttonSpriteAlt: {fileID: 21300000, guid: 8cede5a5773203f43a6a62824b9da08b, type: 3}
+  - scriptInterface: LeftMouse
+    genericInput:
+      button: 48
+      axis: 0
+      axisDirection: 0
+      axisValue: 0
+      axisValueOld: 0
+    buttonSprite: {fileID: 21300000, guid: 1a658248002fc7a4a95cb00e12de5928, type: 3}
+    buttonSpriteAlt: {fileID: 21300000, guid: 2886b89b5977b17409170ffa28ee3d44, type: 3}
+  - scriptInterface: RightMouse
+    genericInput:
+      button: 49
+      axis: 0
+      axisDirection: 0
+      axisValue: 0
+      axisValueOld: 0
+    buttonSprite: {fileID: 21300000, guid: 05d6a99744517e349ab888665846c528, type: 3}
+    buttonSpriteAlt: {fileID: 21300000, guid: 18cca6c68b0033d4ca82404b45356113, type: 3}
+  - scriptInterface: ArrowUp
+    genericInput:
+      button: 50
+      axis: 0
+      axisDirection: 0
+      axisValue: 0
+      axisValueOld: 0
+    buttonSprite: {fileID: 21300000, guid: 552ee5601fde4034cabcf6e52acc340c, type: 3}
+    buttonSpriteAlt: {fileID: 21300000, guid: 2692e630b58fbc04cb8276262982b54f, type: 3}
+  - scriptInterface: ArrowDown
+    genericInput:
+      button: 51
+      axis: 0
+      axisDirection: 0
+      axisValue: 0
+      axisValueOld: 0
+    buttonSprite: {fileID: 21300000, guid: e09be1d7bd4137948b89a206e1cab33e, type: 3}
+    buttonSpriteAlt: {fileID: 21300000, guid: 775d7eebf8ccc2849b51eddddb0819a0, type: 3}
+  - scriptInterface: ArrowRight
+    genericInput:
+      button: 52
+      axis: 0
+      axisDirection: 0
+      axisValue: 0
+      axisValueOld: 0
+    buttonSprite: {fileID: 21300000, guid: ec7eb8ca675365c4cbed2ff8638d4bb3, type: 3}
+    buttonSpriteAlt: {fileID: 21300000, guid: a207a8d590c2b7b408f9ab124e8437b8, type: 3}
+  - scriptInterface: ArrowLeft
+    genericInput:
+      button: 53
+      axis: 0
+      axisDirection: 0
+      axisValue: 0
+      axisValueOld: 0
+    buttonSprite: {fileID: 21300000, guid: 12920c08260d7124f8dea706095554c3, type: 3}
+    buttonSpriteAlt: {fileID: 21300000, guid: 6f1ead4d6def92c44843628551016b4f, type: 3}
+  - scriptInterface: Horizontal
+    genericInput:
+      button: 54
+      axis: 1
+      axisDirection: 0
+      axisValue: 0
+      axisValueOld: 0
+    buttonSprite: {fileID: 0}
+    buttonSpriteAlt: {fileID: 0}
+  - scriptInterface: Vertical
+    genericInput:
+      button: 55
+      axis: 2
+      axisDirection: 0
+      axisValue: 0
+      axisValueOld: 0
+    buttonSprite: {fileID: 0}
+    buttonSpriteAlt: {fileID: 0}
+  - scriptInterface: ENTER
+    genericInput:
+      button: 56
+      axis: 0
+      axisDirection: 0
+      axisValue: 0
+      axisValueOld: 0
+    buttonSprite: {fileID: 21300000, guid: 4517ae71622cc5c4eb37c969ff011b28, type: 3}
+    buttonSpriteAlt: {fileID: 21300000, guid: f2c90eed9dafecc469c67db778e0a8b1, type: 3}
+--- !u!114 &11433302
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -40,7 +557,71 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fffaf0e57ca1741c6bf9b5a53842a114, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &11490050
+  buttons:
+  - interfaceName: Jump
+    alternativeInterfaceName: 
+    controllerButtons: 01000000
+    keyboardButtons: 1e000000
+  - interfaceName: LanternaMagica
+    alternativeInterfaceName: 
+    controllerButtons: 03000000
+    keyboardButtons: 
+  - interfaceName: Mira
+    alternativeInterfaceName: 
+    controllerButtons: 090000000b000000
+    keyboardButtons: 3100000030000000
+  - interfaceName: PickLantern
+    alternativeInterfaceName: 
+    controllerButtons: 
+    keyboardButtons: 
+  - interfaceName: NextGlass
+    alternativeInterfaceName: 
+    controllerButtons: 03000000
+    keyboardButtons: 11000000
+  - interfaceName: Interaction
+    alternativeInterfaceName: 
+    controllerButtons: 02000000
+    keyboardButtons: 05000000
+  - interfaceName: GlassModifier
+    alternativeInterfaceName: 
+    controllerButtons: 04000000
+    keyboardButtons: 1a000000
+  axis:
+  - interfaceName: Horizontal
+    alternativeInterfaceName: 
+    controllerAxis:
+    - controllerPositiveAxis: 20
+      controllerNegativeAxis: 0
+      invertNegative: 0
+    keyboardAxis:
+    - keyboardPositiveAxis: 54
+      keyboardNegativeAxis: 0
+      invertNegative: 0
+  - interfaceName: Vertical
+    alternativeInterfaceName: 
+    controllerAxis:
+    - controllerPositiveAxis: 21
+      controllerNegativeAxis: 0
+      invertNegative: 0
+    keyboardAxis:
+    - keyboardPositiveAxis: 55
+      keyboardNegativeAxis: 0
+      invertNegative: 0
+  - interfaceName: CursorHorizontal
+    alternativeInterfaceName: 
+    controllerAxis:
+    - controllerPositiveAxis: 18
+      controllerNegativeAxis: 0
+      invertNegative: 0
+    keyboardAxis: []
+  - interfaceName: CursorVertical
+    alternativeInterfaceName: 
+    controllerAxis:
+    - controllerPositiveAxis: 19
+      controllerNegativeAxis: 0
+      invertNegative: 0
+    keyboardAxis: []
+--- !u!114 &11496724
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -51,128 +632,849 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d80ae1f81bafbe4bad27299ed2834b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  useController: 0
   buttonElements:
-  - scriptInterface: Jump
-    physicalButton: 0
-    button360Windows: 0
-    button360Mac: 16
-    buttonPS3Mac: 14
-    buttonPS4Mac: 1
-  - scriptInterface: NextGlass
-    physicalButton: 2
-    button360Windows: 1
-    button360Mac: 17
-    buttonPS3Mac: 13
-    buttonPS4Mac: 2
-  - scriptInterface: Interaction
+  - scriptInterface: X
     physicalButton: 1
-    button360Windows: 2
-    button360Mac: 18
-    buttonPS3Mac: 15
-    buttonPS4Mac: 0
-  - scriptInterface: GlassModifier
+    button360Windows:
+      button: 1
+      axis: 0
+      axisDirection: 0
+      axisValue: 0
+      axisValueOld: 0
+    button360Mac:
+      button: 17
+      axis: 0
+      axisDirection: 0
+      axisValue: 0
+      axisValueOld: 0
+    buttonPS3Mac:
+      button: 15
+      axis: 0
+      axisDirection: 0
+      axisValue: 0
+      axisValueOld: 0
+    buttonPS4Mac:
+      button: 2
+      axis: 0
+      axisDirection: 0
+      axisValue: 0
+      axisValueOld: 0
+    button360Sprite: {fileID: 21300000, guid: a6d29a135d07c2047abe0fb9a8c4a49f, type: 3}
+    buttonPS3Sprite: {fileID: 21300000, guid: 36a84b1ee97726b489a6b379ea50ba4d, type: 3}
+    buttonPS4Sprite: {fileID: 21300000, guid: e8029fa36b0f0934cab13fd4e2205461, type: 3}
+  - scriptInterface: Quadrato
+    physicalButton: 2
+    button360Windows:
+      button: 3
+      axis: 0
+      axisDirection: 0
+      axisValue: 0
+      axisValueOld: 0
+    button360Mac:
+      button: 19
+      axis: 0
+      axisDirection: 0
+      axisValue: 0
+      axisValueOld: 0
+    buttonPS3Mac:
+      button: 16
+      axis: 0
+      axisDirection: 0
+      axisValue: 0
+      axisValueOld: 0
+    buttonPS4Mac:
+      button: 1
+      axis: 0
+      axisDirection: 0
+      axisValue: 0
+      axisValueOld: 0
+    button360Sprite: {fileID: 21300000, guid: 00035ab2139db0443892dfb931c437ba, type: 3}
+    buttonPS3Sprite: {fileID: 21300000, guid: 15c94f9c394f2af48a8d4fe2b90881ac, type: 3}
+    buttonPS4Sprite: {fileID: 21300000, guid: c822f8849b4f97340b6871a7e38c7213, type: 3}
+  - scriptInterface: Cerchio
     physicalButton: 3
-    button360Windows: 3
-    button360Mac: 19
-    buttonPS3Mac: 12
-    buttonPS4Mac: 3
-  - scriptInterface: Mira
-    physicalButton: 8
-    button360Windows: 5
-    button360Mac: 14
-    buttonPS3Mac: 11
-    buttonPS4Mac: 5
-  - scriptInterface: PickLantern
-    physicalButton: 10
-    button360Windows: 4
-    button360Mac: 13
-    buttonPS3Mac: 10
-    buttonPS4Mac: 4
-  - scriptInterface: Start
-    physicalButton: 12
-    button360Windows: 7
-    button360Mac: 9
-    buttonPS3Mac: 3
-    buttonPS4Mac: 9
-  - scriptInterface: Select
-    physicalButton: 13
-    button360Windows: 6
-    button360Mac: 10
-    buttonPS3Mac: 0
-    buttonPS4Mac: 8
-  - scriptInterface: LanternaMagica
-    physicalButton: 2
-    button360Windows: 1
-    button360Mac: 17
-    buttonPS3Mac: 13
-    buttonPS4Mac: 2
-  - scriptInterface: ChangeSubContentForward
-    physicalButton: 8
-    button360Windows: 5
-    button360Mac: 14
-    buttonPS3Mac: 11
-    buttonPS4Mac: 5
-  - scriptInterface: ChangeSubContentBackward
-    physicalButton: 10
-    button360Windows: 4
-    button360Mac: 13
-    buttonPS3Mac: 10
-    buttonPS4Mac: 4
-  - scriptInterface: OpenInformative
-    physicalButton: 13
-    button360Windows: 6
-    button360Mac: 10
-    buttonPS3Mac: 0
-    buttonPS4Mac: 8
-  - scriptInterface: GoBackMenu
-    physicalButton: 2
-    button360Windows: 1
-    button360Mac: 17
-    buttonPS3Mac: 13
-    buttonPS4Mac: 2
-  - scriptInterface: GoMenu
-    physicalButton: 0
-    button360Windows: 0
-    button360Mac: 16
-    buttonPS3Mac: 14
-    buttonPS4Mac: 1
-  axisElement:
-  - scriptInterface: CursorVertical
-    physicalButton: 17
-    axis360Windows: 2
-    axis360Mac: 1
-    axisPS3Mac: 1
-    axisPS4Mac: 1
-  - scriptInterface: CursorHorizontal
-    physicalButton: 18
-    axis360Windows: 1
-    axis360Mac: 0
-    axisPS3Mac: 0
-    axisPS4Mac: 0
-  - scriptInterface: Vertical
-    physicalButton: 17
-    axis360Windows: 19
-    axis360Mac: 19
-    axisPS3Mac: 19
-    axisPS4Mac: 19
-  - scriptInterface: Horizontal
-    physicalButton: 18
-    axis360Windows: 18
-    axis360Mac: 18
-    axisPS3Mac: 18
-    axisPS4Mac: 18
-  - scriptInterface: DigitalHorizontal
-    physicalButton: 6
-    axis360Windows: 18
-    axis360Mac: 18
-    axisPS3Mac: 18
-    axisPS4Mac: 4
-  - scriptInterface: DigitalVertical
+    button360Windows:
+      button: 2
+      axis: 0
+      axisDirection: 0
+      axisValue: 0
+      axisValueOld: 0
+    button360Mac:
+      button: 18
+      axis: 0
+      axisDirection: 0
+      axisValue: 0
+      axisValueOld: 0
+    buttonPS3Mac:
+      button: 14
+      axis: 0
+      axisDirection: 0
+      axisValue: 0
+      axisValueOld: 0
+    buttonPS4Mac:
+      button: 3
+      axis: 0
+      axisDirection: 0
+      axisValue: 0
+      axisValueOld: 0
+    button360Sprite: {fileID: 21300000, guid: b2f0e615a6ad0bc4d8adfa24fed4ea07, type: 3}
+    buttonPS3Sprite: {fileID: 21300000, guid: a8b032ac0f2885a419637408a2dc3668, type: 3}
+    buttonPS4Sprite: {fileID: 21300000, guid: a0d3e179e4ee5824bb90dcdc8c033058, type: 3}
+  - scriptInterface: Triangolo
+    physicalButton: 4
+    button360Windows:
+      button: 4
+      axis: 0
+      axisDirection: 0
+      axisValue: 0
+      axisValueOld: 0
+    button360Mac:
+      button: 20
+      axis: 0
+      axisDirection: 0
+      axisValue: 0
+      axisValueOld: 0
+    buttonPS3Mac:
+      button: 13
+      axis: 0
+      axisDirection: 0
+      axisValue: 0
+      axisValueOld: 0
+    buttonPS4Mac:
+      button: 4
+      axis: 0
+      axisDirection: 0
+      axisValue: 0
+      axisValueOld: 0
+    button360Sprite: {fileID: 21300000, guid: ecfd04dd61c92094aac635ca8117c827, type: 3}
+    buttonPS3Sprite: {fileID: 21300000, guid: 8c0ead389a3f5234e8236e622536a29a, type: 3}
+    buttonPS4Sprite: {fileID: 21300000, guid: 7e3d9c8a8c08c994c905e9d7f4769ea8, type: 3}
+  - scriptInterface: DPadUp
     physicalButton: 5
-    axis360Windows: 18
-    axis360Mac: 18
-    axisPS3Mac: 18
-    axisPS4Mac: 5
+    button360Windows:
+      button: 0
+      axis: 5
+      axisDirection: 1
+      axisValue: 0
+      axisValueOld: 0
+    button360Mac:
+      button: 6
+      axis: 0
+      axisDirection: 0
+      axisValue: 0
+      axisValueOld: 0
+    buttonPS3Mac:
+      button: 5
+      axis: 0
+      axisDirection: 0
+      axisValue: 0
+      axisValueOld: 0
+    buttonPS4Mac:
+      button: 0
+      axis: 6
+      axisDirection: 2
+      axisValue: 0
+      axisValueOld: 0
+    button360Sprite: {fileID: 21300000, guid: fb0ba964f8223734082a3e876fd5b241, type: 3}
+    buttonPS3Sprite: {fileID: 21300000, guid: a1c0800ee2dc2a34fa105787068c65f7, type: 3}
+    buttonPS4Sprite: {fileID: 21300000, guid: 81a1f44789fba974cbfedef519479dfa, type: 3}
+  - scriptInterface: DPadDown
+    physicalButton: 6
+    button360Windows:
+      button: 0
+      axis: 5
+      axisDirection: 2
+      axisValue: 0
+      axisValueOld: 0
+    button360Mac:
+      button: 7
+      axis: 0
+      axisDirection: 0
+      axisValue: 0
+      axisValueOld: 0
+    buttonPS3Mac:
+      button: 7
+      axis: 0
+      axisDirection: 0
+      axisValue: 0
+      axisValueOld: 0
+    buttonPS4Mac:
+      button: 0
+      axis: 6
+      axisDirection: 1
+      axisValue: 0
+      axisValueOld: 0
+    button360Sprite: {fileID: 21300000, guid: b26ef1cefbf464b4d80edee2aa6c02f6, type: 3}
+    buttonPS3Sprite: {fileID: 21300000, guid: 05e62e7efa6659044afe20520bb2e133, type: 3}
+    buttonPS4Sprite: {fileID: 21300000, guid: d35e7eb949d3bf54eb03d40aaf33c95e, type: 3}
+  - scriptInterface: DPadRight
+    physicalButton: 7
+    button360Windows:
+      button: 0
+      axis: 4
+      axisDirection: 1
+      axisValue: 0
+      axisValueOld: 0
+    button360Mac:
+      button: 9
+      axis: 0
+      axisDirection: 0
+      axisValue: 0
+      axisValueOld: 0
+    buttonPS3Mac:
+      button: 6
+      axis: 0
+      axisDirection: 0
+      axisValue: 0
+      axisValueOld: 0
+    buttonPS4Mac:
+      button: 0
+      axis: 5
+      axisDirection: 1
+      axisValue: 0
+      axisValueOld: 0
+    button360Sprite: {fileID: 21300000, guid: 2d2fb096f322c4042a4bbe158a3ebc2f, type: 3}
+    buttonPS3Sprite: {fileID: 21300000, guid: 8027442847f22124699c2d09c135cb67, type: 3}
+    buttonPS4Sprite: {fileID: 21300000, guid: 04820236c9af41142b038908c2e4215e, type: 3}
+  - scriptInterface: DPadLeft
+    physicalButton: 8
+    button360Windows:
+      button: 0
+      axis: 4
+      axisDirection: 2
+      axisValue: 0
+      axisValueOld: 0
+    button360Mac:
+      button: 8
+      axis: 0
+      axisDirection: 0
+      axisValue: 0
+      axisValueOld: 0
+    buttonPS3Mac:
+      button: 8
+      axis: 0
+      axisDirection: 0
+      axisValue: 0
+      axisValueOld: 0
+    buttonPS4Mac:
+      button: 0
+      axis: 5
+      axisDirection: 2
+      axisValue: 0
+      axisValueOld: 0
+    button360Sprite: {fileID: 21300000, guid: d5d48a66070d1f9468468e403102004e, type: 3}
+    buttonPS3Sprite: {fileID: 21300000, guid: 3a1fb7ca9f27e4949bc7615f8a5577c8, type: 3}
+    buttonPS4Sprite: {fileID: 21300000, guid: 31871468cbf8eaa42a26bcb70e133f27, type: 3}
+  - scriptInterface: R1
+    physicalButton: 9
+    button360Windows:
+      button: 6
+      axis: 0
+      axisDirection: 0
+      axisValue: 0
+      axisValueOld: 0
+    button360Mac:
+      button: 15
+      axis: 0
+      axisDirection: 0
+      axisValue: 0
+      axisValueOld: 0
+    buttonPS3Mac:
+      button: 12
+      axis: 0
+      axisDirection: 0
+      axisValue: 0
+      axisValueOld: 0
+    buttonPS4Mac:
+      button: 6
+      axis: 0
+      axisDirection: 0
+      axisValue: 0
+      axisValueOld: 0
+    button360Sprite: {fileID: 21300000, guid: a2f22e243baeb1d4da302d7d0ce36acd, type: 3}
+    buttonPS3Sprite: {fileID: 21300000, guid: b45a14dc3218b764c98ef2c1a8667064, type: 3}
+    buttonPS4Sprite: {fileID: 21300000, guid: 3e9c2ac7f4d438149a9393c6bdec7d52, type: 3}
+  - scriptInterface: R2
+    physicalButton: 10
+    button360Windows:
+      button: 0
+      axis: 8
+      axisDirection: 1
+      axisValue: 0
+      axisValueOld: 0
+    button360Mac:
+      button: 0
+      axis: 3
+      axisDirection: 0
+      axisValue: 0
+      axisValueOld: 0
+    buttonPS3Mac:
+      button: 10
+      axis: 0
+      axisDirection: 0
+      axisValue: 0
+      axisValueOld: 0
+    buttonPS4Mac:
+      button: 0
+      axis: 4
+      axisDirection: 0
+      axisValue: 0
+      axisValueOld: 0
+    button360Sprite: {fileID: 21300000, guid: b200d90a18fd48240b7c03396b48e38b, type: 3}
+    buttonPS3Sprite: {fileID: 21300000, guid: 197bf6e78f69ac548b90e3c0d4e9840f, type: 3}
+    buttonPS4Sprite: {fileID: 21300000, guid: 98c40b626af30c043bf58387d3fa41e9, type: 3}
+  - scriptInterface: L1
+    physicalButton: 11
+    button360Windows:
+      button: 5
+      axis: 0
+      axisDirection: 0
+      axisValue: 0
+      axisValueOld: 0
+    button360Mac:
+      button: 14
+      axis: 0
+      axisDirection: 0
+      axisValue: 0
+      axisValueOld: 0
+    buttonPS3Mac:
+      button: 11
+      axis: 0
+      axisDirection: 0
+      axisValue: 0
+      axisValueOld: 0
+    buttonPS4Mac:
+      button: 5
+      axis: 0
+      axisDirection: 0
+      axisValue: 0
+      axisValueOld: 0
+    button360Sprite: {fileID: 21300000, guid: ad6af9d3caf5c364db7dd3963a535923, type: 3}
+    buttonPS3Sprite: {fileID: 21300000, guid: e9674a4c9295e1b4bbfd0320062b514d, type: 3}
+    buttonPS4Sprite: {fileID: 21300000, guid: 037993b5919114d46b875465550937da, type: 3}
+  - scriptInterface: L2
+    physicalButton: 12
+    button360Windows:
+      button: 0
+      axis: 7
+      axisDirection: 1
+      axisValue: 0
+      axisValueOld: 0
+    button360Mac:
+      button: 0
+      axis: 4
+      axisDirection: 0
+      axisValue: 0
+      axisValueOld: 0
+    buttonPS3Mac:
+      button: 9
+      axis: 0
+      axisDirection: 0
+      axisValue: 0
+      axisValueOld: 0
+    buttonPS4Mac:
+      button: 0
+      axis: 3
+      axisDirection: 0
+      axisValue: 0
+      axisValueOld: 0
+    button360Sprite: {fileID: 21300000, guid: 4ed739b898fe3e54fba40ecc7735c3d5, type: 3}
+    buttonPS3Sprite: {fileID: 21300000, guid: 0300604333a510348bf5b6e1fd9278c4, type: 3}
+    buttonPS4Sprite: {fileID: 21300000, guid: 230d0f5fa9b0ed34d9e89ed10317b3a4, type: 3}
+  - scriptInterface: Start
+    physicalButton: 13
+    button360Windows:
+      button: 8
+      axis: 0
+      axisDirection: 0
+      axisValue: 0
+      axisValueOld: 0
+    button360Mac:
+      button: 10
+      axis: 0
+      axisDirection: 0
+      axisValue: 0
+      axisValueOld: 0
+    buttonPS3Mac:
+      button: 4
+      axis: 0
+      axisDirection: 0
+      axisValue: 0
+      axisValueOld: 0
+    buttonPS4Mac:
+      button: 10
+      axis: 0
+      axisDirection: 0
+      axisValue: 0
+      axisValueOld: 0
+    button360Sprite: {fileID: 21300000, guid: 2d62e0b5fa4c01549a2b5edf012f760c, type: 3}
+    buttonPS3Sprite: {fileID: 21300000, guid: 4fb70a466e976db48b952d21e6e0c307, type: 3}
+    buttonPS4Sprite: {fileID: 21300000, guid: 4ae81d4be4a79664a927769b8a06d09d, type: 3}
+  - scriptInterface: Select
+    physicalButton: 14
+    button360Windows:
+      button: 7
+      axis: 0
+      axisDirection: 0
+      axisValue: 0
+      axisValueOld: 0
+    button360Mac:
+      button: 11
+      axis: 0
+      axisDirection: 0
+      axisValue: 0
+      axisValueOld: 0
+    buttonPS3Mac:
+      button: 1
+      axis: 0
+      axisDirection: 0
+      axisValue: 0
+      axisValueOld: 0
+    buttonPS4Mac:
+      button: 9
+      axis: 0
+      axisDirection: 0
+      axisValue: 0
+      axisValueOld: 0
+    button360Sprite: {fileID: 21300000, guid: 463830c63c175d241a9e14a4df0221b5, type: 3}
+    buttonPS3Sprite: {fileID: 21300000, guid: a6db02b3ca46ccd41a52486b128da6db, type: 3}
+    buttonPS4Sprite: {fileID: 21300000, guid: 1fbf3fbf9e5a41f4daeed337ab945bbb, type: 3}
+  - scriptInterface: RButton
+    physicalButton: 15
+    button360Windows:
+      button: 10
+      axis: 0
+      axisDirection: 0
+      axisValue: 0
+      axisValueOld: 0
+    button360Mac:
+      button: 13
+      axis: 0
+      axisDirection: 0
+      axisValue: 0
+      axisValueOld: 0
+    buttonPS3Mac:
+      button: 3
+      axis: 0
+      axisDirection: 0
+      axisValue: 0
+      axisValueOld: 0
+    buttonPS4Mac:
+      button: 12
+      axis: 0
+      axisDirection: 0
+      axisValue: 0
+      axisValueOld: 0
+    button360Sprite: {fileID: 21300000, guid: 56117393899b8a64d94986ec3def5f55, type: 3}
+    buttonPS3Sprite: {fileID: 21300000, guid: e9f38640a334053499e9eab9da9a279b, type: 3}
+    buttonPS4Sprite: {fileID: 21300000, guid: 21005712576576246ac4725dd9e1afb5, type: 3}
+  - scriptInterface: LButton
+    physicalButton: 16
+    button360Windows:
+      button: 9
+      axis: 0
+      axisDirection: 0
+      axisValue: 0
+      axisValueOld: 0
+    button360Mac:
+      button: 12
+      axis: 0
+      axisDirection: 0
+      axisValue: 0
+      axisValueOld: 0
+    buttonPS3Mac:
+      button: 2
+      axis: 0
+      axisDirection: 0
+      axisValue: 0
+      axisValueOld: 0
+    buttonPS4Mac:
+      button: 11
+      axis: 0
+      axisDirection: 0
+      axisValue: 0
+      axisValueOld: 0
+    button360Sprite: {fileID: 21300000, guid: 1b6aaa3e4e0cc024081018468f1ee7b4, type: 3}
+    buttonPS3Sprite: {fileID: 21300000, guid: 161fc1efc6f93a441a83336b0dc40fc0, type: 3}
+    buttonPS4Sprite: {fileID: 21300000, guid: d1fa9f299d0a7fb43977011769c57396, type: 3}
+  - scriptInterface: PS
+    physicalButton: 17
+    button360Windows:
+      button: 0
+      axis: 0
+      axisDirection: 0
+      axisValue: 0
+      axisValueOld: 0
+    button360Mac:
+      button: 16
+      axis: 0
+      axisDirection: 0
+      axisValue: 0
+      axisValueOld: 0
+    buttonPS3Mac:
+      button: 17
+      axis: 0
+      axisDirection: 0
+      axisValue: 0
+      axisValueOld: 0
+    buttonPS4Mac:
+      button: 13
+      axis: 0
+      axisDirection: 0
+      axisValue: 0
+      axisValueOld: 0
+    button360Sprite: {fileID: 0}
+    buttonPS3Sprite: {fileID: 0}
+    buttonPS4Sprite: {fileID: 0}
+  - scriptInterface: StickRHorizontal
+    physicalButton: 18
+    button360Windows:
+      button: 0
+      axis: 2
+      axisDirection: 0
+      axisValue: 0
+      axisValueOld: 0
+    button360Mac:
+      button: 0
+      axis: 1
+      axisDirection: 0
+      axisValue: 0
+      axisValueOld: 0
+    buttonPS3Mac:
+      button: 0
+      axis: 1
+      axisDirection: 0
+      axisValue: 0
+      axisValueOld: 0
+    buttonPS4Mac:
+      button: 0
+      axis: 1
+      axisDirection: 0
+      axisValue: 0
+      axisValueOld: 0
+    button360Sprite: {fileID: 0}
+    buttonPS3Sprite: {fileID: 0}
+    buttonPS4Sprite: {fileID: 0}
+  - scriptInterface: StickRVertical
+    physicalButton: 19
+    button360Windows:
+      button: 0
+      axis: 3
+      axisDirection: 0
+      axisValue: 0
+      axisValueOld: 0
+    button360Mac:
+      button: 0
+      axis: 2
+      axisDirection: 0
+      axisValue: 0
+      axisValueOld: 0
+    buttonPS3Mac:
+      button: 0
+      axis: 2
+      axisDirection: 0
+      axisValue: 0
+      axisValueOld: 0
+    buttonPS4Mac:
+      button: 0
+      axis: 2
+      axisDirection: 0
+      axisValue: 0
+      axisValueOld: 0
+    button360Sprite: {fileID: 0}
+    buttonPS3Sprite: {fileID: 0}
+    buttonPS4Sprite: {fileID: 0}
+  - scriptInterface: StickLHorizontal
+    physicalButton: 20
+    button360Windows:
+      button: 0
+      axis: 19
+      axisDirection: 0
+      axisValue: 0
+      axisValueOld: 0
+    button360Mac:
+      button: 0
+      axis: 19
+      axisDirection: 0
+      axisValue: 0
+      axisValueOld: 0
+    buttonPS3Mac:
+      button: 0
+      axis: 19
+      axisDirection: 0
+      axisValue: 0
+      axisValueOld: 0
+    buttonPS4Mac:
+      button: 0
+      axis: 19
+      axisDirection: 0
+      axisValue: 0
+      axisValueOld: 0
+    button360Sprite: {fileID: 0}
+    buttonPS3Sprite: {fileID: 0}
+    buttonPS4Sprite: {fileID: 0}
+  - scriptInterface: StickLVertical
+    physicalButton: 21
+    button360Windows:
+      button: 0
+      axis: 20
+      axisDirection: 0
+      axisValue: 0
+      axisValueOld: 0
+    button360Mac:
+      button: 0
+      axis: 20
+      axisDirection: 0
+      axisValue: 0
+      axisValueOld: 0
+    buttonPS3Mac:
+      button: 0
+      axis: 20
+      axisDirection: 0
+      axisValue: 0
+      axisValueOld: 0
+    buttonPS4Mac:
+      button: 0
+      axis: 20
+      axisDirection: 0
+      axisValue: 0
+      axisValueOld: 0
+    button360Sprite: {fileID: 0}
+    buttonPS3Sprite: {fileID: 0}
+    buttonPS4Sprite: {fileID: 0}
+  - scriptInterface: StickRUp
+    physicalButton: 22
+    button360Windows:
+      button: 0
+      axis: 3
+      axisDirection: 2
+      axisValue: 0
+      axisValueOld: 0
+    button360Mac:
+      button: 0
+      axis: 2
+      axisDirection: 2
+      axisValue: 0
+      axisValueOld: 0
+    buttonPS3Mac:
+      button: 0
+      axis: 2
+      axisDirection: 2
+      axisValue: 0
+      axisValueOld: 0
+    buttonPS4Mac:
+      button: 0
+      axis: 2
+      axisDirection: 2
+      axisValue: 0
+      axisValueOld: 0
+    button360Sprite: {fileID: 0}
+    buttonPS3Sprite: {fileID: 0}
+    buttonPS4Sprite: {fileID: 0}
+  - scriptInterface: StickRDown
+    physicalButton: 23
+    button360Windows:
+      button: 0
+      axis: 3
+      axisDirection: 1
+      axisValue: 0
+      axisValueOld: 0
+    button360Mac:
+      button: 0
+      axis: 2
+      axisDirection: 1
+      axisValue: 0
+      axisValueOld: 0
+    buttonPS3Mac:
+      button: 0
+      axis: 2
+      axisDirection: 1
+      axisValue: 0
+      axisValueOld: 0
+    buttonPS4Mac:
+      button: 0
+      axis: 2
+      axisDirection: 1
+      axisValue: 0
+      axisValueOld: 0
+    button360Sprite: {fileID: 0}
+    buttonPS3Sprite: {fileID: 0}
+    buttonPS4Sprite: {fileID: 0}
+  - scriptInterface: StickRRight
+    physicalButton: 24
+    button360Windows:
+      button: 0
+      axis: 2
+      axisDirection: 1
+      axisValue: 0
+      axisValueOld: 0
+    button360Mac:
+      button: 0
+      axis: 1
+      axisDirection: 1
+      axisValue: 0
+      axisValueOld: 0
+    buttonPS3Mac:
+      button: 0
+      axis: 1
+      axisDirection: 1
+      axisValue: 0
+      axisValueOld: 0
+    buttonPS4Mac:
+      button: 0
+      axis: 1
+      axisDirection: 1
+      axisValue: 0
+      axisValueOld: 0
+    button360Sprite: {fileID: 0}
+    buttonPS3Sprite: {fileID: 0}
+    buttonPS4Sprite: {fileID: 0}
+  - scriptInterface: StickRLeft
+    physicalButton: 25
+    button360Windows:
+      button: 0
+      axis: 2
+      axisDirection: 2
+      axisValue: 0
+      axisValueOld: 0
+    button360Mac:
+      button: 0
+      axis: 1
+      axisDirection: 2
+      axisValue: 0
+      axisValueOld: 0
+    buttonPS3Mac:
+      button: 0
+      axis: 1
+      axisDirection: 2
+      axisValue: 0
+      axisValueOld: 0
+    buttonPS4Mac:
+      button: 0
+      axis: 1
+      axisDirection: 2
+      axisValue: 0
+      axisValueOld: 0
+    button360Sprite: {fileID: 0}
+    buttonPS3Sprite: {fileID: 0}
+    buttonPS4Sprite: {fileID: 0}
+  - scriptInterface: StickLUp
+    physicalButton: 26
+    button360Windows:
+      button: 0
+      axis: 20
+      axisDirection: 1
+      axisValue: 0
+      axisValueOld: 0
+    button360Mac:
+      button: 0
+      axis: 20
+      axisDirection: 1
+      axisValue: 0
+      axisValueOld: 0
+    buttonPS3Mac:
+      button: 0
+      axis: 20
+      axisDirection: 1
+      axisValue: 0
+      axisValueOld: 0
+    buttonPS4Mac:
+      button: 0
+      axis: 20
+      axisDirection: 1
+      axisValue: 0
+      axisValueOld: 0
+    button360Sprite: {fileID: 0}
+    buttonPS3Sprite: {fileID: 0}
+    buttonPS4Sprite: {fileID: 0}
+  - scriptInterface: StickLDown
+    physicalButton: 27
+    button360Windows:
+      button: 0
+      axis: 20
+      axisDirection: 2
+      axisValue: 0
+      axisValueOld: 0
+    button360Mac:
+      button: 0
+      axis: 20
+      axisDirection: 2
+      axisValue: 0
+      axisValueOld: 0
+    buttonPS3Mac:
+      button: 0
+      axis: 20
+      axisDirection: 2
+      axisValue: 0
+      axisValueOld: 0
+    buttonPS4Mac:
+      button: 0
+      axis: 20
+      axisDirection: 2
+      axisValue: 0
+      axisValueOld: 0
+    button360Sprite: {fileID: 0}
+    buttonPS3Sprite: {fileID: 0}
+    buttonPS4Sprite: {fileID: 0}
+  - scriptInterface: StickLRight
+    physicalButton: 28
+    button360Windows:
+      button: 0
+      axis: 19
+      axisDirection: 1
+      axisValue: 0
+      axisValueOld: 0
+    button360Mac:
+      button: 0
+      axis: 19
+      axisDirection: 1
+      axisValue: 0
+      axisValueOld: 0
+    buttonPS3Mac:
+      button: 0
+      axis: 19
+      axisDirection: 1
+      axisValue: 0
+      axisValueOld: 0
+    buttonPS4Mac:
+      button: 0
+      axis: 19
+      axisDirection: 1
+      axisValue: 0
+      axisValueOld: 0
+    button360Sprite: {fileID: 0}
+    buttonPS3Sprite: {fileID: 0}
+    buttonPS4Sprite: {fileID: 0}
+  - scriptInterface: StickLLeft
+    physicalButton: 29
+    button360Windows:
+      button: 0
+      axis: 19
+      axisDirection: 2
+      axisValue: 0
+      axisValueOld: 0
+    button360Mac:
+      button: 0
+      axis: 19
+      axisDirection: 2
+      axisValue: 0
+      axisValueOld: 0
+    buttonPS3Mac:
+      button: 0
+      axis: 19
+      axisDirection: 2
+      axisValue: 0
+      axisValueOld: 0
+    buttonPS4Mac:
+      button: 0
+      axis: 19
+      axisDirection: 2
+      axisValue: 0
+      axisValueOld: 0
+    button360Sprite: {fileID: 0}
+    buttonPS3Sprite: {fileID: 0}
+    buttonPS4Sprite: {fileID: 0}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

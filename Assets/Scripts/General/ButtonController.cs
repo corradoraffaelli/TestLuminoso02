@@ -3,72 +3,118 @@ using System.Collections;
 
 public class ButtonController : MonoBehaviour {
 
+
+	//[HideInInspector]
+	public bool useController;
+
 	/*
 	 * -----------TIPI DI CONTROLLER---------
 	 */
 	
-	public enum ControllerType { Windows360, Mac360, MacPS3, MacPS4};
+	public enum ControllerType {Default, Windows360, Mac360, MacPS3, MacPS4};
 	public static ControllerType controllerType;
 
 	/*
 	 * -----------TIPI DI BOTTONI---------
 	 */
 
-	public enum Button{Button0, Button1, Button2, Button3, Button4, Button5, Button6,  Button7, Button8, Button9,
-	Button10, Button11, Button12, Button13, Button14, Button15, Button16, Button17, Button18, Button19, Default};
+	public enum Button{Default, Button0, Button1, Button2, Button3, Button4, Button5, Button6,  Button7, Button8, Button9,
+	Button10, Button11, Button12, Button13, Button14, Button15, Button16, Button17, Button18, Button19};
 
 	/*
 	 * -----------TIPI DI ASSI---------
 	 */
 	
-	public enum Axis{Axis3, Axis4, Axis5, Axis6, Axis7, Axis8, Axis9,  Axis10, Axis11, Axis12,
-		Axis13, Axis14, Axis15, Axis16, Axis17, Axis18, Axis19, Axis20, Horizontal, Vertical, Default};
+	public enum Axis{Default, Axis3, Axis4, Axis5, Axis6, Axis7, Axis8, Axis9,  Axis10, Axis11, Axis12,
+		Axis13, Axis14, Axis15, Axis16, Axis17, Axis18, Axis19, Axis20, Horizontal, Vertical};
+
+	public enum AxisDirection{Default, Positive, Negative}
 
 	/*
 	 * -----------TIPI DI BOTTONI FISICI---------
 	 */
 	
-	public enum PS3Button{X, Quadrato, Cerchio, Triangolo, DPadUp, DPadDown, DPadRight, DPadLeft, R1, R2, L1, L2, Start, Select, RButton, LButton, PS, 
-	StickRUp, StickRRight, StickLUp, StickLRight};	
+	public enum PS3Button{Default, X, Quadrato, Cerchio, Triangolo, DPadUp, DPadDown, DPadRight, DPadLeft, R1, R2, L1, L2, Start, Select, RButton, LButton, PS, 
+		StickRHorizontal, StickRVertical, StickLHorizontal, StickLVertical,  StickRUp, StickRDown, StickRRight, StickRLeft, 
+		StickLUp, StickLDown, StickLRight, StickLLeft};	
+
+	[System.Serializable]
+	public class GenericInput{
+		public Button button;
+		public Axis axis;
+		public AxisDirection axisDirection;
+		[HideInInspector]
+		public float axisValue;
+		public float axisValueOld;
+	}
 
 	[System.Serializable]
 	public class ButtonElement
 	{
 		public string scriptInterface;
 		public PS3Button physicalButton;
-		public Button button360Windows;
-		public Button button360Mac;
-		public Button buttonPS3Mac;
-		public Button buttonPS4Mac;
+		public GenericInput button360Windows;
+		public GenericInput button360Mac;
+		public GenericInput buttonPS3Mac;
+		public GenericInput buttonPS4Mac;
+		public Sprite button360Sprite;
+		public Sprite buttonPS3Sprite;
+		public Sprite buttonPS4Sprite;
+
 
 		//METODI
-		public string getStandardName()
+		public GenericInput getStandardInput()
 		{
 			//Button tempButton;
 			switch (controllerType)
 			{
 			case ControllerType.Windows360:
-				return button360Windows.ToString();
+				return button360Windows;
 				break;
 			case ControllerType.Mac360:
-				return button360Mac.ToString();
+				return button360Mac;
 				break;
 			case ControllerType.MacPS3:
-				return buttonPS3Mac.ToString();
+				return buttonPS3Mac;
 				break;
 			case ControllerType.MacPS4:
-				return buttonPS4Mac.ToString();
+				return buttonPS4Mac;
 				break;
 			default:
-				return scriptInterface;
+				return new GenericInput();
 				break;
 			}
 		}
+
+		public Sprite getSprite()
+		{
+			//Button tempButton;
+			switch (controllerType)
+			{
+			case ControllerType.Windows360:
+				return buttonPS3Sprite;
+				break;
+			case ControllerType.Mac360:
+				return button360Sprite;
+				break;
+			case ControllerType.MacPS3:
+				return buttonPS3Sprite;
+				break;
+			case ControllerType.MacPS4:
+				return buttonPS4Sprite;
+				break;
+			default:
+				return null;
+				break;
+			}
+		}
+		
 	}
 
 	[SerializeField]
 	public ButtonElement[] buttonElements;
 
+	/*
 	[System.Serializable]
 	public class AxisElement
 	{
@@ -106,49 +152,154 @@ public class ButtonController : MonoBehaviour {
 	
 	[SerializeField]
 	public AxisElement[] axisElement;
+	*/
 
-	public string getUsedButton(string buttonName)
+	public Sprite getSprite(PS3Button physicalInput)
+	{
+		for (int i = 0; i < buttonElements.Length; i++) {
+			if (buttonElements[i] != null && buttonElements[i].physicalButton == physicalInput)
+			{
+				return buttonElements[i].getSprite();
+			}
+		}
+		return new Sprite();
+	}
+
+	public Sprite getSprite(string buttonName)
 	{
 		for (int i = 0; i < buttonElements.Length; i++) {
 			if (buttonElements[i] != null && buttonElements[i].scriptInterface == buttonName)
 			{
-				return buttonElements[i].getStandardName();
+				return buttonElements[i].getSprite();
 			}
 		}
-		return "";
+		return new Sprite();
 	}
 
-	public string getUsedButton(PS3Button ps3Button)
+	//i due metodi seguenti ritornano la struttura che contiene i dati dell'input, che sia bottone o asse, a seconda del controller inserito
+	public GenericInput getUsedButton(string buttonName)
 	{
 		for (int i = 0; i < buttonElements.Length; i++) {
-			if (buttonElements[i] != null && buttonElements[i].physicalButton == ps3Button)
+			if (buttonElements[i] != null && buttonElements[i].scriptInterface == buttonName)
 			{
-				return buttonElements[i].getStandardName();
+				return buttonElements[i].getStandardInput();
 			}
 		}
-		return "";
+		return new GenericInput();
 	}
 
-	public string getUsedAxis(string axisName)
+	public GenericInput getUsedButton(PS3Button physicalInput)
 	{
-		for (int i = 0; i < axisElement.Length; i++) {
-			if (axisElement[i] != null && axisElement[i].scriptInterface == axisName)
+		for (int i = 0; i < buttonElements.Length; i++) {
+			if (buttonElements[i] != null && buttonElements[i].physicalButton == physicalInput)
 			{
-				return axisElement[i].getStandardName();
+				return buttonElements[i].getStandardInput();
 			}
 		}
-		return "";
+		return new GenericInput();
 	}
 
-	public string getUsedAxis(PS3Button ps3Button)
+
+	public bool getButtonUp(PS3Button inputButton)
 	{
-		for (int i = 0; i < axisElement.Length; i++) {
-			if (axisElement[i] != null && axisElement[i].physicalButton == ps3Button)
+		//se è un bottone ritorna il valore dell'input standard, se è un asse, controlla i valori del frame attuale e di quello precedente
+		//anche in base all'asse negativo o positivo
+		GenericInput actualInput = getUsedButton (inputButton);
+		if (actualInput.button != Button.Default) {
+			return Input.GetButtonUp (actualInput.button.ToString ());
+		} else if (actualInput.axis != Axis.Default) {
+			if (actualInput.axisDirection == AxisDirection.Positive || actualInput.axisDirection == AxisDirection.Default)
 			{
-				return axisElement[i].getStandardName();
+				if (actualInput.axisValue < 0.5f && actualInput.axisValueOld >= 0.5f)
+					return true;
 			}
+			else if (actualInput.axisDirection == AxisDirection.Negative)
+			{
+				if (actualInput.axisValue > -0.5f && actualInput.axisValueOld <= -0.5f)
+					return true;
+			}
+
 		}
-		return "";
+		return false;
+	}
+
+	public bool getButtonDown(PS3Button inputButton)
+	{
+		//se è un bottone ritorna il valore dell'input standard, se è un asse, controlla i valori del frame attuale e di quello precedente
+		GenericInput actualInput = getUsedButton (inputButton);
+		if (actualInput.button != Button.Default) {
+			return Input.GetButtonDown (actualInput.button.ToString ());
+		} else if (actualInput.axis != Axis.Default) {
+			if (actualInput.axisDirection == AxisDirection.Positive || actualInput.axisDirection == AxisDirection.Default)
+			{
+				if (actualInput.axisValue > 0.5f && actualInput.axisValueOld <= 0.5f)
+					return true;
+			}
+			else if (actualInput.axisDirection == AxisDirection.Negative)
+			{
+				if (actualInput.axisValue < -0.5f && actualInput.axisValueOld >= -0.5f)
+					return true;
+			}
+
+		}
+		return false;
+	}
+
+	public bool getButton(PS3Button inputButton)
+	{
+		//se è un bottone ritorna il valore dell'input standard, se è un asse, controlla i valori del frame attuale
+		GenericInput actualInput = getUsedButton (inputButton);
+		if (actualInput.button != Button.Default) {
+			return Input.GetButton (actualInput.button.ToString ());
+		} else if (actualInput.axis != Axis.Default) {
+			if (actualInput.axisDirection == AxisDirection.Positive || actualInput.axisDirection == AxisDirection.Default)
+			{
+				if (actualInput.axisValue > 0.5f)
+					return true;
+			}
+			else if (actualInput.axisDirection == AxisDirection.Negative)
+			{
+				if (actualInput.axisValue < -0.5f)
+					return true;
+			}
+
+		}
+		return false;
+	}
+
+	public float getAxis(PS3Button inputButton)
+	{
+
+		GenericInput actualInput = getUsedButton (inputButton);
+
+		if (actualInput.axis != Axis.Default) {
+			Debug.Log (inputButton.ToString() + " " + Input.GetAxis (actualInput.axis.ToString ()));
+			return Input.GetAxis (actualInput.axis.ToString ());
+		} else if (actualInput.button != Button.Default) {
+			if (Input.GetButton(actualInput.button.ToString()))
+			    return 1.0f;
+			else
+				return 0.0f;
+		}
+
+		return 0.0f;
+	}
+
+	public float getAxisRaw(PS3Button inputButton)
+	{
+		
+		GenericInput actualInput = getUsedButton (inputButton);
+		
+		if (actualInput.axis != Axis.Default) {
+			return Input.GetAxisRaw (actualInput.axis.ToString ());
+		} else if (actualInput.button != Button.Default) {
+			if (Input.GetButton(actualInput.button.ToString()))
+				return 1.0f;
+			else
+				return 0.0f;
+		}
+
+		return 0.0f;
 	}
 
 	void Start () {
@@ -156,40 +307,7 @@ public class ButtonController : MonoBehaviour {
 		Debug.Log (controllerType.ToString ());
 	}
 
-	public bool getButtonUp(string buttonName)
-	{
-		if (Input.GetButtonUp (getUsedButton (buttonName)))
-			return true;
-		else
-			return false;
-	}
-
-	public bool getButtonDown(string buttonName)
-	{
-		if (Input.GetButtonDown (getUsedButton (buttonName)))
-			return true;
-		else
-			return false;
-	}
-
-	public bool getButton(string buttonName)
-	{
-		if (Input.GetButton (getUsedButton (buttonName)))
-			return true;
-		else
-			return false;
-	}
-
-	public float getAxis(string axisName)
-	{
-		return (Input.GetAxis (getUsedAxis (axisName)));
-	}
-
-	public float getAxisRaw(string axisName)
-	{
-		return (Input.GetAxisRaw (getUsedAxis (axisName)));
-	}
-
+	//funzione chiamata allo start, a seconda del controller inserito, ne mette il tipo
 	void switchControllerType()
 	{
 		if (Input.GetJoystickNames ().Length > 0) {
@@ -207,7 +325,49 @@ public class ButtonController : MonoBehaviour {
 			
 	}
 
+
+	void updateUseController()
+	{
+		useController = GeneralFinder.cursorHandler.useController;
+	}
+
+
+	void updateAxisValue()
+	{
+		for (int i = 0; i < buttonElements.Length; i++) {
+			if (buttonElements[i] != null)
+			{
+				if (buttonElements[i].button360Windows != null && buttonElements[i].button360Windows.axis != Axis.Default)
+				{
+					buttonElements[i].button360Windows.axisValueOld = buttonElements[i].button360Windows.axisValue;
+					buttonElements[i].button360Windows.axisValue = Input.GetAxis(buttonElements[i].button360Windows.axis.ToString());
+				}
+
+				if (buttonElements[i].button360Mac != null && buttonElements[i].button360Mac.axis != Axis.Default)
+				{
+					buttonElements[i].button360Mac.axisValueOld = buttonElements[i].button360Mac.axisValue;
+					buttonElements[i].button360Mac.axisValue = Input.GetAxis(buttonElements[i].button360Mac.axis.ToString());
+				}
+
+				if (buttonElements[i].buttonPS3Mac != null && buttonElements[i].buttonPS3Mac.axis != Axis.Default)
+				{
+					buttonElements[i].buttonPS3Mac.axisValueOld = buttonElements[i].buttonPS3Mac.axisValue;
+					buttonElements[i].buttonPS3Mac.axisValue = Input.GetAxis(buttonElements[i].buttonPS3Mac.axis.ToString());
+				}
+
+				if (buttonElements[i].buttonPS4Mac != null && buttonElements[i].buttonPS4Mac.axis != Axis.Default)
+				{
+					buttonElements[i].buttonPS4Mac.axisValueOld = buttonElements[i].buttonPS4Mac.axisValue;
+					buttonElements[i].buttonPS4Mac.axisValue = Input.GetAxis(buttonElements[i].buttonPS4Mac.axis.ToString());
+				}
+
+			}
+		}
+	}
+
 	void Update () {
+		updateAxisValue ();
+
 		if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.Alpha1))
 		{
 			controllerType = ControllerType.Windows360;
@@ -224,5 +384,8 @@ public class ButtonController : MonoBehaviour {
 		{
 			controllerType = ControllerType.MacPS4;
 		}
+
+		updateUseController ();
 	}
+
 }

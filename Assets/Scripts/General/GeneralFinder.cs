@@ -41,6 +41,7 @@ public class GeneralFinder : MonoBehaviour {
 	public static LevelChangerGeneral levelChangerGeneral;
 
 	public static ButtonController buttonController;
+	public static ButtonKeyboardMouse buttonKeyboardMouse;
 
 	public static InputManager inputManager;
 
@@ -109,6 +110,7 @@ public class GeneralFinder : MonoBehaviour {
 		if (buttonControllerOBJ != null) {
 			buttonController = buttonControllerOBJ.GetComponent<ButtonController> ();
 			inputManager = buttonControllerOBJ.GetComponent<InputManager>();
+			buttonKeyboardMouse = buttonControllerOBJ.GetComponent<ButtonKeyboardMouse>();
 		}
 	}
 	
