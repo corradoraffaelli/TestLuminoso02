@@ -34,6 +34,8 @@ public class DialogueManager : MonoBehaviour {
 	
 	[SerializeField]
 	DialogueElement[] dialogueElements;
+
+	public bool mustFaceRight = true;
 	
 	void Start () {
 		if (NPC == null)
@@ -74,12 +76,21 @@ public class DialogueManager : MonoBehaviour {
 			playerColliding = false;
 	}
 
+	void facingHandler()
+	{
+		if ((GeneralFinder.playerMovements.FacingRight && !mustFaceRight)
+			|| (!GeneralFinder.playerMovements.FacingRight && mustFaceRight))
+			GeneralFinder.playerMovements.c_flip ();
+	}
+
 	public void startDialogue()
 	{
 		if (balloonPrefab != null) {
 			dialogueStarted = true;
 
+			facingHandler();
 			enablePlayerMovements(false);
+
 
 			GeneralFinder.cameraMovements.enabled = false;
 			differentCamera = true;
