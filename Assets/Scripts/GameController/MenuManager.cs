@@ -247,15 +247,12 @@ public class MenuManager : MonoBehaviour {
 
 	#endregion CALLBACKS
 
-	// Update is called once per frame
-	void Update () {
-
+	void checkOpenAndClose() {
 
 		//catturo l'evento se
 		//1) il menu è tutto spento
 		//2) opp se è attivo sia il menu che intro
 		//3) non lo catturo se è attivo il menu e qualcosa diverso da intro
-
 
 		if(GeneralFinder.inputManager.getButtonDown("Start") && !GeneralFinder.informativeManager.invokeWithoutMenu 
 		   ||  (GeneralFinder.inputManager.getButtonUp("GoBackMenu") && statusMenu ) ) {
@@ -263,42 +260,45 @@ public class MenuManager : MonoBehaviour {
 			if(!GeneralFinder.canvasMenu.activeSelf || canvasActive == canvasIntro) {
 				//caso in cui siamo in game o dentro la scheda intro del menu
 				//quindi o stiamo entrando in pausa adesso, o ne stiamo uscendo
-
+				
 				//Debug.Log("apro/chiudo menu");
-
+				
 				returnToPlay(!statusMenu);
-
+				
 			}
 			else {
 				//caso di navigazione dentro al menu, quindi di ritorno alla scheda intro
 				//Debug.Log("switcho sezione menu");
 				c_switchMenuSection(canvasActive, canvasIntro);
-
+				
 			}
-
+			
 		}
 
+	}
 
-
-		if (!statusMenu)
-			return;
-
-		//Debug.Log("menu");
+	void checkMenuNav() {
 
 		if (GeneralFinder.inputManager.getAxisRaw("Vertical") != 0.0f) {
 			//Debug.Log("menu");
 			if(!oneControllerDirectionAnUse) {
-
+				
 				oneControllerDirectionAnUse = true;
-
+				
 				float fl = GeneralFinder.inputManager.getAxisRaw("Vertical");
-
-				menuButtons[activeMenuButtonIndex].gameObject.GetComponent<Image>().color = menuButtons[activeMenuButtonIndex].colors.normalColor;
-
+				
+				//menuButtons[activeMenuButtonIndex].gameObject.GetComponent<Image>().color = menuButtons[activeMenuButtonIndex].colors.normalColor;
+				
+				foreach(Button butt in menuButtons) {
+					
+					butt.gameObject.GetComponent<Animator>().SetTrigger("Normal");
+					
+				}
+				
 				if(fl > 0.0f) {
 					//Debug.Log("menu up");
 					activeMenuButtonIndex--;
-
+					
 					if(activeMenuButtonIndex<0) {
 						activeMenuButtonIndex= menuButtons.Length-1;
 					}
@@ -306,21 +306,23 @@ public class MenuManager : MonoBehaviour {
 				else {
 					//Debug.Log("menu down");
 					activeMenuButtonIndex++;
-
+					
 					if(activeMenuButtonIndex>menuButtons.Length-1) {
 						activeMenuButtonIndex=0;
 					}
 				}
-
-				menuButtons[activeMenuButtonIndex].gameObject.GetComponent<Image>().color = menuButtons[activeMenuButtonIndex].colors.highlightedColor;
+				
+				menuButtons[activeMenuButtonIndex].gameObject.GetComponent<Animator>().SetTrigger("Highlighted");
+				
+				//menuButtons[activeMenuButtonIndex].gameObject.GetComponent<Image>().color = menuButtons[activeMenuButtonIndex].colors.highlightedColor;
 			}
 		}
 		else {
-
+			
 			oneControllerDirectionAnUse = false;
-
+			
 		}
-
+		
 		if (GeneralFinder.inputManager.getAxisRaw("DigitalVertical") != 0.0f) {
 			//Debug.Log("menu");
 			if(!oneControllerDirectionDigUse) {
@@ -329,7 +331,15 @@ public class MenuManager : MonoBehaviour {
 				
 				float fl = GeneralFinder.inputManager.getAxisRaw("DigitalVertical");
 				
-				menuButtons[activeMenuButtonIndex].gameObject.GetComponent<Image>().color = menuButtons[activeMenuButtonIndex].colors.normalColor;
+				//menuButtons[activeMenuButtonIndex].gameObject.GetComponent<Image>().color = menuButtons[activeMenuButtonIndex].colors.normalColor;
+				
+				//menuButtons[activeMenuButtonIndex].gameObject.GetComponent<Animator>().SetTrigger("Normal");
+				
+				foreach(Button butt in menuButtons) {
+					
+					butt.gameObject.GetComponent<Animator>().SetTrigger("Normal");
+					
+				}
 				
 				if(fl < 0.0f) {
 					//Debug.Log("menu up");
@@ -347,8 +357,8 @@ public class MenuManager : MonoBehaviour {
 						activeMenuButtonIndex=0;
 					}
 				}
-				
-				menuButtons[activeMenuButtonIndex].gameObject.GetComponent<Image>().color = menuButtons[activeMenuButtonIndex].colors.highlightedColor;
+				menuButtons[activeMenuButtonIndex].gameObject.GetComponent<Animator>().SetTrigger("Highlighted");
+				//menuButtons[activeMenuButtonIndex].gameObject.GetComponent<Image>().color = menuButtons[activeMenuButtonIndex].colors.highlightedColor;
 			}
 		}
 		else {
@@ -357,14 +367,31 @@ public class MenuManager : MonoBehaviour {
 			
 		}
 
+	}
+
+	void checkInteraction() {
 
 		if(GeneralFinder.inputManager.getButtonUp("Interaction") || GeneralFinder.inputManager.getButtonUp("GoMenu")) {
-
+			
 			PointerEventData pointer = new PointerEventData(EventSystem.current);
-
+			
 			ExecuteEvents.Execute<IPointerClickHandler>(menuButtons[activeMenuButtonIndex].gameObject, new PointerEventData(EventSystem.current), ExecuteEvents.pointerClickHandler);
-
+			
 		}
+
+	}
+
+	// Update is called once per frame
+	void Update () {
+
+		checkOpenAndClose();
+
+		if (!statusMenu)
+			return;
+
+		checkMenuNav ();
+
+		checkInteraction ();
 
 	}
 
@@ -374,7 +401,7 @@ public class MenuManager : MonoBehaviour {
 			
 			if(butt.gameObject.name!=name) {
 				
-				butt.gameObject.GetComponent<Image>().color = butt.colors.normalColor;
+				//butt.gameObject.GetComponent<Image>().color = butt.colors.normalColor;
 				
 			}
 			
@@ -386,8 +413,8 @@ public class MenuManager : MonoBehaviour {
 
 		for(int i=0; i< menuButtons.Length; i++) {
 
-			if(i!=selectIndex)
-				menuButtons[i].gameObject.GetComponent<Image>().color = menuButtons[i].colors.highlightedColor;
+			//if(i!=selectIndex)
+				//menuButtons[i].gameObject.GetComponent<Image>().color = menuButtons[i].colors.highlightedColor;
 
 		}
 

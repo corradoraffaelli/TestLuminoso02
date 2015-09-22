@@ -635,17 +635,22 @@ public class InformativeManager : MonoBehaviour {
 
 	}
 
-	void Update() {
-		
+	void checkOpenAndClose() {
+
 		if((GeneralFinder.inputManager.getButtonUp("Start") && invokeWithoutMenu) 
 		   || (GeneralFinder.inputManager.getButtonUp("GoBackMenu") && canvasInformative.activeSelf && invokeWithoutMenu)
 		   || GeneralFinder.inputManager.getButtonUp("OpenInformative")) {
-
+			
 			//Debug.Log("premuto qualcosa per inf");
 			handleIntroAndExitInformativeMenu();
 
-
 		}
+
+	}
+
+	void Update() {
+		
+		checkOpenAndClose ();
 
 		if (!canvasInformative.activeSelf) 
 			return;
@@ -658,30 +663,29 @@ public class InformativeManager : MonoBehaviour {
 
 	#region CONTROLLERNAV
 
-	void controllerNavigation() {
-
+	void checkSectionNav() {
 
 		//if(Input.GetButtonDown("BackTrigger") ) {
 		if(	GeneralFinder.inputManager.getAxisRaw("Horizontal") != 0.0f ) {
 			//Debug.Log("horizontal");
-
+			
 			if(Mathf.Abs( GeneralFinder.inputManager.getAxisRaw("Horizontal") ) > 0.9f) {
 				if(!horizontalDirectionAnUse) {
-
+					
 					float fl = GeneralFinder.inputManager.getAxisRaw("Horizontal");
 					
 					controllerChangeSection(fl);
-
+					
 					horizontalDirectionAnUse = true;
 				}
 			}
 		}
 		else {
-
+			
 			horizontalDirectionAnUse = false;
-
+			
 		}
-
+		
 		if(	GeneralFinder.inputManager.getAxisRaw("DigitalHorizontal") != 0.0f ) {
 			//Debug.Log("horizontal");
 			
@@ -701,75 +705,33 @@ public class InformativeManager : MonoBehaviour {
 			horizontalDirectionDigUse = false;
 			
 		}
-		
-		//if(Input.GetButtonDown("FrontTrigger") ) {
-		if(GeneralFinder.inputManager.getButtonDown("ChangeSubContentForward") ) {
-			
-			//float fl = Input.GetAxisRaw("FrontTrigger");
-			
-			controllerChangeSubContent(1.0f);
-			
-		}
-		else if (GeneralFinder.inputManager.getButtonDown("ChangeSubContentBackward")) {
 
-			controllerChangeSubContent(-1.0f);
+	}
 
-		}
-
-		//TODO: problemi con cursor horizontal
-
-		if (GeneralFinder.inputManager.getAxisRaw ("CursorHorizontal") != 0.0f) {
-
-			if( Mathf.Abs( GeneralFinder.inputManager.getAxisRaw("CursorHorizontal") ) > 0.9f )  {
-
-				//Debug.Log("cursore hor" + GeneralFinder.inputManager.getAxisRaw("CursorHorizontal"));
-				if(!cursorHorizontalDirectionUse) {
-					
-					float fl = GeneralFinder.inputManager.getAxisRaw("CursorHorizontal");
-					
-					controllerChangeSubContent(fl);
-					
-					cursorHorizontalDirectionUse = true;
-
-				}
-
-			}
-			else {
-				
-				cursorHorizontalDirectionUse = false;
-				
-			}
-
-		}
-		else {
-			
-			cursorHorizontalDirectionUse = false;
-			
-		}
-
+	void checkContentNav() {
 
 		//if (Input.GetButtonDown ("Vertical-menu-nav")) {
 		if(	GeneralFinder.inputManager.getAxisRaw("Vertical") != 0.0f ) {
-
+			
 			if(Mathf.Abs( GeneralFinder.inputManager.getAxisRaw("Vertical") ) > 0.9f) {
-
+				
 				if(!verticalDirectionAnUse) {
-
+					
 					float fl = GeneralFinder.inputManager.getAxisRaw("Vertical");
 					
 					controllerChangeContent(fl);
-
+					
 					verticalDirectionAnUse = true;
-
+					
 				}
 			}
 		}
 		else {
-
+			
 			verticalDirectionAnUse = false;
-
+			
 		}
-
+		
 		if(	GeneralFinder.inputManager.getAxisRaw("DigitalVertical") != 0.0f ) {
 			
 			if(Mathf.Abs( GeneralFinder.inputManager.getAxisRaw("DigitalVertical") ) > 0.9f) {
@@ -777,10 +739,10 @@ public class InformativeManager : MonoBehaviour {
 				if(!verticalDirectionDigUse) {
 					
 					float fl = GeneralFinder.inputManager.getAxisRaw("DigitalVertical");
-
+					
 					controllerChangeContent(-fl);
-
-
+					
+					
 					
 					verticalDirectionDigUse = true;
 					
@@ -792,15 +754,77 @@ public class InformativeManager : MonoBehaviour {
 			verticalDirectionDigUse = false;
 			
 		}
+
+	}
+
+	void checkSubContentNav() {
+
+		//if(Input.GetButtonDown("FrontTrigger") ) {
+		if(GeneralFinder.inputManager.getButtonDown("ChangeSubContentForward") ) {
+			
+			//float fl = Input.GetAxisRaw("FrontTrigger");
+			
+			controllerChangeSubContent(1.0f);
+			
+		}
+		else if (GeneralFinder.inputManager.getButtonDown("ChangeSubContentBackward")) {
+			
+			controllerChangeSubContent(-1.0f);
+			
+		}
+
+		//TODO: problemi con cursor horizontal
 		
+		if (GeneralFinder.inputManager.getAxisRaw ("CursorHorizontal") != 0.0f) {
+			
+			if( Mathf.Abs( GeneralFinder.inputManager.getAxisRaw("CursorHorizontal") ) > 0.9f )  {
+				
+				//Debug.Log("cursore hor" + GeneralFinder.inputManager.getAxisRaw("CursorHorizontal"));
+				if(!cursorHorizontalDirectionUse) {
+					
+					float fl = GeneralFinder.inputManager.getAxisRaw("CursorHorizontal");
+					
+					controllerChangeSubContent(fl);
+					
+					cursorHorizontalDirectionUse = true;
+					
+				}
+				
+			}
+			else {
+				
+				cursorHorizontalDirectionUse = false;
+				
+			}
+			
+		}
+		else {
+			
+			cursorHorizontalDirectionUse = false;
+			
+		}
+
+	}
+
+	void controllerNavigation() {
+
+		checkSectionNav ();
+
+		checkSubContentNav ();
+
+		checkContentNav ();
+
+
+		/*
 		if (Input.GetButtonDown ("Horizontal-menu-nav")) {
 			
 			//float fl = Input.GetAxisRaw("Horizontal-menu-nav");
 			
 			
 		}
+		*/
 
-		//TODO: scroll bar da gestire?
+		/*
 		if (Input.GetButtonDown ("Vertical-Informative-menu-nav")) {
 			
 			float fl = Input.GetAxisRaw("Vertical-Informative-menu-nav");
@@ -808,6 +832,7 @@ public class InformativeManager : MonoBehaviour {
 			controllerScrollBarInfo(fl);
 			
 		}
+		*/
 
 	}
 
