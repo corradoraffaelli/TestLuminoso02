@@ -1596,14 +1596,27 @@ public class InformativeManager : MonoBehaviour {
 
 		//GeneralFinder.inputManager.getSprite
 
-		changeContentHelp.sprite = GeneralFinder.inputManager.getControllerSprite (ButtonController.PS3Button.DPadUp);
+		if (GeneralFinder.cursorHandler.useController) {
 
-		changeSubContentHelp.sprite = GeneralFinder.inputManager.getControllerSprite (ButtonController.PS3Button.DPadRight);
+			changeContentHelp.sprite = GeneralFinder.inputManager.getControllerSprite (ButtonController.PS3Button.DPadUp);
 
-		changeSectionHelp[0].sprite = GeneralFinder.inputManager.getControllerSprite (ButtonController.PS3Button.L1);
-		//changeSectionHelp [0].sprite = GeneralFinder.inputManager.getSprite ("ForwardTrigger");
-		changeSectionHelp[1].sprite = GeneralFinder.inputManager.getControllerSprite (ButtonController.PS3Button.R1);
-		
+			changeSubContentHelp.sprite = GeneralFinder.inputManager.getControllerSprite (ButtonController.PS3Button.DPadRight);
+
+			changeSectionHelp [0].sprite = GeneralFinder.inputManager.getControllerSprite (ButtonController.PS3Button.L1);
+			//changeSectionHelp [0].sprite = GeneralFinder.inputManager.getSprite ("ForwardTrigger");
+			changeSectionHelp [1].sprite = GeneralFinder.inputManager.getControllerSprite (ButtonController.PS3Button.R1);
+		}
+		else {
+
+			changeContentHelp.sprite = GeneralFinder.inputManager.getKeyboardSprite(ButtonKeyboardMouse.Button.ArrowUp);
+
+			changeSubContentHelp.sprite = GeneralFinder.inputManager.getKeyboardSprite(ButtonKeyboardMouse.Button.ArrowRight);
+
+			changeSectionHelp [0].sprite = GeneralFinder.inputManager.getKeyboardSprite(ButtonKeyboardMouse.Button.TAB);
+			//changeSectionHelp [0].sprite = GeneralFinder.inputManager.getSprite ("ForwardTrigger");
+			changeSectionHelp [1].sprite = GeneralFinder.inputManager.getKeyboardSprite(ButtonKeyboardMouse.Button.TAB);
+
+		}
 	}
 
 

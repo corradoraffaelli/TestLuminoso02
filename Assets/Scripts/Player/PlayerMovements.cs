@@ -626,7 +626,30 @@ public class PlayerMovements : MonoBehaviour {
 			anim.SetBool ("onGround", true);
 		else
 			anim.SetBool ("onGround", false);
+
 		anim.SetBool ("Running", running);
+
+		
+
+		//velocità animazione run proporzionale all'input orizzontale
+		if (!AIControl) {
+
+
+			if(Mathf.Abs( RigBody.velocity.x ) > 0.0f ) {
+
+				anim.speed = Mathf.Clamp( Mathf.Abs(GeneralFinder.inputManager.getAxis ("Horizontal") ) / 1.5f, 0.2f, 0.65f);
+				
+			}
+			else {
+				
+				//anim.enabled = true;
+				anim.speed = 1.0f;
+
+			}
+
+
+
+		}
 
 		if (!AIControl) {
 

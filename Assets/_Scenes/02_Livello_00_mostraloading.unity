@@ -2045,6 +2045,25 @@ Prefab:
 Transform:
   m_PrefabParentObject: {fileID: 482084, guid: 4338d53ffc91f4e40ad4219850a148b6, type: 2}
   m_PrefabInternal: {fileID: 192115948}
+--- !u!1 &345878616 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 157518, guid: 340389dc4a4be43999e660bcd54a5881, type: 2}
+  m_PrefabInternal: {fileID: 729291101}
+--- !u!111 &345878626
+Animation:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 345878616}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 0}
+  m_Animations:
+  - {fileID: 7400000, guid: 5a6c2ba015d52c248a12bec73c694b64, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 0
+  m_AnimatePhysics: 0
+  m_CullingType: 0
 --- !u!1001 &349130752
 Prefab:
   m_ObjectHideFlags: 0
@@ -6889,6 +6908,10 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 654637569}
     m_Modifications:
+    - target: {fileID: 11433302, guid: 19014203da4cab54987fbcd50e0d748b, type: 2}
+      propertyPath: buttons.Array.data[7].keyboardButtons.Array.size
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 418800, guid: 19014203da4cab54987fbcd50e0d748b, type: 2}
       propertyPath: m_LocalPosition.x
       value: 46.0522614
@@ -6920,6 +6943,10 @@ Prefab:
     - target: {fileID: 418800, guid: 19014203da4cab54987fbcd50e0d748b, type: 2}
       propertyPath: m_RootOrder
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 11433302, guid: 19014203da4cab54987fbcd50e0d748b, type: 2}
+      propertyPath: buttons.Array.data[7].keyboardButtons.Array.data[0]
+      value: 33
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 19014203da4cab54987fbcd50e0d748b, type: 2}
