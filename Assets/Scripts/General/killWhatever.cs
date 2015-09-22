@@ -8,7 +8,8 @@ public class killWhatever : MonoBehaviour {
 	public bool crusher = false;
 	private GameObject objectToCrush;
 	private float tStartCrush = -1.0f;
-	
+
+	private GameObject exitingObj;
 
 
 	public void OnCollisionEnter2D(Collision2D c) {
@@ -22,8 +23,10 @@ public class killWhatever : MonoBehaviour {
 			//Debug.Log ("entro");
 
 			if(crusher) {
-				objectToCrush = c.gameObject;
-				Debug.Log ("parte coroutine");
+
+				//objectToCrush = c.gameObject;
+
+				//Debug.Log ("parte coroutine");
 				StartCoroutine(handleCrushKill(c.gameObject));
 				//tStartCrush = Time.time;
 			}
@@ -45,7 +48,7 @@ public class killWhatever : MonoBehaviour {
 		yield return new WaitForSeconds (0.1f);
 
 		if (turnOn && objectToCrush != null) {
-			Debug.Log (objectToKill + "routine agisco");
+			//Debug.Log (objectToKill + "routine agisco");
 			objectToKill.gameObject.SendMessage ("c_crushKill", gameObject.tag);
 			//turnOn = false;
 		}
@@ -55,7 +58,7 @@ public class killWhatever : MonoBehaviour {
 	}
 
 
-	
+	/*
 	public void OnCollisionExit2D(Collision2D c) {
 
 		if (c.gameObject.tag == "Player" || c.gameObject.tag == "Enemy") {
@@ -66,11 +69,15 @@ public class killWhatever : MonoBehaviour {
 			if (objectToCrush == null)
 				return;
 
+
 			if(crusher) {
 				if (c.gameObject == objectToCrush)
 					objectToCrush = null;
 			}
+
 		}
 		
 	}
+	*/
+
 }
