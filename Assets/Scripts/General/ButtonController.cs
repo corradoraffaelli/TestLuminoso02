@@ -273,7 +273,7 @@ public class ButtonController : MonoBehaviour {
 		GenericInput actualInput = getUsedButton (inputButton);
 
 		if (actualInput.axis != Axis.Default) {
-			Debug.Log (inputButton.ToString() + " " + Input.GetAxis (actualInput.axis.ToString ()));
+			//Debug.Log (inputButton.ToString() + " " + Input.GetAxis (actualInput.axis.ToString ()));
 			return Input.GetAxis (actualInput.axis.ToString ());
 		} else if (actualInput.button != Button.Default) {
 			if (Input.GetButton(actualInput.button.ToString()))

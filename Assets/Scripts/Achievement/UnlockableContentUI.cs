@@ -10,7 +10,11 @@ public class UnlockableContentUI : MonoBehaviour {
 		public Sprite keyboardButton;
 		public Sprite controllerButton;
 		public Sprite pageSprite;
+		public ButtonController.PS3Button controllerButtonType;
+		public ButtonKeyboardMouse.Button keyboardButtonType;
 	}
+
+	public bool overlaySpritesStart = true;
 
 	[SerializeField]
 	SpritesBook spritesBook;
@@ -71,6 +75,11 @@ public class UnlockableContentUI : MonoBehaviour {
 		audioHandler = GetComponent<AudioHandler>();
 
 		wasUseController = GeneralFinder.cursorHandler.useController;
+
+		if (overlaySpritesStart) {
+			spritesBook.controllerButton = GeneralFinder.inputManager.getControllerSprite(spritesBook.controllerButtonType);
+			spritesBook.keyboardButton = GeneralFinder.inputManager.getKeyboardSprite(spritesBook.keyboardButtonType);
+		}
 	}
 
 	void Update () {
@@ -89,6 +98,11 @@ public class UnlockableContentUI : MonoBehaviour {
 		if (wasUseController != GeneralFinder.cursorHandler.useController)
 		{
 			wasUseController = GeneralFinder.cursorHandler.useController;
+
+			if (overlaySpritesStart) {
+				spritesBook.controllerButton = GeneralFinder.inputManager.getControllerSprite(spritesBook.controllerButtonType);
+			}
+
 			setUpperRightButton();
 		}
 
@@ -383,7 +397,7 @@ public class UnlockableContentUI : MonoBehaviour {
 		else
 			buttonSprite = spritesBook.keyboardButton;
 
-		if (GeneralFinder.playingUI != null) {
+		if (GeneralFinder.playingUI != null && activeBook) {
 			GeneralFinder.playingUI.setButtonSprite (PlayingUI.UIPosition.UpperRight, buttonSprite);
 			GeneralFinder.playingUI.updateSpritesOnScreen (PlayingUI.UIPosition.UpperRight);
 		}

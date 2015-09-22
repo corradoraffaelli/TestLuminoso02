@@ -87,6 +87,10 @@ public class ComicBalloonManager : MonoBehaviour {
 
 	public bool standardAppear = true;
 	public float appearSpeed = 0.3f;
+
+	public bool overlaySprites = true;
+	public string action = "Interaction";
+
 	float lastAppear = 0.0f;
 	float lastDisappear = 0.0f;
 	public bool appearing = true;
@@ -330,10 +334,20 @@ public class ComicBalloonManager : MonoBehaviour {
 				continuePiece.transform.localScale = new Vector3(piecesScale, piecesScale, 1.0f);
 				
 				SpriteRenderer continueRenderer = continuePiece.AddComponent<SpriteRenderer>();
-				if (!GeneralFinder.cursorHandler.useController)
-					continueRenderer.sprite = dialogueSrites.keyboardContinue;
+
+				if (overlaySprites)
+				{
+					continueRenderer.sprite = GeneralFinder.inputManager.getSprite(action);
+					continuePiece.transform.localScale = new Vector3(piecesScale*7.0f, piecesScale*7.0f, 1.0f);
+				}
 				else
-					continueRenderer.sprite = dialogueSrites.controllerContinue;
+				{
+					if (!GeneralFinder.cursorHandler.useController)
+						continueRenderer.sprite = dialogueSrites.keyboardContinue;
+					else
+						continueRenderer.sprite = dialogueSrites.controllerContinue;
+				}
+
 				
 				continueRenderer.sortingLayerName = sortingLayerName;
 				continueRenderer.sortingOrder = sortingLayerInt + 2;

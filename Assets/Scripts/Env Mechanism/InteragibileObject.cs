@@ -7,12 +7,13 @@ public class InteragibileObject : MonoBehaviour {
 	public GameObject[] objectsWithMethods;
 	public bool oneTimeInteraction = false;
 	public bool activeDisabledObject = true;
-	public float indicationScale = 2.0f;
+	//public float indicationScale = 2.0f;
 
 	bool interacted = false;
 	public bool playerColliding = false;
 	GameObject player;
 	GameObject indication;
+	SpriteRenderer indicationRenderer;
 	AudioHandler audioHandler;
 
 	InputKeeper inputKeeper;
@@ -22,9 +23,12 @@ public class InteragibileObject : MonoBehaviour {
 	void Start () {
 		player = GameObject.FindGameObjectWithTag ("Player");
 		indication = transform.GetChild (0).gameObject;
-		setIndicationScale ();
+		if (indication != null)
+			indicationRenderer = indication.GetComponent<SpriteRenderer> ();
+		//setIndicationScale ();
 		audioHandler = GetComponent<AudioHandler> ();
 		inputKeeper = GameObject.FindGameObjectWithTag ("Controller").GetComponent<InputKeeper> ();
+		indication.SetActive (true);
 	}
 
 	void Update () {
@@ -42,7 +46,8 @@ public class InteragibileObject : MonoBehaviour {
 
 		if (((oneTimeInteraction && !interacted) || !oneTimeInteraction)) {
 			//mostra la E
-			indication.SetActive(playerColliding);
+			setIndicationVisible(playerColliding);
+			//indication.SetActive(playerColliding);
 
 			//Debug.Log (gameObject.name +" "+ (inputKeeper!= null && inputKeeper.isButtonUp("Interaction") && ((oneTimeInteraction && !interacted) || !oneTimeInteraction) && playerColliding));
 			//Debug.Log (gameObject.name +" "+ (((oneTimeInteraction && !interacted) || !oneTimeInteraction) && playerColliding));
@@ -78,7 +83,8 @@ public class InteragibileObject : MonoBehaviour {
 					if (leverScript != null)
 						leverScript.InteractingMethod();
 
-					indication.SetActive(false);
+					//indication.SetActive(false);
+					setIndicationVisible(false);
 				}
 
 			}
@@ -106,6 +112,23 @@ public class InteragibileObject : MonoBehaviour {
 			playerColliding = false;
 	}
 
+	void setIndicationVisible(bool active = true)
+	{
+		if (indicationRenderer != null) {
+			Color oldColor = indicationRenderer.color;
+			float newAlpha;
+			if (active)
+				newAlpha = 1.0f;
+			else
+				newAlpha = 0.0f;
+			indicationRenderer.color = new Color(oldColor.r, oldColor.g, oldColor.b, newAlpha);
+		} else if (indication != null) {
+			setIndicationVisible(active);
+			//indication.SetActive(active);
+		}
+	}
+
+	/*
 	//setta la scala dell'indicazione (la E) nel world scale
 	void setIndicationScale()
 	{
@@ -113,4 +136,5 @@ public class InteragibileObject : MonoBehaviour {
 		indication.transform.localScale = new Vector3 (indicationScale, indicationScale, indicationScale);
 		indication.transform.parent = transform;
 	}
+	*/
 }
