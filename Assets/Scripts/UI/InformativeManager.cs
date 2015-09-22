@@ -61,7 +61,8 @@ public class InformativeManager : MonoBehaviour {
 	bool cursorVerticalDirectionUse = false;
 	
 	bool cursorHorizontalDirectionUse = false;
-	
+
+	public bool controllerConfig1;
 
 
 	#endregion PUBLICVARIABLES
@@ -81,6 +82,15 @@ public class InformativeManager : MonoBehaviour {
 	GameObject []iconItems = new GameObject[maxItems];
 	Image []iconImages = new Image[maxItems];
 	Button[]iconButtons = new Button[maxItems];
+
+	GameObject helpSection;
+
+	Image changeContentHelp;
+
+	Image changeSubContentHelp;
+
+	Image []changeSectionHelp;
+
 
 	GameObject detailSection;
 	Text detail;
@@ -297,6 +307,8 @@ public class InformativeManager : MonoBehaviour {
 					getMultimediaComponents ();
 					
 					getDetailComponents ();
+
+					getHelpComponents();
 
 					fillMultimediaAndDetails(activeSection, 0);
 
@@ -526,6 +538,12 @@ public class InformativeManager : MonoBehaviour {
 				
 			}
 
+			if(child.name=="Help") {
+				
+				helpSection = child.gameObject;
+				
+			}
+
 		}
 
 		if(navigationSection== null){
@@ -546,7 +564,57 @@ public class InformativeManager : MonoBehaviour {
 			return false;
 		}
 
+		if(helpSection== null){
+			
+			Debug.Log ("ATTENZIONE - helpSection non trovato dentro MainPanel!");
+			return false;
+		}
+
 		return true;
+
+	}
+
+	void getHelpComponents() {
+
+		foreach (Transform child in helpSection.transform) {
+
+			if(child.name.Contains("changeContentH")) {
+				//Debug.Log("ok cont");
+				changeContentHelp = child.gameObject.GetComponentInChildren<Image>();
+
+			}
+
+			if(child.name.Contains("changeSubContentH")) {
+				//Debug.Log("ok sub");
+				changeSubContentHelp = child.gameObject.GetComponentInChildren<Image>();
+
+			}
+
+			if(child.name.Contains("changeSectionH")) {
+				//Debug.Log("ok sec");
+				Image []tempImgs = child.GetComponentsInChildren<Image>();
+
+				changeSectionHelp = new Image[2];
+
+				foreach(Image im in tempImgs) {
+
+					if(im.gameObject.transform.parent.gameObject.name.Contains("left")) {
+
+						changeSectionHelp[0] = im;
+
+					}
+
+					if(im.gameObject.transform.parent.gameObject.name.Contains("right")) {
+						
+						changeSectionHelp[1] = im;
+						
+					}
+
+				}
+
+			}
+
+		}
 
 	}
 
@@ -665,152 +733,103 @@ public class InformativeManager : MonoBehaviour {
 
 	void checkSectionNav() {
 
-		//if(Input.GetButtonDown("BackTrigger") ) {
-		if(	GeneralFinder.inputManager.getAxisRaw("Horizontal") != 0.0f ) {
-			//Debug.Log("horizontal");
-			
-			if(Mathf.Abs( GeneralFinder.inputManager.getAxisRaw("Horizontal") ) > 0.9f) {
-				if(!horizontalDirectionAnUse) {
-					
-					float fl = GeneralFinder.inputManager.getAxisRaw("Horizontal");
-					
-					controllerChangeSection(fl);
-					
-					horizontalDirectionAnUse = true;
-				}
-			}
+		if (GeneralFinder.inputManager.getButtonDown ("RightMenu")) {
+
+			controllerChangeSection(1.0f);
+
 		}
-		else {
+		else if (GeneralFinder.inputManager.getButtonDown ("LeftMenu")) {
+
+			controllerChangeSection(-1.0f);
+
+		}
+
+	}
+
+	void checkSectionNav1() {
+		
+		if (GeneralFinder.inputManager.getButtonDown ("RightMenu")) {
 			
-			horizontalDirectionAnUse = false;
+			controllerChangeSubContent(1.0f);
+			
+		}
+		else if (GeneralFinder.inputManager.getButtonDown ("LeftMenu")) {
+			
+			controllerChangeSubContent(-1.0f);
 			
 		}
 		
-		if(	GeneralFinder.inputManager.getAxisRaw("DigitalHorizontal") != 0.0f ) {
-			//Debug.Log("horizontal");
-			
-			if(Mathf.Abs( GeneralFinder.inputManager.getAxisRaw("DigitalHorizontal") ) > 0.9f) {
-				if(!horizontalDirectionDigUse) {
-					
-					float fl = GeneralFinder.inputManager.getAxisRaw("DigitalHorizontal");
-					
-					controllerChangeSection(fl);
-					
-					horizontalDirectionDigUse = true;
-				}
-			}
-		}
-		else {
-			
-			horizontalDirectionDigUse = false;
-			
-		}
-
 	}
 
 	void checkContentNav() {
 
-		//if (Input.GetButtonDown ("Vertical-menu-nav")) {
-		if(	GeneralFinder.inputManager.getAxisRaw("Vertical") != 0.0f ) {
-			
-			if(Mathf.Abs( GeneralFinder.inputManager.getAxisRaw("Vertical") ) > 0.9f) {
-				
-				if(!verticalDirectionAnUse) {
-					
-					float fl = GeneralFinder.inputManager.getAxisRaw("Vertical");
-					
-					controllerChangeContent(fl);
-					
-					verticalDirectionAnUse = true;
-					
-				}
-			}
-		}
-		else {
-			
-			verticalDirectionAnUse = false;
-			
-		}
-		
-		if(	GeneralFinder.inputManager.getAxisRaw("DigitalVertical") != 0.0f ) {
-			
-			if(Mathf.Abs( GeneralFinder.inputManager.getAxisRaw("DigitalVertical") ) > 0.9f) {
-				
-				if(!verticalDirectionDigUse) {
-					
-					float fl = GeneralFinder.inputManager.getAxisRaw("DigitalVertical");
-					
-					controllerChangeContent(-fl);
-					
-					
-					
-					verticalDirectionDigUse = true;
-					
-				}
-			}
-		}
-		else {
-			
-			verticalDirectionDigUse = false;
-			
-		}
+		if(GeneralFinder.inputManager.getButtonDown("UpMenu")) {
 
+			controllerChangeContent(1.0f);
+
+		}
+		else if(GeneralFinder.inputManager.getButtonDown("DownMenu")) {
+
+			controllerChangeContent(-1.0f);
+		
+		}
 	}
+
 
 	void checkSubContentNav() {
 
-		//if(Input.GetButtonDown("FrontTrigger") ) {
-		if(GeneralFinder.inputManager.getButtonDown("ChangeSubContentForward") ) {
+		if(GeneralFinder.inputManager.getButtonDown("ForwardTrigger") ) {
 			
 			//float fl = Input.GetAxisRaw("FrontTrigger");
 			
 			controllerChangeSubContent(1.0f);
 			
 		}
-		else if (GeneralFinder.inputManager.getButtonDown("ChangeSubContentBackward")) {
+		else if (GeneralFinder.inputManager.getButtonDown("BackwardTrigger")) {
 			
 			controllerChangeSubContent(-1.0f);
 			
 		}
 
-		//TODO: problemi con cursor horizontal
+
+	}
+
+	void checkSubContentNav1() {
 		
-		if (GeneralFinder.inputManager.getAxisRaw ("CursorHorizontal") != 0.0f) {
+		if(GeneralFinder.inputManager.getButtonDown("ForwardTrigger") ) {
 			
-			if( Mathf.Abs( GeneralFinder.inputManager.getAxisRaw("CursorHorizontal") ) > 0.9f )  {
-				
-				//Debug.Log("cursore hor" + GeneralFinder.inputManager.getAxisRaw("CursorHorizontal"));
-				if(!cursorHorizontalDirectionUse) {
-					
-					float fl = GeneralFinder.inputManager.getAxisRaw("CursorHorizontal");
-					
-					controllerChangeSubContent(fl);
-					
-					cursorHorizontalDirectionUse = true;
-					
-				}
-				
-			}
-			else {
-				
-				cursorHorizontalDirectionUse = false;
-				
-			}
+			//float fl = Input.GetAxisRaw("FrontTrigger");
+			
+			controllerChangeSection(1.0f);
 			
 		}
-		else {
+		else if (GeneralFinder.inputManager.getButtonDown("BackwardTrigger")) {
 			
-			cursorHorizontalDirectionUse = false;
+			controllerChangeSection(-1.0f);
 			
 		}
+		
+		
+	}
+	
+
+	void setSprites() {
+
+		//GeneralFinder.inputManager.getControllerSprite(
 
 	}
 
 	void controllerNavigation() {
 
-		checkSectionNav ();
+		if (controllerConfig1) {
+			checkSectionNav1 ();
+			checkSubContentNav1 ();
+		} else {
+			checkSectionNav ();
+			checkSubContentNav ();
 
-		checkSubContentNav ();
+		}
+
 
 		checkContentNav ();
 
@@ -1571,6 +1590,22 @@ public class InformativeManager : MonoBehaviour {
 
 
 	}
+
+
+	public void c_setHelpImages() {
+
+		//GeneralFinder.inputManager.getSprite
+
+		changeContentHelp.sprite = GeneralFinder.inputManager.getControllerSprite (ButtonController.PS3Button.DPadUp);
+
+		changeSubContentHelp.sprite = GeneralFinder.inputManager.getControllerSprite (ButtonController.PS3Button.DPadRight);
+
+		changeSectionHelp[0].sprite = GeneralFinder.inputManager.getControllerSprite (ButtonController.PS3Button.L1);
+		//changeSectionHelp [0].sprite = GeneralFinder.inputManager.getSprite ("ForwardTrigger");
+		changeSectionHelp[1].sprite = GeneralFinder.inputManager.getControllerSprite (ButtonController.PS3Button.R1);
+		
+	}
+
 
 	#endregion CALLBACKS
 

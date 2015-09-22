@@ -277,7 +277,48 @@ public class MenuManager : MonoBehaviour {
 
 	}
 
+
+
 	void checkMenuNav() {
+		
+		if(GeneralFinder.inputManager.getButtonDown("UpMenu")) {
+
+			foreach(Button butt in menuButtons) {
+				
+				butt.gameObject.GetComponent<Animator>().SetTrigger("Normal");
+				
+			}
+
+			activeMenuButtonIndex--;
+			
+			if(activeMenuButtonIndex<0) {
+				activeMenuButtonIndex= menuButtons.Length-1;
+			}
+
+			menuButtons[activeMenuButtonIndex].gameObject.GetComponent<Animator>().SetTrigger("Highlighted");
+
+
+		}
+		else if(GeneralFinder.inputManager.getButtonDown("DownMenu")) {
+
+			foreach(Button butt in menuButtons) {
+				
+				butt.gameObject.GetComponent<Animator>().SetTrigger("Normal");
+				
+			}
+
+			activeMenuButtonIndex++;
+			
+			if(activeMenuButtonIndex>menuButtons.Length-1) {
+				activeMenuButtonIndex=0;
+			}
+
+			menuButtons[activeMenuButtonIndex].gameObject.GetComponent<Animator>().SetTrigger("Highlighted");
+
+		}
+	}
+
+	void checkMenuNav1() {
 
 		if (GeneralFinder.inputManager.getAxisRaw("Vertical") != 0.0f) {
 			//Debug.Log("menu");
@@ -322,7 +363,8 @@ public class MenuManager : MonoBehaviour {
 			oneControllerDirectionAnUse = false;
 			
 		}
-		
+
+		/*
 		if (GeneralFinder.inputManager.getAxisRaw("DigitalVertical") != 0.0f) {
 			//Debug.Log("menu");
 			if(!oneControllerDirectionDigUse) {
@@ -366,6 +408,8 @@ public class MenuManager : MonoBehaviour {
 			oneControllerDirectionDigUse = false;
 			
 		}
+
+		*/
 
 	}
 
