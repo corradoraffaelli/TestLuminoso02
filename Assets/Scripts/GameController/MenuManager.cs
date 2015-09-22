@@ -16,10 +16,13 @@ public class MenuManager : MonoBehaviour {
 
 	Button []menuButtons;
 	int activeMenuButtonIndex;
-	
-	bool statusMenu = false;
+
+	public bool statusMenu = false;
 
 	bool oneControllerDirectionUse = false;
+
+	bool oneControllerDirectionAnUse = false;
+	bool oneControllerDirectionDigUse = false;
 
 	public bool StatusMenu {
 		get{ return statusMenu; }
@@ -254,7 +257,8 @@ public class MenuManager : MonoBehaviour {
 		//3) non lo catturo se è attivo il menu e qualcosa diverso da intro
 
 
-		if(GeneralFinder.inputManager.getButtonDown("Start") && !GeneralFinder.informativeManager.invokeWithoutMenu ) {
+		if(GeneralFinder.inputManager.getButtonDown("Start") && !GeneralFinder.informativeManager.invokeWithoutMenu 
+		   ||  (GeneralFinder.inputManager.getButtonUp("GoBackMenu") && statusMenu ) ) {
 			//Debug.Log("ahi");
 			if(!GeneralFinder.canvasMenu.activeSelf || canvasActive == canvasIntro) {
 				//caso in cui siamo in game o dentro la scheda intro del menu
@@ -283,9 +287,9 @@ public class MenuManager : MonoBehaviour {
 
 		if (GeneralFinder.inputManager.getAxisRaw("Vertical") != 0.0f) {
 			//Debug.Log("menu");
-			if(!oneControllerDirectionUse) {
+			if(!oneControllerDirectionAnUse) {
 
-				oneControllerDirectionUse = true;
+				oneControllerDirectionAnUse = true;
 
 				float fl = GeneralFinder.inputManager.getAxisRaw("Vertical");
 
@@ -313,12 +317,48 @@ public class MenuManager : MonoBehaviour {
 		}
 		else {
 
-			oneControllerDirectionUse = false;
+			oneControllerDirectionAnUse = false;
 
 		}
 
+		if (GeneralFinder.inputManager.getAxisRaw("DigitalVertical") != 0.0f) {
+			//Debug.Log("menu");
+			if(!oneControllerDirectionDigUse) {
+				
+				oneControllerDirectionDigUse = true;
+				
+				float fl = GeneralFinder.inputManager.getAxisRaw("DigitalVertical");
+				
+				menuButtons[activeMenuButtonIndex].gameObject.GetComponent<Image>().color = menuButtons[activeMenuButtonIndex].colors.normalColor;
+				
+				if(fl < 0.0f) {
+					//Debug.Log("menu up");
+					activeMenuButtonIndex--;
+					
+					if(activeMenuButtonIndex<0) {
+						activeMenuButtonIndex= menuButtons.Length-1;
+					}
+				}
+				else {
+					//Debug.Log("menu down");
+					activeMenuButtonIndex++;
+					
+					if(activeMenuButtonIndex>menuButtons.Length-1) {
+						activeMenuButtonIndex=0;
+					}
+				}
+				
+				menuButtons[activeMenuButtonIndex].gameObject.GetComponent<Image>().color = menuButtons[activeMenuButtonIndex].colors.highlightedColor;
+			}
+		}
+		else {
+			
+			oneControllerDirectionDigUse = false;
+			
+		}
 
-		if(GeneralFinder.inputManager.getButtonUp("Interaction") || GeneralFinder.inputManager.getButtonUp("Jump")) {
+
+		if(GeneralFinder.inputManager.getButtonUp("Interaction") || GeneralFinder.inputManager.getButtonUp("GoMenu")) {
 
 			PointerEventData pointer = new PointerEventData(EventSystem.current);
 

@@ -1446,17 +1446,24 @@ public class PlayerMovements : MonoBehaviour {
 
 	}
 
-	public void c_crushKill(){
-		Debug.Log ("AAAAAAAAAAAAAAAA");
+	public void c_crushKill(string tagSource){
+		//Debug.Log ("AAAAAAAAAAAAAAAA");
 		if (!AIControl) {
-			
+			//Debug.Log ("AAAAAAAAAAAAAAAA1");
+			if(zoneAnalyzerParent!=null) {
+				zoneAnalyzerParent.BroadcastMessage("c_playerKilled", tagSource);
+			}
+
 			if(OnGround) {
+				//Debug.Log ("AAAAAAAAAAAAAAAA2");
 				StartCoroutine (handlePlayerKill ());
 				c_stunned (true);
 			}
-		} else {
+		} 
+		else {
 			//se ne occupa lo script dell'AI, riceve anche lui il messaggio
-			
+			//Debug.Log ("OOOOOOOOOOOOO");
+			SendMessage("c_instantKill", "");
 		}
 		
 	}
