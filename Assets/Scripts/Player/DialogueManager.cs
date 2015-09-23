@@ -16,6 +16,7 @@ public class DialogueManager : MonoBehaviour {
 
 	Animator playerAnimator;
 	Rigidbody2D playerRigidbody;
+	AudioHandler playerAudio;
 
 	GameObject camera;
 	bool differentCamera = false;
@@ -35,17 +36,34 @@ public class DialogueManager : MonoBehaviour {
 	[SerializeField]
 	DialogueElement[] dialogueElements;
 
+	[SerializeField]
+	DialogueElement[] dialogueElementsNext;
+
 	public bool mustFaceRight = true;
+	bool firstClick = true;
+
+	GameObject interagibileParent;
+
+	//float lastClick = 0.0f;
+	//float diffClick = 0.3f;
 	
 	void Start () {
 		if (NPC == null)
 			NPC = this.gameObject;
 		playerAnimator = GeneralFinder.player.GetComponent<Animator> ();
 		playerRigidbody = GeneralFinder.player.GetComponent<Rigidbody2D> ();
+		playerAudio = GeneralFinder.player.GetComponent<AudioHandler> ();
 		camera = GeneralFinder.camera;
+
+		InteragibileObject intScript = GetComponentInChildren<InteragibileObject> ();
+		if (intScript != null)
+			interagibileParent = intScript.gameObject;
+
+		enableInteragibility (false);
 	}
 
 	void Update () {
+		//playerColliding viene messo a true solo se è la prima volta che si collide, poi non più
 		if (playerColliding != playerCollidingOld) {
 			if (playerColliding)
 			{
@@ -55,9 +73,12 @@ public class DialogueManager : MonoBehaviour {
 
 		if (dialogueStarted) {
 			cameraAlternativeMovements ();
-			nextDialogueHandler ();
-		}
+			if (!dialogueConsumed)
+				nextDialogueHandler (dialogueElements);
+			else
+				nextDialogueHandler (dialogueElementsNext);
 
+		}
 
 		playerCollidingOld = playerColliding;
 	}
@@ -66,7 +87,7 @@ public class DialogueManager : MonoBehaviour {
 	{
 		if (!dialogueConsumed && other.gameObject.tag == "Player") {
 			playerColliding = true;
-			dialogueConsumed = true;
+			//dialogueConsumed = true;
 		}
 	}
 	
@@ -74,6 +95,12 @@ public class DialogueManager : MonoBehaviour {
 	{
 		if (other.gameObject.tag == "Player")
 			playerColliding = false;
+	}
+
+	void enableInteragibility (bool enable = true)
+	{
+		if (interagibileParent != null)
+			interagibileParent.SetActive (enable);
 	}
 
 	void facingHandler()
@@ -88,16 +115,28 @@ public class DialogueManager : MonoBehaviour {
 		if (balloonPrefab != null) {
 			dialogueStarted = true;
 
-			facingHandler();
+			if (!dialogueConsumed)
+				facingHandler();
+			playerAudio.stopClipByName("Passi");
 			enablePlayerMovements(false);
-
 
 			GeneralFinder.cameraMovements.enabled = false;
 			differentCamera = true;
 
-			showDialogue(actualIndex);
-			actualIndex++;
+			if (!dialogueConsumed)
+			{
+				showDialogue(dialogueElements, actualIndex);
+				actualIndex++;
+			}
+
+
+			enableInteragibility(false);
 		}
+	}
+
+	public void InteractingMethod()
+	{
+		startDialogue ();
 	}
 
 	public void stopDialogue()
@@ -106,6 +145,15 @@ public class DialogueManager : MonoBehaviour {
 
 		GeneralFinder.cameraMovements.enabled = true;
 		differentCamera = false;
+
+		dialogueStarted = false;
+		dialogueConsumed = true;
+
+		enableInteragibility(true);
+
+		actualIndex = 0;
+
+		firstClick = true;
 	}
 
 	void playerExit()
@@ -140,7 +188,7 @@ public class DialogueManager : MonoBehaviour {
 		}
 	}
 
-	void nextDialogueHandler()
+	void nextDialogueHandler(DialogueElement[] elements)
 	{
 		if (GeneralFinder.inputKeeper != null) {
 			if (GeneralFinder.inputKeeper.isButtonUp("Interaction")) {
@@ -149,22 +197,24 @@ public class DialogueManager : MonoBehaviour {
 				if (dialogueElements.Length < (actualIndex + 1))
 					stopDialogue();
 				else
-					showDialogue(actualIndex++);
+					showDialogue(elements, actualIndex++);
+
 			}
 		}
 	}
 
-	void showDialogue(int index)
+	void showDialogue(DialogueElement[] elements, int index)
 	{
-		if (dialogueElements [index] != null) {
+		if (elements [index] != null) {
 			balloonCreated = Instantiate(balloonPrefab);
 			ComicBalloonManager balloonManager = balloonCreated.GetComponent<ComicBalloonManager>();
 			balloonManager.setType(ComicBalloonManager.Type.dialogue);
-			if (dialogueElements [index].text != null && dialogueElements [index].text != "")
-				balloonManager.setText(dialogueElements [index].text);
+			if (elements [index].text != null && elements [index].text != "")
+				balloonManager.setText(elements [index].text);
 				
-			if (!dialogueElements [index].player)
+			if (!elements [index].player)
 				balloonManager.setObjectToFollow(NPC);
 		}
 	}
+	
 }
