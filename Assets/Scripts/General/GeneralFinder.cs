@@ -36,6 +36,7 @@ public class GeneralFinder : MonoBehaviour {
 	public static InputKeeper inputKeeper;
 
 	public static CameraMovements cameraMovements;
+	public static CameraHandler cameraHandler;
 	public static GameObject camera;
 
 	public static LevelChangerGeneral levelChangerGeneral;
@@ -100,6 +101,7 @@ public class GeneralFinder : MonoBehaviour {
 		camera = Camera.main.gameObject;
 		if (camera != null) {
 			cameraMovements = camera.GetComponent<CameraMovements>();
+			cameraHandler = camera.GetComponent<CameraHandler>();
 		}
 
 		GameObject levelChanger = GameObject.FindGameObjectWithTag ("CanvasLoadLevel");

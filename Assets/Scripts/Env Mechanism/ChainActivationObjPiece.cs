@@ -643,6 +643,14 @@ public class ChainActivationObjPiece : MonoBehaviour {
 
 	}
 
+	//fatta per la sendmessage del NPC
+	public void c_buttonPushedOpen() {
+
+		c_buttonPushed (true);
+
+	}
+
+	//fatta per una sendmessage 
 	public void buttonPushed(bool bp){
 
 		c_buttonPushed (bp);
