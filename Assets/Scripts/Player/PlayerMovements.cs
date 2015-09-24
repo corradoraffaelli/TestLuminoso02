@@ -645,7 +645,7 @@ public class PlayerMovements : MonoBehaviour {
 
 			if(Mathf.Abs( RigBody.velocity.x ) > 0.0f ) {
 
-				if(!onGround) {
+				if(onGround) {
 					anim.speed = Mathf.Clamp( Mathf.Abs(GeneralFinder.inputManager.getAxis ("Horizontal") ) / 1.5f, 0.2f, 0.75f);
 				}
 				else {

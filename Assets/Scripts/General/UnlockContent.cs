@@ -27,17 +27,7 @@ public class UnlockContent : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 
-		//initializeComponents ();
 
-		//checkNeedButtonPress ();
-
-		/*
-		if (sectionIndexToUnlock == -1 || contentIndexToUnlock == -1) {
-			
-			getIndexes();
-			
-		}
-		*/
 	}
 
 
