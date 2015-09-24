@@ -65,11 +65,14 @@ public class spawner : MonoBehaviour {
 		while (true) {
 			yield return new WaitForSeconds(tBeetingSpawn);
 
-			if(numberOfAliveEnemies<numberOfEnemies) {
+			if(this.enabled) {
 
-				StartCoroutine (SpawnCoroutine ());
-				numberOfAliveEnemies++;
+				if(numberOfAliveEnemies<numberOfEnemies) {
 
+					StartCoroutine (SpawnCoroutine ());
+					numberOfAliveEnemies++;
+
+				}
 			}
 		}
 
