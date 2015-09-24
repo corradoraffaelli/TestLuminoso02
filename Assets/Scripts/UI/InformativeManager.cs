@@ -198,14 +198,14 @@ public class InformativeManager : MonoBehaviour {
 						if(conte.unlockerObject!=null) {
 							if(!conte.lockedContent) {
 								
-								conte.unlockerObject.SetActive(false);
+								conte.unlockerObject.GetComponent<UnlockContent>().c_contentUnlocked();
 
 							}
 							else {
-								if(conte.unlockerObject.activeSelf) {
-									//conte.unlockerObject.SendMessage("c_setSectionInt", sectionIndex);
-									//conte.unlockerObject.SendMessage("c_setContentInt", contentIndex);
-								}
+
+								conte.unlockerObject.GetComponent<UnlockContent>().c_setContentInt(contentIndex);
+								conte.unlockerObject.GetComponent<UnlockContent>().c_setSectionInt(sectionIndex);
+							
 							}
 							
 							
@@ -221,19 +221,18 @@ public class InformativeManager : MonoBehaviour {
 						if(funfact.unlockerObject!=null) {
 							if(!funfact.lockedContent) {
 								
-								funfact.unlockerObject.SetActive(false);
+								funfact.unlockerObject.GetComponent<UnlockContent>().c_contentUnlocked();
 								
 							}
 							else {
 
-								if(funfact.unlockerObject.activeSelf) {
-									funfact.unlockerObject.SendMessage("c_setSectionInt", sectionIndex);
-									funfact.unlockerObject.SendMessage("c_setContentInt", contentIndex);
-								}
+								funfact.unlockerObject.GetComponent<UnlockContent>().c_setContentInt(contentIndex);
+								funfact.unlockerObject.GetComponent<UnlockContent>().c_setSectionInt(sectionIndex);
+							
 							}
 							
 							
-							}
+						}
 							
 						
 						contentIndex++;
@@ -1366,20 +1365,21 @@ public class InformativeManager : MonoBehaviour {
 		foreach (Button butt in iconButtons) {
 			
 			if(index!=_activeContent) {
-				
-				butt.gameObject.GetComponent<Animator> ().SetTrigger ("Normal");
-				butt.gameObject.GetComponent<Animator> ().SetBool ("Active", false);
-				
-				butt.image.color = new Color(1.0f, 1.0f, 1.0f, 0.5f);
-				
+				if(butt != null) {
+					butt.gameObject.GetComponent<Animator> ().SetTrigger ("Normal");
+					butt.gameObject.GetComponent<Animator> ().SetBool ("Active", false);
+					
+					butt.image.color = new Color(1.0f, 1.0f, 1.0f, 0.5f);
+				}
 				
 			}
 			else {
-				
-				butt.gameObject.GetComponent<Animator> ().SetTrigger ("Pressed");
-				butt.gameObject.GetComponent<Animator> ().SetBool ("Active", true);
-				
-				butt.image.color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
+				if(butt != null) {
+					butt.gameObject.GetComponent<Animator> ().SetTrigger ("Pressed");
+					butt.gameObject.GetComponent<Animator> ().SetBool ("Active", true);
+					
+					butt.image.color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
+				}
 			}
 			
 			index++;
@@ -1635,8 +1635,11 @@ public class InformativeManager : MonoBehaviour {
 		if (GeneralFinder.cursorHandler.useController) {
 
 			//changeContentHelp.sprite = GeneralFinder.inputManager.getControllerSprite (ButtonController.PS3Button.DPadUp);
-
 			//changeSubContentHelp.sprite = GeneralFinder.inputManager.getControllerSprite (ButtonController.PS3Button.DPadRight);
+
+			if(GeneralFinder.inputManager.getKeyboardSprite(ButtonKeyboardMouse.Button.ESC) == null
+			   || exitInformativeHelp == null)
+				return;
 
 			exitInformativeHelp.sprite = GeneralFinder.inputManager.getControllerSprite (ButtonController.PS3Button.Cerchio);
 
@@ -1655,8 +1658,11 @@ public class InformativeManager : MonoBehaviour {
 		else {
 
 			//changeContentHelp.sprite = GeneralFinder.inputManager.getKeyboardSprite(ButtonKeyboardMouse.Button.ArrowUp);
-
 			//changeSubContentHelp.sprite = GeneralFinder.inputManager.getKeyboardSprite(ButtonKeyboardMouse.Button.ArrowRight);
+
+			if(GeneralFinder.inputManager.getKeyboardSprite(ButtonKeyboardMouse.Button.ESC) == null
+			   || exitInformativeHelp == null)
+				return;
 
 			exitInformativeHelp.sprite = GeneralFinder.inputManager.getKeyboardSprite(ButtonKeyboardMouse.Button.ESC);
 

@@ -161,7 +161,7 @@ public class sizeChanger : MonoBehaviour {
 
 			}
 
-			Debug.Log("cambio " + c.gameObject.name);
+			//Debug.Log("cambio " + c.gameObject.name);
 			prevGameObject = c.gameObject;
 			StartCoroutine (checkingCollider (c));
 
