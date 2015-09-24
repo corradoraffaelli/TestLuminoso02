@@ -626,6 +626,18 @@ MonoBehaviour:
     alternativeInterfaceName: 
     controllerButtons: 0e000000
     keyboardButtons: 09000000
+  - interfaceName: SurveyAnswer1
+    alternativeInterfaceName: 
+    controllerButtons: 01000000
+    keyboardButtons: 26000000
+  - interfaceName: SurveyAnswer2
+    alternativeInterfaceName: 
+    controllerButtons: 03000000
+    keyboardButtons: 27000000
+  - interfaceName: SurveyAnswer3
+    alternativeInterfaceName: 
+    controllerButtons: 04000000
+    keyboardButtons: 28000000
   axis:
   - interfaceName: Horizontal
     alternativeInterfaceName: 
@@ -1521,7 +1533,47 @@ Prefab:
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: buttons.Array.size
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: buttons.Array.data[17].interfaceName
+      value: SurveyAnswer1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: buttons.Array.data[18].interfaceName
+      value: SurveyAnswer2
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: buttons.Array.data[19].interfaceName
+      value: SurveyAnswer3
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: buttons.Array.data[17].controllerButtons.Array.data[0]
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: buttons.Array.data[17].keyboardButtons.Array.data[0]
+      value: 38
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: buttons.Array.data[18].controllerButtons.Array.data[0]
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: buttons.Array.data[18].keyboardButtons.Array.data[0]
+      value: 39
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: buttons.Array.data[19].controllerButtons.Array.data[0]
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: buttons.Array.data[19].keyboardButtons.Array.data[0]
+      value: 40
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 176264}
