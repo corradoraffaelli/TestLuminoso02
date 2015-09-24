@@ -3,16 +3,16 @@ using System.Collections;
 
 public class UnlockContent : MonoBehaviour {
 
-	public Sprite unlockedObj;
-	public Sprite controllerButton;
-	public Sprite keyboardButton;
+	Sprite unlockedObj;
+	Sprite controllerButton;
+	Sprite keyboardButton;
 
-	bool needButtonPress = false;
+	public bool useTrigger = false;
 
 	CursorHandler cursorHandler;
 
-	public int sectionIndexToUnlock = -1;
-	public int contentIndexToUnlock = -1;
+	int sectionIndexToUnlock = -1;
+	int contentIndexToUnlock = -1;
 	
 	public bool disableGameObjectIfTaken = true;
 
@@ -27,23 +27,25 @@ public class UnlockContent : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 
-		initializeComponents ();
+		//initializeComponents ();
 
-		checkNeedButtonPress ();
+		//checkNeedButtonPress ();
 
+		/*
 		if (sectionIndexToUnlock == -1 || contentIndexToUnlock == -1) {
 			
 			getIndexes();
 			
 		}
-
+		*/
 	}
+
 
 	void getIndexes() {
 
 		infoContentType tipo;
 
-		if (needButtonPress) {
+		if (!useTrigger) {
 
 			tipo = infoContentType.Collectibles;
 
@@ -58,21 +60,7 @@ public class UnlockContent : MonoBehaviour {
 
 	}
 
-	void checkNeedButtonPress() {
 
-		InteragibileObject io = GetComponent<InteragibileObject> ();
-
-		if (io != null) {
-
-			needButtonPress = true;
-
-		} else {
-
-			needButtonPress = false;
-
-		}
-
-	}
 
 	void initializeComponents() {
 
@@ -100,7 +88,7 @@ public class UnlockContent : MonoBehaviour {
 
 	void OnTriggerEnter2D(Collider2D c) {
 
-		if (!needButtonPress) {
+		if (useTrigger) {
 
 			if(c.tag=="Player") {
 

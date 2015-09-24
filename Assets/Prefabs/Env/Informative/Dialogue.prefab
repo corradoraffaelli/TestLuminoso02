@@ -28,6 +28,7 @@ GameObject:
   - 212: {fileID: 21241196}
   - 61: {fileID: 6114146}
   - 114: {fileID: 11494406}
+  - 114: {fileID: 11451088}
   m_Layer: 0
   m_Name: Dialogue
   m_TagString: Untagged
@@ -75,7 +76,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 186736}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: .899999976, y: .819999993, z: 0}
+  m_LocalPosition: {x: 2.84607506, y: .873634338, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 450430}
@@ -132,6 +133,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   needToPulse: 1
   factor: 2
+--- !u!114 &11451088
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 186736}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 359b9e15f7c024e5d96c98fdca021e67, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unlockedObj: {fileID: 0}
+  controllerButton: {fileID: 0}
+  keyboardButton: {fileID: 0}
+  sectionIndexToUnlock: -1
+  contentIndexToUnlock: -1
+  disableGameObjectIfTaken: 0
 --- !u!114 &11453980
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -209,24 +227,113 @@ MonoBehaviour:
   NPC: {fileID: 0}
   cameraSpeed: 100
   dialogueElements:
-  - text: Ehi ciao! Come va?
+  - text: Ehi ciao, io sono il dinosauro dell'amiciziaNEWLINECome stai?
+    survey:
+      question: What's your name?
+      answers:
+      - text: The pen is on the table.
+        correct: 0
+      - text: The pen is on the table.
+        correct: 0
+      - text: The pen is on the table.
+        correct: 0
+      correctNPCAnswer: Bravo, risposta corretta
+      wrongNPCAnswer: Sbagliato, rileggiti la scheda informativa se vuoi il regalo
     player: 0
   - text: Bene! E tu invece come te la passi? NEWLINE Che mi dici?
+    survey:
+      question: What's your name?
+      answers:
+      - text: The pen is on the table.
+        correct: 0
+      - text: The pen is on the table.
+        correct: 0
+      - text: The pen is on the table.
+        correct: 0
+      correctNPCAnswer: Bravo, risposta corretta
+      wrongNPCAnswer: Sbagliato, rileggiti la scheda informativa se vuoi il regalo
     player: 1
-  - text: "Bah...niente di che in realt\xE0"
+  - text: 
+    survey:
+      question: What's your name?
+      answers:
+      - text: The pen is on the table.
+        correct: 0
+      - text: The pen is under the table.
+        correct: 1
+      - text: The pen is near the table.
+        correct: 0
+      correctNPCAnswer: Bravo, risposta corretta
+      wrongNPCAnswer: Sbagliato, rileggiti la scheda informativa se vuoi il regalo
     player: 0
   - text: Ho la schiena un po' dolorante NEWLINE Vattene che mi hai stancato
+    survey:
+      question: What's your name?
+      answers:
+      - text: The pen is on the table.
+        correct: 0
+      - text: The pen is on the table.
+        correct: 0
+      - text: The pen is on the table.
+        correct: 0
+      correctNPCAnswer: Bravo, risposta corretta
+      wrongNPCAnswer: Sbagliato, rileggiti la scheda informativa se vuoi il regalo
     player: 0
   dialogueElementsNext:
   - text: Ohi ancora qui?
+    survey:
+      question: What's your name?
+      answers:
+      - text: The pen is on the table.
+        correct: 0
+      - text: The pen is on the table.
+        correct: 0
+      - text: The pen is on the table.
+        correct: 0
+      correctNPCAnswer: Bravo, risposta corretta
+      wrongNPCAnswer: Sbagliato, rileggiti la scheda informativa se vuoi il regalo
     player: 0
   - text: Non hai trovato quello NEWLINE che cercavi?
+    survey:
+      question: What's your name?
+      answers:
+      - text: The pen is on the table.
+        correct: 0
+      - text: The pen is on the table.
+        correct: 0
+      - text: The pen is on the table.
+        correct: 0
+      correctNPCAnswer: Bravo, risposta corretta
+      wrongNPCAnswer: Sbagliato, rileggiti la scheda informativa se vuoi il regalo
     player: 0
   - text: No, ancora no, puoi aiutarmi?
+    survey:
+      question: What's your name?
+      answers:
+      - text: The pen is on the table.
+        correct: 0
+      - text: The pen is on the table.
+        correct: 0
+      - text: The pen is on the table.
+        correct: 0
+      correctNPCAnswer: Bravo, risposta corretta
+      wrongNPCAnswer: Sbagliato, rileggiti la scheda informativa se vuoi il regalo
     player: 1
-  - text: No, vai via che mi infastidisci.NEWLINESto aspettando il tram
+  - text: 
+    survey:
+      question: What's your name?
+      answers:
+      - text: risp1
+        correct: 0
+      - text: risp2
+        correct: 0
+      - text: risp3
+        correct: 0
+      correctNPCAnswer: Bravo, risposta corretta
+      wrongNPCAnswer: Sbagliato, rileggiti la scheda informativa se vuoi il regalo
     player: 0
   mustFaceRight: 1
+  unlockContent: 0
 --- !u!212 &21203344
 SpriteRenderer:
   m_ObjectHideFlags: 1

@@ -9,7 +9,7 @@ public class ComicBalloonManager : MonoBehaviour {
 		dialogue
 	}
 
-	Type type = Type.hint;
+	public Type type = Type.hint;
 
 	public float positionY = 3.0f;
 	public float lerpSpeed = 15.0f;
@@ -23,6 +23,14 @@ public class ComicBalloonManager : MonoBehaviour {
 	public int sortingLayerInt = 10;
 
 	GameObject objectToFollow;
+
+	public bool dialogueDown = false;
+	public float dialogueDownOffset = 5.0f;
+	public bool dialogueContinue = true;
+	public bool leftAlignment = false;
+	public bool survey = false;
+	public string[] surveyText = new string[4];
+	public GameObject surveyFather;
 
 	[System.Serializable]
 	public class BalloonSprites{
@@ -104,20 +112,37 @@ public class ComicBalloonManager : MonoBehaviour {
 		if (objectToFollow == null)
 			objectToFollow = GeneralFinder.player;
 
-		textMesh = GetComponent<TextMesh>();
-		GetComponent<MeshRenderer>().sortingLayerName = sortingLayerName;
-		GetComponent<MeshRenderer>().sortingOrder = sortingLayerInt + 2;
+		if (survey) {
+			MeshRenderer meshRenderer = GetComponent<MeshRenderer>();
+			meshRenderer.enabled = false;
+			textMesh = GetComponent<TextMesh>();
 
-		if (inputText != null && inputText != "")
-		{
-			inputText = inputText.Replace("NEWLINE", "\n");
-			textMesh.text = inputText;
-		}
+			surveyFather.GetComponent<ComicBalloonSurveyManager>().setTexts(surveyText);
+
+			surveyFather.SetActive(true);
+			boxCollider = surveyFather.GetComponent<ComicBalloonSurveyManager>().createCollider();
+			//surveyFather.
+			//boxCollider = surveyFather.GetComponent<BoxCollider2D>();
+		} else {
+			textMesh = GetComponent<TextMesh>();
+			GetComponent<MeshRenderer>().sortingLayerName = sortingLayerName;
+			GetComponent<MeshRenderer>().sortingOrder = sortingLayerInt + 2;
 			
-		if (inputTextSize != 0.0f)
-			textMesh.characterSize = inputTextSize;
+			if (leftAlignment)
+				textMesh.alignment = TextAlignment.Left;
+			
+			if (inputText != null && inputText != "")
+			{
+				inputText = inputText.Replace("NEWLINE", "\n");
+				textMesh.text = inputText;
+			}
+			
+			if (inputTextSize != 0.0f)
+				textMesh.characterSize = inputTextSize;
+			
+			boxCollider = gameObject.AddComponent<BoxCollider2D>();
+		}
 
-		boxCollider = gameObject.AddComponent<BoxCollider2D>();
 		boxCollider.isTrigger = true;
 		player = GeneralFinder.player;
 		
@@ -145,12 +170,16 @@ public class ComicBalloonManager : MonoBehaviour {
 	void setInitialPosition()
 	{
 		transform.position = new Vector3(objectToFollow.transform.position.x, objectToFollow.transform.position.y + positionY, objectToFollow.transform.position.z -1.0f);
+		if (dialogueDown)
+			transform.position = new Vector3 (transform.position.x, transform.position.y - dialogueDownOffset, transform.position.z);
 	}
 
 	//chiamato nell'update, permette al fumetto di seguire il player, con un lerp
 	void setPosition()
 	{
 		Vector3 objPosition = new Vector3(objectToFollow.transform.position.x, objectToFollow.transform.position.y + positionY, objectToFollow.transform.position.z -1.0f);
+		if (dialogueDown)
+			objPosition = new Vector3 (objPosition.x, objPosition.y - dialogueDownOffset, objPosition.z);
 		transform.position = Vector3.Lerp(transform.position, objPosition, Time.deltaTime * lerpSpeed);
 	}
 
@@ -203,6 +232,9 @@ public class ComicBalloonManager : MonoBehaviour {
 				startingY = boxCollider.bounds.center.y - (totYNumber/2 * spriteSize);
 			}
 			Vector3 startingPosition = new Vector3(startingX, startingY, transform.position.z);
+
+			//if (!dialogueDown)
+			//	startingPosition = new Vector3(startingPosition.x, startingPosition.y - dialogueDownOffset, startingPosition.z);
 
 			int totalNumber = totXNumber * totYNumber;
 			spriteOBJGroup = new GameObject[totalNumber];
@@ -323,37 +355,54 @@ public class ComicBalloonManager : MonoBehaviour {
 				dialogueRenderer.sortingLayerName = sortingLayerName;
 				dialogueRenderer.sortingOrder = sortingLayerInt + 1;
 
-				Vector3 tempPosition = new Vector3(objectToFollow.transform.position.x + 0.4f, startingPosition.y, startingPosition.z);
-				dialoguePiece.transform.position = tempPosition;
-
-				//indicazione per proseguire
-				GameObject continuePiece = new GameObject();
-				continuePiece.transform.parent = transform;
-				continuePiece.name = "ContinuePiece";
-				
-				continuePiece.transform.localScale = new Vector3(piecesScale, piecesScale, 1.0f);
-				
-				SpriteRenderer continueRenderer = continuePiece.AddComponent<SpriteRenderer>();
-
-				if (overlaySprites)
+				Vector3 tempPosition;
+				if (dialogueDown)
 				{
-					continueRenderer.sprite = GeneralFinder.inputManager.getSprite(action);
-					continuePiece.transform.localScale = new Vector3(piecesScale*7.0f, piecesScale*7.0f, 1.0f);
+					tempPosition = new Vector3(objectToFollow.transform.position.x + 0.4f, startingPosition.y + spriteSize*(totYNumber-1), startingPosition.z);
+					dialoguePiece.transform.localEulerAngles = new Vector3(0.0f, 0.0f, 180.0f);
+					Vector3 oldScale = dialoguePiece.transform.localScale;
+					dialoguePiece.transform.localScale = new Vector3(-oldScale.x, oldScale.y, oldScale.z);
 				}
 				else
 				{
-					if (!GeneralFinder.cursorHandler.useController)
-						continueRenderer.sprite = dialogueSrites.keyboardContinue;
-					else
-						continueRenderer.sprite = dialogueSrites.controllerContinue;
+					tempPosition = new Vector3(objectToFollow.transform.position.x + 0.4f, startingPosition.y, startingPosition.z);
 				}
 
-				
-				continueRenderer.sortingLayerName = sortingLayerName;
-				continueRenderer.sortingOrder = sortingLayerInt + 2;
-				
-				Vector3 tempPosition02 = new Vector3(objectToFollow.transform.position.x, startingPosition.y - 0.6f, startingPosition.z);
-				continuePiece.transform.position = tempPosition02;
+				dialoguePiece.transform.position = tempPosition;
+
+				if (dialogueContinue)
+				{
+					//indicazione per proseguire
+					GameObject continuePiece = new GameObject();
+					continuePiece.transform.parent = transform;
+					continuePiece.name = "ContinuePiece";
+					
+					continuePiece.transform.localScale = new Vector3(piecesScale, piecesScale, 1.0f);
+					
+					SpriteRenderer continueRenderer = continuePiece.AddComponent<SpriteRenderer>();
+					
+					if (overlaySprites)
+					{
+						continueRenderer.sprite = GeneralFinder.inputManager.getSprite(action);
+						continuePiece.transform.localScale = new Vector3(piecesScale*7.0f, piecesScale*7.0f, 1.0f);
+					}
+					else
+					{
+						if (!GeneralFinder.cursorHandler.useController)
+							continueRenderer.sprite = dialogueSrites.keyboardContinue;
+						else
+							continueRenderer.sprite = dialogueSrites.controllerContinue;
+					}
+					
+					
+					continueRenderer.sortingLayerName = sortingLayerName;
+					continueRenderer.sortingOrder = sortingLayerInt + 2;
+					
+					Vector3 tempPosition02;
+					tempPosition02 = new Vector3(objectToFollow.transform.position.x, startingPosition.y - 0.6f, startingPosition.z);
+					continuePiece.transform.position = tempPosition02;
+				}
+
 			}
 		}
 	}
@@ -614,5 +663,37 @@ public class ComicBalloonManager : MonoBehaviour {
 	public void setObjectToFollow(GameObject inputObject)
 	{
 		objectToFollow = inputObject;
+	}
+
+	public void setDialoguePosition(bool setUp = true)
+	{
+		dialogueDown = !setUp;
+	}
+
+	public void setDialogueContinue(bool setContinue = true)
+	{
+		dialogueContinue = !setContinue;
+	}
+
+	public void setLeftAlignment(bool setLeft = true)
+	{
+		leftAlignment = setLeft;
+	}
+
+	public void setSurvey(bool inputSurvey = true)
+	{
+		survey = inputSurvey;
+	}
+
+	public void setSurveyTexts(string question, string answer1, string answer2, string answer3)
+	{
+		if (question != null)
+			surveyText [0] = question;
+		if (answer1 != null)
+			surveyText [1] = answer1;
+		if (answer2 != null)
+			surveyText [2] = answer2;
+		if (answer3 != null)
+			surveyText [3] = answer3;
 	}
 }

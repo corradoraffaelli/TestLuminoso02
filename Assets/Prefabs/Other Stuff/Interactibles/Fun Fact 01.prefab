@@ -82,11 +82,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 359b9e15f7c024e5d96c98fdca021e67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unlockedObj: {fileID: 21300000, guid: a2258f472fa1fcc428d11e23cb221afb, type: 3}
-  controllerButton: {fileID: 0}
-  keyboardButton: {fileID: 21300000, guid: db523af32aa355f46a3f85d47dc07894, type: 3}
-  sectionIndexToUnlock: -1
-  contentIndexToUnlock: -1
+  useTrigger: 1
+  disableGameObjectIfTaken: 1
 --- !u!212 &21273536
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -123,6 +120,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: m_Enabled
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: useTrigger
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
