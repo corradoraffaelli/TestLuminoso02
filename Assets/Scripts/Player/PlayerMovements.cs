@@ -530,13 +530,14 @@ public class PlayerMovements : MonoBehaviour {
 	}
 
 	void handleAudioSteps() {
-
+		/*
 		if (!AIControl && audioHandler != null) {
 			if (running)
 				audioHandler.playClipByName ("Passi");
 			if (!running || (!onGround && running))
 				audioHandler.stopClipByName("Passi");
 		}
+		*/
 	}
 
 	void slideManagement() {
@@ -600,6 +601,13 @@ public class PlayerMovements : MonoBehaviour {
 			}
 			   
 		}
+	}
+
+	public void animationEventTest()
+	{
+		//audioHandler.getAudioClipByName ("Passi").loop = false;
+		audioHandler.playForcedClipByName ("TonfoCaduta");
+		//Debug.Log ("passo");
 	}
 
 	void setAnimations()
