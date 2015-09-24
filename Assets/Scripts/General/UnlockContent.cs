@@ -13,8 +13,16 @@ public class UnlockContent : MonoBehaviour {
 
 	public int sectionIndexToUnlock = -1;
 	public int contentIndexToUnlock = -1;
+	
+	public bool disableGameObjectIfTaken = true;
 
 	bool contentUnlocked = false;
+
+	public bool ContentUnlocked {
+		
+		get{ return contentUnlocked; }
+
+	}
 
 	// Use this for initialization
 	void Start () {
@@ -74,21 +82,16 @@ public class UnlockContent : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	
+		
 	}
 
 	public void getCollectible() {
 
 		if (!contentUnlocked) {
 
-			//GeneralFinder.playingUILateral
-			//lo richiamo da informative manager?
-
-			//setUpPlayingUIForNewContent ();
-
 			GeneralFinder.informativeManager.c_canShowNewContent (sectionIndexToUnlock, contentIndexToUnlock);
 
-			disableThisObject();
+			c_contentUnlocked();
 
 		}
 
@@ -111,8 +114,7 @@ public class UnlockContent : MonoBehaviour {
 
 	void disableThisObject() {
 
-		contentUnlocked = true;
-
+		/*
 		SpriteRenderer []srs = GetComponentsInChildren<SpriteRenderer>();
 		
 		foreach(SpriteRenderer sr in srs) {
@@ -120,6 +122,9 @@ public class UnlockContent : MonoBehaviour {
 			sr.enabled = false;
 			
 		}
+		*/
+		gameObject.SetActive(false);
+
 	}
 
 	void setUpPlayingUIForNewContent() {
@@ -164,6 +169,22 @@ public class UnlockContent : MonoBehaviour {
 
 		contentIndexToUnlock = con;
 		
+	}
+
+	public void c_contentUnlocked() {
+
+		contentUnlocked = true;
+
+		if (disableGameObjectIfTaken) {
+
+			disableThisObject();
+
+		}
+		else {
+
+
+		}
+
 	}
 
 }
