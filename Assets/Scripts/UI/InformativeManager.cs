@@ -90,6 +90,9 @@ public class InformativeManager : MonoBehaviour {
 	Image changeSubContentHelp;
 
 	Image []changeSectionHelp;
+	Image changeSectionPCHelp;
+
+	Image exitInformativeHelp;
 
 
 	GameObject detailSection;
@@ -578,6 +581,7 @@ public class InformativeManager : MonoBehaviour {
 
 		foreach (Transform child in helpSection.transform) {
 
+			/*
 			if(child.name.Contains("changeContentH")) {
 				//Debug.Log("ok cont");
 				changeContentHelp = child.gameObject.GetComponentInChildren<Image>();
@@ -589,6 +593,7 @@ public class InformativeManager : MonoBehaviour {
 				changeSubContentHelp = child.gameObject.GetComponentInChildren<Image>();
 
 			}
+			*/
 
 			if(child.name.Contains("changeSectionH")) {
 				//Debug.Log("ok sec");
@@ -610,8 +615,20 @@ public class InformativeManager : MonoBehaviour {
 						
 					}
 
+					if(im.gameObject.transform.parent.gameObject.name.Contains("pc")) {
+
+						changeSectionPCHelp = im;
+
+					}
+
 				}
 
+			}
+
+			if(child.name.Contains("exit")) {
+				//Debug.Log("ok sub");
+				exitInformativeHelp = child.gameObject.GetComponentInChildren<Image>();
+				
 			}
 
 		}
@@ -710,7 +727,10 @@ public class InformativeManager : MonoBehaviour {
 		   || GeneralFinder.inputManager.getButtonUp("OpenInformative")) {
 			
 			//Debug.Log("premuto qualcosa per inf");
+
 			handleIntroAndExitInformativeMenu();
+
+			handleMouseOnPause();
 
 		}
 
@@ -951,41 +971,38 @@ public class InformativeManager : MonoBehaviour {
 		//OVER MANUALE DELL'ICONA
 		//iconImages [tempAct].color = iconButtons [tempAct].colors.highlightedColor;
 
+		//updateAlphaAndSizeContents (tempAct);
+
+		/*
 		iconButtons [tempAct].gameObject.GetComponent<Animator> ().SetTrigger ("Pressed");
 		iconButtons [tempAct].gameObject.GetComponent<Animator> ().SetBool ("Active", true);
-
-		//iconButtons [tempAct].gameObject.GetComponent<Animator> ().SetTrigger ("Normal");
-
-		//iconImages [prevAct].color = iconButtons [prevAct].colors.normalColor;
+		iconButtons [tempAct].image.color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
 
 		iconButtons [prevAct].gameObject.GetComponent<Animator> ().SetTrigger ("Normal");
 		iconButtons [prevAct].gameObject.GetComponent<Animator> ().SetBool ("Active", false);
+		iconButtons [prevAct].image.color = new Color(1.0f, 1.0f, 1.0f, 0.5f);
 
-		/*
-		int ind = 0;
 
-		foreach (Button bu in iconButtons) {
-
-			if(ind!=tempAct)
-				iconButtons [ind].gameObject.GetComponent<Animator> ().SetTrigger ("Normal");
-
-			ind++;
-		}
 		*/
 
-		//iconButtons [tempAct].gameObject.GetComponent<Animator> ().SetBool ("Normal", true);
-
 	}
 
+	void handleMouseOnPause() {
+		
+		CursorMode cursorMode = CursorMode.Auto;
+		Vector2 hotSpot = Vector2.zero;
+		
+		if (PlayStatusTracker.inPlay)
+			Cursor.visible = false;
+		else {
+			Cursor.SetCursor(GeneralFinder.menuManager.mouseCursor, hotSpot, cursorMode);
+			Cursor.visible = true;
 
-	IEnumerator countDownMenu() {
-
-		yield return new WaitForSeconds (0.2f);
-
-		invokeWithoutMenu = false;
-
+		}
+		
 	}
 
+	
 	#endregion CONTROLLERNAV
 
 	#endregion PRIVATEMETHODS
@@ -1277,6 +1294,8 @@ public class InformativeManager : MonoBehaviour {
 
 	}
 
+
+
 	public void c_changeSubContent(bool forward) {
 
 		int nextIndex = 0;
@@ -1336,24 +1355,35 @@ public class InformativeManager : MonoBehaviour {
 
 		sections [activeSection].activeContent = contentN;
 
+		updateAlphaAndSizeContents (contentN);
+
+	}
+
+	void updateAlphaAndSizeContents(int _activeContent) {
+
 		int index = 0;
 
 		foreach (Button butt in iconButtons) {
-
-			if(index!=contentN) {
+			
+			if(index!=_activeContent) {
 				
 				butt.gameObject.GetComponent<Animator> ().SetTrigger ("Normal");
 				butt.gameObject.GetComponent<Animator> ().SetBool ("Active", false);
-
+				
+				butt.image.color = new Color(1.0f, 1.0f, 1.0f, 0.5f);
+				
+				
 			}
 			else {
-
+				
 				butt.gameObject.GetComponent<Animator> ().SetTrigger ("Pressed");
 				butt.gameObject.GetComponent<Animator> ().SetBool ("Active", true);
+				
+				butt.image.color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
 			}
-
+			
 			index++;
-
+			
 		}
 
 	}
@@ -1591,6 +1621,12 @@ public class InformativeManager : MonoBehaviour {
 
 	}
 
+	public void c_onEnableInformative() {
+
+		updateAlphaAndSizeContents (0);
+
+	}
+
 
 	public void c_setHelpImages() {
 
@@ -1598,23 +1634,39 @@ public class InformativeManager : MonoBehaviour {
 
 		if (GeneralFinder.cursorHandler.useController) {
 
-			changeContentHelp.sprite = GeneralFinder.inputManager.getControllerSprite (ButtonController.PS3Button.DPadUp);
+			//changeContentHelp.sprite = GeneralFinder.inputManager.getControllerSprite (ButtonController.PS3Button.DPadUp);
 
-			changeSubContentHelp.sprite = GeneralFinder.inputManager.getControllerSprite (ButtonController.PS3Button.DPadRight);
+			//changeSubContentHelp.sprite = GeneralFinder.inputManager.getControllerSprite (ButtonController.PS3Button.DPadRight);
+
+			exitInformativeHelp.sprite = GeneralFinder.inputManager.getControllerSprite (ButtonController.PS3Button.Cerchio);
+
+			changeSectionHelp [0].enabled = true;
+			//changeSectionHelp [0].sprite = GeneralFinder.inputManager.getSprite ("ForwardTrigger");
+			changeSectionHelp [1].enabled = true;
 
 			changeSectionHelp [0].sprite = GeneralFinder.inputManager.getControllerSprite (ButtonController.PS3Button.L1);
 			//changeSectionHelp [0].sprite = GeneralFinder.inputManager.getSprite ("ForwardTrigger");
 			changeSectionHelp [1].sprite = GeneralFinder.inputManager.getControllerSprite (ButtonController.PS3Button.R1);
+
+			changeSectionPCHelp.enabled = false;
+
+
 		}
 		else {
 
-			changeContentHelp.sprite = GeneralFinder.inputManager.getKeyboardSprite(ButtonKeyboardMouse.Button.ArrowUp);
+			//changeContentHelp.sprite = GeneralFinder.inputManager.getKeyboardSprite(ButtonKeyboardMouse.Button.ArrowUp);
 
-			changeSubContentHelp.sprite = GeneralFinder.inputManager.getKeyboardSprite(ButtonKeyboardMouse.Button.ArrowRight);
+			//changeSubContentHelp.sprite = GeneralFinder.inputManager.getKeyboardSprite(ButtonKeyboardMouse.Button.ArrowRight);
 
-			changeSectionHelp [0].sprite = GeneralFinder.inputManager.getKeyboardSprite(ButtonKeyboardMouse.Button.TAB);
+			exitInformativeHelp.sprite = GeneralFinder.inputManager.getKeyboardSprite(ButtonKeyboardMouse.Button.ESC);
+
+			changeSectionPCHelp.enabled = true;
+
+			changeSectionPCHelp.sprite = GeneralFinder.inputManager.getKeyboardSprite(ButtonKeyboardMouse.Button.TAB);
+
+			changeSectionHelp [0].enabled = false;
 			//changeSectionHelp [0].sprite = GeneralFinder.inputManager.getSprite ("ForwardTrigger");
-			changeSectionHelp [1].sprite = GeneralFinder.inputManager.getKeyboardSprite(ButtonKeyboardMouse.Button.TAB);
+			changeSectionHelp [1].enabled = false;
 
 		}
 	}
@@ -1632,6 +1684,14 @@ public class InformativeManager : MonoBehaviour {
 		//GeneralFinder.playingUI.cleanPositionGameObjects(PlayingUI.UIPosition.UpperRight);
 		
 		unlockedNewContent = false;
+		
+	}
+
+	IEnumerator countDownMenu() {
+		
+		yield return new WaitForSeconds (0.2f);
+		
+		invokeWithoutMenu = false;
 		
 	}
 

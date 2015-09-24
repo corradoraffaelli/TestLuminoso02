@@ -9,6 +9,8 @@ public class MenuManager : MonoBehaviour {
 
 	//public GameObject canvasMenu;
 
+	public Texture2D mouseCursor;
+
 	GameObject canvasIntro;
 	GameObject canvasInformative;
 
@@ -159,12 +161,14 @@ public class MenuManager : MonoBehaviour {
 
 	#region CALLBACKS
 
-	public void returnToPlay(bool exitMenu) {
+	public void returnToPlay(bool openMenu) {
 
-		c_enableMenu(exitMenu);
+		c_enableMenu(openMenu);
 
-		GeneralFinder.playingUILateral.showIconsImmediately(PlayingUILateral.UIPosition.Right , exitMenu);
-		GeneralFinder.playingUILateral.showIconsImmediately(PlayingUILateral.UIPosition.Left , exitMenu);
+		GeneralFinder.playingUILateral.showIconsImmediately(PlayingUILateral.UIPosition.Right , openMenu);
+		GeneralFinder.playingUILateral.showIconsImmediately(PlayingUILateral.UIPosition.Left , openMenu);
+
+		handleMouseOnPause ();
 
 	}
 
@@ -425,8 +429,25 @@ public class MenuManager : MonoBehaviour {
 
 	}
 
+
+	void handleMouseOnPause() {
+
+		CursorMode cursorMode = CursorMode.Auto;
+		Vector2 hotSpot = Vector2.zero;
+
+		if (PlayStatusTracker.inPlay)
+			Cursor.visible = false;
+		else {
+			Cursor.SetCursor(mouseCursor, hotSpot, cursorMode);
+			Cursor.visible = true;
+
+		}
+
+	}
 	// Update is called once per frame
 	void Update () {
+
+		//handleMouseOnPause ();
 
 		checkOpenAndClose();
 
