@@ -249,16 +249,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b7659367c5f02443819dd8af435c962, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  overlaySpritesStart: 1
   spritesBook:
     normalBook: {fileID: 21300000, guid: a2258f472fa1fcc428d11e23cb221afb, type: 3}
     exclamationBook: {fileID: 21300000, guid: f8ae3d8366d6f35429481eaebe8be557, type: 3}
     keyboardButton: {fileID: 21300000, guid: 7d62f2c844a2fa34890f6a462ebdb50e, type: 3}
     controllerButton: {fileID: 21300000, guid: 8e9b94ab582b71c4db3312e298ccade1, type: 3}
     pageSprite: {fileID: 21300000, guid: d5af78a24f9df8543a272de39b4abe39, type: 3}
+    controllerButtonType: 4
+    keyboardButtonType: 9
   saveOnDestroy: 1
   timeToHideLateral: 4
   timeToPulse: 4
-  timeToGetSmall: 1.20000005
+  timeToGetSmall: .699999988
   pageTimeToGetSmall: 4
 --- !u!114 &11455102
 MonoBehaviour:
@@ -1952,7 +1955,7 @@ Prefab:
         type: 3}
     - target: {fileID: 0}
       propertyPath: timeToGetSmall
-      value: 1.20000005
+      value: .699999988
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: clips.Array.data[2].clip
@@ -1981,6 +1984,14 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: m_Enabled
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: spritesBook.controllerButtonType
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: spritesBook.keyboardButtonType
+      value: 9
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

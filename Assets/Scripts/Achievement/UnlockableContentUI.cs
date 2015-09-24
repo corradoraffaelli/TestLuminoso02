@@ -27,6 +27,9 @@ public class UnlockableContentUI : MonoBehaviour {
 	public float timeToGetSmall = 1.5f;
 	public float pageTimeToGetSmall = 4.0f;
 
+	public float pulseButtonScale = 1.8f;
+	public float pulseButtonSpeed = 3.0f;
+
 	int changeSpriteTime = 0;
 	int maxChangeSpriteTime = 2;
 	bool beginChanged = false;
@@ -205,8 +208,17 @@ public class UnlockableContentUI : MonoBehaviour {
 			//3.
 			PickingObjectGraphic pick = gameObject.AddComponent<PickingObjectGraphic>();
 			pick.setVariables(findContent(actualContentSection, name).iconUnlock, PlayingUILateral.UIPosition.Right, findContentIndex(actualContentSection, name));
+			pick.setBigScale(200.0f);
 			pick.setTimeToGetSmall(timeToGetSmall);
-			
+
+			GameObject testGO = new GameObject();
+			testGO.transform.position = transform.position;
+			PickingObjectGraphic pick02 = testGO.AddComponent<PickingObjectGraphic>();
+			pick02.setVariables(spritesBook.pageSprite, PlayingUI.UIPosition.UpperRight,0);
+			pick02.setBookPage(true);
+			pick02.setTimeToGetSmall(pageTimeToGetSmall);
+
+
 			setUpperRightExclamationBook();
 			setPulsingBook();
 
@@ -373,7 +385,7 @@ public class UnlockableContentUI : MonoBehaviour {
 	{
 		pulsingBook = gameObject.AddComponent<PulsingUIElement>();
 		//pulsingBook.setVariables(GeneralFinder.playingUI.getImageObject(PlayingUI.UIPosition.UpperRight, 0),8.0f, 1.1f, 1.0f);
-		pulsingBook.setVariables(GeneralFinder.playingUI.getButtonObject(PlayingUI.UIPosition.UpperRight),8.0f, 1.1f, 1.0f);
+		pulsingBook.setVariables(GeneralFinder.playingUI.getButtonObject(PlayingUI.UIPosition.UpperRight),8.0f, pulseButtonScale, pulseButtonSpeed);
 		wasPulsingBookNull = false;
 	}
 

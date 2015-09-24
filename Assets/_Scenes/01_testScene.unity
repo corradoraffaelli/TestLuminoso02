@@ -10565,6 +10565,22 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 11494406, guid: 5d726606ee7a22f4182882cea44783e6, type: 2}
+      propertyPath: correctConsequences.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11494406, guid: 5d726606ee7a22f4182882cea44783e6, type: 2}
+      propertyPath: dialogueElementsNext.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 11494406, guid: 5d726606ee7a22f4182882cea44783e6, type: 2}
+      propertyPath: dialogueElementsNext.Array.data[4].survey.answers.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 11494406, guid: 5d726606ee7a22f4182882cea44783e6, type: 2}
+      propertyPath: dialogueElementsNext.Array.data[5].survey.answers.Array.size
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 465704, guid: 5d726606ee7a22f4182882cea44783e6, type: 2}
       propertyPath: m_LocalPosition.x
       value: 2.84607506
@@ -10600,6 +10616,75 @@ Prefab:
     - target: {fileID: 186736, guid: 5d726606ee7a22f4182882cea44783e6, type: 2}
       propertyPath: m_Name
       value: Dialogue (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 11494406, guid: 5d726606ee7a22f4182882cea44783e6, type: 2}
+      propertyPath: dialogueElements.Array.data[3].text
+      value: Se non sai la risposta prova a rileggertiNEWLINEla scheda informativa
+        premendo il tasto che vediNEWLINEin alto a destra
+      objectReference: {fileID: 0}
+    - target: {fileID: 11494406, guid: 5d726606ee7a22f4182882cea44783e6, type: 2}
+      propertyPath: dialogueElementsNext.Array.data[4].survey.question
+      value: What's your name?
+      objectReference: {fileID: 0}
+    - target: {fileID: 11494406, guid: 5d726606ee7a22f4182882cea44783e6, type: 2}
+      propertyPath: dialogueElementsNext.Array.data[4].survey.answers.Array.data[0].text
+      value: risp1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11494406, guid: 5d726606ee7a22f4182882cea44783e6, type: 2}
+      propertyPath: dialogueElementsNext.Array.data[4].survey.answers.Array.data[1].text
+      value: risp2
+      objectReference: {fileID: 0}
+    - target: {fileID: 11494406, guid: 5d726606ee7a22f4182882cea44783e6, type: 2}
+      propertyPath: dialogueElementsNext.Array.data[4].survey.answers.Array.data[2].text
+      value: risp3
+      objectReference: {fileID: 0}
+    - target: {fileID: 11494406, guid: 5d726606ee7a22f4182882cea44783e6, type: 2}
+      propertyPath: dialogueElementsNext.Array.data[4].survey.correctNPCAnswer
+      value: Bravo, risposta corretta
+      objectReference: {fileID: 0}
+    - target: {fileID: 11494406, guid: 5d726606ee7a22f4182882cea44783e6, type: 2}
+      propertyPath: dialogueElementsNext.Array.data[4].survey.wrongNPCAnswer
+      value: Sbagliato, rileggiti la scheda informativa se vuoi il regalo
+      objectReference: {fileID: 0}
+    - target: {fileID: 11494406, guid: 5d726606ee7a22f4182882cea44783e6, type: 2}
+      propertyPath: dialogueElementsNext.Array.data[4].text
+      value: Se non lo sai sei una pippa
+      objectReference: {fileID: 0}
+    - target: {fileID: 11494406, guid: 5d726606ee7a22f4182882cea44783e6, type: 2}
+      propertyPath: dialogueElementsNext.Array.data[5].text
+      value: Se non lo sai sei una pippa
+      objectReference: {fileID: 0}
+    - target: {fileID: 11494406, guid: 5d726606ee7a22f4182882cea44783e6, type: 2}
+      propertyPath: dialogueElementsNext.Array.data[5].survey.question
+      value: What's your name?
+      objectReference: {fileID: 0}
+    - target: {fileID: 11494406, guid: 5d726606ee7a22f4182882cea44783e6, type: 2}
+      propertyPath: dialogueElementsNext.Array.data[5].survey.answers.Array.data[0].text
+      value: risp1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11494406, guid: 5d726606ee7a22f4182882cea44783e6, type: 2}
+      propertyPath: dialogueElementsNext.Array.data[5].survey.answers.Array.data[1].text
+      value: risp2
+      objectReference: {fileID: 0}
+    - target: {fileID: 11494406, guid: 5d726606ee7a22f4182882cea44783e6, type: 2}
+      propertyPath: dialogueElementsNext.Array.data[5].survey.answers.Array.data[2].text
+      value: risp3
+      objectReference: {fileID: 0}
+    - target: {fileID: 11494406, guid: 5d726606ee7a22f4182882cea44783e6, type: 2}
+      propertyPath: dialogueElementsNext.Array.data[5].survey.correctNPCAnswer
+      value: Bravo, risposta corretta
+      objectReference: {fileID: 0}
+    - target: {fileID: 11494406, guid: 5d726606ee7a22f4182882cea44783e6, type: 2}
+      propertyPath: dialogueElementsNext.Array.data[5].survey.wrongNPCAnswer
+      value: Sbagliato, rileggiti la scheda informativa se vuoi il regalo
+      objectReference: {fileID: 0}
+    - target: {fileID: 11494406, guid: 5d726606ee7a22f4182882cea44783e6, type: 2}
+      propertyPath: correctConsequences.Array.data[0].objectWithMethod
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 11494406, guid: 5d726606ee7a22f4182882cea44783e6, type: 2}
+      propertyPath: correctConsequences.Array.data[0].methodToCall
+      value: c_buttonPushedOpen
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5d726606ee7a22f4182882cea44783e6, type: 2}
