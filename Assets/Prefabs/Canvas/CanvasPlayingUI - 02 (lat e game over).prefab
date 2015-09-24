@@ -144,7 +144,7 @@ MonoBehaviour:
     smallSprites: 45
     normalSprites: 60
     bigSprites: 90
-    buttonSprite: 45
+    buttonSprite: 60
 --- !u!114 &11424744
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -456,6 +456,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: m_Color.a
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: sizeVariables.buttonSprite
+      value: 60
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
