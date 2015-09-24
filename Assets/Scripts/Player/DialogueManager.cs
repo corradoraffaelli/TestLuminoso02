@@ -40,6 +40,9 @@ public class DialogueManager : MonoBehaviour {
 	[SerializeField]
 	DialogueElement[] dialogueElementsNext;
 
+	[SerializeField]
+	DialogueElement[] dialogueElementsFinal;
+
 	[System.Serializable]
 	public class AnswerElement{
 		public string text = "The pen is on the table.";
@@ -75,7 +78,9 @@ public class DialogueManager : MonoBehaviour {
 
 	[SerializeField]
 	CorrectConsequence[] correctConsequences;
-	
+
+	bool givenCorrectAnswer = false;
+
 	void Start () {
 		if (NPC == null)
 			NPC = this.gameObject;
@@ -106,8 +111,10 @@ public class DialogueManager : MonoBehaviour {
 			cameraAlternativeMovements ();
 			if (!dialogueConsumed)
 				nextDialogueHandler (dialogueElements);
-			else
+			else if (!givenCorrectAnswer)
 				nextDialogueHandler (dialogueElementsNext);
+			else
+				nextDialogueHandler (dialogueElementsFinal);
 
 		}
 
@@ -353,10 +360,10 @@ public class DialogueManager : MonoBehaviour {
 		if (correct) {
 			balloonManager.setText (survey.correctNPCAnswer);
 			activeConsequences ();
+			givenCorrectAnswer = true;
 		} else {
 			balloonManager.setText(survey.wrongNPCAnswer);
 		}
-			
 			
 		balloonManager.setObjectToFollow(NPC);
 
@@ -371,9 +378,6 @@ public class DialogueManager : MonoBehaviour {
 				correctConsequences[i].objectWithMethod.SendMessage(correctConsequences[i].methodToCall, SendMessageOptions.DontRequireReceiver);
 			}
 		}
-
-
-		    // buttonPushed(true);
 	}
 	
 }
