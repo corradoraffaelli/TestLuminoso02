@@ -510,7 +510,10 @@ public abstract class AIAgent1 : MonoBehaviour {
 	}
 
 	protected virtual void OnCollisionEnter2D(Collision2D c) {
-		
+
+		if (!this.enabled)
+			return;
+
 		if(activeState.myHHandleCollisionEnter!=null)
 			activeState.myHHandleCollisionEnter (c);
 		
@@ -526,6 +529,9 @@ public abstract class AIAgent1 : MonoBehaviour {
 			return;
 		}
 		*/
+
+		if (!this.enabled)
+			return;
 
 		if (c.tag == "Cleaner") {
 			
