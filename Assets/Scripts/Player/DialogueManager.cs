@@ -30,6 +30,7 @@ public class DialogueManager : MonoBehaviour {
 	[System.Serializable]
 	public class DialogueElement{
 		public string text = "Test";
+		public SurveyElement survey;
 		public bool player = true;
 	}
 	
@@ -39,6 +40,26 @@ public class DialogueManager : MonoBehaviour {
 	[SerializeField]
 	DialogueElement[] dialogueElementsNext;
 
+	[System.Serializable]
+	public class AnswerElement{
+		public string text = "The pen is on the table.";
+		public bool correct = false;
+	}
+
+	[System.Serializable]
+	public class SurveyElement{
+		public string question = "What's your name?";
+		public AnswerElement[] answers = new AnswerElement[3];
+		public string correctNPCAnswer = "Bravo, risposta corretta";
+		public string wrongNPCAnswer = "Sbagliato, rileggiti la scheda informativa se vuoi il regalo";
+	}
+
+	//[SerializeField]
+	//SurveyElement survey;
+
+	//public bool surveyFirstDialogue = false;
+	//public bool surveyNextDialogue = false;
+
 	public bool mustFaceRight = true;
 	bool firstClick = true;
 
@@ -46,6 +67,13 @@ public class DialogueManager : MonoBehaviour {
 
 	//float lastClick = 0.0f;
 	//float diffClick = 0.3f;
+
+	int correctAnswer;
+
+	bool surveyStarted = false;
+
+	public bool unlockContent = false;
+	UnlockContent unlockContentScript;
 	
 	void Start () {
 		if (NPC == null)
@@ -60,6 +88,8 @@ public class DialogueManager : MonoBehaviour {
 			interagibileParent = intScript.gameObject;
 
 		enableInteragibility (false);
+
+		unlockContentScript = GetComponent<UnlockContent> ();
 	}
 
 	void Update () {
@@ -154,6 +184,9 @@ public class DialogueManager : MonoBehaviour {
 		actualIndex = 0;
 
 		firstClick = true;
+
+		if (unlockContentScript != null)
+			unlockContentScript.getCollectible ();
 	}
 
 	void playerExit()
@@ -197,9 +230,54 @@ public class DialogueManager : MonoBehaviour {
 				if (dialogueElements.Length < (actualIndex + 1))
 					stopDialogue();
 				else
-					showDialogue(elements, actualIndex++);
+				{
+					if (elements[actualIndex].text != "")
+					{
+						showDialogue(elements, actualIndex++);
+					}
+					//si tratta di un questionario
+					else
+					{
+						//if (!surveyStarted)
+						//{
+							surveyStarted = true;
+							showSurvey(elements[actualIndex].survey, elements[actualIndex].player);
+						//}
+						//else
+						//{
+							actualIndex++;
+						//}
+					}
+				}
 
 			}
+
+			/*
+			if (GeneralFinder.inputManager.getButtonUp("SurveyAnswer1"))
+			{
+				if (correctAnswer == 0)
+					showNPCAnswer(elements[actualIndex].survey, true);
+				else
+					showNPCAnswer(elements[actualIndex].survey, false);
+			}
+
+			if (GeneralFinder.inputManager.getButtonUp("SurveyAnswer2"))
+			{
+				if (correctAnswer == 1)
+					showNPCAnswer(elements[actualIndex].survey, true);
+				else
+					showNPCAnswer(elements[actualIndex].survey, false);
+			}
+
+			if (GeneralFinder.inputManager.getButtonUp("SurveyAnswer3"))
+			{
+				if (correctAnswer == 2)
+					showNPCAnswer(elements[actualIndex].survey, true);
+				else
+					showNPCAnswer(elements[actualIndex].survey, false);
+			}
+			*/
+
 		}
 	}
 
@@ -214,7 +292,63 @@ public class DialogueManager : MonoBehaviour {
 				
 			if (!elements [index].player)
 				balloonManager.setObjectToFollow(NPC);
+
+			//balloonManager.setLeftAlignment(true);
 		}
+	}
+
+	void showSurvey(SurveyElement survey, bool followPlayer)
+	{
+		if (survey != null) {
+			balloonCreated = Instantiate(balloonPrefab);
+			ComicBalloonManager balloonManager = balloonCreated.GetComponent<ComicBalloonManager>();
+
+			//randomizzo le risposte e mi salvo l'indice di quella corretta
+			int firstAnswer = Random.Range (0,3);
+			int secondAnswer = 10;
+			int thirdAnswer = 10;
+			while(secondAnswer == 10 || secondAnswer == firstAnswer)
+				secondAnswer = Random.Range (0,3);
+			while(thirdAnswer == 10 || thirdAnswer == firstAnswer || thirdAnswer == secondAnswer)
+				thirdAnswer = Random.Range (0,3);
+
+			int correctTempAnswer = 0;
+			if (survey.answers[firstAnswer].correct)
+				correctTempAnswer = firstAnswer;
+			if (survey.answers[secondAnswer].correct)
+				correctTempAnswer = secondAnswer;
+			if (survey.answers[thirdAnswer].correct)
+				correctTempAnswer = thirdAnswer;
+
+			correctAnswer = correctTempAnswer;
+
+			balloonManager.setSurveyTexts(survey.question, survey.answers[firstAnswer].text, survey.answers[secondAnswer].text, survey.answers[thirdAnswer].text);
+
+			balloonManager.setSurvey(true);
+
+			balloonManager.setType(ComicBalloonManager.Type.dialogue);
+			
+			if (!followPlayer)
+				balloonManager.setObjectToFollow(NPC);
+		}
+	}
+
+	void showNPCAnswer(SurveyElement survey, bool correct)
+	{
+
+		balloonCreated = Instantiate(balloonPrefab);
+		ComicBalloonManager balloonManager = balloonCreated.GetComponent<ComicBalloonManager>();
+		balloonManager.setType(ComicBalloonManager.Type.dialogue);
+		if (correct)
+			balloonManager.setText(survey.correctNPCAnswer);
+		else
+			balloonManager.setText(survey.wrongNPCAnswer);
+		
+		
+		balloonManager.setObjectToFollow(NPC);
+
+		actualIndex++;
+
 	}
 	
 }
