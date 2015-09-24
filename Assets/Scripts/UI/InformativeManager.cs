@@ -1366,20 +1366,21 @@ public class InformativeManager : MonoBehaviour {
 		foreach (Button butt in iconButtons) {
 			
 			if(index!=_activeContent) {
-				
-				butt.gameObject.GetComponent<Animator> ().SetTrigger ("Normal");
-				butt.gameObject.GetComponent<Animator> ().SetBool ("Active", false);
-				
-				butt.image.color = new Color(1.0f, 1.0f, 1.0f, 0.5f);
-				
+				if(butt != null) {
+					butt.gameObject.GetComponent<Animator> ().SetTrigger ("Normal");
+					butt.gameObject.GetComponent<Animator> ().SetBool ("Active", false);
+					
+					butt.image.color = new Color(1.0f, 1.0f, 1.0f, 0.5f);
+				}
 				
 			}
 			else {
-				
-				butt.gameObject.GetComponent<Animator> ().SetTrigger ("Pressed");
-				butt.gameObject.GetComponent<Animator> ().SetBool ("Active", true);
-				
-				butt.image.color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
+				if(butt != null) {
+					butt.gameObject.GetComponent<Animator> ().SetTrigger ("Pressed");
+					butt.gameObject.GetComponent<Animator> ().SetBool ("Active", true);
+					
+					butt.image.color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
+				}
 			}
 			
 			index++;
