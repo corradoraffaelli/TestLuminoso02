@@ -8,7 +8,7 @@ public class ButtonKeyboardMouse : MonoBehaviour {
 	 */
 	
 	public enum Button{Default, A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, ESC, RETURN, BACK, SPACE, LeftCTRL, LeftSHIFT, 
-		TAB, LeftALT, RightCTRL, RightALT, RightSHIFT, num1, num2, num3, num4, num5, num6, num7, num8, num9, num0, LeftMouse, RightMouse, ArrowUp,
+		TAB, LeftALT, RightCTRL, RightALT, RightSHIFT, Num1, Num2, Num3, Num4, Num5, Num6, Num7, Num8, Num9, Num0, LeftMouse, RightMouse, ArrowUp,
 		ArrowDown, ArrowRight, ArrowLeft, Horizontal, Vertical, ENTER};
 
 	public enum Axis{Default, Horizontal, Vertical};

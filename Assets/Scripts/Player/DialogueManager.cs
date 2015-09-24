@@ -53,27 +53,28 @@ public class DialogueManager : MonoBehaviour {
 		public string correctNPCAnswer = "Bravo, risposta corretta";
 		public string wrongNPCAnswer = "Sbagliato, rileggiti la scheda informativa se vuoi il regalo";
 	}
-
-	//[SerializeField]
-	//SurveyElement survey;
-
-	//public bool surveyFirstDialogue = false;
-	//public bool surveyNextDialogue = false;
+	
 
 	public bool mustFaceRight = true;
 	bool firstClick = true;
 
 	GameObject interagibileParent;
 
-	//float lastClick = 0.0f;
-	//float diffClick = 0.3f;
-
-	int correctAnswer;
+	public int correctAnswer;
 
 	bool surveyStarted = false;
 
 	public bool unlockContent = false;
 	UnlockContent unlockContentScript;
+
+	[System.Serializable]
+	public class CorrectConsequence{
+		public GameObject objectWithMethod;
+		public string methodToCall;
+	}
+
+	[SerializeField]
+	CorrectConsequence[] correctConsequences;
 	
 	void Start () {
 		if (NPC == null)
@@ -185,8 +186,10 @@ public class DialogueManager : MonoBehaviour {
 
 		firstClick = true;
 
-		if (unlockContentScript != null)
+		if (unlockContent && unlockContentScript != null)
 			unlockContentScript.getCollectible ();
+
+		Debug.Log ("stoppato");
 	}
 
 	void playerExit()
@@ -227,7 +230,7 @@ public class DialogueManager : MonoBehaviour {
 			if (GeneralFinder.inputKeeper.isButtonUp("Interaction")) {
 
 				Destroy(balloonCreated);
-				if (dialogueElements.Length < (actualIndex + 1))
+				if (elements.Length < (actualIndex + 1))
 					stopDialogue();
 				else
 				{
@@ -252,31 +255,38 @@ public class DialogueManager : MonoBehaviour {
 
 			}
 
-			/*
-			if (GeneralFinder.inputManager.getButtonUp("SurveyAnswer1"))
+
+			if (GeneralFinder.inputManager.getButtonUp("SurveyAnswer1") && surveyStarted)
 			{
+				Debug.Log ("enrtato1");
+				Destroy(balloonCreated);
 				if (correctAnswer == 0)
 					showNPCAnswer(elements[actualIndex].survey, true);
 				else
 					showNPCAnswer(elements[actualIndex].survey, false);
 			}
 
-			if (GeneralFinder.inputManager.getButtonUp("SurveyAnswer2"))
+
+			if (GeneralFinder.inputManager.getButtonUp("SurveyAnswer2") && surveyStarted)
 			{
+				Debug.Log ("enrtato2");
+				Destroy(balloonCreated);
 				if (correctAnswer == 1)
 					showNPCAnswer(elements[actualIndex].survey, true);
 				else
 					showNPCAnswer(elements[actualIndex].survey, false);
 			}
 
-			if (GeneralFinder.inputManager.getButtonUp("SurveyAnswer3"))
+			if (GeneralFinder.inputManager.getButtonUp("SurveyAnswer3") && surveyStarted)
 			{
+				Debug.Log ("enrtato3");
+				Destroy(balloonCreated);
 				if (correctAnswer == 2)
 					showNPCAnswer(elements[actualIndex].survey, true);
 				else
 					showNPCAnswer(elements[actualIndex].survey, false);
 			}
-			*/
+
 
 		}
 	}
@@ -314,11 +324,11 @@ public class DialogueManager : MonoBehaviour {
 
 			int correctTempAnswer = 0;
 			if (survey.answers[firstAnswer].correct)
-				correctTempAnswer = firstAnswer;
+				correctTempAnswer = 0;
 			if (survey.answers[secondAnswer].correct)
-				correctTempAnswer = secondAnswer;
+				correctTempAnswer = 1;
 			if (survey.answers[thirdAnswer].correct)
-				correctTempAnswer = thirdAnswer;
+				correctTempAnswer = 2;
 
 			correctAnswer = correctTempAnswer;
 
@@ -335,20 +345,35 @@ public class DialogueManager : MonoBehaviour {
 
 	void showNPCAnswer(SurveyElement survey, bool correct)
 	{
+		surveyStarted = false;
 
 		balloonCreated = Instantiate(balloonPrefab);
 		ComicBalloonManager balloonManager = balloonCreated.GetComponent<ComicBalloonManager>();
 		balloonManager.setType(ComicBalloonManager.Type.dialogue);
-		if (correct)
-			balloonManager.setText(survey.correctNPCAnswer);
-		else
+		if (correct) {
+			balloonManager.setText (survey.correctNPCAnswer);
+			activeConsequences ();
+		} else {
 			balloonManager.setText(survey.wrongNPCAnswer);
-		
-		
+		}
+			
+			
 		balloonManager.setObjectToFollow(NPC);
 
 		actualIndex++;
+	}
 
+	void activeConsequences()
+	{
+		for (int i = 0; i < correctConsequences.Length; i++) {
+			if (correctConsequences[i] != null && correctConsequences[i].objectWithMethod != null)
+			{
+				correctConsequences[i].objectWithMethod.SendMessage(correctConsequences[i].methodToCall, SendMessageOptions.DontRequireReceiver);
+			}
+		}
+
+
+		    // buttonPushed(true);
 	}
 	
 }
