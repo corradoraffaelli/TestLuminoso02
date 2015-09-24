@@ -55,6 +55,12 @@ public class InformativeOnScreen : MonoBehaviour {
 			textRenderer.sortingOrder = sortingIntText;
 			textMesh.text = titolo;
 		}
+
+		if (spritesToShow [actualSpriteIndex] != null) {
+			Sprite newSprite = spritesToShow[actualSpriteIndex];
+			spriteRenderer.sprite = newSprite;
+			changeImageSize();
+		}
 			
 	}
 
