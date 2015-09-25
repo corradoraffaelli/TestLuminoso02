@@ -63,9 +63,10 @@ public class DialogueManager : MonoBehaviour {
 
 	GameObject interagibileParent;
 
-	public int correctAnswer;
+	int correctAnswer;
 
 	bool surveyStarted = false;
+	bool surveyStartedOLD = false;
 
 	public bool unlockContent = false;
 	UnlockContent unlockContentScript;
@@ -118,7 +119,12 @@ public class DialogueManager : MonoBehaviour {
 
 		}
 
+		if (surveyStarted != surveyStartedOLD) {
+			GeneralFinder.informativeManager.canOpenInformative = !surveyStarted;
+		}
+
 		playerCollidingOld = playerColliding;
+		surveyStartedOLD = surveyStarted;
 	}
 
 	void OnTriggerEnter2D(Collider2D other)
@@ -244,6 +250,7 @@ public class DialogueManager : MonoBehaviour {
 					if (elements[actualIndex].text != "")
 					{
 						showDialogue(elements, actualIndex++);
+						surveyStarted = false;
 					}
 					//si tratta di un questionario
 					else

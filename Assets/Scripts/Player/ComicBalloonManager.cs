@@ -26,6 +26,7 @@ public class ComicBalloonManager : MonoBehaviour {
 
 	public bool dialogueDown = false;
 	public float dialogueDownOffset = 5.0f;
+	public float dialogueOverOffset = 0.0f;
 	public bool dialogueContinue = true;
 	public bool leftAlignment = false;
 	public bool survey = false;
@@ -172,6 +173,8 @@ public class ComicBalloonManager : MonoBehaviour {
 		transform.position = new Vector3(objectToFollow.transform.position.x, objectToFollow.transform.position.y + positionY, objectToFollow.transform.position.z -1.0f);
 		if (dialogueDown)
 			transform.position = new Vector3 (transform.position.x, transform.position.y - dialogueDownOffset, transform.position.z);
+		else
+			transform.position = new Vector3 (transform.position.x, transform.position.y + dialogueOverOffset, transform.position.z);
 	}
 
 	//chiamato nell'update, permette al fumetto di seguire il player, con un lerp
@@ -180,6 +183,8 @@ public class ComicBalloonManager : MonoBehaviour {
 		Vector3 objPosition = new Vector3(objectToFollow.transform.position.x, objectToFollow.transform.position.y + positionY, objectToFollow.transform.position.z -1.0f);
 		if (dialogueDown)
 			objPosition = new Vector3 (objPosition.x, objPosition.y - dialogueDownOffset, objPosition.z);
+		else
+			objPosition = new Vector3 (objPosition.x, objPosition.y + dialogueOverOffset, objPosition.z);
 		transform.position = Vector3.Lerp(transform.position, objPosition, Time.deltaTime * lerpSpeed);
 	}
 
@@ -672,7 +677,7 @@ public class ComicBalloonManager : MonoBehaviour {
 
 	public void setDialogueContinue(bool setContinue = true)
 	{
-		dialogueContinue = !setContinue;
+		dialogueContinue = setContinue;
 	}
 
 	public void setLeftAlignment(bool setLeft = true)
@@ -695,5 +700,15 @@ public class ComicBalloonManager : MonoBehaviour {
 			surveyText [2] = answer2;
 		if (answer3 != null)
 			surveyText [3] = answer3;
+	}
+
+	public void setDialogueDownOffset(float inputOffset)
+	{
+		dialogueDownOffset = dialogueDownOffset + inputOffset;
+	}
+
+	public void setDialogueOverOffset(float inputOffset)
+	{
+		dialogueOverOffset = dialogueOverOffset + inputOffset;
 	}
 }

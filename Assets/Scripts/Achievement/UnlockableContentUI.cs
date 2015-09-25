@@ -56,6 +56,8 @@ public class UnlockableContentUI : MonoBehaviour {
 
 	AudioHandler audioHandler;
 
+	PulsingInfoButton centralButton;
+
 	void Start () {
 		setSections();
 
@@ -83,6 +85,8 @@ public class UnlockableContentUI : MonoBehaviour {
 			spritesBook.controllerButton = GeneralFinder.inputManager.getControllerSprite(spritesBook.controllerButtonType);
 			spritesBook.keyboardButton = GeneralFinder.inputManager.getKeyboardSprite(spritesBook.keyboardButtonType);
 		}
+
+		centralButton = GeneralFinder.canvasPlayingUI.transform.GetComponentInChildren<PulsingInfoButton> ();
 	}
 
 	void Update () {
@@ -211,6 +215,7 @@ public class UnlockableContentUI : MonoBehaviour {
 			pick.setBigScale(200.0f);
 			pick.setTimeToGetSmall(timeToGetSmall);
 
+			//pagina
 			GameObject testGO = new GameObject();
 			testGO.transform.position = transform.position;
 			PickingObjectGraphic pick02 = testGO.AddComponent<PickingObjectGraphic>();
@@ -218,9 +223,10 @@ public class UnlockableContentUI : MonoBehaviour {
 			pick02.setBookPage(true);
 			pick02.setTimeToGetSmall(pageTimeToGetSmall);
 
+			startCentralButtonPulsing();
 
 			setUpperRightExclamationBook();
-			setPulsingBook();
+			//setPulsingBook();
 
 			//4.
 			if (audioHandler != null)
@@ -257,11 +263,13 @@ public class UnlockableContentUI : MonoBehaviour {
 			
 			//2.
 			setUpperRightExclamationBook();
-			setPulsingBook();
+			//setPulsingBook();
 
 			//3.
 			if (audioHandler != null)
 				audioHandler.playClipByName("UnlockFact");
+
+			startCentralButtonPulsing();
 		}
 	}
 
@@ -462,5 +470,17 @@ public class UnlockableContentUI : MonoBehaviour {
 		}
 
 		return unlockedNum;
+	}
+
+	void startCentralButtonPulsing()
+	{
+		if (centralButton != null) {
+			centralButton.changeSprite(GeneralFinder.inputManager.getSprite("OpenInformative"));
+			centralButton.changeSpeed(1.84f);
+			centralButton.changeMaxScale(1.2f);
+			centralButton.changePulsingTimes(10);
+			centralButton.active(true);
+			centralButton.gameObject.transform.SetAsLastSibling();
+		}
 	}
 }
