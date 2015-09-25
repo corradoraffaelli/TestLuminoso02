@@ -64,7 +64,6 @@ public class InformativeManager : MonoBehaviour {
 
 	public bool controllerConfig1;
 
-	[HideInInspector]
 	public bool canOpenInformative = true;
 
 

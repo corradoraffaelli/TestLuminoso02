@@ -188,6 +188,7 @@ public class HChase1FSM : HEnemyStateFSM {
 		
 		addTransition (C2ScheckStun, hstun);
 		addTransition (C2PlostTargetNull, hpatrol);
+		addTransition (Any2KScheckInstantKill, hstun);
 		
 	}
 
@@ -459,7 +460,7 @@ public class HCrashChaseFSM : HChase1FSM {
 
 	protected void updateCrashChase() {
 
-		//Debug.Log ("udpate CRASSSHHHH");
+		//Debug.Log ("udpate CRASSSHHHH" + Time.deltaTime);
 		i_move (chaseSpeed);
 
 		audioHandler.playClipByName ("Morso");

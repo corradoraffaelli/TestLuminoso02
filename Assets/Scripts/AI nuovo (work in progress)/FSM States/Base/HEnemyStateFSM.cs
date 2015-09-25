@@ -6,7 +6,7 @@ using System.Collections;
 
 
 public abstract class HEnemyStateFSM : HGenericStateFSM {
-	
+
 	#region VARIABLES
 
 	protected PlayerMovements playerScript;
@@ -530,21 +530,6 @@ public abstract class HEnemyStateFSM : HGenericStateFSM {
 
 			}
 
-			/*
-			if(par.canKillPlayer) {
-				co.gameObject.transform.SendMessage ("c_instantKill");
-				Vector2 dist = co.gameObject.transform.position - transform.position;
-				
-				Rigidbody2D r = co.gameObject.GetComponent<Rigidbody2D>();
-				r.velocity = new Vector2(0.0f, 0.0f);
-				r.AddForce(300.0f*dist.normalized);
-			}
-			else {
-
-				_instantKill = true;
-
-			}
-			*/
 
 			//c_playerStunned(true);
 			//return true;
@@ -671,6 +656,8 @@ public abstract class HEnemyStateFSM : HGenericStateFSM {
 	}
 
 	protected bool Any2KScheckInstantKill() {
+
+		//Debug.Log(gameObject.name + "instantkill " + _instantKill);
 
 		return _instantKill;
 
