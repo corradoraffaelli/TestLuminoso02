@@ -6,7 +6,7 @@ public class killWhatever : MonoBehaviour {
 	public bool oneKill = false;
 	public bool turnOn = true;
 	public bool crusher = false;
-	private GameObject objectToCrush;
+	//private GameObject objectToCrush;
 	private float tStartCrush = -1.0f;
 
 	private GameObject exitingObj;
@@ -47,8 +47,8 @@ public class killWhatever : MonoBehaviour {
 		//Debug.Log ("routine inizio");
 		yield return new WaitForSeconds (0.1f);
 
-		if (turnOn && objectToCrush != null) {
-			//Debug.Log (objectToKill + "routine agisco");
+		if (turnOn && objectToKill != null) {
+			Debug.Log (objectToKill + "routine agisco");
 			objectToKill.gameObject.SendMessage ("c_crushKill", gameObject.tag);
 			//turnOn = false;
 		}

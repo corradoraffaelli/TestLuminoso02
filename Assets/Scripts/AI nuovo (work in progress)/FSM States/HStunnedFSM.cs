@@ -124,7 +124,7 @@ public class HStunnedFSM : HEnemyStateFSM {
 		#endif
 
 		if (_instantKill) {
-			Debug.Log(gameObject.name + "init stunn");
+			//Debug.Log(gameObject.name + "init stunn");
 			i_stunned (true);
 			
 			handleKillo ();
@@ -133,7 +133,7 @@ public class HStunnedFSM : HEnemyStateFSM {
 			_instantKill = false;
 
 			if (audioHandler != null) {
-				Debug.Log ("SUONO MORTE");
+				//Debug.Log ("SUONO MORTE");
 				audioHandler.playClipByName ("Morte");
 			}
 			else
