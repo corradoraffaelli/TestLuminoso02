@@ -144,11 +144,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 359b9e15f7c024e5d96c98fdca021e67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unlockedObj: {fileID: 0}
-  controllerButton: {fileID: 0}
-  keyboardButton: {fileID: 0}
-  sectionIndexToUnlock: -1
-  contentIndexToUnlock: -1
+  useTrigger: 0
   disableGameObjectIfTaken: 0
 --- !u!114 &11453980
 MonoBehaviour:
@@ -266,7 +262,8 @@ MonoBehaviour:
       correctNPCAnswer: Bravo, risposta corretta
       wrongNPCAnswer: Sbagliato, rileggiti la scheda informativa se vuoi il regalo
     player: 0
-  - text: Ho la schiena un po' dolorante NEWLINE Vattene che mi hai stancato
+  - text: Se non sai la risposta prova a rileggertiNEWLINEla scheda informativa premendo
+      il tasto che vediNEWLINEin alto a destra
     survey:
       question: What's your name?
       answers:
@@ -324,6 +321,19 @@ MonoBehaviour:
       question: What's your name?
       answers:
       - text: risp1
+        correct: 1
+      - text: risp2
+        correct: 0
+      - text: risp3
+        correct: 0
+      correctNPCAnswer: Bravo, risposta corretta
+      wrongNPCAnswer: Sbagliato, rileggiti la scheda informativa se vuoi il regalo
+    player: 0
+  - text: Se non lo sai sei una pippa
+    survey:
+      question: What's your name?
+      answers:
+      - text: risp1
         correct: 0
       - text: risp2
         correct: 0
@@ -332,8 +342,26 @@ MonoBehaviour:
       correctNPCAnswer: Bravo, risposta corretta
       wrongNPCAnswer: Sbagliato, rileggiti la scheda informativa se vuoi il regalo
     player: 0
+  dialogueElementsFinal:
+  - text: 'af a  faf asf as fsa fasd fas '
+    survey:
+      question: 
+      answers: []
+      correctNPCAnswer: 
+      wrongNPCAnswer: 
+    player: 0
+  - text: 'afasdfafda asdf asf '
+    survey:
+      question: 
+      answers: []
+      correctNPCAnswer: 
+      wrongNPCAnswer: 
+    player: 0
   mustFaceRight: 1
   unlockContent: 0
+  correctConsequences:
+  - objectWithMethod: {fileID: 0}
+    methodToCall: c_buttonPushedOpen
 --- !u!212 &21203344
 SpriteRenderer:
   m_ObjectHideFlags: 1
