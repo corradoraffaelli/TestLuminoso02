@@ -58,6 +58,8 @@ GameObject:
   - 61: {fileID: 6172280}
   - 114: {fileID: 11437512}
   - 114: {fileID: 11479406}
+  - 61: {fileID: 6110418}
+  - 61: {fileID: 6163642}
   m_Layer: 8
   m_Name: ChainPiece
   m_TagString: Untagged
@@ -396,6 +398,19 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!61 &6110418
+BoxCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 138430}
+  m_Enabled: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_Offset: {x: -.654585242, y: -2.40401173}
+  serializedVersion: 2
+  m_Size: {x: .0962254703, y: .421465755}
 --- !u!61 &6129918
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -409,6 +424,19 @@ BoxCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Size: {x: 1.51999998, y: .639999986}
+--- !u!61 &6163642
+BoxCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 138430}
+  m_Enabled: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_Offset: {x: .570712209, y: -2.40566301}
+  serializedVersion: 2
+  m_Size: {x: .0961745158, y: .424773395}
 --- !u!61 &6168054
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -419,9 +447,9 @@ BoxCollider2D:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_UsedByEffector: 0
-  m_Offset: {x: -.0412114337, y: .110954717}
+  m_Offset: {x: -.0377130657, y: .118118748}
   serializedVersion: 2
-  m_Size: {x: 1.0117743, y: .136685684}
+  m_Size: {x: .953466892, y: .122360311}
 --- !u!61 &6172280
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -448,7 +476,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   oneKill: 0
   turnOn: 1
-  crusher: 1
+  crusher: 0
 --- !u!114 &11435192
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -462,7 +490,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   wheel: {fileID: 181918}
   chainPiece: {fileID: 138430}
-  activator: {fileID: 0}
   windFromLeft: 1
   active: 0
   maxRotationSpeed: 800
@@ -508,7 +535,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db8ec66bee508ec4a8754d0738e984cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  debug_AUDIO: 0
   updateAudioClips: 0
+  updateAudioClipsAfterDelay: 0
   clips:
   - clipName: CigolioVentola
     clip: {fileID: 0}
@@ -532,6 +561,7 @@ MonoBehaviour:
     zeroVolumeDistance: 13
     volumeMultiplier: 1
     audioSource: {fileID: 0}
+  debugDistance: 0
 --- !u!114 &11479406
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -543,7 +573,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db8ec66bee508ec4a8754d0738e984cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  debug_AUDIO: 0
   updateAudioClips: 0
+  updateAudioClipsAfterDelay: 0
   clips:
   - clipName: DoorUp
     clip: {fileID: 8300000, guid: c1fb1bb3f770d4901926bc037b0f25b6, type: 3}
@@ -578,6 +610,7 @@ MonoBehaviour:
     zeroVolumeDistance: 17
     volumeMultiplier: 1
     audioSource: {fileID: 0}
+  debugDistance: 0
 --- !u!212 &21218140
 SpriteRenderer:
   m_ObjectHideFlags: 1
