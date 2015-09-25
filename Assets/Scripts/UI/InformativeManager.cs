@@ -64,6 +64,9 @@ public class InformativeManager : MonoBehaviour {
 
 	public bool controllerConfig1;
 
+	[HideInInspector]
+	public bool canOpenInformative = true;
+
 
 	#endregion PUBLICVARIABLES
 
@@ -736,7 +739,10 @@ public class InformativeManager : MonoBehaviour {
 	}
 
 	void Update() {
-		
+
+		if (!canOpenInformative)
+			return;
+
 		checkOpenAndClose ();
 
 		if (!canvasInformative.activeSelf) 
@@ -1366,7 +1372,7 @@ public class InformativeManager : MonoBehaviour {
 			
 			if(index!=_activeContent) {
 				if(butt != null) {
-					Debug.Log("aaaaaaa" + index);
+					//Debug.Log("aaaaaaa" + index);
 					butt.gameObject.GetComponent<Animator> ().SetTrigger ("Normal");
 					butt.gameObject.GetComponent<Animator> ().SetBool ("Active", false);
 
@@ -1376,7 +1382,7 @@ public class InformativeManager : MonoBehaviour {
 			}
 			else {
 				if(butt != null) {
-					Debug.Log("dddddddd" + index);
+					//Debug.Log("dddddddd" + index);
 
 					butt.gameObject.GetComponent<Animator> ().SetBool ("Active", true);
 					butt.gameObject.GetComponent<Animator> ().SetTrigger ("Pressed");
