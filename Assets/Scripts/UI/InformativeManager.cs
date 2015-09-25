@@ -1366,19 +1366,23 @@ public class InformativeManager : MonoBehaviour {
 			
 			if(index!=_activeContent) {
 				if(butt != null) {
+					Debug.Log("aaaaaaa" + index);
 					butt.gameObject.GetComponent<Animator> ().SetTrigger ("Normal");
 					butt.gameObject.GetComponent<Animator> ().SetBool ("Active", false);
-					
-					butt.image.color = new Color(1.0f, 1.0f, 1.0f, 0.5f);
+
+					//butt.image.color = new Color(1.0f, 1.0f, 1.0f, 0.5f);
 				}
 				
 			}
 			else {
 				if(butt != null) {
-					butt.gameObject.GetComponent<Animator> ().SetTrigger ("Pressed");
+					Debug.Log("dddddddd" + index);
+
 					butt.gameObject.GetComponent<Animator> ().SetBool ("Active", true);
-					
-					butt.image.color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
+					butt.gameObject.GetComponent<Animator> ().SetTrigger ("Pressed");
+
+					//butt.image.color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
+
 				}
 			}
 			
