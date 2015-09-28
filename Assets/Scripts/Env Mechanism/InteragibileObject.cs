@@ -13,6 +13,8 @@ public class InteragibileObject : MonoBehaviour {
 	public bool playerColliding = false;
 	GameObject player;
 	GameObject indication;
+	InteragibileObjectControllerSprite indicationScript;
+	public bool updateScaleOnAppear = false;
 	SpriteRenderer indicationRenderer;
 	AudioHandler audioHandler;
 
@@ -23,8 +25,10 @@ public class InteragibileObject : MonoBehaviour {
 	void Start () {
 		player = GameObject.FindGameObjectWithTag ("Player");
 		indication = transform.GetChild (0).gameObject;
-		if (indication != null)
+		if (indication != null) {
 			indicationRenderer = indication.GetComponent<SpriteRenderer> ();
+			indicationScript = indication.GetComponent<InteragibileObjectControllerSprite>();
+		}
 		//setIndicationScale ();
 		audioHandler = GetComponent<AudioHandler> ();
 		inputKeeper = GameObject.FindGameObjectWithTag ("Controller").GetComponent<InputKeeper> ();
@@ -118,7 +122,12 @@ public class InteragibileObject : MonoBehaviour {
 			Color oldColor = indicationRenderer.color;
 			float newAlpha;
 			if (active)
+			{
+				if (updateScaleOnAppear && indicationScript != null)
+					indicationScript.setIndicationScale();
 				newAlpha = 1.0f;
+			}
+				
 			else
 				newAlpha = 0.0f;
 			indicationRenderer.color = new Color(oldColor.r, oldColor.g, oldColor.b, newAlpha);

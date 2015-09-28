@@ -440,6 +440,7 @@ MonoBehaviour:
     scaleFactor: 2
     jumpFactor: 4
     speedFactor: 5
+  zoneAnalyzerParent: {fileID: 0}
 --- !u!114 &11482596
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -481,7 +482,7 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: ce070e848d44f4f8da5fdf3918e6c560, type: 3}
     loop: 0
     playOnAwake: 0
-    volume: 1
+    volume: .230000004
     pitch: 1
     distanceDependency: 0
     maxVolumeDistance: 5
@@ -1844,6 +1845,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: miniPlayerFeatures.speedFactor
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: clips.Array.data[2].volume
+      value: .230000004
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

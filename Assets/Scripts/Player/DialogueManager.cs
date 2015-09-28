@@ -202,7 +202,7 @@ public class DialogueManager : MonoBehaviour {
 		if (unlockContent && unlockContentScript != null)
 			unlockContentScript.getCollectible ();
 
-		Debug.Log ("stoppato");
+		//Debug.Log ("stoppato");
 	}
 
 	void playerExit()
@@ -272,7 +272,7 @@ public class DialogueManager : MonoBehaviour {
 
 			if (GeneralFinder.inputManager.getButtonUp("SurveyAnswer1") && surveyStarted)
 			{
-				Debug.Log ("enrtato1");
+				//Debug.Log ("enrtato1");
 				Destroy(balloonCreated);
 				if (correctAnswer == 0)
 					showNPCAnswer(elements[actualIndex].survey, true);
@@ -283,7 +283,7 @@ public class DialogueManager : MonoBehaviour {
 
 			if (GeneralFinder.inputManager.getButtonUp("SurveyAnswer2") && surveyStarted)
 			{
-				Debug.Log ("enrtato2");
+				//Debug.Log ("enrtato2");
 				Destroy(balloonCreated);
 				if (correctAnswer == 1)
 					showNPCAnswer(elements[actualIndex].survey, true);
@@ -293,7 +293,7 @@ public class DialogueManager : MonoBehaviour {
 
 			if (GeneralFinder.inputManager.getButtonUp("SurveyAnswer3") && surveyStarted)
 			{
-				Debug.Log ("enrtato3");
+				//Debug.Log ("enrtato3");
 				Destroy(balloonCreated);
 				if (correctAnswer == 2)
 					showNPCAnswer(elements[actualIndex].survey, true);
@@ -386,5 +386,15 @@ public class DialogueManager : MonoBehaviour {
 			}
 		}
 	}
-	
+
+	public void disableSprite()
+	{
+		GetComponent<SpriteRenderer> ().enabled = false;
+	}
+
+	public void disableInteragibility()
+	{
+		enableInteragibility (false);
+	}
+
 }

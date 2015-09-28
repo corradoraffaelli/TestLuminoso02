@@ -31,6 +31,7 @@ public class InteragibileObjectControllerSprite : MonoBehaviour {
 			
 			if (wasUseController != useController)
 			{
+				setIndicationScale();
 				updateSprites();
 			}
 			
@@ -57,11 +58,11 @@ public class InteragibileObjectControllerSprite : MonoBehaviour {
 			{
 				spriteRenderer.sprite = keyboardSprite;
 			}
-			
+
 		}
 	}
 
-	void setIndicationScale()
+	public void setIndicationScale()
 	{
 		Transform actualParent = transform.parent;
 		transform.parent = null;

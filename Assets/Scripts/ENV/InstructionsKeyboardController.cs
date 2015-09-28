@@ -7,6 +7,8 @@ public class InstructionsKeyboardController : MonoBehaviour {
 	public Sprite keyboardSprite;
 	public Sprite controllerSprite;
 
+	public bool overrideKeyboard = false;
+	public bool overrideController = false;
 	public ButtonController.PS3Button controllerButton;
 	public ButtonKeyboardMouse.Button keyboardButton;
 
@@ -47,13 +49,17 @@ public class InstructionsKeyboardController : MonoBehaviour {
 	{
 		if (spriteRenderer != null)
 		{
-			if (useController && controllerSprite != null)
+			if (useController)
 			{
+				if (overrideController)
+					controllerSprite = GeneralFinder.inputManager.getControllerSprite (controllerButton);
 				spriteRenderer.sprite = controllerSprite;
 				transform.localScale = new Vector3(controllerScale*normalScale.x, controllerScale*normalScale.y, controllerScale*normalScale.z);
 			}
-			else if (!useController && keyboardSprite != null)
+			else if (!useController)
 			{
+				if (overrideKeyboard)
+					keyboardSprite = GeneralFinder.inputManager.getKeyboardSprite (keyboardButton);
 				spriteRenderer.sprite = keyboardSprite;
 				transform.localScale = new Vector3(keyboardScale*normalScale.x, keyboardScale*normalScale.y, keyboardScale*normalScale.z);
 			}
