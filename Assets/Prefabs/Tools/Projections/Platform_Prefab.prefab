@@ -36,7 +36,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &400412
 Transform:
   m_ObjectHideFlags: 1
@@ -109,6 +109,7 @@ MonoBehaviour:
   threshBeforeIgnore: 10
   useSpriteLimits: 0
   refreshEnemyTime: 2
+  playerInsideX: 0
 --- !u!198 &19891464
 ParticleSystem:
   m_ObjectHideFlags: 1
@@ -1262,6 +1263,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: m_UseSideBounce
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

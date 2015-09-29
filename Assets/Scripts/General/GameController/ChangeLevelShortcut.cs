@@ -119,6 +119,7 @@ public class ChangeLevelShortcut : MonoBehaviour {
 		if (Input.GetKey(KeyCode.LeftShift) && Input.GetKeyDown(KeyCode.L))
 		{
 			enableLantern();
+			Debug.Log ("Abilitata lanterna");
 		}
 
 	}
