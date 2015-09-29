@@ -212,8 +212,8 @@ public class LanternFanfareController : MonoBehaviour {
 
 	void Update () {
 		//DA TOGLIERE
-		if (!effectConsumed && Input.GetKeyUp (KeyCode.T))
-			startEffect ();
+		//if (!effectConsumed && Input.GetKeyUp (KeyCode.T))
+		//	startEffect ();
 
 
 
@@ -263,7 +263,12 @@ public class LanternFanfareController : MonoBehaviour {
 		effectConsumed = true;
 		effectStarted = true;
 		firstStart = true;
+		//Debug.Log ("Avviati effetti lanterna");
 		//chooseProseguireSprite ();
+	}
+
+	public void InteractingMethod(){
+		startEffect();
 	}
 
 	void enablePlayerMovements(bool enable)
@@ -647,10 +652,13 @@ public class LanternFanfareController : MonoBehaviour {
 				proseguireVar.textObject.SetActive (true);
 				SpriteRenderer spriteRenderer = proseguireVar.textObject.GetComponentInChildren<SpriteRenderer> ();
 				if (spriteRenderer != null) {
+					/*
 					if (GeneralFinder.cursorHandler.useController)
 						spriteRenderer.sprite = proseguireVar.controllerSprite;
 					else
 						spriteRenderer.sprite = proseguireVar.keyboardSprite;
+						*/
+					spriteRenderer.sprite = GeneralFinder.inputManager.getSprite("Interaction");
 				}
 			}
 		

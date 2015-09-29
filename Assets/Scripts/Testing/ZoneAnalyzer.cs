@@ -26,12 +26,15 @@ public class ZoneAnalyzer : MonoBehaviour {
 		public float timeSpent = 0.0f;
 		public int enemyDeath = 0;
 		public int spikesDeath = 0;
+		public int doorDeath = 0;
 	}
 
 	[SerializeField]
 	public ZoneInfos zoneInfos;
 
 	public bool playerColliding;
+
+	public bool newImplementation = false;
 
 	ZoneAnalyzerContainer zoneContainer;
 
@@ -139,6 +142,9 @@ public class ZoneAnalyzer : MonoBehaviour {
 				case "Spikes":
 					zoneInfos.spikesDeath++;
 					break;
+				case "KillingObj":
+					zoneInfos.doorDeath++;
+					break;
 				default:
 					break;
 				}
@@ -160,27 +166,58 @@ public class ZoneAnalyzer : MonoBehaviour {
 	{
 		if (type == Type.collector)
 		{
-			Debug.Log ("analyzer");
-			
-			//prende tutti i component zoneAnalyzer presenti nella scena
-			GameObject[] objs = GameObject.FindGameObjectsWithTag("ZoneAnalyzer");
-			
-			ZoneAnalyzer[] analyzers = new ZoneAnalyzer[objs.Length];
-			ZoneInfos[] infos = new ZoneInfos[analyzers.Length];
+			//Debug.Log ("analyzer");
 
-			string[] names = new string[objs.Length];
-			
-			for (int i = 0; i < objs.Length; i++)
+			ZoneInfos[] infos;
+			string[] names;
+
+			if (newImplementation)
 			{
-				if (objs[i] != null)
+				//prende tutti i component zoneAnalyzer presenti nella scena
+				GameObject casualAnalyzer = GameObject.FindGameObjectWithTag("ZoneAnalyzer");
+				Transform zoneFather = casualAnalyzer.transform.parent;
+				Transform[] analyzersTransform = new Transform[zoneFather.childCount];
+				
+				ZoneAnalyzer[] analyzers = new ZoneAnalyzer[analyzersTransform.Length];
+				infos = new ZoneInfos[analyzers.Length];
+				names = new string[analyzers.Length];
+				
+				for (int i = 0; i < analyzersTransform.Length; i++)
 				{
-					analyzers[i] = objs[i].GetComponent<ZoneAnalyzer>();
-					
-					//prende tutti gli elementi ZoneInfos
-					if (analyzers[i] != null && analyzers[i].type == Type.analyzer)
+					analyzersTransform[i] = zoneFather.GetChild(i);
+					if (analyzersTransform[i] != null)
 					{
-						infos[i] = analyzers[i].zoneInfos;
-						names[i] = analyzers[i].zoneInfos.name;
+						analyzers[i] = analyzersTransform[i].GetComponent<ZoneAnalyzer>();
+
+						if (analyzers[i] != null && analyzers[i].type == Type.analyzer)
+						{
+							infos[i] = analyzers[i].zoneInfos;
+							names[i] = analyzers[i].zoneInfos.name;
+						}
+					}
+				}
+			}
+			else
+			{
+				GameObject[] objs = GameObject.FindGameObjectsWithTag("ZoneAnalyzer");
+				
+				ZoneAnalyzer[] analyzers = new ZoneAnalyzer[objs.Length];
+				infos = new ZoneInfos[analyzers.Length];
+				
+				names = new string[objs.Length];
+				
+				for (int i = 0; i < objs.Length; i++)
+				{
+					if (objs[i] != null)
+					{
+						analyzers[i] = objs[i].GetComponent<ZoneAnalyzer>();
+						
+						//prende tutti gli elementi ZoneInfos
+						if (analyzers[i] != null && analyzers[i].type == Type.analyzer)
+						{
+							infos[i] = analyzers[i].zoneInfos;
+							names[i] = analyzers[i].zoneInfos.name;
+						}
 					}
 				}
 			}

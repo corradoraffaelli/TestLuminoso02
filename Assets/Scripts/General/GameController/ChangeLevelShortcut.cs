@@ -8,6 +8,8 @@ public class ChangeLevelShortcut : MonoBehaviour {
 	bool disableMovements = false;
 	bool disableMovementsOLD = false;
 
+	public Glass[] glassesToEnable;
+
 	void Start()
 	{
 		//Debug.Log (Application.loadedLevel);
@@ -113,6 +115,12 @@ public class ChangeLevelShortcut : MonoBehaviour {
 		{
 			saveHubInfos();
 		}
+
+		if (Input.GetKey(KeyCode.LeftShift) && Input.GetKeyDown(KeyCode.L))
+		{
+			enableLantern();
+		}
+
 	}
 
 	void saveHubInfos()
@@ -210,5 +218,16 @@ public class ChangeLevelShortcut : MonoBehaviour {
 		}
 
 		disableMovementsOLD = disableMovements;
+	}
+
+	void enableLantern()
+	{
+		GeneralFinder.magicLanternLogic.setActivable (true);
+		for (int i = 0; i < glassesToEnable.Length; i++) {
+			if (glassesToEnable[i] != null)
+			{
+				GeneralFinder.glassesManager.enableGlassByName(glassesToEnable[i].glassType, true);
+			}
+		}
 	}
 }

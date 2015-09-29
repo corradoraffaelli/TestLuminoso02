@@ -1537,6 +1537,10 @@ Prefab:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 21241196, guid: 5d726606ee7a22f4182882cea44783e6, type: 2}
+      propertyPath: m_SortingLayerID
+      value: -1231338491
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5d726606ee7a22f4182882cea44783e6, type: 2}
   m_IsPrefabParent: 0
@@ -5507,6 +5511,10 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 654637569}
     m_Modifications:
+    - target: {fileID: 11441064, guid: 7d841f27a8f1745eca9c7bcb93d2ddeb, type: 2}
+      propertyPath: glassesToEnable.Array.size
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 495608, guid: 7d841f27a8f1745eca9c7bcb93d2ddeb, type: 2}
       propertyPath: m_LocalPosition.x
       value: 9.95528793
@@ -5587,6 +5595,10 @@ Prefab:
       propertyPath: loadSaveState
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 11441064, guid: 7d841f27a8f1745eca9c7bcb93d2ddeb, type: 2}
+      propertyPath: glassesToEnable.Array.data[0]
+      value: 
+      objectReference: {fileID: 582232710}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7d841f27a8f1745eca9c7bcb93d2ddeb, type: 2}
   m_IsPrefabParent: 0
@@ -11796,6 +11808,19 @@ Prefab:
       propertyPath: m_Layer
       value: 20
       objectReference: {fileID: 0}
+    - target: {fileID: 450044, guid: 7b1b7c60e98fe4b4d91870b26e5a03c4, type: 2}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 450044, guid: 7b1b7c60e98fe4b4d91870b26e5a03c4, type: 2}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 21232404, guid: 7b1b7c60e98fe4b4d91870b26e5a03c4, type: 2}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 707091fe1da54d045a301643c88dba40,
+        type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7b1b7c60e98fe4b4d91870b26e5a03c4, type: 2}
   m_IsPrefabParent: 0
@@ -14791,6 +14816,10 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 2089223567}
     m_Modifications:
+    - target: {fileID: 11408312, guid: b9e7a413c0f27b4408a53abc7ad12dd6, type: 2}
+      propertyPath: objectsWithMethods.Array.size
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 424106, guid: b9e7a413c0f27b4408a53abc7ad12dd6, type: 2}
       propertyPath: m_LocalPosition.x
       value: -1.72000003
@@ -14875,6 +14904,10 @@ Prefab:
       propertyPath: m_Name
       value: FakeLantern02 (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 11408312, guid: b9e7a413c0f27b4408a53abc7ad12dd6, type: 2}
+      propertyPath: objectsWithMethods.Array.data[1]
+      value: 
+      objectReference: {fileID: 1650608756}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b9e7a413c0f27b4408a53abc7ad12dd6, type: 2}
   m_IsPrefabParent: 0
@@ -15827,7 +15860,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 157518, guid: 340389dc4a4be43999e660bcd54a5881, type: 2}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 11467616, guid: 340389dc4a4be43999e660bcd54a5881, type: 2}
       propertyPath: maxNumEnemyCount
@@ -24329,11 +24362,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 494942, guid: 340389dc4a4be43999e660bcd54a5881, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 12.1999998
+      value: 3.5
       objectReference: {fileID: 0}
     - target: {fileID: 494942, guid: 340389dc4a4be43999e660bcd54a5881, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 11.8999996
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 494942, guid: 340389dc4a4be43999e660bcd54a5881, type: 2}
       propertyPath: m_LocalPosition.z
@@ -24361,7 +24394,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 157518, guid: 340389dc4a4be43999e660bcd54a5881, type: 2}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 11467616, guid: 340389dc4a4be43999e660bcd54a5881, type: 2}
       propertyPath: maxNumEnemyCount
@@ -37450,6 +37483,10 @@ BoxCollider2D:
   m_Offset: {x: 0, y: .695000052}
   serializedVersion: 2
   m_Size: {x: 10.5299988, y: 1.38999999}
+--- !u!1 &1650608756 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 128000, guid: 7b1b7c60e98fe4b4d91870b26e5a03c4, type: 2}
+  m_PrefabInternal: {fileID: 574794140}
 --- !u!1 &1654544261
 GameObject:
   m_ObjectHideFlags: 0

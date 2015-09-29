@@ -12,6 +12,7 @@ public class FakeLanternBehaviour : MonoBehaviour {
 	public bool disabledByEnemy = true;
 	public bool emitParticles = false;
 	public GameObject particlesToEnable;
+	//public LanternFanfareController fanfare;
 
 	public enum fakeLanternState
 	{
