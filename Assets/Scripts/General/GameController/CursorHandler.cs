@@ -1,5 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.IO;
+using System.Collections.Generic;
 
 public class CursorHandler : MonoBehaviour {
 
@@ -54,6 +58,10 @@ public class CursorHandler : MonoBehaviour {
 
 	InputKeeper inputKeeper;
 
+	//string directory = "ZoneAnalyzer";
+	string savedFileName = "useControllerInfos";
+	string savedFileExtention = ".dat";
+
 	// Use this for initialization
 	void Start () {
 		Cursor.lockState = CursorLockMode.Confined;
@@ -92,6 +100,10 @@ public class CursorHandler : MonoBehaviour {
 
 		cursorIsMoving = false;
 
+		bool loadedUseController = loadInfo ();
+		if (loadedUseController)
+			changeUseController ();
+
 		/*
 		cameraCenter = new Vector3 (Camera.main.gameObject.transform.position.x, Camera.main.gameObject.transform.position.y, player.transform.position.z);
 		beginCamera = Camera.main.ScreenToWorldPoint (new Vector3 (0.0f, 0.0f, player.transform.position.z));
@@ -125,7 +137,9 @@ public class CursorHandler : MonoBehaviour {
 		//Debug.Log (getCursorWorldPosition());
 		verifyCursorMoving ();
 
-		changeUseController();
+		if (Input.GetKey (KeyCode.LeftShift) && Input.GetKeyDown (KeyCode.C)) {
+			changeUseController();
+		}
 	}
 
 	void setCursorPosition()
@@ -231,13 +245,10 @@ public class CursorHandler : MonoBehaviour {
 
 	void changeUseController()
 	{
-		if (Input.GetKey (KeyCode.LeftShift) && Input.GetKeyDown (KeyCode.C)) {
-			//if (Input.GetKeyDown(KeyCode.C))
-			useController = !useController;
-			if (controllerAutomaticVar)
-			{
-				movingIfStanding = !useController;
-			}
+		useController = !useController;
+		if (controllerAutomaticVar)
+		{
+			movingIfStanding = !useController;
 		}
 	}
 
@@ -448,5 +459,34 @@ public class CursorHandler : MonoBehaviour {
 			return RightLimit;
 		else
 			return null;
+	}
+
+	public void saveInfo()
+	{
+		BinaryFormatter bf = new BinaryFormatter ();
+		
+		FileStream file = File.Create (Application.persistentDataPath + "/" +savedFileName + savedFileExtention);
+		bf.Serialize (file, useController);
+		file.Close ();	
+	}
+	
+	
+	bool loadInfo()
+	{
+		bool loadedUseController = false;
+
+		if (File.Exists (Application.persistentDataPath + "/" +savedFileName + savedFileExtention)) {
+			BinaryFormatter bf = new BinaryFormatter();
+			FileStream file = File.Open (Application.persistentDataPath + "/" +savedFileName + savedFileExtention, FileMode.Open);
+
+
+			loadedUseController = (bool)bf.Deserialize(file);
+			
+			file.Close();
+		}else{
+			loadedUseController = false;
+		}
+
+		return loadedUseController;
 	}
 }
