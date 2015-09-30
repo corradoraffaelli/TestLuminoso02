@@ -26801,6 +26801,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   unlockContent: 0
+  unlockGlass: 1
   disableObject: 0
   intermittance: 1
   disabledByEnemy: 1
@@ -77756,7 +77757,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11494406, guid: 5d726606ee7a22f4182882cea44783e6, type: 2}
       propertyPath: dialogueElements.Array.data[0].text
-      value: "AIUTO!!! Voglio tornare grande!NEWLINESe mi aiuti ti far\xF2 un regalo!"
+      value: "AIUTO!!! Voglio tornare grande!NEWLINESe mi aiuti ti dar\xF2 un regalo!"
       objectReference: {fileID: 0}
     - target: {fileID: 11494406, guid: 5d726606ee7a22f4182882cea44783e6, type: 2}
       propertyPath: dialogueElements.Array.data[2].survey.question
@@ -77784,8 +77785,8 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11494406, guid: 5d726606ee7a22f4182882cea44783e6, type: 2}
       propertyPath: dialogueElements.Array.data[2].survey.wrongNPCAnswer
-      value: Sbagliato, pensavo avessi le informazioni giuste!NEWLINERileggiti la
-        scheda se vuoi il regalo.
+      value: Sbagliato, pensavo avessi le informazioni giuste!NEWLINERileggi la scheda
+        se vuoi il regalo.
       objectReference: {fileID: 0}
     - target: {fileID: 11494406, guid: 5d726606ee7a22f4182882cea44783e6, type: 2}
       propertyPath: dialogueElements.Array.data[3].text
@@ -77850,12 +77851,13 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11494406, guid: 5d726606ee7a22f4182882cea44783e6, type: 2}
       propertyPath: dialogueElements.Array.data[1].survey.wrongNPCAnswer
-      value: Sbagliato, pensavo avessi le informazioni giuste!NEWLINERileggiti la
-        scheda se vuoi il regalo.
+      value: Sbagliato, pensavo avessi le informazioni giuste!NEWLINERileggi la scheda
+        se vuoi il regalo.
       objectReference: {fileID: 0}
     - target: {fileID: 11494406, guid: 5d726606ee7a22f4182882cea44783e6, type: 2}
       propertyPath: dialogueElementsNext.Array.data[2].text
-      value: Se non sei sicuro della rispostaNEWLINErileggi la scheda.
+      value: Se non sai la risposta premi il comando che vedi in alto a destraNEWLINE
+        per aprire le schede informative.
       objectReference: {fileID: 0}
     - target: {fileID: 11494406, guid: 5d726606ee7a22f4182882cea44783e6, type: 2}
       propertyPath: dialogueElementsNext.Array.data[2].survey.question
@@ -77879,8 +77881,8 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11494406, guid: 5d726606ee7a22f4182882cea44783e6, type: 2}
       propertyPath: dialogueElementsNext.Array.data[2].survey.wrongNPCAnswer
-      value: Sbagliato, pensavo avessi le informazioni giuste!NEWLINERileggiti la
-        scheda se vuoi il regalo.
+      value: Sbagliato, pensavo avessi le informazioni giuste!NEWLINERileggi la scheda
+        se vuoi il regalo.
       objectReference: {fileID: 0}
     - target: {fileID: 11494406, guid: 5d726606ee7a22f4182882cea44783e6, type: 2}
       propertyPath: dialogueElementsNext.Array.data[2].player
@@ -77976,12 +77978,12 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11494406, guid: 5d726606ee7a22f4182882cea44783e6, type: 2}
       propertyPath: dialogueElementsNext.Array.data[1].survey.correctNPCAnswer
-      value: Grazie! sei un amico! Eccoti una stella!
+      value: Grazie! Sei un amico! Eccoti una stella!
       objectReference: {fileID: 0}
     - target: {fileID: 11494406, guid: 5d726606ee7a22f4182882cea44783e6, type: 2}
       propertyPath: dialogueElementsNext.Array.data[1].survey.wrongNPCAnswer
-      value: Sbagliato, pensavo avessi le informazioni giuste!NEWLINERileggiti la
-        scheda se vuoi il regalo
+      value: Sbagliato, pensavo avessi le informazioni giuste!NEWLINERileggi la scheda
+        se vuoi il regalo.
       objectReference: {fileID: 0}
     - target: {fileID: 11494406, guid: 5d726606ee7a22f4182882cea44783e6, type: 2}
       propertyPath: dialogueElementsFinal.Array.data[0].text
@@ -78013,7 +78015,8 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11494406, guid: 5d726606ee7a22f4182882cea44783e6, type: 2}
       propertyPath: dialogueElements.Array.data[2].text
-      value: Se non sei sicuro della rispostaNEWLINErileggi la scheda.
+      value: Se non sai la risposta premi il comando che vedi in alto a destraNEWLINE
+        per aprire le schede informative.
       objectReference: {fileID: 0}
     - target: {fileID: 11494406, guid: 5d726606ee7a22f4182882cea44783e6, type: 2}
       propertyPath: dialogueElementsNext.Array.data[2].survey.answers.Array.data[1].correct
