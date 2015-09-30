@@ -149,6 +149,11 @@ public class ChangeLevelShortcut : MonoBehaviour {
 		GeneralFinder.testingController.GetComponent<HintAnalyzer>().saveInfos();
 	}
 
+	void saveUseController()
+	{
+		GeneralFinder.cursorHandler.saveInfo ();
+	}
+
 	void saveInformativeManager()
 	{
 		GeneralFinder.informativeManager.c_saveData();
@@ -172,6 +177,7 @@ public class ChangeLevelShortcut : MonoBehaviour {
 		}
 
 		saveInput();
+		saveUseController ();
 	}
 
 	IEnumerator changeScene(int levelNumber)

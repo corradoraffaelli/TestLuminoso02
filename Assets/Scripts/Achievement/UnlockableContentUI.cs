@@ -66,6 +66,11 @@ public class UnlockableContentUI : MonoBehaviour {
 		else
 			activeBook = true;
 
+		if (overlaySpritesStart) {
+			spritesBook.controllerButton = GeneralFinder.inputManager.getControllerSprite(spritesBook.controllerButtonType);
+			spritesBook.keyboardButton = GeneralFinder.inputManager.getKeyboardSprite(spritesBook.keyboardButtonType);
+		}
+
 		if (activeBook)
 		{
 			setUpperRightVariables();
@@ -81,10 +86,7 @@ public class UnlockableContentUI : MonoBehaviour {
 
 		wasUseController = GeneralFinder.cursorHandler.useController;
 
-		if (overlaySpritesStart) {
-			spritesBook.controllerButton = GeneralFinder.inputManager.getControllerSprite(spritesBook.controllerButtonType);
-			spritesBook.keyboardButton = GeneralFinder.inputManager.getKeyboardSprite(spritesBook.keyboardButtonType);
-		}
+
 
 		centralButton = GeneralFinder.canvasPlayingUI.transform.GetComponentInChildren<PulsingInfoButton> ();
 	}

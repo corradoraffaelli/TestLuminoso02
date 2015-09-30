@@ -95,9 +95,11 @@ public class levelChanger : MonoBehaviour {
 	IEnumerator InputDoorBehave() {
 		GeneralFinder.playerMovements.enabled = false;
 		saveHubInfos();
+		saveUseController ();
 		//yield return new WaitForSeconds(1.5f);
 		yield return new WaitForSeconds(1.0f);
 		changeScene ();
+
 	}
 
 	IEnumerator ExitDoorBehave() {
@@ -105,6 +107,8 @@ public class levelChanger : MonoBehaviour {
 		saveInfo();
 
 		saveTesting();
+
+		saveUseController ();
 		
 		GeneralFinder.informativeManager.c_saveData();
 		Debug.Log ("salvo");
@@ -115,7 +119,7 @@ public class levelChanger : MonoBehaviour {
 		GeneralFinder.playerMovements.enabled = false;
 		//yield return new WaitForSeconds(2.0f);
 		yield return new WaitForSeconds(1.0f);
-
+		
 		changeScene ();
 	}
 
@@ -125,6 +129,11 @@ public class levelChanger : MonoBehaviour {
 		GeneralFinder.testingController.GetComponent<ZoneAnalyzer>().saveInfos();
 		GeneralFinder.testingController.GetComponent<SpikeAnalyzer>().saveInfos();
 		GeneralFinder.testingController.GetComponent<HintAnalyzer>().saveInfos();
+	}
+
+	void saveUseController()
+	{
+		GeneralFinder.cursorHandler.saveInfo ();
 	}
 
 	void saveHubInfos()
