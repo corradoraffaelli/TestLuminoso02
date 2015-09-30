@@ -510,7 +510,7 @@ public class MenuManager : MonoBehaviour {
 
 			if(canvasActive==canvasInformative) {
 
-				GeneralFinder.unlockableContentUI.stopPulsing();
+				//GeneralFinder.unlockableContentUI.stopPulsing();
 
 				GeneralFinder.informativeManager.fillNavigation ();
 

@@ -65,7 +65,7 @@ public class InformativeManager : MonoBehaviour {
 
 	public bool controllerConfig1;
 
-	[HideInInspector]
+	//[HideInInspector]
 	public bool canOpenInformative = true;
 
 
@@ -730,7 +730,7 @@ public class InformativeManager : MonoBehaviour {
 
 		if((GeneralFinder.inputManager.getButtonUp("Start") && invokeWithoutMenu) 
 		   || (GeneralFinder.inputManager.getButtonUp("GoBackMenu") && canvasInformative.activeSelf && invokeWithoutMenu)
-		   || GeneralFinder.inputManager.getButtonUp("OpenInformative")) {
+		   || GeneralFinder.inputManager.getButtonDown("OpenInformative")) {
 			
 			//Debug.Log("premuto qualcosa per inf");
 
@@ -1360,7 +1360,7 @@ public class InformativeManager : MonoBehaviour {
 		}
 		//Debug.Log("bbbbbbbbbbbbbbbb");
 
-		Button toactive = null;
+		//Button toactive = null;
 
 		foreach (Button butt in iconButtons) {
 			
@@ -1382,7 +1382,7 @@ public class InformativeManager : MonoBehaviour {
 					butt.gameObject.GetComponent<Animator> ().SetBool ("Active", true);
 					//butt.gameObject.GetComponent<Animator> ().SetTrigger ("Pressed");
 					//butt.image.color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
-					toactive = butt;
+					//toactive = butt;
 				}
 			}
 			
