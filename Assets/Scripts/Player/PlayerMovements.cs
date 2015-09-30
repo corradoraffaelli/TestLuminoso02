@@ -242,6 +242,8 @@ public class PlayerMovements : MonoBehaviour {
 
 	public GameObject zoneAnalyzerParent;
 
+	public teleportHandler tempTeleport;
+
 	//public GameObject []zoneAnalyzers;
 
 	void Start () {
@@ -1529,40 +1531,54 @@ public class PlayerMovements : MonoBehaviour {
 
 		//transizione scura...
 
-		GameObject canv = GameObject.FindGameObjectWithTag ("CanvasPlayingUI");
+		if (tempTeleport!=null) {
+			
+			//GeneralFinder.camera.transform.eulerAngles = new Vector3(0.0f, 0.0f, 0.0f);
+			
+			tempTeleport.noEffectsTeleportPlayer();
 
-		if (canv != null) {
-			//Debug.Log ("yeah0.0");
-			PlayingUIGameOver puigo = canv.GetComponent<PlayingUIGameOver>();
-
-			if(puigo!=null) {
-				puigo.c_GameOver(timeToRespawn);
-				Debug.Log ("yeah0.1");
-				yield return new WaitForSeconds(timeToRespawn);
-			}
-			else {
-				Debug.Log ("yeah0.2");
-				yield return new WaitForSeconds(timeToRespawn);
-			}
-		} 
-		else {
-			//Debug.Log ("yeah1");
-			if (mainCamera != null)
-				mainCamera.SendMessage ("GameOver");
-
-			yield return new WaitForSeconds(timeToRespawn);
+			tempTeleport = null;
 
 		}
+		else {
 
-		//riposizionamento all'ultimo checkpoint
-		b2d.enabled = true;
-		c2d.enabled = true;
+			GameObject canv = GameObject.FindGameObjectWithTag ("CanvasPlayingUI");
 
-		RigBody.velocity = new Vector2 (0.0f, 0.0f);
+			if (canv != null) {
+				//Debug.Log ("yeah0.0");
+				PlayingUIGameOver puigo = canv.GetComponent<PlayingUIGameOver>();
 
-		bringMeToRespawnPosition ();
+				if(puigo!=null) {
+					puigo.c_GameOver(timeToRespawn);
+					Debug.Log ("yeah0.1");
+					yield return new WaitForSeconds(timeToRespawn);
+				}
+				else {
+					Debug.Log ("yeah0.2");
+					yield return new WaitForSeconds(timeToRespawn);
+				}
+			} 
+			else {
+				//Debug.Log ("yeah1");
+				if (mainCamera != null)
+					mainCamera.SendMessage ("GameOver");
+
+				yield return new WaitForSeconds(timeToRespawn);
+
+			}
+
+			//riposizionamento all'ultimo checkpoint
+			b2d.enabled = true;
+			c2d.enabled = true;
+
+			RigBody.velocity = new Vector2 (0.0f, 0.0f);
+
+
+			bringMeToRespawnPosition ();
+		}
 
 		respawningFromDeath = false;
+	
 	}
 
 	public void c_jumpEnemy(){

@@ -23,6 +23,8 @@ public class teleportHandler : MonoBehaviour {
 
 	public bool disableWhenFinished = false;
 
+	public teleportHandler tempTeleportForPlayer;
+
 	public enum SizeChange {
 		BigToSmall,
 		SmallToBig,
@@ -46,8 +48,14 @@ public class teleportHandler : MonoBehaviour {
 
 	public void teleportPlayer() {
 
-		StartCoroutine (handleTeleport ());
+		StartCoroutine (handleTeleport (false));
 
+	}
+
+	public void noEffectsTeleportPlayer() {
+		
+		StartCoroutine (handleTeleport (true));
+		
 	}
 
 	void enablePlayerMovements(bool enable)
@@ -82,7 +90,7 @@ public class teleportHandler : MonoBehaviour {
 	}
 
 
-	IEnumerator handleTeleport() {
+	IEnumerator handleTeleport(bool noEffects) {
 
 		SpriteRenderer srGameOver = cameraGO.GetComponentInChildren<SpriteRenderer> ();
 		SpriteRenderer srPlayer = GeneralFinder.player.GetComponent<SpriteRenderer>();
@@ -97,12 +105,14 @@ public class teleportHandler : MonoBehaviour {
 			
 		}
 
-		//ingrandisco un po il player (SEMPRE)
-		for (int i=0; i<5; i++) {
+		if (!noEffects) {
+			//ingrandisco un po il player (SEMPRE)
+			for (int i=0; i<5; i++) {
 
-			GeneralFinder.player.transform.localScale = new Vector3 (GeneralFinder.player.transform.localScale.x * 1.1f, GeneralFinder.player.transform.localScale.y * 1.1f, GeneralFinder.player.transform.localScale.z * 1.1f);
-			yield return new WaitForSeconds(0.05f);
+				GeneralFinder.player.transform.localScale = new Vector3 (GeneralFinder.player.transform.localScale.x * 1.1f, GeneralFinder.player.transform.localScale.y * 1.1f, GeneralFinder.player.transform.localScale.z * 1.1f);
+				yield return new WaitForSeconds (0.05f);
 
+			}
 		}
 
 		float factor1 = 1.0f;
@@ -132,41 +142,42 @@ public class teleportHandler : MonoBehaviour {
 		//lerpo la posizione del player verso la camera oscura e lo schiarisco
 		//cambio la size del player (INGRANDISCO/RIMPICCIOLISCO)
 
-		for (int i=0; i<10; i++) {
+		if (!noEffects) {
+
+			for (int i=0; i<10; i++) {
 			
-			GeneralFinder.player.transform.localScale = new Vector3 (GeneralFinder.player.transform.localScale.x * factor1, GeneralFinder.player.transform.localScale.y * factor1, GeneralFinder.player.transform.localScale.z * factor1);
+				GeneralFinder.player.transform.localScale = new Vector3 (GeneralFinder.player.transform.localScale.x * factor1, GeneralFinder.player.transform.localScale.y * factor1, GeneralFinder.player.transform.localScale.z * factor1);
 
-			switch (sizeChange) {
+				switch (sizeChange) {
 				
-			case SizeChange.BigToSmall:
-				float deltaPosX = Mathf.Lerp(startPlayerX,finalPlayerX, ((float)(i+1))/((float)10));
+				case SizeChange.BigToSmall:
+					float deltaPosX = Mathf.Lerp (startPlayerX, finalPlayerX, ((float)(i + 1)) / ((float)10));
 				
-				float deltaPosY;
+					float deltaPosY;
 				
-				if(i<5) {
-					deltaPosY = Mathf.Lerp(startPlayerY,finalPlayerY + 1.0f, ((float)(i+1))/((float)5));
-				}
-				else {
-					deltaPosY = Mathf.Lerp(finalPlayerY + 1.0f,finalPlayerY, ((float)(i-4))/((float)5));
-				}
+					if (i < 5) {
+						deltaPosY = Mathf.Lerp (startPlayerY, finalPlayerY + 1.0f, ((float)(i + 1)) / ((float)5));
+					} else {
+						deltaPosY = Mathf.Lerp (finalPlayerY + 1.0f, finalPlayerY, ((float)(i - 4)) / ((float)5));
+					}
 				
-				GeneralFinder.player.transform.position = new Vector2(deltaPosX, deltaPosY);
-				break;
+					GeneralFinder.player.transform.position = new Vector2 (deltaPosX, deltaPosY);
+					break;
 				
-			case SizeChange.SmallToBig:
+				case SizeChange.SmallToBig:
 
-				break;
+					break;
 				
+				}
+
+				float alphaValue = Mathf.Lerp (1.0f, 0.0f, ((float)(i + 1)) / ((float)10));
+
+				srPlayer.color = new Color (srPlayer.color.r, srPlayer.color.g, srPlayer.color.b, alphaValue);
+
+				yield return new WaitForSeconds (0.08f);
+			
 			}
-
-			float alphaValue = Mathf.Lerp(1.0f,0.0f, ((float)(i+1))/((float)10));
-
-			srPlayer.color = new Color(srPlayer.color.r, srPlayer.color.g, srPlayer.color.b, alphaValue);
-
-			yield return new WaitForSeconds(0.08f);
-			
 		}
-
 		//scurisco lo schermo
 
 		for (int i=0; i<10; i++) {
@@ -241,6 +252,9 @@ public class teleportHandler : MonoBehaviour {
 
 		disableObj ();
 
+		if (tempTeleportForPlayer != null) {
+			GeneralFinder.playerMovements.tempTeleport = tempTeleportForPlayer;
+		}
 		//INIZIO FINE NERO
 
 		//schiarisco lo schermo
@@ -265,40 +279,40 @@ public class teleportHandler : MonoBehaviour {
 		finalPlayerX = targetPosition.transform.position.x +1.2f;
 		finalPlayerY = targetPosition.transform.position.y +1.2f; 
 
+
+
 		for (int i=0; i<10; i++) {
 
 			GeneralFinder.player.transform.localScale = new Vector3 (GeneralFinder.player.transform.localScale.x * factor3, GeneralFinder.player.transform.localScale.y * factor3, GeneralFinder.player.transform.localScale.z * factor3);
 
 			switch (sizeChange) {
-				
+			
 			case SizeChange.BigToSmall:
 
 				break;
-				
+			
 			case SizeChange.SmallToBig:
-				float deltaPosX = Mathf.Lerp(startPlayerX,finalPlayerX, ((float)(i+1))/((float)10));
-				
-				float deltaPosY = Mathf.Lerp(startPlayerY,finalPlayerY, ((float)(i+1))/((float)10));
+				float deltaPosX = Mathf.Lerp (startPlayerX, finalPlayerX, ((float)(i + 1)) / ((float)10));
+			
+				float deltaPosY = Mathf.Lerp (startPlayerY, finalPlayerY, ((float)(i + 1)) / ((float)10));
 
-				GeneralFinder.player.transform.position = new Vector2(deltaPosX, deltaPosY);
+				GeneralFinder.player.transform.position = new Vector2 (deltaPosX, deltaPosY);
 				break;
-				
+			
 			}
 
 			float alphaValue = Mathf.Lerp (0.0f, 1.0f, ((float)(i + 1)) / ((float)10));
-		
+	
 			srPlayer.color = new Color (srPlayer.color.r, srPlayer.color.g, srPlayer.color.b, alphaValue);
 
-			yield return new WaitForSeconds(0.05f);
-		
+			yield return new WaitForSeconds (0.05f);
+	
 		}
+
 
 		GeneralFinder.player.transform.localScale = originalScale;
 
-
-
 		enablePlayer (true);
-
 
 		if(disableWhenFinished)
 			this.gameObject.SetActive(false);
