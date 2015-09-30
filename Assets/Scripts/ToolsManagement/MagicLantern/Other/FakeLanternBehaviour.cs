@@ -4,6 +4,7 @@ using System.Collections;
 public class FakeLanternBehaviour : MonoBehaviour {
 
 	public bool unlockContent = false;
+	public bool unlockGlass = true;
 	int sectionIndex;
 	int contentIndex;
 
@@ -329,7 +330,7 @@ public class FakeLanternBehaviour : MonoBehaviour {
 				if (glassesManager != null){
 					glassesToEnable[i].canBeEnabled = true;
 					glassesManager.enableGlassByName(glassesToEnable[i].glassType, true);
-					if (!unlockContent)
+					if (unlockGlass)
 						UIHandler(glassesToEnable[i].glassSprite);
 				}
 
@@ -405,7 +406,7 @@ public class FakeLanternBehaviour : MonoBehaviour {
 
 	void UIHandler(Sprite inputSprite)
 	{
-		Debug.Log ("called");
+		//Debug.Log ("called");
 		PickingObjectGraphic pick = gameObject.AddComponent<PickingObjectGraphic>();
 		pick.setVariables(inputSprite, PlayingUI.UIPosition.BottomRight, 0);
 		pick.setTimeToGetSmall(1.5f);
