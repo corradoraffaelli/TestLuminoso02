@@ -4579,7 +4579,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 454944, guid: cc2aaf1274de746d79ea8e568a2a73e4, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 20.3400002
+      value: 21.9300003
       objectReference: {fileID: 0}
     - target: {fileID: 454944, guid: cc2aaf1274de746d79ea8e568a2a73e4, type: 2}
       propertyPath: m_LocalPosition.z
@@ -4628,6 +4628,14 @@ Prefab:
     - target: {fileID: 11433328, guid: cc2aaf1274de746d79ea8e568a2a73e4, type: 2}
       propertyPath: TimeToAppearDisappear
       value: .5
+      objectReference: {fileID: 0}
+    - target: {fileID: 454944, guid: cc2aaf1274de746d79ea8e568a2a73e4, type: 2}
+      propertyPath: m_LocalScale.y
+      value: 4.38750076
+      objectReference: {fileID: 0}
+    - target: {fileID: 145458, guid: cc2aaf1274de746d79ea8e568a2a73e4, type: 2}
+      propertyPath: m_Name
+      value: LadderAppear-Hand
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: cc2aaf1274de746d79ea8e568a2a73e4, type: 2}
@@ -9526,7 +9534,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 460876, guid: 10071f74be532424f827eb82b0ef843d, type: 2}
       propertyPath: m_RootOrder
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 150810, guid: 10071f74be532424f827eb82b0ef843d, type: 2}
       propertyPath: m_Name
@@ -10533,7 +10541,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 453848, guid: 4f8ce935f1493450fb52beeda608187f, type: 2}
       propertyPath: m_RootOrder
-      value: 6
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 162654, guid: 4f8ce935f1493450fb52beeda608187f, type: 2}
       propertyPath: m_Name
@@ -16204,11 +16212,19 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11474506, guid: 4ba0533d6bcd39a49910406de36bd12e, type: 2}
       propertyPath: balloonString
-      value: Se riuscissi a SpingerliNEWLINEnel Carrello...
+      value: Posso spingere i Nemici nel Carrello!
       objectReference: {fileID: 0}
     - target: {fileID: 11474506, guid: 4ba0533d6bcd39a49910406de36bd12e, type: 2}
       propertyPath: balloonStringController
-      value: Se riuscissi a SpingerliNEWLINEnel Carrello...
+      value: Posso spingere i Nemici nel Carrello!
+      objectReference: {fileID: 0}
+    - target: {fileID: 11474506, guid: 4ba0533d6bcd39a49910406de36bd12e, type: 2}
+      propertyPath: balloonReappearTime
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 103616, guid: 4ba0533d6bcd39a49910406de36bd12e, type: 2}
+      propertyPath: m_Name
+      value: TutorialHint-Bilancia
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4ba0533d6bcd39a49910406de36bd12e, type: 2}
@@ -18182,7 +18198,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 426788, guid: c4efff3641b36a94aa3a9c65d40ec80d, type: 2}
       propertyPath: m_RootOrder
-      value: 21
+      value: 22
       objectReference: {fileID: 0}
     - target: {fileID: 134752, guid: c4efff3641b36a94aa3a9c65d40ec80d, type: 2}
       propertyPath: m_Name
@@ -18686,7 +18702,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 453848, guid: 4f8ce935f1493450fb52beeda608187f, type: 2}
       propertyPath: m_RootOrder
-      value: 7
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 162654, guid: 4f8ce935f1493450fb52beeda608187f, type: 2}
       propertyPath: m_Name
@@ -19164,7 +19180,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 453848, guid: 4f8ce935f1493450fb52beeda608187f, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -19.4200001
+      value: -21.6399994
       objectReference: {fileID: 0}
     - target: {fileID: 453848, guid: 4f8ce935f1493450fb52beeda608187f, type: 2}
       propertyPath: m_LocalPosition.y
@@ -20129,6 +20145,57 @@ Prefab:
 Transform:
   m_PrefabParentObject: {fileID: 478192, guid: ced71e6f513fe49a5ae658ad3aee7c01, type: 2}
   m_PrefabInternal: {fileID: 780023720}
+--- !u!1001 &782364952
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 2000944851}
+    m_Modifications:
+    - target: {fileID: 489754, guid: 5132d59a1acaf00438f3443574bd548e, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: -16.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 489754, guid: 5132d59a1acaf00438f3443574bd548e, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 27.0100021
+      objectReference: {fileID: 0}
+    - target: {fileID: 489754, guid: 5132d59a1acaf00438f3443574bd548e, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 489754, guid: 5132d59a1acaf00438f3443574bd548e, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 489754, guid: 5132d59a1acaf00438f3443574bd548e, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 489754, guid: 5132d59a1acaf00438f3443574bd548e, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 489754, guid: 5132d59a1acaf00438f3443574bd548e, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 489754, guid: 5132d59a1acaf00438f3443574bd548e, type: 2}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 21266472, guid: 5132d59a1acaf00438f3443574bd548e, type: 2}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: d53d79430f5a50e4b8a41bfc4f31d8d4,
+        type: 3}
+    - target: {fileID: 11446350, guid: 5132d59a1acaf00438f3443574bd548e, type: 2}
+      propertyPath: text
+      value: "Con il Vento puoi fare salti pi\xF9 lunghi!"
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 5132d59a1acaf00438f3443574bd548e, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1 &784375695
 GameObject:
   m_ObjectHideFlags: 0
@@ -21741,7 +21808,7 @@ Transform:
   - {fileID: 2143496734}
   - {fileID: 811913860}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
 --- !u!1001 &850826652
 Prefab:
   m_ObjectHideFlags: 0
@@ -24596,11 +24663,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 494942, guid: 340389dc4a4be43999e660bcd54a5881, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 244.899994
+      value: 161.660004
       objectReference: {fileID: 0}
     - target: {fileID: 494942, guid: 340389dc4a4be43999e660bcd54a5881, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -112.900002
+      value: -126.849998
       objectReference: {fileID: 0}
     - target: {fileID: 494942, guid: 340389dc4a4be43999e660bcd54a5881, type: 2}
       propertyPath: m_LocalPosition.z
@@ -24624,7 +24691,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 494942, guid: 340389dc4a4be43999e660bcd54a5881, type: 2}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 157518, guid: 340389dc4a4be43999e660bcd54a5881, type: 2}
       propertyPath: m_Name
@@ -27701,7 +27768,7 @@ Transform:
   - {fileID: 809151814}
   - {fileID: 612658183}
   m_Father: {fileID: 2000944851}
-  m_RootOrder: 1
+  m_RootOrder: 2
 --- !u!1001 &1072140030
 Prefab:
   m_ObjectHideFlags: 0
@@ -27864,6 +27931,10 @@ Prefab:
     - target: {fileID: 142468, guid: d1f0e3e6316d74b348c519273373140b, type: 2}
       propertyPath: m_Name
       value: _Enemy - Dumb (NEW) - 001 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 142468, guid: d1f0e3e6316d74b348c519273373140b, type: 2}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d1f0e3e6316d74b348c519273373140b, type: 2}
@@ -28121,6 +28192,18 @@ Prefab:
     - target: {fileID: 11474506, guid: 4ba0533d6bcd39a49910406de36bd12e, type: 2}
       propertyPath: balloonStringController
       value: "Forse il Vento pu\xF2NEWLINEattraversare i Muri..."
+      objectReference: {fileID: 0}
+    - target: {fileID: 103616, guid: 4ba0533d6bcd39a49910406de36bd12e, type: 2}
+      propertyPath: m_Name
+      value: TutorialHint-Lanterna e Muri
+      objectReference: {fileID: 0}
+    - target: {fileID: 11474506, guid: 4ba0533d6bcd39a49910406de36bd12e, type: 2}
+      propertyPath: balloonReappearTime
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 103616, guid: 4ba0533d6bcd39a49910406de36bd12e, type: 2}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4ba0533d6bcd39a49910406de36bd12e, type: 2}
@@ -29349,7 +29432,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 404282, guid: 6a1aaf56fe57b4e6f9b3240741e6ff5f, type: 2}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6a1aaf56fe57b4e6f9b3240741e6ff5f, type: 2}
@@ -30459,11 +30542,19 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11474506, guid: 4ba0533d6bcd39a49910406de36bd12e, type: 2}
       propertyPath: balloonString
-      value: Potrei spingere quella CassaNEWLINEper premere il Pulsante...
+      value: Posso spingere quella CassaNEWLINEper premere il Pulsante!
       objectReference: {fileID: 0}
     - target: {fileID: 11474506, guid: 4ba0533d6bcd39a49910406de36bd12e, type: 2}
       propertyPath: balloonStringController
-      value: Potrei spingere quella CassaNEWLINEper premere il Pulsante...
+      value: Posso spingere quella CassaNEWLINEper premere il Pulsante!
+      objectReference: {fileID: 0}
+    - target: {fileID: 11474506, guid: 4ba0533d6bcd39a49910406de36bd12e, type: 2}
+      propertyPath: balloonReappearTime
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 103616, guid: 4ba0533d6bcd39a49910406de36bd12e, type: 2}
+      propertyPath: m_Name
+      value: TutorialHint-Cassa 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4ba0533d6bcd39a49910406de36bd12e, type: 2}
@@ -30486,9 +30577,9 @@ BoxCollider2D:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_UsedByEffector: 0
-  m_Offset: {x: 6.76761913, y: 3.79112792}
+  m_Offset: {x: 6.76761913, y: 3.5560205}
   serializedVersion: 2
-  m_Size: {x: 5.26106787, y: 2.50390625}
+  m_Size: {x: 5.26106787, y: 2.97411609}
 --- !u!1 &1177771237
 GameObject:
   m_ObjectHideFlags: 0
@@ -31943,6 +32034,10 @@ Prefab:
     m_TransformParent: {fileID: 491188897}
     m_Modifications:
     - target: {fileID: 11433328, guid: cc2aaf1274de746d79ea8e568a2a73e4, type: 2}
+      propertyPath: toAppear.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 11433328, guid: cc2aaf1274de746d79ea8e568a2a73e4, type: 2}
       propertyPath: toDisappear.Array.size
       value: 4
       objectReference: {fileID: 0}
@@ -32022,6 +32117,10 @@ Prefab:
       propertyPath: toDisappear.Array.data[3]
       value: 
       objectReference: {fileID: 979708809}
+    - target: {fileID: 11433328, guid: cc2aaf1274de746d79ea8e568a2a73e4, type: 2}
+      propertyPath: toAppear.Array.data[1]
+      value: 
+      objectReference: {fileID: 1635182773}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: cc2aaf1274de746d79ea8e568a2a73e4, type: 2}
   m_IsPrefabParent: 0
@@ -37446,7 +37545,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11474506, guid: 4ba0533d6bcd39a49910406de36bd12e, type: 2}
       propertyPath: balloonString
-      value: E se ingrandissi il Vento?
+      value: Posso uscire ingrandendo il Vento!
       objectReference: {fileID: 0}
     - target: {fileID: 11474506, guid: 4ba0533d6bcd39a49910406de36bd12e, type: 2}
       propertyPath: timeToTrigger
@@ -37454,7 +37553,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11474506, guid: 4ba0533d6bcd39a49910406de36bd12e, type: 2}
       propertyPath: balloonStringController
-      value: E se ingrandissi il Vento?
+      value: Posso uscire ingrandendo il Vento!
+      objectReference: {fileID: 0}
+    - target: {fileID: 11474506, guid: 4ba0533d6bcd39a49910406de36bd12e, type: 2}
+      propertyPath: balloonReappearTime
+      value: 30
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4ba0533d6bcd39a49910406de36bd12e, type: 2}
@@ -40658,6 +40761,10 @@ Transform:
 Transform:
   m_PrefabParentObject: {fileID: 404282, guid: 6a1aaf56fe57b4e6f9b3240741e6ff5f, type: 2}
   m_PrefabInternal: {fileID: 1963363466}
+--- !u!1 &1635182773 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 103616, guid: 4ba0533d6bcd39a49910406de36bd12e, type: 2}
+  m_PrefabInternal: {fileID: 1086140702}
 --- !u!1 &1640532081
 GameObject:
   m_ObjectHideFlags: 0
@@ -40753,7 +40860,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 453848, guid: 4f8ce935f1493450fb52beeda608187f, type: 2}
       propertyPath: m_RootOrder
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 162654, guid: 4f8ce935f1493450fb52beeda608187f, type: 2}
       propertyPath: m_Name
@@ -41453,6 +41560,10 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ced71e6f513fe49a5ae658ad3aee7c01, type: 2}
   m_IsPrefabParent: 0
+--- !u!4 &1678717925 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 489754, guid: 5132d59a1acaf00438f3443574bd548e, type: 2}
+  m_PrefabInternal: {fileID: 782364952}
 --- !u!1001 &1681656533
 Prefab:
   m_ObjectHideFlags: 0
@@ -48086,7 +48197,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11474506, guid: 4ba0533d6bcd39a49910406de36bd12e, type: 2}
       propertyPath: balloonString
-      value: Potrei sfruttare il VentoNEWLINEper spingere la Cassa...
+      value: Posso usare il VentoNEWLINEper spingere la Cassa!
       objectReference: {fileID: 0}
     - target: {fileID: 11474506, guid: 4ba0533d6bcd39a49910406de36bd12e, type: 2}
       propertyPath: timeToTrigger
@@ -48094,7 +48205,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11474506, guid: 4ba0533d6bcd39a49910406de36bd12e, type: 2}
       propertyPath: balloonStringController
-      value: Potrei sfruttare il VentoNEWLINEper spingere la Cassa...
+      value: Posso usare il VentoNEWLINEper spingere la Cassa!
+      objectReference: {fileID: 0}
+    - target: {fileID: 11474506, guid: 4ba0533d6bcd39a49910406de36bd12e, type: 2}
+      propertyPath: balloonReappearTime
+      value: 30
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4ba0533d6bcd39a49910406de36bd12e, type: 2}
@@ -48241,7 +48356,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 498782, guid: d1f0e3e6316d74b348c519273373140b, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -35.0400009
+      value: -27.9799995
       objectReference: {fileID: 0}
     - target: {fileID: 498782, guid: d1f0e3e6316d74b348c519273373140b, type: 2}
       propertyPath: m_LocalPosition.y
@@ -48269,7 +48384,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 498782, guid: d1f0e3e6316d74b348c519273373140b, type: 2}
       propertyPath: m_RootOrder
-      value: 5
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 498782, guid: d1f0e3e6316d74b348c519273373140b, type: 2}
       propertyPath: m_LocalScale.x
@@ -48834,7 +48949,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 460876, guid: 10071f74be532424f827eb82b0ef843d, type: 2}
       propertyPath: m_RootOrder
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 150810, guid: 10071f74be532424f827eb82b0ef843d, type: 2}
       propertyPath: m_Name
@@ -50754,6 +50869,7 @@ Transform:
   m_LocalPosition: {x: 22.1399994, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 1678717925}
   - {fileID: 802036570}
   - {fileID: 1068668475}
   - {fileID: 1138275540}
@@ -51040,7 +51156,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 496366, guid: 4268e12e6b5fd1f419f2d81cafac7f14, type: 2}
       propertyPath: m_RootOrder
-      value: 8
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 6158976, guid: 4268e12e6b5fd1f419f2d81cafac7f14, type: 2}
       propertyPath: m_Offset.x
@@ -54242,7 +54358,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11474506, guid: 4ba0533d6bcd39a49910406de36bd12e, type: 2}
       propertyPath: timeToTrigger
-      value: 18
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 11474506, guid: 4ba0533d6bcd39a49910406de36bd12e, type: 2}
       propertyPath: balloonTimeToDisable
@@ -54250,15 +54366,15 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11474506, guid: 4ba0533d6bcd39a49910406de36bd12e, type: 2}
       propertyPath: balloonReappearTime
-      value: 20
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 11474506, guid: 4ba0533d6bcd39a49910406de36bd12e, type: 2}
       propertyPath: balloonString
-      value: "Potrei sfruttare il VentoNEWLINEper Saltare pi\xF9 in alto..."
+      value: "Posso sfruttare il VentoNEWLINEper saltare pi\xF9 in alto!"
       objectReference: {fileID: 0}
     - target: {fileID: 11474506, guid: 4ba0533d6bcd39a49910406de36bd12e, type: 2}
       propertyPath: balloonStringController
-      value: "Potrei sfruttare il VentoNEWLINEper Saltare pi\xF9 in alto..."
+      value: "Posso sfruttare il VentoNEWLINEper saltare pi\xF9 in alto!"
       objectReference: {fileID: 0}
     - target: {fileID: 11474506, guid: 4ba0533d6bcd39a49910406de36bd12e, type: 2}
       propertyPath: balloonOnTheRight
@@ -54271,6 +54387,10 @@ Prefab:
     - target: {fileID: 6116842, guid: 4ba0533d6bcd39a49910406de36bd12e, type: 2}
       propertyPath: m_Offset.y
       value: -.289999992
+      objectReference: {fileID: 0}
+    - target: {fileID: 103616, guid: 4ba0533d6bcd39a49910406de36bd12e, type: 2}
+      propertyPath: m_Name
+      value: TutorialHint-Salto Ventoso
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4ba0533d6bcd39a49910406de36bd12e, type: 2}
