@@ -188,6 +188,20 @@ public class LanternFanfareController : MonoBehaviour {
 
 	bool firstDisabling = false;
 	bool firstDisablingOLD = false;
+
+	[System.Serializable]
+	public class ConsequenceElement
+	{
+		public GameObject gameObject;
+		public string methodToCall ="";
+	}
+
+	[SerializeField]
+	ConsequenceElement[] continueConsequences;
+
+	public AudioSource music;
+	public float changeMusicSpeed = 0.1f;
+	float musicStandardVolume;
 	
 	void Start () {
 		playerAnimator = GeneralFinder.player.GetComponent<Animator> ();
@@ -208,6 +222,9 @@ public class LanternFanfareController : MonoBehaviour {
 		lanternTextStart ();
 		coriandoliStart ();
 		proseguireStart ();
+
+		if (music != null)
+			musicStandardVolume = music.volume;
 	}
 
 	void Update () {
@@ -253,6 +270,7 @@ public class LanternFanfareController : MonoBehaviour {
 		lanternTextUpdate ();
 		coriandoliUpdate ();
 		proseguireUpdate ();
+		handleMusicVolume ();
 
 		firstDisablingOLD = firstDisabling;
 	}
@@ -668,6 +686,32 @@ public class LanternFanfareController : MonoBehaviour {
 		{
 			if (proseguireVar.textObject != null)
 				proseguireVar.textObject.SetActive (false);
+			handleConsequences();
+		}
+	}
+
+	void handleConsequences()
+	{
+		for (int i = 0; i < continueConsequences.Length; i++) {
+			if (continueConsequences[i] != null && continueConsequences[i].gameObject != null)
+			{
+				continueConsequences[i].gameObject.SendMessage(continueConsequences[i].methodToCall, SendMessageOptions.DontRequireReceiver);
+			}
+		}
+	}
+
+	void handleMusicVolume()
+	{
+		if (music != null) {
+			//il volume della musica dipende dal fatto che sia presente o meno la scritta "Proseguire"
+			if (effectStarted && !proseguireCreated)
+			{
+				music.volume = Mathf.MoveTowards(music.volume, 0.0f, Time.deltaTime * changeMusicSpeed * 3.0f);
+			}
+			else if (proseguireCreated)
+			{
+				music.volume = Mathf.MoveTowards(music.volume, musicStandardVolume, Time.deltaTime * changeMusicSpeed);
+			}
 		}
 	}
 }

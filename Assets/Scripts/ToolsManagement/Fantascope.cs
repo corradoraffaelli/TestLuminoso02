@@ -44,6 +44,11 @@ public class Fantascope : Tool {
 		toolGameObject.transform.position = new Vector3(player.transform.position.x+0.4f,player.transform.position.y+0.8f,player.transform.position.z);
 		Debug.Log ("sto usando il fantascopio");
 	}
+
+	protected override void useToolPaused() {
+		toolGameObject.transform.position = new Vector3(player.transform.position.x+0.4f,player.transform.position.y+0.8f,player.transform.position.z);
+		Debug.Log ("Non sto usando il fantascopio");
+	}
 	
 	
 }

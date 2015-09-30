@@ -51,8 +51,11 @@ abstract public class Tool : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-		if (!PlayStatusTracker.inPlay)
+		if (!PlayStatusTracker.inPlay) {
+			useToolPaused();
 			return;
+		}
+			
 
 		if (!active) {
 			return;
@@ -85,6 +88,9 @@ abstract public class Tool : MonoBehaviour {
 
 	//funzione per usare il tool, quindi per esempio per proiettare il vetrino, oppure per sparare col fucile
 	abstract protected void useTool();
+
+	//funzione per usare il tool, ma quando la partita non è in play
+	abstract protected void useToolPaused();
 
 	//funzione da poter richiamare alla riattivazione del tool
 	protected virtual void activationToolFunc () {

@@ -108,6 +108,11 @@ public class MagicLantern : Tool {
 
 	Vector3 lastInstatiatePosition;
 
+	bool inPlayOLD = true;
+	public bool canChangeState = true;
+	float timeBeforeCanChangeState = 0.3f;
+	float lastTimeNotPlay = 0.0f;
+
 	//--------INITIALIZATION AND ACTIVATION-------------------------------------
 
 	protected override void initializeTool() {
@@ -335,13 +340,21 @@ public class MagicLantern : Tool {
 
 		updateLeftLantern ();
 
-
+		handleCanChangeState();
 	}
 
 
+	protected override void useToolPaused() {
+		if (!PlayStatusTracker.inPlay)
+		{
+			lastTimeNotPlay = Time.unscaledTime;
+			canChangeState = false;
+		}
+	}
+
 	void setStates()
 	{
-		if (inputKeeper != null) {
+		if (inputKeeper != null && canChangeState) {
 			if (inputKeeper.isButtonPressed ("Mira") && player.GetComponent<PlayerMovements> ().OnGround && usable) {
 				actualState = lanternState.InHand;
 			}
@@ -518,6 +531,17 @@ public class MagicLantern : Tool {
 	public void setCollidingBadWall(bool colliding)
 	{
 		collidingBadWall = colliding;
+	}
+
+	void handleCanChangeState()
+	{
+		if (PlayStatusTracker.inPlay)
+		{
+			if ((Time.unscaledTime - lastTimeNotPlay) > timeBeforeCanChangeState)
+				canChangeState = true;
+			else
+				canChangeState = false;
+		}
 	}
 	
 }
