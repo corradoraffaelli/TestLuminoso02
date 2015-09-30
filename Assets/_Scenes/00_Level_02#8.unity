@@ -789,6 +789,10 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 366ae96d3754a4617946e6345b200d7c, type: 2}
   m_IsPrefabParent: 0
+--- !u!4 &20709182 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 457202, guid: 4ba0533d6bcd39a49910406de36bd12e, type: 2}
+  m_PrefabInternal: {fileID: 177633966}
 --- !u!4 &21972827 stripped
 Transform:
   m_PrefabParentObject: {fileID: 453848, guid: 4f8ce935f1493450fb52beeda608187f, type: 2}
@@ -3699,6 +3703,72 @@ Prefab:
 Transform:
   m_PrefabParentObject: {fileID: 404282, guid: 6a1aaf56fe57b4e6f9b3240741e6ff5f, type: 2}
   m_PrefabInternal: {fileID: 1074726653}
+--- !u!1001 &177633966
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 2009522669}
+    m_Modifications:
+    - target: {fileID: 457202, guid: 4ba0533d6bcd39a49910406de36bd12e, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: -24.0599995
+      objectReference: {fileID: 0}
+    - target: {fileID: 457202, guid: 4ba0533d6bcd39a49910406de36bd12e, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: -23.2700005
+      objectReference: {fileID: 0}
+    - target: {fileID: 457202, guid: 4ba0533d6bcd39a49910406de36bd12e, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 457202, guid: 4ba0533d6bcd39a49910406de36bd12e, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 457202, guid: 4ba0533d6bcd39a49910406de36bd12e, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 457202, guid: 4ba0533d6bcd39a49910406de36bd12e, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 457202, guid: 4ba0533d6bcd39a49910406de36bd12e, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 457202, guid: 4ba0533d6bcd39a49910406de36bd12e, type: 2}
+      propertyPath: m_RootOrder
+      value: 18
+      objectReference: {fileID: 0}
+    - target: {fileID: 103616, guid: 4ba0533d6bcd39a49910406de36bd12e, type: 2}
+      propertyPath: m_Name
+      value: TutorialHint-Dumb e Pulsante
+      objectReference: {fileID: 0}
+    - target: {fileID: 6116842, guid: 4ba0533d6bcd39a49910406de36bd12e, type: 2}
+      propertyPath: m_Offset.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 457202, guid: 4ba0533d6bcd39a49910406de36bd12e, type: 2}
+      propertyPath: m_LocalScale.x
+      value: 4.11023426
+      objectReference: {fileID: 0}
+    - target: {fileID: 457202, guid: 4ba0533d6bcd39a49910406de36bd12e, type: 2}
+      propertyPath: m_LocalScale.y
+      value: 2.643749
+      objectReference: {fileID: 0}
+    - target: {fileID: 11474506, guid: 4ba0533d6bcd39a49910406de36bd12e, type: 2}
+      propertyPath: balloonString
+      value: Devo solo arrivare alla PortaNEWLINEe aspettare che Lui la apra!
+      objectReference: {fileID: 0}
+    - target: {fileID: 11474506, guid: 4ba0533d6bcd39a49910406de36bd12e, type: 2}
+      propertyPath: balloonStringController
+      value: Devo solo arrivare alla PortaNEWLINEe aspettare che Lui la apra!
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 4ba0533d6bcd39a49910406de36bd12e, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1001 &178564924
 Prefab:
   m_ObjectHideFlags: 0
@@ -12689,7 +12759,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11474506, guid: 4ba0533d6bcd39a49910406de36bd12e, type: 2}
       propertyPath: balloonString
-      value: Forse potrei sfruttare il NemicoNEWLINEper premere il Pulsante...
+      value: "Se creo un Ponte GrandeNEWLINEil Nemico pu\xF2 arrivare al Pulsante!"
       objectReference: {fileID: 0}
     - target: {fileID: 11474506, guid: 4ba0533d6bcd39a49910406de36bd12e, type: 2}
       propertyPath: timeToTrigger
@@ -12697,7 +12767,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11474506, guid: 4ba0533d6bcd39a49910406de36bd12e, type: 2}
       propertyPath: balloonStringController
-      value: Forse potrei sfruttare il NemicoNEWLINEper premere il Pulsante...
+      value: "Se creo un Ponte GrandeNEWLINEil Nemico pu\xF2 arrivare al Pulsante!"
+      objectReference: {fileID: 0}
+    - target: {fileID: 103616, guid: 4ba0533d6bcd39a49910406de36bd12e, type: 2}
+      propertyPath: m_Name
+      value: TutorialHint-Primo Ponte
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4ba0533d6bcd39a49910406de36bd12e, type: 2}
@@ -16158,7 +16232,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 457202, guid: 4ba0533d6bcd39a49910406de36bd12e, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 1.75717735
+      value: 2.63000011
       objectReference: {fileID: 0}
     - target: {fileID: 457202, guid: 4ba0533d6bcd39a49910406de36bd12e, type: 2}
       propertyPath: m_LocalPosition.z
@@ -16186,7 +16260,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 6116842, guid: 4ba0533d6bcd39a49910406de36bd12e, type: 2}
       propertyPath: m_Offset.y
-      value: -1.54557037
+      value: -1.82096553
       objectReference: {fileID: 0}
     - target: {fileID: 6116842, guid: 4ba0533d6bcd39a49910406de36bd12e, type: 2}
       propertyPath: m_Size.x
@@ -16194,7 +16268,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 6116842, guid: 4ba0533d6bcd39a49910406de36bd12e, type: 2}
       propertyPath: m_Size.y
-      value: 1.9715426
+      value: 2.52233124
       objectReference: {fileID: 0}
     - target: {fileID: 6116842, guid: 4ba0533d6bcd39a49910406de36bd12e, type: 2}
       propertyPath: m_Offset.x
@@ -16202,7 +16276,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11474506, guid: 4ba0533d6bcd39a49910406de36bd12e, type: 2}
       propertyPath: balloonString
-      value: Se solo potessi EvitareNEWLINEdi Toccar terra...
+      value: Posso usare una ProiezioneNEWLINEper evitare il Pulsante!
       objectReference: {fileID: 0}
     - target: {fileID: 11474506, guid: 4ba0533d6bcd39a49910406de36bd12e, type: 2}
       propertyPath: timeToTrigger
@@ -16210,7 +16284,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11474506, guid: 4ba0533d6bcd39a49910406de36bd12e, type: 2}
       propertyPath: balloonStringController
-      value: Se solo potessi EvitareNEWLINEdi Toccar terra...
+      value: Posso usare una ProiezioneNEWLINEper evitare il Pulsante!
+      objectReference: {fileID: 0}
+    - target: {fileID: 103616, guid: 4ba0533d6bcd39a49910406de36bd12e, type: 2}
+      propertyPath: m_Name
+      value: TutorialHint-Pulsantone
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4ba0533d6bcd39a49910406de36bd12e, type: 2}
@@ -25038,11 +25116,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 494942, guid: 340389dc4a4be43999e660bcd54a5881, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 125.910004
+      value: -26.9099998
       objectReference: {fileID: 0}
     - target: {fileID: 494942, guid: 340389dc4a4be43999e660bcd54a5881, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 26.8600006
+      value: 14.2799997
       objectReference: {fileID: 0}
     - target: {fileID: 494942, guid: 340389dc4a4be43999e660bcd54a5881, type: 2}
       propertyPath: m_LocalPosition.z
@@ -41703,15 +41781,15 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11474506, guid: 4ba0533d6bcd39a49910406de36bd12e, type: 2}
       propertyPath: balloonString
-      value: Potrei sfruttare il NemicoNEWLINEper premere i Pulsanti...
+      value: "Devo creare dei Ponti per il NemicoNEWLINEcos\xEC pu\xF2 premere i Pulsanti!"
       objectReference: {fileID: 0}
     - target: {fileID: 11474506, guid: 4ba0533d6bcd39a49910406de36bd12e, type: 2}
       propertyPath: balloonStringController
-      value: Potrei sfruttare il NemicoNEWLINEper premere i Pulsanti...
+      value: "Devo creare dei Ponti per il NemicoNEWLINEcos\xEC pu\xF2 premere i Pulsanti!"
       objectReference: {fileID: 0}
     - target: {fileID: 103616, guid: 4ba0533d6bcd39a49910406de36bd12e, type: 2}
       propertyPath: m_Name
-      value: "TutorialHint (se uno \xE8 tardo)"
+      value: TutorialHint-Doppio Ponte
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4ba0533d6bcd39a49910406de36bd12e, type: 2}
@@ -44991,19 +45069,19 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 6116842, guid: 4ba0533d6bcd39a49910406de36bd12e, type: 2}
       propertyPath: m_Offset.y
-      value: .405169189
+      value: -1.13435245
       objectReference: {fileID: 0}
     - target: {fileID: 6116842, guid: 4ba0533d6bcd39a49910406de36bd12e, type: 2}
       propertyPath: m_Size.x
-      value: 8.73383904
+      value: 9.73575974
       objectReference: {fileID: 0}
     - target: {fileID: 6116842, guid: 4ba0533d6bcd39a49910406de36bd12e, type: 2}
       propertyPath: m_Size.y
-      value: 4.78392172
+      value: 7.86296606
       objectReference: {fileID: 0}
     - target: {fileID: 6116842, guid: 4ba0533d6bcd39a49910406de36bd12e, type: 2}
       propertyPath: m_Offset.x
-      value: 2.02002978
+      value: 2.210289
       objectReference: {fileID: 0}
     - target: {fileID: 11474506, guid: 4ba0533d6bcd39a49910406de36bd12e, type: 2}
       propertyPath: timeToTrigger
@@ -45011,11 +45089,15 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11474506, guid: 4ba0533d6bcd39a49910406de36bd12e, type: 2}
       propertyPath: balloonString
-      value: Potrei Attirare il nemicoNEWLINEper farlo Scendere...
+      value: Posso attirare il NemicoNEWLINEper farlo scendere!
       objectReference: {fileID: 0}
     - target: {fileID: 11474506, guid: 4ba0533d6bcd39a49910406de36bd12e, type: 2}
       propertyPath: balloonStringController
-      value: Potrei Attirare il nemicoNEWLINEper farlo Scendere...
+      value: Posso attirare il NemicoNEWLINEper farlo scendere!
+      objectReference: {fileID: 0}
+    - target: {fileID: 103616, guid: 4ba0533d6bcd39a49910406de36bd12e, type: 2}
+      propertyPath: m_Name
+      value: TutorialHint-Trappola Guard
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4ba0533d6bcd39a49910406de36bd12e, type: 2}
@@ -48876,6 +48958,7 @@ Transform:
   - {fileID: 1978022249}
   - {fileID: 578423860}
   - {fileID: 796628884}
+  - {fileID: 20709182}
   m_Father: {fileID: 1953433900}
   m_RootOrder: 2
 --- !u!1001 &2010494805
