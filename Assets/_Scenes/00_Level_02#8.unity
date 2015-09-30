@@ -25038,11 +25038,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 494942, guid: 340389dc4a4be43999e660bcd54a5881, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 8.02000046
+      value: 125.910004
       objectReference: {fileID: 0}
     - target: {fileID: 494942, guid: 340389dc4a4be43999e660bcd54a5881, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 21.5400009
+      value: 26.8600006
       objectReference: {fileID: 0}
     - target: {fileID: 494942, guid: 340389dc4a4be43999e660bcd54a5881, type: 2}
       propertyPath: m_LocalPosition.z
@@ -29266,7 +29266,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11494406, guid: 5d726606ee7a22f4182882cea44783e6, type: 2}
       propertyPath: dialogueElements.Array.data[0].text
-      value: "Se sai rispondere al mio quesitoNEWLINEti mostrer\xF2 un luogo segreto!"
+      value: "Se saprai rispondere al mio quesitoNEWLINEti mostrer\xF2 un luogo segreto!"
       objectReference: {fileID: 0}
     - target: {fileID: 11494406, guid: 5d726606ee7a22f4182882cea44783e6, type: 2}
       propertyPath: dialogueElements.Array.data[1].player
@@ -29294,11 +29294,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11494406, guid: 5d726606ee7a22f4182882cea44783e6, type: 2}
       propertyPath: dialogueElements.Array.data[1].survey.wrongNPCAnswer
-      value: Sbagliato, rileggiti la scheda informativa
+      value: Sbagliato, rileggi la scheda informativa!
       objectReference: {fileID: 0}
     - target: {fileID: 11494406, guid: 5d726606ee7a22f4182882cea44783e6, type: 2}
       propertyPath: dialogueElements.Array.data[2].text
-      value: Se non sai la risposta prova a rileggertiNEWLINEla scheda informativa
+      value: Se non sai la risposta prova a rileggereNEWLINEla scheda informativa
         premendo il tasto che vediNEWLINEin alto a destra
       objectReference: {fileID: 0}
     - target: {fileID: 11494406, guid: 5d726606ee7a22f4182882cea44783e6, type: 2}
@@ -29443,16 +29443,16 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11494406, guid: 5d726606ee7a22f4182882cea44783e6, type: 2}
       propertyPath: dialogueElementsNext.Array.data[0].survey.wrongNPCAnswer
-      value: Sbagliato, rileggiti la scheda informativa
+      value: Sbagliato, rileggi la scheda informativa!
       objectReference: {fileID: 0}
     - target: {fileID: 11494406, guid: 5d726606ee7a22f4182882cea44783e6, type: 2}
       propertyPath: dialogueElementsNext.Array.data[1].text
-      value: Se non sai la risposta prova a rileggertiNEWLINEla scheda informativa
+      value: Se non sai la risposta prova a rileggereNEWLINEla scheda informativa
         premendo il tasto che vediNEWLINEin alto a destra
       objectReference: {fileID: 0}
     - target: {fileID: 11494406, guid: 5d726606ee7a22f4182882cea44783e6, type: 2}
       propertyPath: dialogueElementsFinal.Array.data[0].text
-      value: Bravo! Hai preso la stella?
+      value: Bravo! Hai preso la Stella?
       objectReference: {fileID: 0}
     - target: {fileID: 11494406, guid: 5d726606ee7a22f4182882cea44783e6, type: 2}
       propertyPath: dialogueElementsFinal.Array.data[1].text
@@ -29473,6 +29473,38 @@ Prefab:
     - target: {fileID: 186736, guid: 5d726606ee7a22f4182882cea44783e6, type: 2}
       propertyPath: m_Name
       value: Dialogue_QUIZ
+      objectReference: {fileID: 0}
+    - target: {fileID: 11494406, guid: 5d726606ee7a22f4182882cea44783e6, type: 2}
+      propertyPath: dialogueElements.Array.data[1].survey.correctNPCAnswer
+      value: Bravo, risposta corretta!
+      objectReference: {fileID: 0}
+    - target: {fileID: 11494406, guid: 5d726606ee7a22f4182882cea44783e6, type: 2}
+      propertyPath: dialogueElements.Array.data[2].survey.correctNPCAnswer
+      value: Bravo, risposta corretta!
+      objectReference: {fileID: 0}
+    - target: {fileID: 11494406, guid: 5d726606ee7a22f4182882cea44783e6, type: 2}
+      propertyPath: dialogueElements.Array.data[2].survey.wrongNPCAnswer
+      value: Sbagliato, rileggi la scheda informativa se vuoi il regalo!
+      objectReference: {fileID: 0}
+    - target: {fileID: 11494406, guid: 5d726606ee7a22f4182882cea44783e6, type: 2}
+      propertyPath: dialogueElementsNext.Array.data[0].survey.correctNPCAnswer
+      value: Bravo, risposta corretta!
+      objectReference: {fileID: 0}
+    - target: {fileID: 11494406, guid: 5d726606ee7a22f4182882cea44783e6, type: 2}
+      propertyPath: dialogueElements.Array.data[0].survey.correctNPCAnswer
+      value: Bravo, risposta corretta!
+      objectReference: {fileID: 0}
+    - target: {fileID: 11494406, guid: 5d726606ee7a22f4182882cea44783e6, type: 2}
+      propertyPath: dialogueElements.Array.data[0].survey.wrongNPCAnswer
+      value: Sbagliato, rileggi la scheda informativa se vuoi il regalo
+      objectReference: {fileID: 0}
+    - target: {fileID: 11494406, guid: 5d726606ee7a22f4182882cea44783e6, type: 2}
+      propertyPath: dialogueElementsNext.Array.data[1].survey.correctNPCAnswer
+      value: Bravo, risposta corretta!
+      objectReference: {fileID: 0}
+    - target: {fileID: 11494406, guid: 5d726606ee7a22f4182882cea44783e6, type: 2}
+      propertyPath: dialogueElementsNext.Array.data[1].survey.wrongNPCAnswer
+      value: Sbagliato, rileggi la scheda informativa se vuoi il regalo
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5d726606ee7a22f4182882cea44783e6, type: 2}
