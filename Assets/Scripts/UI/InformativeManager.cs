@@ -64,6 +64,7 @@ public class InformativeManager : MonoBehaviour {
 
 	public bool controllerConfig1;
 
+	[HideInInspector]
 	public bool canOpenInformative = true;
 
 
@@ -211,6 +212,19 @@ public class InformativeManager : MonoBehaviour {
 							}
 							
 							
+						}
+
+						//TODO:
+
+						if(conte.questionObject!=null) {
+
+							if(!conte.questionAnswered) {
+
+								conte.questionObject.GetComponent<NPCSurveyInfo>().c_setContentInt(contentIndex);
+								conte.questionObject.GetComponent<NPCSurveyInfo>().c_setSectionInt(sectionIndex);
+
+							}
+
 						}
 
 						contentIndex++;
@@ -1494,6 +1508,26 @@ public class InformativeManager : MonoBehaviour {
 		GeneralFinder.unlockableContentUI.unlockFragment (sections [sect].contents [fragm].name);
 
 	}
+
+	public void c_addWrongTrial(int sectionN, int contentN) {
+
+		if(sections[sectionN].contents[contentN].questionObject!=null) {
+
+			sections[sectionN].contents[contentN].wrongTrials ++;
+		
+		}
+
+	}
+
+	public void c_setQuestionAnswered(int sectionN, int contentN) {
+		
+		if(sections[sectionN].contents[contentN].questionObject!=null) {
+			
+			sections[sectionN].contents[contentN].questionAnswered = true;
+			
+		}
+		
+	}
 	
 
 	public void c_saveData() {
@@ -2092,6 +2126,13 @@ public class InfoSectionContainer
 
 		contentToSet.contentViewsCounter = contentLoad.contentViewsCounter;
 
+		//----------
+
+		//contentToSet.hasQuestion = contentLoad.hasQuestion;
+		
+		contentToSet.questionAnswered = contentLoad.questionAnswered;
+		
+		contentToSet.wrongTrials = contentLoad.wrongTrials;
 	}
 	
 	public static InfoSectionContainer Load(string path)
@@ -2210,6 +2251,16 @@ public class InformativeContent {
 	
 	[SerializeField]
 	public bool lockedContent = false;
+
+
+	//--------
+
+	[XmlIgnoreAttribute]
+	public GameObject questionObject;
+
+	public bool questionAnswered = false;
+
+	public int wrongTrials = 0;
 
 	//STARTtodelete----
 
