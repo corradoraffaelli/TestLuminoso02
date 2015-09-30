@@ -37,6 +37,7 @@ public class InformativeManager : MonoBehaviour {
 	public InformativeSection []sections;
 
 	int activeSection;
+
 	public int ActiveSection {
 		get{ return activeSection;}
 
@@ -229,6 +230,7 @@ public class InformativeManager : MonoBehaviour {
 
 						contentIndex++;
 					}
+
 					break;
 
 				case infoContentType.FunFacts :
@@ -669,18 +671,10 @@ public class InformativeManager : MonoBehaviour {
 
 		//Debug.Log ("INVOCATO");
 
-		//Debug.Log ("canvasInformative.activeSelf" + canvasInformative.activeSelf);
-		//Debug.Log ("canvasInformative.transform.parent.gameObject.activeSelf" + canvasInformative.transform.parent.gameObject.activeSelf);
-		//Debug.Log ("invokedwitoutmenu" + invokeWithoutMenu);
-		//Debug.Log ("statusmenu" + GeneralFinder.menuManager.StatusMenu);
-
-		//if( (!canvasInformative.activeSelf || !canvasInformative.transform.parent.gameObject.activeSelf  ) 
-		//  && Input.GetKeyDown (KeyCode.I) && !invokeWithoutMenu && !GeneralFinder.menuManager.StatusMenu) {
-			if( (!canvasInformative.activeSelf || !canvasInformative.transform.parent.gameObject.activeSelf  ) 
-		     	/*&& GeneralFinder.inputManager.getButtonDown("OpenInformative") */
-		   		&& !invokeWithoutMenu 
-		   		&& !GeneralFinder.menuManager.StatusMenu) {
-
+		if( (!canvasInformative.activeSelf || !canvasInformative.transform.parent.gameObject.activeSelf  ) 
+	     	/*&& GeneralFinder.inputManager.getButtonDown("OpenInformative") */
+	   		&& !invokeWithoutMenu 
+	   		&& !GeneralFinder.menuManager.StatusMenu) {
 
 			//Debug.Log("ciao0");
 			
@@ -688,17 +682,14 @@ public class InformativeManager : MonoBehaviour {
 			
 			invokeWithoutMenu = true;
 			PlayStatusTracker.inPlay = false;
-			
-			canvasInformative.transform.parent.gameObject.SetActive(true);
-			canvasInformative.SetActive(true);
-			
-			fillNavigation ();
 
+			fillNavigation ();
+			
 			fillMultimediaAndDetails();
 
-			//fillMultimedia();
-			//fillDetail();
-			
+			canvasInformative.transform.parent.gameObject.SetActive(true);
+			canvasInformative.SetActive(true);
+
 			if(unlockedNewContent) {
 				
 				GeneralFinder.testInformativeManager.c_setShowWhenUnlocked(activeSection, sections[activeSection].activeContent);
@@ -985,23 +976,6 @@ public class InformativeManager : MonoBehaviour {
 
 		c_changeContent(tempAct);
 
-		//TODO:
-		//OVER MANUALE DELL'ICONA
-		//iconImages [tempAct].color = iconButtons [tempAct].colors.highlightedColor;
-
-		//updateAlphaAndSizeContents (tempAct);
-
-		/*
-		iconButtons [tempAct].gameObject.GetComponent<Animator> ().SetTrigger ("Pressed");
-		iconButtons [tempAct].gameObject.GetComponent<Animator> ().SetBool ("Active", true);
-		iconButtons [tempAct].image.color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
-
-		iconButtons [prevAct].gameObject.GetComponent<Animator> ().SetTrigger ("Normal");
-		iconButtons [prevAct].gameObject.GetComponent<Animator> ().SetBool ("Active", false);
-		iconButtons [prevAct].image.color = new Color(1.0f, 1.0f, 1.0f, 0.5f);
-
-
-		*/
 
 	}
 
@@ -1064,9 +1038,7 @@ public class InformativeManager : MonoBehaviour {
 	}
 
 	public SubContent c_getRandomSubContent(){
-		
-		//InformativeManager infM = GeneralFinder.informativeManager;
-		
+
 		InformativeSection [] sections = GeneralFinder.informativeManager.getUnlockedSections ();
 		
 		if (sections != null) {
@@ -1381,11 +1353,20 @@ public class InformativeManager : MonoBehaviour {
 
 		int index = 0;
 
+		if (unlockedNewContent) {
+			//Debug.Log("aaaaaaaaaaaaaaaa" + _activeContent);
+			_activeContent = sections[activeSection].activeContent;
+			//Debug.Log("aaaaaaaaaaaaaaaa" + _activeContent);
+		}
+		//Debug.Log("bbbbbbbbbbbbbbbb");
+
+		Button toactive = null;
+
 		foreach (Button butt in iconButtons) {
 			
 			if(index!=_activeContent) {
 				if(butt != null) {
-					//Debug.Log("aaaaaaa" + index);
+					//Debug.Log("aaaaaaa>" + index);
 					butt.gameObject.GetComponent<Animator> ().SetTrigger ("Normal");
 					butt.gameObject.GetComponent<Animator> ().SetBool ("Active", false);
 
@@ -1395,19 +1376,21 @@ public class InformativeManager : MonoBehaviour {
 			}
 			else {
 				if(butt != null) {
-					//Debug.Log("dddddddd" + index);
+
+					Debug.Log("dddddddd>" + index);
 
 					butt.gameObject.GetComponent<Animator> ().SetBool ("Active", true);
-					butt.gameObject.GetComponent<Animator> ().SetTrigger ("Pressed");
-
+					//butt.gameObject.GetComponent<Animator> ().SetTrigger ("Pressed");
 					//butt.image.color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
-
+					toactive = butt;
 				}
 			}
 			
 			index++;
 			
 		}
+
+		toactive.gameObject.GetComponent<Animator> ().SetBool ("Active", true);
 
 	}
 
@@ -1995,27 +1978,6 @@ public class InfoSectionContainer
 
 		}
 
-		/*
-		foreach (InformativeSection sectionToSet in sectionsToSet) {
-
-			foreach(InformativeSection loadedSection in sectionsLoaded) {
-
-				if(loadedSection.title==sectionToSet.title && loadedSection.levelN == sectionToSet.levelN) {
-					
-					//setto le informazioni della section
-
-					InformativeSection tempSectToSet = sectionToSet;
-
-					setConfigurationSection(ref tempSectToSet, loadedSection);
-
-					break;
-
-				}
-
-			}
-
-		}
-		*/
 
 	}
 
@@ -2054,34 +2016,6 @@ public class InfoSectionContainer
 
 
 
-
-			/*
-			foreach(InformativeContent contentToSet in sectionToSet.contents) {
-
-				Debug.Log("-configuro content " + contentToSet.name);
-
-				foreach(InformativeContent loadedContent in sectionLoad.contents) {
-
-					Debug.Log("--contenuto : " + loadedContent.name);
-
-					if(contentToSet.name == loadedContent.name) {
-						
-						InformativeContent tempCont = contentToSet;
-						Debug.Log("---carico da content " + loadedContent.name);
-						setConfigurationContent(ref tempCont, loadedContent);
-						
-						break;
-					}
-					else {
-
-						Debug.Log("---NON carico da content " + loadedContent.name);
-
-					}
-					
-				}
-				
-			}
-			*/
 		}
 		catch(Exception e) {
 
@@ -2114,9 +2048,6 @@ public class InfoSectionContainer
 
 		}
 
-		//contentToSet.timerViewsContent = contentLoad.timerViewsContent;
-
-		//contentToSet.numberViewsContent = contentLoad.numberViewsContent;
 
 		contentToSet.shownWhenUnlocked = contentLoad.shownWhenUnlocked;
 
@@ -2128,8 +2059,6 @@ public class InfoSectionContainer
 
 		//----------
 
-		//contentToSet.hasQuestion = contentLoad.hasQuestion;
-		
 		contentToSet.questionAnswered = contentLoad.questionAnswered;
 		
 		contentToSet.wrongTrials = contentLoad.wrongTrials;
