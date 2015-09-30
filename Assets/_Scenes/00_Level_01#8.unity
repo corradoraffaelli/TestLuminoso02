@@ -17942,7 +17942,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 426788, guid: c4efff3641b36a94aa3a9c65d40ec80d, type: 2}
       propertyPath: m_RootOrder
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6139672, guid: c4efff3641b36a94aa3a9c65d40ec80d, type: 2}
       propertyPath: m_Enabled
@@ -20736,6 +20736,80 @@ SpriteRenderer:
   m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: a37c7a70c1c2d403588cde9e6b3d9bb3, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
+--- !u!1001 &427202066
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 1746613756}
+    m_Modifications:
+    - target: {fileID: 457202, guid: 4ba0533d6bcd39a49910406de36bd12e, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 2.0488205
+      objectReference: {fileID: 0}
+    - target: {fileID: 457202, guid: 4ba0533d6bcd39a49910406de36bd12e, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: -.300000012
+      objectReference: {fileID: 0}
+    - target: {fileID: 457202, guid: 4ba0533d6bcd39a49910406de36bd12e, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 457202, guid: 4ba0533d6bcd39a49910406de36bd12e, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 457202, guid: 4ba0533d6bcd39a49910406de36bd12e, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 457202, guid: 4ba0533d6bcd39a49910406de36bd12e, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 457202, guid: 4ba0533d6bcd39a49910406de36bd12e, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 457202, guid: 4ba0533d6bcd39a49910406de36bd12e, type: 2}
+      propertyPath: m_RootOrder
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 6116842, guid: 4ba0533d6bcd39a49910406de36bd12e, type: 2}
+      propertyPath: m_Offset.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 457202, guid: 4ba0533d6bcd39a49910406de36bd12e, type: 2}
+      propertyPath: m_LocalScale.y
+      value: 1.19531536
+      objectReference: {fileID: 0}
+    - target: {fileID: 457202, guid: 4ba0533d6bcd39a49910406de36bd12e, type: 2}
+      propertyPath: m_LocalScale.x
+      value: 2.8687501
+      objectReference: {fileID: 0}
+    - target: {fileID: 11474506, guid: 4ba0533d6bcd39a49910406de36bd12e, type: 2}
+      propertyPath: balloonString
+      value: Posso usare la Cassa per premere il Pulsante!
+      objectReference: {fileID: 0}
+    - target: {fileID: 11474506, guid: 4ba0533d6bcd39a49910406de36bd12e, type: 2}
+      propertyPath: balloonStringController
+      value: Posso usare la Cassa per premere il Pulsante!
+      objectReference: {fileID: 0}
+    - target: {fileID: 11474506, guid: 4ba0533d6bcd39a49910406de36bd12e, type: 2}
+      propertyPath: timeToTrigger
+      value: 120
+      objectReference: {fileID: 0}
+    - target: {fileID: 103616, guid: 4ba0533d6bcd39a49910406de36bd12e, type: 2}
+      propertyPath: m_Name
+      value: TutorialHint-Cassa e Pulsante
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 4ba0533d6bcd39a49910406de36bd12e, type: 2}
+  m_IsPrefabParent: 0
+--- !u!4 &427202067 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 457202, guid: 4ba0533d6bcd39a49910406de36bd12e, type: 2}
+  m_PrefabInternal: {fileID: 427202066}
 --- !u!1001 &428868618
 Prefab:
   m_ObjectHideFlags: 0
@@ -53814,8 +53888,8 @@ Transform:
   m_LocalPosition: {x: 96.25, y: 2.88000011, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 169014024}
   - {fileID: 376499217}
+  - {fileID: 169014024}
   - {fileID: 968855926}
   - {fileID: 1218300782}
   - {fileID: 1339378458}
@@ -58540,7 +58614,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 457202, guid: 4ba0533d6bcd39a49910406de36bd12e, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -.941017151
+      value: -1.11000001
       objectReference: {fileID: 0}
     - target: {fileID: 457202, guid: 4ba0533d6bcd39a49910406de36bd12e, type: 2}
       propertyPath: m_LocalPosition.z
@@ -58568,19 +58642,19 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11474506, guid: 4ba0533d6bcd39a49910406de36bd12e, type: 2}
       propertyPath: balloonString
-      value: Forse posso AttirarloNEWLINEverso il Pulsante...
+      value: Posso attirarloNEWLINEverso il Pulsante...
       objectReference: {fileID: 0}
     - target: {fileID: 11474506, guid: 4ba0533d6bcd39a49910406de36bd12e, type: 2}
       propertyPath: balloonStringController
-      value: Forse posso AttirarloNEWLINEverso il Pulsante...
+      value: Posso attirarloNEWLINEverso il Pulsante...
       objectReference: {fileID: 0}
     - target: {fileID: 6116842, guid: 4ba0533d6bcd39a49910406de36bd12e, type: 2}
       propertyPath: m_Offset.x
-      value: .515523314
+      value: .515513122
       objectReference: {fileID: 0}
     - target: {fileID: 6116842, guid: 4ba0533d6bcd39a49910406de36bd12e, type: 2}
       propertyPath: m_Offset.y
-      value: .680000305
+      value: 1.27586961
       objectReference: {fileID: 0}
     - target: {fileID: 6116842, guid: 4ba0533d6bcd39a49910406de36bd12e, type: 2}
       propertyPath: m_Size.x
@@ -58589,6 +58663,14 @@ Prefab:
     - target: {fileID: 11474506, guid: 4ba0533d6bcd39a49910406de36bd12e, type: 2}
       propertyPath: timeToTrigger
       value: 120
+      objectReference: {fileID: 0}
+    - target: {fileID: 6116842, guid: 4ba0533d6bcd39a49910406de36bd12e, type: 2}
+      propertyPath: m_Size.y
+      value: 4.16174078
+      objectReference: {fileID: 0}
+    - target: {fileID: 103616, guid: 4ba0533d6bcd39a49910406de36bd12e, type: 2}
+      propertyPath: m_Name
+      value: TutorialHint-Guard e Pulsante
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4ba0533d6bcd39a49910406de36bd12e, type: 2}
@@ -60936,7 +61018,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 417646, guid: e7b3dfc0077f282469a7e710b5ff45f5, type: 2}
       propertyPath: m_RootOrder
-      value: 5
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 417646, guid: e7b3dfc0077f282469a7e710b5ff45f5, type: 2}
       propertyPath: m_LocalScale.y
@@ -62571,7 +62653,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 402626, guid: 366ae96d3754a4617946e6345b200d7c, type: 2}
       propertyPath: m_RootOrder
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 402626, guid: 366ae96d3754a4617946e6345b200d7c, type: 2}
       propertyPath: m_LocalScale.y
@@ -69850,11 +69932,15 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11474506, guid: 4ba0533d6bcd39a49910406de36bd12e, type: 2}
       propertyPath: balloonString
-      value: Forse dovrei provare a SaltareNEWLINEsulle piattaforme Blu...
+      value: Dovrei saltare sulle piattaforme Blu...
       objectReference: {fileID: 0}
     - target: {fileID: 11474506, guid: 4ba0533d6bcd39a49910406de36bd12e, type: 2}
       propertyPath: balloonStringController
-      value: Forse dovrei provare a SaltareNEWLINEsulle piattaforme Blu...
+      value: Dovrei saltare sulle piattaforme Blu...
+      objectReference: {fileID: 0}
+    - target: {fileID: 103616, guid: 4ba0533d6bcd39a49910406de36bd12e, type: 2}
+      propertyPath: m_Name
+      value: TutorialHint- Blu
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4ba0533d6bcd39a49910406de36bd12e, type: 2}
@@ -74103,7 +74189,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 417646, guid: e7b3dfc0077f282469a7e710b5ff45f5, type: 2}
       propertyPath: m_RootOrder
-      value: 7
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 417646, guid: e7b3dfc0077f282469a7e710b5ff45f5, type: 2}
       propertyPath: m_LocalScale.y
@@ -88697,6 +88783,7 @@ Transform:
   - {fileID: 839256655}
   - {fileID: 1326434424}
   - {fileID: 55410541}
+  - {fileID: 427202067}
   m_Father: {fileID: 296698296}
   m_RootOrder: 2
 --- !u!4 &1751837513 stripped
@@ -91001,7 +91088,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 402626, guid: 366ae96d3754a4617946e6345b200d7c, type: 2}
       propertyPath: m_RootOrder
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 402626, guid: 366ae96d3754a4617946e6345b200d7c, type: 2}
       propertyPath: m_LocalScale.y
@@ -94520,7 +94607,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 417646, guid: e7b3dfc0077f282469a7e710b5ff45f5, type: 2}
       propertyPath: m_RootOrder
-      value: 6
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 417646, guid: e7b3dfc0077f282469a7e710b5ff45f5, type: 2}
       propertyPath: m_LocalScale.y
