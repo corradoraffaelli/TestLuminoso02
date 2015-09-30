@@ -18,8 +18,8 @@ public class MenuManager : MonoBehaviour {
 
 	Button []menuButtons;
 	int activeMenuButtonIndex;
-
-	public bool statusMenu = false;
+	
+	bool statusMenu = false;
 
 	bool oneControllerDirectionUse = false;
 

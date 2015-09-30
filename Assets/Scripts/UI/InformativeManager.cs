@@ -1390,7 +1390,7 @@ public class InformativeManager : MonoBehaviour {
 			
 		}
 
-		toactive.gameObject.GetComponent<Animator> ().SetBool ("Active", true);
+		//toactive.gameObject.GetComponent<Animator> ().SetBool ("Active", true);
 
 	}
 
@@ -2190,33 +2190,6 @@ public class InformativeContent {
 	public bool questionAnswered = false;
 
 	public int wrongTrials = 0;
-
-	//STARTtodelete----
-
-	//[XmlIgnoreAttribute]
-	//[SerializeField]
-	//public Sprite []mainImages;
-
-	//[SerializeField]
-	//public float []timerViewsImages;
-
-	//[SerializeField]
-	//public int []numberViewsImages;
-
-	//[HideInInspector]
-	//public int mainImageIndex = 0;
-
-	//[XmlIgnoreAttribute]
-	//[SerializeField]
-	//public TextAsset infoText;
-	
-	//[SerializeField]
-	//public float timerViewsContent;
-
-	//[SerializeField]
-	//public int numberViewsContent;
-
-	//ENDtodelete----
 
 
 
