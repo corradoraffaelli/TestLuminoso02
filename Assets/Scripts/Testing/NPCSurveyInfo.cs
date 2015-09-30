@@ -3,8 +3,8 @@ using System.Collections;
 
 public class NPCSurveyInfo : MonoBehaviour {
 
-	int contentIndex = 0;
-	int sectionIndex = 0;
+	int contentIndex = -1;
+	int sectionIndex = -1;
 
 	public void c_setContentInt(int contentIndexInput)
 	{
@@ -16,13 +16,19 @@ public class NPCSurveyInfo : MonoBehaviour {
 		sectionIndex = sectionIndexInput;
 	}
 
-	public void wrongAnswer(int section, int content)
+	public void wrongAnswer()
 	{
-		GeneralFinder.informativeManager.c_addWrongTrial(sectionIndex,contentIndex);
+		if (contentIndex != -1 && sectionIndex != .1)
+			GeneralFinder.informativeManager.c_addWrongTrial (sectionIndex, contentIndex);
+		else
+			Debug.Log ("CONTENT E SECTION DEL QUESTIONARIO NON ASSEGNATE CORRETTAMENTE");
 	}
 
-	public void correctAnswer(int section, int content)
+	public void correctAnswer()
 	{
-		GeneralFinder.informativeManager.c_setQuestionAnswered(sectionIndex,contentIndex);
+		if (contentIndex != -1 && sectionIndex != .1)
+			GeneralFinder.informativeManager.c_setQuestionAnswered(sectionIndex,contentIndex);
+		else
+			Debug.Log ("CONTENT E SECTION DEL QUESTIONARIO NON ASSEGNATE CORRETTAMENTE");
 	}
 }

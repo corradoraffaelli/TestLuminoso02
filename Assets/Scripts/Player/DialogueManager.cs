@@ -82,6 +82,8 @@ public class DialogueManager : MonoBehaviour {
 
 	bool givenCorrectAnswer = false;
 
+	NPCSurveyInfo surveyInfo;
+
 	void Start () {
 		if (NPC == null)
 			NPC = this.gameObject;
@@ -97,6 +99,8 @@ public class DialogueManager : MonoBehaviour {
 		enableInteragibility (false);
 
 		unlockContentScript = GetComponent<UnlockContent> ();
+
+		surveyInfo = GetComponent<NPCSurveyInfo> ();
 	}
 
 	void Update () {
@@ -368,8 +372,12 @@ public class DialogueManager : MonoBehaviour {
 			balloonManager.setText (survey.correctNPCAnswer);
 			activeConsequences ();
 			givenCorrectAnswer = true;
+			if (surveyInfo != null)
+				surveyInfo.correctAnswer();
 		} else {
 			balloonManager.setText(survey.wrongNPCAnswer);
+			if (surveyInfo != null)
+				surveyInfo.wrongAnswer();
 		}
 			
 		balloonManager.setObjectToFollow(NPC);

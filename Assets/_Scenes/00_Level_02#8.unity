@@ -3281,6 +3281,10 @@ Prefab:
       propertyPath: sections.Array.data[4].contents.Array.data[1].unlockerObject
       value: 
       objectReference: {fileID: 76402111}
+    - target: {fileID: 11411856, guid: 95901a015c0054a31979001d1038a7df, type: 2}
+      propertyPath: sections.Array.data[3].contents.Array.data[0].questionObject
+      value: 
+      objectReference: {fileID: 1247967242}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 95901a015c0054a31979001d1038a7df, type: 2}
   m_IsPrefabParent: 0
@@ -29419,9 +29423,17 @@ Prefab:
       propertyPath: correctConsequences.Array.data[0].methodToCall
       value: c_manualActivation
       objectReference: {fileID: 0}
+    - target: {fileID: 186736, guid: 5d726606ee7a22f4182882cea44783e6, type: 2}
+      propertyPath: m_Name
+      value: Dialogue_QUIZ
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5d726606ee7a22f4182882cea44783e6, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &1247967242 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 186736, guid: 5d726606ee7a22f4182882cea44783e6, type: 2}
+  m_PrefabInternal: {fileID: 1247967241}
 --- !u!1001 &1251378670
 Prefab:
   m_ObjectHideFlags: 0
