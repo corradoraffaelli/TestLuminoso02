@@ -52,7 +52,7 @@ public class UnlockableContentUI : MonoBehaviour {
 
 	bool wasUseController;
 
-	bool activeBook = false;
+	public bool activeBook = false;
 
 	AudioHandler audioHandler;
 
@@ -201,6 +201,7 @@ public class UnlockableContentUI : MonoBehaviour {
 				setUpperRightVariables();
 				setUpperRightStandardBook();
 				setUpperRightButton();
+				//Debug.Log ("entrato");
 			}
 
 			//1.
@@ -413,6 +414,10 @@ public class UnlockableContentUI : MonoBehaviour {
 	void setUpperRightButton()
 	{
 		Sprite buttonSprite;
+
+		if (overlaySpritesStart) {
+			spritesBook.controllerButton = GeneralFinder.inputManager.getControllerSprite(spritesBook.controllerButtonType);
+		}
 
 		if (GeneralFinder.cursorHandler.useController)
 			buttonSprite = spritesBook.controllerButton;
