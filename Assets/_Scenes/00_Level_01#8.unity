@@ -27051,11 +27051,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 428780, guid: 94c2ca25f289d4411a5b2a91832b23ed, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 18.6399994
+      value: 18.7199993
       objectReference: {fileID: 0}
     - target: {fileID: 428780, guid: 94c2ca25f289d4411a5b2a91832b23ed, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 6.21876907
+      value: 4.67999983
       objectReference: {fileID: 0}
     - target: {fileID: 428780, guid: 94c2ca25f289d4411a5b2a91832b23ed, type: 2}
       propertyPath: m_LocalPosition.z
@@ -27123,7 +27123,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 428780, guid: 94c2ca25f289d4411a5b2a91832b23ed, type: 2}
       propertyPath: m_LocalScale.y
-      value: 1.96000004
+      value: .400000006
+      objectReference: {fileID: 0}
+    - target: {fileID: 428780, guid: 94c2ca25f289d4411a5b2a91832b23ed, type: 2}
+      propertyPath: m_LocalScale.x
+      value: 2.24000001
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 94c2ca25f289d4411a5b2a91832b23ed, type: 2}
@@ -50045,7 +50049,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 157518, guid: 340389dc4a4be43999e660bcd54a5881, type: 2}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 340389dc4a4be43999e660bcd54a5881, type: 2}
@@ -81771,7 +81775,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 157518, guid: 340389dc4a4be43999e660bcd54a5881, type: 2}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 494942, guid: 340389dc4a4be43999e660bcd54a5881, type: 2}
       propertyPath: m_LocalScale.y
@@ -103737,6 +103741,7 @@ MonoBehaviour:
   keyboardSprite: {fileID: 21300000, guid: 86e471b5641264d2d8a732ab6659ad15, type: 3}
   controllerSprite: {fileID: 21300000, guid: a5617b423aed19c48abae3b83b30b9ca, type: 3}
   action: Interaction
+  useController: 0
   overlaySprites: 1
   indicationScale: 2
   overlayScale: .5
