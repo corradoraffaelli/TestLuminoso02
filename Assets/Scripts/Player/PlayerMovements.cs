@@ -246,6 +246,10 @@ public class PlayerMovements : MonoBehaviour {
 
 	//public GameObject []zoneAnalyzers;
 
+	float lastJump = 0.0f;
+	float diffBetweenJump = 0.3f;
+
+
 	void Start () {
 		//HERE...
 
@@ -811,7 +815,8 @@ public class PlayerMovements : MonoBehaviour {
 
 	void jumpingManagement()
 	{
-		if (inputKeeper!=null && inputKeeper.isButtonDown ("Jump")) {
+		if (inputKeeper!=null && inputKeeper.isButtonDown ("Jump") && ((Time.time - lastJump)> diffBetweenJump)) {
+			lastJump = Time.time;
 			Jumping = true;
 		}
 	}
