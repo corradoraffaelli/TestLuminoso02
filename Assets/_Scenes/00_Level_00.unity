@@ -1286,6 +1286,10 @@ Prefab:
       propertyPath: m_Name
       value: MammutLantern_UL
       objectReference: {fileID: 0}
+    - target: {fileID: 478902, guid: c728c6d2a5356d441bbe19739b0f0f19, type: 2}
+      propertyPath: m_LocalScale.x
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c728c6d2a5356d441bbe19739b0f0f19, type: 2}
   m_IsPrefabParent: 0
@@ -1767,6 +1771,10 @@ Prefab:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 478902, guid: c728c6d2a5356d441bbe19739b0f0f19, type: 2}
+      propertyPath: m_LocalScale.x
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c728c6d2a5356d441bbe19739b0f0f19, type: 2}
   m_IsPrefabParent: 0
@@ -1967,6 +1975,10 @@ Prefab:
     - target: {fileID: 11423922, guid: c728c6d2a5356d441bbe19739b0f0f19, type: 2}
       propertyPath: clips.Array.data[0].clipName
       value: Leva
+      objectReference: {fileID: 0}
+    - target: {fileID: 478902, guid: c728c6d2a5356d441bbe19739b0f0f19, type: 2}
+      propertyPath: m_LocalScale.x
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c728c6d2a5356d441bbe19739b0f0f19, type: 2}
@@ -3069,6 +3081,28 @@ SpriteRenderer:
 Transform:
   m_PrefabParentObject: {fileID: 471404, guid: df6e94520b67e33449efcb29faea029a, type: 2}
   m_PrefabInternal: {fileID: 1377048597}
+--- !u!1 &555677779 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 187440, guid: c728c6d2a5356d441bbe19739b0f0f19, type: 2}
+  m_PrefabInternal: {fileID: 317963879}
+--- !u!114 &555677782
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 555677779}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45a31f033c1b14246a82dcdb18edd088, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  keyboardSprite: {fileID: 0}
+  controllerSprite: {fileID: 0}
+  action: Interaction
+  useController: 0
+  overlaySprites: 1
+  indicationScale: 2
+  overlayScale: .5
 --- !u!1 &562396812 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 179348, guid: 17e6a72955f3b4ec18133894e815dcdd, type: 2}
@@ -3494,6 +3528,10 @@ Prefab:
     - target: {fileID: 474384, guid: c728c6d2a5356d441bbe19739b0f0f19, type: 2}
       propertyPath: m_LocalPosition.y
       value: -1.07000005
+      objectReference: {fileID: 0}
+    - target: {fileID: 478902, guid: c728c6d2a5356d441bbe19739b0f0f19, type: 2}
+      propertyPath: m_LocalScale.x
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c728c6d2a5356d441bbe19739b0f0f19, type: 2}
@@ -7728,6 +7766,28 @@ Prefab:
 Transform:
   m_PrefabParentObject: {fileID: 424982, guid: 17e6a72955f3b4ec18133894e815dcdd, type: 2}
   m_PrefabInternal: {fileID: 1598625730}
+--- !u!1 &1606507538 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 187440, guid: c728c6d2a5356d441bbe19739b0f0f19, type: 2}
+  m_PrefabInternal: {fileID: 306420831}
+--- !u!114 &1606507541
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1606507538}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45a31f033c1b14246a82dcdb18edd088, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  keyboardSprite: {fileID: 0}
+  controllerSprite: {fileID: 0}
+  action: Interaction
+  useController: 0
+  overlaySprites: 1
+  indicationScale: 2
+  overlayScale: .5
 --- !u!1 &1622103754
 GameObject:
   m_ObjectHideFlags: 0
@@ -8131,6 +8191,28 @@ BoxCollider2D:
   m_Offset: {x: 0, y: -.280000001}
   serializedVersion: 2
   m_Size: {x: 1.46000004, y: 1.90999997}
+--- !u!1 &1735153386 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 187440, guid: c728c6d2a5356d441bbe19739b0f0f19, type: 2}
+  m_PrefabInternal: {fileID: 696381958}
+--- !u!114 &1735153389
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1735153386}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45a31f033c1b14246a82dcdb18edd088, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  keyboardSprite: {fileID: 0}
+  controllerSprite: {fileID: 0}
+  action: Interaction
+  useController: 0
+  overlaySprites: 1
+  indicationScale: 2
+  overlayScale: .5
 --- !u!1 &1738970892
 GameObject:
   m_ObjectHideFlags: 0
@@ -9255,6 +9337,28 @@ Transform:
   - {fileID: 1284271185}
   m_Father: {fileID: 0}
   m_RootOrder: 2
+--- !u!1 &1993781287 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 187440, guid: c728c6d2a5356d441bbe19739b0f0f19, type: 2}
+  m_PrefabInternal: {fileID: 201319623}
+--- !u!114 &1993781290
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1993781287}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45a31f033c1b14246a82dcdb18edd088, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  keyboardSprite: {fileID: 0}
+  controllerSprite: {fileID: 0}
+  action: Interaction
+  useController: 0
+  overlaySprites: 1
+  indicationScale: 2
+  overlayScale: .5
 --- !u!1 &1997044357
 GameObject:
   m_ObjectHideFlags: 0

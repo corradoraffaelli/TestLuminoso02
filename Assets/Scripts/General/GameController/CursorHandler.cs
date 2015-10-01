@@ -62,6 +62,14 @@ public class CursorHandler : MonoBehaviour {
 	string savedFileName = "useControllerInfos";
 	string savedFileExtention = ".dat";
 
+	void Awake()
+	{
+		bool loadedUseController = loadInfo ();
+		if (loadedUseController)
+			changeUseController ();
+		//Debug.Log ("1");
+	}
+
 	// Use this for initialization
 	void Start () {
 		Cursor.lockState = CursorLockMode.Confined;
@@ -100,9 +108,7 @@ public class CursorHandler : MonoBehaviour {
 
 		cursorIsMoving = false;
 
-		bool loadedUseController = loadInfo ();
-		if (loadedUseController)
-			changeUseController ();
+
 
 		/*
 		cameraCenter = new Vector3 (Camera.main.gameObject.transform.position.x, Camera.main.gameObject.transform.position.y, player.transform.position.z);

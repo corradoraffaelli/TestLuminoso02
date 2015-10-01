@@ -253,7 +253,7 @@ public class InputManager : MonoBehaviour {
 		for (int i = 0; i < buttons.Length; i++) {
 			if (buttons[i] != null && (buttons[i].interfaceName == buttonName || buttons[i].alternativeInterfaceName == buttonName))
 			{
-				if (GeneralFinder.buttonController.useController)
+				if (GeneralFinder.cursorHandler.useController)
 				{
 					//Debug.Log ("uso controller");
 					for (int j = 0; j < buttons[i].controllerButtons.Length; j++)
