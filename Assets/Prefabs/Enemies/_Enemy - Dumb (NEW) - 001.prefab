@@ -266,6 +266,8 @@ MonoBehaviour:
     scaleFactor: 2
     jumpFactor: 1
     speedFactor: 1
+  zoneAnalyzerParent: {fileID: 0}
+  tempTeleport: {fileID: 0}
 --- !u!114 &11424252
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -353,7 +355,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63d3f37c00b564f79b2a866273a3f57e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DEBUG_STUNNED: 1
+  DEBUG_STUNNED: 0
   bouncy: 1
   sprintForce: 500
   newImplementation: 1
@@ -546,6 +548,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: hugePlayerFeatures.speedFactor
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: DEBUG_STUNNED
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

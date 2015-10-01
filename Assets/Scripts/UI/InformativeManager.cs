@@ -932,7 +932,7 @@ public class InformativeManager : MonoBehaviour {
 		int prevAct = 0;
 
 		if (sections [activeSection].lockedSection) {
-			Debug.Log("locked sect - return from controllerChangeContent");
+			//Debug.Log("locked sect - return from controllerChangeContent");
 			return;
 		}
 
