@@ -129,7 +129,7 @@ public class ZoneAnalyzer : MonoBehaviour {
 
 	public void c_playerKilled(string objectKiller)
 	{
-		Debug.Log ("ricevuto messaggio");
+		//Debug.Log ("ricevuto messaggio");
 		if (type == Type.analyzer && playerColliding) {
 			if ((Time.time - lastKill) > diffKill)
 			{

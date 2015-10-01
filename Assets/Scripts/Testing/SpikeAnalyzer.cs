@@ -109,14 +109,16 @@ public class SpikeAnalyzer : MonoBehaviour {
 		{
 			//prende tutti i component zoneAnalyzer presenti nella scena
 			GameObject[] objs = GameObject.FindGameObjectsWithTag("SpikesAnalyzer");
-			
+
+			/*
 			for (int i = 0; i < objs.Length; i++)
 			{
 				if (objs[i] != null)
 				{
-					Debug.Log (objs[i].name);
+					//Debug.Log (objs[i].name);
 				}
 			}
+			*/
 			
 			SpikeAnalyzer[] analyzers = new SpikeAnalyzer[objs.Length];
 			SpikesInfos[] infos = new SpikesInfos[analyzers.Length];

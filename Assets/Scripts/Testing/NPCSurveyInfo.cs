@@ -18,7 +18,7 @@ public class NPCSurveyInfo : MonoBehaviour {
 
 	public void wrongAnswer()
 	{
-		if (contentIndex != -1 && sectionIndex != .1)
+		if (contentIndex != -1 && sectionIndex != -1)
 			GeneralFinder.informativeManager.c_addWrongTrial (sectionIndex, contentIndex);
 		else
 			Debug.Log ("CONTENT E SECTION DEL QUESTIONARIO NON ASSEGNATE CORRETTAMENTE");
@@ -26,7 +26,7 @@ public class NPCSurveyInfo : MonoBehaviour {
 
 	public void correctAnswer()
 	{
-		if (contentIndex != -1 && sectionIndex != .1)
+		if (contentIndex != -1 && sectionIndex != -1)
 			GeneralFinder.informativeManager.c_setQuestionAnswered(sectionIndex,contentIndex);
 		else
 			Debug.Log ("CONTENT E SECTION DEL QUESTIONARIO NON ASSEGNATE CORRETTAMENTE");

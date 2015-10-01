@@ -57,6 +57,8 @@ public class UnlockableContentUI : MonoBehaviour {
 	AudioHandler audioHandler;
 
 	PulsingInfoButton centralButton;
+	int actualDelayIndex = 0;
+	int delayIndex = 1;
 
 	void Start () {
 		setSections();
@@ -86,8 +88,6 @@ public class UnlockableContentUI : MonoBehaviour {
 
 		wasUseController = GeneralFinder.cursorHandler.useController;
 
-
-
 		centralButton = GeneralFinder.canvasPlayingUI.transform.GetComponentInChildren<PulsingInfoButton> ();
 	}
 
@@ -112,6 +112,13 @@ public class UnlockableContentUI : MonoBehaviour {
 				spritesBook.controllerButton = GeneralFinder.inputManager.getControllerSprite(spritesBook.controllerButtonType);
 			}
 
+			setUpperRightButton();
+		}
+
+		if (actualDelayIndex < delayIndex)
+			actualDelayIndex ++;
+		else if (actualDelayIndex == delayIndex) {
+			actualDelayIndex++;
 			setUpperRightButton();
 		}
 
@@ -153,7 +160,7 @@ public class UnlockableContentUI : MonoBehaviour {
 	{
 		if (actualFragmentSection != null)
 		{
-			Debug.Log ("ho sbloccato il frammento "+id);
+			//Debug.Log ("ho sbloccato il frammento "+id);
 			
 			//se è un frammento devo
 			//1. aggiornare l'array di sprites a sinistra
@@ -184,7 +191,7 @@ public class UnlockableContentUI : MonoBehaviour {
 	{
 		if (actualContentSection != null)
 		{
-			Debug.Log ("ho sbloccato l'oggetto "+name);
+			//Debug.Log ("ho sbloccato l'oggetto "+name);
 			
 			//se è un collezionabile devo
 			//0. mostrare la sprite del libro, se non presente
@@ -241,7 +248,7 @@ public class UnlockableContentUI : MonoBehaviour {
 	{
 		if (actualFactSection != null)
 		{
-			Debug.Log ("ho sbloccato il fun fact "+name);
+			//Debug.Log ("ho sbloccato il fun fact "+name);
 			
 			//se è un fun fact devo
 			//0. mostrare la sprite del libro, se non presente
