@@ -150,7 +150,7 @@ public class InformativeManager : MonoBehaviour {
 
 	void Start () {
 
-		initializeUIReferences ();
+		//initializeUIReferences ();
 
 	}
 
@@ -409,7 +409,7 @@ public class InformativeManager : MonoBehaviour {
 					if(iconButtons[i] != null)
 						iconButtons[i].onClick.AddListener(() => { c_changeContent(temp); });
 					else {
-						Debug.Log ("siamo alla " + i);
+						//Debug.Log ("siamo alla " + i);
 						break;
 					}
 					i++;
@@ -1145,13 +1145,14 @@ public class InformativeManager : MonoBehaviour {
 			sectionN = activeSection;
 			
 		}
-		
+
 		int index = 0;
 		
 		int numberOfContents = sections [sectionN].contents.Length;
 		
 		sectionName.text = sections [sectionN].title;
-		
+
+
 		foreach (GameObject item in iconItems) {
 			
 			//Debug.Log ("passo l'item " + item.name + " contentsN " + numberOfContents);
@@ -1160,8 +1161,9 @@ public class InformativeManager : MonoBehaviour {
 				break;
 			
 			item.SetActive(true);
-			
+
 			if(!sections [sectionN].contents[index].lockedContent) {
+
 				iconImages[index].sprite = sections [sectionN].contents[index].iconUnlock;
 				iconButtons[index].interactable = true;
 			}
@@ -1175,8 +1177,7 @@ public class InformativeManager : MonoBehaviour {
 		}
 		
 		for (int rest=index; rest<iconItems.Length; rest++) {
-			
-			
+
 			iconItems[rest].SetActive(false);
 			
 		}
@@ -1377,7 +1378,7 @@ public class InformativeManager : MonoBehaviour {
 			else {
 				if(butt != null) {
 
-					Debug.Log("dddddddd>" + index);
+					//Debug.Log("dddddddd>" + index);
 
 					butt.gameObject.GetComponent<Animator> ().SetBool ("Active", true);
 					//butt.gameObject.GetComponent<Animator> ().SetTrigger ("Pressed");

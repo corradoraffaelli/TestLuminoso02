@@ -754,7 +754,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 494942, guid: 340389dc4a4be43999e660bcd54a5881, type: 2}
       propertyPath: m_RootOrder
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 157518, guid: 340389dc4a4be43999e660bcd54a5881, type: 2}
       propertyPath: m_IsActive
@@ -1956,33 +1956,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa6a88a109986284dab9d1a0e982e169, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &323513175
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 146812, guid: faf26e613d2444c02b2a8815287a4680, type: 2}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 323513176}
-  m_Layer: 0
-  m_Name: RespawnPoint
-  m_TagString: Untagged
-  m_Icon: {fileID: 3936346786652291628, guid: 0000000000000000d000000000000000, type: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &323513176
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 414148, guid: faf26e613d2444c02b2a8815287a4680, type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 323513175}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -9.42000008, y: .340000004, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 911429695}
-  m_RootOrder: 0
 --- !u!1001 &354319554
 Prefab:
   m_ObjectHideFlags: 0
@@ -2097,7 +2070,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22416708, guid: 7eb88863bbd3e41de953c184d5413412, type: 2}
       propertyPath: m_RootOrder
-      value: 5
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 22416708, guid: 7eb88863bbd3e41de953c184d5413412, type: 2}
       propertyPath: m_AnchoredPosition.x
@@ -2602,7 +2575,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 454944, guid: cc2aaf1274de746d79ea8e568a2a73e4, type: 2}
       propertyPath: m_RootOrder
-      value: 8
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 6117854, guid: cc2aaf1274de746d79ea8e568a2a73e4, type: 2}
       propertyPath: m_Offset.y
@@ -3086,881 +3059,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1317614458}
   m_RootOrder: 1
---- !u!1 &911429694
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 181696, guid: faf26e613d2444c02b2a8815287a4680, type: 2}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 911429695}
-  - 114: {fileID: 911429708}
-  - 114: {fileID: 911429707}
-  - 114: {fileID: 911429706}
-  - 114: {fileID: 911429705}
-  - 114: {fileID: 911429704}
-  - 114: {fileID: 911429703}
-  - 114: {fileID: 911429702}
-  - 114: {fileID: 911429701}
-  - 114: {fileID: 911429700}
-  - 114: {fileID: 911429699}
-  - 114: {fileID: 911429698}
-  - 114: {fileID: 911429697}
-  - 114: {fileID: 911429696}
-  m_Layer: 0
-  m_Name: GameController - 01
-  m_TagString: Controller
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &911429695
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 446826, guid: faf26e613d2444c02b2a8815287a4680, type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 911429694}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 9.95528793, y: -9.39180374, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 323513176}
-  m_Father: {fileID: 1683395738}
-  m_RootOrder: 0
---- !u!114 &911429696
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 11493012, guid: faf26e613d2444c02b2a8815287a4680,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 911429694}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: db8ec66bee508ec4a8754d0738e984cc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  debug_AUDIO: 0
-  updateAudioClips: 0
-  updateAudioClipsAfterDelay: 0
-  clips:
-  - clipName: UnlockStar
-    clip: {fileID: 8300000, guid: 440030d483552134a9b207c0e8c82b77, type: 3}
-    loop: 0
-    playOnAwake: 0
-    volume: 1
-    pitch: 1
-    distanceDependency: 0
-    maxVolumeDistance: 0
-    zeroVolumeDistance: 0
-    volumeMultiplier: 1
-    audioSource: {fileID: 0}
-  - clipName: UnlockContent
-    clip: {fileID: 8300000, guid: 8a37dd99f0b1042e3bffd63181aa45c1, type: 3}
-    loop: 0
-    playOnAwake: 0
-    volume: 1
-    pitch: 1
-    distanceDependency: 0
-    maxVolumeDistance: 0
-    zeroVolumeDistance: 0
-    volumeMultiplier: 1
-    audioSource: {fileID: 0}
-  - clipName: UnlockFact
-    clip: {fileID: 8300000, guid: 341ffa83753944149ab5066474bd4945, type: 3}
-    loop: 0
-    playOnAwake: 0
-    volume: 1
-    pitch: 1
-    distanceDependency: 0
-    maxVolumeDistance: 0
-    zeroVolumeDistance: 0
-    volumeMultiplier: 1
-    audioSource: {fileID: 0}
-  debugDistance: 0
---- !u!114 &911429697
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 11439068, guid: faf26e613d2444c02b2a8815287a4680,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 911429694}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8273635949734824d916342115b9a350, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  glassesToEnable: []
---- !u!114 &911429698
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 11410444, guid: faf26e613d2444c02b2a8815287a4680,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 911429694}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7b7659367c5f02443819dd8af435c962, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  overlaySpritesStart: 1
-  spritesBook:
-    normalBook: {fileID: 21300000, guid: a2258f472fa1fcc428d11e23cb221afb, type: 3}
-    exclamationBook: {fileID: 21300000, guid: f8ae3d8366d6f35429481eaebe8be557, type: 3}
-    keyboardButton: {fileID: 21300000, guid: 7d62f2c844a2fa34890f6a462ebdb50e, type: 3}
-    controllerButton: {fileID: 21300000, guid: 8e9b94ab582b71c4db3312e298ccade1, type: 3}
-    pageSprite: {fileID: 21300000, guid: d5af78a24f9df8543a272de39b4abe39, type: 3}
-    controllerButtonType: 0
-    keyboardButtonType: 0
-  saveOnDestroy: 1
-  timeToHideLateral: 4
-  timeToPulse: 4
-  timeToGetSmall: 1.20000005
-  pageTimeToGetSmall: 4
-  pulseButtonScale: 1.79999995
-  pulseButtonSpeed: 3
---- !u!114 &911429699
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 11445650, guid: faf26e613d2444c02b2a8815287a4680,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 911429694}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 307bba77b96dc6d4cb0bcdad6672cc44, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  timeBeforePulse: 10
-  pulsingSpeed: 6
-  pulsingTimes: 6
---- !u!114 &911429700
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 11430910, guid: faf26e613d2444c02b2a8815287a4680,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 911429694}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5a4729301addb25448b181acdd64e289, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &911429701
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 11426192, guid: faf26e613d2444c02b2a8815287a4680,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 911429694}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 27bbf7c602cc34937928b28543c78386, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  loadDefaultConf: 0
-  dataManage: 0
-  sections:
-  - title: Oggetti 01
-    levelN: 1
-    contentType: 1
-    contents:
-    - name: Lente
-      contentViewingTimer: 0
-      contentViewsCounter: 0
-      activeSubContentIndex: 0
-      subContents: []
-      iconUnlock: {fileID: 21300000, guid: ec340e4e564f3134b907e038190805ae, type: 3}
-      iconLock: {fileID: 21300000, guid: 93a2d5980e1390e45859069cc2ddbd89, type: 3}
-      unlockerObject: {fileID: 0}
-      shownWhenUnlocked: 0
-      lockedContent: 0
-      questionObject: {fileID: 0}
-      questionAnswered: 0
-      wrongTrials: 0
-    - name: Camera Oscura
-      contentViewingTimer: 0
-      contentViewsCounter: 0
-      activeSubContentIndex: 0
-      subContents: []
-      iconUnlock: {fileID: 21300000, guid: 291f5346d1b77944089a3c5e0ccda060, type: 3}
-      iconLock: {fileID: 21300000, guid: c04f1f1565156bc4fa2e94d933666a45, type: 3}
-      unlockerObject: {fileID: 0}
-      shownWhenUnlocked: 0
-      lockedContent: 0
-      questionObject: {fileID: 0}
-      questionAnswered: 0
-      wrongTrials: 0
-    - name: Mondo Niovo
-      contentViewingTimer: 0
-      contentViewsCounter: 0
-      activeSubContentIndex: 0
-      subContents: []
-      iconUnlock: {fileID: 21300000, guid: 38829cb4b2085e34fbc58e0c8b4d78a5, type: 3}
-      iconLock: {fileID: 21300000, guid: 458d02e75fb2a4f448db54f30f83f1e3, type: 3}
-      unlockerObject: {fileID: 0}
-      shownWhenUnlocked: 0
-      lockedContent: 0
-      questionObject: {fileID: 0}
-      questionAnswered: 0
-      wrongTrials: 0
-    activeContent: 0
-    lockedSection: 0
-    ended: 0
-  - title: Fun Facts 01
-    levelN: 1
-    contentType: 2
-    contents:
-    - name: Vedute Ottiche
-      contentViewingTimer: 0
-      contentViewsCounter: 0
-      activeSubContentIndex: 0
-      subContents: []
-      iconUnlock: {fileID: 21300000, guid: b3d0b737e3dcce14a9a076f070a110f2, type: 3}
-      iconLock: {fileID: 21300000, guid: cd2e761e975bd364fa0b13127f4e6354, type: 3}
-      unlockerObject: {fileID: 0}
-      shownWhenUnlocked: 0
-      lockedContent: 0
-      questionObject: {fileID: 0}
-      questionAnswered: 0
-      wrongTrials: 0
-    activeContent: 0
-    lockedSection: 0
-    ended: 0
-  - title: Frammenti 01
-    levelN: 1
-    contentType: 0
-    contents:
-    - name: fragm 01
-      contentViewingTimer: 0
-      contentViewsCounter: 0
-      activeSubContentIndex: 0
-      subContents: []
-      iconUnlock: {fileID: 21300000, guid: e3fd1caba5879ff4aa3db0f54efe1146, type: 3}
-      iconLock: {fileID: 21300000, guid: ad0ffdf7b2b2b484ea168c51c5444ce0, type: 3}
-      unlockerObject: {fileID: 0}
-      shownWhenUnlocked: 0
-      lockedContent: 0
-      questionObject: {fileID: 0}
-      questionAnswered: 0
-      wrongTrials: 0
-    - name: fragm 02
-      contentViewingTimer: 0
-      contentViewsCounter: 0
-      activeSubContentIndex: 0
-      subContents: []
-      iconUnlock: {fileID: 21300000, guid: e3fd1caba5879ff4aa3db0f54efe1146, type: 3}
-      iconLock: {fileID: 21300000, guid: ad0ffdf7b2b2b484ea168c51c5444ce0, type: 3}
-      unlockerObject: {fileID: 0}
-      shownWhenUnlocked: 0
-      lockedContent: 0
-      questionObject: {fileID: 0}
-      questionAnswered: 0
-      wrongTrials: 0
-    - name: fragm 03
-      contentViewingTimer: 0
-      contentViewsCounter: 0
-      activeSubContentIndex: 0
-      subContents: []
-      iconUnlock: {fileID: 21300000, guid: e3fd1caba5879ff4aa3db0f54efe1146, type: 3}
-      iconLock: {fileID: 21300000, guid: ad0ffdf7b2b2b484ea168c51c5444ce0, type: 3}
-      unlockerObject: {fileID: 0}
-      shownWhenUnlocked: 0
-      lockedContent: 0
-      questionObject: {fileID: 0}
-      questionAnswered: 0
-      wrongTrials: 0
-    - name: fragm 04
-      contentViewingTimer: 0
-      contentViewsCounter: 0
-      activeSubContentIndex: 0
-      subContents: []
-      iconUnlock: {fileID: 21300000, guid: e3fd1caba5879ff4aa3db0f54efe1146, type: 3}
-      iconLock: {fileID: 21300000, guid: ad0ffdf7b2b2b484ea168c51c5444ce0, type: 3}
-      unlockerObject: {fileID: 0}
-      shownWhenUnlocked: 0
-      lockedContent: 0
-      questionObject: {fileID: 0}
-      questionAnswered: 0
-      wrongTrials: 0
-    - name: fragm 05
-      contentViewingTimer: 0
-      contentViewsCounter: 0
-      activeSubContentIndex: 0
-      subContents: []
-      iconUnlock: {fileID: 21300000, guid: e3fd1caba5879ff4aa3db0f54efe1146, type: 3}
-      iconLock: {fileID: 21300000, guid: ad0ffdf7b2b2b484ea168c51c5444ce0, type: 3}
-      unlockerObject: {fileID: 0}
-      shownWhenUnlocked: 0
-      lockedContent: 0
-      questionObject: {fileID: 0}
-      questionAnswered: 0
-      wrongTrials: 0
-    - name: fragm 06
-      contentViewingTimer: 0
-      contentViewsCounter: 0
-      activeSubContentIndex: 0
-      subContents: []
-      iconUnlock: {fileID: 21300000, guid: e3fd1caba5879ff4aa3db0f54efe1146, type: 3}
-      iconLock: {fileID: 21300000, guid: ad0ffdf7b2b2b484ea168c51c5444ce0, type: 3}
-      unlockerObject: {fileID: 0}
-      shownWhenUnlocked: 0
-      lockedContent: 0
-      questionObject: {fileID: 0}
-      questionAnswered: 0
-      wrongTrials: 0
-    activeContent: 0
-    lockedSection: 0
-    ended: 0
-  - title: Oggetti 02
-    levelN: 2
-    contentType: 1
-    contents:
-    - name: Lanterna Magica
-      contentViewingTimer: 0
-      contentViewsCounter: 0
-      activeSubContentIndex: 0
-      subContents: []
-      iconUnlock: {fileID: 21300000, guid: 45c0904712b20b346bfdb098df062786, type: 3}
-      iconLock: {fileID: 21300000, guid: 24cbe5d46d1acf048815bed5726e6e67, type: 3}
-      unlockerObject: {fileID: 0}
-      shownWhenUnlocked: 0
-      lockedContent: 0
-      questionObject: {fileID: 0}
-      questionAnswered: 0
-      wrongTrials: 0
-    - name: Diorami Teatrali
-      contentViewingTimer: 0
-      contentViewsCounter: 0
-      activeSubContentIndex: 0
-      subContents: []
-      iconUnlock: {fileID: 21300000, guid: ca7c3084cddeae74c9f6f43403c612e6, type: 3}
-      iconLock: {fileID: 21300000, guid: 6ac8188e987349d4cae98a7914fadb81, type: 3}
-      unlockerObject: {fileID: 0}
-      shownWhenUnlocked: 0
-      lockedContent: 0
-      questionObject: {fileID: 0}
-      questionAnswered: 0
-      wrongTrials: 0
-    activeContent: 0
-    lockedSection: 0
-    ended: 0
-  - title: Fun Facts 02
-    levelN: 2
-    contentType: 2
-    contents:
-    - name: Oggetto Sovrannaturale
-      contentViewingTimer: 0
-      contentViewsCounter: 0
-      activeSubContentIndex: 0
-      subContents: []
-      iconUnlock: {fileID: 21300000, guid: b3d0b737e3dcce14a9a076f070a110f2, type: 3}
-      iconLock: {fileID: 21300000, guid: cd2e761e975bd364fa0b13127f4e6354, type: 3}
-      unlockerObject: {fileID: 0}
-      shownWhenUnlocked: 0
-      lockedContent: 0
-      questionObject: {fileID: 0}
-      questionAnswered: 0
-      wrongTrials: 0
-    - name: Lanterna Sbagliata
-      contentViewingTimer: 0
-      contentViewsCounter: 0
-      activeSubContentIndex: 0
-      subContents: []
-      iconUnlock: {fileID: 21300000, guid: b3d0b737e3dcce14a9a076f070a110f2, type: 3}
-      iconLock: {fileID: 21300000, guid: cd2e761e975bd364fa0b13127f4e6354, type: 3}
-      unlockerObject: {fileID: 0}
-      shownWhenUnlocked: 0
-      lockedContent: 0
-      questionObject: {fileID: 0}
-      questionAnswered: 0
-      wrongTrials: 0
-    - name: Vetrini Mobili
-      contentViewingTimer: 0
-      contentViewsCounter: 0
-      activeSubContentIndex: 0
-      subContents: []
-      iconUnlock: {fileID: 21300000, guid: b3d0b737e3dcce14a9a076f070a110f2, type: 3}
-      iconLock: {fileID: 21300000, guid: cd2e761e975bd364fa0b13127f4e6354, type: 3}
-      unlockerObject: {fileID: 0}
-      shownWhenUnlocked: 0
-      lockedContent: 0
-      questionObject: {fileID: 0}
-      questionAnswered: 0
-      wrongTrials: 0
-    activeContent: 0
-    lockedSection: 0
-    ended: 0
-  - title: Frammenti 02
-    levelN: 2
-    contentType: 0
-    contents:
-    - name: fragm 01
-      contentViewingTimer: 0
-      contentViewsCounter: 0
-      activeSubContentIndex: 0
-      subContents: []
-      iconUnlock: {fileID: 21300000, guid: e3fd1caba5879ff4aa3db0f54efe1146, type: 3}
-      iconLock: {fileID: 21300000, guid: ad0ffdf7b2b2b484ea168c51c5444ce0, type: 3}
-      unlockerObject: {fileID: 0}
-      shownWhenUnlocked: 0
-      lockedContent: 0
-      questionObject: {fileID: 0}
-      questionAnswered: 0
-      wrongTrials: 0
-    - name: fragm 02
-      contentViewingTimer: 0
-      contentViewsCounter: 0
-      activeSubContentIndex: 0
-      subContents: []
-      iconUnlock: {fileID: 21300000, guid: e3fd1caba5879ff4aa3db0f54efe1146, type: 3}
-      iconLock: {fileID: 21300000, guid: ad0ffdf7b2b2b484ea168c51c5444ce0, type: 3}
-      unlockerObject: {fileID: 0}
-      shownWhenUnlocked: 0
-      lockedContent: 0
-      questionObject: {fileID: 0}
-      questionAnswered: 0
-      wrongTrials: 0
-    - name: fragm 03
-      contentViewingTimer: 0
-      contentViewsCounter: 0
-      activeSubContentIndex: 0
-      subContents: []
-      iconUnlock: {fileID: 21300000, guid: e3fd1caba5879ff4aa3db0f54efe1146, type: 3}
-      iconLock: {fileID: 21300000, guid: ad0ffdf7b2b2b484ea168c51c5444ce0, type: 3}
-      unlockerObject: {fileID: 0}
-      shownWhenUnlocked: 0
-      lockedContent: 0
-      questionObject: {fileID: 0}
-      questionAnswered: 0
-      wrongTrials: 0
-    - name: fragm 04
-      contentViewingTimer: 0
-      contentViewsCounter: 0
-      activeSubContentIndex: 0
-      subContents: []
-      iconUnlock: {fileID: 21300000, guid: e3fd1caba5879ff4aa3db0f54efe1146, type: 3}
-      iconLock: {fileID: 21300000, guid: ad0ffdf7b2b2b484ea168c51c5444ce0, type: 3}
-      unlockerObject: {fileID: 0}
-      shownWhenUnlocked: 0
-      lockedContent: 0
-      questionObject: {fileID: 0}
-      questionAnswered: 0
-      wrongTrials: 0
-    - name: fragm 05
-      contentViewingTimer: 0
-      contentViewsCounter: 0
-      activeSubContentIndex: 0
-      subContents: []
-      iconUnlock: {fileID: 21300000, guid: e3fd1caba5879ff4aa3db0f54efe1146, type: 3}
-      iconLock: {fileID: 21300000, guid: ad0ffdf7b2b2b484ea168c51c5444ce0, type: 3}
-      unlockerObject: {fileID: 0}
-      shownWhenUnlocked: 0
-      lockedContent: 0
-      questionObject: {fileID: 0}
-      questionAnswered: 0
-      wrongTrials: 0
-    - name: fragm 06
-      contentViewingTimer: 0
-      contentViewsCounter: 0
-      activeSubContentIndex: 0
-      subContents: []
-      iconUnlock: {fileID: 21300000, guid: e3fd1caba5879ff4aa3db0f54efe1146, type: 3}
-      iconLock: {fileID: 21300000, guid: ad0ffdf7b2b2b484ea168c51c5444ce0, type: 3}
-      unlockerObject: {fileID: 0}
-      shownWhenUnlocked: 0
-      lockedContent: 0
-      questionObject: {fileID: 0}
-      questionAnswered: 0
-      wrongTrials: 0
-    activeContent: 0
-    lockedSection: 0
-    ended: 0
-  - title: Oggetti 03
-    levelN: 3
-    contentType: 1
-    contents:
-    - name: Taumatropio
-      contentViewingTimer: 0
-      contentViewsCounter: 0
-      activeSubContentIndex: 0
-      subContents: []
-      iconUnlock: {fileID: 21300000, guid: 1b269f1d8ec535c47bb5b20a40f7248e, type: 3}
-      iconLock: {fileID: 21300000, guid: 0142f98e6dc33984fb4cb44f43116de4, type: 3}
-      unlockerObject: {fileID: 0}
-      shownWhenUnlocked: 0
-      lockedContent: 0
-      questionObject: {fileID: 0}
-      questionAnswered: 0
-      wrongTrials: 0
-    - name: Stereoscopio
-      contentViewingTimer: 0
-      contentViewsCounter: 0
-      activeSubContentIndex: 0
-      subContents: []
-      iconUnlock: {fileID: 21300000, guid: 56f608be2c89ff247883a0ad77d3aee1, type: 3}
-      iconLock: {fileID: 21300000, guid: 031ff2e19a002f54a9715a9fbcf71bfd, type: 3}
-      unlockerObject: {fileID: 0}
-      shownWhenUnlocked: 0
-      lockedContent: 0
-      questionObject: {fileID: 0}
-      questionAnswered: 0
-      wrongTrials: 0
-    - name: Anaglifi
-      contentViewingTimer: 0
-      contentViewsCounter: 0
-      activeSubContentIndex: 0
-      subContents: []
-      iconUnlock: {fileID: 21300000, guid: 693e41f198bb1d5459b7f18f742820f0, type: 3}
-      iconLock: {fileID: 21300000, guid: ff5544ae2a295e643b536e587ea115db, type: 3}
-      unlockerObject: {fileID: 0}
-      shownWhenUnlocked: 0
-      lockedContent: 0
-      questionObject: {fileID: 0}
-      questionAnswered: 0
-      wrongTrials: 0
-    activeContent: 0
-    lockedSection: 0
-    ended: 0
-  - title: Fun Facts 03
-    levelN: 3
-    contentType: 2
-    contents:
-    - name: Dissolving Views
-      contentViewingTimer: 0
-      contentViewsCounter: 0
-      activeSubContentIndex: 0
-      subContents: []
-      iconUnlock: {fileID: 21300000, guid: b3d0b737e3dcce14a9a076f070a110f2, type: 3}
-      iconLock: {fileID: 21300000, guid: cd2e761e975bd364fa0b13127f4e6354, type: 3}
-      unlockerObject: {fileID: 0}
-      shownWhenUnlocked: 0
-      lockedContent: 0
-      questionObject: {fileID: 0}
-      questionAnswered: 0
-      wrongTrials: 0
-    - name: Panorama
-      contentViewingTimer: 0
-      contentViewsCounter: 0
-      activeSubContentIndex: 0
-      subContents: []
-      iconUnlock: {fileID: 21300000, guid: b3d0b737e3dcce14a9a076f070a110f2, type: 3}
-      iconLock: {fileID: 21300000, guid: cd2e761e975bd364fa0b13127f4e6354, type: 3}
-      unlockerObject: {fileID: 0}
-      shownWhenUnlocked: 0
-      lockedContent: 0
-      questionObject: {fileID: 0}
-      questionAnswered: 0
-      wrongTrials: 0
-    - name: Moving Panoramas
-      contentViewingTimer: 0
-      contentViewsCounter: 0
-      activeSubContentIndex: 0
-      subContents: []
-      iconUnlock: {fileID: 21300000, guid: b3d0b737e3dcce14a9a076f070a110f2, type: 3}
-      iconLock: {fileID: 21300000, guid: cd2e761e975bd364fa0b13127f4e6354, type: 3}
-      unlockerObject: {fileID: 0}
-      shownWhenUnlocked: 0
-      lockedContent: 0
-      questionObject: {fileID: 0}
-      questionAnswered: 0
-      wrongTrials: 0
-    activeContent: 0
-    lockedSection: 0
-    ended: 0
-  - title: Frammenti 03
-    levelN: 3
-    contentType: 0
-    contents:
-    - name: fragm 01
-      contentViewingTimer: 0
-      contentViewsCounter: 0
-      activeSubContentIndex: 0
-      subContents: []
-      iconUnlock: {fileID: 21300000, guid: e3fd1caba5879ff4aa3db0f54efe1146, type: 3}
-      iconLock: {fileID: 21300000, guid: ad0ffdf7b2b2b484ea168c51c5444ce0, type: 3}
-      unlockerObject: {fileID: 0}
-      shownWhenUnlocked: 0
-      lockedContent: 0
-      questionObject: {fileID: 0}
-      questionAnswered: 0
-      wrongTrials: 0
-    - name: fragm 02
-      contentViewingTimer: 0
-      contentViewsCounter: 0
-      activeSubContentIndex: 0
-      subContents: []
-      iconUnlock: {fileID: 21300000, guid: e3fd1caba5879ff4aa3db0f54efe1146, type: 3}
-      iconLock: {fileID: 21300000, guid: ad0ffdf7b2b2b484ea168c51c5444ce0, type: 3}
-      unlockerObject: {fileID: 0}
-      shownWhenUnlocked: 0
-      lockedContent: 0
-      questionObject: {fileID: 0}
-      questionAnswered: 0
-      wrongTrials: 0
-    - name: fragm 03
-      contentViewingTimer: 0
-      contentViewsCounter: 0
-      activeSubContentIndex: 0
-      subContents: []
-      iconUnlock: {fileID: 21300000, guid: e3fd1caba5879ff4aa3db0f54efe1146, type: 3}
-      iconLock: {fileID: 21300000, guid: ad0ffdf7b2b2b484ea168c51c5444ce0, type: 3}
-      unlockerObject: {fileID: 0}
-      shownWhenUnlocked: 0
-      lockedContent: 0
-      questionObject: {fileID: 0}
-      questionAnswered: 0
-      wrongTrials: 0
-    - name: fragm 04
-      contentViewingTimer: 0
-      contentViewsCounter: 0
-      activeSubContentIndex: 0
-      subContents: []
-      iconUnlock: {fileID: 21300000, guid: e3fd1caba5879ff4aa3db0f54efe1146, type: 3}
-      iconLock: {fileID: 21300000, guid: ad0ffdf7b2b2b484ea168c51c5444ce0, type: 3}
-      unlockerObject: {fileID: 0}
-      shownWhenUnlocked: 0
-      lockedContent: 0
-      questionObject: {fileID: 0}
-      questionAnswered: 0
-      wrongTrials: 0
-    - name: fragm 05
-      contentViewingTimer: 0
-      contentViewsCounter: 0
-      activeSubContentIndex: 0
-      subContents: []
-      iconUnlock: {fileID: 21300000, guid: e3fd1caba5879ff4aa3db0f54efe1146, type: 3}
-      iconLock: {fileID: 21300000, guid: ad0ffdf7b2b2b484ea168c51c5444ce0, type: 3}
-      unlockerObject: {fileID: 0}
-      shownWhenUnlocked: 0
-      lockedContent: 0
-      questionObject: {fileID: 0}
-      questionAnswered: 0
-      wrongTrials: 0
-    - name: fragm 06
-      contentViewingTimer: 0
-      contentViewsCounter: 0
-      activeSubContentIndex: 0
-      subContents: []
-      iconUnlock: {fileID: 21300000, guid: e3fd1caba5879ff4aa3db0f54efe1146, type: 3}
-      iconLock: {fileID: 21300000, guid: ad0ffdf7b2b2b484ea168c51c5444ce0, type: 3}
-      unlockerObject: {fileID: 0}
-      shownWhenUnlocked: 0
-      lockedContent: 0
-      questionObject: {fileID: 0}
-      questionAnswered: 0
-      wrongTrials: 0
-    activeContent: 0
-    lockedSection: 0
-    ended: 0
-  invokeWithoutMenu: 0
-  actualLevelNumber: -1
-  timeCanShowNewContent: 5
-  controllerConfig1: 0
-  canOpenInformative: 1
---- !u!114 &911429702
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 11444582, guid: faf26e613d2444c02b2a8815287a4680,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 911429694}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a5916987459241ee9629a5bf7fe98d2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mouseCursor: {fileID: 0}
---- !u!114 &911429703
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 11485234, guid: faf26e613d2444c02b2a8815287a4680,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 911429694}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1248f08f4c6f84d68afbc1b381e1b362, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  triggerStartStopTime: 0
-  timeScale: 1
---- !u!114 &911429704
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 11400758, guid: faf26e613d2444c02b2a8815287a4680,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 911429694}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 91aa590cc2a9c46a6bb50b20bd4cc05e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &911429705
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 11459180, guid: faf26e613d2444c02b2a8815287a4680,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 911429694}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5442d15e7657b0548b4c4e7f747c01a5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  info: {fileID: 21300000, guid: f8ae3d8366d6f35429481eaebe8be557, type: 3}
-  noInfo: {fileID: 21300000, guid: a2258f472fa1fcc428d11e23cb221afb, type: 3}
-  controllerButton: {fileID: 21300000, guid: 8e9b94ab582b71c4db3312e298ccade1, type: 3}
-  keyboardButton: {fileID: 21300000, guid: dd963e6007da5334d838312776b44d5c, type: 3}
---- !u!114 &911429706
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 11472376, guid: faf26e613d2444c02b2a8815287a4680,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 911429694}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b6dc06056c120dd438b68ef515af9393, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  inputButtons:
-  - name: Jump
-    buttonStay: 0
-    buttonUp: 0
-    buttonDown: 0
-    needToResetUp: 0
-    needToResetDown: 0
-  - name: LanternaMagica
-    buttonStay: 0
-    buttonUp: 0
-    buttonDown: 0
-    needToResetUp: 0
-    needToResetDown: 0
-  - name: Mira
-    buttonStay: 0
-    buttonUp: 0
-    buttonDown: 0
-    needToResetUp: 0
-    needToResetDown: 0
-  - name: PickLantern
-    buttonStay: 0
-    buttonUp: 0
-    buttonDown: 0
-    needToResetUp: 0
-    needToResetDown: 0
-  - name: NextGlass
-    buttonStay: 0
-    buttonUp: 0
-    buttonDown: 0
-    needToResetUp: 0
-    needToResetDown: 0
-  - name: Interaction
-    buttonStay: 0
-    buttonUp: 0
-    buttonDown: 0
-    needToResetUp: 0
-    needToResetDown: 0
-  - name: GlassModifier
-    buttonStay: 0
-    buttonUp: 0
-    buttonDown: 0
-    needToResetUp: 0
-    needToResetDown: 0
-  inputAxis:
-  - name: Horizontal
-    getAxisNormal: 0
-    getAxisRaw: 0
-  - name: Vertical
-    getAxisNormal: 0
-    getAxisRaw: 0
-  - name: CursorHorizontal
-    getAxisNormal: 0
-    getAxisRaw: 0
-  - name: CursorVertical
-    getAxisNormal: 0
-    getAxisRaw: 0
-  gameObjectsToControl:
-  - tag: Player
-    position:
-      x: 0
-      y: 0
-      z: 0
-    scale:
-      x: 0
-      y: 0
-      z: 0
-    rotation:
-      x: 0
-      y: 0
-      z: 0
-      w: 0
-  - tag: Cursor
-    position:
-      x: 0
-      y: 0
-      z: 0
-    scale:
-      x: 0
-      y: 0
-      z: 0
-    rotation:
-      x: 0
-      y: 0
-      z: 0
-      w: 0
-  changedObjectsList: []
-  loadSaveState: 0
-  savedButtonFile: savedInputButtons
-  savedAxisFile: savedInputAxis
-  savedMouseFile: savedInputMouse
-  savedObjectsFile: savedObjects
-  savedFileExtention: .dat
-  indexToLoad: 0
-  correctionTime: .200000003
-  adjustPositions: 1
-  debugPath: 1
---- !u!114 &911429707
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 11415886, guid: faf26e613d2444c02b2a8815287a4680,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 911429694}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 342100b8d8d3fd04598aa46d7c8ea441, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gravityValue: -30
---- !u!114 &911429708
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 11473314, guid: faf26e613d2444c02b2a8815287a4680,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 911429694}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cd0f2b1d5fdd4b342972ac16e6fec475, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  controllerAutomaticVar: 1
-  useController: 0
-  xControllerMultiplier: 25
-  yControllerMultiplier: 25
-  zPositionEnvironment: 0
-  BottomLimit: {fileID: 0}
-  LeftLimit: {fileID: 0}
-  RightLimit: {fileID: 0}
-  UpperLimit: {fileID: 0}
-  cursorIsMoving: 0
-  ScreenRatioMovement: .300000012
-  ScreenControllerRatioMovement: .300000012
-  maxTimesControllerMoving: 2
-  timeAfterMoving: 1
-  movingAfterController: 0
-  movingIfStanding: 1
 --- !u!4 &931162145 stripped
 Transform:
   m_PrefabParentObject: {fileID: 432986, guid: 132db652a260843a89353034c4473d96, type: 2}
@@ -4002,7 +3100,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22476150, guid: 9aab11338b8c04094b5f2d48e84c34ff, type: 2}
       propertyPath: m_RootOrder
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 22476150, guid: 9aab11338b8c04094b5f2d48e84c34ff, type: 2}
       propertyPath: m_AnchoredPosition.x
@@ -4111,7 +3209,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 494942, guid: 340389dc4a4be43999e660bcd54a5881, type: 2}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 157518, guid: 340389dc4a4be43999e660bcd54a5881, type: 2}
       propertyPath: m_Name
@@ -4161,7 +3259,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22455728, guid: b98ac32831e038245b7ec43a39e1a174, type: 2}
       propertyPath: m_RootOrder
-      value: 12
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 22455728, guid: b98ac32831e038245b7ec43a39e1a174, type: 2}
       propertyPath: m_AnchoredPosition.x
@@ -4287,6 +3385,10 @@ Transform:
   m_Children: []
   m_Father: {fileID: 721556484}
   m_RootOrder: 5
+--- !u!4 &1240802686 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 495608, guid: 7d841f27a8f1745eca9c7bcb93d2ddeb, type: 2}
+  m_PrefabInternal: {fileID: 1972448817}
 --- !u!1 &1269235728
 GameObject:
   m_ObjectHideFlags: 0
@@ -6287,7 +5389,7 @@ Transform:
   m_LocalPosition: {x: -9.95528793, y: 9.39180374, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 911429695}
+  - {fileID: 1240802686}
   - {fileID: 262140122}
   - {fileID: 1937874706}
   - {fileID: 2072417042}
@@ -6334,7 +5436,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 485348, guid: 132db652a260843a89353034c4473d96, type: 2}
       propertyPath: m_RootOrder
-      value: 7
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 115048, guid: 132db652a260843a89353034c4473d96, type: 2}
       propertyPath: m_IsActive
@@ -7654,7 +6756,15 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 406316, guid: 95901a015c0054a31979001d1038a7df, type: 2}
       propertyPath: m_RootOrder
-      value: 7
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 11411856, guid: 95901a015c0054a31979001d1038a7df, type: 2}
+      propertyPath: actualLevelNumber
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 119962, guid: 95901a015c0054a31979001d1038a7df, type: 2}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 95901a015c0054a31979001d1038a7df, type: 2}
@@ -8589,6 +7699,48 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1959732031}
   m_RootOrder: 7
+--- !u!1001 &1972448817
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 1683395738}
+    m_Modifications:
+    - target: {fileID: 495608, guid: 7d841f27a8f1745eca9c7bcb93d2ddeb, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 7.13337421
+      objectReference: {fileID: 0}
+    - target: {fileID: 495608, guid: 7d841f27a8f1745eca9c7bcb93d2ddeb, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 2.61498451
+      objectReference: {fileID: 0}
+    - target: {fileID: 495608, guid: 7d841f27a8f1745eca9c7bcb93d2ddeb, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: .273213387
+      objectReference: {fileID: 0}
+    - target: {fileID: 495608, guid: 7d841f27a8f1745eca9c7bcb93d2ddeb, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 495608, guid: 7d841f27a8f1745eca9c7bcb93d2ddeb, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 495608, guid: 7d841f27a8f1745eca9c7bcb93d2ddeb, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 495608, guid: 7d841f27a8f1745eca9c7bcb93d2ddeb, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 495608, guid: 7d841f27a8f1745eca9c7bcb93d2ddeb, type: 2}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 7d841f27a8f1745eca9c7bcb93d2ddeb, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1 &2000794475
 GameObject:
   m_ObjectHideFlags: 0
@@ -8703,7 +7855,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 418800, guid: 19014203da4cab54987fbcd50e0d748b, type: 2}
       propertyPath: m_RootOrder
-      value: 6
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 19014203da4cab54987fbcd50e0d748b, type: 2}

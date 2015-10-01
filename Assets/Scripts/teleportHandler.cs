@@ -25,6 +25,8 @@ public class teleportHandler : MonoBehaviour {
 
 	public teleportHandler tempTeleportForPlayer;
 
+	public bool noEffectsBeforeFade = false;
+
 	public enum SizeChange {
 		BigToSmall,
 		SmallToBig,
@@ -105,7 +107,7 @@ public class teleportHandler : MonoBehaviour {
 			
 		}
 
-		if (!noEffects) {
+		if (!noEffects && !noEffectsBeforeFade) {
 			//ingrandisco un po il player (SEMPRE)
 			for (int i=0; i<5; i++) {
 
@@ -142,7 +144,7 @@ public class teleportHandler : MonoBehaviour {
 		//lerpo la posizione del player verso la camera oscura e lo schiarisco
 		//cambio la size del player (INGRANDISCO/RIMPICCIOLISCO)
 
-		if (!noEffects) {
+		if (!noEffects && !noEffectsBeforeFade) {
 
 			for (int i=0; i<10; i++) {
 			
