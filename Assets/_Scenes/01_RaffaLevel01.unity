@@ -10492,6 +10492,8 @@ MonoBehaviour:
   sameSprite: 0
   keyboardSprite: {fileID: 21300000, guid: bcd9896034af5e147928767725f2c19d, type: 3}
   controllerSprite: {fileID: 21300000, guid: 667e1a56b55e983459337748b03e42ea, type: 3}
+  overrideKeyboard: 0
+  overrideController: 0
   controllerButton: 0
   keyboardButton: 0
   controllerScale: 1
@@ -15398,6 +15400,8 @@ MonoBehaviour:
   sameSprite: 0
   keyboardSprite: {fileID: 21300000, guid: 51dad322626d6584f8f3780096b55c67, type: 3}
   controllerSprite: {fileID: 21300000, guid: b7d23b1c949504d4c9d294fd10953221, type: 3}
+  overrideKeyboard: 0
+  overrideController: 0
   controllerButton: 0
   keyboardButton: 0
   controllerScale: 1
@@ -17025,6 +17029,7 @@ MonoBehaviour:
   oneTimeInteraction: 1
   activeDisabledObject: 1
   playerColliding: 0
+  updateScaleOnAppear: 0
   debugVar: 0
 --- !u!61 &369473706
 BoxCollider2D:
@@ -26253,6 +26258,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   unlockContent: 0
+  unlockGlass: 1
   disableObject: 0
   intermittance: 1
   disabledByEnemy: 1
@@ -100959,6 +100965,7 @@ MonoBehaviour:
   keyboardSprite: {fileID: 21300000, guid: 86e471b5641264d2d8a732ab6659ad15, type: 3}
   controllerSprite: {fileID: 21300000, guid: a5617b423aed19c48abae3b83b30b9ca, type: 3}
   action: Interaction
+  useController: 0
   overlaySprites: 1
   indicationScale: 2
   overlayScale: .5
