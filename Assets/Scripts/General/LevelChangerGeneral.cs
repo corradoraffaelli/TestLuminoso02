@@ -101,7 +101,7 @@ public class LevelChangerGeneral : MonoBehaviour {
 	
 		if (rendererContinue != null) {
 			rendererContinue.sprite = GeneralFinder.inputManager.getSprite ("Interaction");
-			Debug.Log ("PRESO");
+			//Debug.Log ("PRESO");
 		}
 			
 	}
@@ -181,7 +181,7 @@ public class LevelChangerGeneral : MonoBehaviour {
 			{
 				screenImage.sprite = subC.image;
 
-				Debug.Log ("immagini sub content");
+				//Debug.Log ("immagini sub content");
 				if(textArea!=null) {
 					Text t = textArea.GetComponent<Text>();
 					t.text = subC.infoText.text;
@@ -196,7 +196,7 @@ public class LevelChangerGeneral : MonoBehaviour {
 				screenImage.sprite = images[randomNum];
 				if(textArea!=null)
 					textArea.SetActive(false);
-				Debug.Log ("immagini");
+				//Debug.Log ("immagini");
 			}
 			
 		}

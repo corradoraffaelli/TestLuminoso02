@@ -1515,7 +1515,7 @@ public class InformativeManager : MonoBehaviour {
 	
 
 	public void c_saveData() {
-		Debug.Log ("save data");
+		//Debug.Log ("save data");
 		InfoSectionContainer.saveInformativeManagerConf (sections, true);
 		
 	}
@@ -1830,7 +1830,7 @@ public class InfoSectionContainer
 			string dirName = Path.GetDirectoryName (path);
 			string fileName = Path.GetFileName (path);
 
-			Debug.Log ("path" + dirName + " e file " + fileName);
+			//Debug.Log ("path" + dirName + " e file " + fileName);
 
 			if (!Directory.Exists (dirName)) {
 				//Debug.Log ("ciaone2");
