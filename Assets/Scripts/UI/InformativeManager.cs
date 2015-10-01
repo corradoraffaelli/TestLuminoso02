@@ -678,7 +678,7 @@ public class InformativeManager : MonoBehaviour {
 
 			//Debug.Log("ciao0");
 			
-			GeneralFinder.unlockableContentUI.stopPulsing();
+			//GeneralFinder.unlockableContentUI.stopPulsing();
 			
 			invokeWithoutMenu = true;
 			PlayStatusTracker.inPlay = false;
