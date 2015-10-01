@@ -136,9 +136,9 @@ public class HStunnedFSM : HEnemyStateFSM {
 				//Debug.Log ("SUONO MORTE");
 				audioHandler.playClipByName ("Morte");
 			}
-			else
+			else {
 				Debug.Log ("audio handler NULL");
-
+			}
 
 		}
 		else {
@@ -153,12 +153,12 @@ public class HStunnedFSM : HEnemyStateFSM {
 			stunnedCor = stunnedCountDown ();
 
 			if (audioHandler != null) {
-				Debug.Log ("SUONO MORTE");
+				//Debug.Log ("SUONO MORTE");
 				audioHandler.playClipByName ("Stun");
 			}
-			else
+			else {
 				Debug.Log ("audio handler NULL");
-
+			}
 			_StartCoroutine (stunnedCor);
 		}
 
