@@ -111,7 +111,7 @@ public class levelChanger : MonoBehaviour {
 		saveUseController ();
 		
 		GeneralFinder.informativeManager.c_saveData();
-		Debug.Log ("salvo");
+		//Debug.Log ("salvo");
 
 		if (GeneralFinder.inputKeeper.loadSaveState == InputKeeper.LoadSaveState.Save)
 			saveInput();

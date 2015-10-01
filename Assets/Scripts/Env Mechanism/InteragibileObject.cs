@@ -78,7 +78,7 @@ public class InteragibileObject : MonoBehaviour {
 								objectsWithMethods[i].SetActive(true);
 							objectsWithMethods[i].SendMessage(methodToCall,SendMessageOptions.DontRequireReceiver);
 							
-							Debug.Log ("inviato messaggio di interazione ad oggetto "+objectsWithMethods[i].name);
+							//Debug.Log ("inviato messaggio di interazione ad oggetto "+objectsWithMethods[i].name);
 						}
 					}
 
