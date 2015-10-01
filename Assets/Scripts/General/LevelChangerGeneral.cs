@@ -17,6 +17,7 @@ public class LevelChangerGeneral : MonoBehaviour {
 	public GameObject loadCircle;
 	public GameObject shadow;
 	public GameObject pressButton;
+	public UnityEngine.UI.Image rendererContinue;
 
 	public Sprite[] images;
 	public int randomNum = 0;
@@ -34,6 +35,8 @@ public class LevelChangerGeneral : MonoBehaviour {
 	bool loadEnded = false;
 	bool loadEndedOLD = false;
 	AsyncOperation async;
+
+	bool useControllerOLD = false;
 
 	void Start () {
 
@@ -63,8 +66,10 @@ public class LevelChangerGeneral : MonoBehaviour {
 		//	loadArea.SetActive(false);
 		//}
 
-		if (pressButton != null)
+		if (pressButton != null) {
+			rendererContinue = pressButton.GetComponentInChildren<UnityEngine.UI.Image>();
 			pressButton.SetActive (false);
+		}
 		//if(background!=null)
 		//	background.SetActive(false);
 
@@ -94,6 +99,11 @@ public class LevelChangerGeneral : MonoBehaviour {
 		}
 
 	
+		if (rendererContinue != null) {
+			rendererContinue.sprite = GeneralFinder.inputManager.getSprite ("Interaction");
+			Debug.Log ("PRESO");
+		}
+			
 	}
 
 	void Update()
@@ -120,11 +130,21 @@ public class LevelChangerGeneral : MonoBehaviour {
 			if (loadEnded)
 			{
 				if (pressButton != null)
+				{
 					pressButton.SetActive (true);
+					rendererContinue = pressButton.GetComponentInChildren<UnityEngine.UI.Image>();
+					if (rendererContinue != null)
+						rendererContinue.sprite = GeneralFinder.inputManager.getSprite ("Interaction");
+				}
 			}
 		}
 
 		loadEndedOLD = loadEnded;
+
+		if (rendererContinue != null && GeneralFinder.cursorHandler.useController != useControllerOLD)
+			rendererContinue.sprite = GeneralFinder.inputManager.getSprite ("Interaction");
+
+		useControllerOLD = GeneralFinder.cursorHandler.useController;
 	}
 
 	IEnumerator DisplayLoadingScreen(int level)

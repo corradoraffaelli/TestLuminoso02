@@ -7,7 +7,7 @@ public class InteragibileObjectControllerSprite : MonoBehaviour {
 	public Sprite controllerSprite;
 	public string action = "Interaction";
 
-	bool useController = false;
+	public bool useController = false;
 	bool wasUseController = false;
 
 	SpriteRenderer spriteRenderer;
@@ -19,6 +19,8 @@ public class InteragibileObjectControllerSprite : MonoBehaviour {
 
 	void Start () {
 		//wasUseController = GeneralFinder.cursorHandler.useController;
+		//Debug.Log ("2");
+		useController = GeneralFinder.cursorHandler.useController;
 		spriteRenderer = GetComponent<SpriteRenderer>();
 		setIndicationScale ();
 		updateSprites ();
