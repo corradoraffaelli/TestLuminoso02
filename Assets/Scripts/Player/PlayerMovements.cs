@@ -1550,11 +1550,11 @@ public class PlayerMovements : MonoBehaviour {
 
 				if(puigo!=null) {
 					puigo.c_GameOver(timeToRespawn);
-					Debug.Log ("yeah0.1");
+					//Debug.Log ("yeah0.1");
 					yield return new WaitForSeconds(timeToRespawn);
 				}
 				else {
-					Debug.Log ("yeah0.2");
+					//Debug.Log ("yeah0.2");
 					yield return new WaitForSeconds(timeToRespawn);
 				}
 			} 

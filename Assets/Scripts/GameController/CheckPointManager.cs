@@ -133,7 +133,7 @@ public class CheckPointManager : MonoBehaviour {
 	public void c_setActiveLamp(CheckPointUpdate _checkpointScript) {
 
 		//check if it exists
-		Debug.Log ("set active lamp");
+		//Debug.Log ("set active lamp");
 		bool found = false;
 
 		foreach (object chObj in checkpointScripts) {
@@ -142,7 +142,7 @@ public class CheckPointManager : MonoBehaviour {
 
 			if(ch == _checkpointScript) {
 				found = true;
-				Debug.Log("found");
+				//Debug.Log("found");
 				break;
 			}
 
@@ -163,7 +163,7 @@ public class CheckPointManager : MonoBehaviour {
 				if(ch.Activated) {
 					ch.gameObject.GetComponent<streetLampAnimation>().c_deactivateLight();
 					ch.gameObject.GetComponent<CheckPointUpdate>().c_setInactiveLight();
-					Debug.Log("chiamo deactivate su " + ch.gameObject.name);
+					//Debug.Log("chiamo deactivate su " + ch.gameObject.name);
 				}
 
 			}

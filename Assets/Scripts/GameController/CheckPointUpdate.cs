@@ -100,7 +100,7 @@ public class CheckPointUpdate : MonoBehaviour {
 	public void OnTriggerEnter2D(Collider2D c) {
 		
 		if (c.tag == "Player" && !activated) {
-			Debug.Log ("trigger enter" + c.gameObject.name);
+			//Debug.Log ("trigger enter" + c.gameObject.name);
 			c_manualActivation();
 
 			CheckPointManager cpm = GameObject.FindGameObjectWithTag("Controller").GetComponent<CheckPointManager>();
