@@ -53,7 +53,7 @@ MonoBehaviour:
       activeSubContentIndex: 0
       subContents:
       - name: Cosa sono
-        usableForLoading: 0
+        usableForLoading: 1
         image: {fileID: 21300000, guid: 9da2a102e79fa4ea5a3210666f67c482, type: 3}
         infoText: {fileID: 4900000, guid: dc78af347e6174a399d93d75f8aade87, type: 3}
         subContentViewingTimer: 0
@@ -122,13 +122,13 @@ MonoBehaviour:
       activeSubContentIndex: 0
       subContents:
       - name: Cosa sono
-        usableForLoading: 0
+        usableForLoading: 1
         image: {fileID: 21300000, guid: ed518143d8faa4c3480e6cf1d31f8336, type: 3}
         infoText: {fileID: 4900000, guid: 669350265089047448bbc0a817d4f3de, type: 3}
         subContentViewingTimer: 0
         subContentViewsCounter: 0
       - name: Giorno e notte
-        usableForLoading: 0
+        usableForLoading: 1
         image: {fileID: 21300000, guid: 8036d613f9ef249bead1952d788cd28b, type: 3}
         infoText: {fileID: 4900000, guid: fa48e5048ad1948ae86ef759b6b4320f, type: 3}
         subContentViewingTimer: 0
@@ -257,7 +257,7 @@ MonoBehaviour:
         subContentViewingTimer: 0
         subContentViewsCounter: 0
       - name: Come funziona
-        usableForLoading: 0
+        usableForLoading: 1
         image: {fileID: 21300000, guid: aa1f4de2369e944b58418badb2187a4d, type: 3}
         infoText: {fileID: 4900000, guid: b9223e30d584d4632a0e885cfc00a6e5, type: 3}
         subContentViewingTimer: 0
@@ -289,7 +289,7 @@ MonoBehaviour:
         subContentViewingTimer: 0
         subContentViewsCounter: 0
       - name: Lanterna sbagliata
-        usableForLoading: 0
+        usableForLoading: 1
         image: {fileID: 21300000, guid: a3971792a915243e5924a0c1439d30ea, type: 3}
         infoText: {fileID: 4900000, guid: 42414966ee39e4370b00e9b89538bbed, type: 3}
         subContentViewingTimer: 0
@@ -425,7 +425,7 @@ MonoBehaviour:
       activeSubContentIndex: 0
       subContents:
       - name: Stereoscopio
-        usableForLoading: 0
+        usableForLoading: 1
         image: {fileID: 21300000, guid: 45ad373c3cba74f4eb10150a82e6523b, type: 3}
         infoText: {fileID: 4900000, guid: 7fec1f3308dcc4d5d90a117f14893eeb, type: 3}
         subContentViewingTimer: 0
@@ -513,7 +513,7 @@ MonoBehaviour:
       activeSubContentIndex: 0
       subContents:
       - name: Cosa sono
-        usableForLoading: 0
+        usableForLoading: 1
         image: {fileID: 21300000, guid: 7e5d2514d8af8492e8b3d5a2e03f479e, type: 3}
         infoText: {fileID: 4900000, guid: c05f922b0f5744478a42b22affb32610, type: 3}
         subContentViewingTimer: 0
@@ -1052,7 +1052,7 @@ Prefab:
         type: 3}
     - target: {fileID: 0}
       propertyPath: sections.Array.data[3].contents.Array.data[0].subContents.Array.data[3].usableForLoading
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: sections.Array.data[4].contents.Array.data[2].name
@@ -1429,6 +1429,30 @@ Prefab:
       propertyPath: mouseCursor
       value: 
       objectReference: {fileID: 2800000, guid: 7ec4140b4064248e793bfaaec63a52b6, type: 3}
+    - target: {fileID: 0}
+      propertyPath: sections.Array.data[0].contents.Array.data[0].subContents.Array.data[0].usableForLoading
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: sections.Array.data[1].contents.Array.data[0].subContents.Array.data[0].usableForLoading
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: sections.Array.data[1].contents.Array.data[0].subContents.Array.data[1].usableForLoading
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: sections.Array.data[4].contents.Array.data[0].subContents.Array.data[1].usableForLoading
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: sections.Array.data[6].contents.Array.data[0].subContents.Array.data[0].usableForLoading
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: sections.Array.data[7].contents.Array.data[1].subContents.Array.data[0].usableForLoading
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 119962}
