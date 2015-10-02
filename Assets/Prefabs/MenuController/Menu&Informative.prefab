@@ -436,6 +436,12 @@ MonoBehaviour:
         infoText: {fileID: 4900000, guid: 50d73bc926b084ff1a2f9ac74eb0b775, type: 3}
         subContentViewingTimer: 0
         subContentViewsCounter: 0
+      - name: "Curiosit\xE0"
+        usableForLoading: 0
+        image: {fileID: 21300000, guid: a1f139a5271904c3a86d55dc873df73f, type: 3}
+        infoText: {fileID: 4900000, guid: ba26040a851364ab4b195d71e7692899, type: 3}
+        subContentViewingTimer: 0
+        subContentViewsCounter: 0
       iconUnlock: {fileID: 21300000, guid: 56f608be2c89ff247883a0ad77d3aee1, type: 3}
       iconLock: {fileID: 21300000, guid: 031ff2e19a002f54a9715a9fbcf71bfd, type: 3}
       unlockerObject: {fileID: 0}
@@ -623,7 +629,6 @@ MonoBehaviour:
   invokeWithoutMenu: 0
   actualLevelNumber: -1
   timeCanShowNewContent: 5
-  controllerConfig1: 0
   canOpenInformative: 1
 --- !u!114 &11476098
 MonoBehaviour:
@@ -687,6 +692,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: sections.Array.data[7].contents.Array.data[2].subContents.Array.size
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: sections.Array.data[6].contents.Array.data[0].subContents.Array.size
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: sections.Array.data[0].lockedSection
@@ -1453,6 +1462,19 @@ Prefab:
       propertyPath: sections.Array.data[7].contents.Array.data[1].subContents.Array.data[0].usableForLoading
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: sections.Array.data[6].contents.Array.data[0].subContents.Array.data[2].name
+      value: "Curiosit\xE0"
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: sections.Array.data[6].contents.Array.data[0].subContents.Array.data[2].infoText
+      value: 
+      objectReference: {fileID: 4900000, guid: ba26040a851364ab4b195d71e7692899, type: 3}
+    - target: {fileID: 0}
+      propertyPath: sections.Array.data[6].contents.Array.data[0].subContents.Array.data[2].image
+      value: 
+      objectReference: {fileID: 21300000, guid: a1f139a5271904c3a86d55dc873df73f,
+        type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 119962}
