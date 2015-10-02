@@ -63,7 +63,7 @@ public class InformativeManager : MonoBehaviour {
 	
 	bool cursorHorizontalDirectionUse = false;
 
-	public bool controllerConfig1;
+	//public bool controllerConfig1;
 
 	//[HideInInspector]
 	public bool canOpenInformative = true;
@@ -850,14 +850,9 @@ public class InformativeManager : MonoBehaviour {
 
 	void controllerNavigation() {
 
-		if (controllerConfig1) {
-			checkSectionNav1 ();
-			checkSubContentNav1 ();
-		} else {
-			checkSectionNav ();
-			checkSubContentNav ();
 
-		}
+		checkSectionNav1 ();
+		checkSubContentNav1 ();
 
 
 		checkContentNav ();
@@ -1068,6 +1063,7 @@ public class InformativeManager : MonoBehaviour {
 				}
 				
 			}
+
 			int randomSubContentIndex = 0;
 			attempts = 0;
 
@@ -1112,7 +1108,6 @@ public class InformativeManager : MonoBehaviour {
 						}
 						
 					}
-
 
 					
 				}
@@ -1649,6 +1644,25 @@ public class InformativeManager : MonoBehaviour {
 	}
 
 	public void c_onEnableInformative() {
+
+		if (sectionButtons [1] != null) {
+
+			if (GeneralFinder.cursorHandler.useController) {
+			
+				sectionButtons [0].gameObject.GetComponent<Image> ().enabled = false;
+				sectionButtons [1].gameObject.GetComponent<Image> ().enabled = false;
+				sectionButtons [0].enabled = false;
+				sectionButtons [1].enabled = false;
+			
+			} else {
+
+				sectionButtons [0].enabled = true;
+				sectionButtons [1].enabled = true;
+				sectionButtons [0].gameObject.GetComponent<Image> ().enabled = true;
+				sectionButtons [1].gameObject.GetComponent<Image> ().enabled = true;
+
+			}
+		}
 
 		updateAlphaAndSizeContents (0);
 
