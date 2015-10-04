@@ -1,6 +1,11 @@
 using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Classe che gestisce tutta la logica della lanterna magica
+/// </summary>
+
+//Corrado
 public class MagicLantern : Tool {
 
 	//public GameObject lantern;

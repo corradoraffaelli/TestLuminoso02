@@ -1,6 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Classe che si occupa di mostrare il bottone pulsante al raccoglimento di un oggetto.
+/// </summary>
+
+// Corrado
 public class PulsingInfoButton : MonoBehaviour {
 
 	RectTransform rectTransform;

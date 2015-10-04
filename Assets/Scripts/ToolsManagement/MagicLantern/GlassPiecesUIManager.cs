@@ -1,6 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Classe che si occupa della grafica del raccoglimento dei frammenti di vetrino. NIN UTILIZZATA.
+/// </summary>
+
+// Corrado
 public class GlassPiecesUIManager : MonoBehaviour {
 
 	[System.Serializable]

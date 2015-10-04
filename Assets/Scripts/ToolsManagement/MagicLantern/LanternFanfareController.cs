@@ -1,6 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Effetti che vengono mostrati la prima volta che si raccoglie la Lanterna Magica.
+/// </summary>
+
+// Corrado
 public class LanternFanfareController : MonoBehaviour {
 	
 	[System.Serializable]

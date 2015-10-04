@@ -1,6 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Gestisce la comparsa di balloon e le varie tipologie (Tutorial, Hint, Dialogue).
+/// </summary>
+
+// Corrado
 public class ComicBalloonManager : MonoBehaviour {
 
 	public enum Type{

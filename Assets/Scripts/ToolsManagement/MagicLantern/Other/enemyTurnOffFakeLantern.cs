@@ -1,6 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Gestisce lo spegnimento della lanterna da parte di un nemico. DEPRECATA.
+/// </summary>
+
+// Corrado
 public class enemyTurnOffFakeLantern : MonoBehaviour {
 
 	GameObject fakeLantern;

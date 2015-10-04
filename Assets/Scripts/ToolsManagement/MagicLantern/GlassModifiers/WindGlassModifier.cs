@@ -1,6 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Modificatore del vetrino del vento che permette di cambiarne la direzione tra varie opzioni disponibili. DEPRECATA.
+/// </summary>
+
+// Corrado
 public class WindGlassModifier : MonoBehaviour {
 
 	[System.Serializable]

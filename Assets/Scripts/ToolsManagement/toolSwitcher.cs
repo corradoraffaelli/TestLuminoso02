@@ -1,6 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Classe per gestire lo switch tra tool.
+/// </summary>
+
+//Corrado e Dario
 public class toolSwitcher : MonoBehaviour {
 
 

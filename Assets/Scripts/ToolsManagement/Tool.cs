@@ -12,6 +12,11 @@
 using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Classe astratta per l'utilizzo dei tool
+/// </summary>
+
+//Corrado e Dario
 abstract public class Tool : MonoBehaviour {
 
 	//dice se è il tool momentaneamente in uso del giocatore

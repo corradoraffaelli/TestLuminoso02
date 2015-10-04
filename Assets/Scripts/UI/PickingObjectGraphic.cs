@@ -1,6 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Si occupa di mostrare un effetto nell'interfaccia grafica, al momento del raccoglimento di un oggetto.
+/// </summary>
+
+// Corrado
 public class PickingObjectGraphic : MonoBehaviour {
 
 	CameraHandler cameraHandler;

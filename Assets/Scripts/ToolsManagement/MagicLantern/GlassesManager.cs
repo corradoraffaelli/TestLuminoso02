@@ -1,6 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Gestisce i vetrini della Lanterna.
+/// </summary>
+
+// Corrado
 public class GlassesManager : MonoBehaviour {
 
 	public string modifierMethodName = "glassModifier";

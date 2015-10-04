@@ -1,6 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Classe per gestire la riproduzione di audio.
+/// </summary>
+
+// Corrado
 public class AudioHandler : MonoBehaviour {
 
 	[System.Serializable]

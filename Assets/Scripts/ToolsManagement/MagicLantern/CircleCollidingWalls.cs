@@ -1,6 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Si occupa di gestire i muri dove la lanterna non può proiettare. INUTILIZZATO.
+/// </summary>
+
+// Corrado
 public class CircleCollidingWalls : MonoBehaviour {
 
 	GameObject magicLanternLogicOBJ;

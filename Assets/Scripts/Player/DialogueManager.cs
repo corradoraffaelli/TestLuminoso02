@@ -1,6 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Gestisce i dialochi con l'NPC.
+/// </summary>
+
+// Corrado
 public class DialogueManager : MonoBehaviour {
 
 	bool dialogueConsumed = false;

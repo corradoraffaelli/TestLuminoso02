@@ -5,6 +5,11 @@ using System.Xml.Serialization;
 using System.IO;
 using System;
 
+/// <summary>
+/// Gestisce il salvataggio delle informazioni su quanto tempo il player ha passato in ogni zona di gioco. Mostra anche le morti e chi le ha causate. (DEBUG)
+/// </summary>
+
+// Corrado
 public class ZoneAnalyzer : MonoBehaviour {
 
 	string directory = "ZoneAnalyzer";

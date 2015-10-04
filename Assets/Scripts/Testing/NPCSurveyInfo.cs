@@ -1,6 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Gestisce il salvataggio delle informazioni sulle risposte dei questionari (DEBUG)
+/// </summary>
+
+// Corrado
 public class NPCSurveyInfo : MonoBehaviour {
 
 	int contentIndex = -1;
