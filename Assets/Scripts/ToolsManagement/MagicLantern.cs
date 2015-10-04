@@ -46,57 +46,8 @@ public class MagicLantern : Tool {
 
 	public bool leftLantern = true;
 
-	//public GameObject glasses;
-	/*
-	GameObject raggio_cerchio;
-	GameObject raggio;
-	GameObject cameraPoint;
-	GameObject camera;
-	GameObject projectionObject;
-
-	public float zPositionEnvironment = 0.0f;
-	public float resizeFactor = 4.0f;
-	public float maxProjectingDistance = 8.5f;
-	public float minProjectingDistance = 1.0f;
-	public bool newSizeImplementation = true;
-	public float defaultCircleSize = 3.5f;
-	public float defaultDircleDistance = 4.0f;
-	[Range(0.0f,3.0f)]
-	public float changeSizeMultiplier = 1.8f;
-	public bool limitProjectionDistance = true;
-	[Range(0.0f,1.0f)]
-	public float alphaProjection = 0.5f;
-
-	public Sprite normalRay;
-	public Sprite normalCircle;
-	public Sprite pressedRay;
-	public Sprite pressedCircle;
-
-	Sprite goodGlassSprite;
-	Sprite badGlassSprite;
-	Sprite projectionSprite;
-	Sprite blurredSprite;
-	Sprite emptySprite;
-	*/
-
 	public GameObject projectionPrefab;
 
-	/*
-	Vector3 cameraPointPos;
-	Vector3 _direction;
-	Vector3 pos_move;
-
-
-	//grandezza della sprite con il raggio
-	float xSize;
-	float ySize;
-	Bounds boundsRay;
-
-	SpriteRenderer spRendRay;
-	SpriteRenderer spRendCircle;
-	*/
-
-	//ProjectionCollision PC;
 	GlassesManager glassesManager;
 
 	GraphicLantern graphicLantern;
@@ -125,39 +76,11 @@ public class MagicLantern : Tool {
 		graphicLantern = GetComponent<GraphicLantern> ();
 		returnParticles = GetComponentInChildren<ReturnParticles> ();
 		audioHandler = GetComponent<AudioHandler> ();
-
-		/*
-		//prendo gli oggetti dalla scena e li salvo nelle rispettive variabili
-		takeObjectsFromScene ();
-
-		//prendo i components a partire dalle variabili appena salvate
-		takeComponentsFromObjects ();
-
-		boundsRay = spRendRay.bounds;
-		xSize = boundsRay.size.x;
-		ySize = boundsRay.size.y;
-
-		PC.setProjectionObject(projectionObject);
-		*/
+	
 	}
-
-
 
 	protected override void activationToolFunc()
 	{
-		//posiziono la lenterna di fronte al personaggio
-		//!!!!!!--------------DA CONTROLLARE!!!!-------- probabilmente basta settare la lanterna come figlio del player nella giusta posizione
-		//toolGameObject.transform.position = new Vector3(player.transform.position.x+0.4f,player.transform.position.y+0.8f,player.transform.position.z);
-
-		//presupponendo che la lanterna sia figlia dell'oggetto
-		//toolGameObject.transform.localPosition = new Vector3 (0.4f, 0.8f, 0.0f);
-		//actualGlass = nextUsableGlass (true);
-		/*
-		if (glassesManager.isThereAUsableGlass ()) {
-			actualGlass = glassesManager.getActualGlass();
-			glassSpriteUpdate ();
-		}
-			*/
 		
 	}
 
@@ -405,10 +328,6 @@ public class MagicLantern : Tool {
 				collidingBadWall = false;
 			}
 		}
-
-
-
-
 			
 	}
 
@@ -473,46 +392,17 @@ public class MagicLantern : Tool {
 			//istanzio un prefab e lo sposto sotto il mouse
 			glassesManager.getActualGlass().projectionObject = Instantiate <GameObject> (glassesManager.getActualGlass().prefabObject);
 			glassesManager.getActualGlass().projectionObject.transform.position = graphicLantern.getCircleRay().position;
-			//actualGlass.projectionObject.transform.position = new Vector3(actualMousePosition.x, actualMousePosition.y, zPositionEnvironment);
 
-			//3 righe inutili nel caso in cui la proiezione non debba ruotare insieme alla lanterna
-			//glassesManager.getActualGlass().projectionObject.transform.parent = graphicLantern.getCircleRay();
-			//glassesManager.getActualGlass().projectionObject.transform.localEulerAngles = new Vector3(0.0f,0.0f,0.0f);
-			//glassesManager.getActualGlass().projectionObject.transform.parent = null;
-
-			//vecchia implementazione, da vedere, attualmente funziona solo se la scala è la stessa, sia della sprite della proiezione che della sagoma
-			/*
-			//prendo i bounds della sprite della proiezione
-			Bounds objBounds = graphicLantern.getProjectionBounds();
-			//prendo lo spriteRenderer del prefab ed i suoi bounds
-			SpriteRenderer actualSprite = glassesManager.getActualGlass().projectionObject.transform.GetComponent<SpriteRenderer> ();
-			//actualSprite.sprite = projectionSprite;
-			Bounds newObjBounds = actualSprite.bounds;
-			
-			//scalo l'oggetto per far sì che la sua sprite coincida con quella sottostante (teoricamente vuota)
-			float spriteScale = objBounds.size.x / newObjBounds.size.x;
-			glassesManager.getActualGlass().projectionObject.transform.localScale = new Vector3 (spriteScale, spriteScale, spriteScale);
-			
-			//metto l'oggetto come figlio del raggio_cerchio
-			glassesManager.getActualGlass().projectionObject.transform.parent = graphicLantern.getCircleRay();
-			*/
-
-			//nuova implementazione - INIZIO
 			glassesManager.getActualGlass().projectionObject.transform.parent = graphicLantern.getCircleRay();
 			glassesManager.getActualGlass().projectionObject.transform.localScale = graphicLantern.getTempProjectionScale();
 
-
-			//glassesManager.getActualGlass().projectionObject.transform.localEulerAngles = graphicLantern.getTempProjectionAngle();
 			glassesManager.getActualGlass().projectionObject.transform.localEulerAngles = new Vector3(0.0f,0.0f,graphicLantern.getStandardFakeProjectionRotation());
-			//nuova implementazione - FINE
-
 
 			glassesManager.getActualGlass().projectionObject.SetActive (true);
 
 			projectedGlass = glassesManager.getActualGlassIndex();
 
 			lastInstatiatePosition = glassesManager.getActualGlass().projectionObject.transform.position;
-			//Debug.Log(projectedGlass);
 		}
 
 	}

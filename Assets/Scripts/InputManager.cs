@@ -1,6 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Fornisce un'interfaccia standard di accesso agli input.
+/// </summary>
+
+// Corrado
 public class InputManager : MonoBehaviour {
 
 	[System.Serializable]

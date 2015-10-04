@@ -1,6 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Controlla la presenza di files residui, e fornisce metodi per cancellarli.
+/// </summary>
+
+//Corrado
 public class ResidualFilesVerifier : MonoBehaviour {
 
 	public string savedLadderFile = "savedLadder";

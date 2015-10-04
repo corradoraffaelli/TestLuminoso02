@@ -1,6 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Fornisce una variabile utile per sincronizzare oggetti della scena. Usato ad esempio dai flares.
+/// </summary>
+
+//Corrado
 public class TimeSyncronizerInteragible : MonoBehaviour {
 
 	[SerializeField]
