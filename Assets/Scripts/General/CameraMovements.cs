@@ -62,7 +62,7 @@ public class CameraMovements : MonoBehaviour {
 	void Start () {
 		player = GameObject.FindGameObjectWithTag ("Player");
 
-		assignMainCameraToPlayer ();
+		//assignMainCameraToPlayer ();
 
 		getGameOverObject ();
 
@@ -94,12 +94,14 @@ public class CameraMovements : MonoBehaviour {
 		setCameraSize (defaultSize);
 	}
 
+	/*
 	private void assignMainCameraToPlayer(){
 
 		if(player!=null)
 			player.GetComponent<PlayerMovements> ().MainCamera = this.gameObject;
 
 	}
+	*/
 
 	private void getGameOverObject(){
 

@@ -10,107 +10,207 @@ public class PlayerMovements : MonoBehaviour {
 
 	public float timeToRespawn = 1.0f;
 
-	//parametri di stato, per ora alcuni sono visibili nell'inspector, per debug
+
+	//COMPONENT DEL PLAYER
+	Rigidbody2D rigBody;
+	Animator anim;
+	AudioHandler audioHandler;
+
+	//ALTRI OGGETTI E COMPONENT
+	GameObject controller;
+	CursorHandler cursorHandler;
+	GameObject mainCamera;
+	InputKeeper inputKeeper;
+	MagicLantern magicLanternLogic;
+
+	/*
+	 * CORRADO
+	 * VARIABILI DI STATO DEL PLAYER
+	 */
 	[System.Serializable]
-	public class StateParameters {
-		bool onGround = false;
-		public bool OnGround { get; set; }
-		bool facingRight = true;
-		public bool FacingRight { get; set; }
-		bool jumping = false;
-		public bool Jumping { get; set; }
-		bool collidingLadder = false;
-		public bool CollidingLadder { get; set; }
-		public bool onLadder = false;
-		public bool OnLadder { get; set; }
-		bool running;
-		public bool Running { get; set; }
-		public bool underWater = false;
-		public bool UnderWater { get; set; }
+	public class StateVar
+	{
+		[HideInInspector]
+		public bool facingRight = true;
+
+		public bool onGround = false;
+		[HideInInspector]
+		public bool wasGround = false;
+		[Range(1.0f,5.0f)]
+
+		public float gravityMultiplier = 1.0f;
+		[HideInInspector]
+		public float standardGravity;
+
+		[HideInInspector]
+		public bool freezedByTool = false;
+	}
+
+	[SerializeField]
+	StateVar stateVar;
+
+	//utile per vecchi script che usano la proprietà OnGround
+	public bool onGround {
+		get{ return stateVar.onGround;}
+	}
+
+	//utile per vecchi script che usano la proprietà FacingRight
+	public bool FacingRight {
+		get{ return stateVar.facingRight;}
+		set{ stateVar.facingRight = value;}
 	}
 
 	/*
-	public bool OnGround02 {
-		get{ return stateParameters.OnGround}
-	}
-	*/
-	class UsedComponents{
-		Rigidbody2D rigBody;
-		public Rigidbody2D RigBody{ get; set; }
-		Animator anim;
-		public Animator Anim{ get; set; }
-	}
+	 * CORRADO
+	 * VARIABILI PER LA CORSA
+	 */
 
 	[System.Serializable]
-	class FallingForcesVariables{
-		[Range(-1.0f,5.0f)]
-		[SerializeField]
-		public float gravityMultiplier = 1.0f;
-		public float GravityMultiplier{ get;set;}
-
-		bool addFallingForceRight = false;
-		public bool AddFallingForceRight{ get; set; }
-		bool addFallingForceLeft = false;
-		public bool AddFallingForceLeft{ get; set; }
-		bool removeFallingNegForce = false;
-		public bool RemoveFallingNegForce{ get; set; }
-		bool removeFallingPosForce = false;
-		public bool RemoveFallingPosForce{ get; set; }
-		bool removeFallingForce = false;
-		public bool RemoveFallingForce{ get; set; }
-	}
-
-	[System.Serializable]
-	class OnGroundVariables{
-
-	}
-
-	class OnLadderVariables{
-		bool climbingUp = false;
-		public bool ClimbingUp{ get; set; }
-		bool climbingDown = false;
-		public bool ClimbingDown{ get; set; }
-		bool jumpFromLadderRight = false;
-		public bool JumpFromLadderRight{ get; set; }
-		bool jumpFromLadderLeft = false;
-		public bool JumpFromLadderLeft{ get; set; }
+	public class RunningVars
+	{
+		public float speedFactor = 5.0f;
+		[HideInInspector]
+		public bool running;
 	}
 
 	[SerializeField]
-	StateParameters stateParameters;
-	UsedComponents usedComponents;
+	RunningVars runningVars;
+
+	//utile per vecchi script che usano il metodo isRunning()
+	public bool isRunning(){
+		return runningVars.running;
+	}
+
+	/*
+	 * CORRADO
+	 * VARIABILI PER IL SALTO
+	 */
+
+	[System.Serializable]
+	public class JumpingVars
+	{
+		public float jumpFactor = 3.5f;
+		[HideInInspector]
+		public bool jumping = false;
+		[HideInInspector]
+		public float lastJump = 0.0f;
+		[HideInInspector]
+		public float diffBetweenJump = 0.3f;
+	}
+	
 	[SerializeField]
-	FallingForcesVariables fallingForcesVariables;
+	JumpingVars jumpingVars;
 
-	Rigidbody2D RigBody;
-	Animator anim;
-	//Collider coll;
+	/*
+	 * CORRADO
+	 * VARIABILI PER IL CONTROLLO IN ARIA
+	 */
 
-	bool facingRight = true;
-	bool Jumping = false;
-	public bool onGround = false;
-	bool wasGround = false;
-	public bool onLadder = false;
-	bool collidingLadder = false;
+	[System.Serializable]
+	public class OnAirVars
+	{
+		[HideInInspector]
+		public bool addFallingForceRight = false;
+		[HideInInspector]
+		public bool addFallingForceLeft = false;
+		[HideInInspector]
+		public bool removeFallingNegForce = false;
+		[HideInInspector]
+		public bool removeFallingPosForce = false;
+		[HideInInspector]
+		public bool removeFallingForce = false;
+		public float forceOnAirFactor = 16.0f;
+		public float airXDeceleration = 8.0f;
+		public float maxFallingSpeed = 14.0f;
+	}
+
+	//utile per vecchi script che usano la variabile maxFallingSpeed
+	public float maxFallingSpeed{
+		get{ return onAirVars.maxFallingSpeed;}
+		set{ onAirVars.maxFallingSpeed = value;}
+	}
+
+	[SerializeField]
+	OnAirVars onAirVars;
+
+	/*
+	 * CORRADO
+	 * VARIABILI PER LA SCALA
+	 */
+
+	[System.Serializable]
+	public class LadderVars
+	{
+		[HideInInspector]
+		public bool onLadder = false;
+		[HideInInspector]
+		public bool jumpFromLadderRight = false;
+		[HideInInspector]
+		public bool jumpFromLadderLeft = false;
+		[HideInInspector]
+		public bool collidingLadder = false;
+		public float ladderLateralLimit = 0.3f;
+		public float onLadderMovement = 0.1f;
+		public float fromLadderForce = 100.0f;
+		[HideInInspector]
+		public GameObject actualLadder;
+	}
+
+	//utile per vecchi script che usano la variabile onLadder
+	public bool onLadder{
+		get{ return ladderVar.onLadder;}
+		set{ ladderVar.onLadder = value;}
+	}
+
+	[SerializeField]
+	LadderVars ladderVar;
+
+	/*
+	 * CORRADO
+	 * VARIABILI PER LA SCALA
+	 */
+
+	[System.Serializable]
+	public class BounceVars
+	{
+		public bool fallingVelocityDependence = false;
+		public float baseAscForce = 525.0f;
+		public float baseAscForceSpring = 450.0f;
+		public float addEnemyAscForce = 250.0f;
+		public float addHeightAscForce = 200.0f;
+		public int numEnemyJump = 0;
+		public int maxNumEnemyCount = 2;
+		[HideInInspector]
+		public bool settedNumHeightLevel = false;
+		public float diffHeight = 0.0f;
+		public float maxDiffHeight = 9.0f;
+		//[HideInInspector]
+		public float addedForceDebug = 0.0f;
+		[HideInInspector]
+		public bool savedFallingPositions = false;
+		[HideInInspector]
+		public float lastYPositivePosition = 0.0f;
+		[HideInInspector]
+		public float firstYNegativePosition = 0.0f;
+		[HideInInspector]
+		public float bounceTime = 0.0f;
+		public float diffBounceTime = 0.5f;
+	}
+
+	[SerializeField]
+	BounceVars bounceVars;
+
+
+
+	/*
+	 * 
+	 * DARIO
+	 * 
+	 */
 
 	public bool underWater = false;
 	//public bool UnderWater { get; set; }
 
-	bool addFallingForceRight = false;
-	bool addFallingForceLeft = false;
-	bool removeFallingNegForce = false;
-	bool removeFallingPosForce = false;
-	bool removeFallingForce = false;
-
-	bool climbingUp = false;
-	bool climbingDown = false;
-	bool jumpFromLadderRight = false;
-	bool jumpFromLadderLeft = false;
-
-	[Range(1.0f,5.0f)]
-	public float gravityMultiplier = 1.0f;
-
-	public float speedFactor = 4.0f;
 
 	//solo per AI-------------------------
 
@@ -138,40 +238,15 @@ public class PlayerMovements : MonoBehaviour {
 	
 	
 	//------------------------------------
-	public float jumpFactor = 2.0f;
-	public float forceOnAirFactor = 10.0f;
-	public float airXDeceleration = 5.0f;
-	public float maxFallingSpeed = 12.0f;
 
-	public float LadderLateralLimit = 0.1f;
-	public float onLadderMovement = 0.1f;
-	public float fromLadderForce = 100.0f;
 
-	//gestione rimbalzi
-	public bool FallingVelocityDependence = false;
-	public float baseAscForce = 300.0f;
-	public float baseAscForceSpring = 500.0f;
-	public float addEnemyAscForce = 100.0f;
-	public float addHeightAscForce = 50.0f;
-	//public float HeightLevels = 5.0f;
-	public int numEnemyJump = 0;
-	public int maxNumEnemyCount = 2;
-	//public int numHeightLevel = 0;
-	//public float lastTouchedHeight;
-	bool settedNumHeightLevel = false;
-	public float diffHeight = 0.0f;
-	public float maxDiffHeight = 5.0f;
-	public float addedForceDebug = 0.0f;
-	//bool leavedGround = false;
-	bool savedFallingPositions = false;
-	float lastYPositivePosition = 0.0f;
-	float firstYNegativePosition = 0.0f;
-	//public float yPos = 0.0f;
-	float bounceTime = 0.0f;
-	public float diffBounceTime = 0.5f;
 
-	float standardGravity;
-	bool freezedByTool = false;
+
+
+
+
+
+
 	public bool AIControl = false;
 
 	//onGround Test Objects
@@ -182,53 +257,39 @@ public class PlayerMovements : MonoBehaviour {
 	public LayerMask PlayerLayer;
 	public LayerMask PlayerStunnedLayer;
 
-	bool running;
+
 
 	bool alert;
 
 	bool charged;
 
-	public bool isRunning(){
-		return running;
-	}
 
-	GameObject actualLadder;
 
-	GameObject controller;
-	CursorHandler cursorHandler;
-	GameObject mainCamera;
+
+
+	/*
 	public GameObject MainCamera {
 		get{ return mainCamera;}
 		set{ mainCamera = value;}
 	}
+	*/
 
-	public bool FacingRight {
-		get{ return facingRight;}
-		set{ facingRight = value;}
-	}
 
-	public bool OnGround {
-		get{ return onGround;}
-	}
 
 	bool stunned = false;
 	float tStartStunned = -5.0f;
 	float tToReturnFromStunned = 1.5f;
 
 	Vector2 vec2Null = new Vector2(0.0f,0.0f);
-	Vector3 movingPlatformPosition;
-	bool goneOnMovingPlatform = false;
 
 	public GameObject respawnPoint;
 	gameSet gs;
 	//private GameObject myToStun;
 
-	InputKeeper inputKeeper;
 
-	MagicLantern magicLanternLogic;
-	AudioHandler audioHandler;
 
-	GameObject windPrefab;
+
+
 
 	bool cameraOscura = false;
 
@@ -246,8 +307,7 @@ public class PlayerMovements : MonoBehaviour {
 
 	//public GameObject []zoneAnalyzers;
 
-	float lastJump = 0.0f;
-	float diffBetweenJump = 0.3f;
+
 
 
 	void Start () {
@@ -264,18 +324,13 @@ public class PlayerMovements : MonoBehaviour {
 		}
 
 
-		RigBody = transform.GetComponent<Rigidbody2D>();
-		anim = transform.GetComponent<Animator> ();
-		audioHandler = GetComponent<AudioHandler> ();
+		takePlayerComponents ();
+		
+		takeComponents ();
 
-		getGameController ();
-
-		inputKeeper = controller.GetComponent<InputKeeper> ();
 
 		if (!AIControl){
 			getRespawnPoint ();
-			getCursorHandler ();
-			getMagicLanternLogic();
 
 			gs = controller.GetComponent<gameSet>();
 
@@ -287,7 +342,7 @@ public class PlayerMovements : MonoBehaviour {
 
 		checkStartFacing ();
 
-		standardGravity = RigBody.gravityScale;
+		stateVar.standardGravity = rigBody.gravityScale;
 
 
 		initNormalPlayerFeatures ();
@@ -310,6 +365,26 @@ public class PlayerMovements : MonoBehaviour {
 	
 	}
 
+	//CORRADO
+	//prende i component del player
+	void takePlayerComponents()
+	{
+		rigBody = GetComponent<Rigidbody2D>();
+		anim = GetComponent<Animator> ();
+		audioHandler = GetComponent<AudioHandler> ();
+	}
+
+	//CORRADO
+	//prende component ed oggetti
+	void takeComponents()
+	{
+		mainCamera = Camera.main.gameObject;
+		magicLanternLogic = GeneralFinder.magicLanternLogic;
+		controller = GeneralFinder.controller;
+		cursorHandler = GeneralFinder.cursorHandler;
+		inputKeeper = GeneralFinder.inputKeeper;
+	}
+
 	void initZoneAnalyzer() {
 
 		if (zoneAnalyzerParent == null) {
@@ -329,32 +404,19 @@ public class PlayerMovements : MonoBehaviour {
 
 		activePlayerFeatures = normalePlayerFeatures;
 		
-		normalePlayerFeatures.jumpFactor = jumpFactor;
+		normalePlayerFeatures.jumpFactor = jumpingVars.jumpFactor;
 		
-		normalePlayerFeatures.speedFactor = speedFactor;
+		normalePlayerFeatures.speedFactor = runningVars.speedFactor;
 		
 		normalePlayerFeatures.scaleFactor = Mathf.Abs(transform.localScale.x);
 
 	}
 
-	private void getMagicLanternLogic()
-	{
-		GameObject magicLanternObject = GameObject.FindGameObjectWithTag ("MagicLanternLogic");
-		
-		if (magicLanternLogic == null)
-			Debug.Log ("ATTENZIONE - oggetto MagicLanternLogic non trovato");
 
-		magicLanternLogic = magicLanternObject.GetComponent<MagicLantern> ();
-	}
 
-	private void getGameController(){
 
-		controller = GameObject.FindGameObjectWithTag ("Controller");
 
-		if (controller == null)
-			Debug.Log ("ATTENZIONE - oggetto GameController non trovato");
 
-	}
 
 	private void getRespawnPoint () {
 
@@ -374,19 +436,14 @@ public class PlayerMovements : MonoBehaviour {
 			Debug.Log ("ATTENZIONE - oggetto RespawnPoint non trovato");
 	}
 
-	private void getCursorHandler(){
 
-		cursorHandler = controller.GetComponent<CursorHandler> ();
-		if (cursorHandler == null)
-			Debug.Log ("ATTENZIONE - oggetto cursorHandler non trovato");
-	}
 
 	private void checkStartFacing(){
 
 		if (transform.localScale.x < 0) {
 			if(transform.localScale.x == -1) {
 				
-				facingRight = false;
+				stateVar.facingRight = false;
 				
 			}
 			else {
@@ -413,43 +470,36 @@ public class PlayerMovements : MonoBehaviour {
 
 	}
 
+	//CORRADO E DARIO
 	void Update () {
-		//verifico se il player è a terra ed aggiorno l'animator
-
+	
 		if (!PlayStatusTracker.inPlay)
 			return;
 
 		if (respawningFromDeath) {
-			handleAudioSteps();
 			setAnimations();
 			return;
 		}
 
-		if (!onLadder) {
-			onGround = groundCheck ();
+		if (!ladderVar.onLadder) {
+			stateVar.onGround = groundCheck ();
 
-			if (!freezedByTool && !AIControl && !stunned) {
-				
-				//gestione del girarsi o meno
-				//if ((facingRight == true && Input.GetAxis ("Horizontal") < 0) || (facingRight == false && Input.GetAxis ("Horizontal") > 0))
-				//	Flip ();
+			if (!stateVar.freezedByTool && !AIControl && !stunned) {
 
+				//gestione del flipping del player
 				flipHandling();
-
-
-				
+	
 				//se tocco terra
-				if (onGround) {
+				if (stateVar.onGround) {
+					//resetto le variabili di movimento in aria
 					resetAscForceVariables ();
 					
-					//corsa
+					//gestione della corsa
 					runningManagement ();
 					
-					//salto (verrà gestito nel FixedUpdate)
+					//gestione del salto (viene preso l'input, la forza verrà gestita nel FixedUpdate)
 					jumpingManagement ();
 
-
-					
 				} else {
 					
 					//salvo le posizioni utili a calcolare le forze di rimbalzo
@@ -463,13 +513,7 @@ public class PlayerMovements : MonoBehaviour {
 					saveFallingPositionsManagement ();
 					
 				}
-				
-				//-------------debug-------------
-				/*
-				if (Input.GetKeyUp (KeyCode.Q)) {
-					addEnemyCount ();
-				}
-				*/
+
 				
 				//gestione del movimento in aria
 				notGroundManagement ();
@@ -477,13 +521,8 @@ public class PlayerMovements : MonoBehaviour {
 				//gestione della collisione con la scala
 				CollidingLadderManagement ();
 
-				//if (wasGround != onGround)
-					//gestione delle piattaforme che si muovono. importante che non sia nell'if dell'onground, fa un controllo all'interno
-					movingPlatformManagement();
-
-				//gestione collisioni con oggetti "softGround" (quelli in corrispondenza o meno di scale)
-				//softGroundCollManagement ();
-				//softGroundCollManagement_02();
+				//gestione delle movingPlatform
+				movingPlatformManagement();
 
 				slideManagement();
 
@@ -493,7 +532,7 @@ public class PlayerMovements : MonoBehaviour {
 					
 					//riga che avevo provato a mettere per controbilanciare le piattaforme con friction zero...
 					//ma per ora meglio di no
-					//RigBody.velocity = vec2Null;
+					//rigBody.velocity = vec2Null;
 					
 					if (stunned && !AIControl) {
 						//player stunned
@@ -503,8 +542,8 @@ public class PlayerMovements : MonoBehaviour {
 				//AI stunned è gestito da esterno
 				
 				//personaggio freezato
-				if (freezedByTool) {
-					RigBody.velocity = vec2Null;
+				if (stateVar.freezedByTool) {
+					rigBody.velocity = vec2Null;
 				}
 				
 				//personaggio AI
@@ -512,14 +551,13 @@ public class PlayerMovements : MonoBehaviour {
 				//per ora solo check per vedere se AI è fermo
 				if (AIControl) {
 					
-					if (RigBody.velocity.x == 0.0f) {
+					if (rigBody.velocity.x == 0.0f) {
 						//anim.SetBool ("Running", false);
-						running = false;
+						runningVars.running = false;
 					}
 				}
 			}
-
-			gravityManagement();
+		
 		}
 		//sono sulla scala
 		else {
@@ -527,23 +565,8 @@ public class PlayerMovements : MonoBehaviour {
 			OnLadderManagement ();
 		}
 
-
-		handleAudioSteps();
-
-
 		setAnimations ();
 
-	}
-
-	void handleAudioSteps() {
-		/*
-		if (!AIControl && audioHandler != null) {
-			if (running)
-				audioHandler.playClipByName ("Passi");
-			if (!running || (!onGround && running))
-				audioHandler.stopClipByName("Passi");
-		}
-		*/
 	}
 
 	void slideManagement() {
@@ -558,7 +581,7 @@ public class PlayerMovements : MonoBehaviour {
 
 		//Debug.Log ("cc ha " + cc.sharedMaterial.ToString ());
 
-		if (!onGround && cc.sharedMaterial == null) {
+		if (!stateVar.onGround && cc.sharedMaterial == null) {
 			//Debug.Log ("attivo slide");
 			cc.sharedMaterial = matFrictionZero;
 			//cc.enabled = false;
@@ -566,7 +589,7 @@ public class PlayerMovements : MonoBehaviour {
 
 		}
 
-		if (onGround && cc.sharedMaterial != null) {
+		if (stateVar.onGround && cc.sharedMaterial != null) {
 			//Debug.Log ("DISattivo slide");
 			cc.sharedMaterial = null;
 			//cc.enabled = false;
@@ -576,46 +599,50 @@ public class PlayerMovements : MonoBehaviour {
 
 	}
 
+	//CORRADO
+	//gestisce il flipping del player
 	void flipHandling()
 	{
+		//il player si gira nella direzione in cui sta puntando la lanterna
 		if (magicLanternLogic!= null && magicLanternLogic.active && !magicLanternLogic.leftLantern)
 		{
 			if (((cursorHandler.getCursorWorldPosition ().x > transform.position.x) && !FacingRight) ||
 			    ((cursorHandler.getCursorWorldPosition ().x < transform.position.x) && FacingRight))
 			{
 				Flip ();
-				//Debug.Log ("girando 1");
 			}	
 		}
 
+		//il player si gira nella direzione del cursore
 		if (cursorHandler!=null && cursorHandler.isCursorMoving())
 		{
 			if (((cursorHandler.getCursorWorldPosition ().x > transform.position.x) && !FacingRight) ||
 			    ((cursorHandler.getCursorWorldPosition ().x < transform.position.x) && FacingRight))
 			{
 				Flip ();
-				//Debug.Log ("girando 2");
 			}	
 		}
 
 		//se la lanterna è attiva ma l'ho lasciata, oppure non è attiva, il player gira in base al suo movimento solo se non sto muovendo il cursore
 		if (inputKeeper != null && ((magicLanternLogic.active && magicLanternLogic.leftLantern) || (!magicLanternLogic.active)) && !cursorHandler.isCursorMoving ()) {
-			if ((inputKeeper.getAxis("Horizontal") < -0.2f && facingRight) || (inputKeeper.getAxis("Horizontal") > 0.2f && !facingRight))
+			if ((inputKeeper.getAxis("Horizontal") < -0.2f && stateVar.facingRight) || (inputKeeper.getAxis("Horizontal") > 0.2f && !stateVar.facingRight))
 			{
 				Flip ();
-				//Debug.Log ("girando 3");
 			}
 			   
 		}
 	}
 
+	//CORRADO
+	//funzione chiamata ogni volta che l'animazione del player, raggiunge un frame in cui il piede tocca terra
 	public void animationEventTest()
 	{
-		//audioHandler.getAudioClipByName ("Passi").loop = false;
 		audioHandler.playForcedClipByName ("TonfoCaduta");
 		//Debug.Log ("passo");
 	}
 
+	//CORRADO E DARIO
+	//setta le variabili dell'animator, in base alle funzioni precedenti dell'update
 	void setAnimations()
 	{
 		if(!anim.GetBool("Stunned") && stunned)
@@ -636,12 +663,12 @@ public class PlayerMovements : MonoBehaviour {
 
 		anim.SetBool ("Stunned", stunned);
 
-		if (onGround && ((onLadder && RigBody.velocity.y <= 0.0f) || (!onLadder)))
+		if (stateVar.onGround && ((ladderVar.onLadder && rigBody.velocity.y <= 0.0f) || (!ladderVar.onLadder)))
 			anim.SetBool ("onGround", true);
 		else
 			anim.SetBool ("onGround", false);
 
-		anim.SetBool ("Running", running);
+		anim.SetBool ("Running", runningVars.running);
 
 		
 
@@ -649,9 +676,9 @@ public class PlayerMovements : MonoBehaviour {
 		if (!AIControl) {
 
 
-			if(Mathf.Abs( RigBody.velocity.x ) > 0.0f ) {
+			if(Mathf.Abs( rigBody.velocity.x ) > 0.0f ) {
 
-				if(onGround) {
+				if(stateVar.onGround) {
 					anim.speed = Mathf.Clamp( Mathf.Abs(GeneralFinder.inputManager.getAxis ("Horizontal") ) / 1.5f, 0.2f, 0.75f);
 				}
 				else {
@@ -671,8 +698,8 @@ public class PlayerMovements : MonoBehaviour {
 
 		if (!AIControl) {
 
-			if (running) {
-				if (((RigBody.velocity.x > 0.0f) && !facingRight) || ((RigBody.velocity.x < 0.0f) && facingRight))
+			if (runningVars.running) {
+				if (((rigBody.velocity.x > 0.0f) && !stateVar.facingRight) || ((rigBody.velocity.x < 0.0f) && stateVar.facingRight))
 					anim.SetBool ("Backwards", true);
 				else
 					anim.SetBool ("Backwards", false);
@@ -680,8 +707,8 @@ public class PlayerMovements : MonoBehaviour {
 
 
 
-			anim.SetBool ("OnLadder", onLadder);
-			if (onLadder && RigBody.velocity.y != 0.0f)
+			anim.SetBool ("OnLadder", ladderVar.onLadder);
+			if (ladderVar.onLadder && rigBody.velocity.y != 0.0f)
 				anim.SetBool ("Climbing", true);
 			else
 				anim.SetBool ("Climbing", false);
@@ -690,31 +717,25 @@ public class PlayerMovements : MonoBehaviour {
 
 	}
 
-	void gravityManagement()
-	{
-		/*
-		if (RigBody.velocity.y < 0.0f)
-			RigBody.gravityScale = gravityMultiplier * standardGravity;
-		else
-			RigBody.gravityScale = standardGravity;
-		*/
-		//Debug.Log (RigBody.gravityScale);
-	}
-
+	//CORRADO
+	//se sono sulla scala, ignoro le collisioni con i softGround
 	void setCollisionsOnLadder(bool toIgnore = true)
 	{
 		GameObject[] softGrounds = GameObject.FindGameObjectsWithTag("SoftGround");
-		
-		foreach (GameObject softGround in softGrounds)
-		{
-			Physics2D.IgnoreCollision(softGround.transform.GetComponent<BoxCollider2D>(), GetComponent<BoxCollider2D>(), toIgnore);
-			Physics2D.IgnoreCollision(softGround.transform.GetComponent<BoxCollider2D>(), GetComponent<CircleCollider2D>(), toIgnore);
+
+		for (int i = 0; i < softGrounds.Length; i++) {
+			if (softGrounds[i] != null)
+			{
+				Physics2D.IgnoreCollision(softGrounds[i].transform.GetComponent<BoxCollider2D>(), GetComponent<BoxCollider2D>(), toIgnore);
+				Physics2D.IgnoreCollision(softGrounds[i].transform.GetComponent<BoxCollider2D>(), GetComponent<CircleCollider2D>(), toIgnore);
+			}
 		}
 	}
 
+	//CORRADO
 	void FixedUpdate()
 	{
-		if (!freezedByTool && !AIControl) {
+		if (!stateVar.freezedByTool && !AIControl) {
 			//fa un salto
 			jumpingManagementFU ();
 
@@ -726,234 +747,214 @@ public class PlayerMovements : MonoBehaviour {
 		}
 	}
 
+	//CORRADO
+	//in aria, salva varibili utili per calcolare la forza di rimbalzo
 	void saveFallingPositionsManagement()
 	{
-		if (!savedFallingPositions)
+		if (!bounceVars.savedFallingPositions)
 		{
-			if (RigBody.velocity.y >= 0.0f){
-				lastYPositivePosition = transform.position.y;
+			if (rigBody.velocity.y >= 0.0f){
+				//salva la posizione Y più elevata raggiunta durante il salto
+				bounceVars.lastYPositivePosition = transform.position.y;
 			}else{
-				firstYNegativePosition = transform.position.y;
-				savedFallingPositions = true;
+				bounceVars.firstYNegativePosition = transform.position.y;
+				bounceVars.savedFallingPositions = true;
 			}
 		}
 	}
 
-	void softGroundCollManagement_02()
-	{
-		//if (onLadder)
-		//	onGround = groundCheckOnLadder ();
-	}
 
+	//CORRADO
 	public void setAscForce(bool isSpring = false)
 	{
-		//Debug.Log ("called");
 		//richiamo la funzione solo se è passato il tempo necessario
-		if (Mathf.Abs (Time.time - bounceTime) > diffBounceTime) {
-			bounceTime = Time.time;
+		if (Mathf.Abs (Time.time - bounceVars.bounceTime) > bounceVars.diffBounceTime) {
+			bounceVars.bounceTime = Time.time;
 
 			//richiamato al primo rimbalzo, la variabile settedNumHeightLevel deve essere rimessa a false ogni volta che si tocca terra
-			if (!settedNumHeightLevel && !FallingVelocityDependence) {
+			if (!bounceVars.settedNumHeightLevel && !bounceVars.fallingVelocityDependence) {
 				
 				//faccio una media tra l'ultima posizione con velocità positiva registrata e la prima con velocità negativa,
 				//per approssimare la massima posizione raggiunta
-				float mediumMaxHeight = (lastYPositivePosition + firstYNegativePosition) / 2;
+				float mediumMaxHeight = (bounceVars.lastYPositivePosition + bounceVars.firstYNegativePosition) / 2;
 				
 				if (mediumMaxHeight>transform.position.y)
 				{
-					diffHeight = Mathf.Abs (mediumMaxHeight - transform.position.y);
-					if (diffHeight > maxDiffHeight)
-						diffHeight = maxDiffHeight;
+					bounceVars.diffHeight = Mathf.Abs (mediumMaxHeight - transform.position.y);
+					if (bounceVars.diffHeight > bounceVars.maxDiffHeight)
+						bounceVars.diffHeight = bounceVars.maxDiffHeight;
 				}else{
-					diffHeight = 0.0f;
+					bounceVars.diffHeight = 0.0f;
 				}
 				
-				settedNumHeightLevel = true;
+				bounceVars.settedNumHeightLevel = true;
 			}
 			
 			float velocity = 0.0f;
-			if (FallingVelocityDependence) {
-				velocity = Mathf.Abs (RigBody.velocity.y);
+			if (bounceVars.fallingVelocityDependence) {
+				velocity = Mathf.Abs (rigBody.velocity.y);
 			}
 			
-			RigBody.velocity = new Vector3(RigBody.velocity.x,0.0f,0.0f);
+			rigBody.velocity = new Vector3(rigBody.velocity.x,0.0f,0.0f);
 			
 			//dipende dalla velocità di caduta
-			if (FallingVelocityDependence) {
-				addedForceDebug = baseAscForce + (numEnemyJump*addEnemyAscForce) + (velocity*0.1f*addHeightAscForce);
+			if (bounceVars.fallingVelocityDependence) {
+				bounceVars.addedForceDebug = bounceVars.baseAscForce + (bounceVars.numEnemyJump*bounceVars.addEnemyAscForce) + (velocity*0.1f*bounceVars.addHeightAscForce);
 			} else {
 				
 				//dipende dall'altezza di caduta, non dalla velocità
 				if (isSpring)
-					addedForceDebug = baseAscForceSpring + (numEnemyJump*addEnemyAscForce) + (diffHeight/4*addHeightAscForce);
+					bounceVars.addedForceDebug = bounceVars.baseAscForceSpring + (bounceVars.numEnemyJump*bounceVars.addEnemyAscForce) + (bounceVars.diffHeight/4*bounceVars.addHeightAscForce);
 				else
-					addedForceDebug = baseAscForce + (numEnemyJump*addEnemyAscForce) + (diffHeight/4*addHeightAscForce);
+					bounceVars.addedForceDebug = bounceVars.baseAscForce + (bounceVars.numEnemyJump*bounceVars.addEnemyAscForce) + (bounceVars.diffHeight/4*bounceVars.addHeightAscForce);
 			}
 
-			RigBody.AddForce(new Vector2 (0.0f,addedForceDebug));
+			rigBody.AddForce(new Vector2 (0.0f,bounceVars.addedForceDebug));
 
 		}
 		if (audioHandler != null)
 			audioHandler.playClipByName ("RimbalzoNemico");
 	}
 
+	//CORRADO
+	//chiamata dal nemico ad ogni salto in testa, incrementa una variabile
 	public void addEnemyCount()
 	{
-		if (numEnemyJump<maxNumEnemyCount)
-			numEnemyJump = numEnemyJump +1;
+		if (bounceVars.numEnemyJump<bounceVars.maxNumEnemyCount)
+			bounceVars.numEnemyJump++;
 	}
 		
-
+	//CORRADO
+	//resetta le variabili che si usano in aria, viene chiamata quando il player è a terra
 	void resetAscForceVariables()
 	{
-		numEnemyJump = 0;
-		settedNumHeightLevel = false;
-		diffHeight = 0.0f;
-		lastYPositivePosition = transform.position.y;
-		savedFallingPositions = false;
+		bounceVars.numEnemyJump = 0;
+		bounceVars.settedNumHeightLevel = false;
+		bounceVars.diffHeight = 0.0f;
+		bounceVars.lastYPositivePosition = transform.position.y;
+		bounceVars.savedFallingPositions = false;
 	}
 
+	//CORRADO
+	//gestione del salto nell'update, imposta una variabile usata nel fixedUpdate
 	void jumpingManagement()
 	{
-		if (inputKeeper!=null && inputKeeper.isButtonDown ("Jump") && ((Time.time - lastJump)> diffBetweenJump)) {
-			lastJump = Time.time;
-			Jumping = true;
+		if (inputKeeper!=null && inputKeeper.isButtonDown ("Jump") && ((Time.time - jumpingVars.lastJump)> jumpingVars.diffBetweenJump)) {
+			jumpingVars.lastJump = Time.time;
+			jumpingVars.jumping = true;
 		}
 	}
 
+	//CORRADO
+	//gestione del salto nel FixedUpdate, assegna una forza ascendente al player
 	void jumpingManagementFU()
 	{
-		if (Jumping == true) {
+		if (jumpingVars.jumping == true) {
 			if (audioHandler != null)
 				audioHandler.playClipByName("Salto");
 
 			if (!cameraOscura)
-				RigBody.AddForce (new Vector2 (0.0f, 150.0f * jumpFactor));
+				rigBody.AddForce (new Vector2 (0.0f, 150.0f * jumpingVars.jumpFactor));
 			else
-				RigBody.AddForce (new Vector2 (0.0f, (transform.localScale.y) * 150.0f * jumpFactor));
+				rigBody.AddForce (new Vector2 (0.0f, (transform.localScale.y) * 150.0f * jumpingVars.jumpFactor));
 			
-			Jumping = false;
+			jumpingVars.jumping = false;
 		}
 	}
 
+	//CORRADO
 	void resetFallingForcesVariables()
 	{
-		removeFallingForce = false;
-		removeFallingNegForce = false;
-		removeFallingPosForce = false;
+		onAirVars.removeFallingForce = false;
+		onAirVars.removeFallingNegForce = false;
+		onAirVars.removeFallingPosForce = false;
 	}
 
+	//CORRADO
+	//gestisce l'input quando il player è in aria. Setta alcune variabili usate poi nel FixedUpdate per assegnare forze
 	void notGroundManagement()
 	{
-		if (inputKeeper!=null && !onGround && !onLadder) {
+		if (inputKeeper!=null && !stateVar.onGround && !ladderVar.onLadder) {
 			if (inputKeeper.getAxis ("Horizontal") == 0.0f)
 			{
-				addFallingForceRight = false;
-				addFallingForceLeft = false;
+				onAirVars.addFallingForceRight = false;
+				onAirVars.addFallingForceLeft = false;
 
 				//rallentamento del personaggio
-				if (RigBody.velocity.x != 0.0f && !removeFallingForce)
-					removeFallingForce = true;
+				if (rigBody.velocity.x != 0.0f && !onAirVars.removeFallingForce)
+					onAirVars.removeFallingForce = true;
 			}
 
 			else{
 				if (inputKeeper.getAxis ("Horizontal") > 0.0f){
-					addFallingForceRight = true;
+					//se muovo il player verso destra, imposto la variabile usata poi nel FU per assegnare la forza
+					onAirVars.addFallingForceRight = true;
 					//se supero la velocità massima non aggiungo forza
-					if ((RigBody.velocity.x > 0.0f) && (Mathf.Abs (RigBody.velocity.x) > speedFactor)){
-						addFallingForceRight = false;
+					if ((rigBody.velocity.x > 0.0f) && (Mathf.Abs (rigBody.velocity.x) > runningVars.speedFactor)){
+						onAirVars.addFallingForceRight = false;
 					}
 				}else if (inputKeeper.getAxis ("Horizontal") < 0.0f){
-					addFallingForceLeft = true;
+					//se muovo il player verso sinistra, imposto la variabile usata poi nel FU per assegnare la forza
+					onAirVars.addFallingForceLeft = true;
 					//se supero la velocità massima non aggiungo forza
-					if ((RigBody.velocity.x < 0.0f) && (Mathf.Abs (RigBody.velocity.x) > speedFactor)){
-						addFallingForceLeft = false;
+					if ((rigBody.velocity.x < 0.0f) && (Mathf.Abs (rigBody.velocity.x) > runningVars.speedFactor)){
+						onAirVars.addFallingForceLeft = false;
 					}
 				}
 
-
-
-				/*
-				//se sto muovendo nella stessa direzione in cui sto guardando, devo controllare che la velocità non sia già massima
-				if (((RigBody.velocity.x > 0.0f) && (Input.GetAxis ("Horizontal") > 0)) || ((RigBody.velocity.x < 0.0f) && (Input.GetAxis ("Horizontal") < 0)))
-				{
-					if (Mathf.Abs (RigBody.velocity.x) < speedFactor)
-					{
-						addFallingForce = true;
-					}
-				}else{
-					addFallingForce = true;
-				}
-
-				*/
 				//-----nuova aggiunta------
 				resetFallingForcesVariables();
 			}
 
 			//setto la massima velocità di caduta
-			if (RigBody.velocity.y < -maxFallingSpeed)
+			if (rigBody.velocity.y < -onAirVars.maxFallingSpeed)
 			{
-				RigBody.velocity = new Vector2(RigBody.velocity.x, -maxFallingSpeed);
+				rigBody.velocity = new Vector2(rigBody.velocity.x, -onAirVars.maxFallingSpeed);
 			}
 
-			//gestione vento
-			//--------------DA OTTIMIZZARE!!!!!!-----------------
-			//------------LE OPERAZIONI DOVREBBE FARLE SOLO AL PRIMO LEFT!!!------------------
-			/*
-			if (magicLanternLogic.actualState == MagicLantern.lanternState.Left)
-			{
-				windPrefab = GameObject.FindGameObjectWithTag("WindPrefab");
-				if (windPrefab != null)
-				{
-					WindBehaviour windBehaviour = windPrefab.GetComponent<WindBehaviour>();
-					if (windBehaviour.isGameObjectOnWind(gameObject) && RigBody.velocity.y < 0.0f)
-					{
-						RigBody.velocity = new Vector2(RigBody.velocity.x, RigBody.velocity.y/4);
-					}
-				}
-			}
-			*/
 		}
 	}
 
+	//CORRADO
 	//movimenti in aria, da usare nel FixedUpdate (forze in gioco)
 	void notGroundManagementFU()
 	{
-		if (!onGround && !onLadder) {
+		if (!stateVar.onGround && !ladderVar.onLadder) {
 
-			if (addFallingForceRight)
+			//se le variabili sono state settate nell'update, aggiungo forza
+			if (onAirVars.addFallingForceRight)
 			{
-				RigBody.AddForce (new Vector2(forceOnAirFactor,0.0f));
-				addFallingForceRight = false;
+				rigBody.AddForce (new Vector2(onAirVars.forceOnAirFactor,0.0f));
+				onAirVars.addFallingForceRight = false;
 			}
 
-			if (addFallingForceLeft)
+			if (onAirVars.addFallingForceLeft)
 			{
-				RigBody.AddForce (new Vector2(-forceOnAirFactor,0.0f));
-				addFallingForceLeft = false;
+				rigBody.AddForce (new Vector2(-onAirVars.forceOnAirFactor,0.0f));
+				onAirVars.addFallingForceLeft = false;
 			}
 
 			//-----nuova aggiunta------
-			if (removeFallingForce)
+			if (onAirVars.removeFallingForce)
 			{
 				//ho superato il limite
-				if ((RigBody.velocity.x < 0.0f && removeFallingPosForce) || (RigBody.velocity.x > 0.0f && removeFallingNegForce))
+				if ((rigBody.velocity.x < 0.0f && onAirVars.removeFallingPosForce) || (rigBody.velocity.x > 0.0f && onAirVars.removeFallingNegForce))
 				{
-					RigBody.velocity = new Vector2(0.0f, RigBody.velocity.y);
-					removeFallingForce = false;
-					removeFallingNegForce = false;
-					removeFallingPosForce = false;
+					rigBody.velocity = new Vector2(0.0f, rigBody.velocity.y);
+					onAirVars.removeFallingForce = false;
+					onAirVars.removeFallingNegForce = false;
+					onAirVars.removeFallingPosForce = false;
 					return;
 				}
 
-				if (RigBody.velocity.x < 0.0f)
+				if (rigBody.velocity.x < 0.0f)
 				{
-					removeFallingNegForce = true;
-					RigBody.AddForce (new Vector2(airXDeceleration,0.0f));
-				}else if(RigBody.velocity.x > 0.0f)
+					onAirVars.removeFallingNegForce = true;
+					rigBody.AddForce (new Vector2(onAirVars.airXDeceleration,0.0f));
+				}else if(rigBody.velocity.x > 0.0f)
 				{
-					removeFallingPosForce = true;
-					RigBody.AddForce (new Vector2(-airXDeceleration,0.0f));
+					onAirVars.removeFallingPosForce = true;
+					rigBody.AddForce (new Vector2(-onAirVars.airXDeceleration,0.0f));
 				}
 
 			}
@@ -961,39 +962,48 @@ public class PlayerMovements : MonoBehaviour {
 		}
 	}
 
+	//CORRADO
+	//agisce sui collider dei softGround, gli elementi che possono essere attraversati dal basso verso l'alto
 	void softGroundCollManagement ()
 	{
-		foreach (GameObject fooObj in GameObject.FindGameObjectsWithTag("SoftGround")) {
-			
-			BoxCollider2D objCollider = fooObj.transform.GetComponent<BoxCollider2D> ();
-			SpriteRenderer objRend = fooObj.transform.GetComponent<SpriteRenderer> ();
-			
-			if (!onLadder) {
+
+		GameObject[] softGrounds = GameObject.FindGameObjectsWithTag ("SoftGround");
+
+		for (int i = 0; i < softGrounds.Length; i++) {
+			if (softGrounds[i] != null)
+			{
+				BoxCollider2D objCollider = softGrounds[i].transform.GetComponent<BoxCollider2D> ();
+				SpriteRenderer objRend = softGrounds[i].transform.GetComponent<SpriteRenderer> ();
 				
-				if (objRend.bounds.max.y > GroundCheckUpperLeft.transform.position.y) {
+				if (!ladderVar.onLadder) {
+					
+					if (objRend.bounds.max.y > GroundCheckUpperLeft.transform.position.y) {
+						objCollider.enabled = false;
+					} else {
+						objCollider.enabled = true;
+					}
+				}else
 					objCollider.enabled = false;
-				} else {
-					objCollider.enabled = true;
-				}
-			}else
-				objCollider.enabled = false;
+			}
 		}
 	}
-	
+
+	//CORRADO
+	//assegna le giuste variabili se decido si salire su una scala con cui sto collidendo
 	void CollidingLadderManagement()
 	{
 		//se decido di salire sulla scala
-		if (inputKeeper!=null && collidingLadder && !onLadder) {
+		if (inputKeeper!=null && ladderVar.collidingLadder && !ladderVar.onLadder) {
 
 			if (((inputKeeper.getAxisRaw ("Vertical") > 0.5f) || (inputKeeper.getAxisRaw ("Vertical") < -0.5f && !groundCheckOnLadder()))) 
 			{
 				//controllo sulla distanza dalla scala, si può sostituire diminuendo la dimensione del collider, ma così ho più controllo
-				if (Mathf.Abs (actualLadder.transform.position.x - transform.position.x) < LadderLateralLimit) {
-					onLadder = true;
-					onGround = false;
+				if (Mathf.Abs (ladderVar.actualLadder.transform.position.x - transform.position.x) < ladderVar.ladderLateralLimit) {
+					ladderVar.onLadder = true;
+					stateVar.onGround = false;
 					//anim.SetBool ("OnLadder", true);
-					RigBody.velocity = vec2Null;
-					transform.position = new Vector3 (actualLadder.transform.position.x, transform.position.y, transform.position.z);
+					rigBody.velocity = vec2Null;
+					transform.position = new Vector3 (ladderVar.actualLadder.transform.position.x, transform.position.y, transform.position.z);
 
 					setCollisionsOnLadder();
 				}
@@ -1001,36 +1011,33 @@ public class PlayerMovements : MonoBehaviour {
 		}
 	}
 
+	//CORRADO
+	//gestione dei movimenti lungo la scala
 	void OnLadderManagement ()
 	{
+		if (inputKeeper!=null && ladderVar.onLadder == true) {
 
-		if (inputKeeper!=null && onLadder == true) {
-
-			//onGround = false;
-
-			//onGround = groundCheckOnLadder();
-
-			RigBody.gravityScale = 0.0f;
+			//metto la gravità a 0
+			rigBody.gravityScale = 0.0f;
 
 			//faccio in modo che il personaggio sia sempre "centrato"
-			//transform.position = new Vector3 (actualLadder.transform.position.x, transform.position.y, transform.position.z);
+			//ERA COMMENTATA NELLA BUILD (?!?!?!)
+			transform.position = new Vector3 (ladderVar.actualLadder.transform.position.x, transform.position.y, transform.position.z);
 
 			//se non premo più verso il basso o l'alto, il personaggio si ferma
 			if (inputKeeper.getAxisRaw("Vertical") == 0.0f)
 			{
-				//if (onGround)
-				//	onLadder = false;
-				RigBody.velocity = vec2Null;
+				rigBody.velocity = vec2Null;
 			}else if(inputKeeper.getAxisRaw("Vertical") > 0.5f && isUpperOnLadder())
 			{
-				RigBody.velocity = new Vector2(0.0f, onLadderMovement*40.0f);
+				rigBody.velocity = new Vector2(0.0f, ladderVar.onLadderMovement*40.0f);
 			}else if(inputKeeper.getAxisRaw("Vertical") > 0.5f && !isUpperOnLadder())
 			{
-				RigBody.velocity = vec2Null;
+				rigBody.velocity = vec2Null;
 			}else if(inputKeeper.getAxisRaw("Vertical") < -0.5f && isMiddleOnLadder())
 			{
 				if (!groundCheckOnLadder())
-					RigBody.velocity = new Vector2(0.0f, -onLadderMovement*40.0f);
+					rigBody.velocity = new Vector2(0.0f, -ladderVar.onLadderMovement*40.0f);
 				//sto toccando terra e premendo il tasto giù, cioè sto lasciando la scala
 				else
 				{
@@ -1041,7 +1048,7 @@ public class PlayerMovements : MonoBehaviour {
 			}else if(inputKeeper.getAxisRaw("Vertical") < -0.5f && !isMiddleOnLadder())
 			{
 				//dovrebbe cadere
-				RigBody.velocity = vec2Null;
+				rigBody.velocity = vec2Null;
 
 				leaveLadder();
 			}
@@ -1049,19 +1056,20 @@ public class PlayerMovements : MonoBehaviour {
 
 
 			float HorInput = inputKeeper.getAxisRaw("Horizontal");
+
 			//se mi muovo lateralmente dalla scala
 			if (HorInput != 0.0f && inputKeeper.getAxisRaw("Vertical") > -0.4f && inputKeeper.getAxisRaw("Vertical") < 0.4f)
 			{
 				leaveLadder();
-				RigBody.velocity = vec2Null;
+				rigBody.velocity = vec2Null;
 
 				if (HorInput > 0.0f)
-					jumpFromLadderRight = true;
+					ladderVar.jumpFromLadderRight = true;
 				else
-					jumpFromLadderLeft = true;
+					ladderVar.jumpFromLadderLeft = true;
 			}else{
-				jumpFromLadderRight = false;
-				jumpFromLadderLeft = false;
+				ladderVar.jumpFromLadderRight = false;
+				ladderVar.jumpFromLadderLeft = false;
 			}
 
 			//bisogna resettare le variabili, perché se il player è sulla scala non è onGround, quindi le variabili rimangono settate
@@ -1069,24 +1077,28 @@ public class PlayerMovements : MonoBehaviour {
 		}
 	}
 
+	//CORRADO
+	//imposta alcune variabili nel momento in cui bisogna lasciare la scala
 	void leaveLadder()
 	{
 		setCollisionsOnLadder(false);
-		onLadder = false;
-		RigBody.gravityScale = standardGravity;
+		ladderVar.onLadder = false;
+		rigBody.gravityScale = stateVar.standardGravity;
 	}
 
+	//CORRADO
+	//gestione delle forze da applicare quando si lascia la scala
 	void OnLadderManagemetFU()
 	{
-		if (onLadder) {
-			if (jumpFromLadderRight)
+		if (ladderVar.onLadder) {
+			if (ladderVar.jumpFromLadderRight)
 			{
-				RigBody.AddForce(new Vector2(fromLadderForce,0.0f));
-				jumpFromLadderRight = false;
-			}else if(jumpFromLadderLeft)
+				rigBody.AddForce(new Vector2(ladderVar.fromLadderForce,0.0f));
+				ladderVar.jumpFromLadderRight = false;
+			}else if(ladderVar.jumpFromLadderLeft)
 			{
-				RigBody.AddForce(new Vector2(-fromLadderForce,0.0f));
-				jumpFromLadderLeft = false;
+				rigBody.AddForce(new Vector2(-ladderVar.fromLadderForce,0.0f));
+				ladderVar.jumpFromLadderLeft = false;
 			}
 		}	
 	}
@@ -1096,11 +1108,11 @@ public class PlayerMovements : MonoBehaviour {
 	void runningManagement(bool facingLeftAI = false, bool facingRightAI = false, float speedAI = 1.0f)
 	{
 		if (inputKeeper!=null && !AIControl) {
-			RigBody.velocity = new Vector2 (inputKeeper.getAxis ("Horizontal") * speedFactor, RigBody.velocity.y);
+			rigBody.velocity = new Vector2 (inputKeeper.getAxis ("Horizontal") * runningVars.speedFactor, rigBody.velocity.y);
 
 			//stoppo immediatamente il movimento non appena si lascia il tasto per la corsa
 			if (inputKeeper.getAxisRaw ("Horizontal") == 0)
-				RigBody.velocity = new Vector2 (0.0f, RigBody.velocity.y);
+				rigBody.velocity = new Vector2 (0.0f, rigBody.velocity.y);
 		}
 		else {
 			int directionAI = 1;
@@ -1111,37 +1123,38 @@ public class PlayerMovements : MonoBehaviour {
 			}else if (!facingLeftAI && facingRightAI)
 				directionAI = 1;
 
-			RigBody.velocity = new Vector2 (directionAI * speedAI, RigBody.velocity.y);
+			rigBody.velocity = new Vector2 (directionAI * speedAI, rigBody.velocity.y);
 
 		}
 		
 
 		
-		if (RigBody.velocity.x != 0) {
+		if (rigBody.velocity.x != 0) {
 			if (!AIControl)
 			{
-				//if (((RigBody.velocity.x > 0.0f) && !facingRight) || ((RigBody.velocity.x < 0.0f) && facingRight))
+				//if (((rigBody.velocity.x > 0.0f) && !stateVar.facingRight) || ((rigBody.velocity.x < 0.0f) && stateVar.facingRight))
 					//anim.SetBool ("Backwards", true);
 				//else
 					//anim.SetBool ("Backwards", false);
 
 			}
-			running = true;
+			runningVars.running = true;
 			//anim.SetBool ("Running", true);
 		} else {
-			running = false;
+			runningVars.running = false;
 			//anim.SetBool ("Running", false);
 		}
 	}
 
+	//????
 	void runningManagement1(bool facingLeftAI = false, bool facingRightAI = false, bool isWalkSpeed = true, float scaleFactorAI = 1)
 	{
 		if (inputKeeper!=null && !AIControl) {
-			RigBody.velocity = new Vector2 (inputKeeper.getAxis ("Horizontal") * speedFactor, RigBody.velocity.y);
+			rigBody.velocity = new Vector2 (inputKeeper.getAxis ("Horizontal") * runningVars.speedFactor, rigBody.velocity.y);
 			
 			//stoppo immediatamente il movimento non appena si lascia il tasto per la corsa
 			if (inputKeeper.getAxisRaw ("Horizontal") == 0)
-				RigBody.velocity = new Vector2 (0.0f, RigBody.velocity.y);
+				rigBody.velocity = new Vector2 (0.0f, rigBody.velocity.y);
 		}
 		else {
 			int directionAI = 1;
@@ -1153,41 +1166,43 @@ public class PlayerMovements : MonoBehaviour {
 				directionAI = 1;
 			
 			if(isWalkSpeed) {
-				RigBody.velocity = new Vector2 (scaleFactorAI * AI_walkSpeed * directionAI, RigBody.velocity.y);
+				rigBody.velocity = new Vector2 (scaleFactorAI * AI_walkSpeed * directionAI, rigBody.velocity.y);
 			}
 			else {
-				RigBody.velocity = new Vector2 (scaleFactorAI * AI_runSpeed * directionAI, RigBody.velocity.y);
+				rigBody.velocity = new Vector2 (scaleFactorAI * AI_runSpeed * directionAI, rigBody.velocity.y);
 			}
 		}
 		
 		
 		
-		if (RigBody.velocity.x != 0) {
+		if (rigBody.velocity.x != 0) {
 			if (!AIControl)
 			{
-				//if (((RigBody.velocity.x > 0.0f) && !facingRight) || ((RigBody.velocity.x < 0.0f) && facingRight))
+				//if (((rigBody.velocity.x > 0.0f) && !stateVar.facingRight) || ((rigBody.velocity.x < 0.0f) && stateVar.facingRight))
 				//anim.SetBool ("Backwards", true);
 				//else
 				//anim.SetBool ("Backwards", false);
 				
 			}
-			running = true;
+			runningVars.running = true;
 			//anim.SetBool ("Running", true);
 		} else {
-			running = false;
+			runningVars.running = false;
 			//anim.SetBool ("Running", false);
 		}
 	}
 
 	void underWaterManagement () {
 		if (inputKeeper!=null)
-			RigBody.AddForce (new Vector2 (inputKeeper.getAxis ("Horizontal") * 10.0f, inputKeeper.getAxis ("Vertical") * 20.0f));
+			rigBody.AddForce (new Vector2 (inputKeeper.getAxis ("Horizontal") * 10.0f, inputKeeper.getAxis ("Vertical") * 20.0f));
 
 	}
 
+	//CORRADO
+	//se sono sopra una piattaforma mobile, imposto il player come figlio
 	void movingPlatformManagement()
 	{
-		if (onGround) {
+		if (stateVar.onGround) {
 			GameObject GO = getGroundGameObject ();
 			if (GO.tag.ToString () == "MovingPlatform") {
 				//parenting
@@ -1198,10 +1213,10 @@ public class PlayerMovements : MonoBehaviour {
 		} else {
 			setPlayerParentTo(null);
 		}
-		wasGround = onGround;
-		//Debug.Log ("movingPlatformManagement");
+		stateVar.wasGround = stateVar.onGround;
 	}
 
+	//CORRADO
 	void setPlayerParentTo(GameObject parentGO)
 	{
 		if (parentGO != null)
@@ -1210,6 +1225,8 @@ public class PlayerMovements : MonoBehaviour {
 			transform.parent = null;
 	}
 
+	//CORRADO
+	//metodi usati per capire in che parte della scala sono
 	bool isUpperOnLadder()
 	{
 		GameObject[] Ladders = GameObject.FindGameObjectsWithTag ("Ladder");
@@ -1230,6 +1247,7 @@ public class PlayerMovements : MonoBehaviour {
 		return false;
 	}
 
+	//CORRADO
 	bool isMiddleOnLadder()
 	{
 		GameObject[] Ladders = GameObject.FindGameObjectsWithTag ("Ladder");
@@ -1251,31 +1269,34 @@ public class PlayerMovements : MonoBehaviour {
 		return false;
 	}
 
+	//CORRADO
 	//se attivo il trigger della scala, setto le relative variabili
 	void OnTriggerStay2D(Collider2D coll)
 	{
 		if (coll.tag == "Ladder") {
-			collidingLadder = true;
-			actualLadder = coll.gameObject;
+			ladderVar.collidingLadder = true;
+			ladderVar.actualLadder = coll.gameObject;
 		}
 	}
 
+	//CORRADO
 	//esco dal trigger della scala
 	void OnTriggerExit2D(Collider2D coll)
 	{
 		if (coll.tag == "Ladder") {
-			collidingLadder = false;
+			ladderVar.collidingLadder = false;
 		}
 	}
 
-
+	//CORRADO
 	//giro il player
 	void Flip()
 	{
 		transform.localScale = new Vector3 (-transform.localScale.x, transform.localScale.y, transform.localScale.z);
-		facingRight = ! facingRight;
+		stateVar.facingRight = ! stateVar.facingRight;
 	}
-	
+
+	//CORRADO
 	//controllo che il player tocchi terra
 	bool groundCheck()
 	{
@@ -1283,33 +1304,32 @@ public class PlayerMovements : MonoBehaviour {
 		                              new Vector2(GroundCheckBottomRight.position.x,GroundCheckBottomRight.position.y), GroundLayers);
 	}
 
+	//CORRADO
+	//groundCheck, ma in cui si evitano i layer softGround.
 	bool groundCheckOnLadder()
 	{
 		return Physics2D.OverlapArea (new Vector2(GroundCheckUpperLeft.position.x,GroundCheckUpperLeft.position.y), 
 		                              new Vector2(GroundCheckBottomRight.position.x,GroundCheckBottomRight.position.y), hardGroundLayers);
 	}
 
+	//CORRADO
 	GameObject getGroundGameObject()
 	{
 		return Physics2D.OverlapArea (new Vector2(GroundCheckUpperLeft.position.x,GroundCheckUpperLeft.position.y), 
 		                              new Vector2(GroundCheckBottomRight.position.x,GroundCheckBottomRight.position.y), GroundLayers).gameObject;
 	}
 
-	public void isUsingTool(bool UseOrNot)
+	//CORRADO
+	public void isUsingTool(bool useOrNot)
 	{
-		freezedByTool = UseOrNot;
-		//anim.SetBool("usingTool",UseOrNot);
+		stateVar.freezedByTool = useOrNot;
 	}
 
-	void OnTriggerEnter2D (Collider2D other)
-	{
-		/*
-		if (other.gameObject.tag == "WindPrefab" && RigBody.velocity.y < 0.0f)
-			//RigBody.velocity = new Vector2 (0.0f,0.0f);
-			RigBody.velocity = new Vector2(RigBody.velocity.x, RigBody.velocity.y/4);
-
-		*/
-	}
+	/*
+	 * 
+	 * DARIO
+	 * 
+	 */
 
 	//funzione temporanea per conversione del layer
 
@@ -1398,7 +1418,7 @@ public class PlayerMovements : MonoBehaviour {
 
 	public void c_jump()
 	{
-		Jumping = true;
+		jumpingVars.jumping = true;
 		jumpingManagementFU ();
 	}
 
@@ -1421,7 +1441,7 @@ public class PlayerMovements : MonoBehaviour {
 	public void c_flip()
 	{
 		transform.localScale = new Vector3 (-transform.localScale.x, transform.localScale.y, transform.localScale.z);
-		facingRight = ! facingRight;
+		stateVar.facingRight = ! stateVar.facingRight;
 	}
 
 	//gestione stunned, usato sia per player che per AI
@@ -1429,7 +1449,7 @@ public class PlayerMovements : MonoBehaviour {
 		
 		if (isStun) {
 			if(!stunned) {
-				running = false;
+				runningVars.running = false;
 				//anim.SetBool ("Running", false);
 				//altri controlli? devo mettere a false altre variabili?
 				//anim.SetBool ("Stunned", true);
@@ -1496,7 +1516,7 @@ public class PlayerMovements : MonoBehaviour {
 				zoneAnalyzerParent.BroadcastMessage("c_playerKilled", tagSource);
 			}
 
-			if(OnGround) {
+			if(onGround) {
 				//Debug.Log ("AAAAAAAAAAAAAAAA2");
 				StartCoroutine (handlePlayerKill ());
 				c_stunned (true);
@@ -1515,8 +1535,8 @@ public class PlayerMovements : MonoBehaviour {
 		//MOD CORRADO!!!!!!!!!!
 		leaveLadder();
 
-		onGround = false;
-		running = false;
+		stateVar.onGround = false;
+		runningVars.running = false;
 
 		respawningFromDeath = true;
 
@@ -1528,7 +1548,7 @@ public class PlayerMovements : MonoBehaviour {
 		BoxCollider2D b2d = GetComponent<BoxCollider2D> ();
 		CircleCollider2D c2d = GetComponent<CircleCollider2D> ();
 		
-		RigBody.AddForce(new Vector2(100.0f,300.0f));
+		rigBody.AddForce(new Vector2(100.0f,300.0f));
 		b2d.enabled = false;
 		c2d.enabled = false;
 
@@ -1576,7 +1596,7 @@ public class PlayerMovements : MonoBehaviour {
 			b2d.enabled = true;
 			c2d.enabled = true;
 
-			RigBody.velocity = new Vector2 (0.0f, 0.0f);
+			rigBody.velocity = new Vector2 (0.0f, 0.0f);
 
 
 			bringMeToRespawnPosition ();
@@ -1646,10 +1666,10 @@ public class PlayerMovements : MonoBehaviour {
 			gameObject.transform.localScale = new Vector3 (features.scaleFactor * playerVerse, features.scaleFactor, features.scaleFactor);
 
 		if(features.jumpFactor!=0.0f)
-			jumpFactor = features.jumpFactor;
+			jumpingVars.jumpFactor = features.jumpFactor;
 
 		if(features.speedFactor!=0.0f)
-			speedFactor = features.speedFactor;
+			runningVars.speedFactor = features.speedFactor;
 
 
 		activePlayerFeatures = features;

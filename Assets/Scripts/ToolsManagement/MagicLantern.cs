@@ -355,11 +355,11 @@ public class MagicLantern : Tool {
 	void setStates()
 	{
 		if (inputKeeper != null && canChangeState) {
-			if (inputKeeper.isButtonPressed ("Mira") && player.GetComponent<PlayerMovements> ().OnGround && usable) {
+			if (inputKeeper.isButtonPressed ("Mira") && player.GetComponent<PlayerMovements> ().onGround && usable) {
 				actualState = lanternState.InHand;
 			}
 			
-			if (inputKeeper.isButtonPressed ("Mira") && !player.GetComponent<PlayerMovements> ().OnGround) {
+			if (inputKeeper.isButtonPressed ("Mira") && !player.GetComponent<PlayerMovements> ().onGround) {
 				actualState = lanternState.NotUsed;
 			}
 			
