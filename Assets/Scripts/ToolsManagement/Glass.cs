@@ -1,6 +1,11 @@
 using System;
 using UnityEngine;
 
+/// <summary>
+/// Classe che caratterizza ogni vetrino.
+/// </summary>
+
+//Corrado
 public class Glass : MonoBehaviour
 {
 	public bool usable = false;

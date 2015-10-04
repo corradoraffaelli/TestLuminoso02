@@ -1,6 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Gestisce il comportamento della proiezione del vento.
+/// </summary>
+
+// Corrado
 public class WindBehaviour : MonoBehaviour {
 
 	GameObject[] collidingObjects = new GameObject[20];

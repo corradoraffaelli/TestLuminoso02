@@ -1,13 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Gestisce le velocità massime delle mongolfiere.
+/// </summary>
+
+// Corrado
 public class AirBalloon : MonoBehaviour {
 
-	/// <summary>
-	/// Gestisce le velocità massime delle mongolfiere.
-	/// </summary>
-
-	// Corrado
 	public float maxYSpeed = 1.0f;
 	public float maxXSpeed = 1.0f;
 	Rigidbody2D objRigidbody;

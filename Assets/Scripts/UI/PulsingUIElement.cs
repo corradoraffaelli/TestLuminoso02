@@ -1,6 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Classe che fornisce un'interfaccia per far pulsare un qualsiasi elemento della UI.
+/// </summary>
+
+// Corrado
 public class PulsingUIElement : MonoBehaviour {
 
 	public GameObject pulsingGameObject;

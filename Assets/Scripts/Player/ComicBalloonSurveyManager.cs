@@ -1,6 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Gestore dei questionari con l'NPC.
+/// </summary>
+
+// Corrado
 public class ComicBalloonSurveyManager : MonoBehaviour {
 
 	/*

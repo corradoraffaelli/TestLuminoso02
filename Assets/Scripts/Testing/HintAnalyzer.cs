@@ -6,6 +6,11 @@ using System.Xml.Serialization;
 using System.IO;
 using System;
 
+/// <summary>
+/// Gestisce il salvataggio delle informazioni su quante volte sono stati attivati gli Hint (DEBUG)
+/// </summary>
+
+// Corrado
 public class HintAnalyzer : MonoBehaviour {
 
 	string directory = "HintAnalyzer";

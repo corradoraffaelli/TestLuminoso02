@@ -1,6 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Gestisce le particelle che vengono generate dalla Lanterna ogni volta che questa viene raccolta.
+/// </summary>
+
+// Corrado
 public class ReturnParticles : MonoBehaviour {
 
 	bool needToMove = false;

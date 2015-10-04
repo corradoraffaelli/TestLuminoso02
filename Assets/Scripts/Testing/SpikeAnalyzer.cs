@@ -5,6 +5,11 @@ using System.Xml.Serialization;
 using System.IO;
 using System;
 
+/// <summary>
+/// Gestisce il salvataggio delle informazioni su quante volte sono stati attivati gli Spikes, utili per capire dove il player è caduto (DEBUG)
+/// </summary>
+
+// Corrado
 public class SpikeAnalyzer : MonoBehaviour {
 	
 	string directory = "SpikesAnalyzer";

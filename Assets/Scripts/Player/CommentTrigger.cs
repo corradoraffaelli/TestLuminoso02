@@ -1,6 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Gestisce i dialoghi con NPC basati su trigger.
+/// </summary>
+
+// Corrado
 public class CommentTrigger : MonoBehaviour {
 
 	public GameObject balloonPrefab;

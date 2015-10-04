@@ -1,6 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Classe confusissima che si occupa di gestire la grafica dell'oggetto Lanterna Magica.
+/// </summary>
+
+// Corrado
 public class GraphicLantern : MonoBehaviour {
 
 	GameObject raggio_cerchio;

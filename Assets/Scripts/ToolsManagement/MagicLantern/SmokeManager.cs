@@ -1,6 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Gestisce il fumo che esce dalla Lanterna Magica.
+/// </summary>
+
+// Corrado
 public class SmokeManager : MonoBehaviour {
 
 	ParticleSystem particleSystem;

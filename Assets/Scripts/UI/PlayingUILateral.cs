@@ -1,6 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Classe che si occupa di fornire un'interfaccia standard per accedere agli elementi dell'interfaccia grafica posti ai lati dello schermo.
+/// </summary>
+
+// Corrado
 public class PlayingUILateral : MonoBehaviour {
 
 	[System.Serializable]

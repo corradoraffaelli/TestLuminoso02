@@ -1,6 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Si occupa di far scomparire le lanterne nella scena.
+/// </summary>
+
+// Corrado
 public class DeleteFakeLantern : MonoBehaviour {
 
 	GameObject magicLanternLogic;

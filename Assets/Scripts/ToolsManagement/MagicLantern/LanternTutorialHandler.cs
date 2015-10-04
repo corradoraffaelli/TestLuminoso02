@@ -1,6 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Gestisce i tutorial della Lanterna.
+/// </summary>
+
+// Corrado
 public class LanternTutorialHandler : MonoBehaviour {
 
 	//bool utile per settare in che situazioni l'aiuto deve comparire

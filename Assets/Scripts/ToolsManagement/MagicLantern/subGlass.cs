@@ -1,6 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Frammento di vetrino. INUTILIZZATA.
+/// </summary>
+
+// Corrado
 public class subGlass : MonoBehaviour {
 
 	//public Sprite subGlassSprite;

@@ -1,6 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Gestisce l'interfaccia grafica dei vetrini. Compreso il bottone per lo switch dei vetrini.
+/// </summary>
+
+// Corrado
 public class GlassesUIManager : MonoBehaviour {
 
 	GlassesManager glassesManager;

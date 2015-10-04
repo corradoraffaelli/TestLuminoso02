@@ -1,6 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Caricamento di un nuovo livello all'interazione con una proiezione di fine livello. DEPRECATA.
+/// </summary>
+
+// Corrado
 public class resetLevel : MonoBehaviour {
 
 	public GameObject Q;

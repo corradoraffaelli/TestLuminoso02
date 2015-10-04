@@ -1,6 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Gestisce la logica della proiezione della Piattaforma.
+/// </summary>
+
+// Corrado
 public class SpringBehaviour : MonoBehaviour {
 
 	GameObject player;

@@ -1,6 +1,11 @@
 using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Gestisce il comportamento delle lanterne poste nelle scene, con cui è possibile interagire per raccoglierne i vetrini.
+/// </summary>
+
+// Corrado
 public class FakeLanternBehaviour : MonoBehaviour {
 
 	public bool unlockContent = false;
