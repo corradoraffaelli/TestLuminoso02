@@ -267,7 +267,7 @@ public class GlassesManager : MonoBehaviour {
 				{
 					glassList[i].usable = true;
 					actualGlassIndex = i;
-					Debug.Log ("abilitato glass " + glassName);
+					//Debug.Log ("abilitato glass " + glassName);
 				}
 			}
 		}else{

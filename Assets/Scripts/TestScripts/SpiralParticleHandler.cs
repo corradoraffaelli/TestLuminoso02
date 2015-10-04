@@ -31,7 +31,7 @@ public class SpiralParticleHandler : MonoBehaviour {
 			
 			if (!stampato && newAlpha == 0.0f)
 			{
-				Debug.Log ("alpha zero " + Time.time);
+				//Debug.Log ("alpha zero " + Time.time);
 				stampato = true;
 			}
 			

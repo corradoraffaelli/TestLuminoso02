@@ -8,6 +8,11 @@ public enum cellArea {
 }
 
 
+/// <summary>
+/// Gestione di celle.
+/// </summary>
+
+//Dario
 
 public class GridHandler : MonoBehaviour {
 

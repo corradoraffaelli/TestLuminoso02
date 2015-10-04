@@ -318,7 +318,7 @@ public class FakeLanternBehaviour : MonoBehaviour {
 
 	public void InteractingMethod()
 	{
-		Debug.Log ("Interagito con fake lantern");
+		//Debug.Log ("Interagito con fake lantern");
 		changeLanternState (fakeLanternState.Off);
 		canLanternBeEnabled (false);
 
