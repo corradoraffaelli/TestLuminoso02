@@ -1,6 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Specifica del livello del vento. Gestisce il comportamento del primo pezzo di tubo.
+/// </summary>
+
+// Corrado
 public class Pipe01Down : MonoBehaviour {
 
 	SimpleLinearMovement linearMovement;

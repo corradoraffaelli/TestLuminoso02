@@ -1,6 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Si occpua del suono di caduta di un oggetto con rigidbody.
+/// </summary>
+
+// Corrado
 public class FallingThudSound : MonoBehaviour {
 
 	Rigidbody2D rigidbody;

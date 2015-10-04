@@ -1,6 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Gestisce il suono degli oggetti che vengono trascinati (cassa)
+/// </summary>
+
+// Corrado
 public class ShiftingSound : MonoBehaviour {
 
 	Rigidbody2D rigidbody;

@@ -1,6 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Specifica dell'intro. Si occupa di gestire i movimenti della camera.
+/// </summary>
+
+// Corrado
 public class CameraControllerIntro : MonoBehaviour {
 
 	public Transform finalDestination;

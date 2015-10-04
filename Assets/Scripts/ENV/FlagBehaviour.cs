@@ -1,6 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Gestisce il comportamento delle bandiere, soggette a vento
+/// </summary>
+
+// Corrado
 public class FlagBehaviour : MonoBehaviour {
 
 	public bool active = false;

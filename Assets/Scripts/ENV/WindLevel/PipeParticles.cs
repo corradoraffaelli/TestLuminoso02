@@ -1,6 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Specifica del livello del vento. Gestisce il comportamento delle particelle di vento che escono dai tubi.
+/// </summary>
+
+// Corrado
 public class PipeParticles : MonoBehaviour {
 
 	public enum State{Initial, Pipe01Down, Pipe02Down}

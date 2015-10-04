@@ -1,6 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Specifica del livello del vento. Gestisce la stella nascosta dietro l'albero.
+/// </summary>
+
+// Corrado
 public class FragmentBehindTree : MonoBehaviour {
 
 	public TreeWindController tree;

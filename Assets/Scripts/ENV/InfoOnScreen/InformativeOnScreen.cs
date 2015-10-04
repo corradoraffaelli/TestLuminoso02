@@ -1,6 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Gestisce la logica delle cornicione con le schede informative.
+/// </summary>
+
+// Corrado
 public class InformativeOnScreen : MonoBehaviour {
 
 	public GameObject centerCamera;

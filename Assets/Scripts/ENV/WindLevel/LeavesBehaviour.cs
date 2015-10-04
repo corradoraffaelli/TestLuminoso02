@@ -1,6 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Specifica del livello del vento. Gestisce il comportamento delle foglie FISICHE.
+/// </summary>
+
+// Corrado
 public class LeavesBehaviour : MonoBehaviour {
 
 	public Sprite[] leavesSprites;

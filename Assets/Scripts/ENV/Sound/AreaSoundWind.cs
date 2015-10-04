@@ -1,6 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Gestisce il suono ad area del vento.
+/// </summary>
+
+// Corrado
 public class AreaSoundWind : MonoBehaviour {
 
 	GameObject referenceWind;

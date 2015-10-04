@@ -1,6 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Si occupa di mostrare un riflesso (flare) sopra gli oggetti collezionabili
+/// </summary>
+
+// Corrado
 public class FlareBehaviour : MonoBehaviour {
 
 	public GameObject[] circles;

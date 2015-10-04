@@ -1,6 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Classe specifica dell'hub. Si occupa di gestire la UI delle stelle raccolte.
+/// </summary>
+
+// Corrado
 public class HubStarsUIControl : MonoBehaviour {
 
 	public Sprite starSprite;

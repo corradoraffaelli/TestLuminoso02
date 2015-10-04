@@ -1,6 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Classe specifica dell'hub. Si occupa di contare il numero si stelle raccolte.
+/// </summary>
+
+// Corrado
 public class HubFragmentCounter : MonoBehaviour {
 
 	public int fragmentTotalNumber = 0;

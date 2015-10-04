@@ -1,6 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Specifica del livello del vento. Gestisce la navigazione della barca.
+/// </summary>
+
+// Corrado
 public class SailsManagement : MonoBehaviour {
 
 	public bool active = false;

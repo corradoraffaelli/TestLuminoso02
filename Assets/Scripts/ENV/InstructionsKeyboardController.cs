@@ -1,6 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Metodo che si occupa di switchare grafica dei bottoni mostrati a schermo, nel caso si utilizzi controller o tastiera
+/// </summary>
+
+// Corrado
 public class InstructionsKeyboardController : MonoBehaviour {
 
 	public bool sameSprite = false;

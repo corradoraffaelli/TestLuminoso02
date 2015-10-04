@@ -1,6 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Si occupa di gestire l'interfaccia grafica relativa agli oggetti collezionabili
+/// </summary>
+
+// Corrado
 public class UnlockableContentUI : MonoBehaviour {
 
 	[System.Serializable]

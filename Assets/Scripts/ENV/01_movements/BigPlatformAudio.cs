@@ -1,6 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Specifica del livello 1. Gestisce l'audio della piattaforma killer gigante (non più presente)
+/// </summary>
+
+// Corrado
 public class BigPlatformAudio : MonoBehaviour {
 
 	public movingPlatform movingPlat;

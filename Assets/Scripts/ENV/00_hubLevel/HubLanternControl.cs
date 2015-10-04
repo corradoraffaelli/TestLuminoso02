@@ -5,6 +5,11 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 using System.Collections.Generic;
 
+/// <summary>
+/// Classe specifica dell'hub. Si occupa di gestire le lanterne mammut. Salvataggio e caricamento su file.
+/// </summary>
+
+// Corrado
 public class HubLanternControl : MonoBehaviour {
 
 	public bool setDefault = false;

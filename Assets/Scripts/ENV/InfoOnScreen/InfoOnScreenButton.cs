@@ -1,6 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Gestisce il bottone delle cornicione con le schede.
+/// </summary>
+
+// Corrado
 public class InfoOnScreenButton : MonoBehaviour {
 
 	public Sprite buttonDown;

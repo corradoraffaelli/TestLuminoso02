@@ -1,6 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Attiva i suoni del mare nel terzo livello.
+/// </summary>
+
+// Corrado
 public class SeaActivation : MonoBehaviour {
 
 	public AudioHandler audioHandler;
