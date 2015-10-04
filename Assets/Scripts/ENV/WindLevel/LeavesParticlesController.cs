@@ -1,6 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Specifica del livello del vento. Gestisce il comportamento delle foglie PARTICLES
+/// </summary>
+
+// Corrado
 public class LeavesParticlesController : MonoBehaviour {
 
 	public bool defaultVerseRight = true;

@@ -1,6 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Classe che si occupa di gestire lo switch di sprite tra uso del controller e tastiera degli interagibile object.
+/// </summary>
+
+// Corrado
 public class InteragibileObjectControllerSprite : MonoBehaviour {
 
 	public Sprite keyboardSprite;

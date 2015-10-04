@@ -5,6 +5,12 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 using System.Collections.Generic;
 
+/// <summary>
+/// Classe specifica dell'hub. Si occupa di gestire le scale.
+/// Quando si attiva una lanterna mammut, si attiva la scala successiva. Salvataggio e caricamento da file.
+/// </summary>
+
+// Corrado
 public class HubLadderControl : MonoBehaviour {
 
 	public bool loadDefaultValues = true;

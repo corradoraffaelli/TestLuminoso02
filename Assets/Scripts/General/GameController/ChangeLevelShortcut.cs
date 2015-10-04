@@ -1,6 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Si occupa di tutte le shortcut utili per Debug
+/// </summary>
+
+// Corrado
 public class ChangeLevelShortcut : MonoBehaviour {
 
 	//public string[] levels;

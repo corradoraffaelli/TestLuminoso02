@@ -1,6 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Specifica del livello del vento. Gestisce il comportamento delle girandole che aprono le porte.
+/// </summary>
+
+// Corrado
 public class WheelDoor : MonoBehaviour {
 
 	public GameObject wheel;

@@ -1,6 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Classe utilizzata per gestire i suoni ad area
+/// </summary>
+
+// Corrado
 public class AreaSoundVerifier : MonoBehaviour {
 
 	bool collidingPlayer = false;

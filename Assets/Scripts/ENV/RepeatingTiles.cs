@@ -1,6 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Si occupa di porre una serie di tiles affiancati.
+/// </summary>
+
+// Corrado
 public class RepeatingTiles : MonoBehaviour {
 
 	public int rightTiles = 4;

@@ -5,6 +5,11 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 using System.Collections.Generic;
 
+/// <summary>
+/// Classe specifica dell'hub. Si occupa di gestire la posizione del player quando esce da un livello.
+/// </summary>
+
+// Corrado
 public class HubPlayerBeginPosition : MonoBehaviour {
 
 	[HideInInspector]

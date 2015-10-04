@@ -5,6 +5,11 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 using System.Collections.Generic;
 
+/// <summary>
+/// Specifica dell'hub. Si occupa di gestire le porte di accesso ai livelli.
+/// </summary>
+
+// Corrado
 public class UnlockedLevelControl : MonoBehaviour {
 
 	public bool loadUnlocked = false;

@@ -1,6 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Fornisce variabili dello schermo che possono essere utili ad altri script
+/// </summary>
+
+// Corrado
 public class CameraHandler : MonoBehaviour {
 
 	Vector3 cameraCenter;

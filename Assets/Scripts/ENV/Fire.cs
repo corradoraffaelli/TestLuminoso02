@@ -1,6 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Gestisce il suono del fuoco
+/// </summary>
+
+// Corrado
 public class Fire : MonoBehaviour {
 
 	public bool useAudioHandler = false;

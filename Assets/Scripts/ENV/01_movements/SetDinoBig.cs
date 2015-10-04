@@ -1,6 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Specifica del livello 1. Si occupa di ingrandire il dinosauro.
+/// </summary>
+
+// Corrado
 public class SetDinoBig : MonoBehaviour {
 
 	public float finalScale = 1.0f;

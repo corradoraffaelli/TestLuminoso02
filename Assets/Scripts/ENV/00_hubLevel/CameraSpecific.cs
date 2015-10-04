@@ -1,6 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Classe specifica dell'hub. Fissa la camera al centro, alla giusta distanza.
+/// </summary>
+
+// Corrado
 public class CameraSpecific : MonoBehaviour {
 
 	public float lateralView = 8.3f;

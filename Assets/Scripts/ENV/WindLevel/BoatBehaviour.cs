@@ -1,6 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Specifica del livello del vento. Gestisce il comportamento della barca.
+/// </summary>
+
+// Corrado
 public class BoatBehaviour : MonoBehaviour {
 
 	public GameObject noExitLimit;

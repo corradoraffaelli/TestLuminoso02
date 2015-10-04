@@ -1,6 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Specifica del livello del vento. Gestisce il comportamento della lanterna magica quando si usa la barca.
+/// </summary>
+
+// Corrado
 public class LanternOnBoat : MonoBehaviour {
 
 	bool playerOnTrigger = false;

@@ -1,6 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Specifica del livello del vento. Gestisce il comportamento delle piante spostate dal vento.
+/// </summary>
+
+// Corrado
 public class TreeWindController : MonoBehaviour {
 
 	GameObject referenceWind;

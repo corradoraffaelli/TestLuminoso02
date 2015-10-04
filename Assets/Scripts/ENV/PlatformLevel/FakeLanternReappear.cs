@@ -1,6 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Fa riapparire la fakeLantern
+/// </summary>
+
+// Corrado
 public class FakeLanternReappear : MonoBehaviour {
 
 	public int fixedUpdateNumber = 1;

@@ -1,6 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Gestisce le piattaforme che possono essere attraversate dal basso verso l'alto
+/// </summary>
+
+// Corrado
 public class OneWayPlatform : MonoBehaviour {
 
 	GameObject player;

@@ -5,6 +5,11 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 using System.Collections.Generic;
 
+/// <summary>
+/// Gestore del cursore e del puntatore
+/// </summary>
+
+// Corrado
 public class CursorHandler : MonoBehaviour {
 
 	public bool controllerAutomaticVar = true;

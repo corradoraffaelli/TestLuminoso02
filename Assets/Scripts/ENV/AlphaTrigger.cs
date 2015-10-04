@@ -1,6 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Se il player entra nel trigger, abilita e disabilita gli oggetti specificati
+/// </summary>
+
+// Corrado
 public class AlphaTrigger : MonoBehaviour {
 
 	public SpriteRenderer[] objectToEnable;

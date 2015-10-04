@@ -1,6 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Gestisce i movimenti della camera.
+/// </summary>
+
+// Corrado
 public class CameraMovements : MonoBehaviour {
 
 	public bool newImplementation = false;

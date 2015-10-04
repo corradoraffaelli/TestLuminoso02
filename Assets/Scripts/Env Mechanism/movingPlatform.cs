@@ -1,6 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Gestisce le piattaforme che si muovono tra due punti.
+/// </summary>
+
+// Corrado
 public class movingPlatform : MonoBehaviour 
 {
 	public bool newImplementation = false;

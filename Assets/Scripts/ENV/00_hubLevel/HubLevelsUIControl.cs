@@ -1,6 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Classe specifica dell'hub. Si occupa di gestire la UI di fronte alle porte di accesso ai livelli.
+/// </summary>
+
+// Corrado
 public class HubLevelsUIControl : MonoBehaviour {
 
 	UnlockedLevelControl levelControl;

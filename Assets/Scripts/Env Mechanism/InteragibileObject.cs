@@ -2,6 +2,11 @@
 using System.Collections;
 using System;
 
+/// <summary>
+/// Classe generica che gestisce tutti gli oggetti interagibili.
+/// </summary>
+
+// Corrado
 public class InteragibileObject : MonoBehaviour {
 	public string methodToCall = "InteractingMethod";
 	public GameObject[] objectsWithMethods;

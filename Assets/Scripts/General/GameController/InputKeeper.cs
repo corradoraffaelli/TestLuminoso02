@@ -5,6 +5,12 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 using System.Collections.Generic;
 
+/// <summary>
+/// Fa da interfaccia per gli input di gioco. Pensata per permettere il salvataggio ed il caricamento di replay sulla base degli input dell'utente.
+/// Pesantemente da migliorare. Per ura utilizzata solo per debug.
+/// </summary>
+
+// Corrado
 public class InputKeeper : MonoBehaviour {
 
 

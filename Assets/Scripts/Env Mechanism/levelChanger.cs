@@ -5,6 +5,11 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 using System.Collections.Generic;
 
+/// <summary>
+/// Classe che si occupa di gestire il cambiamento del livello interagendo con le porte.
+/// </summary>
+
+// Corrado
 public class levelChanger : MonoBehaviour {
 
 	public bool inputDoor = false;

@@ -1,6 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Specifica del livello del vento. Gestisce il comportamento delle nuvole che si muovono con il vento (non usate).
+/// </summary>
+
+// Corrado
 public class SimpleCloudMove : MonoBehaviour {
 
 	bool started = false;

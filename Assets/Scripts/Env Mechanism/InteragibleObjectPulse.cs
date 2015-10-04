@@ -1,6 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Fa pulsare il colore degli oggetti interagibili ogni tot secondi.
+/// </summary>
+
+// Corrado
 public class InteragibleObjectPulse : MonoBehaviour {
 
 	public bool needToPulse;

@@ -1,6 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Gestisce il comportamento dei venti del livello 3
+/// </summary>
+
+// Corrado
 public class ExternalWind : MonoBehaviour {
 
 	[Range(0.0f,15.0f)]

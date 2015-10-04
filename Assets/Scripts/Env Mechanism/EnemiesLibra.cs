@@ -1,6 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Gestisce la bilancia del terzo livello.
+/// </summary>
+
+// Corrado
 public class EnemiesLibra : MonoBehaviour {
 
 	public int enemiesNumber = 4;

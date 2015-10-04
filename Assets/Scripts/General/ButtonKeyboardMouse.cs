@@ -1,6 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Gestisce un'interfaccia standard per l'input da tastiera e mouse.
+/// </summary>
+
+// Corrado
 public class ButtonKeyboardMouse : MonoBehaviour {
 
 	/*

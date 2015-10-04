@@ -1,6 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Specifica del livello del vento. Gestisce il comportamento del secondo pezzo di tubo.
+/// </summary>
+
+// Corrado
 public class Pipe02Down : MonoBehaviour {
 
 	public GameObject firstPipe;
