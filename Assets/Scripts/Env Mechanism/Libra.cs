@@ -1,6 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Gestisce il comportamento della bilancia del terzo livello.
+/// </summary>
+
+// Corrado
 public class Libra : MonoBehaviour {
 
 	[System.Serializable]

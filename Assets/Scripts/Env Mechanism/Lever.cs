@@ -1,6 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Gestisce il comportamento delle leve.
+/// </summary>
+
+// Corrado
 public class Lever : MonoBehaviour {
 
 	public Sprite leftSprite;

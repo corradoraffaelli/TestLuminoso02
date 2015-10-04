@@ -1,6 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Mostra un flare ogni tot secondi su un interagibile object.
+/// </summary>
+
+// Corrado
 public class InteragibleObjectFlare : MonoBehaviour {
 
 	public GameObject flarePrefab;

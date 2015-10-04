@@ -1,6 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Gestisce lo stivale che cade del primo livello del 1921. Non usato.
+/// </summary>
+
+// Corrado
 public class FallingBoot : MonoBehaviour {
 
 	public Transform finalPosition;

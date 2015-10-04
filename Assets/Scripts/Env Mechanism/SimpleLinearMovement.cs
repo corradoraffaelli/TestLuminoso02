@@ -1,6 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Permette di fare movimenti lineari tra un'origine ed una destinazione.
+/// </summary>
+
+// Corrado
 public class SimpleLinearMovement : MonoBehaviour {
 
 	public Transform destination;

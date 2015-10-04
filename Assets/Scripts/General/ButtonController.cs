@@ -1,6 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Gestisce la possibilità di avere più mappature di controller. Oltre che un'interfaccia standard. 
+/// </summary>
+
+// Corrado
 public class ButtonController : MonoBehaviour {
 
 

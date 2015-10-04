@@ -1,6 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Si occupa di far comparire e scomparire elementi in dissolvenza nella scena
+/// </summary>
+
+// Corrado e Dario
 public class sceneChanger : MonoBehaviour {
 
 	public bool disableActualGameObject = true;

@@ -1,6 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// permette di modificare la gravità allo start.
+/// </summary>
+
+// Corrado
 public class PhysicsController : MonoBehaviour {
 
 	public float gravityValue = -9.81f;

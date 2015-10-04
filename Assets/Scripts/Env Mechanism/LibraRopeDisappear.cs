@@ -1,6 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Usato dalla bilancia del terzo livello per contare il numero di oggetti su ogni piatto.
+/// </summary>
+
+// Corrado
 public class LibraRopeDisappear : MonoBehaviour {
 
 	public GameObject wheel;
