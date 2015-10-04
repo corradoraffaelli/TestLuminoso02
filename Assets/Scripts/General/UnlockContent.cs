@@ -1,6 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Gestisce lo sblocco dei contenuti Serious (come oggeti e fun facts). Comunica con InformativeManager
+/// </summary>
+
 public class UnlockContent : MonoBehaviour {
 
 	Sprite unlockedObj;

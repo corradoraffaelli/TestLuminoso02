@@ -2,6 +2,10 @@
 using UnityEngine.UI;
 using System.Collections;
 
+/// <summary>
+/// Gestisce il cambio di scena, quindi il caricamento della scena successiva e la schermata di caricamento.
+/// </summary>
+
 public class LevelChangerGeneral : MonoBehaviour {
 
 	int loadProgress = 0;

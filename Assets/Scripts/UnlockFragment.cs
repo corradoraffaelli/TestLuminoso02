@@ -1,6 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Gestisce lo sblocco delle stelle/frammenti. Comunica con InformativeManager
+/// </summary>
+
 public class UnlockFragment : MonoBehaviour {
 	
 	public Sprite unlockedObj;

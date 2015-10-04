@@ -1,6 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Efficiency handler.
+/// Ha lo scopo di attivare e disattivare gli script di un gameobject in base alla sua distanza dal player (NON USATO al momento).
+/// </summary>
+
 public class EfficiencyHandler : MonoBehaviour {
 
 	public enum rangeSetting {
@@ -24,6 +29,7 @@ public class EfficiencyHandler : MonoBehaviour {
 		StartCoroutine( initValue ());
 
 	}
+
 
 	IEnumerator initValue () {
 

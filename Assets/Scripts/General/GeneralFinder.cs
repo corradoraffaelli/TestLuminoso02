@@ -1,6 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Classe utility che permette il rapido ritrovamento delle classi singleton e GameObject della scena.
+/// </summary>
+
+//Dario e Corrado
+
 public class GeneralFinder : MonoBehaviour {
 	
 	public static GameObject player;

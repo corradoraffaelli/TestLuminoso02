@@ -3,11 +3,13 @@ using System.Collections;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
+/// <summary>
+/// Gestisce il menù di pausa, quindi l'interruzione di gioco. Comunica con altri script, come InformativeManager e PlayStatusTracker.
+/// </summary>
+
+// Dario
+
 public class MenuManager : MonoBehaviour {
-
-	//InformativeManager informativeMan;
-
-	//public GameObject canvasMenu;
 
 	public Texture2D mouseCursor;
 
@@ -33,8 +35,6 @@ public class MenuManager : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 
-		//informativeMan = UtilFinder._GetComponentOfGameObjectWithTag<InformativeManager> ("Controller");
-
 		initializeReferencesOfMenu ();
 
 	}
@@ -42,7 +42,6 @@ public class MenuManager : MonoBehaviour {
 	void initializeReferencesOfMenu() {
 
 		GeneralFinder.informativeManager.c_initializeInformative ();
-		//informativeMan.c_initializeInformative ();
 
 		initializeIntroOfMenu ();
 
@@ -86,8 +85,6 @@ public class MenuManager : MonoBehaviour {
 
 					//initialize menu buttons func
 					initializeMenuButtons();
-
-
 
 				}
 
@@ -184,7 +181,7 @@ public class MenuManager : MonoBehaviour {
 
 	public void exitFromLevel() {
 
-		Application.LoadLevel ("00_startMenu");
+		Application.LoadLevel (0);
 
 	}
 
@@ -192,7 +189,7 @@ public class MenuManager : MonoBehaviour {
 
 		Application.LoadLevel (Application.loadedLevel);
 		PlayStatusTracker.inPlay = true;
-		//GeneralFinder.playStatusTracker.inPlay = true;
+
 	}
 
 	public void c_enableMenu(bool enable, GameObject canvasToShow=null) {
@@ -200,10 +197,7 @@ public class MenuManager : MonoBehaviour {
 		if (enable) {
 			//blocco input
 			
-			//Time.timeScale = 0.0f;
 			PlayStatusTracker.inPlay = false;
-			//GeneralFinder.playStatusTracker.inPlay = false;
-			//Debug.Log("setto in playmode");
 
 			if(canvasToShow==null)
 				c_switchMenuSection(null, canvasIntro);
@@ -213,9 +207,8 @@ public class MenuManager : MonoBehaviour {
 		else {
 			//sblocco input
 			
-			//Time.timeScale = 1.0f;
 			PlayStatusTracker.inPlay = true;
-			//GeneralFinder.playStatusTracker.inPlayMode = true;
+
 			c_switchMenuSection(canvasIntro, null);
 			
 		}
@@ -321,101 +314,7 @@ public class MenuManager : MonoBehaviour {
 
 		}
 	}
-
-	void checkMenuNav1() {
-
-		if (GeneralFinder.inputManager.getAxisRaw("Vertical") != 0.0f) {
-			//Debug.Log("menu");
-			if(!oneControllerDirectionAnUse) {
-				
-				oneControllerDirectionAnUse = true;
-				
-				float fl = GeneralFinder.inputManager.getAxisRaw("Vertical");
-				
-				//menuButtons[activeMenuButtonIndex].gameObject.GetComponent<Image>().color = menuButtons[activeMenuButtonIndex].colors.normalColor;
-				
-				foreach(Button butt in menuButtons) {
-					
-					butt.gameObject.GetComponent<Animator>().SetTrigger("Normal");
-					
-				}
-				
-				if(fl > 0.0f) {
-					//Debug.Log("menu up");
-					activeMenuButtonIndex--;
-					
-					if(activeMenuButtonIndex<0) {
-						activeMenuButtonIndex= menuButtons.Length-1;
-					}
-				}
-				else {
-					//Debug.Log("menu down");
-					activeMenuButtonIndex++;
-					
-					if(activeMenuButtonIndex>menuButtons.Length-1) {
-						activeMenuButtonIndex=0;
-					}
-				}
-				
-				menuButtons[activeMenuButtonIndex].gameObject.GetComponent<Animator>().SetTrigger("Highlighted");
-				
-				//menuButtons[activeMenuButtonIndex].gameObject.GetComponent<Image>().color = menuButtons[activeMenuButtonIndex].colors.highlightedColor;
-			}
-		}
-		else {
-			
-			oneControllerDirectionAnUse = false;
-			
-		}
-
-		/*
-		if (GeneralFinder.inputManager.getAxisRaw("DigitalVertical") != 0.0f) {
-			//Debug.Log("menu");
-			if(!oneControllerDirectionDigUse) {
-				
-				oneControllerDirectionDigUse = true;
-				
-				float fl = GeneralFinder.inputManager.getAxisRaw("DigitalVertical");
-				
-				//menuButtons[activeMenuButtonIndex].gameObject.GetComponent<Image>().color = menuButtons[activeMenuButtonIndex].colors.normalColor;
-				
-				//menuButtons[activeMenuButtonIndex].gameObject.GetComponent<Animator>().SetTrigger("Normal");
-				
-				foreach(Button butt in menuButtons) {
-					
-					butt.gameObject.GetComponent<Animator>().SetTrigger("Normal");
-					
-				}
-				
-				if(fl < 0.0f) {
-					//Debug.Log("menu up");
-					activeMenuButtonIndex--;
-					
-					if(activeMenuButtonIndex<0) {
-						activeMenuButtonIndex= menuButtons.Length-1;
-					}
-				}
-				else {
-					//Debug.Log("menu down");
-					activeMenuButtonIndex++;
-					
-					if(activeMenuButtonIndex>menuButtons.Length-1) {
-						activeMenuButtonIndex=0;
-					}
-				}
-				menuButtons[activeMenuButtonIndex].gameObject.GetComponent<Animator>().SetTrigger("Highlighted");
-				//menuButtons[activeMenuButtonIndex].gameObject.GetComponent<Image>().color = menuButtons[activeMenuButtonIndex].colors.highlightedColor;
-			}
-		}
-		else {
-			
-			oneControllerDirectionDigUse = false;
-			
-		}
-
-		*/
-
-	}
+	
 
 	void checkInteraction() {
 
@@ -460,31 +359,7 @@ public class MenuManager : MonoBehaviour {
 
 	}
 
-	public void c_overMouseOnMenuButton(string name) {
-		
-		foreach (Button butt in menuButtons) {
-			
-			if(butt.gameObject.name!=name) {
-				
-				//butt.gameObject.GetComponent<Image>().color = butt.colors.normalColor;
-				
-			}
-			
-		}
-		
-	}
 
-	public void c_deselectOtherButtons(int selectIndex) {
-
-		for(int i=0; i< menuButtons.Length; i++) {
-
-			//if(i!=selectIndex)
-				//menuButtons[i].gameObject.GetComponent<Image>().color = menuButtons[i].colors.highlightedColor;
-
-		}
-
-	}
-	
 
 	public void c_switchMenuSection(GameObject toDeactivate, GameObject toActivate ) {
 

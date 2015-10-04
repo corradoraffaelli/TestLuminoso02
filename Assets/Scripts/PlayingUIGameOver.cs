@@ -2,6 +2,10 @@
 using System.Collections;
 using UnityEngine.UI;
 
+/// <summary>
+/// Gestisce l'oscuramento dello schermo durante il gameover.
+/// </summary>
+
 public class PlayingUIGameOver : MonoBehaviour {
 
 	GameObject controller;

@@ -19,6 +19,10 @@ public enum DataManagement {
 	Save,//come useactual, in più salva il file
 }
 
+/// <summary>
+/// Gestisce l'interfaccia grafica per i contenuti scritti e multimediali.
+/// </summary>
+
 public class InformativeManager : MonoBehaviour {
 
 	#region VARIABLES
@@ -63,17 +67,14 @@ public class InformativeManager : MonoBehaviour {
 	
 	bool cursorHorizontalDirectionUse = false;
 
-	//public bool controllerConfig1;
 
-	//[HideInInspector]
+	[HideInInspector]
 	public bool canOpenInformative = true;
 
 
 	#endregion PUBLICVARIABLES
 
 	#region PRIVATEVARIABLES
-	
-	//MenuManager menuMan;
 
 	GameObject multimediaSection;
 	Image multimedia;
@@ -97,8 +98,7 @@ public class InformativeManager : MonoBehaviour {
 	Image changeSectionPCHelp;
 
 	Image exitInformativeHelp;
-
-
+	
 	GameObject detailSection;
 	Text detail;
 	Text indexSubContent;
@@ -130,19 +130,6 @@ public class InformativeManager : MonoBehaviour {
 
 		}
 
-		/*
-		if (loadDefaultConf) {
-			
-			InfoSectionContainer.loadInformativeManagerConf(ref sections);
-			
-		}
-		else {
-			
-			InfoSectionContainer.tryLoadInformativeManagerConf (ref sections, InfoSectionContainer.defaultFileName + "-0-");
-			
-		}
-		*/
-
 		setLevelNumberAndUnlockerOfThisLevel ();
 
 	}
@@ -150,6 +137,7 @@ public class InformativeManager : MonoBehaviour {
 
 	void Start () {
 
+		//la funzione qui sotto viene invocata da menumanager
 		//initializeUIReferences ();
 
 	}
@@ -267,6 +255,9 @@ public class InformativeManager : MonoBehaviour {
 								
 							}
 							else {
+
+								//sblocco gestito da unlockFragment, si dovrebbe uniformare ad unlockContent
+
 								/*
 								if(fragme.unlockerObject.activeSelf) {
 									fragme.unlockerObject.SendMessage("c_setSectionInt", sectionIndex);
@@ -291,8 +282,6 @@ public class InformativeManager : MonoBehaviour {
 
 		}
 
-		//trovare quella con degli unlocker != null
-		//disattivarli o meno in base al fatto che siano già stati scoperti
 		
 	}
 
@@ -305,14 +294,8 @@ public class InformativeManager : MonoBehaviour {
 		if (initialized)
 			return;
 
-		//menuMan = UtilFinder._GetComponentOfGameObjectWithTag<MenuManager> ("Controller");
-
 
 		if (GeneralFinder.canvasMenu != null) {
-
-			//bool activeState = canvasMenu.activeSelf;
-
-
 
 			if (getCanvas ()) {
 
@@ -331,9 +314,6 @@ public class InformativeManager : MonoBehaviour {
 					getHelpComponents();
 
 					fillMultimediaAndDetails(activeSection, 0);
-
-					//fillDetail (activeSection, 0);
-					//fillMultimedia (activeSection, 0);
 					
 					fillNavigation (activeSection);
 
@@ -346,7 +326,7 @@ public class InformativeManager : MonoBehaviour {
 
 			} else {
 
-				//TODO:
+				Debug.Log ("ATTENZIONE - getCanvas() = false, durante initializeUIReferences");
 				
 			}
 
@@ -355,7 +335,7 @@ public class InformativeManager : MonoBehaviour {
 			
 		} else {
 
-			Debug.Log ("ATTENZIONE - canvasMenu non assegnato a InformativeManager");
+			Debug.Log ("ATTENZIONE - canvasMenu non assegnato a InformativeManager, durante initializeUIReferences");
 
 		}
 
@@ -403,13 +383,12 @@ public class InformativeManager : MonoBehaviour {
 					iconItems[i] = nephew.gameObject;
 					iconImages[i] = iconItems[i].GetComponentInChildren<Image>();
 					iconButtons[i] = iconItems[i].GetComponentInChildren<Button>();
-					//Debug.Log("ho preso " + iconButtons[i].ToString());
+
 					int temp = i;
-					//
+
 					if(iconButtons[i] != null)
 						iconButtons[i].onClick.AddListener(() => { c_changeContent(temp); });
 					else {
-						//Debug.Log ("siamo alla " + i);
 						break;
 					}
 					i++;
@@ -461,11 +440,9 @@ public class InformativeManager : MonoBehaviour {
 
 					if(nephew.name=="Index") {
 						
-						//multimedia = nephew.gameObject.GetComponentInChildren<Image> ();
 						indexSubContent = nephew.gameObject.GetComponentInChildren<Text>();
 					}
 				}
-				//multimediaButtons
 
 			}
 
@@ -598,22 +575,8 @@ public class InformativeManager : MonoBehaviour {
 
 		foreach (Transform child in helpSection.transform) {
 
-			/*
-			if(child.name.Contains("changeContentH")) {
-				//Debug.Log("ok cont");
-				changeContentHelp = child.gameObject.GetComponentInChildren<Image>();
-
-			}
-
-			if(child.name.Contains("changeSubContentH")) {
-				//Debug.Log("ok sub");
-				changeSubContentHelp = child.gameObject.GetComponentInChildren<Image>();
-
-			}
-			*/
-
 			if(child.name.Contains("changeSectionH")) {
-				//Debug.Log("ok sec");
+
 				Image []tempImgs = child.GetComponentsInChildren<Image>();
 
 				changeSectionHelp = new Image[2];
@@ -643,7 +606,7 @@ public class InformativeManager : MonoBehaviour {
 			}
 
 			if(child.name.Contains("exit")) {
-				//Debug.Log("ok sub");
+
 				exitInformativeHelp = child.gameObject.GetComponentInChildren<Image>();
 				
 			}
@@ -658,9 +621,6 @@ public class InformativeManager : MonoBehaviour {
 
 
 
-
-
-
 	void activeTempCanvasInformative(bool act) {
 
 		canvasInformative.SetActive (act);
@@ -669,15 +629,12 @@ public class InformativeManager : MonoBehaviour {
 
 	void handleIntroAndExitInformativeMenu() {
 
-		//Debug.Log ("INVOCATO");
 
 		if( (!canvasInformative.activeSelf || !canvasInformative.transform.parent.gameObject.activeSelf  ) 
-	     	/*&& GeneralFinder.inputManager.getButtonDown("OpenInformative") */
 	   		&& !invokeWithoutMenu 
 	   		&& !GeneralFinder.menuManager.StatusMenu) {
 
-			//Debug.Log("ciao0");
-			
+			//TODO: potrebbe servire?
 			//GeneralFinder.unlockableContentUI.stopPulsing();
 			
 			invokeWithoutMenu = true;
@@ -700,10 +657,9 @@ public class InformativeManager : MonoBehaviour {
 			
 		}
 		else {
-			//Debug.Log("ciao1");
+
 			if(!GeneralFinder.menuManager.StatusMenu && invokeWithoutMenu) {
-				//Debug.Log("ciao2");
-				
+
 				PlayStatusTracker.inPlay = true;
 				
 				canvasInformative.SetActive(false);
@@ -714,7 +670,6 @@ public class InformativeManager : MonoBehaviour {
 			else {
 				//caso SOLO per X di informative schedules, premuto per tornare al menu
 				if(GeneralFinder.menuManager.StatusMenu && !invokeWithoutMenu) {
-					//Debug.Log("ciao3");
 
 					GeneralFinder.menuManager.c_switchMenuSection (canvasInformative, canvasIntro);
 
@@ -731,8 +686,6 @@ public class InformativeManager : MonoBehaviour {
 		if((GeneralFinder.inputManager.getButtonUp("Start") && invokeWithoutMenu) 
 		   || (GeneralFinder.inputManager.getButtonUp("GoBackMenu") && canvasInformative.activeSelf && invokeWithoutMenu)
 		   || GeneralFinder.inputManager.getButtonDown("OpenInformative")) {
-			
-			//Debug.Log("premuto qualcosa per inf");
 
 			handleIntroAndExitInformativeMenu();
 
@@ -840,42 +793,17 @@ public class InformativeManager : MonoBehaviour {
 		
 		
 	}
-	
 
-	void setSprites() {
-
-		//GeneralFinder.inputManager.getControllerSprite(
-
-	}
 
 	void controllerNavigation() {
 
 
 		checkSectionNav1 ();
-		checkSubContentNav1 ();
 
+		checkSubContentNav1 ();
 
 		checkContentNav ();
 
-
-		/*
-		if (Input.GetButtonDown ("Horizontal-menu-nav")) {
-			
-			//float fl = Input.GetAxisRaw("Horizontal-menu-nav");
-			
-			
-		}
-		*/
-
-		/*
-		if (Input.GetButtonDown ("Vertical-Informative-menu-nav")) {
-			
-			float fl = Input.GetAxisRaw("Vertical-Informative-menu-nav");
-			
-			controllerScrollBarInfo(fl);
-			
-		}
-		*/
 
 	}
 
@@ -913,11 +841,9 @@ public class InformativeManager : MonoBehaviour {
 
 		if (fl > 0) {
 			c_changeSubContent(true);
-			//c_changeMultimedia (true);
 		}
 		else {
 			c_changeSubContent(false);
-			//c_changeMultimedia (false);
 		}
 	}
 
@@ -934,8 +860,6 @@ public class InformativeManager : MonoBehaviour {
 		tempAct = sections [activeSection].activeContent;
 
 		prevAct = tempAct;
-
-		//Debug.Log ("active content>" + tempAct);
 
 		int attempts = 0;
 
@@ -1192,9 +1116,7 @@ public class InformativeManager : MonoBehaviour {
 			contentN = sections[sectionN].activeContent;
 			
 		}
-		
-		//Debug.Log("section " + sectionN + " e content " + contentN);
-		
+
 		if (sections [sectionN].contents [contentN] == null){
 			Debug.Log ("ATTENZIONE - contenuto nullo");
 			return;
@@ -1274,10 +1196,6 @@ public class InformativeManager : MonoBehaviour {
 
 
 
-		//old IMPLEMENTS
-		//fillMultimedia (activeSection, sections [activeSection].activeContent);
-		//fillDetail (activeSection, sections [activeSection].activeContent);
-
 	}
 
 
@@ -1354,9 +1272,6 @@ public class InformativeManager : MonoBehaviour {
 			_activeContent = sections[activeSection].activeContent;
 			//Debug.Log("aaaaaaaaaaaaaaaa" + _activeContent);
 		}
-		//Debug.Log("bbbbbbbbbbbbbbbb");
-
-		//Button toactive = null;
 
 		foreach (Button butt in iconButtons) {
 			
@@ -1373,12 +1288,8 @@ public class InformativeManager : MonoBehaviour {
 			else {
 				if(butt != null) {
 
-					//Debug.Log("dddddddd>" + index);
-
 					butt.gameObject.GetComponent<Animator> ().SetBool ("Active", true);
-					//butt.gameObject.GetComponent<Animator> ().SetTrigger ("Pressed");
-					//butt.image.color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
-					//toactive = butt;
+
 				}
 			}
 			
@@ -1386,7 +1297,6 @@ public class InformativeManager : MonoBehaviour {
 			
 		}
 
-		//toactive.gameObject.GetComponent<Animator> ().SetBool ("Active", true);
 
 	}
 
@@ -1675,8 +1585,6 @@ public class InformativeManager : MonoBehaviour {
 
 		if (GeneralFinder.cursorHandler.useController) {
 
-			//changeContentHelp.sprite = GeneralFinder.inputManager.getControllerSprite (ButtonController.PS3Button.DPadUp);
-			//changeSubContentHelp.sprite = GeneralFinder.inputManager.getControllerSprite (ButtonController.PS3Button.DPadRight);
 
 			if(GeneralFinder.inputManager.getKeyboardSprite(ButtonKeyboardMouse.Button.ESC) == null
 			   || exitInformativeHelp == null)
@@ -1698,8 +1606,6 @@ public class InformativeManager : MonoBehaviour {
 		}
 		else {
 
-			//changeContentHelp.sprite = GeneralFinder.inputManager.getKeyboardSprite(ButtonKeyboardMouse.Button.ArrowUp);
-			//changeSubContentHelp.sprite = GeneralFinder.inputManager.getKeyboardSprite(ButtonKeyboardMouse.Button.ArrowRight);
 
 			if(GeneralFinder.inputManager.getKeyboardSprite(ButtonKeyboardMouse.Button.ESC) == null
 			   || exitInformativeHelp == null)
@@ -1747,6 +1653,10 @@ public class InformativeManager : MonoBehaviour {
 
 	
 }
+
+/// <summary>
+/// Responsabile del salvataggio dei progressi del giocatore.
+/// </summary>
 
 [XmlRoot("InfoSectionCollection")]
 public class InfoSectionContainer
@@ -1963,12 +1873,7 @@ public class InfoSectionContainer
 			infocon.setConfiguration (ref _sections);
 		}
 		
-		
-		
-		
-		
-		//infocon = InfoSectionContainer.Load("/Users/dariorandazzo/Unity Projects/Magic 02/Assets/TextAssets/provainfo.xml");
-		
+
 	}
 
 	public void setConfiguration(ref InformativeSection[] sectionsToSet) {
@@ -2028,8 +1933,6 @@ public class InfoSectionContainer
 				}
 
 			}
-
-
 
 		}
 		catch(Exception e) {
@@ -2121,7 +2024,9 @@ public class InfoSectionContainer
 	}
 }
 
-
+/// <summary>
+/// Contiene le informazioni di una sezione da mostrare nell'interfaccia delle schede informative.
+/// </summary>
 
 [System.Serializable]
 public class InformativeSection {
@@ -2156,6 +2061,9 @@ public class InformativeSection {
 
 }
 
+/// <summary>
+/// Gestisce le informazioni di un contenuto informativo.
+/// </summary>
 
 [System.Serializable]
 public class InformativeContent {
@@ -2210,6 +2118,9 @@ public class InformativeContent {
 
 }
 
+/// <summary>
+/// Gestisce le informazioni di un sotto-contenuto.
+/// </summary>
 
 [System.Serializable]
 public class SubContent {
