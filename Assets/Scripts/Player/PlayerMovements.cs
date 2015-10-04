@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Classe che si occupa di gestire i movimenti del player in base agli input dell'utente
+/// </summary>
 public class PlayerMovements : MonoBehaviour {
 
 	public bool jumpSLIDEMAN;
