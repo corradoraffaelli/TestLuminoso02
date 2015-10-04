@@ -1,6 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Gestione spawner nemici ed effetti grafici. (DEPRECATO)
+/// </summary>
+
+//Dario
+
 public class GeneralSpawner : MonoBehaviour {
 
 	//[System.Serializable]

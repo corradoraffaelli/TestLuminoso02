@@ -1,6 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Responsabile della creazione dei nemici.
+/// </summary>
+
+//Dario
+
 public class spawner : MonoBehaviour {
 
 	// Use this for initialization

@@ -6,6 +6,8 @@ using System.Collections;
 /// Gestisce il cambio di scena, quindi il caricamento della scena successiva e la schermata di caricamento.
 /// </summary>
 
+//Dario e Corrado
+
 public class LevelChangerGeneral : MonoBehaviour {
 
 	int loadProgress = 0;
@@ -66,21 +68,13 @@ public class LevelChangerGeneral : MonoBehaviour {
 		}
 
 
-		//if(loadArea!=null) {
-		//	loadArea.SetActive(false);
-		//}
 
 		if (pressButton != null) {
 			rendererContinue = pressButton.GetComponentInChildren<UnityEngine.UI.Image>();
 			pressButton.SetActive (false);
 		}
-		//if(background!=null)
-		//	background.SetActive(false);
 
 
-
-		//bar.SetActive(false);
-		//loadingText.SetActive(false);
 		if(shadow!=null) {
 			shadow.SetActive(false);
 		}
@@ -154,19 +148,13 @@ public class LevelChangerGeneral : MonoBehaviour {
 	IEnumerator DisplayLoadingScreen(int level)
 	{
 
-		//if(loadArea!=null) {
-		//	loadArea.SetActive(true);
-		//}
-
-		//if(background!=null) {
-		//	background.SetActive(true);
-		//}
 		if (blackScreen != null)
 			blackScreen.SetActive (true);
+
 		if (textNumber != null)
 			textNumber.SetActive (true);
-		//bar.SetActive(true);
-		//loadingText.SetActive(true);
+
+
 		if(shadow!=null) {
 			shadow.SetActive(true);
 		}
@@ -205,9 +193,6 @@ public class LevelChangerGeneral : MonoBehaviour {
 			
 		}
 
-
-			
-
 		for (int i = 0; i < canvasToDisable.Length; i++)
 		{
 			if (canvasToDisable[i] != null)
@@ -216,7 +201,6 @@ public class LevelChangerGeneral : MonoBehaviour {
 			}
 		}
 
-		//AsyncOperation async = Application.LoadLevelAsync(level);
 		async = Application.LoadLevelAsync(level);
 		async.allowSceneActivation = false;
 		//Debug.Log ("cerco di avviare il livello " + level);
@@ -240,9 +224,7 @@ public class LevelChangerGeneral : MonoBehaviour {
 
 		if (textUI != null)
 			textUI.text = loadProgress.ToString();
-		
-		//barTransform.localScale = new Vector3(loadProgressFloat, 1.0f, 1.0f);
-		
+
 		loadEnded = true;
 
 		loadCircle.SetActive (false);
@@ -252,7 +234,7 @@ public class LevelChangerGeneral : MonoBehaviour {
 		pressButton.SetActive (true);
 
 		while (!async.isDone)
-		//while (async.progress != 1.0f)
+
 		{
 			yield return null;
 		}

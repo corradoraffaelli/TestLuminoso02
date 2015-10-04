@@ -6,6 +6,8 @@ using UnityEngine.UI;
 /// Gestisce l'oscuramento dello schermo durante il gameover.
 /// </summary>
 
+//Dario
+
 public class PlayingUIGameOver : MonoBehaviour {
 
 	GameObject controller;

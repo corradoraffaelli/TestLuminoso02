@@ -1,6 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Responsabile della pulizia dei nemici morti. (DEPRECATO)
+/// </summary>
+
+//Dario
+
 public class enemiesCleaner : MonoBehaviour {
 
 	public bool DEBUG_CLEANING = false;

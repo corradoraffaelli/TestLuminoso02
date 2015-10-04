@@ -23,6 +23,8 @@ public enum DataManagement {
 /// Gestisce l'interfaccia grafica per i contenuti scritti e multimediali.
 /// </summary>
 
+//Dario
+
 public class InformativeManager : MonoBehaviour {
 
 	#region VARIABLES
@@ -982,7 +984,7 @@ public class InformativeManager : MonoBehaviour {
 
 				//forma di sicurezza...
 				if(attempts>5) {
-					Debug.Log ("più di 5 prove - non trovo content sbloccati");
+					//Debug.Log ("più di 5 prove - non trovo content sbloccati");
 					return null;
 				}
 				
@@ -1004,7 +1006,7 @@ public class InformativeManager : MonoBehaviour {
 				}
 
 				if(attempts>5) {
-					Debug.Log ("più di 5 prove - non trovo subcontent adatto");
+					//Debug.Log ("più di 5 prove - non trovo subcontent adatto");
 					return null;
 				}
 

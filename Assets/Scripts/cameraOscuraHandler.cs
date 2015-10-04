@@ -1,6 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Gestione camera oscura. (DEPRECATO)(NON USATO)
+/// </summary>
+
+//Dario
+
 public class cameraOscuraHandler : MonoBehaviour {
 
 	public GameObject []toShow;
