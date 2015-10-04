@@ -1,6 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Gestore dei vari checkpoint sparsi per la scena.
+/// </summary>
+
+//Dario
+
 public class CheckPointManager : MonoBehaviour {
 
 	GameObject controller;

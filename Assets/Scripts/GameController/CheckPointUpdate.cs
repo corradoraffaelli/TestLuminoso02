@@ -1,6 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Gestore di un singolo checkpoint.
+/// </summary>
+
+//Dario
+
 public class CheckPointUpdate : MonoBehaviour {
 
 

@@ -1,6 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Script da associare in genere ad un bottone, ha lo scopo di attivare un meccanismo, come quello di una porta.
+/// </summary>
+
+//Dario
+
 public class ChainActivationObjStarter : MonoBehaviour {
 	
 	public GameObject firstChainPieceObj;

@@ -1,6 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Gestore della grafica dei checkpoint di tipo lampione.
+/// </summary>
+
+//Dario
+
 public class streetLampAnimation : MonoBehaviour {
 
 	SpriteRenderer lampLight;

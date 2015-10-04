@@ -5,6 +5,8 @@ using System.Collections;
 /// Gestisce lo sblocco dei contenuti Serious (come oggeti e fun facts). Comunica con InformativeManager
 /// </summary>
 
+//Dario
+
 public class UnlockContent : MonoBehaviour {
 
 	Sprite unlockedObj;

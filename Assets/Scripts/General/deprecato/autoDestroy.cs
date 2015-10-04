@@ -1,6 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Auto destroy dei nemici. (DEPRECATO)
+/// </summary>
+
+//Dario
+
 public class autoDestroy : MonoBehaviour {
 
 	float tStart = -4.0f;

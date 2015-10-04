@@ -1,6 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Gestisce l'ingrandimento e il rimpicciolimento del player, tramite l'uso delle lenti.
+/// </summary>
+
+//Dario
+
 public class sizeChanger : MonoBehaviour {
 
 	public enum sizeChangement {

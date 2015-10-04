@@ -1,6 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Gestisce l'entrata e l'uscita dalla camera oscura.
+/// </summary>
+
+//Dario
+
 public class teleportHandler : MonoBehaviour {
 
 	public Transform targetPosition;

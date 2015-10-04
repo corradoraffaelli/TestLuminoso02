@@ -1,6 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Classe responsabile del bottone. (DEPRECATA)
+/// </summary>
+
+//Dario
+
 public class ButtonTrigger : MonoBehaviour {
 
 	public GameObject objectToActivate;

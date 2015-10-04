@@ -1,6 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Gestione delle porte con bottoni in sequenza. (DEPRECATO)
+/// </summary>
+
+//Dario
+
 public class ButtonSequenceHandler : MonoBehaviour {
 
 	public enum buttonSequenceType {

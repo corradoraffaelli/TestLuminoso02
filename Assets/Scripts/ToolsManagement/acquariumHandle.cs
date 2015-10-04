@@ -1,6 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Gestione del vetrino acquario. (NON USATO)
+/// </summary>
+
+//Dario
+
 public class acquariumHandle : MonoBehaviour {
 
 	AreaEffector2D aeHorizontal;

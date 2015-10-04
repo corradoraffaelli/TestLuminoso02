@@ -1,6 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Classe utility per un rapido ritrovamento di GameObject e componenti.
+/// </summary>
+
+//Dario
+
 public class UtilFinder {
 	
 	//GAMEOBJECT FINDER-------------------------------------------------------------------------------------------------------------------------

@@ -1,6 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Classe singleton che tiene traccia dello stato di gioco. Utile anche durante il testing in editor.
+/// </summary>
+
+//Dario
+
 public class PlayStatusTracker : MonoBehaviour {
 
 	private static bool prevInPlay = true;

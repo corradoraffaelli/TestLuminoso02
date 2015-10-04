@@ -1,6 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Anello di una catena di un generico meccanismo, come per esempio una porta.
+/// </summary>
+
+//Dario
+
 public class ChainActivationObjPiece : MonoBehaviour {
 	
 	public bool DEBUG_transition = false;
